@@ -1,0 +1,250 @@
+                       CHANGES to the XMod package
+
+Problems: 
+
+ - (05/11/13) Removed gpd2obj.tst from testall.g because of recursion 
+              deathtrap error (this also occurs in example gpd2obj.g).
+ - (09/01/13) GroupGeneralMappingByImages in ghom.gi has changed, 
+              so DiscreteNormalPreXModWithObjects no longer works. 
+              Also need Print/Display methods for these constructions. 
+ - (22/06/12) need to fix construction of endomorphism classes 
+              so that they can be printed/displayed. 
+ - (15/02/12) failed to construct induced xmod from X = (SL25 -> SL25.C2) 
+              and the inclusion SL25.C2 -> GL25 using the matrix groups 
+              (construction worked OK with isomorphic perm groups). 
+
+#############################################################################
+2.26 -> 2.31 (08/11/2014) 
+
+ - (08/11/14) moved package home page to pages.bangor.ac.uk/~mas023/chda/xmod/
+ - (08/11/14) created BitBucket repository for xmod 
+
+########################################################
+2.22 -> 2.26 (26/11/2013) 
+
+ - (26/11/13) minor mod to WhiteheadTransMonoid to fix gp2up.tst output
+ - (03/11/13) fixed errors in cat1data.g reported by Van Luyen Le. 
+ - (15/10/13) fixed error in Cat1MorphismByXModMorphism. 
+ - (03/10/13) completed work on groups of order [64..70] in cat1data.g 
+ - (02/10/13) added operation CollectPartsAlreadyDone. 
+ - (01/10/13) added operation PreCat1IsomorphismByIsomorphisms. 
+ - (17/08/13) fixed bug in PermCat1Select sent by Van Luyen Le 
+ - (26/03/13) put groups of order 64 back into cat1data.g 
+ - (05/02/13) rewrite of testall.g following Alex K's wedderga example 
+
+#############################################################################
+2.19 -> 2.22 (25/01/2013) 
+
+ - (25/01/13) Minor change to test file output to avoid problems in tests. 
+ - (09/01/13) Changed PackageWWWHome, using "gap4" rather than "gap4r5". 
+              Unable to fix problems related to changes in lib/ghom.gi, 
+              so removed gpd2obj.tst from the set of standard tests: 
+              the problem is with changes to GroupGeneralMappingByImages. 
+ - (26/09/12) Moved functions to the new cat1data.gd, cat1data.gi. 
+ - (21/09/12) Edited test files to reflect recent changes
+ - (12/07/12) Changed the format and rebuilt the data file cat1data.g :- 
+              it is now assumed that the SmallGroups library is used. 
+              Extended cat1data.g from order 47 to most of order 64. 
+              Major revision of AllCat1s, MakeAllCat1s, Cat1Select 
+ - (04/07/12) Added AllCat1s and IsomorphismPreCat1s (from GAP3 version). 
+              Removed batch of functions from util.gd(.gi) involving 
+              EndomorphismClasses, IdempotentImages, etc. 
+              Replaced their use in AllCat1s with calls to GQuotients. 
+
+#############################################################################
+2.18 -> 2.19 (09/06/2012) 
+
+ - (08/06/12) Following the replacement of IdentitySubgroup by TrivialSubgroup 
+              in Gpd, renamed IdentitySubXMod by TrivialSubXMod, etc. 
+              All calls of GroupHomomorphismByImagesTriv returned to 
+              GroupHomomorphismByImages (see item dated 30/04/08) 
+ - (07/06/12) Renamed special Display for lists as PrintListOneItemPerLine  
+              following email from Max Horn 
+
+#############################################################################
+2.17 -> 2.18 (23/04/2012) 
+
+ - (23/04/12) added autpgrp as a needed package 
+ - (20/04/12) added DiscreteNormalPreXModWithObjects 
+ - (26/01/12) replaced XModActedUpon by AutomorphismDomain in gp2act.gd(i) 
+ - (25/01/12) fixed error in XModByGroupOfAutomorphisms (oneG now oneP) 
+ - (10/01/12) updated to 2012; corrected URLs in intro.xml 
+ - (15/12/11) now requires version 1.13 of Gpd 
+
+#############################################################################
+2.15 -> 2.17 (21/09/2011) 
+
+ - (20/09/11) new version of makedocrel.g for building the manual 
+              added file gpd/examples/readall.g for testing purposes 
+ - (17/09/11) Shortened the banner. 
+ - (16/09/11) Renamed subdirectory xmod/gap as xmod/lib 
+
+#############################################################################
+2.14 -> 2.15 (06/09/2011) 
+
+ - (04/09/11) Changed BIND_GLOBAL to BindGlobal, since it is safer 
+ - (16/08/11) changed directory for archive to .../chda/gap4r5/xmod/ 
+
+#############################################################################
+2.13 -> 2.14 (30/07/2011)
+
+ - (30/07/11) final adjustments to the test files 
+ - (29/07/11) major changes to gp3objmap.gd(i). 
+ - (28/07/11) new 16/07/11 files now dom2d3d.gd etc. 
+ - (27/07/11) ViewObj, PrintObj, Display, Name now methods for 2d-groups. 
+ - (19/07/11) IsUp2dMapping now a category. 
+              InducedXMod( s4, s3b, s3b ) fails due to iso to pc-group, 
+              fo forced (for now) an isomorphism to a perm group. 
+ - (18/07/11) Centre of an xmod no longer works, so brought back XModCentre. 
+ - (16/07/11) Introduced a range of new categories in files 
+              dom2d.gd, dom2d.gi, map2d.gd, map2d.gi. 
+              As a result there were many changes in all files. 
+ - (08/07/11) Changed headers of all files. 
+ - (06/07/10) Changed XModByGroupOfAutomorphisms(G) in case G is pcgroup
+ - (02/07/10) New email address for Murat
+ - (30/06/10) Added check for IsPc2dDomain to PreXModObj 
+ - (30/06/10) InducedXModByCopower now constructs a PcXMod if appropriate 
+ - (28/06/10) Added methods for IsomorphismPcPreXMod, IsomorphismPcPreCat1
+ - (12/03/10) Moved XMod development to IMac at home, and started v.2.14 
+ 
+#############################################################################
+2.12 -> 2.13 (21/01/2010)
+
+ - (21/01/10) Changed output of AllInducedXMods to list of StructureDesc.  
+
+#############################################################################
+2.11 -> 2.12 (24/11/2008)
+
+ - (19/11/08) GapDoc relegated to "suggested other packages". 
+
+#############################################################################
+2.008 -> 2.11 (13/11/2008)
+
+ - (13/11/08) added GNU General Public License declaration,
+               moved some XMod utilities to gpd/gap/util.gd(gi), 
+ - (07/11/08) Changed website to: www.maths.bangor.ac.uk/chda/xmod/ 
+               Split the test file into one file per chapter. 
+ - (30/04/08) Added GroupHomomorphismByImagesTriv to util.gd, util.gi 
+               to allow both <gens> and <imgs> to be empty: triv -> triv! 
+               Fixed bug in XModOfCat1 in assigning names. 
+               FixedBug in Boundary for a pre-cat1-group. 
+ - (31/03/08) Added function GpdBuildManualHTML()
+ - (16/03/08) renamed Tail,Head as TailMap,HeadMap (for benefit of Gpd)
+ - (08.10/07) started this CHANGES file 
+ -               changed directory permissions from 711 to 755
+ -               renamed files:  obj2 -> gp2obj, etc, ready for groupoids 
+ -               added file  testall.g  in xmod/tst 
+
+#############################################################################
+2.007 -> 2.008 (25/10/2006)
+
+ - Fixed broken links in PackageInfo.g.
+
+#############################################################################
+2.006 -> 2.007 (20/10/2006)
+
+ - Added basic functions for crossed squares, considered as 3dObjects  
+   with crossed pairings, and their morphisms. 
+   (Groups with two normal subgroups, and the actor of a crossed module, 
+    provide standard examples. Cat2-groups are not yet implemented.) 
+ - Converted the documentation to the format of the GAPDoc package, 
+   and added the function XModBuildManual() to the util.gi file.
+ - Improved AutomorphismPermGroup for crossed modules, and introduced 
+   a special method for conjugation crossed modules.
+ - Substantial revisons made to XModByCentralExtension, NorrieXMod, 
+   LueXMod, ActorXMod, and InclusionInducedXModByCopower. 
+ - Reintroduced the Cat1Select operation.
+
+#############################################################################
+2.005 -> 2.006 (04/09/2004)
+
+ - Changed morphism functions to return fail when invalid data is supplied, 
+   rather than calling Error.  
+ - Fixed a bug in XModByGroupOfAutomorphisms. 
+
+#############################################################################
+2.004 -> 2.005 (16/04/2004)
+
+ - Moved the example files from tst/test_i.g to examples/example_i.g,
+ - converted testmanual.g to a proper test file tst/xmod_manual.tst. 
+ - Replaced OperationHomomorphism by ActionHomomorphism, 
+   a general GAP;4.4 change.
+ - Finished replacing RModule by AbelianModule. 
+ - Renamed UpMapping as Up2dMapping. 
+ - Added MappingGeneratorsImages and InverseGeneralMapping  
+   for a 2dMapping.
+ - A significant change was the conversion of the actor crossed module 
+   functions from the 3.4.4 version, including AutomorphismPermGroup 
+   for a crossed module, WhiteheadXMod, NorrieXMod, LueXMod, ActorXMod, 
+   Centre of a crossed module, InnerMorphism and InnerActorXMod. 
+ - Added SmallerDegreePermPreXMod after discovering, in the library, 
+   the very useful SmallerDegreePermutationRepresentation.
+
+#############################################################################
+2.003 -> 2.004 (14/04/2004)
+
+ - gave a new email address for Murat Alp
+ - added the Cat1Select functionality of version 1 to the Cat1 function
+
+#############################################################################
+2.002 -> 2.003 (28/02/2004)
+
+#############################################################################
+2.001 -> 2.002 (January 2004)
+
+Version 2.002 was prepared for the 4.4 release at the end of January 2004,
+and so required a PackageInfo.g file.
+
+#############################################################################
+Induced Crossed Modules (May 2002)
+
+Converted combinatorial functions -- DistinctRepresentatives, 
+CommonRepresentatives, CommonTransversal and IsCommonTransversal.
+
+Converted Tietze modification functions
+TzCommutatorPair, TzPartition and FactorsPresentation.
+
+Introduced global functions
+IsomorphismPermObject, IsomorphismFpObject, and IsomorphismPcObject
+which call IsomorphismPermGroup etc. when the object is a group.
+Added functions IsomorphismPermPreXMod, IsomorphismPermPreCat1, 
+etc. to be called when the object is a 2d-object.
+
+Added IsomorphismXModByNormalSubgroup which applies when the boundary
+of the xmod is injective.
+
+Added PreXModIsomorphismByIsomorphisms
+(we also need a similar function PreCat1IsomorphismByIsomorphisms)
+where the data consists of a crossed module, an isomorphism of the source,
+and an isomorphism of the range.
+
+Changed RModule to AbelianModule.
+
+#############################################################################
+Version 2.001 for GAP 4 (April 2002)
+
+Generic name UpMapping chosen for derivations and sections 
+(later changed to Up2dMapping).
+
+File names changed to obj2.gd, map2.gi, up2.tex, etc.
+
+Added alternative methods for IsomorphismPermGroup for 2dObjects. 
+
+Sorted a problem with fixing the generating set for R when used to 
+define derivations.  The (old) code used an fp-group version of R 
+and checks that all the relators map by chi to 1.
+Unfortunately, IsomorphismFpGroup sometimes permutes the order
+of the R-generators, with unfortunate effects.  
+The fix used IsomorphismFpGroupByGenerators, which returns the 
+images of the generators specified in the function call.  
+We have also used 
+genR := StrongGeneratorsStabChain( StabChain( rng ) ); 
+throughout to specify the generators of R.
+
+Operation XModMorphism renamed as XModMorphismByHoms, and a new 
+global function XModMorphism introduced (ditto for other 2dMappings).
+
+Now using \chi_1 \star \chi_2 for Whitehead multiplication (on the right), 
+with CompositeDerivation still giving multiplication on the left.  
+This means that the second axiom for derivations and for sections has changed 
+-- see Chapter 4.
