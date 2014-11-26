@@ -1,0 +1,170 @@
+<!-- ------------------------------------------------------------------- -->
+<!--                                                                     -->
+<!--  intro.xml             XMod documentation            Chris Wensley  -->
+<!--                                                        & Murat Alp  -->
+<!--  version 2.31, 08/11/2014                                           --> 
+<!--                                                                     --> 
+<!--  Copyright (C) 2001-2014, Murat Alp and Chris Wensley,              --> 
+<!--  School of Computer Science, Bangor University, U.K.                --> 
+<!--                                                                     -->
+<!-- ------------------------------------------------------------------- -->
+
+<!-- lines to edit for each new version: 73, 121. --> 
+
+<?xml version="1.0" encoding="UTF-8"?> 
+
+<Chapter Label="Intro">
+
+<Heading>Introduction</Heading>
+
+The &XMod; package provides functions for computation with 
+<List> 
+<Item>
+finite crossed modules of groupsand cat1-groups, 
+and morphisms of these structures;
+</Item>
+<Item>
+finite pre-crossed modules, pre-cat1-groups, and their Peiffer quotients;
+</Item>
+<Item>
+derivations of crossed modules and sections of cat1-groups; 
+</Item>
+<Item>
+the actor crossed square of a crossed module; 
+</Item>
+<Item>
+crossed squares and their morphisms (experimental version); 
+</Item>
+<Item>
+crossed modules of groupoids (experimental version). 
+</Item>
+</List>
+
+It is loaded with the command
+<Example>
+<![CDATA[
+gap> LoadPackage( "xmod" ); 
+]]>
+</Example>
+<P/>
+The term crossed module was introduced by J. H. C. Whitehead in 
+<Cite Key="W2" />, <Cite Key="W1" />.
+Loday, in <Cite Key="L1" />, 
+reformulated the notion of a crossed module as a cat1-group.
+Norrie <Cite Key="N1" />, <Cite Key="N2" /> 
+and Gilbert <Cite Key="G1" /> have studied derivations, 
+automorphisms of crossed modules and the actor of a crossed module, 
+while Ellis <Cite Key="E1" /> 
+has investigated higher dimensional analogues.
+Properties of induced crossed modules have been determined by 
+Brown, Higgins and Wensley in <Cite Key="BH1" />, 
+<Cite Key="BW1" /> and <Cite Key="BW2" />.
+For further references see <Cite Key="AW1" />, 
+where we discuss some of the data structures and algorithms 
+used in this package, and also tabulate
+isomorphism classes of cat1-groups up to size <M>30</M>.
+<P/>
+&XMod; was originally implemented in 1997 using the &GAP; 3 language.
+In April 2002 the first and third parts were converted to &GAP; 4, 
+the pre-structures were added, and version 2.001 was released. 
+The final two parts, covering derivations, sections and actors, 
+were included in the January 2004 release 2.002 for &GAP; 4.4.
+<P/>
+Many of the function names have been changed during the conversion,
+for example <C>ConjugationXMod</C> has become <C>XModByNormalSubgroup</C>.
+For a list of name changes see the file <F>names.pdf</F> 
+in the <F>doc</F> directory.
+<P/> 
+The current versions are 2.22 for &GAP; 4.6, released on January 25th 2013; 
+and &VERSION; for &GAP; 4.7, released on &LONGRELEASEDATE;. 
+<P/> 
+The package may be obtained as a compressed tar file 
+<File>&TARFILENAME;</File>
+by ftp from one of the sites with a &GAP; 4 archive,
+or from the Bangor Mathematics website pages using the URL: 
+<URL>http://www.maths.bangor.ac.uk/chda/gap4/xmod/&HTMLFILENAME;</URL>
+<P/>
+Crossed modules and cat1-groups are special types of 
+<E>2-dimensional groups</E> <Cite Key="B82"/>, <Cite Key="brow:hig:siv"/>, 
+and are implemented as <C>2dDomains</C> and <C>2dGroups</C> 
+having a <C>Source</C> and a <C>Range</C>.
+<!--  See the file <F>notes.pdf</F> in the <F>doc</F> directory  --> 
+<!--  for an introductory account of these algebraic gadgets.    --> 
+<P/>
+The package divides into four parts. 
+The first part is concerned with the standard constructions for 
+pre-crossed modules and crossed modules; together with
+direct products; normal sub-crossed modules; and quotients.
+Operations for constructing pre-cat1-groups and cat1-groups,
+and for converting between cat1-groups and crossed modules,
+are also included.
+<P/>
+The second part is concerned with <E>morphisms</E> of (pre-)crossed modules
+and (pre-)cat1-groups, together with standard operations for morphisms,
+such as composition, image and kernel.
+<P/>
+The third part deals with the equivalent notions of
+<E>derivation</E> for a crossed module and <E>section</E> for a cat1-group,
+and the monoids which they form under the Whitehead multiplication.
+<P/>
+The fourth part deals with actor crossed modules and actor cat1-groups.
+For the actor crossed module <M>{\rm Act}(\mathcal{X})</M> of a
+crossed module <M>\mathcal{X}</M> we require representations
+for the Whitehead group of regular derivations of <M>\mathcal{X}</M>
+and for the group of automorphisms of <M>\mathcal{X}</M>.
+The construction also provides an inner morphism from  <M>\mathcal{X}</M>  
+to  <M>{\rm Act}(\mathcal{X})</M>  
+whose kernel is the centre of <M>\mathcal{X}</M>.
+<P/>
+Since version 2.007 there are experimental functions for 
+<E>crossed squares</E> and their morphisms, 
+structures which arise as <M>3</M>-dimensional groups.  
+Examples of these are inclusions of normal sub-crossed modules, 
+and the inner morphism from a crossed module to its actor.
+<P/>
+Future plans include the implementation of <E>group-graphs</E>
+which will provide examples of pre-crossed modules
+(their implementation will require interaction with graph-theoretic
+functions in &GAP; 4). 
+Cat2-groups, and conversion betwen these and crossed squares, 
+are also planned.
+<P/>
+The equivalent categories  <C>XMod</C>  (crossed modules) and
+<C>Cat1</C>  (cat1-groups) are also equivalent to  <C>GpGpd</C>, 
+the subcategory of group objects in the category <C>Gpd</C> of groupoids.
+Finite groupoids have been implemented in Emma Moore's package 
+<Package>Gpd</Package> <Cite Key="M1"/> 
+for groupoids and crossed resolutions. 
+<P/>
+<Index Key="InfoXMod"><C>InfoXMod</C></Index>
+In order that the user has some control of the verbosity of the 
+&XMod; package's functions, 
+an <C>InfoClass</C>  <C>InfoXMod</C> is provided
+(see Chapter <C>ref:Info Functions</C> in the &GAP; Reference Manual for
+a description of the <C>Info</C> mechanism). 
+By default, the <C>InfoLevel</C> of <C>InfoXMod</C> is <C>0</C>; 
+progressively more information is supplied by raising
+the <C>InfoLevel</C> to <C>1</C>, <C>2</C> and <C>3</C>.
+
+<Example>
+<![CDATA[
+gap> SetInfoLevel( InfoXMod, 1); #sets the InfoXMod level to 1
+]]>
+</Example>
+
+Once the package is loaded, it is possible to check the correct
+installation by running the test suite of the package with the 
+following command. 
+<Example>
+<![CDATA[
+gap> ReadPackage( "xmod", "tst/testall.g" );
++ Testing examples in Chapter 2 of the XMod manual
+... 
+]]>
+</Example>
+
+Additional information can be found on the
+<E>Computational Higher-dimensional Discrete Algebra</E> website at
+<URL>http://www.maths.bangor.ac.uk/chda/</URL>. 
+
+</Chapter>

@@ -1,0 +1,331 @@
+<!-- ------------------------------------------------------------------- -->
+<!--                                                                     -->
+<!--  gp2up.xml             XMod documentation            Chris Wensley  -->
+<!--                                                        & Murat Alp  -->
+<!--  version 2.31, 08/11/2014                                           --> 
+<!--                                                                     --> 
+<!--  Copyright (C) 2001-2014, Murat Alp and Chris Wensley,              --> 
+<!--  School of Computer Science, Bangor University, U.K.                --> 
+<!--                                                                     -->
+<!-- ------------------------------------------------------------------- -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Chapter Label="chap-gp2up">
+<Heading>Derivations and Sections</Heading>
+<Index>up 2d-mapping of 2d-group</Index>
+
+<Section><Heading>Whitehead Multiplication</Heading>
+<Index>Whitehead multiplication</Index>
+
+<ManSection>
+   <Prop Name="IsDerivation"
+         Arg="map" />
+   <Prop Name="IsSection"
+         Arg="map" />
+   <Prop Name="IsUp2dMapping"
+         Arg="map" />
+<Description>
+<Index>derivation, of crossed module</Index>
+<Index>Whitehead monoid</Index>
+The Whitehead monoid  <M>{\rm Der}(\mathcal{X})</M> of <M>\mathcal{X}</M> 
+was defined in <Cite Key="W2" /> to be the monoid of all <E>derivations</E> 
+from <M>R</M> to <M>S</M>, that is the set of all maps  
+<M>\chi : R \to S</M>,  with <E>Whitehead multiplication</E>  
+<M>\star</M> (on the <E>right</E>) satisfying:
+<Display>
+{\bf Der\ 1}:  \chi(qr) ~=~ (\chi q)^{r} \; (\chi r),
+\qquad
+{\bf Der\ 2}: (\chi_1 \star \chi_2)(r) 
+    ~=~ (\chi_2 r)(\chi_1 r)(\chi_2 \partial \chi_1 r).
+</Display>
+The zero map is the identity for this composition.
+<Index>regular derivation</Index>
+Invertible elements in the monoid are called <E>regular</E>.
+<Index>Whitehead group</Index>
+The Whitehead group of <M>\mathcal{X}</M> 
+is the group of regular derivations in <M>{\rm Der}(\mathcal{X} )</M>. 
+In the next chapter the <E>actor</E> of <M>\mathcal{X}</M> 
+is defined as a crossed module whose source and range are permutation 
+representations of the Whitehead group and the automorphism group of 
+<M>\mathcal{X}</M>.
+<P/>
+<Index>section, of cat1-group</Index>
+The construction for cat1-groups equivalent to the derivation of a
+crossed module is the <E>section</E>. 
+<Index>Whitehead multiplication</Index>
+The monoid of sections of  <M>\mathcal{C} = (e;t,h : G \to R)</M>  
+is the set of group homomorphisms
+<M>\xi : R \to G</M>, with Whitehead multiplication  <M>\star</M>,  
+(on the <E>right</E>)  satisfying:
+<Display>
+{\bf Sect\ 1}: t \xi ~=~ {\rm id}_R,
+\quad
+{\bf Sect\ 2}: (\xi_1 \star \xi_2)(r) 
+                ~=~ (\xi_1 r)(e h \xi_1 r)^{-1}(\xi_2 h \xi_1 r) 
+                ~=~ (\xi_2 h \xi_1 r)(e h \xi_1 r)^{-1}(\xi_1 r).
+</Display>
+The embedding  <M>e</M>  is the identity for this composition,
+and  <M>h(\xi_1 \star \xi_2) = (h \xi_1)(h \xi_2)</M>.
+A section is  <E>regular</E>  when  <M>h \xi</M>  is an automorphism, and 
+the group of regular sections is isomorphic to the Whitehead group.
+<P/>
+If  <M>\epsilon</M> denotes the inclusion of  
+<M>S = {\rm ker} t</M>  in  <M>G</M>
+then  <M>\partial = h \epsilon : S \to R</M> and 
+<Display>
+\xi r ~=~ (e r)(e \chi r) ~=~ (r, \chi r) 
+</Display>
+determines a section  <M>\xi</M>  of  <M>\mathcal{C}</M>  
+in terms of the corresponding derivation  <M>\chi</M>  of
+<M>\mathcal{X}</M>, and conversely. 
+</Description>
+</ManSection>
+
+
+<ManSection>
+   <Oper Name="DerivationByImages"
+         Arg="X0 ims" />
+<Description>
+Derivations are stored like group homomorphisms by specifying the images
+of a generating set.  
+Images of the remaining elements may then be obtained using axiom  
+{\bf Der\ 1}.  
+The function <C>IsDerivation</C> is automatically called to 
+check that this procedure is well-defined.
+<P/>
+In the following example a cat1-group <C>C3</C> and the associated 
+crossed module  <C>X3</C>  are constructed, 
+where <C>X3</C> is isomorphic to the inclusion of the normal
+cyclic group <C>c3</C> in the symmetric group <C>s3</C>.
+</Description>
+</ManSection>
+
+<Example>
+<![CDATA[
+gap> g18 := Group( (1,2,3), (4,5,6), (2,3)(5,6) );;
+gap> SetName( g18, "g18" );
+gap> gen18 := GeneratorsOfGroup( g18 );;
+gap> g1 := gen18[1];;  g2 := gen18[2];;  g3 := gen18[3];;
+gap> s3 := Subgroup( g18, gen18{[2..3]} );;
+gap> SetName( s3, "s3" );;
+gap> t := GroupHomomorphismByImages( g18, s3, gen18, [g2,g2,g3] );;
+gap> h := GroupHomomorphismByImages( g18, s3, gen18, [(),g2,g3] );;
+gap> e := GroupHomomorphismByImages( s3, g18, [g2,g3], [g2,g3] );;
+gap> C3 := Cat1( t, h, e );
+[g18=>s3]
+gap> SetName( Kernel(t), "c3" );;
+gap> X3 := XModOfCat1( C3 );;
+gap> Display( X3 );
+Crossed module [c3->s3] :- 
+: Source group has generators:
+  [ (1,2,3)(4,6,5) ]
+: Range group has generators:
+  [ (4,5,6), (2,3)(5,6) ]
+: Boundary homomorphism maps source generators to:
+  [ (4,6,5) ]
+: Action homomorphism maps range generators to automorphisms:
+  (4,5,6) --> { source gens --> [ (1,2,3)(4,6,5) ] }
+  (2,3)(5,6) --> { source gens --> [ (1,3,2)(4,5,6) ] }
+  These 2 automorphisms generate the group of automorphisms.
+: associated cat1-group is [g18=>s3]
+
+gap> imchi := [ (1,2,3)(4,6,5), (1,2,3)(4,6,5) ];;
+gap> chi := DerivationByImages( X3, imchi );
+DerivationByImages( s3, c3, [ (4,5,6), (2,3)(5,6) ],
+[ (1,2,3)(4,6,5), (1,2,3)(4,6,5) ] )
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="SectionByImages"
+         Arg="C ims" />
+   <Oper Name="SectionByDerivation"
+         Arg="chi" />
+   <Oper Name="DerivationBySection"
+         Arg="xi" />
+<Description>
+Sections <E>are</E> group homomorphisms, 
+so do not need a special representation.
+Operations <C>SectionByDerivation</C> and <C>DerivationBySection</C> 
+convert derivations to sections, and vice-versa, 
+calling <C>Cat1OfXMod</C> and <C>XModOfCat1</C> automatically.
+<P/>
+Two strategies for calculating derivations and sections are implemented,
+see <Cite Key="AW1" />.
+The default method for <C>AllDerivations</C> is to search for all possible
+sets of images using a backtracking procedure, and when all the derivations
+are found it is not known which are regular.
+In the &GAP;3 version of this package, the default method for 
+<C>AllSections( &lt;C&gt; )</C> was to compute all endomorphisms
+on the range group <C>R</C> of <C>C</C> as possibilities 
+for the composite <M>h \xi</M>.
+A backtrack method then found possible images for such a section.
+In the current version the derivations of the associated crossed module
+are calculated, and these are all converted to sections
+using <C>SectionByDerivation</C>. 
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> xi := SectionByDerivation( chi );
+SectionByImages( s3, g18, [ (4,5,6), (2,3)(5,6) ], [ (1,2,3), (1,2)(4,6) ] )
+]]>
+</Example>
+</Section>
+
+
+
+<Section><Heading>Whitehead Groups and Monoids</Heading>
+
+<ManSection>
+   <Attr Name="RegularDerivations"
+         Arg="X0" />
+   <Attr Name="AllDerivations"
+         Arg="X0" />
+   <Attr Name="RegularSections"
+         Arg="C0" />
+   <Attr Name="AllSections"
+         Arg="C0" />
+   <Attr Name="ImagesList"
+         Arg="obj" />
+   <Attr Name="ImagesTable"
+         Arg="obj" />
+<Description>
+There are two functions to determine the elements of the Whitehead group 
+and the Whitehead monoid of <M>\mathcal{X}0</M>,
+namely <C>RegularDerivations</C> and <C>AllDerivations</C>.  
+(The functions <C>RegularSections</C> and <C>AllSections</C> 
+perform corresponding tasks for a cat1-group.)
+<P/>
+Using our example  <C>X3</C> 
+we find that there are just nine derivations,
+six of them regular, and the associated group is isomorphic to <C>s3</C>.
+</Description>
+</ManSection>
+
+<Example>
+<![CDATA[
+gap> all3 := AllDerivations( X3 );;
+gap> imall3 := ImagesList( all3 );; 
+gap> PrintListOneItemPerLine( imall3 );
+[ [ (), () ],
+  [ (), (1,2,3)(4,6,5) ],
+  [ (), (1,3,2)(4,5,6) ],
+  [ (1,2,3)(4,6,5), () ],
+  [ (1,2,3)(4,6,5), (1,2,3)(4,6,5) ],
+  [ (1,2,3)(4,6,5), (1,3,2)(4,5,6) ],
+  [ (1,3,2)(4,5,6), () ],
+  [ (1,3,2)(4,5,6), (1,2,3)(4,6,5) ],
+  [ (1,3,2)(4,5,6), (1,3,2)(4,5,6) ]
+  ]
+gap> KnownAttributesOfObject( all3 );
+[ "Object2d", "ImagesList", "AllOrRegular", "ImagesTable" ]
+gap> PrintListOneItemPerLine( ImagesTable( all3 ) );
+[ [ 1, 1, 1, 1, 1, 1 ],
+  [ 1, 1, 1, 2, 2, 2 ],
+  [ 1, 1, 1, 3, 3, 3 ],
+  [ 1, 2, 3, 1, 2, 3 ],
+  [ 1, 2, 3, 2, 3, 1 ],
+  [ 1, 2, 3, 3, 1, 2 ],
+  [ 1, 3, 2, 1, 3, 2 ],
+  [ 1, 3, 2, 2, 1, 3 ],
+  [ 1, 3, 2, 3, 2, 1 ]
+  ]
+]]>
+</Example>
+
+
+<ManSection>
+   <Oper Name="CompositeDerivation"
+         Arg="chi1 chi2" />
+   <Attr Name="UpImagePositions"
+         Arg="chi" />
+   <Attr Name="UpGeneratorImages"
+         Arg="chi" />
+   <Oper Name="CompositeSection"
+         Arg="xi1 xi2" />
+<Description>
+The Whitehead product <M>\chi_1 \star \chi_2</M> is implemented as 
+<C>CompositeDerivation( &lt;chi1&gt;, &lt;chi2&gt; )</C>.
+The composite of two sections is just the composite of homomorphisms.
+</Description>
+</ManSection>
+
+<Example>
+<![CDATA[
+gap> reg3 := RegularDerivations( X3 );;
+gap> imder3 := ImagesList( reg3 ); 
+[ [ (), () ], [ (), (1,2,3)(4,6,5) ], [ (), (1,3,2)(4,5,6) ], 
+  [ (1,3,2)(4,5,6), () ], [ (1,3,2)(4,5,6), (1,2,3)(4,6,5) ], 
+  [ (1,3,2)(4,5,6), (1,3,2)(4,5,6) ] ]
+gap> chi4 := DerivationByImages( X3, imder3[4] );
+DerivationByImages( s3, c3, [ (4,5,6), (2,3)(5,6) ], [ (1,3,2)(4,5,6), () ] )
+gap> chi5 := DerivationByImages( X3, imder3[5] );
+DerivationByImages( s3, c3, [ (4,5,6), (2,3)(5,6) ], 
+[ (1,3,2)(4,5,6), (1,2,3)(4,6,5) ] )
+gap> im4 := UpImagePositions( chi4 );
+[ 1, 3, 2, 1, 3, 2 ] 
+gap> im5 := UpImagePositions( chi5 );
+[ 1, 3, 2, 2, 1, 3 ] 
+gap> chi45 := chi4 * chi5;
+DerivationByImages( s3, c3, [ (4,5,6), (2,3)(5,6) ], [ (), (1,2,3)(4,6,5) ] )
+gap> im45 := UpImagePositions( chi45 );
+[ 1, 1, 1, 2, 2, 2 ]  
+gap> pos := Position( imder3, UpGeneratorImages( chi45 ) );
+2
+]]>
+</Example>
+
+<ManSection>
+   <Attr Name="WhiteheadGroupTable"
+         Arg="X0" />
+   <Attr Name="WhiteheadMonoidTable"
+         Arg="X0" />
+   <Attr Name="WhiteheadPermGroup"
+         Arg="X0" />
+   <Attr Name="WhiteheadTransMonoid"
+         Arg="X0" />
+<Description>
+Multiplication tables for the Whitehead group or monoid
+enable the construction of permutation or transformation representations.
+</Description>
+</ManSection>
+
+<Example>
+<![CDATA[
+gap> wgt3 := WhiteheadGroupTable( X3 );; 
+gap> PrintListOneItemPerLine( wgt3 );
+[ [ 1, 2, 3, 4, 5, 6 ],
+  [ 2, 3, 1, 5, 6, 4 ],
+  [ 3, 1, 2, 6, 4, 5 ],
+  [ 4, 6, 5, 1, 3, 2 ],
+  [ 5, 4, 6, 2, 1, 3 ],
+  [ 6, 5, 4, 3, 2, 1 ]
+  ]
+gap> wpg3 := WhiteheadPermGroup( X3 );
+Group([ (1,2,3)(4,5,6), (1,4)(2,6)(3,5) ])
+gap> wmt3 := WhiteheadMonoidTable( X3 );; 
+gap> PrintListOneItemPerLine( wmt3 );
+[ [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ],
+  [ 2, 3, 1, 5, 6, 4, 8, 9, 7 ],
+  [ 3, 1, 2, 6, 4, 5, 9, 7, 8 ],
+  [ 4, 4, 4, 4, 4, 4, 4, 4, 4 ],
+  [ 5, 5, 5, 5, 5, 5, 5, 5, 5 ],
+  [ 6, 6, 6, 6, 6, 6, 6, 6, 6 ],
+  [ 7, 9, 8, 4, 6, 5, 1, 3, 2 ],
+  [ 8, 7, 9, 5, 4, 6, 2, 1, 3 ],
+  [ 9, 8, 7, 6, 5, 4, 3, 2, 1 ]
+  ]
+gap> wtm3 := WhiteheadTransMonoid( X3 );
+<transformation monoid on 9 pts with 3 generators>
+gap> GeneratorsOfMonoid( wtm3 ); 
+[ Transformation( [ 2, 3, 1, 5, 6, 4, 8, 9, 7 ] ), 
+  Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4 ] ), 
+  Transformation( [ 7, 9, 8, 4, 6, 5, 1, 3, 2 ] ) ]
+]]>
+</Example>
+
+</Section>
+
+</Chapter>

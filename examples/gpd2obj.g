@@ -2,15 +2,15 @@
 ##
 #W  gpd2obj.g                XMOD example files                 Chris Wensley
 ##
-##  version 2.31, 08/11/2014 
+##  version 2.31, 26/11/2014 
 ##
 #Y  Copyright (C) 2001-2014, Murat Alp and Chris Wensley, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 #############################################################################
 
-Print("\nXMod example file gpd2obj.g (version 08/11/14) :-");
-Print("\nTHIS EXAMPLE FAILS IN GAP 4.6"); 
+Print("\nXMod example file gpd2obj.g (version 26/11/14) :-");
+Print("\nTHIS EXAMPLE FAILS IN GAP >= 4.6"); 
 Print("\ntesting functions for crossed modules of groupoids\n\n");
 
 SetInfoLevel( InfoXMod, 2 );

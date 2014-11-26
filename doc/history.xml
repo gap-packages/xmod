@@ -1,0 +1,258 @@
+<!-- ------------------------------------------------------------------- -->
+<!--                                                                     -->
+<!--  history.xml           XMod documentation            Chris Wensley  -->
+<!--                                                        & Murat Alp  -->
+<!--  version 2.31, 08/11/2014                                           --> 
+<!--                                                                     --> 
+<!--  Copyright (C) 2001-2014, Murat Alp and Chris Wensley,              --> 
+<!--  School of Computer Science, Bangor University, U.K.                --> 
+<!--                                                                     -->
+<!-- ------------------------------------------------------------------- -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Chapter Label="chap-history">
+<Heading>Development history</Heading>
+
+This chapter, which contains details of the major changes 
+to the package as it develops, was first created in April 2002. 
+Details of the changes from &XMod; 1 to &XMod; 2.001 are far from complete. 
+Starting with version 2.009 the file <F>CHANGES</F> lists the minor changes 
+as well as the more fundamental ones. 
+<P/>
+The inspiration for this package was the need, in the mid-1990's, 
+to calculate induced crossed modules 
+(see <Cite Key="BW1" />, <Cite Key="BW2" />, <Cite Key="BW3" />).
+&GAP; was chosen over other computational group theory systems
+because the code was freely available, and it was possible to
+modify the Tietze transformation code so as to record the images
+of the original generators of a presentation as words in the
+simplified presentation.  
+(These modifications are now a standard part of the Tietze transformation
+package in &GAP;.)
+
+<Section><Heading>Changes from version to version</Heading>
+
+<Subsection><Heading>Version 1 for &GAP; 3</Heading>
+<Index>version 1 for &GAP; 3</Index>
+
+The first version of &XMod; became an accepted package 
+for &GAP; 3.4.3 in December 1996.
+</Subsection>
+
+
+<Subsection><Heading>Version 2</Heading>
+
+Conversion of &XMod; 1 from &GAP; 3.4.3 
+to the new &GAP; syntax began soon after &GAP; 4 was released, 
+and had a lengthy gestation.
+The new &GAP; syntax encouraged a re-naming of many of the function names.
+An early decision was to introduce generic categories
+<C>2dDomain</C> for (pre-)crossed modules and (pre-)cat1-groups, 
+and <C>2dMapping</C> for the various types of morphism.
+In 2.009 <C>3dDomain</C> was used for crossed squares and
+cat2-groups, and <C>3dMapping</C> for their morphisms.
+A generic name for derivations and sections is also required, 
+and <C>Up2dMapping</C> is currently used.
+</Subsection>
+
+
+<Subsection><Heading>Version 2.001 for &GAP; 4</Heading>
+<Index>version 2.001 for &GAP; 4</Index>
+
+This was the first version of &XMod; for &GAP; 4,
+completed in April 2002 in a rush to catch the release of &GAP; 4.3.
+Functions for actors and induced crossed modules were not included,
+nor many of the functions for derivations and sections,
+for example <C>InnerDerivation</C>.
+</Subsection> 
+
+
+<Subsection><Heading>Induced crossed modules</Heading>
+
+During the period May 20th - May 27th 2002
+converted <F>induce.g</F> to <F>induce.gd</F> and <F>induce.gi</F>
+(later renamed <F>gp2ind.gd</F>, <F>gp2ind.gi</F>),
+at least as regards induced crossed modules. 
+(Induced cat1-groups may be convereted one day.) 
+For details, see the file <F>CHANGES</F>.
+</Subsection>
+
+
+<Subsection><Heading>Versions 2.002 -- 2.006</Heading>
+
+Version 2.002 was prepared for the 4.4 release at the end of January 2004.
+<P/>
+Version 2.003 of February 28th 2004 just fixed some file protections.
+<P/>
+Version 2.004 of April 14th 2004 added the <C>Cat1Select</C> functionality 
+of version 1 to the <C>Cat1</C> function (see also version 2.007).
+<P/>
+Version 2.005 of April 16th 2004 moved the example files from
+<F>tst/test&uscore;i.g</F> to <F>examples/example&uscore;i.g</F>,
+and converted <F>testmanual.g</F> 
+to a proper test file <F>tst/xmod&uscore;manual.tst</F>.
+<P/>
+
+A significant change was the conversion of the actor crossed module 
+functions from the <F>3.4.4</F> version, 
+including <C>AutomorphismPermGroup</C> for a crossed module, 
+<C>WhiteheadXMod</C>, <C>NorrieXMod</C>, <C>LueXMod</C>, <C>ActorXMod</C>, 
+<C>Centre</C> of a crossed module, <C>InnerMorphism</C> 
+and <C>InnerActorXMod</C>.
+</Subsection>
+
+
+
+<Subsection><Heading>Versions 2.007 -- 2.010</Heading>
+
+These versions contain changes made between September 2004 and October 2007. 
+<List>
+<Item> 
+Added basic functions for crossed squares, considered as <C>3dObjects</C> 
+with crossed pairings, and their morphisms. 
+Groups with two normal subgroups, and the actor of a crossed module, 
+provide standard examples of crossed squares. 
+(Cat2-groups are not yet implemented.) 
+</Item>
+<Item>
+Converted the documentation to the format of the &GAPDoc; package.
+</Item>
+<Item>
+Improved <C>AutomorphismPermGroup</C> for crossed modules, 
+and introduced a special method for conjugation crossed modules.
+</Item>
+<Item>
+Substantial revisons made to <C>XModByCentralExtension</C>, 
+<C>NorrieXMod</C>, <C>LueXMod</C>, <C>ActorXMod</C>, 
+and <C>InclusionInducedXModByCopower</C>. 
+</Item>
+<Item>
+Reintroduced the <C>Cat1Select</C> operation.
+</Item> 
+<Item> 
+Version 2.010, of October 2007, was timed to coincide with the release 
+of &GAP; 4.4.10, and included a change of filenames; 
+correct file protection codes; and an improvement to 
+<C>AutomorphismPermGroup</C> for crossed modules. 
+</Item> 
+</List>
+</Subsection>
+</Section> 
+
+
+<Section><Heading>Versions for &GAP; 4.5, 4.6 and 4.7</Heading>
+
+Version 2.19, released on 9th June 2012, included the following changes:  
+<List>
+<Item> 
+The file <C>makedocrel.g</C> was copied, with appropriate changes, 
+from <Package>GAPDoc</Package>, and now provides the correct way 
+to update the documentation. 
+</Item>
+<Item> 
+The first functions for crossed modules of groupoids were introduced. 
+</Item>
+<Item>
+The package webpage has moved along with the whole of the 
+Bangor Maths website: <URL>http://www.maths.bangor.ac.uk/chda/</URL>. 
+</Item>
+<Item>
+A GNU General Public License declaration has been added. 
+</Item>
+</List> 
+
+<Subsection><Heading>AllCat1s</Heading>
+Version 2.21 contained major changes to the <C>Cat1Select</C> operation: 
+the list <C>CAT1_LIST</C> of cat1-structures in the data file 
+<F>cat1data.g</F> was changed from permutation groups to pc-groups, 
+with the generators of subgroups; images of the tail map; and images of 
+the head map being given as <C>ExtRepOfObj</C> of words in the generators. 
+<P/> 
+The <C>AllCat1s</C> function was reintroduced from the &GAP;3 version, 
+and renamed as the operation <C>AllCat1sBasic</C>. 
+<P/> 
+In version 2.25 the data in <F>cat1data.g</F> was extended from groups 
+of size up to <M>48</M> to groups of size up to <M>70</M>. 
+In particular, the <M>267</M> groups of size 64 give rise to a total 
+of <M>1275</M> cat1-groups. 
+The authors are indebted to Van Luyen Le in Galway for pointing out a number 
+of errors in the version of this list distributed with version 2.24 of this package.  
+</Subsection>
+
+<Subsection><Heading>Version &VERSION;</Heading>
+This latest version was released on &LONGRELEASEDATE;. 
+</Subsection>
+</Section> 
+
+
+
+<Section><Heading>What needs doing next?</Heading>
+
+<List>
+<Item>
+Speed up the calculation of Whitehead groups.
+</Item>
+<Item> 
+Add more functions for <C>3dObjects</C> and implement <C>cat2-groups</C>.
+</Item>
+<Item> 
+Improve interaction with the package <Package>Gpd</Package> 
+implementing the group groupoid version of a crossed module, 
+and adding more functions for crossed modules of groupoids. 
+</Item>
+<Item> 
+Add interaction with <Package>IdRel</Package>  
+(and possibly <Package>XRes</Package> and <Package>natp</Package>) .
+</Item>
+<Item> 
+Need <C>InverseGeneralMapping</C> for morphisms 
+and more features for <C>FpXMods</C>, <C>PcXMods</C>, etc.
+</Item>
+<Item> 
+Implement actions of a crossed module.
+</Item>
+<Item> 
+Implement <C>FreeXMods</C> and an operation <C>Isomorphism2dDomains</C>.
+</Item>
+<Item>
+Allow the construction of a group of morphisms of crossed modules.
+</Item>
+<Item> 
+Complete the conversion from Version 1 of the calculation of sections
+using <C>EndoClasses</C>.
+</Item>
+<Item>
+More crossed square constructions: 
+<List>
+<Item>
+If <M>M, N</M> are ordinary <M>P</M>-modules 
+and <M>A</M> is an arbitrary abelian group on which <M>P</M> acts trivially, 
+then there is a crossed square with sides 
+<Display>
+0 : A \to N,\quad 0 : A \to M,\quad
+0 : M \to P,\quad 0 : N \to P. 
+</Display>
+</Item>
+<Item>
+For a group <M>L</M>, the automorphism crossed module 
+<M>{\rm Act}\ L = (\iota : L \to {\rm Aut}\ L)</M> 
+splits to form the square 
+with <M>(\iota_1 : L \to {\rm Inn}\ L)</M> on two sides, 
+and <M>(\iota_2 : {\rm Inn}\ L \to {\rm Aut}\ L)</M> on the other two sides, 
+where <M>\iota_1</M> maps <M>l \in L</M> to the inner automorphism  
+<M>\beta_l : L \to L,\; l^{\prime} \mapsto l^{-1}l^{\prime}l</M>,  
+and $\iota_2$ is the inclusion of <M>{\rm Inn}\ L</M> in  <M>{\rm Aut}\ L</M>. 
+The actions are standard, and the crossed pairing is 
+<Display>
+\boxtimes \;:\; {\rm Inn}\ L \times {\rm Inn}\ L \to L, \quad
+(\beta_l, \beta_{l^{\prime}}) \;\mapsto\; [l, l^{\prime}]~.
+</Display>
+</Item>
+</List>
+</Item>
+</List>
+
+</Section>
+
+</Chapter>

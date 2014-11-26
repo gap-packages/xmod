@@ -1,0 +1,400 @@
+<!-- ------------------------------------------------------------------- -->
+<!--                                                                     -->
+<!--  gp3objmap.xml         XMod documentation            Chris Wensley  -->
+<!--                                                                     -->
+<!--  version 2.31, 08/11/2014                                           --> 
+<!--                                                                     --> 
+<!--  Copyright (C) 2001-2014, Murat Alp and Chris Wensley,              --> 
+<!--  School of Computer Science, Bangor University, U.K.                --> 
+<!--                                                                     -->
+<!-- ------------------------------------------------------------------- -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Chapter Label="chap-obj3">
+
+<Heading>Crossed squares and their morphisms</Heading>
+
+<Index>crossed module</Index>
+<Index>cat2-group</Index>
+<Index>3d-group</Index>
+
+Crossed squares were introduced by Guin-Wal\'ery and Loday 
+(see, for example, <Cite Key="brow:lod"/>)
+as fundamental crossed squares of commutative squares of spaces,
+but are also of purely algebraic interest.
+We denote by <M>[n]</M> the set <M>\{1,2,\ldots,n\}</M>.
+We use the <M>n=2</M> version of the definition of crossed <M>n</M>-cube
+as given by Ellis and Steiner <Cite Key="ell:st"/>.
+<P/>
+A <E>crossed square</E> <M>\mathcal{S}</M> consists of the following:
+<List>
+<Item>
+Groups <M>S_J</M> for each of the four subsets <M>J \subseteq [2]</M>;
+</Item>
+<Item>
+a commutative diagram of group homomorphisms:
+  <Display>
+  \ddot{\partial}_1 : S_{[2]} \to S_{\{2\}}, \quad 
+  \ddot{\partial}_2 : S_{[2]} \to S_{\{1\}}, \quad 
+  \dot{\partial}_1 : S_{\{1\}} \to S_{\emptyset}, \quad 
+  \dot{\partial}_2 : S_{\{2\}} \to S_{\emptyset}; 
+  </Display>
+</Item>
+<Item>
+actions of <M>S_{\emptyset}</M> on <M>S_{\{1\}}, S_{\{2\}}</M> 
+and <M>S_{[2]}</M> which determine actions of 
+<M>S_{\{1\}}</M> on <M>S_{\{2\}}</M> and <M>S_{[2]}</M> 
+via <M>\dot{\partial}_1</M> 
+and actions of 
+<M>S_{\{2\}}</M> on <M>S_{\{1\}}</M> and <M>S_{[2]}</M> 
+via <M>\dot{\partial}_2</M>~;
+</Item>
+<Item>
+a function <M>\boxtimes : S_{\{1\}} \times S_{\{2\}} \to S_{[2]}</M>.
+</Item>
+</List>
+The following axioms must be satisfied for all 
+<M>l \in S_{[2]},\; m,m_1,m_2 \in S_{\{1\}},\; 
+n,n_1,n_2 \in S_{\{2\}},\; p \in S_{\emptyset}</M>:
+<List>
+<Item>
+the homomorphisms <M>\ddot{\partial}_1, \ddot{\partial}_2</M> 
+preserve the action of <M>S_{\emptyset}</M>~;
+</Item>
+<Item>
+each of 
+<Display>
+ \ddot{\mathcal{S}}_1 = (\ddot{\partial}_1 : S_{[2]} \to S_{\{2\}}), 
+ \ddot{\mathcal{S}}_2 = (\ddot{\partial}_2 : S_{[2]} \to S_{\{1\}}), 
+  \dot{\mathcal{S}}_1  = (\dot{\partial}_1 : S_{\{1\}} \to S_{\emptyset}), 
+  \dot{\mathcal{S}}_2  = (\dot{\partial}_2 : S_{\{2\}} \to S_{\emptyset}),
+</Display>
+and the diagonal  
+<Display>
+\mathcal{S}_{12} = (\partial_{12} := \dot{\partial}_1\ddot{\partial}_2 
+                  = \dot{\partial}_2\ddot{\partial}_1 
+                  : S_{[2]} \to S_{\emptyset})
+</Display>
+are crossed modules (with actions via <M>S_{\emptyset}</M>);
+</Item>
+<Item>
+<Index>crossed pairing</Index>
+<M>\boxtimes</M> is a <E>crossed pairing</E>:
+  <List>
+  <Item>
+  <M>(m_1m_2 \boxtimes n)\;=\;
+     {(m_1 \boxtimes n)}^{m_2}\;(m_2 \boxtimes n)</M>,
+  </Item>
+  <Item>
+  <M>(m \boxtimes n_1n_2) \;=\; 
+     (m \boxtimes n_2)\;{(m \boxtimes n_1)}^{n_2}</M>,
+  </Item>
+  <Item> 
+  <M>(m \boxtimes n)^{p} \;=\; (m^p \boxtimes n^p)</M>;
+  </Item>
+  </List>
+</Item>
+<Item>
+<M>\ddot{\partial}_1 (m \boxtimes n) \;=\; (n^{-1})^{m}\;n</M>
+\quad \mbox{and} \quad
+<M>\ddot{\partial}_2 (m \boxtimes n) \;=\; m^{-1}\;m^{n}</M>,
+</Item>
+<Item>
+<M>(m \boxtimes \ddot{\partial}_1 l) \;=\; (l^{-1})^{m}\;l</M>
+\quad \mbox{and} \quad
+<M>(\ddot{\partial}_2 l \boxtimes n) \;=\; l^{-1}\;l^n</M>.
+</Item>
+</List>
+Note that the actions of  <M>S_{\{1\}}</M>  on  <M>S_{\{2\}}</M>  
+and  <M>S_{\{2\}}</M>  on  <M>S_{\{1\}}</M>  via  <M>S_{\emptyset}</M>
+are compatible since
+<Display>
+{m_1}^{(n^m)} \;=\; {m_1}^{\dot{\partial}_2(n^m)} 
+              \;=\; {m_1}^{m^{-1}(\dot{\partial}_2 n)m}
+\;=\; (({m_1}^{m^{-1}})^n)^m.
+</Display>
+
+
+
+
+<Section><Heading>Constructions for crossed squares</Heading>
+
+Analogously to the data structure used for crossed modules, 
+crossed squares are implemented as <C>3d-groups</C>. 
+When times allows, cat2-groups will also be implemented, 
+with conversion between the two types of structure.
+
+Some standard constructions of crossed squares are listed below. 
+At present, a limited number of constructions are implemented.
+Morphisms of crossed squares have also been implemented, 
+though there is a lot still to do.
+
+<ManSection>
+   <Func Name="XSq"
+         Arg="args" />
+   <Oper Name="XSqByNormalSubgroups"
+         Arg="P N M L" />
+   <Oper Name="ActorXSq" 
+         Arg="X0" />
+   <Attr Name="Transpose3dGroup" 
+         Arg="S0" />
+   <Attr Name="Name" 
+         Arg="S0" />
+<!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+<!--   <Oper Name="XSqByXMods"             -->
+<!--         Arg="X1 X2 X3 X4 action pairing" /> -->
+<!--   <Oper Name="AsXSq"                        -->
+<!--         Arg="obj" />                        -->
+<Description>
+Here are some standard examples of crossed squares.
+<List>
+<Item>
+If <M>M, N</M> are normal subgroups of a group <M>P</M>, 
+and <M>L = M \cap N</M>, then the four inclusions, 
+<M>L \to N,~ L \to M,~ M \to P,~ N \to P</M>, 
+together with the actions of <M>P</M> on <M>M, N</M> 
+and <M>L</M> given by conjugation, and the crossed pairing  
+<Display>
+\boxtimes \;:\; M \times N \to M\cap N, \quad 
+(m,n) \mapsto [m,n] \,=\, m^{-1}n^{-1}mn \,=\,(n^{-1})^mn \,=\, m^{-1}m^n
+</Display>
+is a crossed square. 
+This construction is implemented as <C>XSqByNormalSubgroups(P,N,M,L);</C>.
+</Item>
+<Item>
+The actor <M>\mathcal{A}(\mathcal{X}_0)</M> of a crossed module 
+<M>\mathcal{X}_0</M> has been described in Chapter 5.
+The crossed pairing is given by 
+<Display>
+\boxtimes \;:\;  R \times W \,\to\, S, \quad (r,\chi) \,\mapsto\, \chi r~.
+</Display>
+This is implemented as <C>ActorXSq( X0 );</C>.
+</Item>
+<Item>
+The <E>transpose</E> of <M>\mathcal{S}</M> is the crossed square  
+<M>\tilde{\mathcal{S}}</M> obtained by interchanging 
+<M>S_{\{1\}}</M> with <M>S_{\{2\}}</M>, 
+<M>\ddot{\partial}_1</M> with <M>\ddot{\partial}_2</M>, and 
+<M>\dot{\partial}_1</M> with <M>\dot{\partial}_2</M>.  
+The crossed pairing is given by 
+<Display>
+\tilde{\boxtimes} \;:\; S_{\{2\}} \times S_{\{1\}} \to S_{[2]}, \quad 
+(n,m) \;\mapsto\; n\,\tilde{\boxtimes}\,m := (m \boxtimes n)^{-1}~.
+</Display>
+</Item>
+</List>
+</Description>
+</ManSection>
+
+<Example>
+<![CDATA[
+gap> c := (11,12,13,14,15,16);;
+gap> d := (12,16)(13,15);;
+gap> cd := c*d;;
+gap> d12 := Group( [ c, d ] );;
+gap> s3a := Subgroup( d12, [ c^2, d ] );;
+gap> s3b := Subgroup( d12, [ c^2, cd ] );;
+gap> c3 := Subgroup( d12, [ c^2 ] );;
+gap> SetName( d12, "d12");  SetName( s3a, "s3a" );
+gap> SetName( s3b, "s3b" );  SetName( c3, "c3" );
+gap> XSconj := XSqByNormalSubgroups( d12, s3b, s3a, c3 );
+[  c3 -> s3b ]
+[  |      |  ]
+[ s3a -> d12 ]
+gap> Name( XSconj );
+"[c3->s3b,s3a->d12]"
+gap> XStrans := Transpose3dGroup( XSconj );
+[  c3 -> s3a ]
+[  |      |  ]
+[ s3b -> d12 ]
+gap> X12 := XModByNormalSubgroup( d12, s3a );
+[s3a->d12]
+gap> XSact := ActorXSq( X12 );
+crossed square with:
+      up = Whitehead[s3a->d12]
+    left = [s3a->d12]
+    down = Norrie[s3a->d12]
+   right = Actor[s3a->d12]
+]]>
+</Example>
+
+<ManSection>
+   <Prop Name="IsXSq"
+         Arg="obj" />
+<!--   <Prop Name="IsCat2"   -->
+<!--         Arg="obj" />    -->
+   <Prop Name="Is3dObject"
+         Arg="obj" />
+   <Prop Name="IsPerm3dObject"
+         Arg="obj" />
+   <Prop Name="IsPc3dObject"
+         Arg="obj" />
+   <Prop Name="IsFp3dObject"
+         Arg="obj" />
+   <Prop Name="IsPreXSq"
+         Arg="obj" />
+<Description>
+These are the basic properties for 3d-groups, 
+and crossed squares in particular.
+</Description>
+</ManSection>
+
+<ManSection>
+   <Attr Name="Up2dGroup"
+         Arg="XS" />
+   <Attr Name="Left2dGroup"
+         Arg="XS" />
+   <Attr Name="Down2dGroup"
+         Arg="XS" />
+   <Attr Name="Right2dGroup"
+         Arg="XS" />
+   <Attr Name="DiagonalAction"
+         Arg="XS" />
+   <Attr Name="XPair"
+         Arg="XS" />
+   <Oper Name="ImageElmXPair"
+         Arg="XS pair" />
+<Description>
+In this implementation the attributes used in the construction of
+a crossed square <C>XS</C> are the four crossed modules (2d-groups) 
+on the sides of the square; 
+the diagonal action of <M>P</M> on <M>L</M>,
+and the crossed pairing.
+<P/>
+The &GAP; development team have suggested that crossed pairings should be 
+implemented as a special case of <C>BinaryMappings</C> -- a structure 
+which does not yet exist in &GAP;.
+As a temporary measure, crossed pairings have been implemented using 
+<C>Mapping2ArgumentsByFunction</C>.
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> Up2dGroup( XSconj );
+[c3->s3b]
+gap> Right2dGroup( XSact );
+Actor[s3a->d12]
+gap> xpconj := XPair( XSconj );;
+gap> ImageElmXPair( xpconj, [ (12,16)(13,15), (11,16)(12,15)(13,14) ] );
+(11,15,13)(12,16,14)
+gap> diag := DiagonalAction( XSact );
+[ (2,3)(5,6), (1,2)(4,6) ] -> 
+[ [ (11,13,15)(12,14,16), (12,16)(13,15) ] -> [ (11,15,13)(12,16,14), 
+      (12,16)(13,15) ], [ (11,13,15)(12,14,16), (12,16)(13,15) ] -> 
+    [ (11,15,13)(12,16,14), (11,13)(14,16) ] ]
+]]>
+</Example>
+
+</Section>
+
+
+
+<Section><Heading>Morphisms of crossed squares</Heading>
+
+<Index>morphism of 3d-group</Index>
+<Index>crossed square morphism</Index>
+<Index>3d-mapping</Index>
+This section describes an initial implementation of morphisms of 
+(pre-)crossed squares.
+
+<ManSection>
+   <Attr Name="Source"
+         Arg="map" />
+   <Attr Name="Range"
+         Arg="map" />
+   <Attr Name="Up2dMorphism"
+         Arg="map" />
+   <Attr Name="Left2dMorphism"
+         Arg="map" />
+   <Attr Name="Down2dMorphism"
+         Arg="map" />
+   <Attr Name="Right2dMorphism"
+         Arg="map" />
+<Description>
+Morphisms of <C>3dObjects</C> are implemented as <C>3dMappings</C>.
+These have a pair of 3d-groups as source and range, together with four 
+2d-morphisms mapping between the four pairs of crossed modules  
+on the four sides of the squares.
+These functions return <C>fail</C> when invalid data is supplied.
+</Description>
+</ManSection>
+
+
+<ManSection>
+   <Prop Name="IsXSqMorphism"
+         Arg="map" />
+<!--   <Prop Name="IsCat2Morphism"    -->
+<!--         Arg="map" />             -->
+   <Prop Name="IsPreXSqMorphism"
+         Arg="map" />
+<!--   <Prop Name="IsPreCat2Morphism" -->
+<!--         Arg="map" />             -->
+   <Prop Name="IsBijective"
+         Arg="mor" />
+   <Prop Name="IsEndomorphism3dObject"
+         Arg="mor" />
+   <Prop Name="IsAutomorphism3dObject"
+         Arg="mor" />
+<Description>
+A morphism <C>mor</C> between two pre-crossed squares 
+<M>\mathcal{S}_{1}</M> and  <M>\mathcal{S}_{2}</M> 
+consists of four crossed module morphisms  
+<C>Up2dMorphism( mor )</C>, 
+mapping the <C>Up2dGroup</C> of <M>\mathcal{S}_1</M> 
+to that of <M>\mathcal{S}_2</M>, 
+<C>Left2dMorphism( mor )</C>, <C>Down2dMorphism( mor )</C> 
+and <C>Right2dMorphism( mor )</C>. 
+These four morphisms are required to commute with the four boundary maps
+and to preserve the rest of the structure. 
+The current version of <C>IsXSqMorphism</C> does not perform all the 
+required checks.
+</Description>
+</ManSection>
+
+<Example>
+<![CDATA[
+gap> ad12 := GroupHomomorphismByImages( d12, d12, [c,d], [c,d^c] );;
+gap> as3a := GroupHomomorphismByImages( s3a, s3a, [c^2,d], [c^2,d^c] );;
+gap> as3b := GroupHomomorphismByImages( s3b, s3b, [c^2,cd], [c^2,cd^c] );;
+gap> idc3 := IdentityMapping( c3 );;
+gap> upconj := Up2dGroup( XSconj );;
+gap> leftconj := Left2dGroup( XSconj );; 
+gap> downconj := Down2dGroup( XSconj );; 
+gap> rightconj := Right2dGroup( XSconj );; 
+gap> up := XModMorphismByHoms( upconj, upconj, idc3, as3b );
+[[c3->s3b] => [c3->s3b]]
+gap> left := XModMorphismByHoms( leftconj, leftconj, idc3, as3a );
+[[c3->s3a] => [c3->s3a]]
+gap> down := XModMorphismByHoms( downconj, downconj, as3a, ad12 );
+[[s3a->d12] => [s3a->d12]]
+gap> right := XModMorphismByHoms( rightconj, rightconj, as3b, ad12 );
+[[s3b->d12] => [s3b->d12]]
+gap> autoconj := XSqMorphism( XSconj, XSconj, up, left, down, right );; 
+gap> ord := Order( autoconj );;
+gap> Display( autoconj );
+Morphism of crossed squares :-
+:    Source = [c3->s3b,s3a->d12]
+:     Range = [c3->s3b,s3a->d12]
+:     order = 3
+:    up-left: [ [ (11,13,15)(12,14,16) ], [ (11,13,15)(12,14,16) ] ]
+:   up-right: [ [ (11,13,15)(12,14,16), (11,16)(12,15)(13,14) ],
+  [ (11,13,15)(12,14,16), (11,12)(13,16)(14,15) ] ]
+:  down-left: [ [ (11,13,15)(12,14,16), (12,16)(13,15) ],
+  [ (11,13,15)(12,14,16), (11,13)(14,16) ] ]
+: down-right: [ [ (11,12,13,14,15,16), (12,16)(13,15) ],
+  [ (11,12,13,14,15,16), (11,13)(14,16) ] ]
+gap> KnownPropertiesOfObject( autoconj );
+[ "IsTotal", "IsSingleValued", "IsInjective", "IsSurjective", "Is3dMapping",
+  "IsPreXSqMorphism", "IsXSqMorphism", "IsEndomorphism3dObject" ]
+gap> IsAutomorphism3dObject( autoconj );
+true
+]]>
+</Example>
+
+
+</Section>
+
+
+</Chapter>

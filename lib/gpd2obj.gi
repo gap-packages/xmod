@@ -2,7 +2,7 @@
 ##
 #W  gpd2obj.gi                 GAP4 package `XMod'               Chris Wensley
 ##
-##  version 2.31, 21/11/2014 
+##  version 2.31, 26/11/2014 
 ##
 #Y  Copyright (C) 2001-2014, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -115,7 +115,6 @@ function( R, gpS )
     AR := AutomorphismGroup( R ); 
     AS := AutomorphismGroup( S ); 
     idS := One( AS ); 
-zzz := idS[3]; 
     AS0 := DomainWithSingleObject( AS, 0 ); 
     gengpR := GeneratorsOfGroup( gpR ); 
     gengpS := GeneratorsOfGroup( gpS ); 

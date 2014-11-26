@@ -1,0 +1,633 @@
+<!-- ------------------------------------------------------------------- -->
+<!--                                                                     -->
+<!--  gp2obj.xml            XMod documentation            Chris Wensley  -->
+<!--                                                        & Murat Alp  -->
+<!--  version 2.31, 08/11/2014                                           --> 
+<!--                                                                     --> 
+<!--  Copyright (C) 2001-2014, Murat Alp and Chris Wensley,              --> 
+<!--  School of Computer Science, Bangor University, U.K.                --> 
+<!--                                                                     -->
+<!-- ------------------------------------------------------------------- -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Chapter Label="chap-gp2obj">
+
+<Heading>2d-groups : crossed modules and cat1-groups</Heading>
+
+<Section>
+
+<Heading>Constructions for crossed modules</Heading>
+
+<Index>crossed module</Index>
+<Index>2d-domain</Index>
+<Index>2d-group</Index>
+A crossed module (of groups)  <M>\mathcal{X} = (\partial : S \to R )</M> 
+consists of a group homomorphism <M>\partial </M>, 
+called the <E>boundary</E> of <M>\mathcal{X}</M>, 
+with <E>source</E> <M>S</M>  and <E>range</E> <M>R</M>. 
+The group <M>R</M> acts on itself by conjugation, and on <M>S</M> by an action 
+<M>\alpha : R \to {\rm Aut}(S)</M> such that,  
+for all <M>s,s_1,s_2 \in S</M>  and  <M>r \in R</M>,
+<Display>
+{\bf XMod\ 1} ~:~  \partial(s^r) 
+   = r^{-1} (\partial s) r
+   = (\partial s)^r,
+\qquad
+{\bf XMod\ 2} ~:~  s_1^{\partial s_2} 
+   = s_2^{-1}s_1 s_2
+   = {s_1}^{s_2}.
+</Display>
+<P/>
+The kernel of  <M>\partial</M>  is abelian.
+<P/>
+There are a variety of constructors for crossed modules:
+
+<ManSection>
+   <Func Name="XMod"
+         Arg="args" />
+   <Oper Name="XModByBoundaryAndAction"
+         Arg="bdy act" />
+   <Oper Name="XModByTrivialAction"
+         Arg="bdy" />
+   <Oper Name="XModByNormalSubgroup"
+         Arg="G N" />
+   <Oper Name="XModByCentralExtension"
+         Arg="bdy" />
+   <Oper Name="XModByAutomorphismGroup"
+         Arg="grp" />
+   <Oper Name="XModByInnerAutomorphismGroup"
+         Arg="grp" />
+   <Oper Name="XModByGroupOfAutomorphisms"
+         Arg="G A" />
+   <Oper Name="XModByAbelianModule"
+         Arg="abgrp" />
+   <Oper Name="DirectProduct"
+         Arg="X1 X2" />
+<Description>
+Here are the standard constructions which these implement:
+<List>
+<Item>
+A <E>trivial action crossed module</E>  <M>\partial : S \to R</M>
+has  <M>s^r = s</M>  for all  <M>s \in S, \; r \in R</M>,  
+the source is abelian and the image lies in the centre of the range.
+</Item>
+<Item>
+A <E>conjugation crossed module</E> is an inclusion of a normal subgroup  
+<M>S \unlhd R</M>, where <M>R</M> acts on <M>S</M> by conjugation.
+</Item>
+<Item>
+A <E>central extension crossed module</E> has as boundary a surjection
+<M>\partial : S \to R</M> with central kernel,
+where <M>r \in R</M> acts on <M>S</M> by conjugation 
+with <M>\partial^{-1}r</M>.
+</Item>
+<Item>
+An <E>automorphism crossed module</E> has as range a subgroup <M>R</M>
+of the automorphism group  Aut<M>(S)</M>  of  <M>S</M>
+which contains the inner automorphism group of <M>S</M>.
+The boundary maps <M>s \in S</M> to the inner automorphism of <M>S</M> 
+by <M>s</M>.
+</Item>
+<Item>
+A <E>crossed abelian module</E> has an abelian module as source
+and the zero map as boundary.
+</Item>
+<Item>
+The direct product  <M>\mathcal{X}_{1} \times \mathcal{X}_{2}</M>
+of two crossed modules has source  <M>S_1 \times S_2</M>,
+range  <M>R_1 \times R_2</M>  and boundary
+<M>\partial_1 \times \partial_2</M>,  with  <M>R_1,\ R_2</M>  acting
+trivially on  <M>S_2,\ S_1</M>  respectively.
+</Item>
+</List>
+</Description>
+</ManSection>
+
+<ManSection>
+   <Attr Name="Source"
+         Arg="X0" />
+   <Attr Name="Range"
+         Arg="X0" />
+   <Attr Name="Boundary"
+         Arg="X0" />
+   <Attr Name="AutoGroup"
+         Arg="X0" />
+   <Attr Name="XModAction"
+         Arg="X0" />
+<Description>
+In this implementation the attributes used in the construction of
+a crossed module <C>X0</C> are as follows.
+<List>
+<Item>
+<C>Source(X0)</C> and <C>Range(X0)</C> are the source <M>S</M> 
+and range <M>R</M> of <M>\partial</M>, the boundary <C>Boundary(X0)</C>;
+</Item>
+<Item>
+<C>AutoGroup(X0)</C> is a group of automorphisms of <M>S</M>;
+</Item>
+<Item>
+<C>XModAction(X0)</C> is a homomorphism from <M>R</M> to <C>AutoGroup(X0)</C>.
+</Item>
+</List>
+</Description>
+</ManSection>
+
+<ManSection>
+   <Attr Name="Size"
+         Arg="X0" />
+   <Attr Name="Name"
+         Arg="X0" />
+<Description>
+More familiar attributes are <C>Size</C> and <C>Name</C>, 
+the latter formed by concatenating the names of the source and range 
+(if these exist).
+An <C>Enumerator</C> function has not been implemented.
+<Index>display a 2d-group</Index>
+The <C>Display</C> function is used to print details of 2d-groups.
+</Description>
+</ManSection>
+
+Here is a simple example of an automorphism crossed module, 
+using a cyclic group of size five.
+
+<Example>
+<![CDATA[
+gap> c5 := Group( (5,6,7,8,9) );;
+gap> SetName( c5, "c5" );
+gap> X1 := XModByAutomorphismGroup( c5 );
+[c5 -> PAut(c5)] 
+gap> Display( X1 );
+Crossed module [c5 -> PAut(c5)] :-
+: Source group c5 has generators:
+  [ (5,6,7,8,9) ]
+: Range group PAut(c5) has generators:
+  [ (1,2,3,4) ]
+: Boundary homomorphism maps source generators to:
+  [ () ]
+: Action homomorphism maps range generators to automorphisms:
+  (1,2,3,4) --> { source gens --> [ (5,7,9,6,8) ] }
+  This automorphism generates the group of automorphisms.
+gap> Size( X1 );
+[ 5, 4 ]
+gap> Print( RepresentationsOfObject(X1), "\n" );
+[ "IsComponentObjectRep", "IsAttributeStoringRep", "IsPreXModObj" ]
+gap> Print( KnownPropertiesOfObject(X1), "\n" );
+[ "IsEmpty", "IsTrivial", "IsNonTrivial", "IsFinite", 
+  "CanEasilyCompareElements", "CanEasilySortElements", "IsDuplicateFree", 
+  "IsPerm2dDomain", "IsPreXMod", "IsXMod", "IsAutomorphismGroup2dDomain" ]
+gap> Print( KnownAttributesOfObject(X1), "\n" );
+[ "Name", "Size", "Range", "Source", "Boundary", "AutoGroup", "XModAction" ]
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="SubXMod"
+         Arg="X0 src rng" />
+   <Attr Name="TrivialSubXMod"
+         Arg="X0" />
+   <Attr Name="NormalSubXMods"
+         Arg="X0" />
+<Description>
+With the standard crossed module constructors listed above as building blocks, 
+sub-crossed modules, normal sub-crossed modules 
+<M>\mathcal{N} \lhd \mathcal{X}</M>,
+and also quotients <M>\mathcal{X}/\mathcal{N}</M> may be constructed.
+A sub-crossed module  <M>\mathcal{S} = (\delta : N \to M)</M>
+is <E>normal</E> in <M>\mathcal{X} = (\partial : S \to R)</M>  if
+<List>
+<Item>
+<M>N,M</M> are normal subgroups of <M>S,R</M> respectively,
+</Item>
+<Item>
+<M>\delta</M> is the restriction of <M>\partial</M>,
+</Item>
+<Item>
+<M>n^r \in N</M>  for all  <M>n \in N,~r \in R</M>,
+</Item>
+<Item>
+<M>s^{-1}s^m \in N</M>  for all  <M>m \in M,~s \in S</M>.
+</Item>
+</List>
+These conditions ensure that  <M>M \ltimes N</M>  is normal in  
+the semidirect product <M>R \ltimes S</M>.
+</Description>
+</ManSection>
+
+</Section>
+
+
+<Section><Heading>Pre-crossed modules</Heading>
+
+<Index>pre-crossed module</Index>
+<ManSection>
+   <Oper Name="PreXModByBoundaryAndAction"
+         Arg="bdy act" />
+   <Oper Name="SubPreXMod"
+         Arg="X0 src rng" />
+<Description>
+When axiom  {\bf XMod\ 2}  is <E>not</E> satisfied, 
+the corresponding structure is known as a <E>pre-crossed module</E>.
+</Description>
+</ManSection>
+
+<Example>
+<![CDATA[
+gap> c := (11,12,13,14,15,16,17,18);;  d := (12,18)(13,17)(14,16);;
+gap> d16 := Group( c, d );;
+gap> sk4 := Subgroup( d16, [ c^4, d ] );;
+gap> SetName( d16, "d16" );  SetName( sk4, "sk4" );
+gap> bdy16 := GroupHomomorphismByImages( d16, sk4, [c,d], [c^4,d] );;
+gap> h1 := GroupHomomorphismByImages( d16, d16, [c,d], [c^5,d] );;
+gap> h2 := GroupHomomorphismByImages( d16, d16, [c,d], [c,c^4*d] );;
+gap> aut16 := Group( [ h1, h2 ] );;
+gap> act16 := GroupHomomorphismByImages( sk4, aut16, [c^4,d], [h1,h2] );;
+gap> P16 := PreXModByBoundaryAndAction( bdy16 );
+[d16->sk4]
+]]>
+</Example>
+
+<Index>Peiffer subgroup</Index>
+<ManSection>
+   <Attr Name="PeifferSubgroup"
+         Arg="X0" />
+   <Attr Name="XModByPeifferQuotient"
+         Arg="prexmod" />
+<Description>
+The <E>Peiffer subgroup</E> of a pre-crossed module <M>P</M> of <M>S</M>
+is the subgroup of  <M>{\rm ker}(\partial)</M>
+generated by  <E>Peiffer commutators</E>
+<Display>
+\langle s_1,s_2 \rangle \quad=\quad 
+(s_1^{-1})^{\partial s_2}~s_2^{-1}~s_1~s_2~.
+</Display>
+Then  <M>\mathcal{P} = (0 : P \to \{1_R\})</M>
+is a normal sub-pre-crossed module of  <M>\mathcal{X}</M>
+and  <M>\mathcal{X}/\mathcal{P} = (\partial : S/P \to R)</M>
+is a crossed module.
+<P/>
+In the following example the Peiffer subgroup is cyclic of size <M>4</M>.
+</Description>
+</ManSection>
+
+<Example>
+<![CDATA[
+gap> P := PeifferSubgroup( P16 );
+Group( [ (11,15)(12,16)(13,17)(14,18), (11,17,15,13)(12,18,16,14) ] )
+gap> X16 := XModByPeifferQuotient( P16 );
+[d16/P->sk4]
+gap> Display( X16 );
+Crossed module [d16/P->sk4] :-
+: Source group has generators:
+  [ f1, f2 ]
+: Range group has generators:
+  [ (11,15)(12,16)(13,17)(14,18), (12,18)(13,17)(14,16) ]
+: Boundary homomorphism maps source generators to:
+  [ (12,18)(13,17)(14,16), (11,15)(12,16)(13,17)(14,18) ]
+  The automorphism group is trivial
+gap> iso16 := IsomorphismPermGroup( Source( X16 ) );;
+gap> S16 := Image( iso16 );
+Group([ (1,2), (3,4) ])   
+]]>
+</Example>
+
+<ManSection>
+   <Prop Name="IsPermXMod"
+         Arg="X0" />
+   <Prop Name="IsPcPreXMod"
+         Arg="X0" />
+<Description>
+When both source and range groups are of the same type,
+corresponding properties are assigned to the crossed module.
+</Description>
+</ManSection>
+</Section>
+
+
+<Section Label="sect-cat1">
+<Heading>Cat1-groups and pre-cat1-groups</Heading>
+<Index>cat1-group</Index>
+
+<ManSection>
+   <Attr Name="Source"
+         Arg="C" />
+   <Attr Name="Range"
+         Arg="C" />
+   <Attr Name="TailMap"
+         Arg="C" />
+   <Attr Name="HeadMap"
+         Arg="C" />
+   <Attr Name="RangeEmbedding"
+         Arg="C" />
+   <Attr Name="KernelEmbedding"
+         Arg="C" />
+   <Attr Name="Boundary"
+         Arg="C" />
+   <Attr Name="Name"
+         Arg="C" />
+   <Attr Name="Size"
+         Arg="C" />
+<Description> 
+These are the attributes of a cat1-group <M>\mathcal{C}</M> 
+in this implementation.
+<P/>
+In <Cite Key="L1" />, Loday reformulated the notion of a 
+crossed module as a cat1-group, 
+namely a group <M>G</M> with a pair of homomorphisms <M>t,h : G \to G</M>
+having  a common image <M>R</M> and satisfying certain axioms.
+We find it convenient to define a cat1-group 
+<M>\mathcal{C} = (e;t,h : G \to R )</M>  as having source group  <M>G</M>,
+range group <M>R</M>,  and three homomorphisms:  two surjections  
+<M>t,h : G \to R</M>  and an embedding  <M>e : R \to G</M>  satisfying:
+<Display>
+{\bf Cat\ 1} ~:~ te = he = {\rm id}_R,
+\qquad
+{\bf Cat\ 2} ~:~ [\ker t, \ker h] = \{ 1_G \}.
+</Display>
+It follows that  
+<M>teh = h</M>, <M>het = t</M>, <M>tet = t</M>, <M>heh = h</M>.
+<P/>
+The maps  <M>t,h</M>  are often referred to as the 
+<E>source</E> and <E>target</E>,
+but we choose to call them the
+<E>tail</E> and <E>head</E> of  <M>\mathcal{C}</M>, 
+because <E>source</E> is the &GAP; term for the domain of a function.
+The <C>RangeEmbedding</C> is the embedding of <C>R</C> in <C>G</C>,
+the <C>KernelEmbedding</C> is the inclusion of 
+the kernel of <C>t</C> in <C>G</C>,
+and the <C>Boundary</C> is the restriction of <C>h</C> 
+to the kernel of <C>t</C>.
+</Description>
+</ManSection>
+
+<ManSection>
+   <Attr Name="Cat1"
+         Arg="args" />
+   <Attr Name="PreCat1ByTailHeadEmbedding"
+         Arg="t h e" />
+   <Attr Name="PreCat1ByEndomorphisms"
+         Arg="t h" />
+   <Attr Name="PreCat1ByNormalSubgroup"
+         Arg="G N" />
+   <Attr Name="Cat1ByPeifferQuotient"
+         Arg="P" />
+   <Attr Name="Reverse"
+         Arg="C0" />
+<Description>
+These are some of the constructors for pre-cat1-groups and cat1-groups.
+<P/>
+The following listing shows an example of a cat1-group of pc-groups:
+</Description>
+</ManSection>
+
+<Example>
+<![CDATA[
+gap> s3 := SymmetricGroup(IsPcGroup,3);;   
+gap> gens3 := GeneratorsOfGroup(s3);
+[ f1, f2 ]
+gap> pc4 := CyclicGroup(4);; 
+gap> SetName(s3,"s3");  SetName( pc4, "pc4" );
+gap> s3c4 := DirectProduct( s3, pc4 );; 
+gap> SetName( s3c4, "s3c4" );  
+gap> gens3c4 := GeneratorsOfGroup( s3c4 );
+[ f1, f2, f3, f4 ]
+gap> a := gens3[1];;  b := gens3[2];;  one := One(s3);;
+gap> t2 := GroupHomomorphismByImages( s3c4, s3, gens3c4, [a,b,one,one] );
+[ f1, f2, f3, f4 ] -> [ f1, f2, &lt;identity&gt; of ..., &lt;identity&gt; of ... ]
+gap> e2 := Embedding( s3c4, 1 );
+[ f1, f2 ] -> [ f1, f2 ]
+gap> C2 := Cat1( t2, t2, e2 );
+[s3c4=>s3]
+gap> Display( C2 );
+Cat1-group [s3c4=>s3] :-
+: Source group s3c4 has generators:
+  [ f1, f2, f3, f4 ]
+: Range group s3 has generators:
+  [ f1, f2 ]
+: tail homomorphism maps source generators to:
+  [ f1, f2, &lt;identity&gt; of ..., &lt;identity&gt; of ... ]
+: head homomorphism maps source generators to:
+  [ f1, f2, &lt;identity&gt; of ..., &lt;identity&gt; of ... ]
+: range embedding maps range generators to:
+  [ f1, f2 ]
+: kernel has generators:
+  [ f3, f4 ]
+: boundary homomorphism maps generators of kernel to:
+  [ &lt;identity&gt; of ..., &lt;identity&gt; of ... ]
+: kernel embedding maps generators of kernel to:
+  [ f3, f4 ]
+: associated crossed module is [ker(t2)->s3]
+gap> IsPcCat1( C2 );
+true
+gap> Size( C2 );
+[ 24, 6 ]
+]]>
+</Example>
+
+<ManSection>
+   <Attr Name="Cat1OfXMod"
+         Arg="X0" />
+   <Attr Name="XModOfCat1"
+         Arg="C0" />
+   <Attr Name="PreCat1OfPreXMod"
+         Arg="P0" />
+   <Attr Name="PreXModOfPreCat1"
+         Arg="P0" />
+<Description>
+The category of crossed modules is equivalent to the category of cat1-groups,
+and the functors between these two categories may be described as follows.
+
+Starting with the crossed module 
+<M>\mathcal{X} = (\partial : S \to R)</M> the group <M>G</M> is defined 
+as the semidirect product <M>G = R \ltimes S</M>
+using the action from  <M>\mathcal{X}</M>,
+with multiplication rule
+<Display>
+(r_1,s_1)(r_2,s_2) ~=~ (r_1r_2,{s_1}^{r_2}s_2).
+</Display>
+The structural morphisms are given by
+<Display>
+t(r,s) = r, \quad h(r,s) = r (\partial s), \quad er = (r,1).
+</Display>
+On the other hand, starting with a cat1-group 
+<M> \mathcal{C} = (e;t,h : G \to R)</M>,  we define 
+<M> S = \ker t</M>, the range <M>R</M> remains unchanged, and 
+<M> \partial = h\!\mid_S </M>.
+The action of  <M>R</M>  on  <M>S</M>  is conjugation in  <M>G</M>  via the embedding
+of  <M>R</M>  in  <M>G</M>.
+</Description>
+</ManSection>
+
+
+<Example>
+<![CDATA[
+gap> SetName( Kernel( t2 ), "ker(t2)" );;
+gap> X2 := XModOfCat1( C2 );
+[Group( [ f3, f4 ] )->s3]
+gap> Display( X2 );
+Crossed module [ker(t2)->s3] :-
+: Source group has generators:
+  [ f3, f4 ]
+: Range group s3 has generators:
+  [ f1, f2 ]
+: Boundary homomorphism maps source generators to:
+  [ &lt;identity&gt; of ..., &lt;identity&gt; of ... ]
+  The automorphism group is trivial
+: associated cat1-group is [s3c4=>s3]
+]]>
+</Example>
+</Section>
+
+
+<Section><Heading>Selection of a small cat1-group</Heading>
+<Index>selection of a small cat1-group</Index>
+
+The <C>Cat1</C> function may also be used to select a cat1-group 
+from a data file.
+All cat1-structures on groups of size up to <M>70</M> 
+(ordered according to the &GAP; 4 numbering of small groups) 
+are stored in a list in file <F>cat1data.g</F>.
+Global variables <C>CAT1&uscore;LIST&uscore;MAX&uscore;SIZE := 70</C> and
+<C>CAT1&uscore;LIST&uscore;CLASS&uscore;SIZES</C> are also stored. 
+The data is read into the list <C>CAT1&uscore;LIST</C> 
+only when this function is called. 
+
+<ManSection>
+   <Attr Name="Cat1Select"
+         Arg="size gpnum num" />
+<Description>
+The function <C>Cat1Select</C> may be used in three ways. 
+<C>Cat1Select( size )</C> returns the names of the groups with this size, 
+while <C>Cat1Select( size, gpnum )</C> prints a list of cat1-structures 
+for this chosen group. 
+<C>Cat1Select( size, gpnum, num )</C> 
+(or just <C>Cat1( size, gpnum, num )</C>) 
+returns the chosen cat1-group.
+<P/>
+The example below is the first case in which <M>t \neq h</M>
+and the associated conjugation crossed module
+is given by the normal subgroup <C>c3</C> of <C>s3</C>.
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> ## check the number of groups of size 18
+gap> L18 := Cat1Select( 18 ); 
+Usage:  Cat1Select( size, gpnum, num );
+[ "D18", "C18", "C3 x S3", "(C3 x C3) : C2", "C6 x C3" ]
+gap> ## check the number of cat1-structrues on the fourth of these
+gap> Cat1Select( 18, 4 );
+Usage:  Cat1Select( size, gpnum, num );
+There are 4 cat1-structures for the group (C3 x C3) : C2.
+[ [range gens], [tail genimages], [head genimages] ] :-
+(1)  [ [ f1 ], [ f1, <identity> of ..., <identity> of ... ], 
+  [ f1, <identity> of ..., <identity> of ... ] ]
+(2)  [ [ f1, f3 ], [ f1, <identity> of ..., f3 ], 
+  [ f1, <identity> of ..., f3 ] ]
+(3)  [ [ f1, f3 ], [ f1, <identity> of ..., f3 ], 
+  [ f1, f3^2, <identity> of ... ] ]
+(4)  [ [ f1, f2, f2*f3 ],  tail = head = identity mapping ]
+4
+gap> ## select the third of these cat1-structures 
+gap> C18 := Cat1( 18, 4, 3 );
+[(C3 x C3) : C2=>Group( [ f1, <identity> of ..., f3 ] )]
+gap> ## convert from a pc-cat1-group to a permutation cat1-group
+gap> iso18 := IsomorphismPermObject( C18 );;
+gap> PC18 := Image( iso18 );;
+gap> Display( PC18 );                     
+
+Cat1-group [..=>..] :- 
+: Source group has generators:
+  [ (2,3)(5,6), (4,5,6), (1,2,3) ]
+: Range group has generators:
+  [ (2,3), (), (1,2,3) ]
+: tail homomorphism maps source generators to:
+  [ (2,3), (), (1,2,3) ]
+: head homomorphism maps source generators to:
+  [ (2,3), (1,3,2), (1,2,3) ]
+: range embedding maps range generators to:
+  [ (2,3)(5,6), (), (1,2,3) ]
+: kernel has generators:
+  [ (4,5,6) ]
+: boundary homomorphism maps generators of kernel to:
+  [ (1,3,2) ]
+: kernel embedding maps generators of kernel to:
+  [ (4,5,6) ]
+
+gap> convert the result to the associated permutation crossed module 
+gap> X18 := XModByCat1( PC18 );; 
+gap> Display( X18 ); 
+
+Crossed module X([..=>..]) :- 
+: Source group has generators:
+  [ (4,5,6) ]
+: Range group has generators:
+  [ (2,3), (), (1,2,3) ]
+: Boundary homomorphism maps source generators to:
+  [ (1,3,2) ]
+: Action homomorphism maps range generators to automorphisms:
+  (2,3) --> { source gens --> [ (4,6,5) ] }
+  () --> { source gens --> [ (4,5,6) ] }
+  (1,2,3) --> { source gens --> [ (4,5,6) ] }
+  These 3 automorphisms generate the group of automorphisms.
+: associated cat1-group is [..=>..]
+
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="AllCat1sBasic" 
+         Arg="gp" /> 
+<Description>
+For a group <M>G</M> of size greater than <M>70</M> which is reasonably 
+straightforward this function may be used to construct a list of all 
+cat1-group structures on <M>G</M>. 
+The operation also attempts to write output to a file in the folder 
+<F>xmod/lib</F>. 
+(Other operations in the file <F>cat1data.gi</F> have been used to deal 
+with the more complicated groups of size up to <M>70</M>, 
+but these are not described here.) 
+<P/> 
+Van Luyen Le has a more efficient algorithm, extending the data 
+up to groups of size 171, which is expected to appear in a future 
+release of <Package>HAP</Package>. 
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> gp := SmallGroup( 102, 2 ); 
+<pc group of size 102 with 3 generators>
+gap> StructureDescription( gp ); 
+"C3 x D34"
+gap> all := AllCat1sBasic( gp );
+#I Edit last line of .../xmod/lib/nn.kk.out to end with ] ] ] ] ]
+[ [Group( [ f1, f2, f3 ] )=>Group( [ f1, <identity> of ..., <identity> of ... 
+     ] )], [Group( [ f1, f2, f3 ] )=>Group( [ f1, f2, <identity> of ... ] )], 
+  [Group( [ f1, f2, f3 ] )=>Group( [ f1, <identity> of ..., f3 ] )], 
+  [Group( [ f1, f2, f3 ] )=>Group( [ f1, f2, f3 ] )] ]
+gap> Display( all[3] ); 
+
+Cat1-group [..=>..] :- 
+: Source group has generators:
+  [ f1, f2, f3 ]
+: Range group has generators:
+  [ f1, <identity> of ..., f3 ]
+: tail homomorphism maps source generators to:
+  [ f1, <identity> of ..., f3 ]
+: head homomorphism maps source generators to:
+  [ f1, <identity> of ..., f3 ]
+: range embedding maps range generators to:
+  [ f1, <identity> of ..., f3 ]
+: kernel has generators:
+  [ f2 ]
+: boundary homomorphism maps generators of kernel to:
+  [ <identity> of ... ]
+: kernel embedding maps generators of kernel to:
+  [ f2 ]
+
+]]>
+</Example>
+
+</Section>
+
+</Chapter>

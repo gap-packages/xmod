@@ -1,0 +1,308 @@
+<!-- ------------------------------------------------------------------- -->
+<!--                                                                     -->
+<!--  gp2map.xml            XMod documentation            Chris Wensley  -->
+<!--                                                        & Murat Alp  -->
+<!--  version 2.31, 08/11/2014                                           --> 
+<!--                                                                     --> 
+<!--  Copyright (C) 2001-2014, Murat Alp and Chris Wensley,              --> 
+<!--  School of Computer Science, Bangor University, U.K.                --> 
+<!--                                                                     -->
+<!-- ------------------------------------------------------------------- -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Chapter Label="chap-gpmap2">
+<Heading>2d-mappings</Heading>
+<Index>2d-mapping</Index>
+
+<Section><Heading>Morphisms of 2d-groups</Heading>
+
+<Index>morphism of 2d-group</Index>
+<Index>crossed module morphism</Index>
+This chapter describes morphisms of (pre-)crossed modules
+and (pre-)cat1-groups.
+
+<ManSection>
+   <Attr Name="Source"
+         Arg="map" />
+   <Attr Name="Range"
+         Arg="map" />
+   <Attr Name="SourceHom"
+         Arg="map" />
+   <Attr Name="RangeHom"
+         Arg="map" />
+<Description>
+Morphisms of <E>2d-groups</E> are implemented as <E>2d-mappings</E>.
+These have a pair of 2d-groups as source and range, together with two
+group homomorphisms mapping between corresponding source and range groups.
+These functions return <C>fail</C> when invalid data is supplied.
+</Description>
+</ManSection>
+</Section>
+
+
+<Section><Heading>Morphisms of pre-crossed modules</Heading>
+
+<Index>morphism</Index>
+<ManSection>
+   <Prop Name="IsXModMorphism"
+         Arg="map" />
+   <Prop Name="IsPreXModMorphism"
+         Arg="map" />
+<Description>
+A morphism between two pre-crossed modules 
+<M>\mathcal{X}_{1} = (\partial_1 : S_1 \to R_1)</M> and  
+<M>\mathcal{X}_{2} = (\partial_2 : S_2 \to R_2)</M> 
+is a pair  <M>(\sigma, \rho)</M>, where 
+<M>\sigma : S_1 \to S_2</M> and <M>\rho : R_1 \to R_2</M> 
+commute with the two boundary maps
+and are morphisms for the two actions:
+<Display>
+\partial_2 \sigma = \rho \partial_1, \qquad
+\sigma(s^r) = (\sigma s)^{\rho r}.
+</Display>
+Thus  <M>\sigma</M> is the <C>SourceHom</C>  
+and  <M>\rho</M>  is the <C>RangeHom</C>.
+When <M>\mathcal{X}_{1} = \mathcal{X}_{2}</M>
+and <M>\sigma, \rho</M> are automorphisms then 
+<M>(\sigma, \rho)</M>  is an automorphism of <M>\mathcal{X}_1</M>. 
+The group of automorphisms is denoted 
+by <M>{\rm Aut}(\mathcal{X}_1 )</M>. 
+</Description>
+</ManSection>
+
+
+<ManSection>
+   <Prop Name="IsInjective"
+         Arg="map" />
+   <Prop Name="IsSurjective"
+         Arg="map" />
+   <Prop Name="IsSingleValued"
+         Arg="map" />
+   <Prop Name="IsTotal"
+         Arg="map" />
+   <Prop Name="IsBijective"
+         Arg="map" />
+   <Prop Name="IsEndo2dMapping"
+         Arg="map" />
+<Description>
+The usual properties of mappings are easily checked.
+It is usually sufficient to verify that both the <C>SourceHom</C> and the
+<C>RangeHom</C> have the required property.
+</Description>
+</ManSection>
+
+<ManSection>
+   <Func Name="XModMorphism"
+         Arg="args" />
+   <Oper Name="XModMorphismByHoms"
+         Arg="X1 X2 sigma rho" />
+   <Func Name="PreXModMorphism"
+         Arg="args" />
+   <Oper Name="PreXModMorphismByHoms"
+         Arg="P1 P2 sigma rho" />
+   <Oper Name="InclusionMorphism2dDomains"
+         Arg="X1 S1" />
+   <Oper Name="InnerAutomorphismXMod"
+         Arg="X1 r" />
+   <Attr Name="IdentityMapping"
+         Arg="X1" />
+   <Func Name="IsomorphismPermObject"
+         Arg="obj" />
+<Description>
+These are the constructors for morphisms of pre-crossed and crossed modules.
+<P/>
+In the following example we construct a simple automorphism of 
+the crossed module  <C>X1</C>  constructed in the previous chapter.
+</Description>
+</ManSection>
+
+<Index>display a 2d-mapping</Index>
+<Index>order of a 2d-automorphism</Index>
+<Example>
+<![CDATA[
+gap> sigma1 := GroupHomomorphismByImages( c5, c5, [ (5,6,7,8,9) ]
+        [ (5,9,8,7,6) ] );;
+gap> rho1 := IdentityMapping( Range( X1 ) );
+IdentityMapping( PAut(c5) )
+gap> mor1 := XModMorphism( X1, X1, sigma1, rho1 );
+[[c5->PAut(c5))] => [c5->PAut(c5))]] 
+gap> Display( mor1 );
+Morphism of crossed modules :-
+: Source = [c5->PAut(c5))] with generating sets:
+  [ (5,6,7,8,9) ]
+  [ (1,2,3,4) ]
+: Range = Source
+: Source Homomorphism maps source generators to:
+  [ (5,9,8,7,6) ]
+: Range Homomorphism maps range generators to:
+  [ (1,2,3,4) ]
+gap> IsAutomorphism2dDomain( mor1 );
+true 
+gap> Order( mor1 );
+2
+gap> RepresentationsOfObject( mor1 );
+[ "IsComponentObjectRep", "IsAttributeStoringRep", "Is2dMappingRep" ]
+gap> KnownPropertiesOfObject( mor1 );
+[ "CanEasilyCompareElements", "CanEasilySortElements", "IsTotal", 
+  "IsSingleValued", "IsInjective", "IsSurjective", "RespectsMultiplication", 
+  "IsPreXModMorphism", "IsXModMorphism", "IsEndomorphism2dDomain", 
+  "IsAutomorphism2dDomain" ]
+gap> KnownAttributesOfObject( mor1 );
+[ "Name", "Order", "Range", "Source", "SourceHom", "RangeHom" ]
+]]>
+</Example>
+</Section>
+
+
+<Section Label="sect-mor-pre-cat1">
+<Heading>Morphisms of pre-cat1-groups</Heading>
+
+A morphism of pre-cat1-groups from 
+<M>\mathcal{C}_1 = (e_1;t_1,h_1 : G_1 \to R_1)</M>
+to  <M>\mathcal{C}_2 = (e_2;t_2,h_2 : G_2 \to R_2)</M>  
+is a pair  <M>(\gamma, \rho)</M>  where
+<M>\gamma : G_1 \to G_2</M>  and  <M>\rho : R_1 \to R_2</M>  
+are homomorphisms satisfying
+<Display>
+h_2 \gamma = \rho h_1, \qquad 
+t_2 \gamma = \rho t_1, \qquad 
+e_2 \rho = \gamma e_1. 
+</Display>
+
+<ManSection>
+   <Prop Name="IsCat1Morphism"
+         Arg="map" />
+   <Prop Name="IsPreCat1Morphism"
+         Arg="map" />
+   <Func Name="Cat1Morphism"
+         Arg="args" />
+   <Oper Name="Cat1MorphismByHoms"
+         Arg="C1 C2 gamma rho" />
+   <Func Name="PreCat1Morphism"
+         Arg="args" />
+   <Oper Name="PreCat1MorphismByHoms"
+         Arg="P1 P2 gamma rho" />
+   <Oper Name="InclusionMorphism2dDomains"
+         Arg="C1 S1" />
+   <Oper Name="InnerAutomorphismCat1"
+         Arg="C1 r" />
+   <Attr Name="IdentityMapping"
+         Arg="C1" />
+   <Func Name="IsomorphismPermObject"
+         Arg="obj" />
+   <Func Name="SmallerDegreePerm2dDomain"
+         Arg="obj" />
+<Description>
+The global function <C>IsomorphismPermObject</C> 
+calls <C>IsomorphismPermPreCat1</C>, 
+which constructs a morphism whose <C>SourceHom</C> and <C>RangeHom</C> 
+are calculated using <C>IsomorphismPermGroup</C> on the source and range.  
+Similarly <C>SmallerDegreePermutationRepresentation</C> is used on the
+two groups to obtain <C>SmallerDegreePerm2dDomain</C>.
+Names are assigned automatically.
+</Description>
+</ManSection>
+
+<Example>
+<![CDATA[
+gap> iso2 := IsomorphismPermObject( C2 );; 
+gap> Display( iso2 ); 
+Morphism of cat1-groups :- 
+: Source = [s3c4=>s3] with generating sets:
+  [ f1, f2, f3, f4 ]
+  [ f1, f2 ]
+:  Range = P[s3c4=>s3] with generating sets:
+  [ (6,7), (5,6,7), (1,2,3,4), (1,3)(2,4) ]
+  [ (2,3), (1,2,3) ]
+: Source Homomorphism maps source generators to:
+  [ (6,7), (5,6,7), (1,2,3,4), (1,3)(2,4) ]
+: Range Homomorphism maps range generators to:
+  [ (2,3), (1,2,3) ]
+]]>
+</Example>
+</Section>
+
+
+
+<Section Label="sect-oper-mor">
+<Heading>Operations on morphisms</Heading>
+<Index>operations on morphisms</Index>
+
+<ManSection>
+   <Oper Name="CompositionMorphism"
+         Arg="map2 map1" />
+<Description>
+Composition of morphisms, written <C>(&lt;map1&gt; * &lt;map2&gt;)</C> 
+for maps acting of the right,
+calls the <C>CompositionMorphism</C> function for maps acting on the left,
+applied to the appropriate type of 2d-mapping.
+</Description>
+</ManSection>
+
+<Example>
+<![CDATA[
+gap> GeneratorsOfGroup( d16 );
+[ (11,12,13,14,15,16,17,18), (12,18)(13,17)(14,16) ]
+gap> d8 := Subgroup( d16, [ c^2, d ] );;
+gap> c4 := Subgroup( d8, [ c^2 ] );;
+gap> SetName( d8, "d8" );  SetName( c4, "c4" );
+gap> X16 := XModByNormalSubgroup( d16, d8 );
+[d8->d16]
+gap> X8 := SubXMod( X16, c4, d8 );
+[c4->d8]
+gap> IsSubXMod( X16, X8 );
+true
+gap> inc8 := InclusionMorphism2dDomains( X16, X8 );
+[[c4->d8] => [d8->d16]]
+gap> rho := GroupHomomorphismByImages( d16, d16, [c,d], [c,d^(c^2)] );;
+gap> sigma := GroupHomomorphismByImages( d8, d8, [c^2,d], [c^2,d^(c^2)] );;
+gap> mor := XModMorphismByHoms( X16, X16, sigma, rho );
+[[d8->d16] => [d8->d16]]
+gap> comp := inc8 * mor;
+[[c4->d8] => [d8->d16]]
+gap> comp = CompositionMorphism(mor,inc8);
+true
+gap> c2 := Group( (19,20) );;
+gap> i2 := Subgroup( c2, [()] );;
+gap> X9 := XModByNormalSubgroup( c2, i2 );;
+gap> sigma9 := GroupHomomorphismByImages( c4, i2, [c^2], [()] );;
+gap> rho9 := GroupHomomorphismByImages( d8, c2, [c^2,d], [(),(19,20)] );;
+gap> mor9 := XModMorphism( X8, X9, sigma9, rho9 );
+[[c4->d8] => [..]]
+gap> K9 := Kernel( mor9 );
+[Group( [ (11,13,15,17)(12,14,16,18) ] )->Group( [ (11,13,15,17)(12,14,16,18)
+ ] )]
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="Kernel"
+         Arg="map" />
+   <Attr Name="Kernel2dMapping"
+         Arg="map" />
+<Description>
+The kernel of a morphism of crossed modules is a normal subcrossed module 
+whose groups are the kernels of the source and target homomorphisms. 
+The inclusion of the kernel is a standard example of a crossed square, 
+but these have not yet been implemented.
+</Description>
+</ManSection>
+
+<Example>
+<![CDATA[
+gap> c2 := Group( (19,20) );;
+gap> i2 := Subgroup( c2, [()] );;
+gap> X9 := XModByNormalSubgroup( c2, i2 );;
+gap> sigma9 := GroupHomomorphismByImages( c4, i2, [c^2], [()] );;
+gap> rho9 := GroupHomomorphismByImages( d8, c2, [c^2,d], [(),(19,20)] );;
+gap> mor9 := XModMorphism( X8, X9, sigma9, rho9 );
+[[c4->d8] => [..]]
+gap> K9 := Kernel( mor9 );
+[Group( [ (11,13,15,17)(12,14,16,18) ] )->Group( [ (11,13,15,17)(12,14,16,18)
+ ] )]
+]]></Example>
+
+</Section>
+
+</Chapter>

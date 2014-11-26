@@ -1,0 +1,138 @@
+<!-- ------------------------------------------------------------------- -->
+<!--                                                                     -->
+<!--  manual.xml            XMod documentation            Chris Wensley  -->
+<!--                                                        & Murat Alp  -->
+<!--  version 2.31, 08/11/2014                                           --> 
+<!--                                                                     --> 
+<!--  Copyright (C) 2001-2014, Murat Alp and Chris Wensley,              --> 
+<!--  School of Computer Science, Bangor University, U.K.                --> 
+<!--                                                                     -->
+<!-- ------------------------------------------------------------------- -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Reading data chunk from the PackageInfo.g file --> 
+
+<!DOCTYPE Book SYSTEM "gapdoc.dtd"
+  [<!ENTITY xmod "<Package>XMod</Package>"> 
+   <#Include Label="PKGVERSIONDATA"> 
+  ]> 
+
+<!DOCTYPE Book SYSTEM "gapdoc.dtd"
+[<!ENTITY XMod "<Package>XMod</Package>">] >
+
+<!-- The documentation to the XMod package. -->
+
+<Book Name="XMod"> 
+
+<TitlePage>
+  <Title>&XMod;</Title>
+  <Subtitle>Crossed modules and cat1-groups in &GAP;</Subtitle>
+  <Version>Version &VERSION;</Version>
+  <Date>&RELEASEDATE;</Date> 
+  <Author> Murat Alp
+    <Email>muratalp@nigde.edu.tr</Email>
+    <Address>
+      Nigde &#xdc;niversitesi,<Br/> 
+      Fen Edebiyat Fak&#xfc;ltesi, Matematik B&#xf6;l&#xfc;m&#xfc;<Br/>
+      Nigde, Turkey.
+    </Address>
+  </Author>    
+  <Author> Chris Wensley
+    <Email>c.d.wensley@bangor.ac.uk</Email>
+    <Homepage>http://www.bangor.ac.uk/~mas023/</Homepage>
+    <Address>
+      School of Computer Science, Bangor University,<Br/>
+      Dean Street, Bangor, Gwynedd, LL57 1UT, U.K.
+    </Address>
+  </Author>
+
+<Abstract>
+The &xmod; package provides functions for computation with 
+<List> 
+<Item>
+finite crossed modules of groups and cat1-groups, 
+and morphisms of these structures;
+</Item>
+<Item>
+finite pre-crossed modules, pre-cat1-groups, and their Peiffer quotients;
+</Item>
+<Item>
+derivations of crossed modules and sections of cat1-groups; 
+</Item>
+<Item>
+the actor crossed square of a crossed module. 
+</Item>
+</List> 
+Initial, experimental versions of the following are also included 
+in this version: 
+<List>
+<Item>
+crossed squares and their morphisms; 
+</Item>
+<Item>
+crossed modules of groupoids. 
+</Item>
+</List>
+<P/>
+&xmod; was originally implemented in 1997 using the &GAP;3 language.
+when the first author was studying for a Ph.D. <Cite Key="A1"/> in Bangor.
+<P/>
+In April 2002 the first and third parts were converted to &GAP;4, 
+the pre-structures were added, and version 2.001 was released. 
+The final two parts, covering derivations, sections and actors, 
+were included in the January 2004 release 2.002 for &GAP; 4.4.
+<P/>
+Version 2.19 was released on 9th June 2012 for the first release of 
+&GAP; 4.5. 
+<P/>
+The current version is &VERSION;, released &LONGRELEASEDATE; for &GAP; 4.7. 
+<P/>
+Bug reports, suggestions and comments are, of course, welcome. 
+Please contact the second author at     
+<Email>c.d.wensley@bangor.ac.uk</Email>.
+</Abstract>
+
+<Copyright> 
+<Index>License</Index>
+&copyright; 1997-2013 Murat Alp and Chris Wensley.  
+
+&xmod; is free software; you can redistribute it 
+and/or modify it under the terms of the 
+<URL Text="GNU General Public License">http://www.fsf.org/licenses/gpl.html</URL> 
+as published by the Free Software Foundation; 
+either version 2 of the License, or (at your option) any later version.
+</Copyright>
+
+<Acknowledgements>
+This documentation was prepared with the <Package>GAPDoc</Package> 
+package of Frank L&#xfc;beck and Max Neunh&#xf6;ffer. 
+<P/>
+The first author wishes to acknowledge support from 
+Dumlupinar University and the Turkish government. 
+</Acknowledgements>
+
+</TitlePage>
+
+<TableOfContents/>
+
+<Body>
+
+<#Include SYSTEM "intro.xml">
+<#Include SYSTEM "gp2obj.xml">
+<#Include SYSTEM "gp2map.xml">
+<#Include SYSTEM "gp2up.xml">
+<#Include SYSTEM "gp2act.xml">
+<#Include SYSTEM "gp2ind.xml">
+<#Include SYSTEM "gp3objmap.xml">
+<#Include SYSTEM "gpd2obj.xml">
+<#Include SYSTEM "util.xml">
+<#Include SYSTEM "history.xml">
+
+</Body>
+
+<Bibliography Databases="manual"/>
+
+<TheIndex/>
+
+</Book>
