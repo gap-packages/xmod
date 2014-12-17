@@ -14,12 +14,12 @@ Problems:
               (construction worked OK with isomorphic perm groups). 
 
 #############################################################################
-2.26 -> 2.31 (08/11/2014) 
+2.26 -> 2.31 (17/12/2014) 
 
- - (08/11/14) moved package home page to pages.bangor.ac.uk/~mas023/chda/xmod/
+ - (17/12/14) moved package home page to pages.bangor.ac.uk/~mas023/chda/xmod/
  - (08/11/14) created BitBucket repository for xmod 
 
-########################################################
+############################################################################# 
 2.22 -> 2.26 (26/11/2013) 
 
  - (26/11/13) minor mod to WhiteheadTransMonoid to fix gp2up.tst output

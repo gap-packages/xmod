@@ -2,7 +2,7 @@
 ##
 #W  testall.g                 GAP4 package `XMod'               Chris Wensley
 ## 
-##  version 2.31, 08/11/2014 
+##  version 2.31, 17/12/2014 
 ##
 #Y  Copyright (C) 2001-2014, Murat Alp and Chris Wensley, 
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -16,8 +16,7 @@ TestXMod := function( pkgname )
     # Arrange chapters as required
     testfiles := 
         [ "gp2obj.tst", "gp2map.tst", "gp2up.tst", "gp2act.tst", "gp2ind.tst", 
-          "gp3objmap.tst", "util.tst" ];
-##  (05/11/13) omit: "gpd2obj.tst" 
+          "gp3objmap.tst", "gpd2obj.tst", "util.tst" ];
     testresult := true;
     for ff in testfiles do
         fn := Filename( pkgdir, ff );

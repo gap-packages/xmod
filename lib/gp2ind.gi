@@ -2,7 +2,7 @@
 ##
 #W  gp2ind.gi                      XMOD Package                  Chris Wensley
 ##
-##  version 2.31, 08/11/2014 
+##  version 2.31, 17/12/2014 
 ##
 #Y  Copyright (C) 2001-2014, Murat Alp and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -970,7 +970,7 @@ function( info )
     genQ := GeneratorsOfGroup( Q );
     genCsrc := Csrc!.generators;
     genCrng := Crng!.generators;
-Print( "genCrng = ", genCrng, "\n" );
+    Info( InfoXMod, 2, "genCrng = ", genCrng );
     ngG := Length( genCsrc );
     ngQ := Length( genQ );
     ngI := ngG+ngQ;

@@ -2,7 +2,7 @@
 ##
 #W  gpd2obj.gi                 GAP4 package `XMod'               Chris Wensley
 ##
-##  version 2.31, 26/11/2014 
+##  version 2.31, 17/12/2014 
 ##
 #Y  Copyright (C) 2001-2014, Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -67,7 +67,7 @@ InstallMethod( IsXMod, "generic method for pre-crossed modules",
 
     local  gensrc, genrng, x2, y2, w2, z2, hom, act;
 
-Print( "\I using IsXMod from gpd2obj.gi\n" ); 
+    Info( InfoXMod, 2, "using IsXMod from gpd2obj.gi" ); 
     hom := Boundary( XM );
     act := XModAction( XM );
     gensrc := Flat( GeneratorsOfGroupoid( Source( XM ) ) );

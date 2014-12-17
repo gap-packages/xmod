@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  history.xml           XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  version 2.31, 08/11/2014                                           --> 
+<!--  version 2.31, 17/12/2014                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2014, Murat Alp and Chris Wensley,              --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
@@ -181,7 +181,9 @@ of errors in the version of this list distributed with version 2.24 of this pack
 </Subsection>
 
 <Subsection><Heading>Version &VERSION;</Heading>
-This latest version was released on &LONGRELEASEDATE;. 
+This latest version was released on &LONGRELEASEDATE;, 
+following a change in the package website location. 
+A <C>Bitbucket</C> repository for the package was also created. 
 </Subsection>
 </Section> 
 

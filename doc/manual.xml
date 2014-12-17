@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  manual.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  version 2.31, 08/11/2014                                           --> 
+<!--  version 2.31, 17/12/2014                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2014, Murat Alp and Chris Wensley,              --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
@@ -95,7 +95,7 @@ Please contact the second author at
 
 <Copyright> 
 <Index>License</Index>
-&copyright; 1997-2013 Murat Alp and Chris Wensley.  
+&copyright; &COPYRIGHTYEARS; Murat Alp and Chris Wensley.  
 
 &xmod; is free software; you can redistribute it 
 and/or modify it under the terms of the 

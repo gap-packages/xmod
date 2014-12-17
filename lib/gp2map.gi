@@ -2,7 +2,7 @@
 ##
 #W  gp2map.gi                  GAP4 package `XMod'               Chris Wensley
 #W                                                                 & Murat Alp
-##  version 2.31, 08/11/2014 
+##  version 2.31, 17/12/2014 
 ##
 ##  This file installs methods for 2dMappings for crossed modules and 
 ##  cat1-groups. 
@@ -1467,7 +1467,7 @@ end );
 # InstallOtherMethod( ImagesSource, "for an xmod morphism",
 #     true, [ IsXModMorphism ], 0,
 # function( mor )
-##################### MORE TO DO ON THIS!
+##################### MORE TO DO ON THIS! Perhaps it should be ImagesSet here?
 
 ##############################################################################
 ##
