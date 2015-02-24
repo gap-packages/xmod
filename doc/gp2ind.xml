@@ -2,9 +2,9 @@
 <!--                                                                     -->
 <!--  gp2ind.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  version 2.31, 08/11/2014                                           --> 
+<!--  version 2.32, 13/02/2015                                           --> 
 <!--                                                                     --> 
-<!--  Copyright (C) 2001-2014, Murat Alp and Chris Wensley,              --> 
+<!--  Copyright (C) 2001-2015, Murat Alp and Chris Wensley,              --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -32,7 +32,7 @@
 A morphism of crossed modules
 <M>(\sigma, \rho) : {\cal X}_1 \to {\cal X}_2</M>
 factors uniquely through an induced crossed module
-<M>\rho_{\ast} {\cal X}_1 = (\delta ~:~ \rho_{\ast} S_1 \to R_2)</M>.
+<M>\rho_{\ast} {\cal X}_1 = (\delta  :  \rho_{\ast} S_1 \to R_2)</M>.
 Similarly, a morphism of cat1-groups factors through an induced cat1-group.
 Calculation of induced crossed modules of <M>{\cal X}</M> also
 provides an algebraic means of determining the homotopy <M>2</M>-type
@@ -44,10 +44,10 @@ building blocks for constructing pushouts in the categories
 <E>XMod</E> and <E>Cat1</E>.
 <P/>
 Data for the cases of algebraic interest is provided by a conjugation
-crossed module  <M>{\cal X} = (\partial ~:~ S \to R)</M>
+crossed module  <M>{\cal X} = (\partial  :  S \to R)</M>
 and a homomorphism  <M>\iota</M>  from  <M>R</M>  to a third group  <M>Q</M>.
 The output from the calculation is a crossed module
-<M>\iota_{\ast}{\cal X} = (\delta ~:~ \iota_{\ast}S \to Q)</M>
+<M>\iota_{\ast}{\cal X} = (\delta  :  \iota_{\ast}S \to Q)</M>
 together with a morphism of crossed modules
 <M>{\cal X} \to \iota_{\ast}{\cal X}</M>.
 When <M>\iota</M> is a surjection with kernel <M>K</M> then
@@ -103,7 +103,7 @@ gap> morX4 := MorphismOfInducedXMod( indX4 );
 </Example>
 
 For a second, injective example we take for <M>{\cal X}</M> 
-the conjugation crossed module <M>(\partial ~:~ c4 \to d8)</M> of Chapter 3, 
+the conjugation crossed module <M>(\partial  :  c4 \to d8)</M> of Chapter 3, 
 and for <M>\iota</M> the inclusion <C>incd8</C> of <C>d8</C> in <C>d16</C>.  
 The induced crossed module has <M>c4 \times c4</M> as source.
 (The groups in <C>indX8</C> vary from run to run due to random methods.) 

@@ -2,9 +2,9 @@
 ##
 #W  gp2act.gd                   GAP4 package `XMod'              Chris Wensley
 #W                                                                 & Murat Alp
-##  version 2.31, 08/11/2014 
+##  version 2.32, 29/01/2015 
 ##
-#Y  Copyright (C) 2001-2014, Murat Alp and Chris Wensley,  
+#Y  Copyright (C) 2001-2015, Murat Alp and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 ##  This file declares methods for actor crossed squares of crossed modules. 

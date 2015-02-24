@@ -2,9 +2,9 @@
 ##
 #W  gp2obj.gi                 GAP4 package `XMod'               Chris Wensley
 #W                                                                & Murat Alp
-##  version 2.31, 08/11/2014 
+##  version 2.32, 03/02/2015 
 ##
-#Y  Copyright (C) 2001-2014, Murat Alp and Chris Wensley,  
+#Y  Copyright (C) 2001-2015, Murat Alp and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 ##  This file contains generic methods for (pre-)crossed modules and
@@ -25,24 +25,24 @@ CAT1_LIST := [ ];
 
 #############################################################################
 ##
-#M  IsPerm2dDomain . . . . . . check whether source and range are perm groups
-#M  IsFp2dDomain . . . . . . . check whether source and range are perm groups
-#M  IsPc2dDomain . . . . . . . check whether source and range are perm groups
+#M  IsPerm2dGroup . . . . . . check whether source and range are perm groups
+#M  IsFp2dGroup . . . . . . . check whether source and range are perm groups
+#M  IsPc2dGroup . . . . . . . check whether source and range are perm groups
 ##
-InstallMethod( IsPerm2dDomain, "generic method for 2d-group objects",
-    true, [ Is2dDomain ], 0,
+InstallMethod( IsPerm2dGroup, "generic method for 2d-group objects",
+    true, [ Is2dGroup ], 0,
     function( obj )
     return ( IsPermGroup( Source( obj ) ) and IsPermGroup( Range( obj ) ) );
 end );
 
-InstallMethod( IsFp2dDomain, "generic method for 2d-group objects",
-    true, [ Is2dDomain ], 0,
+InstallMethod( IsFp2dGroup, "generic method for 2d-group objects",
+    true, [ Is2dGroup ], 0,
     function( obj )
     return ( IsFpGroup( Source( obj ) ) and IsFpGroup( Range( obj ) ) );
 end );
 
-InstallMethod( IsPc2dDomain, "generic method for 2d-group objects",
-    true, [ Is2dDomain ], 0,
+InstallMethod( IsPc2dGroup, "generic method for 2d-group objects",
+    true, [ Is2dGroup ], 0,
     function( obj )
     return ( IsPcGroup( Source( obj ) ) and IsPcGroup( Range( obj ) ) );
 end );
@@ -51,8 +51,8 @@ end );
 ##
 #M  IsPreXMod    check that the first crossed module axiom holds
 ##
-InstallMethod( IsPreXMod, "generic method for 2d-domain",
-    true, [ Is2dDomain ], 0,
+InstallMethod( IsPreXMod, "generic method for 2d-group",
+    true, [ Is2dGroup ], 0,
 function( P )
 
     local  Xsrc, Xrng, hom, a, aut, act, gensrc, ngsrc, genrng, ngrng, 
@@ -91,7 +91,7 @@ function( P )
         return false;
     fi;
     if ( aut = Group( IdentityMapping( Xsrc ) ) ) then
-       SetIsTrivialAction2dDomain( P, true );
+       SetIsTrivialAction2dGroup( P, true );
     else
         a := GeneratorsOfGroup( aut )[1];
         if not ( ( Source( a ) = Xsrc ) and ( Range( a ) = Xsrc ) 
@@ -150,7 +150,7 @@ end );
 ##
 #M  Size( <P> )  . . . . . . . . . . . . . . . . size for a pre-crossed module
 ##
-InstallOtherMethod( Size, "generic method for a 2d-object", [ Is2dDomain ], 0,
+InstallOtherMethod( Size, "generic method for a 2d-object", [ Is2dDomain ], 20,
 function ( obj )
     return [ Size( Source( obj ) ), Size( Range( obj ) ) ];
 end );
@@ -163,10 +163,10 @@ end );
 
 #############################################################################
 ##
-#M  IsTrivialAction2dDomain  . . . . . . . . .  check whetheraction is trivial
+#M  IsTrivialAction2dGroup  . . . . . . . . . check whether action is trivial
 ##
-InstallMethod( IsTrivialAction2dDomain,
-    "generic method for pre-crossed modules", true, [ Is2dDomain ], 0,
+InstallMethod( IsTrivialAction2dGroup,
+    "generic method for pre-crossed modules", true, [ IsPreXMod ], 0,
 function( PM )
 
     local  act, genrng, onesrc;
@@ -199,9 +199,9 @@ function( bdy, act )
         Error( "Range( act ) must be a group of automorphisms" );
     fi;
     if ( IsPermGroup( src ) and IsPermGroup( rng ) ) then
-        filter := filter and IsPerm2dDomain; 
+        filter := filter and IsPerm2dGroup; 
     elif ( IsPcGroup( src ) and IsPcGroup( rng ) ) then 
-        filter := filter and IsPc2dDomain; 
+        filter := filter and IsPc2dGroup; 
     fi;
     PM := rec();
     ObjectifyWithAttributes( PM, 
@@ -211,7 +211,8 @@ function( bdy, act )
       Boundary, bdy,
       AutoGroup, aut,
       XModAction, act,
-      Is2dDomain, true );
+      IsPreXModDomain, true, 
+      Is2dGroup, true );
     if not IsPreXMod( PM ) then
         Info( InfoXMod, 1, "Warning: not a pre-crossed module." );
     fi;
@@ -222,15 +223,15 @@ end );
 
 #############################################################################
 ##
-#M  ViewObj( <g2d> ) . . . . . . . . . . . . . . . . . . . . view a 2d-group 
+#M  ViewObj( <g2d> ) . . . . . . . . . . . . . . . . . . . . view a 2d-domain 
 ##
-InstallMethod( ViewObj, "method for a 2d-group", true, [ Is2dGroup ], 0,
+InstallMethod( ViewObj, "method for a 2d domain", true, [ Is2dDomain ], 0,
     function( g2d )
     if HasName( g2d ) then
         Print( Name( g2d ), "\n" );
-    elif ( HasIsPreXMod( g2d ) and IsPreXMod( g2d ) ) then 
+    elif ( HasIsPreXModDomain( g2d ) and IsPreXModDomain( g2d ) ) then 
         Print( "[", Source( g2d ), "->", Range( g2d ), "]" ); 
-    elif IsPreCat1( g2d ) then 
+    elif ( HasIsPreCat1Domain( g2d ) and IsPreCat1Domain( g2d ) ) then 
         Print( "[", Source( g2d ), "=>", Range( g2d ), "]" );
     else 
         TryNextMethod(); 
@@ -239,15 +240,15 @@ end );
 
 #############################################################################
 ##
-#M  PrintObj( <g2d> )  . . . . . . . . . . . . . . . . . . . view a 2d-group 
+#M  PrintObj( <g2d> )  . . . . . . . . . . . . . . . . . . . view a 2d-domain 
 ##
-InstallMethod( PrintObj, "method for a 2d-group", true, [ Is2dGroup ], 0,
+InstallMethod( PrintObj, "method for a 2d-domain", true, [ Is2dDomain ], 0,
     function( g2d )
     if HasName( g2d ) then
         Print( Name( g2d ), "\n" );
-    elif ( HasIsPreXMod( g2d ) and IsPreXMod( g2d ) ) then 
+    elif ( HasIsPreXModDomain( g2d ) and IsPreXModDomain( g2d ) ) then 
         Print( "[", Source( g2d ), "->", Range( g2d ), "]" ); 
-    elif IsPreCat1( g2d ) then 
+    elif ( HasIsPreCat1Domain( g2d ) and IsPreCat1Domain( g2d ) ) then 
         Print( "[", Source( g2d ), "=>", Range( g2d ), "]" );
     else 
         TryNextMethod(); 
@@ -258,7 +259,7 @@ end );
 ##
 #F  Display( <g2d> ) . . . . . . . . . . . . . . print details of a 2d-group 
 ##
-InstallMethod( Display, "method for a 2d-group", true, [ Is2dGroup ], 0,
+InstallMethod( Display, "method for a 2d-group", true, [ Is2dGroup ], 20,
 function( g2d )
 
     local  name, bdy, act, aut, len, i, ispar, src, rng, 
@@ -377,30 +378,32 @@ end );
 
 #############################################################################
 ##
-#M  Name . . . . . . . . . . . . . . . . . . . . . . . . . . . for a 2d-group
+#M  Name . . . . . . . . . . . . . . . . . . . . . . . . . .  for a 2d-domain
 ##
-InstallMethod( Name, "method for a 2d-group", true, [ Is2dGroup ], 0,
-function( g2d )
+InstallMethod( Name, "method for a 2d-domain", true, [ Is2dDomain ], 0,
+function( dom )
 
     local  nsrc, nrng, name, arrow;
 
-    if HasName( Source( g2d ) ) then
-        nsrc := Name( Source( g2d ) );
+    if HasName( Source( dom ) ) then
+        nsrc := Name( Source( dom ) );
     else
         nsrc := "..";
     fi;
-    if HasName( Range( g2d ) ) then
-        nrng := Name( Range( g2d ) );
+    if HasName( Range( dom ) ) then
+        nrng := Name( Range( dom ) );
     else
         nrng := "..";
     fi; 
-    if ( HasIsPreXMod( g2d ) and IsPreXMod( g2d ) ) then 
+    if ( HasIsPreXModDomain( dom ) and IsPreXModDomain( dom ) ) then 
         arrow := "->"; 
-    else 
+    elif ( HasIsPreCat1Domain( dom ) and IsPreCat1Domain( dom ) ) then 
         arrow := "=>"; 
+    else 
+        arrow := "->-"; 
     fi; 
     name := Concatenation( "[", nsrc, arrow, nrng, "]" );
-    SetName( g2d, name );
+    SetName( dom, name );
     return name;
 end );
 
@@ -456,8 +459,8 @@ end );
 ##
 #M  IsPreCat1    check that the first pre-cat1-group axiom holds
 ##
-InstallMethod( IsPreCat1, "generic method for 2d-domain", true, 
-    [ Is2dDomain ], 0,
+InstallMethod( IsPreCat1, "generic method for 2d-group", true, 
+    [ Is2dGroup ], 0,
 function( C1G )
 
     local  Csrc, Crng, x, e, t, h, idrng, he, te, kert, kerh, kerth;
@@ -519,8 +522,9 @@ InstallMethod( PreCat1Obj, "for tail, head, embedding", true,
       Range, Range( t ),
       TailMap, t,
       HeadMap, h,
-      RangeEmbedding, e,
-      Is2dDomain, true );
+      RangeEmbedding, e, 
+      IsPreCat1Domain, true, 
+      Is2dGroup, true );
     ok := IsPreCat1( C1G );
     # name := Name( C1G );
     if not ok then
@@ -593,7 +597,7 @@ function( XM )
     one := One( Xrng );
     Xact := XModAction( XM );
     Xbdy := Boundary( XM );
-    if IsTrivialAction2dDomain( XM ) then
+    if IsTrivialAction2dGroup( XM ) then
         Info( InfoXMod, 2, "Using direct product: ", Xrng, " x ", Xsrc );
         G := DirectProduct( Xrng, Xsrc );
         info := DirectProductInfo( G );
@@ -706,7 +710,7 @@ function( f )
     aut := Group( IdentityMapping( S ) );
     act := MappingToOne( R, aut );
     XM := XModByBoundaryAndAction( f, act );
-    SetIsTrivialAction2dDomain( XM, true );
+    SetIsTrivialAction2dGroup( XM, true );
     return XM;
 end );
 
@@ -744,9 +748,9 @@ function( G, N )
     SetIsGroupOfAutomorphisms( aut, true );
     act := GroupHomomorphismByImages( G, aut, genrng, autgen );
     XM := PreXModObj( bdy, act );
-    SetIsNormalSubgroup2dDomain( XM, true );
+    SetIsNormalSubgroup2dGroup( XM, true );
     if ( Length( autgen ) = 0 ) then
-        SetIsTrivialAction2dDomain( XM, true );
+        SetIsTrivialAction2dGroup( XM, true );
     fi;
     return XM;
 end );
@@ -789,10 +793,10 @@ function( hom )
         Error( "action is not a homomorphism" );
     fi;
     XM := PreXModObj( hom, act );
-    SetIsCentralExtension2dDomain( XM, true );
+    SetIsCentralExtension2dGroup( XM, true );
     idsrc := IdentityMapping( src );
     if ForAll( autgen, a -> ( a = idsrc ) ) then
-        SetIsTrivialAction2dDomain( XM, true );
+        SetIsTrivialAction2dGroup( XM, true );
     fi;
     ok := IsXMod( XM );
     return XM;
@@ -853,7 +857,7 @@ function( G, A )
     fi;  
     bdy := GroupHomomorphismByImages( G, P, genG, imbdy );
     XM := PreXModObj( bdy, p2a );
-    SetIsAutomorphismGroup2dDomain( XM, true );
+    SetIsAutomorphismGroup2dGroup( XM, true );
     if not IsXMod( XM ) then
         Error( "this boundary and action only defines a pre-crossed module" );
     fi;
@@ -1010,7 +1014,7 @@ end );
 #M  PeifferSubgroup . . . . . . . . 
 ##
 InstallMethod( PeifferSubgroup, "generic method for 2d-groups",
-               true, [ Is2dDomain ], 0,
+               true, [ Is2dGroup ], 0,
 function( obj )
     if IsPreXModObj( obj ) then
         if IsXMod( obj ) then
@@ -1143,7 +1147,7 @@ end );
 #M  IsSubPreXMod
 ##
 InstallMethod( IsSubPreXMod, "generic method for pre-crossed modules", true,
-    [ Is2dDomain, Is2dDomain ], 0,
+    [ Is2dGroup, Is2dGroup ], 0,
 function( PM, SM )
 
     local  ok, Ssrc, Srng, gensrc, genrng, s, r, r1, r2, im1, im2;
@@ -1200,7 +1204,7 @@ end );
 #M  IsSubXMod( <XM>, <SM> )
 ##
 InstallMethod( IsSubXMod, "generic method for crossed modules", true,
-    [ Is2dDomain, Is2dDomain ], 0,
+    [ Is2dGroup, Is2dGroup ], 0,
 function( XM, SM )
 
     if not ( IsXMod( XM ) and IsXMod( SM ) ) then
@@ -1214,7 +1218,7 @@ end );
 #M  IsSubPreCat1
 ##
 InstallMethod( IsSubPreCat1, "generic method for pre-cat1-groups", true,
-    [ Is2dDomain, Is2dDomain ], 0,
+    [ Is2dGroup, Is2dGroup ], 0,
 function( C0, S0 )
 
     local  ok, Ssrc, Srng, gensrc, genrng, tc, hc, ec, ts, hs, es, s, r;
@@ -1269,7 +1273,7 @@ end );
 #M  IsSubCat1( <C1>, <S1> )
 ##
 InstallMethod( IsSubCat1, "generic method for cat1-groups", true,
-    [ Is2dDomain, Is2dDomain ], 0,
+    [ Is2dGroup, Is2dGroup ], 0,
 function( C1, S1 )
 
     if not ( IsCat1( C1 ) and IsCat1( S1 ) ) then
@@ -1280,10 +1284,10 @@ end );
 
 ##############################################################################
 ##
-#M  Sub2dDomain               creates Sub2bObject from Ssrc<=Osrc & Srng<=Orng
+#M  Sub2dGroup               creates Sub2bObject from Ssrc<=Osrc & Srng<=Orng
 ##
-InstallMethod( Sub2dDomain, "generic method for 2d-objects", true,
-    [ Is2dDomain, IsGroup, IsGroup ], 0,
+InstallMethod( Sub2dGroup, "generic method for 2d-objects", true,
+    [ Is2dGroup, IsGroup, IsGroup ], 0,
 function( obj, src, rng )
     if IsXMod( obj ) then
         return SubXMod( obj, src, rng );
@@ -1876,7 +1880,7 @@ function( C1G )
     PM := PreXModObj( bdy, act ); 
     #?  aded 30/04/08 - but is it really needed ?? 
     if ( IsSubgroup( Crng, kert ) and IsNormal( Crng, kert ) ) then 
-        SetIsNormalSubgroup2dDomain( PM, true ); 
+        SetIsNormalSubgroup2dGroup( PM, true ); 
     fi; 
     if HasName( C1G ) then 
         SetName( PM, Concatenation( "X(", Name( C1G ), ")" ) ); 
@@ -2144,7 +2148,7 @@ end );
 #M  Embedding . . . . for direct products of (pre-)xmods and (pre-)cat1-groups
 ##
 InstallOtherMethod( Embedding, "generic method for (pre-)xmods & (pre-)cat1s",
-    true, [ Is2dDomain, IsPosInt ], 0,
+    true, [ Is2dGroup, IsPosInt ], 0,
 function( D, i )
     local  info, eS, eR, mor;
 
@@ -2175,7 +2179,7 @@ end );
 #M  Projection . . .  for direct products of (pre-)xmods and (pre-)cat1-groups
 ##
 InstallOtherMethod( Projection, "generic method for (pre-)xmods & (pre-)cat1s",
-    true, [ Is2dDomain and HasDirectProductInfo, IsPosInt ], 0,
+    true, [ Is2dGroup and HasDirectProductInfo, IsPosInt ], 0,
 function( D, i )
     local  info, pS, pR, mor;
 
@@ -2201,13 +2205,13 @@ end );
 
 ##############################################################################
 ##
-#M  TrivialSub2dDomain . . . . . . . . . . . . . . . of a 2d-object
+#M  TrivialSub2dGroup . . . . . . . . . . . . . . . of a 2d-object
 #M  TrivialSubPreXMod  . . . . . . . . . . . . . . . of a pre-crossed module
 #M  TrivialSubXMod     . . . . . . . . . . . . . . . of a crossed module
 #M  TrivialSubPreCat1  . . . . . . . . . . . . . . . of a pre-cat1-group
 #M  TrivialSubCat1     . . . . . . . . . . . . . . . of a cat1-group
 ##
-InstallMethod( TrivialSub2dDomain, "of a 2d-object", true, [ Is2dDomain ], 0,
+InstallMethod( TrivialSub2dGroup, "of a 2d-object", true, [ Is2dGroup ], 0,
 function( obj )
 
     local  idsrc, idrng;
@@ -2226,31 +2230,31 @@ end );
 InstallMethod( TrivialSubPreXMod, "of a pre-crossed module", true,
     [ IsPreXMod ], 0,
 function( obj )
-    return TrivialSub2dDomain( obj );
+    return TrivialSub2dGroup( obj );
 end );
 
 InstallMethod( TrivialSubXMod, "of a crossed module", true, [ IsXMod ], 0,
 function( obj )
-    return TrivialSub2dDomain( obj );
+    return TrivialSub2dGroup( obj );
 end );
 
 InstallMethod( TrivialSubPreCat1, "of a pre-cat1-group", true,
 [ IsPreCat1 ], 0,
 function( obj )
-    return TrivialSub2dDomain( obj );
+    return TrivialSub2dGroup( obj );
 end );
 
 InstallMethod( TrivialSubCat1, "of a cat1-group", true, [ IsCat1 ], 0,
 function( obj )
-    return TrivialSub2dDomain( obj );
+    return TrivialSub2dGroup( obj );
 end );
 
 ##############################################################################
 ##
-#M  IsNormalSubgroup2dDomain . . . . . . . . . . . . . . . . .  for 2d-objects
+#M  IsNormalSubgroup2dGroup . . . . . . . . . . . . . . . . .  for 2d-objects
 ##
-InstallMethod( IsNormalSubgroup2dDomain, "for crossed modules and cat1-groups",
-    [ Is2dDomain ], 0,
+InstallMethod( IsNormalSubgroup2dGroup, "for crossed modules and cat1-groups",
+    [ Is2dGroup ], 0,
 function( obj )
     local  src, rng, gensrc, genrng;
     src := Source( obj );
@@ -2260,7 +2264,7 @@ function( obj )
         return ( IsNormal(rng,src) and
                  ( gensrc = List( gensrc, s -> Image( Boundary(obj), s ) ) ) );
     elif IsCat1( obj ) then
-        return IsNormalSubgroup2dDomain( XModOfCat1( obj ) );
+        return IsNormalSubgroup2dGroup( XModOfCat1( obj ) );
     else
         Error( "method not yet implemented" );
     fi;

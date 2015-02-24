@@ -2,9 +2,9 @@
 ##
 #W  gpd2obj.tst                   XMOD test file                Chris Wensley
 ##
-##  version 2.31, 08/11/2014 
+##  version 2.32, 03/02/2015 
 ##
-#Y  Copyright (C) 2001-2014, Murat Alp and Chris Wensley, 
+#Y  Copyright (C) 2001-2015, Murat Alp and Chris Wensley, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 #############################################################################
@@ -26,7 +26,7 @@ homogeneous, discrete groupoid with:
   group: Group( [ (1,2)(3,4), (1,3)(2,4) ] ) >
 objects: [ -9, -8, -7 ]
 #I  now need to be able to test:   ok := IsXMod( PM );
-<magma>
+<semigroup>
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> SetInfoLevel( InfoGpd, saved_infolevel_gpd );; 
 

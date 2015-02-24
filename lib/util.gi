@@ -3,7 +3,7 @@
 #W  util.gi                    GAP4 package `XMod'               Chris Wensley
 #W                                                                 & Murat Alp
 ##
-##  version 2.31, 08/11/2014 
+##  version 2.32, 20/12/2014 
 ##
 #Y  Copyright (C) 2001-2014, Murat Alp and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -800,7 +800,7 @@ function( grp )
     iso := IsomorphismFpGroup( grp );
     fp := ImagesSource( iso );
     mgi := MappingGeneratorsImages( iso );
-    inv := GroupHomomorphismByImages( fp, grp, mgi[2], mgi[1] );
+    inv := GroupHomomorphismByImagesNC( fp, grp, mgi[2], mgi[1] );
     if IsPermGroup( grp ) then
         SetIsomorphismPermInfo( fp,
             rec( perm := grp, g2perm := inv, perm2g := iso ) );
@@ -821,7 +821,7 @@ function( grp )
     iso := IsomorphismPermGroup( grp );
     perm := ImagesSource( iso );
     mgi := MappingGeneratorsImages( iso );
-    inv := GroupHomomorphismByImages( perm, grp, mgi[2], mgi[1] );
+    inv := GroupHomomorphismByImagesNC( perm, grp, mgi[2], mgi[1] );
     if IsFpGroup( grp ) then
         SetIsomorphismFpInfo( perm,
             rec( fp := grp, g2fp := inv, fp2g := iso ) );

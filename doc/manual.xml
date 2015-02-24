@@ -2,9 +2,9 @@
 <!--                                                                     -->
 <!--  manual.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  version 2.31, 17/12/2014                                           --> 
+<!--  version 2.32, 12/01/2015                                           --> 
 <!--                                                                     --> 
-<!--  Copyright (C) 2001-2014, Murat Alp and Chris Wensley,              --> 
+<!--  Copyright (C) 2001-2015, Murat Alp and Chris Wensley,              --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -40,7 +40,7 @@
   </Author>    
   <Author> Chris Wensley
     <Email>c.d.wensley@bangor.ac.uk</Email>
-    <Homepage>http://www.bangor.ac.uk/~mas023/</Homepage>
+    <Homepage>http://pages.bangor.ac.uk/~mas023/</Homepage>
     <Address>
       School of Computer Science, Bangor University,<Br/>
       Dean Street, Bangor, Gwynedd, LL57 1UT, U.K.

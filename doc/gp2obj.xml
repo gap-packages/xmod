@@ -2,9 +2,9 @@
 <!--                                                                     -->
 <!--  gp2obj.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  version 2.31, 08/11/2014                                           --> 
+<!--  version 2.32, 13/02/2015                                           --> 
 <!--                                                                     --> 
-<!--  Copyright (C) 2001-2014, Murat Alp and Chris Wensley,              --> 
+<!--  Copyright (C) 2001-2015, Murat Alp and Chris Wensley,              --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -30,11 +30,11 @@ The group <M>R</M> acts on itself by conjugation, and on <M>S</M> by an action
 <M>\alpha : R \to {\rm Aut}(S)</M> such that,  
 for all <M>s,s_1,s_2 \in S</M>  and  <M>r \in R</M>,
 <Display>
-{\bf XMod\ 1} ~:~  \partial(s^r) 
+{\bf XMod\ 1}  :   \partial(s^r) 
    = r^{-1} (\partial s) r
    = (\partial s)^r,
 \qquad
-{\bf XMod\ 2} ~:~  s_1^{\partial s_2} 
+{\bf XMod\ 2}  :   s_1^{\partial s_2} 
    = s_2^{-1}s_1 s_2
    = {s_1}^{s_2}.
 </Display>
@@ -340,9 +340,9 @@ We find it convenient to define a cat1-group
 range group <M>R</M>,  and three homomorphisms:  two surjections  
 <M>t,h : G \to R</M>  and an embedding  <M>e : R \to G</M>  satisfying:
 <Display>
-{\bf Cat\ 1} ~:~ te = he = {\rm id}_R,
+{\bf Cat\ 1}  :  te = he = {\rm id}_R,
 \qquad
-{\bf Cat\ 2} ~:~ [\ker t, \ker h] = \{ 1_G \}.
+{\bf Cat\ 2}  :  [\ker t, \ker h] = \{ 1_G \}.
 </Display>
 It follows that  
 <M>teh = h</M>, <M>het = t</M>, <M>tet = t</M>, <M>heh = h</M>.

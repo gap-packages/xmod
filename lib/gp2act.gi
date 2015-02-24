@@ -5,9 +5,9 @@
 ##
 ##  This file implements methods for actor crossed squares of crossed modules. 
 ##
-##  version 2.31, 08/11/2014 
+##  version 2.32, 29/01/2015 
 ##
-#Y  Copyright (C) 2001-2014, Murat Alp and Chris Wensley,  
+#Y  Copyright (C) 2001-2015, Murat Alp and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 #############################################################################
@@ -120,7 +120,7 @@ end );
 #######  special version for XModByNormalSubgroup, 23/06/06  #######
 
 InstallMethod( AutomorphismPermGroup, "automorphism perm group of xmod", 
-    true, [ IsXMod and IsNormalSubgroup2dDomain ], 0, 
+    true, [ IsXMod and IsNormalSubgroup2dGroup ], 0, 
 function( XM )
 
     local  S, genS, R, genR, autR, autS, AR, genAR, ngAR, AS, genAS, 

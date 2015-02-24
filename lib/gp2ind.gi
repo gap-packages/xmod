@@ -2,9 +2,9 @@
 ##
 #W  gp2ind.gi                      XMOD Package                  Chris Wensley
 ##
-##  version 2.31, 17/12/2014 
+##  version 2.32, 13/02/2015 
 ##
-#Y  Copyright (C) 2001-2014, Murat Alp and Chris Wensley,  
+#Y  Copyright (C) 2001-2015, Murat Alp and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file implements functions for induced crossed modules. 
@@ -122,6 +122,7 @@ end );
 ##
 InstallMethod( InclusionInducedXModByCopower, 
     "for a group, a homomorphism, and a transversal", true, 
+
     [ IsXMod, IsGroupHomomorphism, IsList ], 0,
 function( X0, iota, trans )
 
@@ -218,6 +219,9 @@ function( X0, iota, trans )
     fN := FreeGroup( ngN, "fN" );
     genfN := GeneratorsOfGroup( fN );
     subfN := genfN{[1..ngFM]};
+    Info( InfoXMod, 2, "genFM = ", genFM ); 
+    Info( InfoXMod, 2, "subfN = ", subfN ); 
+    Info( InfoXMod, 2, "genFN = ", genFN ); 
     defN := List( genFN, g -> MappedWord( g, genFM, subfN ) );
     relFN := List( relFM, r -> MappedWord( r, genfreeM, subfN ) );
     for i in [ (ngFM+1)..ngN ] do
@@ -495,8 +499,8 @@ function( X0, iota, trans )
     Print( "#I induced group has Size: ", oFI2, "\n"); 
     #? (19/07/11) : example InducedXMod( s4, s3b, s3b ) fails 
     #? because of a pc isomorphism instead of a perm isomorphism,
-    #? so refert, for now, to the perm case only: 
-    if ( oFI2 > 1 ) then 
+    #? so revert, for now, to the perm case only: 
+    if ( oFI2 >= 1 ) then 
         #?  info := IsomorphismPermOrPcInfo( FI2 ); 
         info := IsomorphismPermInfo( FI2 ); 
         #?  ispc := ( info!.type = "pc" ); 
@@ -510,11 +514,9 @@ function( X0, iota, trans )
             f2p := info!.g2perm; 
         fi; 
         Info( InfoXMod, 2, "IsomorphismPermOrPcInfo: ", info ); 
-    fi; 
-
-    if ( oFI2 = 1 ) then 
-        Print( "\n#I  unexpected order(I) = 1, so returning fail!\n" ); 
-        return fail; 
+    else 
+        Print( "\n#I  unexpected order(I) = 1\n" ); 
+        I := Group( () );
     fi; 
 
     # now identify I (if possible)
@@ -638,7 +640,7 @@ function( X0, iota )
 
     R := Range( X0 );
     S := Source( X0 );
-    ispc := IsPc2dDomain( X0 ); 
+    ispc := IsPc2dGroup( X0 ); 
     genS := GeneratorsOfGroup( S );
     bdy := Boundary( X0 );
     act := XModAction( X0 );
@@ -769,7 +771,7 @@ function( Q )
         nnorm := Length( norm );
         ##  ??  (16/01/04)
         ##  norm[ nnorm ] := P;
-        for n in [2..nnorm] do
+        for n in [1..nnorm] do
         ## for n in [1..nnorm-1] do
             if keep[n] then
                 M := norm[n]; 
@@ -784,7 +786,7 @@ function( Q )
                 SQsd := StructureDescription( SQ ); 
                 if ( InfoLevel( InfoXMod ) > 0 ) then
                     Display( XQ );
-                    Print( "SQ has structured description: ", SQsd, "\n\n" );
+                    Print( "SQ has structure description: ", SQsd, "\n\n" );
                 fi;
                 Print( line, "\n\n" ); 
                 Ksd := StructureDescription( Kernel( Boundary( XQ ) ) ); 
@@ -792,7 +794,9 @@ function( Q )
             fi;
         od;
     od;
-    Info( InfoXMod, 1, "No. induced crossed modules calculated = ", num );
+    Info( InfoXMod, 1, 
+              "Number of induced crossed modules calculated = ", num );
+    PrintListOneItemPerLine( descrip );
     return descrip;
 end );
 

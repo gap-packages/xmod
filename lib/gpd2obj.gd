@@ -2,9 +2,9 @@
 ##
 #W  gpd2obj.gd                 GAP4 package `XMod'               Chris Wensley
 ##
-##  version 2.31, 08/11/2014 
+##  version 2.32, 13/02/2015 
 ##
-#Y  Copyright (C) 2001-2014, Murat Alp and Chris Wensley,  
+#Y  Copyright (C) 2001-2015, Murat Alp and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 #############################################################################
@@ -17,20 +17,19 @@ DeclareCategory( "Is2dDomainWithObjects", Is2dDomain and IsDomainWithObjects );
 ## 
 #C  Is2dMagmaWithObjects( <m2d> ) . . . . category of 2d magmas with objects
 #C  Is2dMagmaWithObjectsAndOnes( <m2d> ) . . . . . . . . . . . and with ones
-#C  Is2dMagmaWithObjectsAndInversesIfNonzero( <m2d> ) . .  and some inverses
+#C  Is2dMagmaWithObjectsAndInverses( <m2d> ) . .  and some inverses
 #C  Is2dGroupWithObjects( <m2d> )  . . . . . . . . . . . .  and all inverses
 ##
 DeclareCategory( "Is2dMagmaWithObjects", Is2dDomainWithObjects and 
-    IsMagmaWithObjects and IsMultiplicativeElementWithTupleCollection ); 
+    IsMagmaWithObjects ); 
 DeclareCategoryCollections( "Is2dMagmaWithObjects" ); 
-DeclareCategory( "Is2dMagmaWithObjectsAndOnes", Is2dMagmaWithObjects and 
-    IsMultiplicativeElementWithTupleAndOnesCollection ); 
-DeclareCategory( "Is2dMagmaWithObjectsAndInversesIfNonzero", 
-    Is2dMagmaWithObjectsAndOnes and 
-    IsMultiplicativeElementWithTupleAndInversesIfNonzeroCollection ); 
-DeclareCategory( "Is2dGroupWithObjects", 
-    Is2dMagmaWithObjectsAndInversesIfNonzero and 
-    IsGroupElementWithTupleCollection ); 
+DeclareCategory( "Is2dMagmaWithObjectsAndOne", Is2dMagmaWithObjects and 
+    CategoryCollections( IsMultiplicativeElementWithObjectsAndOnes ) ); 
+DeclareCategory( "Is2dMagmaWithObjectsAndInverses", 
+    Is2dMagmaWithObjectsAndOne and CategoryCollections( 
+        IsMultiplicativeElementWithObjectsAndInverse ) ); 
+DeclareCategory( "Is2dGroupWithObjects", Is2dMagmaWithObjectsAndInverses and 
+    CategoryCollections( IsAssociativeElement ) ); 
 
 ############################################################################# 
 ##  

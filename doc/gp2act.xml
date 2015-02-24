@@ -2,9 +2,9 @@
 <!--                                                                     -->
 <!--  gp2act.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  version 2.31, 08/11/2014                                           --> 
+<!--  version 2.32, 13/02/2015                                           --> 
 <!--                                                                     --> 
-<!--  Copyright (C) 2001-2014, Murat Alp and Chris Wensley,              --> 
+<!--  Copyright (C) 2001-2015, Murat Alp and Chris Wensley,              --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -18,7 +18,7 @@
 <Index>actor</Index>
 
 The <E>actor</E> of <M>{\cal X}</M>  is a crossed module
-<M>(\Delta ~:~ {\cal W}({\cal X}) \to {\rm Aut}({\cal X}))</M>
+<M>(\Delta  :  {\cal W}({\cal X}) \to {\rm Aut}({\cal X}))</M>
 which was shown by Lue and Norrie, in <Cite Key="N2" /> 
 and <Cite Key="N1" /> to give the automorphism object 
 of a crossed module <M>{\cal X}</M>.

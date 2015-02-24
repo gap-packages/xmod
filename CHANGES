@@ -2,8 +2,6 @@
 
 Problems: 
 
- - (05/11/13) Removed gpd2obj.tst from testall.g because of recursion 
-              deathtrap error (this also occurs in example gpd2obj.g).
  - (09/01/13) GroupGeneralMappingByImages in ghom.gi has changed, 
               so DiscreteNormalPreXModWithObjects no longer works. 
               Also need Print/Display methods for these constructions. 
@@ -12,6 +10,17 @@ Problems:
  - (15/02/12) failed to construct induced xmod from X = (SL25 -> SL25.C2) 
               and the inclusion SL25.C2 -> GL25 using the matrix groups 
               (construction worked OK with isomorphic perm groups). 
+
+#############################################################################
+2.31 -> 2.32 (03/02/2015) 
+
+ - (03/02/15) added properties IsPreXModDomain and IsPreCat1Domain 
+              which are meant to apply to both group and algebra cases 
+ - (02/02/15) took out all MultiplicativeElementWithTuple's etc. 
+              and Multiplicative2dElement's etc. 
+ - (29/01/15) made copies of dom2d3d* and gp2obj* before embarking on a 
+              major rewrite of the category structure: specifically, 
+              changing lost of '2dDomain's into '2dGroup's
 
 #############################################################################
 2.26 -> 2.31 (17/12/2014) 

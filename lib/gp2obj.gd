@@ -3,9 +3,9 @@
 #W  gp2obj.gd                  GAP4 package `XMod'               Chris Wensley
 #W                                                                 & Murat Alp
 ##
-##  version 2.31, 08/11/2014 
+##  version 2.32, 03/02/2015 
 ##
-#Y  Copyright (C) 2001-2014, Murat Alp and Chris Wensley,  
+#Y  Copyright (C) 2001-2015, Murat Alp and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 #############################################################################
@@ -16,26 +16,36 @@ DeclareInfoClass( "InfoXMod" );
 
 #############################################################################
 ##
+#P  IsPreXModDomain( <obj> )
+#P  IsPreCat1Domain( <obj> )
+## 
+##  these apply to groups, algebras, whatever ... 
+##
+DeclareProperty( "IsPreXModDomain", Is2dDomain );
+DeclareProperty( "IsPreCat1Domain", Is2dDomain );
+
+#############################################################################
+##
 #R  IsPreXModObj( <obj> )
 ##    A pre-crossed module is a group homomorphism which preserves an action
 #R  IsPreCat1Obj( <obj> )
 ##    A pre-cat1-group is a pair of group endomorphisms with a common image
 ##  
-DeclareRepresentation( "IsPreXModObj", Is2dDomain and IsAttributeStoringRep,
+DeclareRepresentation( "IsPreXModObj", Is2dGroup and IsAttributeStoringRep,
       [ "boundary", "action" ] );
-DeclareRepresentation( "IsPreCat1Obj", Is2dDomain and IsAttributeStoringRep,
+DeclareRepresentation( "IsPreCat1Obj", Is2dGroup and IsAttributeStoringRep,
     [ "tailMap", "headMap", "rangeEmbedding" ] );
 
 #############################################################################
 ##
-#P  IsPerm2dDomain( <obj> )
-#P  IsFp2dDomain( <obj> )
-#P  IsPc2dDomain( <obj> )
+#P  IsPerm2dGroup( <obj> )
+#P  IsFp2dGroup( <obj> )
+#P  IsPc2dGroup( <obj> )
 ##
-#?  DeclareSynonym( "IsPerm2dDomain", IsPermObject and Is2dDomain );  etc ??
-DeclareProperty( "IsPerm2dDomain", Is2dDomain );
-DeclareProperty( "IsFp2dDomain", Is2dDomain );
-DeclareProperty( "IsPc2dDomain", Is2dDomain );
+#?  DeclareSynonym( "IsPerm2dGroup", IsPermObject and Is2dGroup );  etc ??
+DeclareProperty( "IsPerm2dGroup", Is2dGroup );
+DeclareProperty( "IsFp2dGroup", Is2dGroup );
+DeclareProperty( "IsPc2dGroup", Is2dGroup );
 
 #############################################################################
 ##
@@ -44,10 +54,10 @@ DeclareProperty( "IsPc2dDomain", Is2dDomain );
 #P  IsFpPreXMod( <PM> )
 #P  IsPcPreXMod( <PM> )
 ##
-DeclareProperty( "IsPreXMod", Is2dDomain );
-DeclareSynonym( "IsPermPreXMod", IsPreXMod and IsPerm2dDomain );
-DeclareSynonym( "IsFpPreXMod", IsPreXMod and IsFp2dDomain );
-DeclareSynonym( "IsPcPreXMod", IsPreXMod and IsPc2dDomain );
+DeclareProperty( "IsPreXMod", Is2dGroup );
+DeclareSynonym( "IsPermPreXMod", IsPreXMod and IsPerm2dGroup );
+DeclareSynonym( "IsFpPreXMod", IsPreXMod and IsFp2dGroup );
+DeclareSynonym( "IsPcPreXMod", IsPreXMod and IsPc2dGroup );
 
 #############################################################################
 ##
@@ -57,9 +67,9 @@ DeclareSynonym( "IsPcPreXMod", IsPreXMod and IsPc2dDomain );
 #P  IsPcXMod( <XM> )
 ##
 DeclareProperty( "IsXMod", IsPreXMod ); 
-DeclareSynonym( "IsPermXMod", IsXMod and IsPerm2dDomain );
-DeclareSynonym( "IsFpXMod", IsXMod and IsFp2dDomain );
-DeclareSynonym( "IsPcXMod", IsXMod and IsPc2dDomain );
+DeclareSynonym( "IsPermXMod", IsXMod and IsPerm2dGroup );
+DeclareSynonym( "IsFpXMod", IsXMod and IsFp2dGroup );
+DeclareSynonym( "IsPcXMod", IsXMod and IsPc2dGroup );
 
 #############################################################################
 ##
@@ -68,10 +78,10 @@ DeclareSynonym( "IsPcXMod", IsXMod and IsPc2dDomain );
 #P  IsFpPreCat1( <PCG> )
 #P  IsPcPreCat1( <PCG> )
 ##
-DeclareProperty( "IsPreCat1", Is2dDomain );
-DeclareSynonym( "IsPermPreCat1", IsPreCat1 and IsPerm2dDomain );
-DeclareSynonym( "IsFpPreCat1", IsPreCat1 and IsFp2dDomain );
-DeclareSynonym( "IsPcPreCat1", IsPreCat1 and IsPc2dDomain );
+DeclareProperty( "IsPreCat1", Is2dGroup );
+DeclareSynonym( "IsPermPreCat1", IsPreCat1 and IsPerm2dGroup );
+DeclareSynonym( "IsFpPreCat1", IsPreCat1 and IsFp2dGroup );
+DeclareSynonym( "IsPcPreCat1", IsPreCat1 and IsPc2dGroup );
 
 #############################################################################
 ##
@@ -81,9 +91,9 @@ DeclareSynonym( "IsPcPreCat1", IsPreCat1 and IsPc2dDomain );
 #P  IsPcCat1( <CG> )
 ##
 DeclareProperty( "IsCat1", IsPreCat1 );
-DeclareSynonym( "IsPermCat1", IsCat1 and IsPerm2dDomain );
-DeclareSynonym( "IsFpCat1", IsCat1 and IsFp2dDomain );
-DeclareSynonym( "IsPcCat1", IsCat1 and IsPc2dDomain );
+DeclareSynonym( "IsPermCat1", IsCat1 and IsPerm2dGroup );
+DeclareSynonym( "IsFpCat1", IsCat1 and IsFp2dGroup );
+DeclareSynonym( "IsPcCat1", IsCat1 and IsPc2dGroup );
 
 #############################################################################
 ##
@@ -104,7 +114,7 @@ DeclareAttribute( "XModAction", IsPreXMod );
 #O  PeifferSubgroupPreXMod( <PM> )
 #O  PeifferSubgroupPreCat1( <P1C> )
 ##
-DeclareAttribute( "PeifferSubgroup", Is2dDomain );
+DeclareAttribute( "PeifferSubgroup", Is2dGroup );
 DeclareOperation( "PeifferSubgroupPreXMod", [ IsPreXMod ] );
 DeclareOperation( "PeifferSubgroupPreCat1", [ IsPreCat1 ] );
 
@@ -145,18 +155,18 @@ DeclareAttribute( "XModByPeifferQuotient", IsPreXMod );
 
 #############################################################################
 ##
-#P  IsTrivialAction2dDomain( <obj> )
-#P  IsNormalSubgroup2dDomain( <obj> )
-#P  IsCentralExtension2dDomain( <obj> )
-#P  IsAutomorphismGroup2dDomain( <XM> )
-#P  IsAbelianModule2dDomain( <obj> )
+#P  IsTrivialAction2dGroup( <obj> )
+#P  IsNormalSubgroup2dGroup( <obj> )
+#P  IsCentralExtension2dGroup( <obj> )
+#P  IsAutomorphismGroup2dGroup( <XM> )
+#P  IsAbelianModule2dGroup( <obj> )
 #P  IsFreeXMod( <XM> )
 ##
-DeclareProperty( "IsTrivialAction2dDomain", Is2dDomain );
-DeclareProperty( "IsNormalSubgroup2dDomain", Is2dDomain );
-DeclareProperty( "IsCentralExtension2dDomain", Is2dDomain );
-DeclareProperty( "IsAutomorphismGroup2dDomain", Is2dDomain );
-DeclareProperty( "IsAbelianModule2dDomain", Is2dDomain );
+DeclareProperty( "IsTrivialAction2dGroup", Is2dGroup );
+DeclareProperty( "IsNormalSubgroup2dGroup", Is2dGroup );
+DeclareProperty( "IsCentralExtension2dGroup", Is2dGroup );
+DeclareProperty( "IsAutomorphismGroup2dGroup", Is2dGroup );
+DeclareProperty( "IsAbelianModule2dGroup", Is2dGroup );
 DeclareProperty( "IsFreeXMod", IsPreXModObj );
 
 #############################################################################
@@ -166,19 +176,19 @@ DeclareProperty( "IsFreeXMod", IsPreXModObj );
 #O  IsSubPreCat1( <obj> )
 #O  IsSubCat1( <obj> )
 ##
-DeclareOperation( "IsSubPreXMod", [ Is2dDomain, Is2dDomain ] );
-DeclareOperation( "IsSubXMod", [ Is2dDomain, Is2dDomain ] );
-DeclareOperation( "IsSubPreCat1", [ Is2dDomain, Is2dDomain ] );
-DeclareOperation( "IsSubCat1", [ Is2dDomain, Is2dDomain ] );
+DeclareOperation( "IsSubPreXMod", [ Is2dGroup, Is2dGroup ] );
+DeclareOperation( "IsSubXMod", [ Is2dGroup, Is2dGroup ] );
+DeclareOperation( "IsSubPreCat1", [ Is2dGroup, Is2dGroup ] );
+DeclareOperation( "IsSubCat1", [ Is2dGroup, Is2dGroup ] );
 
 ##############################################################################
 ##
-#3#O  Sub2dDomain( <obj>, <src>, <rng> )
+#O  Sub2dGroup( <obj>, <src>, <rng> )
 #O  SubPreXMod( <PM, Ssrc, Srng> )
 #O  SubXMod( <PM, Ssrc, Srng> )
 #O  SubPreCat1( <C>, <H> )                           
 ##
-#3  DeclareOperation( "Sub2dDomain", [ Is2dDomain, IsGroup, IsGroup ] );
+DeclareOperation( "Sub2dGroup", [ Is2dGroup, IsGroup, IsGroup ] );
 DeclareOperation( "SubPreXMod", [ IsPreXMod, IsGroup, IsGroup ] );
 DeclareOperation( "SubXMod", [ IsXMod, IsGroup, IsGroup ] );
 DeclareOperation( "SubPreCat1", [ IsPreCat1, IsGroup, IsGroup ] );
@@ -186,14 +196,14 @@ DeclareOperation( "SubCat1", [ IsCat1, IsGroup, IsGroup ] );
 
 #############################################################################
 ##
-#O  TrivialSub2dDomain( <obj> )
+#O  TrivialSub2dGroup( <obj> )
 #A  TrivialSubPreXMod( <obj> )
 #A  TrivialSubXMod( <obj> )
 #A  TrivialSubPreCat1( <obj> )
 #A  TrivialSubCat1( <obj> )
 #P  IsIdentityCat1( <C1G> )
 ##
-DeclareOperation( "TrivialSub2dDomain", [ Is2dDomain ] );
+DeclareOperation( "TrivialSub2dGroup", [ Is2dGroup ] );
 DeclareAttribute( "TrivialSubPreXMod", IsPreXMod );
 DeclareAttribute( "TrivialSubXMod", IsXMod );
 DeclareAttribute( "TrivialSubPreCat1", IsPreCat1 );

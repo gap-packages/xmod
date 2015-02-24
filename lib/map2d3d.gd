@@ -2,9 +2,9 @@
 ##
 #W  map2d3d.gd                 GAP4 package `XMod'               Chris Wensley
 ##
-##  version 2.31, 08/11/2014 
+##  version 2.32, 02/02/2015 
 ##
-#Y  Copyright (C) 2001-2014, Murat Alp and Chris Wensley, 
+#Y  Copyright (C) 2001-2015, Murat Alp and Chris Wensley, 
 #Y  School of Computer Science, Bangor University, U.K. 
 
 ############################################################################## 
@@ -14,7 +14,7 @@
 #C  IsSPGeneral2dMapping( <map> )
 ## 
 #T  do we need the SP and nonSP division ?
-##  Category and groupoid mapping declarations 
+##  Crossed module and cat1-group mapping declarations 
 
 DeclareCategory( "IsGeneral2dMapping", IsGeneralMapping ); 
 DeclareCategory( "IsSPGeneral2dMapping", 

@@ -2,9 +2,9 @@
 ##
 #W  gp2map.gd                   GAP4 package `XMod'              Chris Wensley
 #W                                                                 & Murat Alp
-##  version 2.31, 08/11/2014 
+##  version 2.32, 29/01/2015 
 ##
-#Y  Copyright (C) 2001-2014, Murat Alp and Chris Wensley,  
+#Y  Copyright (C) 2001-2015, Murat Alp and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 ##  This file contains implementations of 2dMappings for crossed modules and 
@@ -134,14 +134,14 @@ DeclareAttribute( "IsomorphismXModByNormalSubgroup", IsXMod );
 ##
 #O  PreXModIsomorphismByIsomorphisms( <pre-xmod>, <sigma>, <rho> )
 #O  PreCat1IsomorphismByIsomorphisms( <pre-cat1>, <sigma>, <rho> )
-#F  SmallerDegreePerm2dDomain( <args> )
+#F  SmallerDegreePerm2dGroup( <args> )
 #A  SmallerDegreePermPreXMod( <XM> )
 ##
 DeclareOperation( "PreXModIsomorphismByIsomorphisms", 
     [ IsPreXMod, IsBijective, IsBijective ] );
 DeclareOperation( "PreCat1IsomorphismByIsomorphisms", 
     [ IsPreCat1, IsBijective, IsBijective ] );
-DeclareGlobalFunction( "SmallerDegreePerm2dDomain" );
+DeclareGlobalFunction( "SmallerDegreePerm2dGroup" );
 DeclareAttribute( "SmallerDegreePermPreXMod", IsPreXMod );
 
 #############################################################################

@@ -2,12 +2,12 @@
 ##
 #W  gp2map.gi                  GAP4 package `XMod'               Chris Wensley
 #W                                                                 & Murat Alp
-##  version 2.31, 17/12/2014 
+##  version 2.32, 29/01/2015 
 ##
 ##  This file installs methods for 2dMappings for crossed modules and 
 ##  cat1-groups. 
 ##
-#Y  Copyright (C) 2001-2014, Murat Alp and Chris Wensley,  
+#Y  Copyright (C) 2001-2015, Murat Alp and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 ##############################################################################
@@ -738,9 +738,9 @@ function( PM )
         sinv := GroupHomomorphismByImages( Qsrc, Psrc, Qsgen, Psgen );
     fi;
     Prng := Range( PM ); 
-    if ( HasIsNormalSubgroup2dDomain(PM) and IsNormalSubgroup2dDomain(PM) ) then 
+    if ( HasIsNormalSubgroup2dGroup(PM) and IsNormalSubgroup2dGroup(PM) ) then 
         Print( "#!  need to modify IsomorphismPcPreXMod to preserve the\n", 
-               "#!  property of being IsNormalSubgroup2dDomain\n" ); 
+               "#!  property of being IsNormalSubgroup2dGroup\n" ); 
     fi; 
     if IsPcGroup( Prng ) then
         Qrng := Prng;
@@ -1131,7 +1131,7 @@ function( map )
     fi;
     kerS := Kernel( SourceHom( map ) ); 
     kerR := Kernel( RangeHom( map ) ); 
-    K := Sub2dDomain( Source( map ), kerS, kerR );
+    K := Sub2dGroup( Source( map ), kerS, kerR );
     SetKernel2dMapping( map, K );
     return K;
 end );
@@ -1179,7 +1179,7 @@ function( mor )
     Saut := Group( innaut, idsrc1 );
     act := GroupHomomorphismByImages( src2, Saut, gensrc2, innaut );
     S := XModByBoundaryAndAction( SourceHom( mor ), act );
-    isconj := IsNormalSubgroup2dDomain( S );
+    isconj := IsNormalSubgroup2dGroup( S );
     return S; 
 end );
 
@@ -1400,9 +1400,9 @@ end );
 
 ###############################################################################
 ##
-#F  SmallerDegreePerm2dDomain( <obj> )
+#F  SmallerDegreePerm2dGroup( <obj> )
 ##
-InstallGlobalFunction( SmallerDegreePerm2dDomain, function( obj )
+InstallGlobalFunction( SmallerDegreePerm2dGroup, function( obj )
 
     local  src, rng, sigma, rho, mor; 
     # for a PreXMod
