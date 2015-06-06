@@ -2,7 +2,7 @@
 ##
 #W  gp2ind.gi                      XMOD Package                  Chris Wensley
 ##
-##  version 2.32, 13/02/2015 
+##  version 2.32, 26/02/2015 
 ##
 #Y  Copyright (C) 2001-2015, Murat Alp and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -717,14 +717,15 @@ end );
 ##
 #M  AllInducedXMods( <grp> ) given Q, finds all XMods induced as  M <= P <= Q
 ##
-InstallMethod( AllInducedXMods, "for a group", true, [ IsGroup ], 0,
-function( Q )
+InstallGlobalFunction( AllInducedXMods, function( args )
 
-    local  nargs, usage, L, lenL, reps, nreps, r, i, j, k, a, b,  
-           norm, nnorm, n, sizes, keep, coll, P, M, id, XQ, SQ, num, line, 
+    local  nargs, rrange,nrange, usage, L, lenL, reps, nreps, r, i, j, k, a, b,  
+           norm, nnorm, n, sizes, keep, coll, Q, P, M, id, XQ, SQ, num, line, 
            descrip, Msd, Psd, Qsd, SQsd, Ksd; 
 
     descrip := [ ]; 
+    nargs := Length( args ); 
+    Q := args[1]; 
     Qsd := StructureDescription( Q ); 
     Print( "\nInduced crossed modules with Q = ", Qsd, "\n\n" ); 
     L := LatticeSubgroups( Q ); 
@@ -733,9 +734,10 @@ function( Q )
     reps := Reversed( List( ConjugacyClassesSubgroups( L ), 
                       c -> Representative( c ) ) );
     nreps := Length( reps );
-    Info( InfoXMod, 1, "non-trivial reps =" );
-    for r in [ 2 .. nreps-1 ] do
-        Info( InfoXMod, 2, reps[r] );
+    Info( InfoXMod, 1, "non-trivial reps = ", [2..nreps-1] );
+    for r in [ 1 .. nreps-1 ] do
+        Info( InfoXMod, 1, StructureDescription( reps[r] ), " = ", 
+reps[r] );
     od;
     num := 0;
     line := "--------------------------------------";
@@ -745,8 +747,13 @@ function( Q )
         Print( "\n                             P --> Q\n");
         Print( "\ngenQ = ", GeneratorsOfGroup( Q ), "\n" );
         Print( "\n", line, line, "\n\n" );
+    fi; 
+    if ( nargs > 1 ) then 
+        rrange := args[2]; 
+    else 
+        rrange := [2..nreps-1];
     fi;
-    for r in [ 2 .. nreps-1 ] do
+    for r in rrange do
         P := reps[r]; 
         Psd := StructureDescription( P ); 
         norm := NormalSubgroups( P );
@@ -769,9 +776,15 @@ function( Q )
             od;
         od;
         nnorm := Length( norm );
+        Info( InfoXMod, 2, "nnorm = ", nnorm ); 
         ##  ??  (16/01/04)
         ##  norm[ nnorm ] := P;
-        for n in [1..nnorm] do
+        if ( ( nargs > 2 ) and ( Length(rrange) = 1 ) ) then 
+            nrange := args[3]; 
+        else 
+            nrange := [1..nnorm]; 
+        fi;
+        for n in nrange do
         ## for n in [1..nnorm-1] do
             if keep[n] then
                 M := norm[n]; 
@@ -1141,18 +1154,19 @@ end );
 ##
 #M  AllInducedCat1s( <grp> ) . . induced cat1s
 ##
-InstallMethod( AllInducedCat1s, "for a cat1-group", true, [ IsGroup ], 0,
-function( Q )
+InstallGlobalFunction( AllInducedCat1s, function( args )
 
-    local  nargs, L, lenL, reps, nreps, r, i, j, k, a, b,
-           norm, nnorm, n, sizes, keep, coll, P, M, id, info, 
+    local  nargs, rrange, nrange, L, lenL, reps, nreps, r, i, j, k, a, b,
+           norm, nnorm, n, sizes, keep, coll, Q, P, M, id, info, 
            IC, num, line, C, iota;
 
+    nargs := Length( args ); 
+    Q := args[1]; 
     L := LatticeSubgroups( Q );
     reps := Reversed( List( ConjugacyClassesSubgroups(L), 
                       c -> Representative( c ) ) );
     nreps := Length( reps );
-    Print( "non-trivial reps = \n" );
+    Print( "non-trivial reps = ", [2..nreps-1], "\n" );
     for r in [ 2 .. nreps-1 ] do
         Print( reps[r], "\n" );
     od;
@@ -1162,7 +1176,12 @@ function( Q )
     Print( "\n                               P --> Q\n");
     Print( "\n genQ = ", GeneratorsOfGroup( Q ), "\n" );
     Print( "\n", line, line, "\n\n" );
-    for r in [ 2 .. nreps-1 ] do
+    if ( nargs > 1 ) then 
+        rrange := args[1]; 
+    else 
+        rrange := [2..nreps-1]; 
+    fi;
+    for r in rrange do
         P := reps[r];
         norm := NormalSubgroups( P );
         # find representatives of conjugacy classes in Q
@@ -1185,7 +1204,12 @@ function( Q )
         od;
         nnorm := Length( norm );
         norm[ nnorm ] := P;
-        for n in [2..nnorm] do
+        if ( ( nargs > 2 ) and ( Length(rrange) = 1 ) ) then 
+            nrange := args[3]; 
+        else 
+            nrange := [2..nnorm]; 
+        fi;
+        for n in nrange do
             if keep[n] then
                 M := norm[n];
                 Print( "genM = ", GeneratorsOfGroup( M ), "\n" );

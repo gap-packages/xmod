@@ -12,15 +12,21 @@ Problems:
               (construction worked OK with isomorphic perm groups). 
 
 #############################################################################
-2.31 -> 2.32 (03/02/2015) 
+2.32 -> 2.41 (05/06/2015) 
 
+ - (05/06/15) gpd2obj.gd changed to reflect changes in package Gpd 
+
+(#############################################################################
+2.31 -> 2.32 (26/02/2015) 
+
+ - (26/02/15) reverted AllInducedXMods(Cat1s) to global functions 
  - (03/02/15) added properties IsPreXModDomain and IsPreCat1Domain 
               which are meant to apply to both group and algebra cases 
  - (02/02/15) took out all MultiplicativeElementWithTuple's etc. 
               and Multiplicative2dElement's etc. 
  - (29/01/15) made copies of dom2d3d* and gp2obj* before embarking on a 
               major rewrite of the category structure: specifically, 
-              changing lost of '2dDomain's into '2dGroup's
+              changing lots of '2dDomain's into '2dGroup's
 
 #############################################################################
 2.26 -> 2.31 (17/12/2014) 

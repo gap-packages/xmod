@@ -2,7 +2,7 @@
 ##
 #W  gp2ind.gd                   GAP4 package `XMod'               Chris Wensley
 ##
-##  version 2.32, 29/01/2015 
+##  version 2.32, 26/02/2015 
 ##
 #Y  Copyright (C) 2001-2015, Murat Alp and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -82,8 +82,8 @@ DeclareOperation( "InducedCat1ByFreeProduct", [ IsList ] );
 #O  AllInducedXMods( <grp> )
 #O  AllInducedCat1s( <grp> )
 ##
-DeclareOperation( "AllInducedXMods", [ IsGroup ] );
-DeclareOperation( "AllInducedCat1s", [ IsGroup ] );
+DeclareGlobalFunction( "AllInducedXMods" );
+DeclareGlobalFunction( "AllInducedCat1s" );
 
 ##############################################################################
 ##

@@ -2,7 +2,7 @@
 ##
 #W  gpd2obj.gd                 GAP4 package `XMod'               Chris Wensley
 ##
-##  version 2.32, 13/02/2015 
+##  version 2.41, 05/06/2015 
 ##
 #Y  Copyright (C) 2001-2015, Murat Alp and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -27,7 +27,7 @@ DeclareCategory( "Is2dMagmaWithObjectsAndOne", Is2dMagmaWithObjects and
     CategoryCollections( IsMultiplicativeElementWithObjectsAndOnes ) ); 
 DeclareCategory( "Is2dMagmaWithObjectsAndInverses", 
     Is2dMagmaWithObjectsAndOne and CategoryCollections( 
-        IsMultiplicativeElementWithObjectsAndInverse ) ); 
+        IsMultiplicativeElementWithObjectsAndInverses ) ); 
 DeclareCategory( "Is2dGroupWithObjects", Is2dMagmaWithObjectsAndInverses and 
     CategoryCollections( IsAssociativeElement ) ); 
 

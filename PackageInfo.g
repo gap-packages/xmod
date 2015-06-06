@@ -1,6 +1,6 @@
 #############################################################################
 ##
-##  PackageInfo.g   file for the package XMod 
+##  PackageInfo.g  file for the package XMod 
 ##  Chris Wensley and Murat Alp 
 ##
 
@@ -8,23 +8,23 @@ SetPackageInfo( rec(
 PackageName := "XMod",
 Subtitle := "Crossed Modules and Cat1-Groups",
 
-Version := "2.32",
-Date := "13/02/2015",
+Version := "2.41",
+Date := "05/06/2015",
 
 ##  duplicate these values for inclusion in the manual: 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "2.32">
-##  <!ENTITY TARFILENAME "xmod-2.32.tar.gz">
-##  <!ENTITY HTMLFILENAME "xmod232.html">
-##  <!ENTITY RELEASEDATE "13/02/2015">
-##  <!ENTITY LONGRELEASEDATE "13th February 2015">
+##  <!ENTITY VERSION "2.41">
+##  <!ENTITY TARFILENAME "xmod-2.41.tar.gz">
+##  <!ENTITY HTMLFILENAME "xmod241.html">
+##  <!ENTITY RELEASEDATE "05/06/2015">
+##  <!ENTITY LONGRELEASEDATE "5th June 2015">
 ##  <!ENTITY COPYRIGHTYEARS "1997-2015">
 ##  <#/GAPDoc>
 
 PackageWWWHome := 
   "http://pages.bangor.ac.uk/~mas023/chda/xmod/",
 
-ArchiveURL := "http://pages.bangor.ac.uk/~mas023/chda/xmod/xmod-2.32", 
+ArchiveURL := "http://pages.bangor.ac.uk/~mas023/chda/xmod/xmod-2.41", 
 ArchiveFormats := ".tar.gz",
 
 Persons := [
@@ -89,7 +89,7 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">=4.7",
-  NeededOtherPackages := [ ["Gpd", ">= 1.32"], 
+  NeededOtherPackages := [ ["Gpd", ">= 1.34"], 
                            ["Hap", ">= 1.10"],
                            ["autpgrp", ">= 1.5"] ], 
   SuggestedOtherPackages := [ ["GAPDoc", ">= 1.5.1"] ],
