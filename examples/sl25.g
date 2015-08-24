@@ -2,14 +2,15 @@
 ##
 #W  sl25.g                    XMOD example files                Chris Wensley
 ##
-##  version 2.41, 05/06/2015 
+##  version 2.42, 30/07/2015 
 ##
 #Y  Copyright (C) 2001-2015, Murat Alp and Chris Wensley, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 #############################################################################
 
-Print("\nXMod test file sl25.g (version 05/06/15) :-\n\n");
+SetInfoLevel( InfoXMod, 2 ); 
+Print("\nXMod test file sl25.g (version 30/07/15) :-\n\n");
 
 sl25pc := SpecialLinearGroup(2,5); 
 SetName( sl25pc, "sl25-pc" ); 
@@ -45,13 +46,3 @@ indX25 := InducedXMod( X25, inc25 );
 Display( indX25 ); 
 h25 := Source( indX25 ); 
 Print( "h25 = ", StructureDescription( h25 ), "\n" ); 
-
-## sl25c2pc := Image( invgl, sl25c2 ); 
-## SetName( sl25c2pc, "sl25.c2-pc" ); 
-## X25pc := XModByNormalSubgroup( sl25c2pc, sl25pc );
-## inc25pc := InclusionMappingGroups( gl25pc, sl25c2pc );
-## indX25pc := InducedXMod( X25pc, inc25pc ); 
-## Display( indX25pc ); 
-## h25pc := Source( indX25pc ); 
-## Print( "h25pc = ", StructureDescription( h25pc ), "\n" ); 
-

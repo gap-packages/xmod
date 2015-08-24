@@ -3,9 +3,9 @@
 #W  util.gi                    GAP4 package `XMod'               Chris Wensley
 #W                                                                 & Murat Alp
 ##
-##  version 2.32, 20/12/2014 
+##  version 2.32, 20/07/2015 
 ##
-#Y  Copyright (C) 2001-2014, Murat Alp and Chris Wensley,  
+#Y  Copyright (C) 2001-2015, Murat Alp and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 #############################################################################

@@ -2,9 +2,9 @@
 <!--                                                                     -->
 <!--  gp2map.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  version 2.31, 08/11/2014                                           --> 
+<!--  version 2.42, 20/07/2015                                           --> 
 <!--                                                                     --> 
-<!--  Copyright (C) 2001-2014, Murat Alp and Chris Wensley,              --> 
+<!--  Copyright (C) 2001-2015, Murat Alp and Chris Wensley,              --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -108,6 +108,8 @@ It is usually sufficient to verify that both the <C>SourceHom</C> and the
    <Attr Name="IdentityMapping"
          Arg="X1" />
    <Func Name="IsomorphismPermObject"
+         Arg="obj" />
+   <Func Name="IsomorphismPcObject"
          Arg="obj" />
 <Description>
 These are the constructors for morphisms of pre-crossed and crossed modules.

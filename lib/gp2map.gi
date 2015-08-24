@@ -2,7 +2,7 @@
 ##
 #W  gp2map.gi                  GAP4 package `XMod'               Chris Wensley
 #W                                                                 & Murat Alp
-##  version 2.32, 29/01/2015 
+##  version 2.42, 20/07/2015 
 ##
 ##  This file installs methods for 2dMappings for crossed modules and 
 ##  cat1-groups. 
@@ -810,7 +810,7 @@ function( PCG )
         rinv := rhom;
     else
         Prgen := GeneratorsOfGroup( Prng );
-        rhom := IsomorphismSmallPermGroup( Prng ); 
+        rhom := IsomorphismPcGroup( Prng ); 
         if ( rhom = fail ) then 
             return fail; 
         fi; 

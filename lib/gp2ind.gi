@@ -2,7 +2,7 @@
 ##
 #W  gp2ind.gi                      XMOD Package                  Chris Wensley
 ##
-##  version 2.32, 26/02/2015 
+##  version 2.42, 30/07/2015 
 ##
 #Y  Copyright (C) 2001-2015, Murat Alp and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -148,6 +148,7 @@ function( X0, iota, trans )
            comp, mgicomp, series, idseries, 
            imFIQ, mgiFIQ, relFI, genFI, ishom, ispc, ispcI;
 
+    Info( InfoXMod,2,"calling InclusionInducedXModByCopower" ); 
     Q := Range( iota );
     genQ := GeneratorsOfGroup( Q );
     oQ := Size( Q );
@@ -159,7 +160,7 @@ function( X0, iota, trans )
     elP := Elements( P );
     M := Source( X0 );
     oM := Size( M );
-    ## need to generalise beyond normal subgroup xmods?    
+    #? need to generalise beyond normal subgroup xmods?    
     if not IsNormal( P, M ) then
         Error( "M not a normal subgroup of P" );
     fi;
@@ -189,12 +190,12 @@ function( X0, iota, trans )
     relFM := RelatorsOfFpGroup( FM );
     nrFM := Length( relFM );
 
-    # determine  genN = closure of  genM  under conjugation by  P
+    # determine  genN = closure of  genM  under conjugation by  P 
     genN := ShallowCopy( genM );
     genFN := ShallowCopy( genFM );
     i := 0;
     ngN := Length( genN );
-    Info( InfoXMod, 2, "checking GeneratorsOfGroup(M) closed under P-action");
+    Info( InfoXMod, 2, "finding closure of GeneratorsOfGroup(M) by P-action");
     while ( i < ngN ) do
         i := i + 1;
         n1 := genN[i];
