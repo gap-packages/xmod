@@ -60,6 +60,21 @@ Persons := [
                        "Turkey"] ),
     Place         := "Nigde",
     Institution   := "Nigde University"
+  ),
+    rec(
+    LastName      := "Odabas",
+    FirstNames    := "Alper",
+    IsAuthor      := true,
+    Email         := "aodabas@ogu.edu.tr",
+    PostalAddress := Concatenation( [ 
+                       "Dr. A. Odabas \n",
+                       "Osmangazi University \n",
+                       "Arts and Sciences Faculty \n",
+                       "Department of Mathematics and Computer Science \n",
+                       "Eskisehir \n",
+                       "Turkey"] ),
+    Place         := "Eskisehir",
+    Institution   := "Osmangazi University"
   )
 ],
 
