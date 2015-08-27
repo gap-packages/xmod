@@ -242,7 +242,7 @@ gap> h1 := GroupHomomorphismByImages( d16, d16, [c,d], [c^5,d] );;
 gap> h2 := GroupHomomorphismByImages( d16, d16, [c,d], [c,c^4*d] );;
 gap> aut16 := Group( [ h1, h2 ] );;
 gap> act16 := GroupHomomorphismByImages( sk4, aut16, [c^4,d], [h1,h2] );;
-gap> P16 := PreXModByBoundaryAndAction( bdy16 );
+gap> P16 := PreXModByBoundaryAndAction( bdy16, act16 );
 [d16->sk4]
 ]]>
 </Example>
