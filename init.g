@@ -2,9 +2,9 @@
 ##
 #W  init.g                 GAP package `XMod'                   Chris Wensley
 #W                                                                & Murat Alp
-##  version 2.31, 08/111/2014 
+##  version 2.43, 25/08/2015 
 ##
-#Y  Copyright (C) 2014, Murat Alp and Chris Wensley,  
+#Y  Copyright (C) 2015, Murat Alp and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 
@@ -22,4 +22,5 @@ ReadPackage( "xmod", "lib/map2arg.gd" );
 ReadPackage( "xmod", "lib/gp3obj.gd" ); 
 ReadPackage( "xmod", "lib/gp3map.gd" ); 
 ReadPackage( "xmod", "lib/gpd2obj.gd" ); 
-ReadPackage( "xmod", "lib/cat1data.gd" ); 
+ReadPackage( "xmod", "lib/cat1data.gd" );
+ReadPackage( "xmod", "lib/isclnc.gd" );  

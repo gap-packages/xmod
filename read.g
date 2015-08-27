@@ -23,3 +23,4 @@ ReadPackage( "xmod", "lib/gp3obj.gi" );
 ReadPackage( "xmod", "lib/gp3map.gi" ); 
 ReadPackage( "xmod", "lib/gpd2obj.gi" ); 
 ReadPackage( "xmod", "lib/cat1data.gi" ); 
+ReadPackage( "xmod", "lib/isclnc.gi" ); 
