@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  isclnc.gi                 GAP4 package `XMod'                Alper Odabas
+#W  isoclinic.gi                 GAP4 package `XMod'                Alper Odabas
 #W                                                               & Enver Uslu
 ##  version 2.43, 03/09/2015 
 ##
