@@ -2,10 +2,9 @@
 ##
 #W  read.g                 The XMOD package                     Chris Wensley
 #W                                                                & Murat Alp
-##  version 2.31, 08/11/2014 
+##  version 2.43, 03/09/2015 
 ##
-#Y  Copyright (C) 2014, Murat Alp and Chris Wensley,  
-#Y  School of Computer Science, Bangor University, U.K. 
+#Y  Copyright (C) 2001-2015, Chris Wensley et al,  
 ##
 
 ## read the actual code 
@@ -19,8 +18,8 @@ ReadPackage( "xmod", "lib/gp2up.gi" );
 ReadPackage( "xmod", "lib/gp2act.gi" );
 ReadPackage( "xmod", "lib/gp2ind.gi" );
 ReadPackage( "xmod", "lib/map2arg.gi" );
+ReadPackage( "xmod", "lib/isoclinic.gi" ); 
 ReadPackage( "xmod", "lib/gp3obj.gi" ); 
 ReadPackage( "xmod", "lib/gp3map.gi" ); 
 ReadPackage( "xmod", "lib/gpd2obj.gi" ); 
 ReadPackage( "xmod", "lib/cat1data.gi" ); 
-ReadPackage( "xmod", "lib/isclnc.gi" ); 

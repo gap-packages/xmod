@@ -18,10 +18,13 @@ InstallMethod( PreXModFixedPointSubgroup, "generic method for crossed modules",
     true, [ IsPreXMod ], 0,
 function( XM )
 
-    local  alpha, sonuc, T, G, t, g, list;
+    local  alpha, T, G, t, g, list;
 
     T := Source(XM);
     G := Range(XM);
+    if ( HasIsTrivialAction2dGroup(XM) and IsTrivialAction2dGroup(XM) ) then 
+        return T; 
+    fi;
     alpha := XModAction(XM);
     list := [];
     for t in T do

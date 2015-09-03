@@ -2,6 +2,7 @@
 
 Problems: 
 
+ - (03/09/15) XModCentre fails with pc-groups 
  - (09/01/13) GroupGeneralMappingByImages in ghom.gi has changed, 
               so DiscreteNormalPreXModWithObjects no longer works. 
               Also need Print/Display methods for these constructions. 
@@ -14,7 +15,7 @@ Problems:
 #############################################################################
 2.42 -> 2.43 (03/09/2015) 
 
- - (03/09/15) started editing isclnc.gd and isclnc.gi 
+ - (03/09/15) started editing isocilnic.gd and isoclinic.gi 
  - (24/08/15) major edits to README, including GitHub issues link 
 
 #############################################################################

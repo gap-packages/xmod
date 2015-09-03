@@ -147,7 +147,7 @@ Dumlupinar University and the Turkish government.
 <#Include SYSTEM "gp2up.xml">
 <#Include SYSTEM "gp2act.xml">
 <#Include SYSTEM "gp2ind.xml">
-<#Include SYSTEM "isclnc.xml">
+<#Include SYSTEM "isoclinic.xml">
 <#Include SYSTEM "gp3objmap.xml">
 <#Include SYSTEM "gpd2obj.xml">
 <#Include SYSTEM "util.xml">
