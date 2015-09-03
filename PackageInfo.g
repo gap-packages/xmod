@@ -9,15 +9,15 @@ PackageName := "XMod",
 Subtitle := "Crossed Modules and Cat1-Groups",
 
 Version := "2.43",
-Date := "25/08/2015",
+Date := "03/09/2015",
 
 ##  duplicate these values for inclusion in the manual: 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
 ##  <!ENTITY VERSION "2.43">
 ##  <!ENTITY TARFILENAME "xmod-2.43.tar.gz">
 ##  <!ENTITY HTMLFILENAME "xmod243.html">
-##  <!ENTITY RELEASEDATE "25/08/2015">
-##  <!ENTITY LONGRELEASEDATE "25th August 2015">
+##  <!ENTITY RELEASEDATE "03/09/2015">
+##  <!ENTITY LONGRELEASEDATE "3rd September 2015">
 ##  <!ENTITY COPYRIGHTYEARS "1997-2015">
 ##  <#/GAPDoc>
 
@@ -68,6 +68,21 @@ Persons := [
     Email         := "aodabas@ogu.edu.tr",
     PostalAddress := Concatenation( [ 
                        "Dr. A. Odabas \n",
+                       "Osmangazi University \n",
+                       "Arts and Sciences Faculty \n",
+                       "Department of Mathematics and Computer Science \n",
+                       "Eskisehir \n",
+                       "Turkey"] ),
+    Place         := "Eskisehir",
+    Institution   := "Osmangazi University"
+  ),
+    rec(
+    LastName      := "Uslu",
+    FirstNames    := "Enver Onder",
+    IsAuthor      := true,
+    Email         := "enveruslu@ogu.edu.tr",
+    PostalAddress := Concatenation( [ 
+                       "Dr. E. O. Uslu \n",
                        "Osmangazi University \n",
                        "Arts and Sciences Faculty \n",
                        "Department of Mathematics and Computer Science \n",

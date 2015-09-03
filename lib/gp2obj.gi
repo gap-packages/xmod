@@ -2,7 +2,7 @@
 ##
 #W  gp2obj.gi                 GAP4 package `XMod'               Chris Wensley
 #W                                                                & Murat Alp
-##  version 2.43, 25/08/2015 
+##  version 2.43, 02/09/2015 
 ##
 #Y  Copyright (C) 2001-2015, Murat Alp and Chris Wensley,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -216,7 +216,7 @@ function( bdy, act )
     if not IsPreXMod( PM ) then
         Info( InfoXMod, 1, "Warning: not a pre-crossed module." );
     fi;
-    # ok := IsXMod( PM ); # for running properly the function AllXMods
+    ok := IsXMod( PM ); # for running properly the function AllXMods
     # name := Name( PM );
     return PM;
 end );
@@ -2341,7 +2341,3 @@ function( XM )
     od;
     return norm;
 end );
-
-##############################################################################
-##
-#E  gp2obj.gi . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

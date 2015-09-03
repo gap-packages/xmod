@@ -12,8 +12,9 @@ Problems:
               (construction worked OK with isomorphic perm groups). 
 
 #############################################################################
-2.42 -> 2.43 (25/08/2015) 
+2.42 -> 2.43 (03/09/2015) 
 
+ - (03/09/15) started editing isclnc.gd and isclnc.gi 
  - (24/08/15) major edits to README, including GitHub issues link 
 
 #############################################################################

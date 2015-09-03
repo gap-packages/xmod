@@ -1,27 +1,23 @@
 #############################################################################
 ##
-#W  isclnc.gd                 GAP4 package `XMod'               
-#W                                                                
-##  version 2.43, 27/08/2015 
+#W  isclnc.gd                 GAP4 package `XMod'                Alper Odabas
+#W                                                               & Enver Uslu
+##  version 2.43, 03/09/2015 
 ##
-#Y  Copyright (C) 2001-2015,   
-#Y   
-##
-## 
-##  
+#Y  Copyright (C) 2001-2015, Chris Wensley et al 
 ##
 
 #############################################################################
 ##
-#O  TG  . . . . . . . . . the TG group of crossed module (d,T,G)
+#A  PreXModFixedPointSubgroup( <PM> ) 
 ##
-DeclareOperation( "TG", [ Is2dGroup ] );
+DeclareAttribute( "PreXModFixedPointSubgroup", IsPreXMod );
 
 #############################################################################
 ##
-#O  stGT  . . . . . . . . . the stGT group of crossed module (d,T,G)
+#A  PreXModStabilizer( <PM> ) 
 ##
-DeclareOperation( "stGT", [ Is2dGroup ] );
+DeclareAttribute( "PreXModStabilizer", IsPreXMod );
 
 #############################################################################
 ##
@@ -38,9 +34,9 @@ DeclareOperation( "AllHomomorphismsViaSmallGroup", [ IsGroup, IsGroup ] );
 
 #############################################################################
 ##
-#O DGT  . . . . . . . . . the DGT group of crossed module (d,T,G)
+#A DisplacementSubgroup( XM )
 ##
-DeclareOperation( "DGT", [ Is2dGroup ] );
+DeclareAttribute( "DisplacementSubgroup", IsXMod );
 
 #############################################################################
 ##
@@ -50,9 +46,9 @@ DeclareOperation( "IntersectionSubXMod", [  Is2dGroup, Is2dGroup, Is2dGroup ] );
 
 #############################################################################
 ##
-#O DerivedSubXMod  . . . . . . . . . the commutator of the crossed module
+#A DerivedSubXMod  . . . . . . . . . the commutator of the crossed module
 ##
-DeclareOperation( "DerivedSubXMod", [ Is2dGroup ] );
+DeclareAttribute( "DerivedSubXMod", IsXMod );
 
 #############################################################################
 ##

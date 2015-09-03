@@ -1,0 +1,38 @@
+<!-- ------------------------------------------------------------------- -->
+<!--                                                                     -->
+<!--  isclnc.xml            XMod documentation             Alper Odabas  -->
+<!--                                                       & Enver Uslu  -->
+<!--  version 2.43, 03/09/2015                                           --> 
+<!--                                                                     --> 
+<!--  Copyright (C) 2001-2015, ...                                       --> 
+<!--                                                                     -->
+<!-- ------------------------------------------------------------------- -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Chapter Label="chap-isclnc">
+<Heading>Isoclinism of Crossed Modules</Heading>
+
+This chapter describes the functions which enable the computations 
+reported in <Cite Key="OUI1" />. 
+
+<Section><Heading>Isoclinism</Heading>
+
+<ManSection>
+   <Oper Name="IsNilpotentXMod"
+         Arg="X1" />
+<Description>
+This function is used . . . 
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> X8;                   
+[c4->d8]
+gap> IsNilpotentXMod(X8);
+true
+]]>
+</Example>
+</Section>
+
+</Chapter>

@@ -2,9 +2,10 @@
 <!--                                                                     -->
 <!--  manual.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  version 2.32, 12/01/2015                                           --> 
+<!--                                                     & Alper Odabas  -->
+<!--  version 2.43, 03/09/2015                                           --> 
 <!--                                                                     --> 
-<!--  Copyright (C) 2001-2015, Murat Alp and Chris Wensley,              --> 
+<!--  Copyright (C) 2001-2015, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -38,6 +39,22 @@
       Nigde, Turkey.
     </Address>
   </Author>    
+  <Author> Alper Odaba&#x15f; 
+    <Email>aodabas@ogu.edu.tr</Email>
+    <Homepage>http://fef.ogu.edu.tr/matbil/aodabas/</Homepage>
+    <Address>
+      Department of Mathematics and Computer Science,<Br/>
+      Osmangazi University, Eski&#x15f;ehir, Turkey
+    </Address>
+  </Author>
+  <Author> Enver &#xd6;nder Uslu 
+    <Email>enveruslu@ogu.edu.tr</Email>
+    <Homepage>http://fef.ogu.edu.tr/matbil/enveruslu/</Homepage>
+    <Address>
+      Department of Mathematics and Computer Science,<Br/>
+      Osmangazi University, Eski&#x15f;ehir, Turkey
+    </Address>
+  </Author>
   <Author> Chris Wensley
     <Email>c.d.wensley@bangor.ac.uk</Email>
     <Homepage>http://pages.bangor.ac.uk/~mas023/</Homepage>
@@ -85,17 +102,23 @@ were included in the January 2004 release 2.002 for &GAP; 4.4.
 <P/>
 Version 2.19 was released on 9th June 2012 for the first release of 
 &GAP; 4.5. 
+<P/> 
+In September 2015 functions for computing isoclinism classes of 
+crossed modules, written by Alper Odaba&#x15f; and Enver Uslu, were added. 
+These are described in chapter <Ref Chap="chap-gp2up" />. 
 <P/>
 The current version is &VERSION;, released &LONGRELEASEDATE; for &GAP; 4.7. 
 <P/>
 Bug reports, suggestions and comments are, of course, welcome. 
-Please contact the second author at     
-<Email>c.d.wensley@bangor.ac.uk</Email>.
+Please contact the last author at <Email>c.d.wensley@bangor.ac.uk</Email> 
+or submit an issue at <URL>http://github.com/gap-system/xmod/</URL>, 
+and complement the paper <Cite Key="OUI1" />
+
 </Abstract>
 
 <Copyright> 
 <Index>License</Index>
-&copyright; &COPYRIGHTYEARS; Murat Alp and Chris Wensley.  
+&copyright; &COPYRIGHTYEARS; Chris Wensley et al.  
 
 &xmod; is free software; you can redistribute it 
 and/or modify it under the terms of the 
@@ -124,6 +147,7 @@ Dumlupinar University and the Turkish government.
 <#Include SYSTEM "gp2up.xml">
 <#Include SYSTEM "gp2act.xml">
 <#Include SYSTEM "gp2ind.xml">
+<#Include SYSTEM "isclnc.xml">
 <#Include SYSTEM "gp3objmap.xml">
 <#Include SYSTEM "gpd2obj.xml">
 <#Include SYSTEM "util.xml">
