@@ -59,11 +59,11 @@ for g in G do
         Add(list,g);
         fi;        
 od;
-  ### If the list consist only the identity element then there is a bug in the function AsMagma.  
+    ##  if the list consist only the identity element then there is a bug 
+    ##  in the function AsMagma. 
   if Set(list) = [ () ] then
         return Subgroup(Range(XM),[()]);
   fi;
-  ###
 return AsGroup(list);
 end );
 
