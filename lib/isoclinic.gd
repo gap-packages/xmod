@@ -27,10 +27,9 @@ DeclareOperation( "CenterXMod", [ Is2dGroup ] );
 
 #############################################################################
 ##
-#O  AllHomomorphismsViaSmallGroup  . . . . . . . . . all isomorphisms by using small group library.
-## We use small group library since the function AllHomomorphisms fails for some groups G and H.
+#O  AllIsomorphisms  . . . . . . . . . all isomorphisms
 ##
-DeclareOperation( "AllHomomorphismsViaSmallGroup", [ IsGroup, IsGroup ] );
+DeclareOperation( "AllIsomorphisms", [ IsGroup, IsGroup ] );
 
 #############################################################################
 ##

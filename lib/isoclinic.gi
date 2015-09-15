@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  isoclinic.gi                 GAP4 package `XMod'                Alper Odabas
+#W  isclnc.gi                 GAP4 package `XMod'                Alper Odabas
 #W                                                               & Enver Uslu
 ##  version 2.43, 03/09/2015 
 ##
@@ -90,34 +90,22 @@ end );
 
 #############################################################################
 ##
-#M  AllHomomorphismsViaSmallGroup  . . . . . . . . . all isomorphisms by using small group library.
-## We use small group library since the function AllHomomorphisms fails for some groups G and H.
+#M  AllIsomorphisms  . . . . . . . . . all isomorphisms
 ##
-InstallMethod( AllHomomorphismsViaSmallGroup,
-    "generic method for crossed modules", true, [ IsGroup, IsGroup ], 0,
+InstallMethod( AllIsomorphisms,
+    "generic method for groups", true, [ IsGroup, IsGroup ], 0,
 function( G,H )
 
-local A,B,a,b,h,f,i,sonuc;
+local h,list;
 
 if IsomorphismGroups(G,H) = fail  then
-    Print("",G," !~ ",G," \n" );
-    sonuc := [];
-    return sonuc;
-fi;
-
-A := SmallGroup(IdGroup(G));
-B := SmallGroup(IdGroup(H));
-if ( Size(A) = 1 ) then
-    sonuc := [];
-    Add(sonuc,IsomorphismGroups(G,H));
+ #   Print("",G," !~ ",G," \n" );
+    list := [];
 else
-    h := AllHomomorphisms(A,B);
-    f := Filtered(h,IsBijective);
-    a := IsomorphismGroups(G,A);
-    b := IsomorphismGroups(B,H);
-    sonuc := List(f, i -> CompositionMapping(b,i,a));
+    h := AllHomomorphisms(G,H);
+    list := Filtered(h,IsBijective);
 fi;    
-return sonuc;
+return list;
 end );
 
 #############################################################################
@@ -423,8 +411,8 @@ BXM2 := FactorXMod(XM2,MXM2);
     return sonuc;
     fi;
     
-    alpha1 := AllHomomorphismsViaSmallGroup(T1,T2);    
-    phi1 := AllHomomorphismsViaSmallGroup(G1,G2);    
+    alpha1 := AllIsomorphisms(T1,T2);    
+    phi1 := AllIsomorphisms(G1,G2);    
     m1_ler := [];        
     for alp in alpha1 do
         for ph in phi1 do
@@ -441,8 +429,8 @@ BXM2 := FactorXMod(XM2,MXM2);
         return false;
         fi;
     
-    alpha11 := AllHomomorphismsViaSmallGroup(T11,T12);
-    phi11 := AllHomomorphismsViaSmallGroup(G11,G12);    
+    alpha11 := AllIsomorphisms(T11,T12);
+    phi11 := AllIsomorphisms(G11,G12);    
     m2_ler := [];        
     for alp in alpha11 do
         for ph in phi11 do
@@ -594,8 +582,8 @@ a2 := XModAction(XM2);
     return sonuc;
     fi;
 
-    alpha1 := AllHomomorphismsViaSmallGroup(T1,T2);    
-    phi1 := AllHomomorphismsViaSmallGroup(G1,G2);    
+    alpha1 := AllIsomorphisms(T1,T2);    
+    phi1 := AllIsomorphisms(G1,G2);    
     m1_ler := [];        
     for alp in alpha1 do
         for ph in phi1 do
