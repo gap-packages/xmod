@@ -2,9 +2,9 @@
 ##
 #W  gp2map.gd                   GAP4 package `XMod'              Chris Wensley
 #W                                                                 & Murat Alp
-##  version 2.32, 29/01/2015 
+##  version 2.43, 16/09/2015 
 ##
-#Y  Copyright (C) 2001-2015, Murat Alp and Chris Wensley,  
+#Y  Copyright (C) 2001-2015, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 ##  This file contains implementations of 2dMappings for crossed modules and 

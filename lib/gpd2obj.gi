@@ -2,9 +2,9 @@
 ##
 #W  gpd2obj.gi                 GAP4 package `XMod'               Chris Wensley
 ##
-##  version 2.31, 17/12/2014 
+##  version 2.43, 16/09/2015 
 ##
-#Y  Copyright (C) 2001-2014, Chris Wensley,  
+#Y  Copyright (C) 2001-2015, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 ##############################################################################

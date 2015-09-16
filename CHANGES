@@ -13,7 +13,7 @@ Problems:
               (construction worked OK with isomorphic perm groups). 
 
 #############################################################################
-2.42 -> 2.43 (15/09/2015) 
+2.42 -> 2.43 (16/09/2015) 
 
  - (15/09/15) methods for InnerMorphism, ActorXMod, CentreXMod, etc. 
               now specified only for permutation crossed modules 

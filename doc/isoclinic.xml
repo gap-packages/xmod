@@ -2,9 +2,9 @@
 <!--                                                                     -->
 <!--  isclnc.xml            XMod documentation             Alper Odabas  -->
 <!--                                                       & Enver Uslu  -->
-<!--  version 2.43, 03/09/2015                                           --> 
+<!--  version 2.43, 16/09/2015                                           --> 
 <!--                                                                     --> 
-<!--  Copyright (C) 2001-2015, ...                                       --> 
+<!--  Copyright (C) 2001-2015, Chris Wensley et al                       --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
 
@@ -13,10 +13,13 @@
 <Chapter Label="chap-isclnc">
 <Heading>Isoclinism of Crossed Modules</Heading>
 
-This chapter describes the functions which enable the computations 
-reported in <Cite Key="OUI1" />. 
+This chapter describes some functions written by Alper Odaba&#x15f; and  
+Enver Uslu, and reported in <Cite Key="OUI1" />. 
+They consist of some additional basic functions for crossed modules, 
+and some functions dealing specifically with isoclinism. 
 
-<Section><Heading>Isoclinism</Heading>
+
+<Section><Heading>More operations for crossed modules</Heading>
 
 <ManSection>
    <Attr Name="PreXModFixedPointSubgroup"
@@ -61,6 +64,65 @@ gap> DerivedSubXMod(X06);
 [ (11,15)(12,16)(13,17)(14,18) ] )]
 ]]>
 </Example>
+
+<ManSection>
+   <Oper Name="IntersectionSubXMods"
+         Arg="X1 X2" />
+<Description>
+When <C>X1,X2</C> are subcrossed modules of <C>X0</C>, and 
+<C>X3 := IntersectionXMod(X1,X2)</C>, then the source and range of <C>X3</C> 
+are the intersections of the sources and ranges of <C>X1</C> and <C>X2</C>. 
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> G30 := SmallGroup(30,2);
+<pc group of size 30 with 3 generators>
+gap> X30 := XModByAutomorphismGroup( G30 ); 
+[Group( [ f1, f2, f3 ] )->Group( [ f1, f2, f3, f4 ] )]
+gap> Size(X30);
+[ 30, 40 ]
+gap> norm := NormalSubgroups( G30 );;
+gap> N2 := norm[2];  N3 := norm[3];             
+Group([ f1, f3 ])
+Group([ f2, f3 ])
+gap> bdy := Boundary( X30 ); 
+[ f1, f2, f3 ] -> [ f3, <identity> of ..., f4^2 ]
+gap> R2 := Image( bdy, N2 );  R3 := Image( bdy, N3 ); 
+Group([ f3, f4^2 ])
+Group([ <identity> of ..., f4^2 ])
+gap> X2 := SubXMod( X30, N2, R2 );
+[Group( [ f1, f3 ] )->Group( [ f3, f4^2 ] )]
+gap> X3 := SubXMod( X30, N3, R3 );
+[Group( [ f2, f3 ] )->Group( [ <identity> of ..., f4^2 ] )]
+gap> X5 := IntersectionSubXMod( X30, X2, X3 );
+[Group( [ f3, f3^2, f3^3, f3^4 ] )->Group( [ <identity> of ..., f4^2 ] )]
+gap> Size(last);
+[ 5, 5 ]
+]]>
+</Example>
+
+
 </Section>
+
+
+
+
+<Section><Heading>Isoclinism</Heading>
+
+<ManSection>
+   <Oper Name="AreIsoclinicXMods"
+         Arg="X0 X1" />
+<Description>
+to follow
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> zz := 99;; 
+]]>
+</Example>
+</Section>
+
 
 </Chapter>
