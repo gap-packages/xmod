@@ -2,7 +2,7 @@
 
 Problems: 
 
- - (03/09/15) XModCentre fails with pc-groups 
+ - (03/09/15) XModCentre etc. fail with pc-groups 
  - (09/01/13) GroupGeneralMappingByImages in ghom.gi has changed, 
               so DiscreteNormalPreXModWithObjects no longer works. 
               Also need Print/Display methods for these constructions. 
@@ -13,8 +13,10 @@ Problems:
               (construction worked OK with isomorphic perm groups). 
 
 #############################################################################
-2.42 -> 2.43 (03/09/2015) 
+2.42 -> 2.43 (15/09/2015) 
 
+ - (15/09/15) methods for InnerMorphism, ActorXMod, CentreXMod, etc. 
+              now specified only for permutation crossed modules 
  - (03/09/15) started editing isocilnic.gd and isoclinic.gi 
  - (24/08/15) major edits to README, including GitHub issues link 
 

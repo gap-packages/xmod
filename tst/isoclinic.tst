@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.tst               XMOD test file                   Alper Odabas
 #W                                                               & Enver Uslu
-##  version 2.43, 03/09/2015 
+##  version 2.43, 15/09/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 ##
@@ -32,7 +32,7 @@ gap> stGT := PreXModStabilizer(X1);
 <pc group of size 8 with 3 generators>
 gap> IsSubgroup(G,stGT);
 true
-gap> C_X1 := CenterXMod(X1);
+gap> C_X1 := CentreXMod(X1);
 [Group( [ f1, f2*f3 ] )->Group( [ f1, f2, f3 ] )]
 gap> IsAsphericalXMod(X1);
 true

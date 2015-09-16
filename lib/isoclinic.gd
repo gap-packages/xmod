@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.gd              GAP4 package `XMod'                Alper Odabas
 #W                                                               & Enver Uslu
-##  version 2.43, 03/09/2015 
+##  version 2.43, 16/09/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al 
 ##
@@ -21,16 +21,9 @@ DeclareAttribute( "PreXModStabilizer", IsPreXMod );
 
 #############################################################################
 ##
-#O  CenterXMod  . . . . . . . . . the center of crossed module
+#O  CentreXMod  . . . . . . . . . the center of crossed module
 ##
-DeclareOperation( "CenterXMod", [ Is2dGroup ] );
-
-#############################################################################
-##
-#O  AllHomomorphismsViaSmallGroup  . . . . . . . . . all isomorphisms by using small group library.
-## We use small group library since the function AllHomomorphisms fails for some groups G and H.
-##
-DeclareOperation( "AllHomomorphismsViaSmallGroup", [ IsGroup, IsGroup ] );
+DeclareAttribute( "CentreXMod", IsXMod );
 
 #############################################################################
 ##
@@ -40,9 +33,9 @@ DeclareAttribute( "DisplacementSubgroup", IsXMod );
 
 #############################################################################
 ##
-#O IntersectionSubXMod  . . . . . . . . . the intersection of the subcrossed modules SH and RK
+#O IntersectionSubXMod  . . . . .intersection of subcrossed modules SH and RK
 ##
-DeclareOperation( "IntersectionSubXMod", [  Is2dGroup, Is2dGroup, Is2dGroup ] );
+DeclareOperation( "IntersectionSubXMod", [  IsXMod, IsXMod, IsXMod ] );
 
 #############################################################################
 ##

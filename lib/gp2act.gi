@@ -5,9 +5,9 @@
 ##
 ##  This file implements methods for actor crossed squares of crossed modules. 
 ##
-##  version 2.32, 29/01/2015 
+##  version 2.43, 15/09/2015 
 ##
-#Y  Copyright (C) 2001-2015, Murat Alp and Chris Wensley,  
+#Y  Copyright (C) 2001-2015, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 #############################################################################
@@ -464,8 +464,7 @@ end );
 ##
 #M  ActorXMod( <XM> ) 
 ##
-InstallMethod( ActorXMod, "actor crossed module", true,
-    [ IsXMod ], 0, 
+InstallMethod( ActorXMod, "actor crossed module", true, [ IsPermXMod ], 0, 
 function( XM )
 
     local  D, L, W, eW, P, genP, genpos, ngW, genW, invW, imdelta, 
@@ -565,7 +564,7 @@ end );
 #M  InnerMorphism( <XM> )
 ##
 InstallMethod( InnerMorphism, "inner morphism of xmod", true,
-    [ IsXMod ], 0, 
+    [ IsPermXMod ], 0, 
 function( XM )
 
     local  WX, NX, ActX, mor;
@@ -581,7 +580,7 @@ end );
 ##
 #M  XModCentre( <XM> )
 ##
-#?  InstallOtherMethod( Centre, "centre of an xmod", true, [ IsXMod ], 0, 
+#?  InstallOtherMethod( Centre, "centre of an xmod", true, [ IsPermXMod ], 0, 
 ##  
 InstallMethod( XModCentre, "centre of an xmod", true, [ IsXMod ], 0, 
 function( XM )
@@ -611,7 +610,7 @@ end );
 #M  InnerActorXMod( <XM> )
 ##
 InstallMethod( InnerActorXMod, "inner actor crossed module", true,
-    [ IsXMod ], 0, 
+    [ IsPermXMod ], 0, 
 function( XM )
 
     local  InnX, mor, name, ActX;

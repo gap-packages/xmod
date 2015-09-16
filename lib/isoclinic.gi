@@ -1,8 +1,8 @@
 #############################################################################
 ##
-#W  isclnc.gi                 GAP4 package `XMod'                Alper Odabas
+#W  isoclinic.gi               GAP4 package `XMod'                Alper Odabas
 #W                                                               & Enver Uslu
-##  version 2.43, 03/09/2015 
+##  version 2.43, 16/09/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al 
 #Y   
@@ -69,55 +69,24 @@ end );
 
 #############################################################################
 ##
-#M  CenterXMod  . . . . . . . . . the center of crossed module
+#M  CentreXMod  . . . . . . . . . the centre of a crossed module
 ##
-InstallMethod( CenterXMod,
-    "generic method for crossed modules", true, [ Is2dGroup ], 0,
+InstallMethod( CentreXMod,
+    "generic method for crossed modules", true, [ IsXMod ], 0,
 function( XM )
 
-local alpha, T, G, partial, k_partial, k_alpha, PM, K;
-T := Source(XM);
-G := Range(XM);
-alpha := XModAction(XM);
-partial := Boundary(XM);
-K := Intersection(Center(G),PreXModStabilizer(XM));
+    local alpha, T, G, partial, fix, k_partial, k_alpha, PM, K;
 
-k_partial := GroupHomomorphismByFunction( PreXModFixedPointSubgroup(XM), K, x -> Image(partial,x) );
-k_alpha := GroupHomomorphismByFunction( K, AutomorphismGroup(PreXModFixedPointSubgroup(XM)), x -> Image(alpha,x) );
-
-return XMod(k_partial,k_alpha);
-end );
-
-#############################################################################
-##
-#M  AllHomomorphismsViaSmallGroup  . . . . . . . . . all isomorphisms by using small group library.
-## We use small group library since the function AllHomomorphisms fails for some groups G and H.
-##
-InstallMethod( AllHomomorphismsViaSmallGroup,
-    "generic method for crossed modules", true, [ IsGroup, IsGroup ], 0,
-function( G,H )
-
-local A,B,a,b,h,f,i,sonuc;
-
-if IsomorphismGroups(G,H) = fail  then
-    Print("",G," !~ ",G," \n" );
-    sonuc := [];
-    return sonuc;
-fi;
-
-A := SmallGroup(IdGroup(G));
-B := SmallGroup(IdGroup(H));
-if ( Size(A) = 1 ) then
-    sonuc := [];
-    Add(sonuc,IsomorphismGroups(G,H));
-else
-    h := AllHomomorphisms(A,B);
-    f := Filtered(h,IsBijective);
-    a := IsomorphismGroups(G,A);
-    b := IsomorphismGroups(B,H);
-    sonuc := List(f, i -> CompositionMapping(b,i,a));
-fi;    
-return sonuc;
+    T := Source(XM);
+    G := Range(XM);
+    alpha := XModAction(XM);
+    partial := Boundary(XM);
+    K := Intersection( Centre(G), PreXModStabilizer(XM) );
+    fix := PreXModFixedPointSubgroup( XM );
+    k_partial := GroupHomomorphismByFunction( fix, K, x -> Image(partial,x) );
+    k_alpha := GroupHomomorphismByFunction( K, AutomorphismGroup( fix ), 
+                   x -> Image( alpha, x ) );
+    return XModByBoundaryAndAction( k_partial, k_alpha );
 end );
 
 #############################################################################
@@ -152,30 +121,28 @@ end );
 
 #############################################################################
 ##
-#M  IntersectionSubXMod  . . . . . . . . . the intersection of the subcrossed modules SH and RK
+#M  IntersectionSubXMod  . . . . intersection of subcrossed modules SH and RK
 ##
-InstallMethod( IntersectionSubXMod,
-    "generic method for crossed modules", true, [ Is2dGroup, Is2dGroup, Is2dGroup ], 0,
-function(XM,SH,RK)
+InstallMethod( IntersectionSubXMod, "generic method for crossed modules", 
+    true, [ IsXMod, IsXMod, IsXMod ], 0,
+function( XM, SH, RK)
 
-local alpha, T, G, S, H, R, K,  partial, k_partial, k_alpha, SR, HK;
+    local alpha, T, G, S, H, R, K, partial, k_partial, k_alpha, SR, HK;
 
-T := Source(XM);
-G := Range(XM);
-alpha := XModAction(XM);
-partial := Boundary(XM);
-S := Source(SH);
-H := Range(SH);
-R := Source(RK);
-K := Range(RK);
-
-SR := Intersection(S,R);
-HK := Intersection(H,K);
-
-k_partial := GroupHomomorphismByFunction( SR, HK, x -> Image(partial,x) );
-k_alpha := GroupHomomorphismByFunction( HK, AutomorphismGroup(SR), x -> Image(alpha,x) );
-
-return PreXModObj(k_partial,k_alpha);
+    T := Source(XM);
+    G := Range(XM);
+    alpha := XModAction(XM);
+    partial := Boundary(XM);
+    S := Source(SH);
+    H := Range(SH);
+    R := Source(RK);
+    K := Range(RK);
+    SR := Intersection(S,R);
+    HK := Intersection(H,K);
+    k_partial := GroupHomomorphismByFunction( SR, HK, x -> Image(partial,x) );
+    k_alpha := GroupHomomorphismByFunction( HK, AutomorphismGroup(SR), 
+                   x -> Image(alpha,x) );
+    return XModByBoundaryAndAction( k_partial, k_alpha );
 end );
 
 #############################################################################
@@ -397,8 +364,8 @@ ComXM2 := DerivedSubXMod(XM2);
     return sonuc;
     fi;
 
-MXM1 := CenterXMod(XM1);
-MXM2 := CenterXMod(XM2);
+MXM1 := CentreXMod(XM1);
+MXM2 := CentreXMod(XM2);
 BXM1 := FactorXMod(XM1,MXM1); 
 BXM2 := FactorXMod(XM2,MXM2); 
         b11 := Boundary(BXM1);
@@ -423,8 +390,8 @@ BXM2 := FactorXMod(XM2,MXM2);
     return sonuc;
     fi;
     
-    alpha1 := AllHomomorphismsViaSmallGroup(T1,T2);    
-    phi1 := AllHomomorphismsViaSmallGroup(G1,G2);    
+    alpha1 := AllIsomorphisms(T1,T2);    
+    phi1 := AllIsomorphisms(G1,G2);    
     m1_ler := [];        
     for alp in alpha1 do
         for ph in phi1 do
@@ -441,8 +408,8 @@ BXM2 := FactorXMod(XM2,MXM2);
         return false;
         fi;
     
-    alpha11 := AllHomomorphismsViaSmallGroup(T11,T12);
-    phi11 := AllHomomorphismsViaSmallGroup(G11,G12);    
+    alpha11 := AllIsomorphisms(T11,T12);
+    phi11 := AllIsomorphisms(G11,G12);    
     m2_ler := [];        
     for alp in alpha11 do
         for ph in phi11 do
@@ -458,11 +425,11 @@ BXM2 := FactorXMod(XM2,MXM2);
         fi;
     
             
-nhom1 := NaturalHomomorphismByNormalSubgroup(G,Intersection(Center(G),PreXModStabilizer(XM1)));;
+nhom1 := NaturalHomomorphismByNormalSubgroup(G,Intersection(Centre(G),PreXModStabilizer(XM1)));;
 kG11 := Image(nhom1);
 cakma3 := GroupHomomorphismByImages(kG11,G11,GeneratorsOfGroup(kG11),GeneratorsOfGroup(G11));
 
-nhom2 := NaturalHomomorphismByNormalSubgroup(H,Intersection(Center(H),PreXModStabilizer(XM2)));;
+nhom2 := NaturalHomomorphismByNormalSubgroup(H,Intersection(Centre(H),PreXModStabilizer(XM2)));;
 kG12 := Image(nhom2);
 cakma4 := GroupHomomorphismByImages(G12,kG12,GeneratorsOfGroup(G12),GeneratorsOfGroup(kG12));
 
@@ -594,8 +561,8 @@ a2 := XModAction(XM2);
     return sonuc;
     fi;
 
-    alpha1 := AllHomomorphismsViaSmallGroup(T1,T2);    
-    phi1 := AllHomomorphismsViaSmallGroup(G1,G2);    
+    alpha1 := AllIsomorphisms(T1,T2);    
+    phi1 := AllIsomorphisms(G1,G2);    
     m1_ler := [];        
     for alp in alpha1 do
         for ph in phi1 do
@@ -796,7 +763,7 @@ function(XM)
 
 local sonuc,ZXMod,DXMod,BXMod,KXMod,m1,m2,l1,l2;
 
-ZXMod := CenterXMod(XM);
+ZXMod := CentreXMod(XM);
 DXMod := DerivedSubXMod(XM);
 BXMod := FactorXMod(XM,ZXMod);
 KXMod := IntersectionSubXMod(XM,ZXMod,DXMod);
@@ -820,7 +787,7 @@ function(XM)
 
 local sonuc,ZXMod,DXMod,BXMod,KXMod,m1,l1,l2;
 
-ZXMod := CenterXMod(XM);
+ZXMod := CentreXMod(XM);
 DXMod := DerivedSubXMod(XM);
 KXMod := IntersectionSubXMod(XM,DXMod,ZXMod);
 BXMod := FactorXMod(DXMod,KXMod);
@@ -842,7 +809,7 @@ function( XM )
 
 local ZXM,sonuc;
 
-ZXM := CenterXMod(XM);
+ZXM := CentreXMod(XM);
 if XM = ZXM then
     sonuc := true;
 else
@@ -925,7 +892,7 @@ Print("-------------------------------------------------------------------------
 Print("---------------------------------------------------------------------------------------------------------------------------------- \n");
 Print("Number","\t","Rank","\t\t","M. L.","\t\t","Class","\t","|G/Z|","\t\t","|g2|","\t\t","|g3|","\t\t","|g4|","\t\t","|g5| \n");
 Print("---------------------------------------------------------------------------------------------------------------------------------- \n");
-Print(Length(sinif),"\t",RankOfXMod(XM),"\t",MiddleLengthOfXMod(XM),"\t",NilpotencyClassOfXMod(XM),"\t",Size(FactorXMod(XM,CenterXMod(XM))));    
+Print(Length(sinif),"\t",RankOfXMod(XM),"\t",MiddleLengthOfXMod(XM),"\t",NilpotencyClassOfXMod(XM),"\t",Size(FactorXMod(XM,CentreXMod(XM))));    
 
 if Length(B) > 1 then
 for i in [2..Length(B)] do
