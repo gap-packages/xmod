@@ -24,6 +24,13 @@ DeclareAttribute( "PreXModStabilizer", IsPreXMod );
 #O  CentreXMod  . . . . . . . . . the center of crossed module
 ##
 DeclareAttribute( "CentreXMod", IsXMod );
+DeclareSynonym( "CenterXMod", CentreXMod );
+
+#############################################################################
+##
+#O  AllIsomorphisms  . . . . . . . . . . all isomorphisms between two groups 
+##
+DeclareOperation( "AllIsomorphisms", [ IsGroup, IsGroup ] );
 
 #############################################################################
 ##
@@ -45,9 +52,9 @@ DeclareAttribute( "DerivedSubXMod", IsXMod );
 
 #############################################################################
 ##
-#O CommSubXMod  . . . . . . . . . the commutator subcrossed module of the normal subcrossed modules SH and RK
+#O CommutatorSubXMod  . . . . . . . commutator subxmod of two normal subxmods
 ##
-DeclareOperation( "CommSubXMod", [  Is2dGroup, Is2dGroup, Is2dGroup ] );
+DeclareOperation( "CommutatorSubXMod", [  Is2dGroup, Is2dGroup, Is2dGroup ] );
 
 #############################################################################
 ##
@@ -77,17 +84,19 @@ DeclareOperation( "CorrespondingMap", [  IsGroup, IsGroup ] );
 ##
 #O FactorXMod  . . . . . . . . . the quotient crossed module
 ##
-DeclareOperation( "FactorXMod", [  Is2dGroup, Is2dGroup ] );
+DeclareOperation( "FactorXMod", [  IsXMod, IsXMod ] );
 
 #############################################################################
 ##
-#O IsIsoclinicXMod  . . . . . . . . . check that the given crossed modules are isoclinic
+#O AreIsoclinicXMods  . . . . . . check that two crossed modules are isoclinic
 ##
-DeclareOperation( "IsIsoclinicXMod", [  Is2dGroup, Is2dGroup ] );
+DeclareOperation( "AreIsoclinicXMods", [ IsXMod, IsXMod ] );
 
 #############################################################################
 ##
-#O IsIsomorphicXMod  . . . . . . . . . check that the given crossed modules are isomorphic
+#O IsIsomorphicXMod  . . . . . check that two crossed modules are isomorphic
+##
+#? should really be IsomorphismXMods (which might return fail) 
 ##
 DeclareOperation( "IsIsomorphicXMod", [  Is2dGroup, Is2dGroup ] );
 

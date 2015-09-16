@@ -71,8 +71,8 @@ end );
 ##
 #M  CentreXMod  . . . . . . . . . the centre of a crossed module
 ##
-InstallMethod( CentreXMod,
-    "generic method for crossed modules", true, [ IsXMod ], 0,
+InstallMethod( CentreXMod, "generic method for crossed modules", true, 
+    [ IsXMod ], 0,
 function( XM )
 
     local alpha, T, G, partial, fix, k_partial, k_alpha, PM, K;
@@ -87,6 +87,24 @@ function( XM )
     k_alpha := GroupHomomorphismByFunction( K, AutomorphismGroup( fix ), 
                    x -> Image( alpha, x ) );
     return XModByBoundaryAndAction( k_partial, k_alpha );
+end );
+
+#############################################################################
+##
+#M  AllIsomorphisms  . . . . . . . . . . . all isomorphisms between two goups
+##
+InstallMethod( AllIsomorphisms, "generic method for groups", true, 
+    [ IsGroup, IsGroup ], 0,
+function( G,H )
+
+    local  iso, all, list;
+    iso := IsomorphismGroups( G, H );  
+    if ( iso = fail ) then
+        return fail; 
+    else
+        all := AllAutomorphisms( H, H );
+        return List( all, a -> iso*a ); 
+    fi;    
 end );
 
 #############################################################################
@@ -167,9 +185,9 @@ end );
 
 #############################################################################
 ##
-#M  CommSubXMod  . . . . . . . . . the commutator subcrossed module of the normal subcrossed modules SH and RK
+#M  CommutatorSubXMod  . . . . . . . commutator subxmod of two normal subxmods
 ##
-InstallMethod( CommSubXMod,
+InstallMethod( CommutatorSubXMod,
     "generic method for crossed modules", true, [ Is2dGroup, Is2dGroup, Is2dGroup ], 0,
 function(XM,SH,RK)
 
@@ -225,7 +243,7 @@ local liste, C;
   #  while (IsEqualXMod(C,liste[Length(liste)]) = false)  do
   while ( C <> liste[Length(liste)] )  do
         Add( liste, C );
-        C := CommSubXMod( XM, C, XM );
+        C := CommutatorSubXMod( XM, C, XM );
     od;
 
     return liste;
@@ -295,10 +313,10 @@ end );
 
 #############################################################################
 ##
-#M  FactorXMod  . . . . . . . . . the quotient crossed module
+#M  FactorXMod  . . . . . . . . . . . . . . . . . the quotient crossed module
 ##
-InstallMethod( FactorXMod,
-    "generic method for crossed modules", true, [ Is2dGroup, Is2dGroup ], 0,
+InstallMethod( FactorXMod, "generic method for crossed modules", true, 
+    [ Is2dGroup, Is2dGroup ], 0,
 function(XM,PM)
 
 local alpha1,alpha2,partial1,partial2,nhom1,nhom2,T,G,S,H,B1,B2,bdy,act,a,f1,f2,b,c,liste;
@@ -326,13 +344,13 @@ end );
 
 #############################################################################
 ##
-#M  IsIsoclinicXMod  . . . . . . . . . check that the given crossed modules are isoclinic
+#M  AreIsoclinicXMods  . . . . . check that two crossed modules are isoclinic
 ##
-InstallMethod( IsIsoclinicXMod,
-    "generic method for crossed modules", true, [ Is2dGroup, Is2dGroup ], 0,
+InstallMethod( AreIsoclinicXMods, "generic method for crossed modules", true, 
+    [ IsXMod, IsXMod ], 0,
 function(XM1,XM2)
 
-local cakma3,cakma4,kG12,kG11,T,G,S,H,sonuc,kT11,kT12,cakma,cakma2,yeni_iso,x,y,z1,z2,gz1,gz2,gx,gy,gor1,gor2,pisi0,pisi1,nisi1,nisi0,nhom1,nhom2,nhom3,nhom4,ComXM1,ComXM2,MXM1,MXM2,BXM1,BXM2,b1,a1,T1,G1,b2,a2,T2,G2,alpha1,phi1,m1_ler,m2_ler,m1,m2,b11,a11,T11,G11,b12,a12,T12,G12,alpha11,phi11,m11,alp,ph,ialpha,iphi;
+local cakma3,cakma4,kG12,kG11,T,G,S,H,sonuc,kT11,kT12,cakma,cakma2,yeni_iso,x,y,z1,z2,gz1,gz2,gx,gy,gor1,gor2,pisi0,pisi1,nisi1,nisi0,nhom1,nhom2,nhom3,nhom4,ComXM1,ComXM2,MXM1,MXM2,BXM1,BXM2,b1,a1,T1,G1,b2,a2,T2,G2,alpha1,phi1,m1_ler,m2_ler,m1,m2,b11,a11,T11,G11,b12,a12,T12,G12,alpha11,phi11,m11,alp,ph;
 
 sonuc := true;
 
@@ -390,10 +408,8 @@ BXM2 := FactorXMod(XM2,MXM2);
     return sonuc;
     fi;
     
-    ialpha := IsomorphismGroups(T1,T2);
-    alpha1 := List( AllAutomorphisms(T2), a -> ialpha*a );  
-    iphi := IsomorphismGroups(G1,G2);  
-    phi1 := List( AllAutomorphisms(G2), a -> iphi*a );    
+    alpha1 := AllIsomorphisms( T1, T2 );    
+    phi1 := AllIsomorphisms( G1, G2 );    
     m1_ler := [];        
     for alp in alpha1 do
         for ph in phi1 do
@@ -410,10 +426,8 @@ BXM2 := FactorXMod(XM2,MXM2);
         return false;
         fi;
     
-    ialpha := IsomorphismGroups(T11,T12);
-    alpha11 := List( AllAutomorphisms(T12), a -> ialpha*a );  
-    iphi := IsomorphismGroups(G11,G12);  
-    phi11 := List( AllAutomorphisms(G12), a -> iphi*a );    
+    alpha11 := AllIsomorphisms(T11,T12);
+    phi11 := AllIsomorphisms(G11,G12);    
     m2_ler := [];        
     for alp in alpha11 do
         for ph in phi11 do
@@ -538,7 +552,7 @@ InstallMethod( IsIsomorphicXMod,
     "generic method for crossed modules", true, [ Is2dGroup, Is2dGroup ], 0,
 function(XM1,XM2)
 
-local sonuc,T1,G1,b2,a2,b1,a1,T2,G2,alpha1,phi1,m1_ler,m1,alp,ph,ialpha,iphi;
+local sonuc,T1,G1,b2,a2,b1,a1,T2,G2,alpha1,phi1,m1_ler,m1,alp,ph;
 
 sonuc := true;
 
@@ -565,10 +579,8 @@ a2 := XModAction(XM2);
     return sonuc;
     fi;
 
-    ialpha := IsomorphismGroups(T1,T2);
-    alpha1 := List( AllAutomorphisms(T2), a -> ialpha*a );  
-    iphi := IsomorphismGroups(G1,G2);  
-    phi1 := List( AllAutomorphisms(G2), a -> iphi*a );    
+    alpha1 := AllIsomorphisms(T1,T2);    
+    phi1 := AllIsomorphisms(G1,G2);    
     m1_ler := [];        
     for alp in alpha1 do
         for ph in phi1 do
@@ -692,7 +704,7 @@ sonuc := [];
 sayi := 0;
 
         for XM1 in XM1_ler do
-            if IsIsoclinicXMod(XM,XM1) then
+            if AreIsoclinicXMods(XM,XM1) then
                 Print(XM," ~ ",XM1,"\n" );    
                 Add(sonuc,Position(XM1_ler,XM1));
                 sayi := sayi + 1;            
