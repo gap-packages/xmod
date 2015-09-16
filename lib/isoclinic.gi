@@ -332,7 +332,7 @@ InstallMethod( IsIsoclinicXMod,
     "generic method for crossed modules", true, [ Is2dGroup, Is2dGroup ], 0,
 function(XM1,XM2)
 
-local cakma3,cakma4,kG12,kG11,T,G,S,H,sonuc,kT11,kT12,cakma,cakma2,yeni_iso,x,y,z1,z2,gz1,gz2,gx,gy,gor1,gor2,pisi0,pisi1,nisi1,nisi0,nhom1,nhom2,nhom3,nhom4,ComXM1,ComXM2,MXM1,MXM2,BXM1,BXM2,b1,a1,T1,G1,b2,a2,T2,G2,alpha1,phi1,m1_ler,m2_ler,m1,m2,b11,a11,T11,G11,b12,a12,T12,G12,alpha11,phi11,m11,alp,ph;
+local cakma3,cakma4,kG12,kG11,T,G,S,H,sonuc,kT11,kT12,cakma,cakma2,yeni_iso,x,y,z1,z2,gz1,gz2,gx,gy,gor1,gor2,pisi0,pisi1,nisi1,nisi0,nhom1,nhom2,nhom3,nhom4,ComXM1,ComXM2,MXM1,MXM2,BXM1,BXM2,b1,a1,T1,G1,b2,a2,T2,G2,alpha1,phi1,m1_ler,m2_ler,m1,m2,b11,a11,T11,G11,b12,a12,T12,G12,alpha11,phi11,m11,alp,ph,ialpha,iphi;
 
 sonuc := true;
 
@@ -390,8 +390,10 @@ BXM2 := FactorXMod(XM2,MXM2);
     return sonuc;
     fi;
     
-    alpha1 := AllIsomorphisms(T1,T2);    
-    phi1 := AllIsomorphisms(G1,G2);    
+    ialpha := IsomorphismGroups(T1,T2);
+    alpha1 := List( AllAutomorphisms(T2), a -> ialpha*a );  
+    iphi := IsomorphismGroups(G1,G2);  
+    phi1 := List( AllAutomorphisms(G2), a -> iphi*a );    
     m1_ler := [];        
     for alp in alpha1 do
         for ph in phi1 do
@@ -408,8 +410,10 @@ BXM2 := FactorXMod(XM2,MXM2);
         return false;
         fi;
     
-    alpha11 := AllIsomorphisms(T11,T12);
-    phi11 := AllIsomorphisms(G11,G12);    
+    ialpha := IsomorphismGroups(T11,T12);
+    alpha11 := List( AllAutomorphisms(T12), a -> ialpha*a );  
+    iphi := IsomorphismGroups(G11,G12);  
+    phi11 := List( AllAutomorphisms(G12), a -> iphi*a );    
     m2_ler := [];        
     for alp in alpha11 do
         for ph in phi11 do
@@ -534,7 +538,7 @@ InstallMethod( IsIsomorphicXMod,
     "generic method for crossed modules", true, [ Is2dGroup, Is2dGroup ], 0,
 function(XM1,XM2)
 
-local sonuc,T1,G1,b2,a2,b1,a1,T2,G2,alpha1,phi1,m1_ler,m1,alp,ph;
+local sonuc,T1,G1,b2,a2,b1,a1,T2,G2,alpha1,phi1,m1_ler,m1,alp,ph,ialpha,iphi;
 
 sonuc := true;
 
@@ -561,8 +565,10 @@ a2 := XModAction(XM2);
     return sonuc;
     fi;
 
-    alpha1 := AllIsomorphisms(T1,T2);    
-    phi1 := AllIsomorphisms(G1,G2);    
+    ialpha := IsomorphismGroups(T1,T2);
+    alpha1 := List( AllAutomorphisms(T2), a -> ialpha*a );  
+    iphi := IsomorphismGroups(G1,G2);  
+    phi1 := List( AllAutomorphisms(G2), a -> iphi*a );    
     m1_ler := [];        
     for alp in alpha1 do
         for ph in phi1 do
