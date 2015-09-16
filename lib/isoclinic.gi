@@ -97,7 +97,7 @@ InstallMethod( AllIsomorphisms, "generic method for groups", true,
     [ IsGroup, IsGroup ], 0,
 function( G,H )
 
-    local  iso, all, list;
+    local  iso, all;
     iso := IsomorphismGroups( G, H );  
     if ( iso = fail ) then
         return fail; 
@@ -316,7 +316,7 @@ end );
 #M  FactorXMod  . . . . . . . . . . . . . . . . . the quotient crossed module
 ##
 InstallMethod( FactorXMod, "generic method for crossed modules", true, 
-    [ Is2dGroup, Is2dGroup ], 0,
+    [ IsXMod, IsXMod ], 0,
 function(XM,PM)
 
 local alpha1,alpha2,partial1,partial2,nhom1,nhom2,T,G,S,H,B1,B2,bdy,act,a,f1,f2,b,c,liste;
