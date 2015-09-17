@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  isclnc.xml            XMod documentation             Alper Odabas  -->
 <!--                                                       & Enver Uslu  -->
-<!--  version 2.43, 16/09/2015                                           --> 
+<!--  version 2.43, 17/09/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2015, Chris Wensley et al                       --> 
 <!--                                                                     -->
@@ -51,54 +51,68 @@ These constructions are described on pages 19 and 66 of Norrie's thesis
 </ManSection>
 <Example>
 <![CDATA[
-gap> X06;
-[d8->d16]
-gap> PreXModFixedPointSubgroup(X06);
-Group([ (11,15)(12,16)(13,17)(14,18) ])
-gap> PreXModStabilizer(X06);
-Group([ (11,15)(12,16)(13,17)(14,18) ])
-gap> DisplacementSubgroup(X06);
-Group([ (11,13,15,17)(12,14,16,18) ])
-gap> DerivedSubXMod(X06);
-[Group( [ (11,13,15,17)(12,14,16,18) ] )->Group( 
-[ (11,15)(12,16)(13,17)(14,18) ] )]
+gap> D24 := DihedralGroup(24);
+<pc group of size 24 with 4 generators>
+gap> SetName( D24, "D24" );
+gap> norm := NormalSubgroups( D24 );;
+gap> List( norm, n->Size(n) );
+[ 24, 12, 12, 12, 6, 4, 2, 3, 1 ]
+gap> N5 := norm[5];;
+gap> X5 := XModByNormalSubgroup( D24, N5 );
+[Group( [ f3, f4 ] )->D24]
+gap> Size( X5 );
+[ 6, 24 ]
+gap> fix := PreXModFixedPointSubgroup( X5 );
+<pc group of size 2 with 1 generators>
+gap> stab := PreXModStabilizer( X5 );
+<pc group of size 12 with 1 generators>
+gap> DisplacementSubgroup( X5 );
+<pc group of size 3 with 1 generators>
+gap> DX5 := DerivedSubXMod( X5 );  
+[Group( [ f4 ] )->Group( <identity> of ... )]
 ]]>
 </Example>
 
 <ManSection>
-   <Oper Name="IntersectionSubXMods"
+   <Oper Name="IntersectionSubXMod"
          Arg="X1 X2" />
+   <Oper Name="CommutatorSubXMod"
+         Arg="X0 X1 X2" />
 <Description>
-When <C>X1,X2</C> are subcrossed modules of <C>X0</C>, and 
-<C>X3 := IntersectionXMod(X1,X2)</C>, then the source and range of <C>X3</C> 
-are the intersections of the sources and ranges of <C>X1</C> and <C>X2</C>. 
+When <C>X1,X2</C> are subcrossed modules of <C>X0</C>, and when 
+<C>Y12 := IntersectionSubXMod(X1,X2)</C>, 
+then the source and range of <C>Y12</C> are the intersections of 
+the sources and ranges of <C>X1</C> and <C>X2</C>. 
+<P/> 
+The <C>CommutatorSubXMod</C> of <C>X1</C> and <C>X2</C> is <M>\ldots</M> 
 </Description>
 </ManSection>
 <Example>
 <![CDATA[
-gap> G30 := SmallGroup(30,2);
-<pc group of size 30 with 3 generators>
-gap> X30 := XModByAutomorphismGroup( G30 ); 
-[Group( [ f1, f2, f3 ] )->Group( [ f1, f2, f3, f4 ] )]
-gap> Size(X30);
-[ 30, 40 ]
-gap> norm := NormalSubgroups( G30 );;
-gap> N2 := norm[2];  N3 := norm[3];             
-Group([ f1, f3 ])
-Group([ f2, f3 ])
-gap> bdy := Boundary( X30 ); 
-[ f1, f2, f3 ] -> [ f3, <identity> of ..., f4^2 ]
-gap> R2 := Image( bdy, N2 );  R3 := Image( bdy, N3 ); 
-Group([ f3, f4^2 ])
-Group([ <identity> of ..., f4^2 ])
-gap> X2 := SubXMod( X30, N2, R2 );
-[Group( [ f1, f3 ] )->Group( [ f3, f4^2 ] )]
-gap> X3 := SubXMod( X30, N3, R3 );
-[Group( [ f2, f3 ] )->Group( [ <identity> of ..., f4^2 ] )]
-gap> X5 := IntersectionSubXMod( X30, X2, X3 );
-[Group( [ f3, f3^2, f3^3, f3^4 ] )->Group( [ <identity> of ..., f4^2 ] )]
-gap> Size(last);
-[ 5, 5 ]
+gap> X24 := XModByAutomorphismGroup( D24 ); 
+[D24->PAut(D24)]
+gap> Size(X24);
+[ 24, 48 ]
+gap> N3 := norm[3];  N4 := norm[4];             
+Group([ f1*f2*f3*f4^2, f3, f4 ])
+Group([ f1, f3, f4 ])
+gap> bdy := Boundary( X24 ); 
+[ f1, f2, f3, f4 ] -> [ f1*f3, f2*f5, f2^2, f2 ]
+gap> R3 := Image( bdy, N3 );  R4 := Image( bdy, N4 ); 
+Group([ f1*f2^2*f3*f5, f2^2, f2 ])
+Group([ f1*f3, f2^2, f2 ])
+gap> X3 := SubXMod( X24, N3, R3 );
+[Group( [ f1*f2*f3*f4^2, f3, f4 ] )->Group( [ f1*f2^2*f3*f5, f2^2, f2 ] )]
+gap> X4 := SubXMod( X24, N4, R4 );
+[Group( [ f1, f3, f4 ] )->Group( [ f1*f3, f2^2, f2 ] )]
+gap> X6 := IntersectionSubXMod( X24, X3, X4 );
+[Group( [ f3, f4, f3*f4, f4^2, f3*f4^2 ] )->Group( [ f2, f2^2 ] )]
+gap> Size( X6 );
+[ 6, 3 ]
+gap> Y6 := CommutatorSubXMod( X24, X3, X4 );
+[Group( [ f3 ] )->Group( [ f2 ] )]
+gap> X6 = Y6;
+true
 ]]>
 </Example>
 

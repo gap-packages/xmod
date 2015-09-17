@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.gd              GAP4 package `XMod'                Alper Odabas
 #W                                                               & Enver Uslu
-##  version 2.43, 16/09/2015 
+##  version 2.43, 17/09/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al 
 ##
@@ -21,7 +21,37 @@ DeclareAttribute( "PreXModStabilizer", IsPreXMod );
 
 #############################################################################
 ##
-#O  CentreXMod  . . . . . . . . . the center of crossed module
+#A DisplacementSubgroup( XM )
+##
+DeclareAttribute( "DisplacementSubgroup", IsXMod );
+
+#############################################################################
+##
+#A DerivedSubXMod  . . . . . . . . . the commutator of the crossed module
+##
+DeclareAttribute( "DerivedSubXMod", IsXMod );
+
+#############################################################################
+##
+#O IntersectionSubXMod  . . . . .intersection of subcrossed modules SH and RK
+##
+DeclareOperation( "IntersectionSubXMod", [  IsXMod, IsXMod, IsXMod ] );
+
+#############################################################################
+##
+#O CommutatorSubXMod  . . . . . . . commutator subxmod of two normal subxmods
+##
+DeclareOperation( "CommutatorSubXMod", [  IsXMod, IsXMod, IsXMod ] );
+
+#############################################################################
+##
+#O LowerCentralSeriesXMod  . . . . . . the lower central series of an xmod
+##
+DeclareAttribute( "LowerCentralSeriesXMod", IsXMod );
+
+#############################################################################
+##
+#O  CentreXMod  . . . . . . . . . . . . . . . the center of a crossed module
 ##
 DeclareAttribute( "CentreXMod", IsXMod );
 DeclareSynonym( "CenterXMod", CentreXMod );
@@ -34,45 +64,15 @@ DeclareOperation( "AllIsomorphisms", [ IsGroup, IsGroup ] );
 
 #############################################################################
 ##
-#A DisplacementSubgroup( XM )
-##
-DeclareAttribute( "DisplacementSubgroup", IsXMod );
-
-#############################################################################
-##
-#O IntersectionSubXMod  . . . . .intersection of subcrossed modules SH and RK
-##
-DeclareOperation( "IntersectionSubXMod", [  IsXMod, IsXMod, IsXMod ] );
-
-#############################################################################
-##
-#A DerivedSubXMod  . . . . . . . . . the commutator of the crossed module
-##
-DeclareAttribute( "DerivedSubXMod", IsXMod );
-
-#############################################################################
-##
-#O CommutatorSubXMod  . . . . . . . commutator subxmod of two normal subxmods
-##
-DeclareOperation( "CommutatorSubXMod", [  Is2dGroup, Is2dGroup, Is2dGroup ] );
-
-#############################################################################
-##
-#O LowerCentralSeriesOfXMod  . . . . . . . . . the lower central series of the crossed module
-##
-DeclareOperation( "LowerCentralSeriesOfXMod", [ Is2dGroup ] );
-
-#############################################################################
-##
-#O IsNilpotentXMod  . . . . . . . . . check that the crossed module is nilpotent
+#O IsNilpotentXMod  . . . . . . . check that the crossed module is nilpotent
 ##
 DeclareOperation( "IsNilpotentXMod", [ Is2dGroup ] );
 
 #############################################################################
 ##
-#O NilpotencyClassOfXMod  . . . . . . . . . the nilpotency degree of the crossed module
+#O NilpotencyClassXMod  . . . . . . . the nilpotency degree of the crossed module
 ##
-DeclareOperation( "NilpotencyClassOfXMod", [ Is2dGroup ] );
+DeclareOperation( "NilpotencyClassXMod", [ Is2dGroup ] );
 
 #############################################################################
 ##
@@ -132,15 +132,15 @@ DeclareOperation( "IsoAllXMods", [  IsList ] );
 
 #############################################################################
 ##
-#O RankOfXMod  . . . . . . . . . the rank of the crossed module
+#O RankXMod  . . . . . . . . . the rank of the crossed module
 ##
-DeclareOperation( "RankOfXMod", [ Is2dGroup ] );
+DeclareOperation( "RankXMod", [ Is2dGroup ] );
 
 #############################################################################
 ##
-#O MiddleLengthOfXMod  . . . . . . . . . the middle length of the crossed module
+#O MiddleLengthXMod  . . . . . . . . . the middle length of the crossed module
 ##
-DeclareOperation( "MiddleLengthOfXMod", [ Is2dGroup ] );
+DeclareOperation( "MiddleLengthXMod", [ Is2dGroup ] );
 
 #############################################################################
 ##

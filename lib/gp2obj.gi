@@ -2,7 +2,7 @@
 ##
 #W  gp2obj.gi                 GAP4 package `XMod'               Chris Wensley
 #W                                                                & Murat Alp
-##  version 2.43, 16/09/2015 
+##  version 2.43, 17/09/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley ety al,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -836,7 +836,7 @@ function( G, A )
     fi; 
     P := ImagesSource( a2p );
     if ( not HasName( P ) and HasName( A ) ) then
-        SetName( P, Concatenation( "P", Name( A ), ")" ) );
+        SetName( P, Concatenation( "P", Name( A ) ) );
     fi;
     genA := GeneratorsOfGroup( A ); 
     genP := List( genA, a -> Image( a2p, a ) ); 

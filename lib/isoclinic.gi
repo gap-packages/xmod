@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.gi               GAP4 package `XMod'                Alper Odabas
 #W                                                               & Enver Uslu
-##  version 2.43, 16/09/2015 
+##  version 2.43, 17/09/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al 
 #Y   
@@ -34,7 +34,7 @@ function( XM )
     od; 
     ##  if the list consist only the identity element then there is a bug 
     ##  in the function AsMagma. 
-    if ( Length(list) = 1 ) then
+    if ( Length( Set(list) ) = 1 ) then
         return TrivialSubgroup( T );
     fi;
     return AsGroup(list);
@@ -48,23 +48,23 @@ InstallMethod( PreXModStabilizer, "generic method for crossed modules", true,
     [ IsPreXMod ], 0,
 function( XM )
 
-local alpha,sonuc,T,G,t,g,list;
+    local alpha, sonuc, T, G, t, g, list;
 
-T := Source(XM);
-G := Range(XM);
-alpha := XModAction(XM);
-list := [];
-for g in G do
-        if (ForAll(T,t -> Image(Image(alpha,g),t)=t)) then
-        Add(list,g);
+    T := Source(XM);
+    G := Range(XM);
+    alpha := XModAction(XM);
+    list := [];
+    for g in G do
+        if ForAll( T, t -> Image(Image(alpha,g),t)=t ) then
+            Add( list, g );
         fi;        
-od;
-    ##  if the list consist only the identity element then there is a bug 
+    od;
+    ##  if the lists consist only the identity element then there is a bug 
     ##  in the function AsMagma. 
-  if Set(list) = [ () ] then
-        return Subgroup(Range(XM),[()]);
-  fi;
-return AsGroup(list);
+    if ( Length( Set(list) ) = 1 ) then
+        return TrivialSubgroup( G );
+    fi;
+    return AsGroup(list);
 end );
 
 #############################################################################
@@ -131,8 +131,8 @@ function( XM )
     od;
     ##  if the list consist only the identity element then there is a bug 
     ##  in the function AsMagma. 
-    if ( Length( list ) = 1 ) then
-        return TrivialSubgroup( Source(XM) );
+    if ( Length( Set(list) ) = 1 ) then
+        return TrivialSubgroup( T );
     fi;
     return AsGroup(list);
 end );
@@ -165,21 +165,26 @@ end );
 
 #############################################################################
 ##
-#M  DerivedSubXMod  . . . . . . . . . the commutator of the crossed module
+#M  DerivedSubXMod  . . . . . . . . . . the commutator of the crossed module
 ##
 InstallMethod( DerivedSubXMod, "generic method for crossed modules", true, 
     [ IsXMod ], 0,
 function(XM)
 
-    local  alpha, k_partial, k_alpha, PM, D, dgt;
+    local  D, genD, imD, bdy, alpha, PM, dgt, gendgt, imdgt, autdgt, 
+           k_partial, k_alpha; 
 
     D := DerivedSubgroup( Source( XM ) );
+    bdy := Boundary( XM );
     alpha := XModAction( XM );
     dgt := DisplacementSubgroup( XM );
-    k_partial := GroupHomomorphismByFunction( DisplacementSubgroup( XM ), D, 
-                     x -> Image( Boundary( XM ), x ) );
-    k_alpha := GroupHomomorphismByFunction( D, AutomorphismGroup(dgt), 
-                     x -> Image( alpha, x ) );
+    gendgt := GeneratorsOfGroup( dgt );
+    imdgt := List( gendgt, x -> Image( bdy, x ) );
+    k_partial := GroupHomomorphismByImages( dgt, D, gendgt, imdgt ); 
+    genD := GeneratorsOfGroup( D ); 
+    imD := List( genD, x -> Image( alpha, x ) ); 
+    autdgt := AutomorphismGroup( dgt ); 
+    k_alpha := GroupHomomorphismByImages( D, autdgt, genD, imD );
     return XModByBoundaryAndAction( k_partial, k_alpha );
 end );
 
@@ -187,67 +192,67 @@ end );
 ##
 #M  CommutatorSubXMod  . . . . . . . commutator subxmod of two normal subxmods
 ##
-InstallMethod( CommutatorSubXMod,
-    "generic method for crossed modules", true, [ Is2dGroup, Is2dGroup, Is2dGroup ], 0,
-function(XM,SH,RK)
+InstallMethod( CommutatorSubXMod, "generic method for crossed modules", true, 
+    [ IsXMod, IsXMod, IsXMod ], 0,
+function( TG, SH, RK )
 
-local alpha, T, G, S, H, R, K,  partial, k_partial, k_alpha, s,k,r,h,DKS_DHR, KomHK,list;
-T := Source(XM);
-G := Range(XM);
-alpha := XModAction(XM);
-partial := Boundary(XM);
-S := Source(SH);
-H := Range(SH);
-R := Source(RK);
-K := Range(RK);
-list := [];
-## for elements of DKS and DHR 
-for s in S do
+    local  alpha, T, G, S, H, R, K, partial, k_partial, k_alpha, s, k, r, h, 
+           DKS_DHR, KomHK, list;
+    T := Source(TG);
+    G := Range(TG);
+    alpha := XModAction(TG);
+    partial := Boundary(TG);
+    S := Source(SH);
+    H := Range(SH);
+    R := Source(RK);
+    K := Range(RK);
+    list := [];
+    ## for elements of DKS and DHR 
+    for s in S do
         for k in K do
-        Add(list,Image(Image(alpha,k),s)*s^-1);
+            Add( list, Image( Image(alpha,k), s ) * s^-1 );
         od;
-od;
-for r in R do
+    od;
+    for r in R do
         for h in H do
-        Add(list,Image(Image(alpha,h),r)*r^-1);
+            Add( list, Image( Image(alpha,h), r ) * r^-1);
         od;
-od;
-list := Set(list);
-  ### If the list consist only the identity element then there is a bug in the function AsMagma. 
-  if Set(list) = [ () ] then
-        DKS_DHR := Subgroup(Source(XM),[()]);
-  else
+    od;
+    list := Set(list);
+    ### if the list consists only the identity element 
+    ### then there is a bug in the function AsMagma. 
+    if ( Length( Set(list) ) = 1 ) then
+        DKS_DHR := TrivialSubgroup( T );
+    else
         DKS_DHR := AsGroup(list);
-  fi;
-  ###
-KomHK := CommutatorSubgroup(H,K);
-
-k_partial := GroupHomomorphismByFunction( DKS_DHR, KomHK, x -> Image(partial,x) );
-k_alpha := GroupHomomorphismByFunction( KomHK, AutomorphismGroup(DKS_DHR), x -> Image(alpha,x) );
-
-return PreXModObj(k_partial,k_alpha);
+    fi;
+    KomHK := CommutatorSubgroup( H, K );
+    k_partial := GroupHomomorphismByFunction( DKS_DHR, KomHK, 
+                     x -> Image( partial, x ) );
+    k_alpha := GroupHomomorphismByFunction( KomHK, AutomorphismGroup(DKS_DHR), 
+                   x -> Image( alpha, x ) );
+    return XModByBoundaryAndAction( k_partial, k_alpha );
 end );
 
 #############################################################################
 ##
-#M  LowerCentralSeriesOfXMod  . . . . . . . . . the lower central series of the crossed module
+#M  LowerCentralSeriesXMod  . . . . . . . the lower central series of an xmod
 ##
-InstallMethod( LowerCentralSeriesOfXMod,
-    "generic method for crossed modules", true, [ Is2dGroup ], 0,
+InstallMethod( LowerCentralSeriesXMod, "generic method for crossed modules", 
+    true, [ IsXMod ], 0,
 function(XM)
 
-local liste, C;
+    local  list, C;
 
-    liste := [ XM ];
+    list := [ XM ];
     C := DerivedSubXMod( XM );
-  #  while (IsEqualXMod(C,liste[Length(liste)]) = false)  do
-  while ( C <> liste[Length(liste)] )  do
-        Add( liste, C );
+    ##  while (IsEqualXMod(C,liste[Length(liste)]) = false)  do
+    while ( C <> list[ Length(list) ] )  do
+        Add( list, C );
         C := CommutatorSubXMod( XM, C, XM );
     od;
-
-    return liste;
-    end );
+    return list;
+end );
     
 #############################################################################
 ##
@@ -259,7 +264,7 @@ function(XM)
 
 local S,n,sonuc;
 
-    S := LowerCentralSeriesOfXMod( XM );
+    S := LowerCentralSeriesXMod( XM );
     n := Length(S);
     if ( Size(S[n]) = [1,1] ) then
         sonuc := true;
@@ -271,9 +276,9 @@ end );
 
 #############################################################################
 ##
-#M  NilpotencyClassOfXMod  . . . . . . . . . the nilpotency degree of the crossed module
+#M  NilpotencyClassXMod  . . . . . . . . . the nilpotency degree of the crossed module
 ##
-InstallMethod( NilpotencyClassOfXMod,
+InstallMethod( NilpotencyClassXMod,
     "generic method for crossed modules", true, [ Is2dGroup ], 0,
 function(XM)
 
@@ -282,7 +287,7 @@ local sonuc;
     if not IsNilpotentXMod(XM) then
         sonuc := 0;
     else
-    sonuc := Length(LowerCentralSeriesOfXMod(XM))-1;        
+    sonuc := Length(LowerCentralSeriesXMod(XM))-1;        
     fi;
             
 return sonuc;
@@ -773,9 +778,9 @@ end );
 
 #############################################################################
 ##
-#M  RankOfXMod  . . . . . . . . . the rank of the crossed module
+#M  RankXMod  . . . . . . . . . the rank of the crossed module
 ##
-InstallMethod( RankOfXMod,
+InstallMethod( RankXMod,
     "generic method for crossed modules", true, [ Is2dGroup ], 0,
 function(XM)
 
@@ -797,9 +802,9 @@ end );
 
 #############################################################################
 ##
-#M  MiddleLengthOfXMod  . . . . . . . . . the middle length of the crossed module
+#M  MiddleLengthXMod  . . . . . . . . . the middle length of the crossed module
 ##
-InstallMethod( MiddleLengthOfXMod, "generic method for crossed modules", true, 
+InstallMethod( MiddleLengthXMod, "generic method for crossed modules", true, 
     [ Is2dGroup ], 0,
 function(XM)
 
@@ -904,13 +909,13 @@ local Eler,Iler,i,j,sinif,B;
 
 sinif := IsoclinicXModFamily(XM,XM_ler);
 
-B := LowerCentralSeriesOfXMod(XM);
+B := LowerCentralSeriesXMod(XM);
     
 Print("---------------------------------------------------------------------------------------------------------------------------------- \n");
 Print("---------------------------------------------------------------------------------------------------------------------------------- \n");
 Print("Number","\t","Rank","\t\t","M. L.","\t\t","Class","\t","|G/Z|","\t\t","|g2|","\t\t","|g3|","\t\t","|g4|","\t\t","|g5| \n");
 Print("---------------------------------------------------------------------------------------------------------------------------------- \n");
-Print(Length(sinif),"\t",RankOfXMod(XM),"\t",MiddleLengthOfXMod(XM),"\t",NilpotencyClassOfXMod(XM),"\t",Size(FactorXMod(XM,CentreXMod(XM))));    
+Print(Length(sinif),"\t",RankXMod(XM),"\t",MiddleLengthXMod(XM),"\t",NilpotencyClassXMod(XM),"\t",Size(FactorXMod(XM,CentreXMod(XM))));    
 
 if Length(B) > 1 then
 for i in [2..Length(B)] do
