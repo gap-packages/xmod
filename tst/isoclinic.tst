@@ -56,14 +56,38 @@ gap> Y6 := CommutatorSubXMod( X24, X3, X4 );
 gap> X6 = Y6;
 true
 
+gap> nsx := NormalSubXMods( X24 );; 
+gap> Length( nsx );  Size( nsx[30] );
+40
+[ 4, 8 ]
+gap> Q := FactorXMod( X24, nsx[30] ); 
+[Group( [ f1, f2, f2^2, f2 ] )->Group( 
+[ f1, f2, <identity> of ..., <identity> of ..., <identity> of ... ] )]
+gap> Size( Q );
+[ 6, 6 ]
+
 gap> CentreXMod( X5 );      
 [Group( [ f3*f4 ] )->Group( [ f3*f4 ] )]
 
-gap> [ IsAsphericalXMod(X5), IsAsphericalXMod(X24) ];
+gap> X4 := XModByNormalSubgroup( s4, a4 );;
+gap> LX4 := LowerCentralSeriesOfXMod( X4 ); 
+[ [a4->s4], [Group( [ (2,3,4), (1,2)(3,4) ] )->Group( [ (1,3,2), (2,4,3) 
+     ] )] ]
+gap> List( LX4, Y->Size(Y) );
+[ [ 12, 24 ], [ 12, 12 ] ]
+gap> IsNilpotent2dGroup( X4 );
+false
+gap> NilpotencyClass2dGroup( X4 );
+0
+
+
+gap> [ IsAbelian2dGroup(X5), IsAbelian2dGroup(X24) ];
+[ false, false ]
+gap> [ IsAspherical2dGroup(X5), IsAspherical2dGroup(X24) ];
 [ true, false ]
-gap> [ IsSimplyConnectedXMod(X5), IsSimplyConnectedXMod(X24) ];
+gap> [ IsSimplyConnected2dGroup(X5), IsSimplyConnected2dGroup(X24) ];
 [ true, true ]
-gap> [ IsFaithfulXMod(X5), IsFaithfulXMod(X24) ];              
+gap> [ IsFaithful2dGroup(X5), IsFaithful2dGroup(X24) ];              
 [ false, true ]
 
 gap> ## DX24 := DerivedSubXMod( X24 ); fails! 

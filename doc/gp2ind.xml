@@ -2,9 +2,9 @@
 <!--                                                                     -->
 <!--  gp2ind.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  version 2.32, 13/02/2015                                           --> 
+<!--  version 2.43, 18/09/2015                                           --> 
 <!--                                                                     --> 
-<!--  Copyright (C) 2001-2015, Murat Alp and Chris Wensley,              --> 
+<!--  Copyright (C) 2001-2015, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -24,8 +24,6 @@
          Arg="args" />
    <Prop Name="IsInducedXMod"
          Arg="xmod" />
-   <Prop Name="IsInducedCat1"
-         Arg="cat1" />
    <Attr Name="MorphismOfInducedXMod"
          Arg="xmod" />
 <Description>

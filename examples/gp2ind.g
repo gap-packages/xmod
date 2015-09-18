@@ -2,14 +2,14 @@
 ##
 #W  gp2ind.g                  XMOD example files                Chris Wensley
 ##
-##  version 2.31, 08/11/2014 
+##  version 2.43, 18/09/2015 
 ##
-#Y  Copyright (C) 2012, Murat Alp and Chris Wensley, 
+#Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 #############################################################################
 
-Print("\nXMod test file gp2ind.g (version 08/06/12) :-");
+Print("\nXMod test file gp2ind.g (version 18/09/15) :-");
 
 Print("\nSurjective example :-\n" ); 
 

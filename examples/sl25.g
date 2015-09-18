@@ -2,15 +2,15 @@
 ##
 #W  sl25.g                    XMOD example files                Chris Wensley
 ##
-##  version 2.42, 30/07/2015 
+##  version 2.43, 18/09/2015 
 ##
-#Y  Copyright (C) 2001-2015, Murat Alp and Chris Wensley, 
+#Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 #############################################################################
 
 SetInfoLevel( InfoXMod, 2 ); 
-Print("\nXMod test file sl25.g (version 30/07/15) :-\n\n");
+Print("\nXMod test file sl25.g (version 18/09/15) :-\n\n");
 
 sl25pc := SpecialLinearGroup(2,5); 
 SetName( sl25pc, "sl25-pc" ); 

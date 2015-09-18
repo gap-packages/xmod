@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.gd              GAP4 package `XMod'                Alper Odabas
 #W                                                               & Enver Uslu
-##  version 2.43, 17/09/2015 
+##  version 2.43, 18/09/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al 
 ##
@@ -39,15 +39,21 @@ DeclareOperation( "IntersectionSubXMod", [  IsXMod, IsXMod, IsXMod ] );
 
 #############################################################################
 ##
+#O FactorXMod  . . . . . . . . . . . . . . . . . the quotient crossed module
+##
+DeclareOperation( "FactorXMod", [  IsXMod, IsXMod ] );
+
+#############################################################################
+##
 #O CommutatorSubXMod  . . . . . . . commutator subxmod of two normal subxmods
 ##
 DeclareOperation( "CommutatorSubXMod", [  IsXMod, IsXMod, IsXMod ] );
 
 #############################################################################
 ##
-#O LowerCentralSeriesXMod  . . . . . . the lower central series of an xmod
+#O LowerCentralSeriesOfXMod  . . . . . . the lower central series of an xmod
 ##
-DeclareAttribute( "LowerCentralSeriesXMod", IsXMod );
+DeclareAttribute( "LowerCentralSeriesOfXMod", IsXMod );
 
 #############################################################################
 ##
@@ -64,27 +70,23 @@ DeclareOperation( "AllIsomorphisms", [ IsGroup, IsGroup ] );
 
 #############################################################################
 ##
-#O IsNilpotentXMod  . . . . . . . check that the crossed module is nilpotent
+#O IsAbelian2dGroup  
+#O IsAspherical2dGroup  
+#O IsSimplyConnected2dGroup 
+#O IsFaithful2dGroup 
 ##
-DeclareOperation( "IsNilpotentXMod", [ Is2dGroup ] );
+DeclareProperty( "IsAbelian2dGroup", Is2dGroup );
+DeclareProperty( "IsAspherical2dGroup", Is2dGroup );
+DeclareProperty( "IsSimplyConnected2dGroup", Is2dGroup );
+DeclareProperty( "IsFaithful2dGroup", Is2dGroup );
 
 #############################################################################
 ##
-#O NilpotencyClassXMod  . . . . . . . the nilpotency degree of the crossed module
-##
-DeclareOperation( "NilpotencyClassXMod", [ Is2dGroup ] );
-
-#############################################################################
-##
-#O CorrespondingMap  . . . . . . . . . the tool for quotient crossed module
-##
-DeclareOperation( "CorrespondingMap", [  IsGroup, IsGroup ] );
-
-#############################################################################
-##
-#O FactorXMod  . . . . . . . . . the quotient crossed module
-##
-DeclareOperation( "FactorXMod", [  IsXMod, IsXMod ] );
+#P IsNilpotent2dGroup . . . . . check that an xmod or cat1-group is nilpotent
+#A NilpotencyClass2dGroup . . . . nilpotency degree of an xmod or cat1-group 
+## 
+DeclareProperty( "IsNilpotent2dGroup", Is2dGroup );
+DeclareAttribute( "NilpotencyClass2dGroup", Is2dGroup );
 
 #############################################################################
 ##
@@ -141,30 +143,6 @@ DeclareOperation( "RankXMod", [ Is2dGroup ] );
 #O MiddleLengthXMod  . . . . . . . . . the middle length of the crossed module
 ##
 DeclareOperation( "MiddleLengthXMod", [ Is2dGroup ] );
-
-#############################################################################
-##
-#O IsAbelianXMod  . . . . . . . . . check that the crossed module is abelian
-##
-DeclareOperation( "IsAbelianXMod", [ Is2dGroup ] );
-
-#############################################################################
-##
-#O IsAsphericalXMod  . . . . . . . . . check that the crossed module is aspherical
-##
-DeclareOperation( "IsAsphericalXMod", [ Is2dGroup ] );
-
-#############################################################################
-##
-#O IsSimplyConnectedXMod  . . . . . . . . . check that the crossed module is simply connected
-##
-DeclareOperation( "IsSimplyConnectedXMod", [ Is2dGroup ] );
-
-#############################################################################
-##
-#O IsFaithfulXMod  . . . . . . . . . check that the crossed module is faithful
-##
-DeclareOperation( "IsFaithfulXMod", [ Is2dGroup ] );
 
 #############################################################################
 ##

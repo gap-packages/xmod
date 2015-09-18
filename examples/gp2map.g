@@ -2,14 +2,14 @@
 ##
 #W  gp2map.g                 XMOD example files                 Chris Wensley
 #W                                                                & Murat Alp
-##  version 2.31, 08/11/2014 
+##  version 2.43, 18/09/2015 
 ##
-#Y  Copyright (C) 2001-2014, Murat Alp and Chris Wensley, 
+#Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 #############################################################################
 
-Print("\nXMod example file gp2map.g (version 08/11/14) :-");
+Print("\nXMod example file gp2map.g (version 18/09/15) :-");
 Print("\ntesting constructions of crossed module morphisms\n\n");
 
 msl23 := SpecialLinearGroup( 2, 3 );

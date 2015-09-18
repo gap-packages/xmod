@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.gi               GAP4 package `XMod'                Alper Odabas
 #W                                                               & Enver Uslu
-##  version 2.43, 17/09/2015 
+##  version 2.43, 18/09/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al 
 #Y   
@@ -165,26 +165,64 @@ end );
 
 #############################################################################
 ##
+#M  FactorXMod  . . . . . . . . . . . . . . . . . the quotient crossed module
+##
+InstallMethod( FactorXMod, "generic method for crossed modules", true, 
+    [ IsXMod, IsXMod ], 0,
+function( XM, PM )
+
+    local  alpha1, alpha2, partial1, partial2, nhom1, nhom2, T, G, S, H, 
+           B1, B2, bdy, act;
+
+    alpha1 := XModAction(XM);
+    partial1 := Boundary(XM);
+    T := Source(XM);
+    G := Range(XM);
+    alpha2 := XModAction(PM);
+    partial2 := Boundary(PM);
+    S := Source(PM);
+    H := Range(PM);
+    nhom1 := NaturalHomomorphismByNormalSubgroup(T,S);
+    nhom2 := NaturalHomomorphismByNormalSubgroup(G,H);
+    B1 := Image(nhom1); # T/S bölüm grubu
+    B2 := Image(nhom2); # G/H bölüm grubu
+    bdy := GroupHomomorphismByFunction( B1, B2, 
+             a -> Image( nhom2, 
+               Image(partial1,PreImagesRepresentative( nhom1, a ) ) ) );
+    act := GroupHomomorphismByFunction( B2, AutomorphismGroup(B1), 
+             b -> GroupHomomorphismByFunction( B1, B1, 
+               c -> Image( nhom1, 
+                   (Image(Image(alpha1,PreImagesRepresentative(nhom2,b)), 
+                       PreImagesRepresentative(nhom1,c) ) ) ) ) );
+    return XModByBoundaryAndAction( bdy, act );
+end );
+
+#############################################################################
+##
 #M  DerivedSubXMod  . . . . . . . . . . the commutator of the crossed module
 ##
 InstallMethod( DerivedSubXMod, "generic method for crossed modules", true, 
     [ IsXMod ], 0,
 function(XM)
 
-    local  D, genD, imD, bdy, alpha, PM, dgt, gendgt, imdgt, autdgt, 
+    local  D, genD, imD, bdy, alpha, PM, dgt, gendgt, imdgt, aut, 
            k_partial, k_alpha; 
 
-    D := DerivedSubgroup( Source( XM ) );
+    D := DerivedSubgroup( Range( XM ) );
     bdy := Boundary( XM );
     alpha := XModAction( XM );
     dgt := DisplacementSubgroup( XM );
+    aut := AutomorphismGroup( dgt ); 
     gendgt := GeneratorsOfGroup( dgt );
     imdgt := List( gendgt, x -> Image( bdy, x ) );
     k_partial := GroupHomomorphismByImages( dgt, D, gendgt, imdgt ); 
-    genD := GeneratorsOfGroup( D ); 
-    imD := List( genD, x -> Image( alpha, x ) ); 
-    autdgt := AutomorphismGroup( dgt ); 
-    k_alpha := GroupHomomorphismByImages( D, autdgt, genD, imD );
+    if ( Size(D) = 1 ) then 
+        k_alpha := MappingToOne( D, aut ); 
+    else 
+        genD := GeneratorsOfGroup( D ); 
+        imD := List( genD, x -> Image( alpha, x ) ); 
+        k_alpha := GroupHomomorphismByImages( D, aut, genD, imD );
+    fi;
     return XModByBoundaryAndAction( k_partial, k_alpha );
 end );
 
@@ -236,9 +274,9 @@ end );
 
 #############################################################################
 ##
-#M  LowerCentralSeriesXMod  . . . . . . . the lower central series of an xmod
+#M  LowerCentralSeriesOfXMod  . . . . . . . the lower central series of an xmod
 ##
-InstallMethod( LowerCentralSeriesXMod, "generic method for crossed modules", 
+InstallMethod( LowerCentralSeriesOfXMod, "generic method for crossed modules", 
     true, [ IsXMod ], 0,
 function(XM)
 
@@ -246,7 +284,7 @@ function(XM)
 
     list := [ XM ];
     C := DerivedSubXMod( XM );
-    ##  while (IsEqualXMod(C,liste[Length(liste)]) = false)  do
+    ##  while (IsEqualXMod(C,list[Length(list)]) = false)  do
     while ( C <> list[ Length(list) ] )  do
         Add( list, C );
         C := CommutatorSubXMod( XM, C, XM );
@@ -256,15 +294,55 @@ end );
     
 #############################################################################
 ##
-#M  IsNilpotentXMod  . . . . . . . . . check that the crossed module is nilpotent
+#M  IsAbelian2dGroup . . . . . . . . . check that a crossed module is abelian
 ##
-InstallMethod( IsNilpotentXMod,
-    "generic method for crossed modules", true, [ Is2dGroup ], 0,
+InstallMethod( IsAbelian2dGroup, "generic method for crossed modules", true, 
+    [ IsXMod ], 0,
+function( XM )
+    return ( XM = CentreXMod( XM ) );
+end );
+
+#############################################################################
+##
+#M  IsAspherical2dGroup . . . . . . check that a crossed module is aspherical
+##
+InstallMethod( IsAspherical2dGroup, "generic method for crossed modules", 
+    true, [ IsXMod ], 0,
+function( XM )
+    return ( Size( Kernel( Boundary(XM) ) ) = 1 ); 
+end );
+
+#############################################################################
+##
+#M  IsSimplyConnected2dGroup . check that a crossed module is simply connected
+##
+InstallMethod( IsSimplyConnected2dGroup, "generic method for crossed modules", 
+    true, [ IsXMod ], 0,
+function( XM )
+    return ( Size( CoKernel( Boundary(XM) ) ) = 1 );
+end );
+
+#############################################################################
+##
+#M  IsFaithful2dGroup . . . . . . . . check that a crossed module is faithful
+##
+InstallMethod( IsFaithful2dGroup, "generic method for crossed modules", true, 
+    [ IsXMod ], 0,
+function( XM )
+    return ( Size( PreXModStabilizer(XM) ) = 1 ); 
+end );
+
+#############################################################################
+##
+#M  IsNilpotent2dGroup  . . . . . . . . . . . check that an xmod is nilpotent
+##
+InstallMethod( IsNilpotent2dGroup, "generic method for crossed modules", 
+    true, [ IsXMod ], 0,
 function(XM)
 
-local S,n,sonuc;
+    local  S, n, sonuc;
 
-    S := LowerCentralSeriesXMod( XM );
+    S := LowerCentralSeriesOfXMod( XM );
     n := Length(S);
     if ( Size(S[n]) = [1,1] ) then
         sonuc := true;
@@ -276,75 +354,17 @@ end );
 
 #############################################################################
 ##
-#M  NilpotencyClassXMod  . . . . . . . . . the nilpotency degree of the crossed module
+#M  NilpotencyClass2dGroup . . . . . . .nilpotency degree of ta crossed module
 ##
-InstallMethod( NilpotencyClassXMod,
-    "generic method for crossed modules", true, [ Is2dGroup ], 0,
+InstallMethod( NilpotencyClass2dGroup, "generic method for crossed modules", 
+    true, [ IsXMod ], 0,
 function(XM)
 
-local sonuc;
-
-    if not IsNilpotentXMod(XM) then
-        sonuc := 0;
+    if not IsNilpotent2dGroup(XM) then
+        return 0;
     else
-    sonuc := Length(LowerCentralSeriesXMod(XM))-1;        
+        return Length( LowerCentralSeriesOfXMod(XM) ) - 1;        
     fi;
-            
-return sonuc;
-end );
-
-#############################################################################
-##
-#M  CorrespondingMap  . . . . . . . . . the tool for quotient crossed module
-##
-InstallMethod( CorrespondingMap,
-    "generic method for crossed modules", true, [ IsGroup, IsGroup ], 0,
-function(G,N)
-
-local liste1,liste2,B,eB,nhom,i,f;
-
-liste1 := [];
-liste2 := [];
-nhom := NaturalHomomorphismByNormalSubgroup(G,N);
-B := Image(nhom);     # G/N 
-eB := Elements(B);
-    for i in [1..Size(B)] do
-    Add(liste1,Representative(PreImages(nhom,eB[i])));
-    Add(liste2,eB[i]);    
-    od;
-f := MappingByFunction(Domain(liste1),Domain(liste2), i -> liste2[Position(liste1,i)]);
-return f;
-end );
-
-#############################################################################
-##
-#M  FactorXMod  . . . . . . . . . . . . . . . . . the quotient crossed module
-##
-InstallMethod( FactorXMod, "generic method for crossed modules", true, 
-    [ IsXMod, IsXMod ], 0,
-function(XM,PM)
-
-local alpha1,alpha2,partial1,partial2,nhom1,nhom2,T,G,S,H,B1,B2,bdy,act,a,f1,f2,b,c,liste;
-
-alpha1 := XModAction(XM);
-partial1 := Boundary(XM);
-T := Source(XM);
-G := Range(XM);
-alpha2 := XModAction(PM);
-partial2 := Boundary(PM);
-S := Source(PM);
-H := Range(PM);
-nhom1 := NaturalHomomorphismByNormalSubgroup(T,S);
-nhom2 := NaturalHomomorphismByNormalSubgroup(G,H);
-B1 := Image(nhom1); # T/S bölüm grubu
-B2 := Image(nhom2); # G/H bölüm grubu
-f1 := CorrespondingMap(T,S);
-f2 := CorrespondingMap(G,H);
-
-bdy := GroupHomomorphismByFunction(B1,B2, a ->  Image(nhom2,Image(partial1,Representative(PreImages(nhom1,a)))));
-act := GroupHomomorphismByFunction(B2, AutomorphismGroup(B1), b -> GroupHomomorphismByFunction(B1, B1, c -> Image(nhom1,(Image(Image(alpha1,Representative(PreImages(nhom2,b))),Representative(PreImages(nhom1,c)))) )) );
-
-return XMod(bdy,act);
 end );
 
 #############################################################################
@@ -757,23 +777,23 @@ InstallMethod( IsoAllXMods,
     "generic method for crossed modules", true, [ IsList ], 0,
 function(allxmods)
 
-local n,l,i,j,k,isolar,liste1,liste2;
+local n,l,i,j,k,isolar,list1,list2;
 
 n := Length(allxmods);
-liste1 := [];
-liste2 := [];
+list1 := [];
+list2 := [];
 
     for i in [1..n] do
-        if i in liste1 then
+        if i in list1 then
             continue;
         else
         isolar := IsomorphicXModFamily(allxmods[i],allxmods);
-        Append(liste1,isolar);        
-        Add(liste2,allxmods[i]);
+        Append(list1,isolar);        
+        Add(list2,allxmods[i]);
         fi;    
     od;
     
-return liste2;
+return list2;
 end );
 
 #############################################################################
@@ -824,81 +844,6 @@ end );
 
 #############################################################################
 ##
-#M  IsAbelianXMod  . . . . . . . . . check that the crossed module is abelian
-##
-InstallMethod( IsAbelianXMod,
-    "generic method for crossed modules", true, [ Is2dGroup ], 0,
-function( XM )
-
-local ZXM,sonuc;
-
-ZXM := CentreXMod(XM);
-if XM = ZXM then
-    sonuc := true;
-else
-    sonuc := false;
-fi;
-return sonuc;
-end );
-
-#############################################################################
-##
-#M  IsAsphericalXMod  . . . . . . . . . check that the crossed module is aspherical
-##
-InstallMethod( IsAsphericalXMod,
-    "generic method for crossed modules", true, [ Is2dGroup ], 0,
-function( XM )
-
-local bdy,sonuc;
-
-bdy := Boundary(XM);
-if Size(Kernel(bdy)) = 1 then
-    sonuc := true;
-else
-    sonuc := false;
-fi;
-return sonuc;
-end );
-
-#############################################################################
-##
-#M  IsSimplyConnectedXMod  . . . . . . . . . check that the crossed module is simply connected
-##
-InstallMethod( IsSimplyConnectedXMod, "generic method for pre-cat1-groups", true,
-    [ Is2dGroup ], 0,
-function( XM )
-
-local bdy,sonuc;
-
-bdy := Boundary(XM);
-if Size(CoKernel(bdy)) = 1 then
-    sonuc := true;
-else
-    sonuc := false;
-fi;
-return sonuc;
-end );
-
-#############################################################################
-##
-#M  IsFaithfulXMod  . . . . . . . . . check that the crossed module is faithful
-##
-InstallMethod( IsFaithfulXMod, "generic method for crossed modules", true, [ Is2dGroup ], 0,
-function( XM )
-
-local G,sonuc;
-
-G := PreXModStabilizer(XM);
-if Size(G) = 1 then
-    sonuc := true;
-else
-    sonuc := false;
-fi;
-return sonuc;
-end );
-
-#############################################################################
-##
 #M  TableRowXMod  . . . . . . . . . table row for isoclinism families of crossed modules
 ##
 InstallMethod( TableRowXMod,
@@ -909,13 +854,13 @@ local Eler,Iler,i,j,sinif,B;
 
 sinif := IsoclinicXModFamily(XM,XM_ler);
 
-B := LowerCentralSeriesXMod(XM);
+B := LowerCentralSeriesOfXMod(XM);
     
 Print("---------------------------------------------------------------------------------------------------------------------------------- \n");
 Print("---------------------------------------------------------------------------------------------------------------------------------- \n");
 Print("Number","\t","Rank","\t\t","M. L.","\t\t","Class","\t","|G/Z|","\t\t","|g2|","\t\t","|g3|","\t\t","|g4|","\t\t","|g5| \n");
 Print("---------------------------------------------------------------------------------------------------------------------------------- \n");
-Print(Length(sinif),"\t",RankXMod(XM),"\t",MiddleLengthXMod(XM),"\t",NilpotencyClassXMod(XM),"\t",Size(FactorXMod(XM,CentreXMod(XM))));    
+Print(Length(sinif),"\t",RankXMod(XM),"\t",MiddleLengthXMod(XM),"\t",NilpotencyClass2dGroup(XM),"\t",Size(FactorXMod(XM,CentreXMod(XM))));    
 
 if Length(B) > 1 then
 for i in [2..Length(B)] do

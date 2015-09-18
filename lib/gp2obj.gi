@@ -2,7 +2,7 @@
 ##
 #W  gp2obj.gi                 GAP4 package `XMod'               Chris Wensley
 #W                                                                & Murat Alp
-##  version 2.43, 17/09/2015 
+##  version 2.43, 18/09/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley ety al,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -26,8 +26,8 @@ CAT1_LIST := [ ];
 #############################################################################
 ##
 #M  IsPerm2dGroup . . . . . . check whether source and range are perm groups
-#M  IsFp2dGroup . . . . . . . check whether source and range are perm groups
-#M  IsPc2dGroup . . . . . . . check whether source and range are perm groups
+#M  IsFp2dGroup . . . . . . . check whether source and range are fp groups
+#M  IsPc2dGroup . . . . . . . check whether source and range are pc groups
 ##
 InstallMethod( IsPerm2dGroup, "generic method for 2d-group objects",
     true, [ Is2dGroup ], 0,
@@ -416,7 +416,7 @@ InstallMethod( PreXModByBoundaryAndAction,
     true, [ IsGroupHomomorphism, IsGroupHomomorphism ], 0,
 function( bdy, act )
 
-    local  rng, src, genrng, gensrc, aut, genaut, imact, i, a0, ima, a, obj;
+    local  rng, src, genrng, gensrc, aut, genaut, imact, i, a0, ima, a;
 
     src := Source( bdy );
     gensrc := GeneratorsOfGroup( src );
@@ -451,8 +451,7 @@ function( bdy, act )
         a := GroupHomomorphismByImages( src, src, gensrc, ima );
         imact[i] := a;
     od;
-    obj := PreXModObj( bdy, act );
-    return obj;
+    return PreXModObj( bdy, act ); 
 end );
 
 #############################################################################

@@ -2,9 +2,9 @@
 ##
 #W  gp2obj.tst                    XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-##  version 2.31, 08/11/2014 
+##  version 2.43, 18/09/2015 
 ##
-#Y  Copyright (C) 2001-2014, Murat Alp and Chris Wensley, 
+#Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 #############################################################################
@@ -36,6 +36,20 @@ gap> Print( RepresentationsOfObject(X1), "\n" );
 [ "IsComponentObjectRep", "IsAttributeStoringRep", "IsPreXModObj" ]
 gap> Print( KnownAttributesOfObject(X1), "\n" );
 [ "Name", "Size", "Range", "Source", "Boundary", "AutoGroup", "XModAction" ]
+
+## Section 2.1.4
+gap> s4 := SymmetricGroup( IsPermGroup, 4 );
+Sym( [ 1 .. 4 ] )
+gap> a4 := Subgroup( s4, [ (1,2,3), (2,3,4) ] );; 
+gap> k4 := Subgroup( a4, [ (1,2)(3,4), (1,3)(2,4) ] );; 
+gap> SetName(s4,"s4");  SetName(a4,"a4");  SetName(k4,"k4"); 
+gap> X4 := XModByNormalSubgroup( s4, a4 );
+[a4->s4]
+gap> Y4 := SubXMod( X4, k4, a4 ); 
+[k4->a4]
+gap> NX4 := NormalSubXMods( X4 );;
+gap> Length( NX4 ); 
+5
 
 ## Section 2.2.1
 gap> c := (11,12,13,14,15,16,17,18);;  d := (12,18)(13,17)(14,16);;

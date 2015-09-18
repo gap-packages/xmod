@@ -13,11 +13,12 @@ Problems:
               (construction worked OK with isomorphic perm groups). 
 
 #############################################################################
-2.42 -> 2.43 (16/09/2015) 
+2.42 -> 2.43 (18/09/2015) 
 
+ - (18/09/15) processsed a number of properties in the isoclinic files 
+ - (17/09/15) added example in manual subsection 2.1.4. 
  - (15/09/15) methods for InnerMorphism, ActorXMod, CentreXMod, etc. 
               now specified only for permutation crossed modules 
- - (03/09/15) started editing isocilnic.gd and isoclinic.gi 
  - (24/08/15) major edits to README, including GitHub issues link 
 
 #############################################################################
