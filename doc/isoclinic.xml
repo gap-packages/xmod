@@ -1,8 +1,8 @@
 <!-- ------------------------------------------------------------------- -->
 <!--                                                                     -->
-<!--  isclnc.xml            XMod documentation             Alper Odabas  -->
+<!--  isclinic.xml          XMod documentation             Alper Odabas  -->
 <!--                                                       & Enver Uslu  -->
-<!--  version 2.43, 18/09/2015                                           --> 
+<!--  version 2.43, 22/09/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2015, Chris Wensley et al                       --> 
 <!--                                                                     -->
@@ -206,17 +206,98 @@ gap> NilpotencyClass2dGroup( X4 );
 <Section><Heading>Isoclinism of Groups</Heading>
 
 <ManSection>
-   <Oper Name="AreIsoclinic"
+   <Attr Name="CentralQuotient"
+         Arg="G" /> 
+   <Attr Name="CentralQuotientHomomorphism"
+         Arg="G" />
+   <Oper Name="AreIsoclinicGroups"
          Arg="G H" />
+<Description>
+Let <M>G,H</M> be groups with central quotients 
+<M>Q(G)=G/Z(G)</M> and <M>Q(H)=H/Z(H)</M> 
+and derived subgroups <M>[G,G]</M> and <M>[H,H]</M> respectively. 
+Let <M>c_G : Q(G) \times Q(G) \to [G,G]</M> 
+and <M>c_H : Q(H) \times Q(H) \to [H,H]</M> be the two commutator maps.  
+An <E>isoclinism</E> <M>G \sim H</M> is a pair of isomorphisms 
+<M>(\eta,\xi)</M> where <M>\eta : Q(G) \to Q(H)</M> and 
+<M>\xi : [G,G] \to [H,H]</M> such that
+<M>c_G * \xi = (\eta \times \eta) * c_H</M>. 
+Isoclinism is an equivalence relation, and all abelian groups are isoclinic 
+to the trivial group.
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> G := SmallGroup( 64, 6 );
+<pc group of size 64 with 6 generators>
+gap> Q := CentralQuotient( G );
+Group([ f1, f2, f3, <identity> of ..., <identity> of ..., <identity> of ... ])
+gap> H := SmallGroup( 32, 41 );
+<pc group of size 32 with 5 generators>
+gap> iso := Isoclinism( G, H );
+[ [ f1, f2, f3, <identity> of ..., <identity> of ..., <identity> of ... ] -> 
+    [ f1, f2*f3, f3, <identity> of ..., <identity> of ..., <identity> of ... ]
+    , [ f3, f5 ] -> [ f4*f5, f5 ] ]
+gap> K := SmallGroup(32,43);
+<pc group of size 32 with 5 generators>
+gap> AreIsoclinicGroups(G,K);
+false
+]]>
+</Example>
+
+<ManSection>
+   <Prop Name="IsStemGroup"
+         Arg="G" />
+   <Oper Name="AllStemGroupIds"
+         Arg="n" />
+   <Attr Name="IsoclinicStemGroups"
+         Arg="G" />
+<Description>
+A group <M>G</M> is a <E>stem group</E> if <M>Z(G) \leq [G,G]</M>. 
+Every group is isoclinic to a stem group, but distinct stem groups 
+may be isoclinic. 
+For example, groups <M>D_8, Q_8</M> are both stem groups but are isoclinic. 
+<P/>
+The function <C>IsoclinicStemGroups</C> returms the <C>IdGroup</C> list 
+of the stem groups isoclinic to <M>G</M>. 
+The function <C>AllStemGroupIds</C> returns the <C>IdGroup</C> list 
+of the stem groups of a specified size. 
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> CommutatorSubgroup( G, G );
+Group([ f3, f5 ])
+gap> IsStemGroup( G );
+false
+gap> IsoclinicStemGroups( G );
+[ [ 16, 7 ], [ 16, 8 ], [ 16, 9 ] ]
+gap> IsoclinicStemGroups( SmallGroup(32,6) );
+[ [ 32, 6 ], [ 32, 7 ], [ 32, 8 ] ]
+gap> AllStemGroupIds( 32 );
+[ [ 32, 6 ], [ 32, 7 ], [ 32, 8 ], [ 32, 18 ], [ 32, 19 ], [ 32, 20 ], 
+  [ 32, 27 ], [ 32, 28 ], [ 32, 29 ], [ 32, 30 ], [ 32, 31 ], [ 32, 32 ], 
+  [ 32, 33 ], [ 32, 34 ], [ 32, 35 ], [ 32, 43 ], [ 32, 44 ], [ 32, 49 ], 
+  [ 32, 50 ] ]
+]]>
+</Example>
+
+<ManSection>
+   <Attr Name="MiddleLengthOfGroup"
+         Arg="G" />
 <Description>
 to follow
 </Description>
 </ManSection>
 <Example>
 <![CDATA[
-gap> zz := 99;; 
+gap> MiddleLengthOfGroup(G);
+1.
 ]]>
 </Example>
+
+
 </Section>
 
 

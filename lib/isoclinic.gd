@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.gd              GAP4 package `XMod'                Alper Odabas
 #W                                                               & Enver Uslu
-##  version 2.43, 18/09/2015 
+##  version 2.43, 22/09/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al 
 ##
@@ -87,6 +87,27 @@ DeclareProperty( "IsFaithful2dGroup", Is2dGroup );
 ## 
 DeclareProperty( "IsNilpotent2dGroup", Is2dGroup );
 DeclareAttribute( "NilpotencyClass2dGroup", Is2dGroup );
+
+
+############################################################################# 
+#####                FUNCTIONS FOR ISOCLINISM OF GROUPS                 ##### 
+############################################################################# 
+
+#############################################################################
+##
+#P IsStemGroup . . . check that the centre is a subgroup of the derived group
+#O AllStemGroupIds . . . list of all IdGroup's of stem groups of chosen order 
+#A MiddleLengthOfGroup . . . 
+## 
+DeclareProperty( "IsStemGroup", IsGroup );
+DeclareOperation( "AllStemGroupIds", [ IsPosInt ] );
+DeclareAttribute( "CentralQuotient", IsGroup ); 
+DeclareAttribute( "CentralQuotientHomomorphism", IsGroup ); 
+DeclareAttribute( "MiddleLengthOfGroup", IsGroup ); 
+DeclareOperation( "Isoclinism", [ IsGroup, IsGroup ] );
+DeclareOperation( "AreIsoclinicGroups", [ IsGroup, IsGroup ] );
+DeclareAttribute( "IsoclinicStemGroups", IsGroup );
+
 
 #############################################################################
 ##

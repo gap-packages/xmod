@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.tst               XMOD test file                   Alper Odabas
 #W                                                               & Enver Uslu
-##  version 2.43, 17/09/2015 
+##  version 2.43, 22/09/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 ##
@@ -91,5 +91,34 @@ gap> [ IsFaithful2dGroup(X5), IsFaithful2dGroup(X24) ];
 [ false, true ]
 
 gap> ## DX24 := DerivedSubXMod( X24 ); fails! 
+
+gap> G := SmallGroup( 64, 6 );
+<pc group of size 64 with 6 generators>
+gap> Q := CentralQuotient( G );
+Group([ f1, f2, f3, <identity> of ..., <identity> of ..., <identity> of ... ])
+gap> H := SmallGroup( 32, 41 );
+<pc group of size 32 with 5 generators>
+gap> iso := Isoclinism( G, H );
+[ [ f1, f2, f3, <identity> of ..., <identity> of ..., <identity> of ... ] -> 
+    [ f1, f2*f3, f3, <identity> of ..., <identity> of ..., <identity> of ... ]
+    , [ f3, f5 ] -> [ f4*f5, f5 ] ]
+gap> K := SmallGroup(32,43);
+<pc group of size 32 with 5 generators>
+gap> AreIsoclinicGroups(G,K);
+false
+
+gap> CommutatorSubgroup( G, G );
+Group([ f3, f5 ])
+gap> IsStemGroup( G );
+false
+gap> IsoclinicStemGroups( G );
+[ [ 16, 7 ], [ 16, 8 ], [ 16, 9 ] ]
+gap> IsoclinicStemGroups( SmallGroup(32,6) );
+[ [ 32, 6 ], [ 32, 7 ], [ 32, 8 ] ]
+gap> AllStemGroupIds( 32 );
+[ [ 32, 6 ], [ 32, 7 ], [ 32, 8 ], [ 32, 18 ], [ 32, 19 ], [ 32, 20 ], 
+  [ 32, 27 ], [ 32, 28 ], [ 32, 29 ], [ 32, 30 ], [ 32, 31 ], [ 32, 32 ], 
+  [ 32, 33 ], [ 32, 34 ], [ 32, 35 ], [ 32, 43 ], [ 32, 44 ], [ 32, 49 ], 
+  [ 32, 50 ] ]
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 

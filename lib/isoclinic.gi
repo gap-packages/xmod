@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.gi               GAP4 package `XMod'                Alper Odabas
 #W                                                               & Enver Uslu
-##  version 2.43, 18/09/2015 
+##  version 2.43, 22/09/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al 
 #Y   
@@ -102,7 +102,7 @@ function( G,H )
     if ( iso = fail ) then
         return fail; 
     else
-        all := AllAutomorphisms( H, H );
+        all := AllAutomorphisms( H );
         return List( all, a -> iso*a ); 
     fi;    
 end );
@@ -354,7 +354,7 @@ end );
 
 #############################################################################
 ##
-#M  NilpotencyClass2dGroup . . . . . . .nilpotency degree of ta crossed module
+#M  NilpotencyClass2dGroup . . . . . . .nilpotency degree of a crossed module
 ##
 InstallMethod( NilpotencyClass2dGroup, "generic method for crossed modules", 
     true, [ IsXMod ], 0,
@@ -366,6 +366,218 @@ function(XM)
         return Length( LowerCentralSeriesOfXMod(XM) ) - 1;        
     fi;
 end );
+
+
+
+############################################################################# 
+#####                FUNCTIONS FOR ISOCLINISM OF GROUPS                 ##### 
+############################################################################# 
+
+#############################################################################
+##
+#M IsStemGroup . . . check that the centre is a subgroup of the derived group
+## 
+InstallMethod( IsStemGroup, "generic method for groups", true, [ IsGroup ], 0,
+function(G)
+    return IsSubgroup( DerivedSubgroup(G), Centre(G) );
+end );
+
+#############################################################################
+##
+#M AllStemGroupIds . . . list of all IdGroup's of stem groups of chosen order 
+## 
+InstallMethod( AllStemGroupIds, "generic method for posint", true, 
+    [ IsPosInt ], 0,
+function(a) 
+
+    local  g, i, j, sonuc, sayi;
+
+    sonuc := [ ]; 
+    for g in AllSmallGroups(a) do 
+        if IsStemGroup( g ) then 
+            Add( sonuc, IdGroup(g) ); 
+        fi;
+    od; 
+    return sonuc; 
+end );
+
+#############################################################################
+##
+#M CentralQuotient . . . . . . . . . . . . . . . . . . . . . . . . . . G/Z(G)
+#M CentralQuotientHomomorphism . . . . . . . . . . . . . . . . .  G -> G/Z(G)
+## 
+InstallMethod( CentralQuotient, "generic method for groups", true, 
+    [ IsGroup ], 0,
+function( G ) 
+
+    local  ZG, Q, nat; 
+
+    ZG := Centre( G ); 
+    Q := FactorGroup( G, ZG ); 
+    nat := NaturalHomomorphismByNormalSubgroup( G, ZG ); 
+    SetCentralQuotientHomomorphism( G, nat ); 
+    return Q;
+end );
+
+InstallMethod( CentralQuotientHomomorphism, "generic method for groups", true, 
+    [ IsGroup ], 0,
+function( G ) 
+
+    local  Q; 
+
+    Q := CentralQuotientHomomorphism( G );
+    return NaturalHomomorphismByNormalSubgroup( G, Q ); 
+end );
+
+#############################################################################
+##
+#M MiddleLengthOfGroup . . .
+## 
+InstallMethod( MiddleLengthOfGroup, "generic method for groups", true, 
+    [ IsGroup ], 0,
+function( G ) 
+
+    local sonuc, ZG, DG, BG, KG, m1, l1, l2;
+
+    ZG := Center(G);
+    DG := DerivedSubgroup(G);
+    KG := Intersection(DG,ZG);
+    BG := FactorGroup(DG,KG);
+    return Log2( Float( Size(BG) ) );     
+end );
+
+#############################################################################
+##
+#M AreIsoclinicGroups . . . 
+## 
+InstallMethod( AreIsoclinicGroups, "generic method for two groups", true, 
+    [ IsGroup, IsGroup ], 0,
+function( G1, G2 ) 
+    local  iso; 
+    iso := Isoclinism( G1, G2 ); 
+    if ( iso = false ) then 
+        return false; 
+    elif ( iso = fail ) then 
+        return fail; 
+    else 
+        return true; 
+    fi; 
+end );
+
+#############################################################################
+##
+#M Isoclinism . . . 
+## 
+InstallMethod( Isoclinism, "generic method for two groups", true, 
+    [ IsGroup, IsGroup ], 0,
+function( G1, G2 )
+
+    local  B1, B2, ComG1, ComG2, nhom1, nhom2, iterb1, iterb2, iterB, iterC, 
+           isoB, isoC, b1, b2, gb1, gb2, f, g, sonuc, x, y, 
+           gx, gy, gor1, gor2, yeni_iso;
+
+    if (IsomorphismGroups(G1,G2) <> fail) then
+        return true;
+    fi;
+    ComG1 := DerivedSubgroup(G1);
+    ComG2 := DerivedSubgroup(G2);
+    if ( IsomorphismGroups(ComG1,ComG2) = fail ) then 
+        return false;
+    fi;
+    B1 := CentralQuotient(G1);
+    B2 := CentralQuotient(G2);
+    nhom1 := CentralQuotientHomomorphism(G1);
+    nhom2 := CentralQuotientHomomorphism(G2);
+    isoB := IsomorphismGroups(B1,B2);
+    isoC := IsomorphismGroups(ComG1,ComG2);
+    if ( ( isoB = fail ) or ( isoC = fail ) ) then 
+        return false;
+    fi;
+    iterB := Iterator( AllAutomorphisms(B2) ); 
+    iterC := Iterator( AllAutomorphisms(ComG2) );
+    ### ilk iki ˛art˝ geÁerse 3. y¸ kontrol edelim
+    ### anlams˝z hata al˝yorum 
+    iterb1 := Iterator( B1 );
+    while not IsDoneIterator( iterB ) do 
+        f := isoB * NextIterator(iterB); 
+        while not IsDoneIterator( iterC ) do 
+            g := isoC * NextIterator(iterC); 
+            sonuc := true;
+            yeni_iso := false;
+            while ( ( not yeni_iso ) and ( not IsDoneIterator(iterb1) ) ) do 
+                b1 := NextIterator( iterb1 ); 
+                ## yeni_iso degeri dogru geliyorsa yeni f,g 
+                ## ikili iÁin dˆng¸y¸ k˝r.
+                ## if ( yeni_iso = true ) then        
+                ##     break;
+                ## fi;
+                x := PreImagesRepresentative(nhom1,b1);
+                gb1 := Image(f,b1);
+                gx := PreImagesRepresentative(nhom2,gb1);
+                iterb2 := Iterator( B1 );
+                while ( ( not yeni_iso ) and ( not IsDoneIterator(iterb2) ) ) do 
+                    b2 := NextIterator( iterb2 ); 
+                    y := PreImagesRepresentative(nhom1,b2);
+                    gb2 := Image(f,b2);
+                    gy := PreImagesRepresentative(nhom2,gb2);            
+                    gor1 := Image(g,Comm(x,y));    
+                    gor2 := Comm(gx,gy);
+                    if (gor1 <> gor2) then 
+                        yeni_iso := true;
+                        ## sonuc := false;
+                        ## 3. sart bu f,g ikilisi iÁin salanm˝yor 
+                        ## break; 
+                    fi;
+                od;
+            od;
+            ## 3. sart˝ salayan 1 tane f,g ikilisi bulunmas˝ yeterlidir.  
+            if sonuc then        
+                return [f,g];
+            fi;
+        od;
+    od;
+    return fail;
+end );
+
+#############################################################################
+##
+#M IsoclinicStemGroups . . . 
+## 
+InstallMethod( IsoclinicStemGroups, "generic method for a group", 
+    true, [ IsGroup ], 0,
+function(G)
+
+    local  s, i, len, divs, n, id, j, sonuc, sayi;
+
+    if ( HasIsAbelian(G) and IsAbelian(G) ) then 
+        return [ [ 1, 1 ] ]; 
+    fi;
+    if IsStemGroup(G) then 
+        id := AllStemGroupIds( Size(G) ); 
+        return Filtered( id, i -> AreIsoclinicGroups( G, SmallGroup(i) ) ); 
+    fi;
+    sonuc := [];
+    sayi := 0;
+    divs := DivisorsInt( Size(G) );
+    len := Length( divs ); 
+    for i in divs{[1..len-1]} do 
+        for id in AllStemGroupIds( i ) do
+            j := id[2]; 
+            if AreIsoclinicGroups( G, SmallGroup(i,j) ) then
+                ## Print("SmallGroup(",i,",",j,")\n");        
+                sayi := sayi + 1;
+                Add( sonuc, [i,j] );
+            fi;        
+        od;
+        if ( Length( sonuc ) > 0 ) then 
+            return sonuc; 
+        fi;
+    od;
+    Print( "Total Numbers : ", sayi, "\n");
+    return sonuc;
+end );
+
+
 
 #############################################################################
 ##
@@ -497,13 +709,13 @@ cakma2 := GroupHomomorphismByImages(T12,kT12,GeneratorsOfGroup(T12),GeneratorsOf
     ### start check diagram 1    
     
     for z1 in kT11 do
-            x := Representative(PreImages(nhom3,z1));
+            x := PreImagesRepresentative(nhom3,z1);
             gz1 := Image(nisi1,Image(cakma,z1));
-            gx := Representative(PreImages(nhom4,Image(cakma2,gz1)));
+            gx := PreImagesRepresentative(nhom4,Image(cakma2,gz1));
         for z2 in kG11 do
-            y := Representative(PreImages(nhom1,z2));
+            y := PreImagesRepresentative(nhom1,z2);
             gz2 := Image(nisi0,Image(cakma3,z2));
-            gy := Representative(PreImages(nhom2,Image(cakma4,gz2)));    
+            gy := PreImagesRepresentative(nhom2,Image(cakma4,gz2));    
 
                 gor1 := Image(pisi1,Image(Image(XModAction(XM1),y),x)*x^-1);    
                 gor2 := Image(Image(XModAction(XM2),gy),gx)*gx^-1;
@@ -531,13 +743,13 @@ cakma2 := GroupHomomorphismByImages(T12,kT12,GeneratorsOfGroup(T12),GeneratorsOf
     
     for z1 in kG11 do
 
-            x := Representative(PreImages(nhom1,z1));
+            x := PreImagesRepresentative(nhom1,z1);
             gz1 := Image(nisi0,Image(cakma3,z1));
-            gx := Representative(PreImages(nhom2,Image(cakma4,gz1)));
+            gx := PreImagesRepresentative(nhom2,Image(cakma4,gz1));
         for z2 in kG11 do
-            y := Representative(PreImages(nhom1,z2));
+            y := PreImagesRepresentative(nhom1,z2);
             gz2 := Image(nisi0,Image(cakma3,z2));
-            gy := Representative(PreImages(nhom2,Images(cakma4,gz2)));            
+            gy := PreImagesRepresentative(nhom2,Images(cakma4,gz2));            
             
                 gor1 := Image(pisi0,Comm(x,y));    
                 gor2 := Comm(gx,gy);
