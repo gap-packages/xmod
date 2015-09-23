@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  isclinic.xml          XMod documentation             Alper Odabas  -->
 <!--                                                       & Enver Uslu  -->
-<!--  version 2.43, 22/09/2015                                           --> 
+<!--  version 2.43, 23/09/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2015, Chris Wensley et al                       --> 
 <!--                                                                     -->
@@ -284,7 +284,7 @@ gap> AllStemGroupIds( 32 );
 </Example>
 
 <ManSection>
-   <Attr Name="MiddleLengthOfGroup"
+   <Attr Name="MiddleLength"
          Arg="G" />
 <Description>
 to follow
@@ -292,7 +292,7 @@ to follow
 </ManSection>
 <Example>
 <![CDATA[
-gap> MiddleLengthOfGroup(G);
+gap> MiddleLength(G);
 1.
 ]]>
 </Example>

@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.gd              GAP4 package `XMod'                Alper Odabas
 #W                                                               & Enver Uslu
-##  version 2.43, 22/09/2015 
+##  version 2.44, 23/09/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al 
 ##
@@ -64,12 +64,6 @@ DeclareSynonym( "CenterXMod", CentreXMod );
 
 #############################################################################
 ##
-#O  AllIsomorphisms  . . . . . . . . . . all isomorphisms between two groups 
-##
-DeclareOperation( "AllIsomorphisms", [ IsGroup, IsGroup ] );
-
-#############################################################################
-##
 #O IsAbelian2dGroup  
 #O IsAspherical2dGroup  
 #O IsSimplyConnected2dGroup 
@@ -97,17 +91,21 @@ DeclareAttribute( "NilpotencyClass2dGroup", Is2dGroup );
 ##
 #P IsStemGroup . . . check that the centre is a subgroup of the derived group
 #O AllStemGroupIds . . . list of all IdGroup's of stem groups of chosen order 
-#A MiddleLengthOfGroup . . . 
+#A MiddleLength . . . 
 ## 
 DeclareProperty( "IsStemGroup", IsGroup );
 DeclareOperation( "AllStemGroupIds", [ IsPosInt ] );
 DeclareAttribute( "CentralQuotient", IsGroup ); 
 DeclareAttribute( "CentralQuotientHomomorphism", IsGroup ); 
-DeclareAttribute( "MiddleLengthOfGroup", IsGroup ); 
+DeclareAttribute( "MiddleLength", IsGroup ); 
 DeclareOperation( "Isoclinism", [ IsGroup, IsGroup ] );
 DeclareOperation( "AreIsoclinicGroups", [ IsGroup, IsGroup ] );
 DeclareAttribute( "IsoclinicStemGroups", IsGroup );
 
+
+############################################################################# 
+#####                FUNCTIONS FOR ISOCLINISM OF GROUPS                 ##### 
+############################################################################# 
 
 #############################################################################
 ##
@@ -149,7 +147,7 @@ DeclareOperation( "IsomorphicXModFamily", [  Is2dGroup, IsList ] );
 
 #############################################################################
 ##
-#O IsoAllXMods  . . . . . . . . . all crossed modules up to isomorphism
+#O IsoAllXMods . . . . . . . . . . . . all crossed modules up to isomorphism
 ##
 DeclareOperation( "IsoAllXMods", [  IsList ] );
 
@@ -161,13 +159,6 @@ DeclareOperation( "RankXMod", [ Is2dGroup ] );
 
 #############################################################################
 ##
-#O MiddleLengthXMod  . . . . . . . . . the middle length of the crossed module
-##
-DeclareOperation( "MiddleLengthXMod", [ Is2dGroup ] );
-
-#############################################################################
-##
-#O TableRowXMod  . . . . . . . . . table row for isoclinism families of crossed modules
+#O TableRowXMod  . . . . table row for isoclinism families of crossed modules
 ##
 DeclareOperation( "TableRowXMod", [ Is2dGroup, IsList ] );
-

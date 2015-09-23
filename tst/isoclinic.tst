@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.tst               XMOD test file                   Alper Odabas
 #W                                                               & Enver Uslu
-##  version 2.43, 22/09/2015 
+##  version 2.43, 23/09/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 ##
@@ -120,5 +120,8 @@ gap> AllStemGroupIds( 32 );
   [ 32, 27 ], [ 32, 28 ], [ 32, 29 ], [ 32, 30 ], [ 32, 31 ], [ 32, 32 ], 
   [ 32, 33 ], [ 32, 34 ], [ 32, 35 ], [ 32, 43 ], [ 32, 44 ], [ 32, 49 ], 
   [ 32, 50 ] ]
+
+gap> MiddleLength(G);
+1.
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
