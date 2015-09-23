@@ -70,7 +70,7 @@ gap> stab := PreXModStabilizer( X5 );
 gap> DisplacementSubgroup( X5 );
 <pc group of size 3 with 1 generators>
 gap> DX5 := DerivedSubXMod( X5 );  
-[Group( [ f4 ] )->Group( <identity> of ... )]
+[Group( [ f4 ] )->Group( [ f3, f4 ] )]
 ]]>
 </Example>
 

@@ -29,7 +29,7 @@ gap> stab := PreXModStabilizer( X5 );
 gap> DisplacementSubgroup( X5 );
 <pc group of size 3 with 1 generators>
 gap> DX5 := DerivedSubXMod( X5 );  
-[Group( [ f4 ] )->Group( <identity> of ... )]
+[Group( [ f4 ] )->Group( [ f3, f4 ] )]
 
 gap> X24 := XModByAutomorphismGroup( D24 ); 
 [D24->PAut(D24)]
@@ -90,7 +90,8 @@ gap> [ IsSimplyConnected2dGroup(X5), IsSimplyConnected2dGroup(X24) ];
 gap> [ IsFaithful2dGroup(X5), IsFaithful2dGroup(X24) ];              
 [ false, true ]
 
-gap> ## DX24 := DerivedSubXMod( X24 ); fails! 
+gap> DX24 := DerivedSubXMod( X24 ); 
+[Group( [ f2 ] )->Group( [ f2, f5 ] )]
 
 gap> G := SmallGroup( 64, 6 );
 <pc group of size 64 with 6 generators>

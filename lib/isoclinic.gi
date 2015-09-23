@@ -194,17 +194,14 @@ function(XM)
     bdy := Boundary( XM );
     alpha := XModAction( XM );
     dgt := DisplacementSubgroup( XM );
-    aut := AutomorphismGroup( dgt ); 
-    gendgt := GeneratorsOfGroup( dgt );
-    imdgt := List( gendgt, x -> Image( bdy, x ) );
-    k_partial := GroupHomomorphismByImages( dgt, D, gendgt, imdgt ); 
-    if ( Size(D) = 1 ) then 
-        k_alpha := MappingToOne( D, aut ); 
-    else 
-        genD := GeneratorsOfGroup( D ); 
-        imD := List( genD, x -> Image( alpha, x ) ); 
-        k_alpha := GroupHomomorphismByImages( D, aut, genD, imD );
-    fi;
+    ## aut := AutomorphismGroup( dgt ); 
+    ## gendgt := GeneratorsOfGroup( dgt );
+    ## imdgt := List( gendgt, x -> Image( bdy, x ) );
+    k_partial := RestrictionMappingGroups( bdy, dgt, D ); 
+    genD := GeneratorsOfGroup( D ); 
+    imD := List( genD, x -> 
+               RestrictionMappingGroups( Image(alpha,x), dgt, dgt ) ); 
+    k_alpha := GroupHomomorphismByImages( D, Group( Set(imD) ), genD, imD );
     return XModByBoundaryAndAction( k_partial, k_alpha );
 end );
 
