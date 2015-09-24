@@ -2,6 +2,7 @@
 
 Problems: 
 
+ - (24/09/15) at present IsSub2dDomain just returns 'fail' 
  - (03/09/15) XModCentre etc. fail with pc-groups 
  - (09/01/13) GroupGeneralMappingByImages in ghom.gi has changed, 
               so DiscreteNormalPreXModWithObjects no longer works. 
@@ -13,8 +14,9 @@ Problems:
               (construction worked OK with isomorphic perm groups). 
 
 #############################################################################
-2.42 -> 2.43 (23/09/2015) 
+2.42 -> 2.43 (24/09/2015) 
 
+ - (24/09/15) added CrossActionSubgroup 
  - (23/09/15) removed last occurrences of AllIsomorphisms 
  - (22/09/15) added functions for isoclinism of groups 
  - (18/09/15) processsed a number of properties in the isoclinic files 

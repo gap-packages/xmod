@@ -2,7 +2,7 @@
 ##
 ##  gp3obj.gd                 GAP4 package `XMod'                Chris Wensley
 ##
-##  version 2.43, 16/09/2015 
+##  version 2.43, 23/09/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -147,13 +147,13 @@ DeclareAttribute( "Transpose3dGroup", Is3dGroup );
 #############################################################################
 ##
 #P  IsTrivialAction3dGroup( <obj> ) 
-#P  IsNormalSub3dGroup( <obj> ) 
+#P  IsNormalSubgroup3dGroup( <obj> ) 
 #P  IsAutomorphismGroup3dGroup( <XS> ) 
 #P  IsAbelianSquare3dGroup( <obj> ) 
 #P  IsFreeXSq( <XS> )
 ##
 DeclareProperty( "IsTrivialAction3dGroup", Is3dGroup );
-DeclareProperty( "IsNormalSub3dGroup", Is3dGroup );
+DeclareProperty( "IsNormalSubgroup3dGroup", Is3dGroup );
 DeclareProperty( "IsCentralExtension3dGroup", Is3dGroup );
 DeclareProperty( "IsAutomorphismGroup3dGroup", Is3dGroup );
 DeclareProperty( "IsAbelianSquare3dGroup", Is3dGroup );

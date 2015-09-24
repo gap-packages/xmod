@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.gd              GAP4 package `XMod'                Alper Odabas
 #W                                                               & Enver Uslu
-##  version 2.44, 23/09/2015 
+##  version 2.44, 24/09/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al 
 ##
@@ -22,8 +22,10 @@ DeclareAttribute( "PreXModStabilizer", IsPreXMod );
 #############################################################################
 ##
 #A DisplacementSubgroup( XM )
+#O CrossActionSubgroup( XM )
 ##
 DeclareAttribute( "DisplacementSubgroup", IsXMod );
+DeclareOperation( "CrossActionSubgroup", [ IsXMod, IsXMod, IsXMod ] ); 
 
 #############################################################################
 ##

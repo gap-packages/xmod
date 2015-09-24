@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.tst               XMOD test file                   Alper Odabas
 #W                                                               & Enver Uslu
-##  version 2.43, 23/09/2015 
+##  version 2.44, 23/09/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 ##
@@ -27,9 +27,9 @@ gap> fix := PreXModFixedPointSubgroup( X5 );
 gap> stab := PreXModStabilizer( X5 );
 <pc group of size 12 with 1 generators>
 gap> DisplacementSubgroup( X5 );
-<pc group of size 3 with 1 generators>
+Group([ f4^2, f4 ])
 gap> DX5 := DerivedSubXMod( X5 );  
-[Group( [ f4 ] )->Group( [ f3, f4 ] )]
+[Group( [ f4^2, f4 ] )->Group( [ f3, f4 ] )]
 
 gap> X24 := XModByAutomorphismGroup( D24 ); 
 [D24->PAut(D24)]
@@ -52,9 +52,11 @@ gap> X6 := IntersectionSubXMod( X24, X3, X4 );
 gap> Size( X6 );
 [ 6, 3 ]
 gap> Y6 := CommutatorSubXMod( X24, X3, X4 );
-[Group( [ f3 ] )->Group( [ f2 ] )]
+[Group( [ f3, f4^2, f4, f3*f4^2 ] )->Group( [ f2 ] )]
+gap> Size(Y6);
+[ 6, 3 ]
 gap> X6 = Y6;
-true
+false
 
 gap> nsx := NormalSubXMods( X24 );; 
 gap> Length( nsx );  Size( nsx[30] );
@@ -69,16 +71,36 @@ gap> Size( Q );
 gap> CentreXMod( X5 );      
 [Group( [ f3*f4 ] )->Group( [ f3*f4 ] )]
 
-gap> X4 := XModByNormalSubgroup( s4, a4 );;
-gap> LX4 := LowerCentralSeriesOfXMod( X4 ); 
-[ [a4->s4], [Group( [ (2,3,4), (1,2)(3,4) ] )->Group( [ (1,3,2), (2,4,3) 
-     ] )] ]
-gap> List( LX4, Y->Size(Y) );
-[ [ 12, 24 ], [ 12, 12 ] ]
-gap> IsNilpotent2dGroup( X4 );
+gap> LX1 := LowerCentralSeriesOfXMod( X1 );
+[ [c5->PAut(c5)], [Group( [ (5,6,7,8,9) ] )->Group( () )] ]
+gap> List( LX1, x -> Size(x) );            
+[ [ 5, 4 ], [ 5, 1 ] ]
+gap> IsNilpotent2dGroup( X1 );             
 false
-gap> NilpotencyClass2dGroup( X4 );
+gap> NilpotencyClass2dGroup( X1 );         
 0
+
+## Note that the following example (taken from the nq manual) FAILS 
+## gap> F := FreeGroup(2);
+## <free group on the generators [ f1, f2 ]>
+## gap> G := F/[F.1^2,F.2^2];
+## <fp group on the generators [ f1, f2 ]>
+## gap> H := NilpotentQuotient( G, 4 );
+## Pcp-group with orders [ 2, 2, 2, 2, 2 ]
+## gap> SetName(H,"H");
+## gap> XH := XModByNormalSubgroup(H,H);
+## [H->H]
+## gap> LowerCentralSeriesOfXMod(XH);
+## Error, cannot compute this
+##  called from
+## MappedVector( ExponentsByIgs( gens, a ), imgs ) called from
+## CoKernelOfMultiplicativeGeneralMapping( map ) called from
+## IsMapping( hom ) called from
+## GroupHomomorphismByImages( H, G, genH, genH ) called from
+## InclusionMappingGroups( Psrc, Ssrc ) called from
+## ...  at line 35 of *stdin*
+## you can 'quit;' to quit to outer loop, or
+## you can 'return;' to continue 
 
 
 gap> [ IsAbelian2dGroup(X5), IsAbelian2dGroup(X24) ];
@@ -91,7 +113,7 @@ gap> [ IsFaithful2dGroup(X5), IsFaithful2dGroup(X24) ];
 [ false, true ]
 
 gap> DX24 := DerivedSubXMod( X24 ); 
-[Group( [ f2 ] )->Group( [ f2, f5 ] )]
+[Group( [ f4, f4^2, f3*f4, f2*f4^2 ] )->Group( [ f2, f5 ] )]
 
 gap> G := SmallGroup( 64, 6 );
 <pc group of size 64 with 6 generators>
