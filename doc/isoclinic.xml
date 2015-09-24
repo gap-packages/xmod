@@ -287,7 +287,9 @@ gap> AllStemGroupIds( 32 );
    <Attr Name="MiddleLength"
          Arg="G" />
 <Description>
-to follow
+Let <M>G</M> be a finite group. Then <M>log_2 |[G,G] / (Z(G) \cap [G,G])|</M> is 
+called the <E>middle length</E> of <M>G</M>. Also 
+<M>log_2 |Z(G) \cap [G,G]| + log_2 |G/Z(G)|</M> is called <E>rank</E> of <M>G</M>. 
 </Description>
 </ManSection>
 <Example>
