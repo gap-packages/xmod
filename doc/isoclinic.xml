@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  isclinic.xml          XMod documentation             Alper Odabas  -->
 <!--                                                       & Enver Uslu  -->
-<!--  version 2.44, 23/09/2015                                           --> 
+<!--  version 2.44, 26/09/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2015, Chris Wensley et al                       --> 
 <!--                                                                     -->
@@ -111,7 +111,7 @@ gap> X6 := IntersectionSubXMod( X24, X3, X4 );
 gap> Size( X6 );
 [ 6, 3 ]
 gap> Y6 := CommutatorSubXMod( X24, X3, X4 );
-[Group( [ f3, f4^2, f4, f3*f4^2 ] )->Group( [ f2 ] )]
+[Group( [ f3, f4^2, f4 ] )->Group( [ f2 ] )]
 gap> Size(Y6);
 [ 6, 3 ]
 gap> X6 = Y6;
@@ -286,16 +286,22 @@ gap> AllStemGroupIds( 32 );
 <ManSection>
    <Attr Name="MiddleLength"
          Arg="G" />
+   <Attr Name="RankXMod"
+         Arg="X0" />
 <Description>
-Let <M>G</M> be a finite group. Then <M>log_2 |[G,G] / (Z(G) \cap [G,G])|</M> is 
-called the <E>middle length</E> of <M>G</M>. Also 
-<M>log_2 |Z(G) \cap [G,G]| + log_2 |G/Z(G)|</M> is called <E>rank</E> of <M>G</M>. 
+Let <M>G</M> be a finite group. 
+Then <M>\log_2 |[G,G] / (Z(G) \cap [G,G])|</M> is called the 
+<E>middle length</E> of <M>G</M>. 
+Also <M>\log_2 |Z(G) \cap [G,G]| + \log_2 |G/Z(G)|</M> 
+is called the <E>rank</E> of <M>G</M>. 
 </Description>
 </ManSection>
 <Example>
 <![CDATA[
 gap> MiddleLength(G);
 1.
+gap> RankXMod(X1);
+[ 2.32193, 2. ]
 ]]>
 </Example>
 
@@ -314,7 +320,11 @@ to follow
 </ManSection>
 <Example>
 <![CDATA[
-gap> zz := 99;; 
+gap> CentralQuotient(X5);            
+[Group( [ f1^2, f1 ] )->Group( [ f1, f2, f3^2, f3 ] )]
+gap> CentralQuotientHomomorphism(X5);
+[[..] => [..]]
+
 ]]>
 </Example>
 </Section>

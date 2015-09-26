@@ -2,6 +2,8 @@
 
 Problems: 
 
+ - (26/09/15) added NaturalHomomorphismByNormalSubXMod and methods for 
+              xmods for CentralQuotient & CentralQuotientHomomorphism 
  - (24/09/15) at present IsSub2dDomain just returns 'fail' 
  - (03/09/15) XModCentre etc. fail with pc-groups 
  - (09/01/13) GroupGeneralMappingByImages in ghom.gi has changed, 

@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.tst               XMOD test file                   Alper Odabas
 #W                                                               & Enver Uslu
-##  version 2.44, 23/09/2015 
+##  version 2.44, 26/09/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 ##
@@ -20,6 +20,7 @@ gap> List( norm, n->Size(n) );
 gap> N5 := norm[5];;
 gap> X5 := XModByNormalSubgroup( D24, N5 );
 [Group( [ f3, f4 ] )->D24]
+gap> SetName( X5, "X5" );
 gap> Size( X5 );
 [ 6, 24 ]
 gap> fix := PreXModFixedPointSubgroup( X5 );
@@ -52,7 +53,7 @@ gap> X6 := IntersectionSubXMod( X24, X3, X4 );
 gap> Size( X6 );
 [ 6, 3 ]
 gap> Y6 := CommutatorSubXMod( X24, X3, X4 );
-[Group( [ f3, f4^2, f4, f3*f4^2 ] )->Group( [ f2 ] )]
+[Group( [ f3, f4^2, f4 ] )->Group( [ f2 ] )]
 gap> Size(Y6);
 [ 6, 3 ]
 gap> X6 = Y6;
@@ -67,8 +68,10 @@ gap> Q := FactorXMod( X24, nsx[30] );
 [ f1, f2, <identity> of ..., <identity> of ..., <identity> of ... ] )]
 gap> Size( Q );
 [ 6, 6 ]
+gap> nat := NaturalHomomorphismByNormalSubXMod( X24, nsx[30] ); 
+[[D24->PAut(D24)] => [..]]
 
-gap> CentreXMod( X5 );      
+gap> ZX5 := CentreXMod( X5 );      
 [Group( [ f3*f4 ] )->Group( [ f3*f4 ] )]
 
 gap> LX1 := LowerCentralSeriesOfXMod( X1 );
@@ -110,7 +113,7 @@ gap> [ IsAspherical2dGroup(X5), IsAspherical2dGroup(X24) ];
 gap> [ IsSimplyConnected2dGroup(X5), IsSimplyConnected2dGroup(X24) ];
 [ true, true ]
 gap> [ IsFaithful2dGroup(X5), IsFaithful2dGroup(X24) ];              
-[ false, true ]
+[ false, true ] 
 
 gap> DX24 := DerivedSubXMod( X24 ); 
 [Group( [ f4, f4^2, f3*f4, f2*f4^2 ] )->Group( [ f2, f5 ] )]
@@ -146,5 +149,12 @@ gap> AllStemGroupIds( 32 );
 
 gap> MiddleLength(G);
 1.
+gap> RankXMod( X1 );
+[ 2.32193, 2. ]
+
+gap> CentralQuotient(X5);            
+[Group( [ f1^2, f1 ] )->Group( [ f1, f2, f3^2, f3 ] )]
+gap> CentralQuotientHomomorphism(X5);    
+[[..] => [..]]
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 

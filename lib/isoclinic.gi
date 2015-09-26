@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.gi               GAP4 package `XMod'                Alper Odabas
 #W                                                               & Enver Uslu
-##  version 2.43, 24/09/2015 
+##  version 2.43, 26/09/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al 
 #Y   
@@ -148,7 +148,7 @@ function( TG, SH, RK )
     for h in GeneratorsOfGroup( Range(SH) ) do 
         alp := Image( alpha, h ); 
         for r in GeneratorsOfGroup( Source(RK) ) do 
-            r0 := r^-1 * Image( alp, r ); 
+            r0 := Image( alp, r^-1 ) * r; 
             if ( ( r0 <> one ) and ( Position(list,r0) = fail ) ) then  
                 Add( list, r0 );
             fi;
@@ -218,6 +218,24 @@ function( XM, PM )
                    (Image(Image(alpha1,PreImagesRepresentative(nhom2,b)), 
                        PreImagesRepresentative(nhom1,c) ) ) ) ) );
     return XModByBoundaryAndAction( bdy, act );
+end );
+
+#############################################################################
+##
+#M  NaturalHomomorphismByNormalSubXMod . . . . . . the quotient xmod morphism
+##
+InstallMethod( NaturalHomomorphismByNormalSubXMod, 
+    "generic method for crossed modules", true, [ IsXMod, IsXMod ], 0,
+function( XM, PM )
+
+    local  FM, nhom1, nhom2, iso1, iso2;
+
+    FM := FactorXMod( XM, PM ); 
+    nhom1 := NaturalHomomorphismByNormalSubgroup( Source(XM), Source(PM) );
+    nhom2 := NaturalHomomorphismByNormalSubgroup( Range(XM), Range(PM) );
+    iso1 := IsomorphismGroups( Image(nhom1), Source(FM) );
+    iso2 := IsomorphismGroups( Image(nhom2), Range(FM) );
+    return XModMorphismByHoms( XM, FM, nhom1*iso1, nhom2*iso2 ); 
 end );
 
 #############################################################################
@@ -403,8 +421,31 @@ function( G )
 
     local  Q; 
 
-    Q := CentralQuotientHomomorphism( G );
+    Q := CentralQuotient( G );
     return NaturalHomomorphismByNormalSubgroup( G, Q ); 
+end );
+
+InstallOtherMethod( CentralQuotient, "generic method for crossed modules", 
+    true, [ IsXMod ], 0,
+function( XM ) 
+
+    local  ZM, QM, nat; 
+
+    ZM := CentreXMod( XM ); 
+    QM := FactorXMod( XM, ZM ); 
+    nat := NaturalHomomorphismByNormalSubXMod( XM, ZM ); 
+    SetCentralQuotientHomomorphism( XM, nat ); 
+    return QM;
+end );
+
+InstallOtherMethod( CentralQuotientHomomorphism, "generic method for xmods", 
+    true, [ IsXMod ], 0,
+function( XM ) 
+
+    local  QM; 
+
+    QM := CentralQuotient( XM );
+    return NaturalHomomorphismByNormalSubXMod( XM, QM ); 
 end );
 
 #############################################################################

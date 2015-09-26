@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.gd              GAP4 package `XMod'                Alper Odabas
 #W                                                               & Enver Uslu
-##  version 2.44, 24/09/2015 
+##  version 2.44, 26/09/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al 
 ##
@@ -42,8 +42,10 @@ DeclareOperation( "IntersectionSubXMod", [  IsXMod, IsXMod, IsXMod ] );
 #############################################################################
 ##
 #O FactorXMod  . . . . . . . . . . . . . . . . . the quotient crossed module
+#O NaturalHomomorphismByNormalSubXMod . . . . . . the quotient xmod morphism
 ##
 DeclareOperation( "FactorXMod", [  IsXMod, IsXMod ] );
+DeclareOperation( "NaturalHomomorphismByNormalSubXMod", [  IsXMod, IsXMod ] );
 
 #############################################################################
 ##
