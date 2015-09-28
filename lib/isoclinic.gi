@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.gi               GAP4 package `XMod'                Alper Odabas
 #W                                                               & Enver Uslu
-##  version 2.43, 26/09/2015 
+##  version 2.43, 28/09/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al 
 #Y   
@@ -195,7 +195,7 @@ InstallMethod( FactorXMod, "generic method for crossed modules", true,
 function( XM, PM )
 
     local  alpha1, alpha2, partial1, partial2, nhom1, nhom2, T, G, S, H, 
-           B1, B2, bdy, act;
+           B1, B2, bdy, act, FM;
 
     alpha1 := XModAction(XM);
     partial1 := Boundary(XM);
@@ -217,14 +217,18 @@ function( XM, PM )
                c -> Image( nhom1, 
                    (Image(Image(alpha1,PreImagesRepresentative(nhom2,b)), 
                        PreImagesRepresentative(nhom1,c) ) ) ) ) );
-    return XModByBoundaryAndAction( bdy, act );
+    FM := XModByBoundaryAndAction( bdy, act );
+    if ( HasName(XM) and HasName(PM) ) then 
+        SetName( FM, Concatenation( Name(XM), "/", Name(PM) ) ); 
+    fi; 
+    return FM; 
 end );
 
 #############################################################################
 ##
-#M  NaturalHomomorphismByNormalSubXMod . . . . . . the quotient xmod morphism
+#M  NaturalMorphismByNormalSubXMod . . . . . . . . the quotient xmod morphism
 ##
-InstallMethod( NaturalHomomorphismByNormalSubXMod, 
+InstallMethod( NaturalMorphismByNormalSubXMod, 
     "generic method for crossed modules", true, [ IsXMod, IsXMod ], 0,
 function( XM, PM )
 
@@ -389,11 +393,45 @@ function(a)
     local  g, i, j, sonuc, sayi;
 
     sonuc := [ ]; 
-    for g in AllSmallGroups(a) do 
+    for g in AllSmallGroups( a ) do 
         if IsStemGroup( g ) then 
-            Add( sonuc, IdGroup(g) ); 
+            Add( sonuc, IdGroup( g ) ); 
         fi;
     od; 
+    return sonuc; 
+end );
+
+#############################################################################
+##
+#M AllStemGroupFamilies . . . split stem groups of chosen order into families 
+## 
+InstallMethod( AllStemGroupFamilies, "generic method for posint", true, 
+    [ IsPosInt ], 0,
+function(a) 
+
+    local  ids, len, found, id, gi, g, i, j, sonuc, new, sayi;
+
+    ids := AllStemGroupIds( a );
+    len := Length( ids ); 
+    found := ListWithIdenticalEntries( len, false );
+    sonuc := [ ]; 
+    for i in [1..len] do 
+        if not found[i] then 
+            found[i] := true; 
+            id := ids[i]; 
+            new := [ id ];
+            gi := SmallGroup( id ); 
+            for j in [i+1..len] do 
+                if not found[j] then 
+                    if AreIsoclinicGroups( gi, SmallGroup( ids[j] ) ) then
+                        found[j] := true; 
+                        Add( new, ids[j] );
+                    fi; 
+                fi; 
+            od;
+        Add( sonuc, ShallowCopy( new ) ); 
+        fi; 
+    od;
     return sonuc; 
 end );
 
@@ -410,7 +448,15 @@ function( G )
 
     ZG := Centre( G ); 
     Q := FactorGroup( G, ZG ); 
+    if ( HasName(G) and not HasName(ZG) ) then 
+        SetName( ZG, Concatenation( "Z(", Name(G), ")" ) ); 
+    fi; 
     nat := NaturalHomomorphismByNormalSubgroup( G, ZG ); 
+    if HasName(G) then 
+        SetName( Q, Concatenation( Name(G), "/", Name(ZG) ) ); 
+        SetName( nat, Concatenation( "central quotient homomorphism ", 
+                          Name(G), " -> ", Name(Q) ) ); 
+    fi;
     SetCentralQuotientHomomorphism( G, nat ); 
     return Q;
 end );
@@ -433,7 +479,15 @@ function( XM )
 
     ZM := CentreXMod( XM ); 
     QM := FactorXMod( XM, ZM ); 
-    nat := NaturalHomomorphismByNormalSubXMod( XM, ZM ); 
+    if ( HasName(XM) and not HasName(ZM) ) then 
+        SetName( ZM, Concatenation( "Z(", Name(XM), ")" ) ); 
+    fi; 
+    nat := NaturalMorphismByNormalSubXMod( XM, ZM ); 
+    if HasName(XM) then 
+        SetName( QM, Concatenation( Name(XM), "/", Name(ZM) ) ); 
+        SetName( nat, Concatenation( "central quotient morphism ", 
+                          Name(XM), " -> ", Name(QM) ) ); 
+    fi;
     SetCentralQuotientHomomorphism( XM, nat ); 
     return QM;
 end );
@@ -442,10 +496,15 @@ InstallOtherMethod( CentralQuotientHomomorphism, "generic method for xmods",
     true, [ IsXMod ], 0,
 function( XM ) 
 
-    local  QM; 
+    local  QM, nat; 
 
     QM := CentralQuotient( XM );
-    return NaturalHomomorphismByNormalSubXMod( XM, QM ); 
+    nat := NaturalMorphismByNormalSubXMod( XM, QM ); 
+    if HasName(XM) then 
+        SetName( nat, Concatenation( "central quotient morphism ", 
+                          Name(XM), " -> ", Name(QM) ) ); 
+    fi;
+    return nat;
 end );
 
 #############################################################################
@@ -557,40 +616,32 @@ end );
 
 #############################################################################
 ##
-#M IsoclinicStemGroups . . . 
+#M IsoclinicStemGroup . . . 
 ## 
-InstallMethod( IsoclinicStemGroups, "generic method for a group", 
+InstallMethod( IsoclinicStemGroup, "generic method for a group", 
     true, [ IsGroup ], 0,
 function(G)
 
-    local  s, i, len, divs, n, id, j, sonuc, sayi;
+    local  i, len, divs, id, gi;
 
     if ( HasIsAbelian(G) and IsAbelian(G) ) then 
         return [ [ 1, 1 ] ]; 
     fi;
     if IsStemGroup(G) then 
-        id := AllStemGroupIds( Size(G) ); 
-        return Filtered( id, i -> AreIsoclinicGroups( G, SmallGroup(i) ) ); 
-    fi;
-    sonuc := [];
-    sayi := 0;
+        return G;
+    fi; 
     divs := DivisorsInt( Size(G) );
     len := Length( divs ); 
     for i in divs{[1..len-1]} do 
-        for id in AllStemGroupIds( i ) do
-            j := id[2]; 
-            if AreIsoclinicGroups( G, SmallGroup(i,j) ) then
-                ## Print("SmallGroup(",i,",",j,")\n");        
-                sayi := sayi + 1;
-                Add( sonuc, [i,j] );
+        for gi in AllSmallGroups( i ) do 
+            if IsStemGroup( gi ) then
+                if AreIsoclinicGroups( G, gi ) then 
+                    return gi; 
+                fi; 
             fi;        
         od;
-        if ( Length( sonuc ) > 0 ) then 
-            return sonuc; 
-        fi;
     od;
-    Print( "Total Numbers : ", sayi, "\n");
-    return sonuc;
+    return fail; 
 end );
 
 

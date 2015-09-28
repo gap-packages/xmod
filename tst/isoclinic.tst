@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.tst               XMOD test file                   Alper Odabas
 #W                                                               & Enver Uslu
-##  version 2.44, 26/09/2015 
+##  version 2.43, 28/09/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 ##
@@ -68,7 +68,7 @@ gap> Q := FactorXMod( X24, nsx[30] );
 [ f1, f2, <identity> of ..., <identity> of ..., <identity> of ... ] )]
 gap> Size( Q );
 [ 6, 6 ]
-gap> nat := NaturalHomomorphismByNormalSubXMod( X24, nsx[30] ); 
+gap> nat := NaturalMorphismByNormalSubXMod( X24, nsx[30] ); 
 [[D24->PAut(D24)] => [..]]
 
 gap> ZX5 := CentreXMod( X5 );      
@@ -137,23 +137,30 @@ gap> CommutatorSubgroup( G, G );
 Group([ f3, f5 ])
 gap> IsStemGroup( G );
 false
-gap> IsoclinicStemGroups( G );
-[ [ 16, 7 ], [ 16, 8 ], [ 16, 9 ] ]
-gap> IsoclinicStemGroups( SmallGroup(32,6) );
-[ [ 32, 6 ], [ 32, 7 ], [ 32, 8 ] ]
+gap> IsoclinicStemGroup( G );
+<pc group of size 16 with 4 generators>
+gap> IdGroup( last );
+[ 16, 7 ]
 gap> AllStemGroupIds( 32 );
 [ [ 32, 6 ], [ 32, 7 ], [ 32, 8 ], [ 32, 18 ], [ 32, 19 ], [ 32, 20 ], 
   [ 32, 27 ], [ 32, 28 ], [ 32, 29 ], [ 32, 30 ], [ 32, 31 ], [ 32, 32 ], 
   [ 32, 33 ], [ 32, 34 ], [ 32, 35 ], [ 32, 43 ], [ 32, 44 ], [ 32, 49 ], 
   [ 32, 50 ] ]
+gap> AllStemGroupFamilies( 32 );
+[ [ [ 32, 6 ], [ 32, 7 ], [ 32, 8 ] ], [ [ 32, 18 ], [ 32, 19 ], [ 32, 20 ] ],
+  [ [ 32, 27 ], [ 32, 28 ], [ 32, 29 ], [ 32, 30 ], [ 32, 31 ], [ 32, 32 ], 
+      [ 32, 33 ], [ 32, 34 ], [ 32, 35 ] ], [ [ 32, 43 ], [ 32, 44 ] ], 
+  [ [ 32, 49 ], [ 32, 50 ] ] ]
 
 gap> MiddleLength(G);
 1.
 gap> RankXMod( X1 );
 [ 2.32193, 2. ]
 
-gap> CentralQuotient(X5);            
-[Group( [ f1^2, f1 ] )->Group( [ f1, f2, f3^2, f3 ] )]
+gap> CQX5 := CentralQuotient(X5);            
+X5/Z(X5)
+gap> MappingGeneratorsImages( Boundary( CQX5 ) );
+[ [ f1^2, f1 ], [ f3^2, f3 ] ]
 gap> CentralQuotientHomomorphism(X5);    
 [[..] => [..]]
 

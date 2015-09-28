@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.gd              GAP4 package `XMod'                Alper Odabas
 #W                                                               & Enver Uslu
-##  version 2.44, 26/09/2015 
+##  version 2.44, 28/09/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al 
 ##
@@ -42,10 +42,10 @@ DeclareOperation( "IntersectionSubXMod", [  IsXMod, IsXMod, IsXMod ] );
 #############################################################################
 ##
 #O FactorXMod  . . . . . . . . . . . . . . . . . the quotient crossed module
-#O NaturalHomomorphismByNormalSubXMod . . . . . . the quotient xmod morphism
+#O NaturalMorphismByNormalSubXMod . . . . . . . . the quotient xmod morphism
 ##
 DeclareOperation( "FactorXMod", [  IsXMod, IsXMod ] );
-DeclareOperation( "NaturalHomomorphismByNormalSubXMod", [  IsXMod, IsXMod ] );
+DeclareOperation( "NaturalMorphismByNormalSubXMod", [  IsXMod, IsXMod ] );
 
 #############################################################################
 ##
@@ -94,17 +94,18 @@ DeclareAttribute( "NilpotencyClass2dGroup", Is2dGroup );
 #############################################################################
 ##
 #P IsStemGroup . . . check that the centre is a subgroup of the derived group
-#O AllStemGroupIds . . . list of all IdGroup's of stem groups of chosen order 
+#O AllStemGroupFamilies . . . list of all IdGroup's of stem groups of chosen order 
 #A MiddleLength . . . 
 ## 
 DeclareProperty( "IsStemGroup", IsGroup );
 DeclareOperation( "AllStemGroupIds", [ IsPosInt ] );
+DeclareOperation( "AllStemGroupFamilies", [ IsPosInt ] );
 DeclareAttribute( "CentralQuotient", IsGroup ); 
 DeclareAttribute( "CentralQuotientHomomorphism", IsGroup ); 
 DeclareAttribute( "MiddleLength", IsGroup ); 
 DeclareOperation( "Isoclinism", [ IsGroup, IsGroup ] );
 DeclareOperation( "AreIsoclinicGroups", [ IsGroup, IsGroup ] );
-DeclareAttribute( "IsoclinicStemGroups", IsGroup );
+DeclareAttribute( "IsoclinicStemGroup", IsGroup );
 
 
 ############################################################################# 

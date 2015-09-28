@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  isclinic.xml          XMod documentation             Alper Odabas  -->
 <!--                                                       & Enver Uslu  -->
-<!--  version 2.44, 26/09/2015                                           --> 
+<!--  version 2.43, 28/09/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2015, Chris Wensley et al                       --> 
 <!--                                                                     -->
@@ -122,6 +122,8 @@ false
 <ManSection>
    <Oper Name="FactorXMod"
          Arg="X1 X2" />
+   <Oper Name="NaturalMorphismByNormalSubXMod"
+         Arg="X1 X2" />
 <Description>
 When <M>\mathcal{X}_2 = (\partial_2 : S_2 \to R_2)</M> 
 is a normal subcrossed module of 
@@ -142,6 +144,8 @@ gap> Q := FactorXMod( X24, nsx[30] );
 [ f1, f2, <identity> of ..., <identity> of ..., <identity> of ... ] )]
 gap> Size( Q );
 [ 6, 6 ]
+gap> nat := NaturalMorphismByNormalSubXMod( X24, nsx[30] ); 
+[[D24->PAut(D24)] => [..]]
 ]]>
 </Example>
 
@@ -251,7 +255,9 @@ false
          Arg="G" />
    <Oper Name="AllStemGroupIds"
          Arg="n" />
-   <Attr Name="IsoclinicStemGroups"
+   <Oper Name="AllStemGroupFamilies"
+         Arg="n" />
+   <Attr Name="IsoclinicStemGroup"
          Arg="G" />
 <Description>
 A group <M>G</M> is a <E>stem group</E> if <M>Z(G) \leq [G,G]</M>. 
@@ -259,10 +265,11 @@ Every group is isoclinic to a stem group, but distinct stem groups
 may be isoclinic. 
 For example, groups <M>D_8, Q_8</M> are both stem groups but are isoclinic. 
 <P/>
-The function <C>IsoclinicStemGroups</C> returms the <C>IdGroup</C> list 
-of the stem groups isoclinic to <M>G</M>. 
+The function <C>IsoclinicStemGroup</C> returns a stem group 
+isoclinic to <M>G</M>. 
 The function <C>AllStemGroupIds</C> returns the <C>IdGroup</C> list 
-of the stem groups of a specified size. 
+of the stem groups of a specified size, while <C>AllStemGroupFamilies</C> 
+splits this list into isoclinism families.  
 </Description>
 </ManSection>
 <Example>
@@ -271,15 +278,20 @@ gap> CommutatorSubgroup( G, G );
 Group([ f3, f5 ])
 gap> IsStemGroup( G );
 false
-gap> IsoclinicStemGroups( G );
-[ [ 16, 7 ], [ 16, 8 ], [ 16, 9 ] ]
-gap> IsoclinicStemGroups( SmallGroup(32,6) );
-[ [ 32, 6 ], [ 32, 7 ], [ 32, 8 ] ]
+gap> IsoclinicStemGroup( G );
+<pc group of size 16 with 4 generators>
+gap> IdGroup( last );
+[ 16, 7 ]
 gap> AllStemGroupIds( 32 );
 [ [ 32, 6 ], [ 32, 7 ], [ 32, 8 ], [ 32, 18 ], [ 32, 19 ], [ 32, 20 ], 
   [ 32, 27 ], [ 32, 28 ], [ 32, 29 ], [ 32, 30 ], [ 32, 31 ], [ 32, 32 ], 
   [ 32, 33 ], [ 32, 34 ], [ 32, 35 ], [ 32, 43 ], [ 32, 44 ], [ 32, 49 ], 
   [ 32, 50 ] ]
+gap> AllStemGroupFamilies( 32 );
+[ [ [ 32, 6 ], [ 32, 7 ], [ 32, 8 ] ], [ [ 32, 18 ], [ 32, 19 ], [ 32, 20 ] ],
+  [ [ 32, 27 ], [ 32, 28 ], [ 32, 29 ], [ 32, 30 ], [ 32, 31 ], [ 32, 32 ], 
+      [ 32, 33 ], [ 32, 34 ], [ 32, 35 ] ], [ [ 32, 43 ], [ 32, 44 ] ], 
+  [ [ 32, 49 ], [ 32, 50 ] ] ]
 ]]>
 </Example>
 
