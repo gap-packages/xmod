@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2obj.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  version 2.43, 17/09/2015                                           --> 
+<!--  version 2.43, 29/09/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2015, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
@@ -138,9 +138,11 @@ and range <M>R</M> of <M>\partial</M>, the boundary <C>Boundary(X0)</C>;
          Arg="X0" />
    <Attr Name="Name"
          Arg="X0" />
+   <Attr Name="IdGroup"
+         Arg="X0" />
 <Description>
-More familiar attributes are <C>Size</C> and <C>Name</C>, 
-the latter formed by concatenating the names of the source and range 
+More familiar attributes are <C>Size</C>, <C>Name</C> an d <C>IdGroup</C>. 
+The name formed by concatenating the names of the source and range 
 (if these exist).
 An <C>Enumerator</C> function has not been implemented.
 <Index>display a 2d-group</Index>
@@ -170,6 +172,8 @@ Crossed module [c5 -> PAut(c5)] :-
   This automorphism generates the group of automorphisms.
 gap> Size( X1 );
 [ 5, 4 ]
+gap> IdGroup( X1 ); 
+[ [ 5, 1 ], [ 4, 1 ] ]
 gap> Print( RepresentationsOfObject(X1), "\n" );
 [ "IsComponentObjectRep", "IsAttributeStoringRep", "IsPreXModObj" ]
 gap> Print( KnownPropertiesOfObject(X1), "\n" );
@@ -181,6 +185,7 @@ gap> Print( KnownAttributesOfObject(X1), "\n" );
 ]]>
 </Example>
 
+<Index>IsNormal for crossed modules</Index>
 <ManSection>
    <Oper Name="SubXMod"
          Arg="X0 src rng" />
@@ -212,6 +217,7 @@ is <E>normal</E> in <M>\mathcal{X} = (\partial : S \to R)</M>  if
 These conditions ensure that  <M>M \ltimes N</M>  is normal in  
 the semidirect product <M>R \ltimes S</M>. 
 <P/>
+A method for <C>IsNormal</C> is provided. 
 See section <Ref Sect="iso-ops"/> for quotient crossed modules. 
 <P/> 
 The five normal subcrossed modules of <C>X4</C> found in the following 
@@ -230,6 +236,8 @@ gap> X4 := XModByNormalSubgroup( s4, a4 );
 [a4->s4]
 gap> Y4 := SubXMod( X4, k4, a4 ); 
 [k4->a4]
+gap> IsNormal(X4,Y4);
+true
 gap> NX4 := NormalSubXMods( X4 );;
 gap> Length( NX4 ); 
 5

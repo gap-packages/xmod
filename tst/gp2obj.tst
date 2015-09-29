@@ -2,7 +2,7 @@
 ##
 #W  gp2obj.tst                    XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-##  version 2.43, 18/09/2015 
+##  version 2.43, 29/09/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -47,6 +47,8 @@ gap> X4 := XModByNormalSubgroup( s4, a4 );
 [a4->s4]
 gap> Y4 := SubXMod( X4, k4, a4 ); 
 [k4->a4]
+gap> IsNormal( X4, Y4 ); 
+true
 gap> NX4 := NormalSubXMods( X4 );;
 gap> Length( NX4 ); 
 5

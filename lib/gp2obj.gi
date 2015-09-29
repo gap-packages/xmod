@@ -2,9 +2,9 @@
 ##
 #W  gp2obj.gi                 GAP4 package `XMod'               Chris Wensley
 #W                                                                & Murat Alp
-##  version 2.43, 18/09/2015 
+##  version 2.43, 29/09/2015 
 ##
-#Y  Copyright (C) 2001-2015, Chris Wensley ety al,  
+#Y  Copyright (C) 2001-2015, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 ##  This file contains generic methods for (pre-)crossed modules and
@@ -374,6 +374,15 @@ function( g2d )
         Print( ": associated crossed module is ", XModOfCat1( g2d ), "\n" );
     fi;
     Print( "\n" );
+end ); 
+
+#############################################################################
+##
+#M  IdGroup . . . . . . . . . . . . . . . . . . . . . . . . . for a 2d-domain
+##
+InstallOtherMethod( IdGroup, "method for a 2d-domain", true, [ Is2dDomain ], 0,
+function( dom )
+    return [ IdGroup( Source(dom) ), IdGroup( Range(dom) ) ]; 
 end ); 
 
 #############################################################################
