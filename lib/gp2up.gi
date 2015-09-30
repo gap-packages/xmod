@@ -3,7 +3,7 @@
 #W  gp2up.gi                    GAP4 package `XMod'              Chris Wensley
 #W                                                                 & Murat Alp
 ##
-##  version 2.43, 16/09/2015 
+##  version 2.43, 30/09/2015 
 ##
 ##  This file contains implementations of UpMappings, Derivations and Sections
 ##
@@ -834,14 +834,13 @@ InstallMethod( BacktrackDerivationsJ, "method for a crossed module", true,
       IsInt, IsString ], 0,
 function( XM, subs, imrho, imchi, j, str )
     
-    local  Xsrc, onesrc, Xrng, isorng, stgrng, derivgen, s, ok, rho, el, bdy,
+    local  Xsrc, onesrc, Xrng, isorng, stgrng, derivgen, s, ok, rho, bdy,
            k, J, genJ, ord, r, aut, w, t, i, chi;
 
     Xsrc := Source( XM );
     Xrng := Range( XM );
     onesrc := One( Xsrc );
     stgrng := StrongGeneratorsStabChain( StabChain( Xrng ) );
-    el := Elements( Xsrc );
     k := Length( stgrng );
     bdy := Boundary( XM );
     if ( k < j ) then
@@ -863,7 +862,7 @@ function( XM, subs, imrho, imchi, j, str )
         J := subs[j];
         genJ := GeneratorsOfGroup( J );
         derivgen := [ ];
-        for s in el do
+        for s in Xsrc do
             imchi[ j ] := s;
             imrho[ j ] := genJ[j] * Image( bdy, s );
             rho := GroupHomomorphismByImages( J, Xrng, genJ, imrho );

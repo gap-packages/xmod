@@ -2,7 +2,7 @@
 ##
 #W  gp2act.tst                    XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-##  version 2.43, 18/09/2015 
+##  version 2.43, 30/09/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley, et al
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -30,7 +30,7 @@ Crossed module Whitehead[c3->s3] :-
 : Range group has generators:
   [ (1,2,3)(4,5,6), (1,4)(2,6)(3,5) ]
 : Boundary homomorphism maps source generators to:
-  [ (1,3,2)(4,6,5) ]
+  [ (1,2,3)(4,5,6) ]
 : Action homomorphism maps range generators to automorphisms:
   (1,2,3)(4,5,6) --> { source gens --> [ (1,2,3)(4,6,5) ] }
   (1,4)(2,6)(3,5) --> { source gens --> [ (1,3,2)(4,5,6) ] }
@@ -75,9 +75,9 @@ Crossed module Actor[c3->s3] :-
 : Range group has generators:
   [ (5,7,6), (1,2)(3,4)(6,7) ]
 : Boundary homomorphism maps source generators to:
-  [ (5,6,7), (1,2)(3,4)(6,7) ]
+  [ (5,7,6), (1,2)(3,4)(6,7) ]
 : Action homomorphism maps range generators to automorphisms:
-  (5,7,6) --> { source gens --> [ (1,2,3)(4,5,6), (1,5)(2,4)(3,6) ] }
+  (5,7,6) --> { source gens --> [ (1,2,3)(4,5,6), (1,6)(2,5)(3,4) ] }
   (1,2)(3,4)(6,7) --> { source gens --> [ (1,3,2)(4,6,5), (1,4)(2,6)(3,5) ] }
   These 2 automorphisms generate the group of automorphisms.
 
@@ -86,14 +86,14 @@ gap> Display( IAX3 );
 
 Crossed module InnerActor[c3->s3] :- 
 : Source group has generators:
-  [ (1,3,2)(4,6,5) ]
+  [ (1,2,3)(4,5,6) ]
 : Range group has generators:
   [ (5,6,7), (1,2)(3,4)(6,7) ]
 : Boundary homomorphism maps source generators to:
   [ (5,7,6) ]
 : Action homomorphism maps range generators to automorphisms:
-  (5,6,7) --> { source gens --> [ (1,3,2)(4,6,5) ] }
-  (1,2)(3,4)(6,7) --> { source gens --> [ (1,2,3)(4,5,6) ] }
+  (5,6,7) --> { source gens --> [ (1,2,3)(4,5,6) ] }
+  (1,2)(3,4)(6,7) --> { source gens --> [ (1,3,2)(4,6,5) ] }
   These 2 automorphisms generate the group of automorphisms.
 
 
@@ -108,7 +108,7 @@ Morphism of crossed modules :-
   [ (1,2,3)(4,5,6), (1,4)(2,6)(3,5) ]
   [ (5,7,6), (1,2)(3,4)(6,7) ]
 : Source Homomorphism maps source generators to:
-  [ (1,3,2)(4,6,5) ]
+  [ (1,2,3)(4,5,6) ]
 : Range Homomorphism maps range generators to:
   [ (5,6,7), (1,2)(3,4)(6,7) ]
 gap> IsInjective( IMX3 );
