@@ -16,8 +16,9 @@ Problems:
               (construction worked OK with isomorphic perm groups). 
 
 #############################################################################
-2.42 -> 2.43 (28/09/2015) 
+2.42 -> 2.43 (01/10/2015) 
 
+ - (01/10/15) added operation Displacement
  - (28/09/15) added AllStemGroupFamilies and Set various Names 
  - (24/09/15) added CrossActionSubgroup 
  - (23/09/15) removed last occurrences of AllIsomorphisms 

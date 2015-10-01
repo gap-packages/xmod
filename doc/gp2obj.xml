@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2obj.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  version 2.43, 29/09/2015                                           --> 
+<!--  version 2.43, 30/09/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2015, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
@@ -68,7 +68,7 @@ There are a variety of constructors for crossed modules:
 Here are the standard constructions which these implement:
 <List>
 <Item>
-A <E>trivial action crossed module</E>  <M>\partial : S \to R</M>
+A <E>trivial action crossed module</E>  <M>(\partial : S \to R)</M>
 has  <M>s^r = s</M>  for all  <M>s \in S, \; r \in R</M>,  
 the source is abelian and the image lies in the centre of the range.
 </Item>
@@ -116,8 +116,8 @@ trivially on  <M>S_2,\ S_1</M>  respectively.
    <Attr Name="XModAction"
          Arg="X0" />
 <Description>
-In this implementation the attributes used in the construction of
-a crossed module <C>X0</C> are as follows.
+In this implementation the following attributes are used in the construction of
+a crossed module <C>X0</C>.
 <List>
 <Item>
 <C>Source(X0)</C> and <C>Range(X0)</C> are the source <M>S</M> 
@@ -141,8 +141,8 @@ and range <M>R</M> of <M>\partial</M>, the boundary <C>Boundary(X0)</C>;
    <Attr Name="IdGroup"
          Arg="X0" />
 <Description>
-More familiar attributes are <C>Size</C>, <C>Name</C> an d <C>IdGroup</C>. 
-The name formed by concatenating the names of the source and range 
+More familiar attributes are <C>Size</C>, <C>Name</C> and <C>IdGroup</C>. 
+The name is formed by concatenating the names of the source and range 
 (if these exist).
 An <C>Enumerator</C> function has not been implemented.
 <Index>display a 2d-group</Index>

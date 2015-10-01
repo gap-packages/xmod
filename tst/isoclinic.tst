@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.tst               XMOD test file                   Alper Odabas
 #W                                                               & Enver Uslu
-##  version 2.43, 28/09/2015 
+##  version 2.43, 01/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 ##
@@ -23,12 +23,17 @@ gap> X5 := XModByNormalSubgroup( D24, N5 );
 gap> SetName( X5, "X5" );
 gap> Size( X5 );
 [ 6, 24 ]
+gap> d := Displacement( XModAction(X5), N5.1, D24.1 );
+f4^2
+gap> Image( Boundary(X5), d ) = Comm( N5.1, D24.1 );  
+true
+gap> DisplacementSubgroup( X5 );
+Group([ f4^2, f4 ])
+
 gap> fix := PreXModFixedPointSubgroup( X5 );
 <pc group of size 2 with 1 generators>
 gap> stab := PreXModStabilizer( X5 );
 <pc group of size 12 with 1 generators>
-gap> DisplacementSubgroup( X5 );
-Group([ f4^2, f4 ])
 gap> DX5 := DerivedSubXMod( X5 );  
 [Group( [ f4^2, f4 ] )->Group( [ f3, f4 ] )]
 
