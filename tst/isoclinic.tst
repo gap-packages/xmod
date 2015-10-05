@@ -30,9 +30,9 @@ true
 gap> DisplacementSubgroup( X5 );
 Group([ f4^2, f4 ])
 
-gap> fix := FixedPointSubgroupXMod( X5 );
+gap> fix := FixedPointSubgroupXMod( X5, N5, D24 );
 Group([ f3*f4 ])
-gap> stab := StabilizerXMod( X5 );
+gap> stab := StabilizerSubgroupXMod( X5, N5, D24 );
 <pc group of size 12 with 1 generators>
 gap> DX5 := DerivedSubXMod( X5 );  
 [Group( [ f4^2, f4 ] )->Group( [ f3, f4 ] )]
@@ -74,9 +74,9 @@ gap> N2 := norm[2];
 Group([ f1, f3, f4 ])
 gap> X2 := XModByNormalSubgroup( G24, N2 );
 [Group( [ f1, f3, f4 ] )->Group( [ f1, f2, f3, f4 ] )]
-gap> stab := StabilizerXMod(X2);
+gap> stab := StabilizerSubgroupXMod( X2, N2, G24 );
 <pc group of size 4 with 2 generators>
-gap> fix := FixedPointSubgroupXMod( X2 );
+gap> fix := FixedPointSubgroupXMod( X2, N2, G24 );
 Group([ f3 ])
 gap> im := Image(Boundary(X2),fix);
 Group([ f3 ])
@@ -84,8 +84,6 @@ gap> N9 := norm[9];
 Group([ f3, f4 ])
 gap> C9 := Centralizer( G24, N9 );
 Group([ f2, f3, f4 ])
-gap> stab := StabilizerXMod(X2);
-<pc group of size 4 with 2 generators>
 gap> inter := Intersection( stab, C9 );
 <pc group of size 4 with 2 generators>
 gap> stab=Intersection( stab, C9 );
@@ -120,8 +118,22 @@ gap> Size( Q );
 gap> nat := NaturalMorphismByNormalSubXMod( X24, nsx[30] ); 
 [[D24->PAut(D24)] => [..]]
 
+
+
 gap> ZX5 := CentreXMod( X5 );      
 [Group( [ f3*f4 ] )->Group( [ f3*f4 ] )]
+gap> IdGroup( ZX5 );
+[ [ 2, 1 ], [ 2, 1 ] ]
+gap> CDX5 := Centralizer( X5, DX5 );
+[Group( [ f3*f4 ] )->Group( [ f3 ] )]
+gap> IdGroup( CDX5 );    
+[ [ 2, 1 ], [ 6, 2 ] ]
+gap> NDX5 := Normalizer( X5, DX5 ); 
+[Group( <identity> of ... )->Group( [ f2 ] )]
+gap> IdGroup( NDX5 );
+[ [ 1, 1 ], [ 12, 2 ] ]
+
+
 
 gap> LX1 := LowerCentralSeriesOfXMod( X1 );
 [ [c5->PAut(c5)], [Group( [ (5,6,7,8,9) ] )->Group( () )] ]

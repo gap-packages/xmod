@@ -16,8 +16,10 @@ Problems:
               (construction worked OK with isomorphic perm groups). 
 
 #############################################################################
-2.42 -> 2.43 (01/10/2015) 
+2.42 -> 2.43 (05/10/2015) 
 
+ - (05/10/15) added Centralizer and Normalizer methods for crossed modules 
+ - (02/10/15) added ExternalSetXMod 
  - (01/10/15) added operation Displacement
  - (28/09/15) added AllStemGroupFamilies and Set various Names 
  - (24/09/15) added CrossActionSubgroup 

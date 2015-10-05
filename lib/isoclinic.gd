@@ -9,15 +9,11 @@
 
 #############################################################################
 ##
-#A  FixedPointSubgroupXMod( <PM> ) 
+#A  FixedPointSubgroupXMod . . . . . . . . {s in S | s^r = s for all r in R}
+#A  StabilizerSubgroupXMod . . . . . . . . {r in R | s^r = s for all s in S}
 ##
-DeclareAttribute( "FixedPointSubgroupXMod", IsPreXMod );
-
-#############################################################################
-##
-#A  StabilizerXMod( <PM> ) 
-##
-DeclareAttribute( "StabilizerXMod", IsPreXMod );
+DeclareOperation( "FixedPointSubgroupXMod", [ IsPreXMod, IsGroup, IsGroup ] );
+DeclareOperation( "StabilizerSubgroupXMod", [ IsPreXMod, IsGroup, IsGroup ] );
 
 #############################################################################
 ##

@@ -9,15 +9,15 @@ PackageName := "XMod",
 Subtitle := "Crossed Modules and Cat1-Groups",
 
 Version := "2.43",
-Date := "01/10/2015",
+Date := "05/10/2015",
 
 ##  duplicate these values for inclusion in the manual: 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
 ##  <!ENTITY VERSION "2.43">
 ##  <!ENTITY TARFILENAME "xmod-2.43.tar.gz">
 ##  <!ENTITY HTMLFILENAME "xmod243.html">
-##  <!ENTITY RELEASEDATE "01/10/2015">
-##  <!ENTITY LONGRELEASEDATE "1st October 2015">
+##  <!ENTITY RELEASEDATE "05/10/2015">
+##  <!ENTITY LONGRELEASEDATE "5th October 2015">
 ##  <!ENTITY COPYRIGHTYEARS "1997-2015">
 ##  <#/GAPDoc>
 
@@ -131,8 +131,7 @@ AvailabilityTest := ReturnTrue,
 BannerString := Concatenation( 
   "Loading XMod ", String( ~.Version ), " for GAP 4.7", 
   " - methods for crossed modules and cat1-groups\n",
-  "by Chris Wensley (c.d.wensley@bangor.ac.uk),\n", 
-  "with contributions by:\n", 
+  "by Chris Wensley (c.d.wensley@bangor.ac.uk), with contributions by:\n", 
   "    Murat Alp (muratalp@nigde.edu.tr),\n", 
   "    Alper Odabas (aodabas@ogu.edu.tr),\n", 
   "and Enver Uslu (enveruslu@ogu.edu.tr).\n" 

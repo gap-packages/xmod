@@ -1,7 +1,7 @@
 #############################################################################
 ##
 #W  isoclinic.gi               GAP4 package `XMod'                Alper Odabas
-#W                                                               & Enver Uslu
+#W                                                                & Enver Uslu
 ##  version 2.43, 05/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al 
@@ -15,42 +15,49 @@
 #M  FixedPointSubgroupXMod . . . . elements of the range fixed by the source
 ##
 InstallMethod( FixedPointSubgroupXMod, "generic method for precrossed modules", 
-    true, [ IsPreXMod ], 0,
-function( XM )
+    true, [ IsPreXMod, IsGroup, IsGroup ], 0,
+function( XM, T, Q )
 
-    local  S, orb, elts, fix, gens;
+    local  genQ, act, ext, orb, elts, fix, gens;
 
-    S := Source( XM );
-    orb := Orbits( ExternalSetXMod( XM ) );  
+    if not ( IsSubgroup( Source(XM), T ) and IsSubgroup( Range(XM), Q ) ) then 
+        Error( "T,Q not subgroups of S,R" ); 
+    fi; 
+    genQ := GeneratorsOfGroup( Q ); 
+    act := XModAction( XM );
+    ext := ExternalSet( Q, T, genQ, List( genQ, g -> Image(act,g) ) ); 
+    orb := Orbits( ext );  
     elts := Concatenation( Filtered( orb, o -> Length(o) = 1) ); 
-    fix := Subgroup( Source(XM), elts ); 
+    fix := Subgroup( T, elts ); 
     gens := SmallGeneratingSet( fix ); 
-    return Subgroup( S, gens ); 
+    return Subgroup( T, gens ); 
 end );
        
 #############################################################################
 ##
-#M  StabilizerXMod .. elements of the range which fix the source pointwise
+#M  StabilizerSubgroupXMod . . . . elements of Q<=R which fix T<=S pointwise
 ##
-InstallMethod( StabilizerXMod, "generic method for crossed modules", true, 
-    [ IsPreXMod ], 0,
-function( XM )
+InstallMethod( StabilizerSubgroupXMod, 
+    "generic method for a crossed module and subgroups of source, range", 
+    true, [ IsPreXMod, IsGroup, IsGroup ], 0,
+function( XM, T, Q )
 
-    local alpha, sonuc, T, G, t, g, list;
+    local alpha, sonuc, t, q, list;
 
-    T := Source(XM);
-    G := Range(XM);
+    if not ( IsSubgroup( Source(XM), T ) and IsSubgroup( Range(XM), Q ) ) then 
+        Error( "T,Q not subgroups of S,R" ); 
+    fi; 
     alpha := XModAction(XM);
     list := [];
-    for g in G do
-        if ForAll( T, t -> Image(Image(alpha,g),t)=t ) then
-            Add( list, g );
+    for q in Q do
+        if ForAll( T, t -> Image(Image(alpha,q),t)=t ) then
+            Add( list, q );
         fi;        
     od;
     ##  if the lists consist only the identity element then there is a bug 
     ##  in the function AsMagma. 
     if ( Length( Set(list) ) = 1 ) then
-        return TrivialSubgroup( G );
+        return TrivialSubgroup( Q );
     fi;
     return AsGroup(list);
 end );
@@ -69,8 +76,8 @@ function( XM )
     G := Range(XM);
     alpha := XModAction(XM);
     partial := Boundary(XM);
-    K := Intersection( Centre(G), StabilizerXMod(XM) );
-    fix := FixedPointSubgroupXMod( XM );
+    K := Intersection( Centre(G), StabilizerSubgroupXMod( XM, T, G ) );
+    fix := FixedPointSubgroupXMod( XM, T, G );
 ##  k_partial := GroupHomomorphismByFunction( fix, K, x -> Image(partial,x) );
 ##  k_alpha := GroupHomomorphismByFunction( K, AutomorphismGroup( fix ), 
 ##                 x -> Image( alpha, x ) );
@@ -82,12 +89,35 @@ end );
 ##
 #M  Centralizer  . . . . . . . . for a subcrossed module of a crossed module
 ##
-## InstallOtherMethod( Centralizer, "generic method for crossed modules", true, 
-##     [ IsXMod, IsXMod ], 0,
-## function( XM, YM )
-    
+InstallOtherMethod( Centralizer, "generic method for crossed modules", true, 
+    [ IsXMod, IsXMod ], 0,
+function( XM, YM )
 
+    local  srcX, rngY, genR, actY, ext, orb, elts, fix, gens, srcC, rngC; 
 
+    if not IsSubXMod( XM, YM ) then 
+        Error( "YM is not a subcrossed module of XM" ); 
+    fi;
+    srcX := Source( XM ); 
+    rngY := Range( YM  ); 
+    genR := GeneratorsOfGroup( rngY ); 
+    actY := XModAction( YM );
+    ext := ExternalSet( rngY, srcX, genR, List( genR, g -> Image(actY,g) ) ); 
+    orb := Orbits( ExternalSetXMod( XM ) );  
+    elts := Concatenation( Filtered( orb, o -> Length(o) = 1) ); 
+    fix := Subgroup( srcX, elts ); 
+    gens := SmallGeneratingSet( fix ); 
+    srcC := Subgroup( srcX, gens ); 
+    rngC := Intersection( StabilizerSubgroupXMod( XM, srcX, rngY ), 
+                          Centralizer( Range(XM), rngY ) );
+    if ( srcC = srcX ) then 
+        srcC := srcX; 
+        if ( rngC = Range(XM) ) then 
+            return XM; 
+        fi;
+    fi; 
+    return SubXMod( XM, srcC, rngC ); 
+end ); 
 
 #############################################################################
 ##
@@ -140,6 +170,45 @@ function( XM )
     fi;
     return Subgroup( T, list );
 end );
+
+#############################################################################
+##
+#M  Normalizer . . . . . . . . . for a subcrossed module of a crossed module
+##
+InstallOtherMethod( Normalizer, "generic method for crossed modules", true, 
+    [ IsXMod, IsXMod ], 0,
+function( XM, YM )
+
+    local  act, T, G, S, H, t, h, d, pos, elts, gens, srcN, rngN; 
+
+    if not IsSubXMod( XM, YM ) then 
+        Error( "YM is not a subcrossed module of XM" ); 
+    fi;
+    elts := [ ]; 
+    act := XModAction( XM ); 
+    T := Source( XM ); 
+    G := Range( XM  ); 
+    S := Source( YM ); 
+    H := Range( YM  ); 
+    ## is there a more efficient method, just using generators? 
+    for t in T do 
+        for h in H do 
+            d := Displacement( act, t, h ); 
+            if ( d in S ) then 
+                pos := Position( elts, d ); 
+                if ( pos = fail ) then 
+                    Add( elts, d ); 
+                fi; 
+            fi;
+        od; 
+    od;
+    srcN := Subgroup( S, elts ); 
+    gens := SmallGeneratingSet( srcN ); 
+    srcN := Subgroup( S, gens ); 
+    rngN := Intersection( Normalizer( G, H ), 
+                StabilizerSubgroupXMod( XM, S, G ) ); 
+    return SubXMod( XM, srcN, rngN ); 
+end ); 
 
 #############################################################################
 ##
@@ -351,7 +420,7 @@ end );
 InstallMethod( IsFaithful2dGroup, "generic method for crossed modules", true, 
     [ IsXMod ], 0,
 function( XM )
-    return ( Size( StabilizerXMod(XM) ) = 1 ); 
+    return ( Size( StabilizerSubgroupXMod( XM, Source(XM), Range(XM) ) ) = 1 ); 
 end );
 
 #############################################################################
@@ -775,24 +844,26 @@ function(XM1,XM2)
         return false;
     fi;
     
-    QXM1 := Intersection( Centre(G), StabilizerXMod(XM1) ); 
+    QXM1 := Intersection( Centre(G), 
+                StabilizerSubgroupXMod( XM1, T, G ) ); 
     nhom1 := NaturalHomomorphismByNormalSubgroup( G, QXM1 ); 
     kG11 := Image( nhom1 );
     cakma3 := GroupHomomorphismByImages( kG11, G11, GeneratorsOfGroup(kG11), 
                                                     GeneratorsOfGroup(G11) );
-    QXM2 := Intersection( Centre(H), StabilizerXMod(XM2) ); 
+    QXM2 := Intersection( Centre(H), 
+                StabilizerSubgroupXMod( XM2, S, H ) ); 
     nhom2 := NaturalHomomorphismByNormalSubgroup( H, QXM2 ); 
     kG12 := Image( nhom2 );
     cakma4 := GroupHomomorphismByImages( G12, kG12, GeneratorsOfGroup(G12),
                                                     GeneratorsOfGroup(kG12) );
 
     nhom3 := NaturalHomomorphismByNormalSubgroup( T,
-                 FixedPointSubgroupXMod( XM1 ) ); 
+                 FixedPointSubgroupXMod( XM1, T, G ) ); 
     kT11 := Image(nhom3); 
     cakma := GroupHomomorphismByImages( kT11, T11, GeneratorsOfGroup(kT11),
                                                    GeneratorsOfGroup(T11) );
     nhom4 := NaturalHomomorphismByNormalSubgroup( S,
-                 FixedPointSubgroupXMod( XM2 ) ); 
+                 FixedPointSubgroupXMod( XM2, S, H ) ); 
     kT12 := Image(nhom4);
     cakma2 := GroupHomomorphismByImages( T12, kT12, GeneratorsOfGroup(T12),
                                                     GeneratorsOfGroup(kT12) );
