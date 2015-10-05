@@ -2,22 +2,22 @@
 ##
 #W  isoclinic.gd              GAP4 package `XMod'                Alper Odabas
 #W                                                               & Enver Uslu
-##  version 2.43, 01/10/2015 
+##  version 2.43, 05/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al 
 ##
 
 #############################################################################
 ##
-#A  PreXModFixedPointSubgroup( <PM> ) 
+#A  FixedPointSubgroupXMod( <PM> ) 
 ##
-DeclareAttribute( "PreXModFixedPointSubgroup", IsPreXMod );
+DeclareAttribute( "FixedPointSubgroupXMod", IsPreXMod );
 
 #############################################################################
 ##
-#A  PreXModStabilizer( <PM> ) 
+#A  StabilizerXMod( <PM> ) 
 ##
-DeclareAttribute( "PreXModStabilizer", IsPreXMod );
+DeclareAttribute( "StabilizerXMod", IsPreXMod );
 
 #############################################################################
 ##

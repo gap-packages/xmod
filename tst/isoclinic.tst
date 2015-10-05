@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.tst               XMOD test file                   Alper Odabas
 #W                                                               & Enver Uslu
-##  version 2.43, 01/10/2015 
+##  version 2.43, 05/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 ##
@@ -30,9 +30,9 @@ true
 gap> DisplacementSubgroup( X5 );
 Group([ f4^2, f4 ])
 
-gap> fix := PreXModFixedPointSubgroup( X5 );
-<pc group of size 2 with 1 generators>
-gap> stab := PreXModStabilizer( X5 );
+gap> fix := FixedPointSubgroupXMod( X5 );
+Group([ f3*f4 ])
+gap> stab := StabilizerXMod( X5 );
 <pc group of size 12 with 1 generators>
 gap> DX5 := DerivedSubXMod( X5 );  
 [Group( [ f4^2, f4 ] )->Group( [ f3, f4 ] )]
@@ -63,6 +63,50 @@ gap> Size(Y6);
 [ 6, 3 ]
 gap> X6 = Y6;
 false
+
+
+gap> G24:= SmallGroup( 24, 14 );
+<pc group of size 24 with 4 generators>
+gap> norm := NormalSubgroups( G24 );;
+gap> List( norm, n -> Size(n));   
+[ 24, 12, 12, 12, 12, 12, 12, 12, 6, 6, 6, 6, 6, 6, 6, 4, 2, 2, 2, 3, 1 ]
+gap> N2 := norm[2];
+Group([ f1, f3, f4 ])
+gap> X2 := XModByNormalSubgroup( G24, N2 );
+[Group( [ f1, f3, f4 ] )->Group( [ f1, f2, f3, f4 ] )]
+gap> stab := StabilizerXMod(X2);
+<pc group of size 4 with 2 generators>
+gap> fix := FixedPointSubgroupXMod( X2 );
+Group([ f3 ])
+gap> im := Image(Boundary(X2),fix);
+Group([ f3 ])
+gap> N9 := norm[9];
+Group([ f3, f4 ])
+gap> C9 := Centralizer( G24, N9 );
+Group([ f2, f3, f4 ])
+gap> stab := StabilizerXMod(X2);
+<pc group of size 4 with 2 generators>
+gap> inter := Intersection( stab, C9 );
+<pc group of size 4 with 2 generators>
+gap> stab=Intersection( stab, C9 );
+true
+gap> Y9 := SubXMod( X2, fix, inter );
+[Group( [ f3 ] )->Group( [ f2, f3 ] )]
+gap> Display(Y9);
+
+Crossed module [..->..] :- 
+: Source group has generators:
+  [ f3 ]
+: Range group has generators:
+  [ f2, f3 ]
+: Boundary homomorphism maps source generators to:
+  [ f3 ]
+  The automorphism group is trivial
+
+gap> Size(Y9);
+[ 2, 4 ]
+
+
 
 gap> nsx := NormalSubXMods( X24 );; 
 gap> Length( nsx );  Size( nsx[30] );

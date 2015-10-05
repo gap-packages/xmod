@@ -2,7 +2,7 @@
 ##
 #W  gp2obj.gi                 GAP4 package `XMod'               Chris Wensley
 #W                                                                & Murat Alp
-##  version 2.43, 29/09/2015 
+##  version 2.43, 05/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -31,19 +31,19 @@ CAT1_LIST := [ ];
 ##
 InstallMethod( IsPerm2dGroup, "generic method for 2d-group objects",
     true, [ Is2dGroup ], 0,
-    function( obj )
+function( obj )
     return ( IsPermGroup( Source( obj ) ) and IsPermGroup( Range( obj ) ) );
 end );
 
 InstallMethod( IsFp2dGroup, "generic method for 2d-group objects",
     true, [ Is2dGroup ], 0,
-    function( obj )
+function( obj )
     return ( IsFpGroup( Source( obj ) ) and IsFpGroup( Range( obj ) ) );
 end );
 
 InstallMethod( IsPc2dGroup, "generic method for 2d-group objects",
     true, [ Is2dGroup ], 0,
-    function( obj )
+function( obj )
     return ( IsPcGroup( Source( obj ) ) and IsPcGroup( Range( obj ) ) );
 end );
 
@@ -141,9 +141,9 @@ end );
 ##
 InstallMethod( \=, "generic method for two pre-crossed modules",
     IsIdenticalObj, [ IsPreXMod, IsPreXMod ], 0,
-    function ( P, Q )
+function ( P, Q )
     return ( ( Boundary(P) = Boundary(Q) )
-             and ( XModAction(P) = XModAction(Q) ) );
+         and ( XModAction(P) = XModAction(Q) ) );
 end );
 
 ##############################################################################
@@ -154,12 +154,6 @@ InstallOtherMethod( Size, "generic method for a 2d-object", [ Is2dDomain ], 20,
 function ( obj )
     return [ Size( Source( obj ) ), Size( Range( obj ) ) ];
 end );
-
-##############################################################################
-##
-#M  Elements( <P> )  . . . . . . . . . . . . elements for a pre-crossed module
-##
-#?  replaced by Enumerator ?? 
 
 #############################################################################
 ##
@@ -179,7 +173,7 @@ end );
 
 ##############################################################################
 ##
-#M  PreXModObj( <bdy>, <act> ) . . . . . . . . . . . . make pre-crossed module
+#M  PreXModObj( <bdy>, <act> ) . . . . . . . . . . . make a pre-crossed module
 ##
 InstallMethod( PreXModObj, "for homomorphism and action", true,
     [ IsGroupHomomorphism, IsGroupHomomorphism ], 0,
@@ -220,6 +214,23 @@ function( bdy, act )
     # name := Name( PM );
     return PM;
 end );
+
+#############################################################################
+##
+#M  ExternalSetXMod( <pxm> ) . . . . . . . source group as a range group set
+##
+InstallMethod( ExternalSetXMod, "method for a precrossed module", true, 
+    [ IsPreXMod ], 0,
+function( PM ) 
+
+    local  rng, genR, act;
+
+    rng := Range( PM  ); 
+    genR := GeneratorsOfGroup( rng ); 
+    act := XModAction( PM );
+    return ExternalSet( rng, Source(PM), genR, 
+               List( genR, g -> Image(act,g) ) ); 
+end ); 
 
 #############################################################################
 ##
@@ -656,7 +667,7 @@ end );
 ##
 InstallMethod( IsXMod, "generic method for pre-crossed modules",
     true, [ IsPreXMod ], 0,
-    function( XM )
+function( XM )
 
     local  gensrc, genrng, x2, y2, w2, z2, hom, act;
 

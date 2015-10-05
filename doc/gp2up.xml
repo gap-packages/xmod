@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2up.xml             XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  version 2.43, 30/09/2015                                           --> 
+<!--  version 2.43, 05/10/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2015, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
@@ -255,23 +255,20 @@ The composite of two sections is just the composite of homomorphisms.
 <Example>
 <![CDATA[
 gap> reg3 := RegularDerivations( X3 );;
-gap> imder3 := ImagesList( reg3 ); 
-[ [ (), () ], [ (), (1,2,3)(4,6,5) ], [ (), (1,3,2)(4,5,6) ], 
-  [ (1,3,2)(4,5,6), () ], [ (1,3,2)(4,5,6), (1,2,3)(4,6,5) ], 
-  [ (1,3,2)(4,5,6), (1,3,2)(4,5,6) ] ]
+gap> imder3 := ImagesList( reg3 );;
 gap> chi4 := DerivationByImages( X3, imder3[4] );
 DerivationByImages( s3, c3, [ (4,5,6), (2,3)(5,6) ], [ (1,3,2)(4,5,6), () ] )
 gap> chi5 := DerivationByImages( X3, imder3[5] );
 DerivationByImages( s3, c3, [ (4,5,6), (2,3)(5,6) ], 
 [ (1,3,2)(4,5,6), (1,3,2)(4,5,6) ] )
 gap> im4 := UpImagePositions( chi4 );
-[ 1, 3, 2, 1, 3, 2 ] 
+[ 1, 3, 2, 1, 3, 2 ]
 gap> im5 := UpImagePositions( chi5 );
-[ 1, 3, 2, 3, 2, 1 ] 
+[ 1, 3, 2, 3, 2, 1 ]
 gap> chi45 := chi4 * chi5;
 DerivationByImages( s3, c3, [ (4,5,6), (2,3)(5,6) ], [ (), (1,3,2)(4,5,6) ] )
 gap> im45 := UpImagePositions( chi45 );
-[ 1, 1, 1, 3, 3, 3 ]  
+[ 1, 1, 1, 3, 3, 3 ]
 gap> pos := Position( imder3, UpGeneratorImages( chi45 ) );
 2
 ]]>
@@ -321,8 +318,8 @@ gap> wtm3 := WhiteheadTransMonoid( X3 );
 <transformation monoid on 9 pts with 3 generators>
 gap> GeneratorsOfMonoid( wtm3 ); 
 [ Transformation( [ 2, 3, 1, 5, 6, 4, 8, 9, 7 ] ), 
-  Transformation( [ 4, 4, 4, 4, 4, 4, 4, 4, 4 ] ), 
-  Transformation( [ 7, 9, 8, 4, 6, 5, 1, 3, 2 ] ) ]
+  Transformation( [ 4, 6, 5, 1, 3, 2, 7, 9, 8 ] ), 
+  Transformation( [ 7, 7, 7, 7, 7, 7, 7, 7, 7 ] ) ]
 ]]>
 </Example>
 

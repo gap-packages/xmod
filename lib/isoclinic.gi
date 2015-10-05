@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.gi               GAP4 package `XMod'                Alper Odabas
 #W                                                               & Enver Uslu
-##  version 2.43, 01/10/2015 
+##  version 2.43, 05/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al 
 #Y   
@@ -12,39 +12,27 @@
 
 #############################################################################
 ##
-#M  PreXModFixedPointSubgroup  . . elements of the range unmoved by the source
+#M  FixedPointSubgroupXMod . . . . elements of the range fixed by the source
 ##
-InstallMethod( PreXModFixedPointSubgroup, "generic method for crossed modules", 
+InstallMethod( FixedPointSubgroupXMod, "generic method for precrossed modules", 
     true, [ IsPreXMod ], 0,
 function( XM )
 
-    local  alpha, T, G, t, g, list;
+    local  S, orb, elts, fix, gens;
 
-    T := Source(XM);
-    G := Range(XM);
-    if ( HasIsTrivialAction2dGroup(XM) and IsTrivialAction2dGroup(XM) ) then 
-        return T; 
-    fi;
-    alpha := XModAction(XM);
-    list := [];
-    for t in T do
-        if ForAll( G, g -> Image(Image(alpha,g),t) = t ) then
-            Add( list, t );
-        fi;        
-    od; 
-    ##  if the list consist only the identity element then there is a bug 
-    ##  in the function AsMagma. 
-    if ( Length( Set(list) ) = 1 ) then
-        return TrivialSubgroup( T );
-    fi;
-    return AsGroup(list);
+    S := Source( XM );
+    orb := Orbits( ExternalSetXMod( XM ) );  
+    elts := Concatenation( Filtered( orb, o -> Length(o) = 1) ); 
+    fix := Subgroup( Source(XM), elts ); 
+    gens := SmallGeneratingSet( fix ); 
+    return Subgroup( S, gens ); 
 end );
        
 #############################################################################
 ##
-#M  PreXModStabilizer .. elements of the range which fix the source pointwise
+#M  StabilizerXMod .. elements of the range which fix the source pointwise
 ##
-InstallMethod( PreXModStabilizer, "generic method for crossed modules", true, 
+InstallMethod( StabilizerXMod, "generic method for crossed modules", true, 
     [ IsPreXMod ], 0,
 function( XM )
 
@@ -81,13 +69,25 @@ function( XM )
     G := Range(XM);
     alpha := XModAction(XM);
     partial := Boundary(XM);
-    K := Intersection( Centre(G), PreXModStabilizer(XM) );
-    fix := PreXModFixedPointSubgroup( XM );
-    k_partial := GroupHomomorphismByFunction( fix, K, x -> Image(partial,x) );
-    k_alpha := GroupHomomorphismByFunction( K, AutomorphismGroup( fix ), 
-                   x -> Image( alpha, x ) );
-    return XModByBoundaryAndAction( k_partial, k_alpha );
+    K := Intersection( Centre(G), StabilizerXMod(XM) );
+    fix := FixedPointSubgroupXMod( XM );
+##  k_partial := GroupHomomorphismByFunction( fix, K, x -> Image(partial,x) );
+##  k_alpha := GroupHomomorphismByFunction( K, AutomorphismGroup( fix ), 
+##                 x -> Image( alpha, x ) );
+##  return XModByBoundaryAndAction( k_partial, k_alpha );
+    return SubXMod( XM, fix, K ); 
 end );
+
+#############################################################################
+##
+#M  Centralizer  . . . . . . . . for a subcrossed module of a crossed module
+##
+## InstallOtherMethod( Centralizer, "generic method for crossed modules", true, 
+##     [ IsXMod, IsXMod ], 0,
+## function( XM, YM )
+    
+
+
 
 #############################################################################
 ##
@@ -351,7 +351,7 @@ end );
 InstallMethod( IsFaithful2dGroup, "generic method for crossed modules", true, 
     [ IsXMod ], 0,
 function( XM )
-    return ( Size( PreXModStabilizer(XM) ) = 1 ); 
+    return ( Size( StabilizerXMod(XM) ) = 1 ); 
 end );
 
 #############################################################################
@@ -775,24 +775,24 @@ function(XM1,XM2)
         return false;
     fi;
     
-    QXM1 := Intersection( Centre(G), PreXModStabilizer(XM1) ); 
+    QXM1 := Intersection( Centre(G), StabilizerXMod(XM1) ); 
     nhom1 := NaturalHomomorphismByNormalSubgroup( G, QXM1 ); 
     kG11 := Image( nhom1 );
     cakma3 := GroupHomomorphismByImages( kG11, G11, GeneratorsOfGroup(kG11), 
                                                     GeneratorsOfGroup(G11) );
-    QXM2 := Intersection( Centre(H), PreXModStabilizer(XM2) ); 
+    QXM2 := Intersection( Centre(H), StabilizerXMod(XM2) ); 
     nhom2 := NaturalHomomorphismByNormalSubgroup( H, QXM2 ); 
     kG12 := Image( nhom2 );
     cakma4 := GroupHomomorphismByImages( G12, kG12, GeneratorsOfGroup(G12),
                                                     GeneratorsOfGroup(kG12) );
 
     nhom3 := NaturalHomomorphismByNormalSubgroup( T,
-                 PreXModFixedPointSubgroup( XM1 ) ); 
+                 FixedPointSubgroupXMod( XM1 ) ); 
     kT11 := Image(nhom3); 
     cakma := GroupHomomorphismByImages( kT11, T11, GeneratorsOfGroup(kT11),
                                                    GeneratorsOfGroup(T11) );
     nhom4 := NaturalHomomorphismByNormalSubgroup( S,
-                 PreXModFixedPointSubgroup( XM2 ) ); 
+                 FixedPointSubgroupXMod( XM2 ) ); 
     kT12 := Image(nhom4);
     cakma2 := GroupHomomorphismByImages( T12, kT12, GeneratorsOfGroup(T12),
                                                     GeneratorsOfGroup(kT12) );

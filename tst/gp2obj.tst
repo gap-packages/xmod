@@ -2,7 +2,7 @@
 ##
 #W  gp2obj.tst                    XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-##  version 2.43, 29/09/2015 
+##  version 2.43, 05/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -30,12 +30,19 @@ Crossed module [c5->PAut(c5)] :-
   (1,2,3,4) --> { source gens --> [ (5,7,9,6,8) ] }
   This automorphism generates the group of automorphisms.
 
-gap> Size(X1);
+gap> Size( X1 );
 [ 5, 4 ]
+gap> IdGroup( X1 ); 
+[ [ 5, 1 ], [ 4, 1 ] ]
+gap> ext := ExternalSetXMod( X1 ); 
+<xset:[ (), (5,6,7,8,9), (5,7,9,6,8), (5,8,6,9,7), (5,9,8,7,6) ]>
+gap> Orbits( ext );
+[ [ () ], [ (5,6,7,8,9), (5,7,9,6,8), (5,9,8,7,6), (5,8,6,9,7) ] ]
 gap> Print( RepresentationsOfObject(X1), "\n" );
 [ "IsComponentObjectRep", "IsAttributeStoringRep", "IsPreXModObj" ]
 gap> Print( KnownAttributesOfObject(X1), "\n" );
-[ "Name", "Size", "Range", "Source", "Boundary", "AutoGroup", "XModAction" ]
+[ "Name", "Size", "Range", "Source", "IdGroup", "Boundary", "AutoGroup", 
+  "XModAction", "ExternalSetXMod" ]
 
 ## Section 2.1.4
 gap> s4 := SymmetricGroup( IsPermGroup, 4 );

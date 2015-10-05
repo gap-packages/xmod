@@ -3,7 +3,7 @@
 #W  gp2obj.gd                  GAP4 package `XMod'               Chris Wensley
 #W                                                                 & Murat Alp
 ##
-##  version 2.43, 29/09/2015 
+##  version 2.43, 03/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -101,12 +101,13 @@ DeclareSynonym( "IsPcCat1", IsCat1 and IsPc2dGroup );
 #A  Boundary( <PM> )
 #A  AutoGroup( <PM> )
 #A  XModAction( <PM> )
+#A  ExternalSetXMod( <PM> )
 ##
-DeclareOperation( "PreXModObj",
-    [ IsGroupHomomorphism, IsGroupHomomorphism ] );
+DeclareOperation( "PreXModObj", [ IsGroupHomomorphism, IsGroupHomomorphism ] );
 DeclareAttribute( "Boundary", IsPreXMod );
 DeclareAttribute( "AutoGroup", IsPreXMod );
 DeclareAttribute( "XModAction", IsPreXMod );
+DeclareAttribute( "ExternalSetXMod", IsPreXMod ); 
 
 #############################################################################
 ##

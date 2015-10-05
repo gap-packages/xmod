@@ -2,7 +2,7 @@
 ##
 #W  gp2up.tst                     XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-##  version 2.43, 30/09/2015 
+##  version 2.43, 05/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -123,6 +123,10 @@ gap> PrintListOneItemPerLine( wmt3 );
   ]
 gap> wtm3 := WhiteheadTransMonoid( X3 );
 <transformation monoid on 9 pts with 3 generators>
+gap> GeneratorsOfMonoid( wtm3 ); 
+[ Transformation( [ 2, 3, 1, 5, 6, 4, 8, 9, 7 ] ), 
+  Transformation( [ 4, 6, 5, 1, 3, 2, 7, 9, 8 ] ), 
+  Transformation( [ 7, 7, 7, 7, 7, 7, 7, 7, 7 ] ) ]
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 
 #############################################################################
