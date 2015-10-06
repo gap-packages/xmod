@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.tst               XMOD test file                   Alper Odabas
 #W                                                               & Enver Uslu
-##  version 2.43, 05/10/2015 
+##  version 2.43, 06/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 ##
@@ -225,4 +225,34 @@ gap> MappingGeneratorsImages( Boundary( CQX5 ) );
 gap> CentralQuotientHomomorphism(X5);    
 [[..] => [..]]
 
+gap> px24 := AllPreXMods( 2, 4 );;
+gap> Length( px24 );              
+122
+gap> x24 := AllXMods( 2, 4 );;   
+gap> Length( x24 );           
+94
+
+gap> IsomorphismXMods( x24[7], x24[8] );
+[[Group( [ f1 ] )->Group( [ f1, f2 ] )] => [Group( [ f1 ] )->Group( 
+[ f1, f2 ] )]]
+gap> L := ListWithIdenticalEntries( 94, 1 );;
+gap> for i in [1..93] do 
+>      if ( L[i] = 1 ) then 
+>        X1 := x24[i]; 
+>        for j in [i+1..94] do 
+>          if ( L[j] = 1 ) then 
+>            X2 := x24[j];            
+>            mor := IsomorphismXMods( X1, X2 ); 
+>            if ( mor <> fail ) then L[j]:=0; fi; 
+>          fi;
+>        od;
+>      fi;
+>    od;
+gap> L;
+[ 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 
+  1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 
+  1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 
+  1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1 ]
+gap> Sum( L );
+60
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 

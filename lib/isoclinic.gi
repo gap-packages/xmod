@@ -981,22 +981,25 @@ InstallMethod( AllPreXMods, "generic method for crossed modules", true,
     [ IsInt, IsInt ], 0,
 function( min, max )
 
-    local  list, i1, s1, j1, T, i2, s2, j2, G, b1, a1, b11, a11, obj; 
+    local  list, i1, s1, j1, T, autT, i2, s2, j2, G, itTG, b1, itGA, a1, obj; 
 
     list := [ ];
     for i1 in [min..max] do
-        s1 := Length(IdsOfAllSmallGroups(i1));        
+        s1 := Length( IdsOfAllSmallGroups(i1) );        
         for j1 in [1..s1] do
             T := SmallGroup(i1,j1);
+            autT := AutomorphismGroup(T);
             for i2 in [min..max] do
                 s2 := Length(IdsOfAllSmallGroups(i2));        
                 for j2 in [1..s2] do
                     G := SmallGroup(i2,j2);
-                    b1 := AllHomomorphisms(T,G);
-                    a1 := AllHomomorphisms(G,AutomorphismGroup(T));    
-                    for b11 in b1 do
-                        for a11 in a1 do
-                            obj := PreXModObj(b11,a11); 
+                    itTG := Iterator( AllHomomorphisms(T,G) );
+                    while not IsDoneIterator( itTG ) do 
+                        b1 := NextIterator( itTG ); 
+                        itGA := Iterator( AllHomomorphisms(G,autT) );
+                        while not IsDoneIterator( itGA ) do 
+                            a1 := NextIterator( itGA ); 
+                            obj := PreXModObj( b1, a1 ); 
                             if IsPreXMod( obj ) then 
                                 Add( list, obj);
                             fi;
@@ -1017,22 +1020,25 @@ InstallMethod( AllXMods, "generic method for crossed modules", true,
     [ IsInt, IsInt ], 0,
 function( min, max )
 
-    local  list, i1, s1, j1, T, i2, s2, j2, G, b1, a1, b11, a11, obj;
+    local  list, i1, s1, j1, T, autT, i2, s2, j2, G, itTG, itGA, b1, a1, obj;
 
     list := [];
     for i1 in [min..max] do
         s1 := Length(IdsOfAllSmallGroups(i1));        
         for j1 in [1..s1] do
             T := SmallGroup(i1,j1);
+            autT := AutomorphismGroup(T); 
             for i2 in [min..max] do
                 s2 := Length(IdsOfAllSmallGroups(i2));        
                 for j2 in [1..s2] do
                     G := SmallGroup(i2,j2);
-                    b1 := AllHomomorphisms(T,G);
-                    a1 := AllHomomorphisms(G,AutomorphismGroup(T));    
-                    for b11 in b1 do
-                        for a11 in a1 do
-                            obj := PreXModObj( b11, a11 );  
+                    itTG := Iterator( AllHomomorphisms(T,G) );
+                    while not IsDoneIterator( itTG ) do 
+                        b1 := NextIterator( itTG ); 
+                        itGA := Iterator( AllHomomorphisms(G,autT) );
+                        while not IsDoneIterator( itGA ) do 
+                            a1 := NextIterator( itGA ); 
+                            obj := PreXModObj( b1, a1 );  
                             if ( IsPreXMod( obj ) and IsXMod( obj ) ) then 
                                 Add( list, obj );
                             fi;
