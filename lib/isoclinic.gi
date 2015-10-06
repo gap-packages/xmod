@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.gi               GAP4 package `XMod'                Alper Odabas
 #W                                                                & Enver Uslu
-##  version 2.43, 05/10/2015 
+##  version 2.43, 06/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al 
 #Y   
@@ -736,10 +736,14 @@ function(G)
 end );
 
 
+############################################################################# 
+#####            FUNCTIONS FOR ISOCLINISM OF CROSSED MODULES            ##### 
+############################################################################# 
+
 
 #############################################################################
 ##
-#M  AreIsoclinicXMods  . . . . . check that two crossed modules are isoclinic
+#M  AreIsoclinicXMods
 ##
 InstallMethod( AreIsoclinicXMods, "generic method for crossed modules", true, 
     [ IsXMod, IsXMod ], 0,
@@ -937,76 +941,49 @@ end );
 
 #############################################################################
 ##
-#M  IsIsomorphicXMod  . . check that the given crossed modules are isomorphic
+#M  IsomorphismXMods  . . check that the given crossed modules are isomorphic
 ##
-InstallMethod( IsIsomorphicXMod, "generic method for crossed modules", true, 
+InstallMethod( IsomorphismXMods, "generic method for crossed modules", true, 
     [ Is2dGroup, Is2dGroup ], 0,
 function(XM1,XM2)
 
-    local  sonuc, T1, G1, b2, a2, b1, a1, T2, G2, alpha1, phi1, m1_ler, m1, 
-           isoT, isoG, iterT, iterG, alp, ph, mor;
+    local  T1, G1, T2, G2, isoT, isoG, iterT, iterG, alp, ph, mor;
 
-    sonuc := true;
     T1 := Source(XM1);
     G1 := Range(XM1);
-    b1 := Boundary(XM1);
-    a1 := XModAction(XM1);
     T2 := Source(XM2);
     G2 := Range(XM2);
-    b2 := Boundary(XM2);
-    a2 := XModAction(XM2);
     isoT := IsomorphismGroups(T1,T2); 
     isoG := IsomorphismGroups(G1,G2);
-    if ( ( isoT = fail ) or (isoG = fail ) ) then 
-        return false; 
-    fi;
-    ## alpha1 := AllIsomorphisms(T1,T2); 
+    if ( ( isoT = fail ) or ( isoG = fail ) ) then 
+        return fail; 
+    fi; 
     iterT := Iterator( AllAutomorphisms( T2 ) ); 
-    ## phi1 := AllIsomorphisms(G1,G2); 
     iterG := Iterator( AllAutomorphisms( G2 ) ); 
-    m1_ler := []; 
-    ## for alp in alpha1 do
     while not IsDoneIterator( iterT ) do 
-        alp := isoT * NextIterator( iterT );
-        ## for ph in phi1 do
+        alp := isoT * NextIterator( iterT ); 
         while not IsDoneIterator( iterG ) do 
             ph := isoG * NextIterator( iterG ); 
             mor := Make2dGroupMorphism( XM1, XM2, alp, ph ); 
-            if IsPreXModMorphism( mor ) then 
-                if IsXModMorphism( mor ) then 
-                    Add( m1_ler, mor ); 
-                fi; 
+            if ( IsPreXModMorphism( mor ) and IsXModMorphism( mor ) ) then 
+                return mor; 
             fi;
         od;
     od;    
-    ## m1_ler := Filtered(m1_ler,IsXModMorphism);
-    if ( Length( m1_ler ) = 0 ) then 
-        return false;
-    fi;    
-    return sonuc;
+    return fail;
 end );
 
 #############################################################################
 ##
-#M  PreAllXMods  . . . . . all precrossed modules in the given order interval
+#M  AllPreXMods  . . . . . all precrossed modules in the given order interval
 ##
-InstallMethod( PreAllXMods, "generic method for crossed modules", true, 
+InstallMethod( AllPreXMods, "generic method for crossed modules", true, 
     [ IsInt, IsInt ], 0,
-function(min,max)
+function( min, max )
 
-    local  s1, i1, j1, s2, i2, j2, s3, i3, j3, s4, i4, j4, sonuc, sayi,
-           T, G, S, H, b1, a1, b2, a2, XM1_ler, XM2_ler, XM1, XM2,
-           b11, a11, PreXM1_ler;
+    local  list, i1, s1, j1, T, i2, s2, j2, G, b1, a1, b11, a11, obj; 
 
-    sonuc := [];
-    a1 := [];
-    b1 := [];
-    a2 := [];
-    b2 := [];
-    sayi := 0;
-    XM1_ler := [];
-    PreXM1_ler := [];
-
+    list := [ ];
     for i1 in [min..max] do
         s1 := Length(IdsOfAllSmallGroups(i1));        
         for j1 in [1..s1] do
@@ -1019,8 +996,9 @@ function(min,max)
                     a1 := AllHomomorphisms(G,AutomorphismGroup(T));    
                     for b11 in b1 do
                         for a11 in a1 do
-                            if IsPreXMod(PreXModObj(b11,a11)) then
-                                Add(PreXM1_ler,PreXModObj(b11,a11));
+                            obj := PreXModObj(b11,a11); 
+                            if IsPreXMod( obj ) then 
+                                Add( list, obj);
                             fi;
                         od;
                     od; 
@@ -1028,7 +1006,7 @@ function(min,max)
             od;
         od; 
     od;
-    return PreXM1_ler;
+    return list;
 end );
 
 #############################################################################
@@ -1037,20 +1015,11 @@ end );
 ##
 InstallMethod( AllXMods, "generic method for crossed modules", true, 
     [ IsInt, IsInt ], 0,
-function(min,max)
+function( min, max )
 
-    local  s1, i1, j1, s2, i2, j2, s3, i3, j3, s4, i4, j4, sonuc, sayi,
-           T, G, S, H, b1, a1, b2, a2, XM1_ler, XM2_ler, XM1, XM2, 
-           b11, a11, PreXM1_ler;
+    local  list, i1, s1, j1, T, i2, s2, j2, G, b1, a1, b11, a11, obj;
 
-    sonuc := [];
-    a1 := [];
-    b1 := [];
-    a2 := [];
-    b2 := [];
-    sayi := 0;
-    XM1_ler := [];
-    PreXM1_ler := [];
+    list := [];
     for i1 in [min..max] do
         s1 := Length(IdsOfAllSmallGroups(i1));        
         for j1 in [1..s1] do
@@ -1063,17 +1032,17 @@ function(min,max)
                     a1 := AllHomomorphisms(G,AutomorphismGroup(T));    
                     for b11 in b1 do
                         for a11 in a1 do
-                            if (  IsPreXMod(PreXModObj(b11,a11)) ) then
-                                Add(PreXM1_ler,PreXModObj(b11,a11));
+                            obj := PreXModObj( b11, a11 );  
+                            if ( IsPreXMod( obj ) and IsXMod( obj ) ) then 
+                                Add( list, obj );
                             fi;
                         od;
                     od;
-                    XM1_ler := Filtered( PreXM1_ler, IsXMod );        
                 od;
             od;
         od; 
     od;
-    return XM1_ler;
+    return list;
 end );
 
 #############################################################################
@@ -1109,12 +1078,13 @@ InstallMethod( IsomorphicXModFamily, "generic method for crossed modules",
     true, [ Is2dGroup, IsList ], 0,
 function( XM, XM1_ler )
 
-    local  sonuc, sayi, XM1;
+    local  sonuc, sayi, iso, XM1;
 
     sonuc := [];
     sayi := 0;
     for XM1 in XM1_ler do
-        if IsIsomorphicXMod(XM,XM1) then
+        iso := IsomorphismXMods(XM,XM1); 
+        if ( iso <> fail ) then
             # Print(XM," ~ ",XM1,"\n" );    
             Add(sonuc,Position(XM1_ler,XM1));
             sayi := sayi + 1;

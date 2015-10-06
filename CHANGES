@@ -18,6 +18,8 @@ Problems:
 #############################################################################
 2.42 -> 2.43 (05/10/2015) 
 
+ - (06/10/15) revised AllPreXMods, AllXMods; renamed IsIsomorphicXMod as 
+              IsomorphismXMods; fixed the call to IsXMod in PreXModObj 
  - (05/10/15) added Centralizer and Normalizer methods for crossed modules 
  - (02/10/15) added ExternalSetXMod 
  - (01/10/15) added operation Displacement

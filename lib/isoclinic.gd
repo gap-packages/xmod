@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.gd              GAP4 package `XMod'                Alper Odabas
 #W                                                               & Enver Uslu
-##  version 2.43, 05/10/2015 
+##  version 2.43, 06/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al 
 ##
@@ -118,17 +118,15 @@ DeclareOperation( "AreIsoclinicXMods", [ IsXMod, IsXMod ] );
 
 #############################################################################
 ##
-#O IsIsomorphicXMod  . . . . . check that two crossed modules are isomorphic
+#O IsomorphismXMods  . . . . . check that two crossed modules are isomorphic
 ##
-#? should really be IsomorphismXMods (which might return fail) 
-##
-DeclareOperation( "IsIsomorphicXMod", [  Is2dGroup, Is2dGroup ] );
+DeclareOperation( "IsomorphismXMods", [  Is2dGroup, Is2dGroup ] );
 
 #############################################################################
 ##
-#O PreAllXMods  . . . . . . . . . all precrossed modules in the given order interval
+#O AllPreXMods  . . . . . . all precrossed modules in the given order interval
 ##
-DeclareOperation( "PreAllXMods", [  IsInt, IsInt ] );
+DeclareOperation( "AllPreXMods", [  IsInt, IsInt ] );
 
 #############################################################################
 ##
