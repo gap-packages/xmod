@@ -19,6 +19,7 @@ Problems:
 2.42 -> 2.43 (07/10/2015) 
 
  - (07/10/15) AllXMods and AllPreXMods now global functions 
+              added property IsStemXMod 
  - (06/10/15) renamed IsIsomorphicXMod as IsomorphismXMods; 
               fixed the call to IsXMod in PreXModObj 
  - (05/10/15) added Centralizer and Normalizer methods for crossed modules 

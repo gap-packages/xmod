@@ -53,12 +53,6 @@ DeclareOperation( "CommutatorSubXMod", [  IsXMod, IsXMod, IsXMod ] );
 
 #############################################################################
 ##
-#O LowerCentralSeriesOfXMod  . . . . . . the lower central series of an xmod
-##
-DeclareAttribute( "LowerCentralSeriesOfXMod", IsXMod );
-
-#############################################################################
-##
 #O  CentreXMod  . . . . . . . . . . . . . . . the center of a crossed module
 ##
 DeclareAttribute( "CentreXMod", IsXMod );
@@ -79,10 +73,10 @@ DeclareProperty( "IsFaithful2dGroup", Is2dGroup );
 #############################################################################
 ##
 #P IsNilpotent2dGroup . . . . . check that an xmod or cat1-group is nilpotent
-#A NilpotencyClass2dGroup . . . . nilpotency degree of an xmod or cat1-group 
+#A NilpotencyClassOf2dGroup  . . . nilpotency degree of an xmod or cat1-group 
 ## 
 DeclareProperty( "IsNilpotent2dGroup", Is2dGroup );
-DeclareAttribute( "NilpotencyClass2dGroup", Is2dGroup );
+DeclareAttribute( "NilpotencyClassOf2dGroup", Is2dGroup );
 
 
 ############################################################################# 
@@ -92,7 +86,7 @@ DeclareAttribute( "NilpotencyClass2dGroup", Is2dGroup );
 #############################################################################
 ##
 #P IsStemGroup . . . check that the centre is a subgroup of the derived group
-#O AllStemGroupFamilies . . . list of all IdGroup's of stem groups of chosen order 
+#O AllStemGroupFamilies . . . . . all IdGroups of stem groups of chosen order 
 #A MiddleLength . . . 
 ## 
 DeclareProperty( "IsStemGroup", IsGroup );
@@ -112,6 +106,12 @@ DeclareAttribute( "IsoclinicStemGroup", IsGroup );
 
 #############################################################################
 ##
+#P IsStemXMod . . check that the centre xmod is a subxmod of the derived xmod
+## 
+DeclareProperty( "IsStemXMod", IsXMod );
+
+#############################################################################
+##
 #O AreIsoclinicXMods  . . . . . . check that two crossed modules are isoclinic
 ##
 DeclareOperation( "AreIsoclinicXMods", [ IsXMod, IsXMod ] );
@@ -126,13 +126,9 @@ DeclareOperation( "IsomorphismXMods", [  Is2dGroup, Is2dGroup ] );
 ##
 #F AllXMods
 #O AllXModsWithGroups  . . . . . . . . . all xmods with given source and range
-#F AllPreXMods
-#O AllPreXModsWithGroups  . . . . . . all prexmods with given source and range
 ##
 DeclareGlobalFunction( "AllXMods" );
 DeclareOperation( "AllXModsWithGroups", [ IsGroup, IsGroup ] );
-DeclareGlobalFunction( "AllPreXMods" );
-DeclareOperation( "AllPreXModsWithGroups", [ IsGroup, IsGroup ] );
 
 #############################################################################
 ##

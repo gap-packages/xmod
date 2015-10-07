@@ -365,9 +365,9 @@ end );
 
 #############################################################################
 ##
-#M  LowerCentralSeriesOfXMod  . . . . . . . the lower central series of an xmod
+#M  LowerCentralSeries  . . . . . . . . . the lower central series of an xmod
 ##
-InstallMethod( LowerCentralSeriesOfXMod, "generic method for crossed modules", 
+InstallOtherMethod( LowerCentralSeries, "generic method for crossed modules", 
     true, [ IsXMod ], 0,
 function(XM)
 
@@ -375,7 +375,6 @@ function(XM)
 
     list := [ XM ];
     C := DerivedSubXMod( XM );
-    ##  while (IsEqualXMod(C,list[Length(list)]) = false)  do
     while ( C <> list[ Length(list) ] )  do
         Add( list, C );
         C := CommutatorSubXMod( XM, C, XM );
@@ -433,7 +432,7 @@ function(XM)
 
     local  S, n, sonuc;
 
-    S := LowerCentralSeriesOfXMod( XM );
+    S := LowerCentralSeries( XM );
     n := Length(S);
     if ( Size(S[n]) = [1,1] ) then
         sonuc := true;
@@ -445,16 +444,16 @@ end );
 
 #############################################################################
 ##
-#M  NilpotencyClass2dGroup . . . . . . .nilpotency degree of a crossed module
+#M  NilpotencyClassOf2dGroup . . . . .  nilpotency degree of a crossed module
 ##
-InstallMethod( NilpotencyClass2dGroup, "generic method for crossed modules", 
+InstallMethod( NilpotencyClassOf2dGroup, "generic method for crossed modules", 
     true, [ IsXMod ], 0,
 function(XM)
 
     if not IsNilpotent2dGroup(XM) then
         return 0;
     else
-        return Length( LowerCentralSeriesOfXMod(XM) ) - 1;        
+        return Length( LowerCentralSeries(XM) ) - 1;        
     fi;
 end );
 
@@ -740,6 +739,16 @@ end );
 #####            FUNCTIONS FOR ISOCLINISM OF CROSSED MODULES            ##### 
 ############################################################################# 
 
+#############################################################################
+##
+#M IsStemXMod . . check that the centre xmod is a subxmod of the derived xmod
+## 
+InstallMethod( IsStemXMod, "generic method for crossed modules", true, 
+    [ IsXMod ], 0,
+function(X0)
+    return IsSubXMod( DerivedSubXMod(X0), CentreXMod(X0) );
+end );
+
 
 #############################################################################
 ##
@@ -752,7 +761,7 @@ function(XM1,XM2)
     local  cakma3, cakma4, kG12, kG11, T, G, S, H, sonuc, kT11, kT12, 
            cakma, cakma2, yeni_iso, x, y, z1, z2, gz1, gz2, gx, gy, 
            gor1, gor2, pisi0, pisi1, nisi1, nisi0, nhom1, nhom2, nhom3, nhom4, 
-           ComXM1, ComXM2, MXM1, MXM2, BXM1, BXM2, b1, a1, T1, G1, 
+           DXM1, DXM2, CXM1, CXM2, FXM1, FXM2, b1, a1, T1, G1, 
            b2, a2, T2, G2, alpha1, phi1, m1_ler, m2_ler, m1, m2, b11, a11, 
            T11, G11, b12, a12, T12, G12, alpha11, phi11, m11, alp, ph, 
            isoT, isoG, isoT1, isoG1, iterT2, iterG2, iterT12, iterG12, mor, 
@@ -763,16 +772,16 @@ function(XM1,XM2)
     G := Range(XM1);
     S := Source(XM2);
     H := Range(XM2);
-    ComXM1 := DerivedSubXMod(XM1);
-    ComXM2 := DerivedSubXMod(XM2);
-    b1 := Boundary(ComXM1);
-    a1 := XModAction(ComXM1);
-    T1 := Source(ComXM1);
-    G1 := Range(ComXM1);
-    b2 := Boundary(ComXM2);
-    a2 := XModAction(ComXM2);
-    T2 := Source(ComXM2);
-    G2 := Range(ComXM2);
+    DXM1 := DerivedSubXMod(XM1);
+    DXM2 := DerivedSubXMod(XM2);
+    b1 := Boundary(DXM1);
+    a1 := XModAction(DXM1);
+    T1 := Source(DXM1);
+    G1 := Range(DXM1);
+    b2 := Boundary(DXM2);
+    a2 := XModAction(DXM2);
+    T2 := Source(DXM2);
+    G2 := Range(DXM2);
     
     isoT := IsomorphismGroups(T1,T2); 
     isoG := IsomorphismGroups(G1,G2);
@@ -780,18 +789,18 @@ function(XM1,XM2)
         return false; 
     fi;
 
-    MXM1 := CentreXMod(XM1);
-    MXM2 := CentreXMod(XM2);
-    BXM1 := FactorXMod(XM1,MXM1); 
-    BXM2 := FactorXMod(XM2,MXM2); 
-    b11 := Boundary(BXM1);
-    a11 := XModAction(BXM1);
-    T11 := Source(BXM1);
-    G11 := Range(BXM1);
-    b12 := Boundary(BXM2);
-    a12 := XModAction(BXM2);
-    T12 := Source(BXM2);
-    G12 := Range(BXM2);
+    CXM1 := CentreXMod(XM1);
+    CXM2 := CentreXMod(XM2);
+    FXM1 := FactorXMod(XM1,CXM1); 
+    FXM2 := FactorXMod(XM2,CXM2); 
+    b11 := Boundary(FXM1);
+    a11 := XModAction(FXM1);
+    T11 := Source(FXM1);
+    G11 := Range(FXM1);
+    b12 := Boundary(FXM2);
+    a12 := XModAction(FXM2);
+    T12 := Source(FXM2);
+    G12 := Range(FXM2);
         
     isoT1 := IsomorphismGroups(T11,T12); 
     isoG1 := IsomorphismGroups(G11,G12);
@@ -810,7 +819,7 @@ function(XM1,XM2)
         ## for ph in phi1 do 
         while not IsDoneIterator( iterG2 ) do 
             ph := isoG * NextIterator( iterG2 ); 
-            mor := Make2dGroupMorphism(ComXM1,ComXM2,alp,ph); 
+            mor := Make2dGroupMorphism(DXM1,DXM2,alp,ph); 
             if IsPreXModMorphism( mor ) then 
                 if IsXModMorphism( mor ) then 
                     Add( m1_ler, mor );
@@ -835,7 +844,7 @@ function(XM1,XM2)
         ## for ph in phi11 do 
         while not IsDoneIterator( iterG12 ) do 
             ph := isoG1 * NextIterator( iterG12 ); 
-            mor := Make2dGroupMorphism( BXM1, BXM2, alp, ph ); 
+            mor := Make2dGroupMorphism( FXM1, FXM2, alp, ph ); 
             if IsPreXModMorphism( mor ) then 
                 if IsXModMorphism( mor ) then 
                     Add( m2_ler, mor );
@@ -935,7 +944,7 @@ function(XM1,XM2)
             fi;    
         od;
     od;
-    Print("There is no morphism that provides conditions \n");    
+    Info( InfoXMod, 1, "there is no morphism that provides conditions" );    
     return sonuc;
 end );
 
@@ -1042,77 +1051,6 @@ InstallGlobalFunction( AllXMods, function( arg )
         fi; 
     fi; 
     Error( "standard usage: AllXMods(S,R), AllXMods([n,m]), AllXMods(n)" ); 
-end );
-
-#############################################################################
-##
-#M  AllPreXModsWithGroups . . . . . all prexmods with given source and range
-##
-InstallMethod( AllPreXModsWithGroups, "generic method for a pair of groups", 
-    true, [ IsGroup, IsGroup ], 0,
-function( T, G )
-
-    local  list, autT, itTG, itGA, b1, a1, obj;
-
-    list := [ ];
-    autT := AutomorphismGroup(T); 
-    itTG := Iterator( AllHomomorphisms(T,G) );
-    while not IsDoneIterator( itTG ) do 
-        b1 := NextIterator( itTG ); 
-        itGA := Iterator( AllHomomorphisms(G,autT) );
-        while not IsDoneIterator( itGA ) do 
-            a1 := NextIterator( itGA ); 
-            obj := PreXModObj( b1, a1 );  
-            if IsPreXMod( obj ) then 
-                Add( list, obj );
-            fi;
-        od; 
-    od;
-    return list;
-end );
-
-#############################################################################
-##
-#F  AllPreXMods( <T>, <G> )       prexmods with given source and range 
-#F  AllPreXMods( <size> )         prexmods with a given size 
-#F  AllPreXMods( <order> )        prexmods whose cat1-group has a given order
-## 
-InstallGlobalFunction( AllPreXMods, function( arg )
-
-    local  nargs, a, list, s1, j1, s2, j2, T, G, sizes; 
-
-    nargs := Length( arg ); 
-    if ( nargs = 2 ) then 
-        ## given source and range 
-        if ( IsGroup( arg[1] ) and IsGroup( arg[2] ) ) then 
-            return AllPreXModsWithGroups( arg[1], arg[2] ); 
-        fi; 
-    elif ( nargs = 1 ) then 
-        a := arg[1]; 
-        ## given size 
-        if ( IsList(a) and (Length(a)=2) and IsInt(a[1]) and IsInt(a[2]) ) then 
-            list := [ ]; 
-            s1 := NumberSmallGroups( a[1] ); 
-            for j1 in [1..s1] do
-                T := SmallGroup( a[1], j1 );
-                s2 := NumberSmallGroups( a[2] );        
-                for j2 in [1..s2] do
-                    G := SmallGroup( a[2], j2 );
-                    Append( list, AllPreXModsWithGroups( T, G ) ); 
-                od; 
-            od;
-            return list; 
-        ## given total size 
-        elif IsInt(a) then 
-            sizes := List( DivisorsInt(a), d -> [d,a/d] ); 
-            list := [ ];
-            for s1 in sizes do
-                Append( list, AllPreXMods( s1 ) ); 
-            od;
-            return list; 
-        fi; 
-    fi; 
-    Error( "usage: AllPreXMods(S,R), AllPreXMods([n,m]), AllPreXMods(n)" ); 
 end );
 
 #############################################################################
@@ -1242,13 +1180,13 @@ function(XM,XM_ler)
     local  Eler, Iler, i, j, sinif, B;
 
     sinif := IsoclinicXModFamily( XM, XM_ler );
-    B := LowerCentralSeriesOfXMod( XM );
+    B := LowerCentralSeries( XM );
     
 Print("---------------------------------------------------------------------------------------------------------------------------------- \n");
 Print("---------------------------------------------------------------------------------------------------------------------------------- \n");
 Print("Number","\t","Rank","\t\t","M. L.","\t\t","Class","\t","|G/Z|","\t\t","|g2|","\t\t","|g3|","\t\t","|g4|","\t\t","|g5| \n");
 Print("---------------------------------------------------------------------------------------------------------------------------------- \n");
-Print(Length(sinif),"\t",RankXMod(XM),"\t",MiddleLength(XM),"\t",NilpotencyClass2dGroup(XM),"\t",Size(FactorXMod(XM,CentreXMod(XM))));    
+Print(Length(sinif),"\t",RankXMod(XM),"\t",MiddleLength(XM),"\t",NilpotencyClassOf2dGroup(XM),"\t",Size(FactorXMod(XM,CentreXMod(XM))));    
 
 if Length(B) > 1 then
 for i in [2..Length(B)] do

@@ -304,8 +304,6 @@ gap> NilpotencyClass2dGroup( X1 );
 <ManSection>
    <Func Name="AllXMods"
          Arg="args" />
-   <Func Name="AllPreXMods"
-         Arg="args" />
 <Description>
 The global function <C>AllXMods</C> may be called 
 as <C>AllXMods(S,R)</C> to compute all crossed modules with chosen 
@@ -313,8 +311,6 @@ source and range groups;
 as <C>AllXMods([n,m])</C> to compute all crossed modules with a given size; 
 or as <C>AllXMods(o)</C> to compute all crossed modules whose associated 
 cat1-groups have a given order <C>o</C>. 
-The global function <C>AllPreXMods</C> computes all precrossed modules 
-in the same three ways. 
 <P/> 
 In the example we see that there are <M>4</M> crossed modules 
 <M>(C_6 \to S_3)</M>; forming a subset of the <M>17</M> crossed modules 
@@ -501,6 +497,98 @@ gap> RankXMod(X1);
 
 <Section><Heading>Isoclinism of Crossed Modules</Heading>
 
+Here is Example 6 from the paper (with <C>X1,X2</C> renumbdered <C>X8,X9</C>). 
+<Example>
+<![CDATA[
+gap> C8 := Cat1(16,8,1);
+[QD16=>Group( [ f2, f2 ] )]
+gap> X8 := XMod(C8); 
+[Group( [ f1*f2*f3, f3, f4 ] )->Group( [ f2, f2 ] )]
+gap> IdGroup( X8 );
+[ [ 8, 1 ], [ 2, 1 ] ]
+gap> ZX8 := CentreXMod( X8 );
+[Group( [ f4 ] )->Group( <identity> of ... )]
+gap> FX8 := FactorXMod( X8, ZX8 );
+[Group( [ f1, f2, <identity> of ... ] )->Group( [ f2, f2 ] )]
+gap> DX8 := DerivedSubXMod( X8 );
+[Group( [ f3*f4, f4 ] )->Group( <identity> of ... )]
+gap> RankXMod( X8 );  
+[ 3., 1. ]
+gap> MiddleLength( X8 );    
+[ 1., 0. ]
+gap> LowerCentralSeries(X8);
+[ [Group( [ f1*f2*f3, f3, f4 ] )->Group( [ f2, f2 ] )], 
+  [Group( [ f3*f4, f4 ] )->Group( <identity> of ... )], 
+  [Group( [ f4 ] )->Group( <identity> of ... )], 
+  [Group( [ <identity> of ... ] )->Group( <identity> of ... )] ]
+
+gap> C9 := Cat1(32,9,1);
+[(C8 x C2) : C2=>Group( [ f2, f2 ] )]
+gap> X9 := XMod( C9 );
+[Group( [ f1*f2*f3, f3, f4, f5 ] )->Group( [ f2, f2 ] )]
+gap> IdGroup( X9 );
+[ [ 16, 5 ], [ 2, 1 ] ]
+gap> mor := IsomorphismXMods( X8, X9 ); 
+fail
+gap> ZX9 := CentreXMod( X9 );
+[Group( [ f4, f5 ] )->Group( <identity> of ... )]
+gap> FX9 := FactorXMod( X9, ZX9 );
+[Group( [ f1, f2, <identity> of ..., <identity> of ... ] )->Group( 
+[ f2, f2 ] )]
+gap> DX9 := DerivedSubXMod( X9 );
+[Group( [ f3*f5, f5 ] )->Group( <identity> of ... )]
+gap> morF := IsomorphismXMods( FX8, FX9 );
+[[Group( [ f1, f2, <identity> of ... ] )->Group( [ f2, f2 ] )] => [Group( 
+[ f1, f2, <identity> of ..., <identity> of ... ] )->Group( [ f2, f2 ] )]]
+gap> morD := IsomorphismXMods( DX8, DX9 );
+[[Group( [ f3*f4, f4 ] )->Group( <identity> of ... )] => [Group( 
+[ f3*f5, f5 ] )->Group( <identity> of ... )]]
+gap> AreIsoclinicXMods( X8, X9 );
+false
+]]>
+</Example>
+
+Here is Example 7 from the paper. 
+<Example>
+<![CDATA[
+gap> all44 := AllXMods( [4,4] );;
+gap> Length( all44 );            
+60
+gap> iso44 := IsoAllXMods( all44 );;
+gap> Length( iso44 );
+34
+gap> IsoclinicXModFamily( iso44[1], iso44 );
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `PreImagesRepresentative' on 2 arguments called from
+PreImagesRepresentative( nhom2, Images( cakma4, gz2 ) ) called from
+AreIsoclinicXMods( XM, XM1 ) called from
+<function "unknown">( <arguments> )
+ called from read-eval loop at line 54 of *stdin*
+you can 'quit;' to quit to outer loop, or
+you can 'return;' to continue
+brk> quit;
+]]>
+</Example>
+
+<ManSection>
+   <Prop Name="IsStemXMod"
+         Arg="X0" />
+<Description>
+A crossed module <M>\mathcal{X}</M> is a <E>stem stem crossed module</E> 
+if <M>Z(\mathcal{X}) \leq [\mathcal{X},\mathcal{X}]</M>. 
+Every crossed module is isoclinic to a stem crossed module, 
+but distinct stem crossed modules may be isoclinic. 
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> IsStemXMod(X8);
+true
+gap> IsStemXMod(X9);
+false
+]]>
+</Example>
+
 <ManSection>
    <Oper Name="AreIsoclinicXMods"
          Arg="X0 X1" />
@@ -517,6 +605,9 @@ gap> CentralQuotientHomomorphism(X5);
 
 ]]>
 </Example>
+
+
+
 </Section>
 
 

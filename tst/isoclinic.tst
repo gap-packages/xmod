@@ -135,13 +135,13 @@ gap> IdGroup( NDX5 );
 
 
 
-gap> LX1 := LowerCentralSeriesOfXMod( X1 );
+gap> LX1 := LowerCentralSeries( X1 );
 [ [c5->PAut(c5)], [Group( [ (5,6,7,8,9) ] )->Group( () )] ]
 gap> List( LX1, x -> Size(x) );            
 [ [ 5, 4 ], [ 5, 1 ] ]
 gap> IsNilpotent2dGroup( X1 );             
 false
-gap> NilpotencyClass2dGroup( X1 );         
+gap> NilpotencyClassOf2dGroup( X1 );         
 0
 
 ## Note that the following example (taken from the nq manual) FAILS 
@@ -234,9 +234,6 @@ gap> Length( x66 );
 gap> x36 := AllXMods( 36 );; 
 gap> Length( x36 ); 
 205
-gap> px66 := AllPreXMods( [6,6] );;   
-gap> Length( px66 );
-40
 
 gap> IsomorphismXMods( x66[1], x66[2] );
 [[Group( [ f1, f2 ] )->Group( [ f1, f2 ] )] => [Group( [ f1, f2 ] )->Group( 
@@ -244,11 +241,11 @@ gap> IsomorphismXMods( x66[1], x66[2] );
 gap> L := ListWithIdenticalEntries( 17, 1 );;
 gap> for i in [1..16] do 
 >      if ( L[i] = 1 ) then 
->        X1 := x66[i]; 
+>        Y1 := x66[i]; 
 >        for j in [i+1..17] do 
 >          if ( L[j] = 1 ) then 
->            X2 := x66[j];            
->            mor := IsomorphismXMods( X1, X2 ); 
+>            Y2 := x66[j];            
+>            mor := IsomorphismXMods( Y1, Y2 ); 
 >            if ( mor <> fail ) then L[j]:=0; fi; 
 >          fi;
 >        od;
@@ -258,5 +255,59 @@ gap> L;
 [ 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0 ]
 gap> Sum( L );
 9
+
+############################################################################# 
+##  Example 6 from the paper 
+
+gap> C8 := Cat1(16,8,1);
+[QD16=>Group( [ f2, f2 ] )]
+gap> X8 := XMod(C8); 
+[Group( [ f1*f2*f3, f3, f4 ] )->Group( [ f2, f2 ] )]
+gap> IdGroup( X8 );
+[ [ 8, 1 ], [ 2, 1 ] ]
+gap> ZX8 := CentreXMod( X8 );
+[Group( [ f4 ] )->Group( <identity> of ... )]
+gap> FX8 := FactorXMod( X8, ZX8 );
+[Group( [ f1, f2, <identity> of ... ] )->Group( [ f2, f2 ] )]
+gap> DX8 := DerivedSubXMod( X8 );
+[Group( [ f3*f4, f4 ] )->Group( <identity> of ... )]
+gap> RankXMod( X8 );  
+[ 3., 1. ]
+gap> MiddleLength( X8 );    
+[ 1., 0. ]
+gap> LowerCentralSeries(X8);
+[ [Group( [ f1*f2*f3, f3, f4 ] )->Group( [ f2, f2 ] )], 
+  [Group( [ f3*f4, f4 ] )->Group( <identity> of ... )], 
+  [Group( [ f4 ] )->Group( <identity> of ... )], 
+  [Group( [ <identity> of ... ] )->Group( <identity> of ... )] ]
+
+gap> C9 := Cat1(32,9,1);
+[(C8 x C2) : C2=>Group( [ f2, f2 ] )]
+gap> X9 := XMod( C9 );
+[Group( [ f1*f2*f3, f3, f4, f5 ] )->Group( [ f2, f2 ] )]
+gap> IdGroup( X9 );
+[ [ 16, 5 ], [ 2, 1 ] ]
+gap> mor := IsomorphismXMods( X8, X9 ); 
+fail
+gap> ZX9 := CentreXMod( X9 );
+[Group( [ f4, f5 ] )->Group( <identity> of ... )]
+gap> FX9 := FactorXMod( X9, ZX9 );
+[Group( [ f1, f2, <identity> of ..., <identity> of ... ] )->Group( 
+[ f2, f2 ] )]
+gap> DX9 := DerivedSubXMod( X9 );
+[Group( [ f3*f5, f5 ] )->Group( <identity> of ... )]
+gap> morF := IsomorphismXMods( FX8, FX9 );
+[[Group( [ f1, f2, <identity> of ... ] )->Group( [ f2, f2 ] )] => [Group( 
+[ f1, f2, <identity> of ..., <identity> of ... ] )->Group( [ f2, f2 ] )]]
+gap> morD := IsomorphismXMods( DX8, DX9 );
+[[Group( [ f3*f4, f4 ] )->Group( <identity> of ... )] => [Group( 
+[ f3*f5, f5 ] )->Group( <identity> of ... )]]
+gap> AreIsoclinicXMods( X8, X9 );
+false
+
+gap> IsStemXMod(X8);
+true
+gap> IsStemXMod(X9);
+false
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
