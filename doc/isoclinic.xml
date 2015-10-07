@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  isclinic.xml          XMod documentation             Alper Odabas  -->
 <!--                                                       & Enver Uslu  -->
-<!--  version 2.43, 06/10/2015                                           --> 
+<!--  version 2.43, 07/10/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2015, Chris Wensley et al                       --> 
 <!--                                                                     -->
@@ -302,24 +302,37 @@ gap> NilpotencyClass2dGroup( X1 );
 </Example>
 
 <ManSection>
-   <Oper Name="AllXMods"
-         Arg="min max" />
-   <Oper Name="AllPreXMods"
-         Arg="min max" />
+   <Func Name="AllXMods"
+         Arg="args" />
+   <Func Name="AllPreXMods"
+         Arg="args" />
 <Description>
-These functions compute all crossed modules 
-(respectively all precrossed modules) such that both the source 
-and range groups have size in the interval <C>[min..max]</C>. 
+The global function <C>AllXMods</C> may be called 
+as <C>AllXMods(S,R)</C> to compute all crossed modules with chosen 
+source and range groups; 
+as <C>AllXMods([n,m])</C> to compute all crossed modules with a given size; 
+or as <C>AllXMods(o)</C> to compute all crossed modules whose associated 
+cat1-groups have a given order <C>o</C>. 
+The global function <C>AllPreXMods</C> computes all precrossed modules 
+in the same three ways. 
+<P/> 
+In the example we see that there are <M>4</M> crossed modules 
+<M>(C_6 \to S_3)</M>; forming a subset of the <M>17</M> crossed modules 
+with size <C>[6,6]</C>; and that these form a subset of the <M>205</M> 
+crossed modules whose cat1-group has size <M>36</M>. 
 </Description>
 </ManSection>
 <Example>
 <![CDATA[
-gap> px24 := AllPreXMods( 2, 4 );;
-gap> Length( px24 );              
-122
-gap> x24 := AllXMods( 2, 4 );;   
-gap> Length( x24 );           
-94
+gap> xc6s3 := AllXMods( SmallGroup(6,2), SmallGroup(6,1) );;   
+gap> Length( xc6s3 );           
+4
+gap> x66 := AllXMods( [6,6] );;   
+gap> Length( x66 );
+17
+gap> x36 := AllXMods( 36 );; 
+gap> Length( all36 ); 
+205
 ]]>
 </Example>
 
@@ -330,22 +343,23 @@ gap> Length( x24 );
 This function computes an isomorphism 
 <M>\mu : \mathcal{X}_1 \to \mathcal{X}_2</M>, 
 provided one exists, or else returns <C>fail</C>. 
-The calculation in the example below shows that the <M>94</M> crossed modules 
-in <C>x24</C> (see the previous subsection) fall into <M>60</M> isomorphism classes. 
+The calculation in the example below shows that the <M>17</M> crossed modules 
+of size <C>[6,6]</C> in <C>x66</C> (see the previous subsection) 
+fall into <M>9</M> isomorphism classes. 
 </Description>
 </ManSection>
 <Example>
 <![CDATA[
-gap> IsomorphismXMods( x24[7], x24[8] );
-[[Group( [ f1 ] )->Group( [ f1, f2 ] )] => [Group( [ f1 ] )->Group( 
+gap> IsomorphismXMods( x66[1], x66[2] );
+[[Group( [ f1, f2 ] )->Group( [ f1, f2 ] )] => [Group( [ f1, f2 ] )->Group( 
 [ f1, f2 ] )]]
-gap> L := ListWithIdenticalEntries( 94, 1 );;
-gap> for i in [1..93] do 
+gap> L := ListWithIdenticalEntries( 17, 1 );;
+gap> for i in [1..16] do 
 >      if ( L[i] = 1 ) then 
->        X1 := x24[i]; 
->        for j in [i+1..94] do 
+>        X1 := x66[i]; 
+>        for j in [i+1..17] do 
 >          if ( L[j] = 1 ) then 
->            X2 := x24[j];            
+>            X2 := x66[j];            
 >            mor := IsomorphismXMods( X1, X2 ); 
 >            if ( mor <> fail ) then L[j]:=0; fi; 
 >          fi;
@@ -353,12 +367,9 @@ gap> for i in [1..93] do
 >      fi;
 >    od;
 gap> L;
-[ 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 
-  1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 
-  1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 
-  1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1 ]
+[ 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0 ]
 gap> Sum( L );
-60
+9
 ]]>
 </Example>
 

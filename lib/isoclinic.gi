@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.gi               GAP4 package `XMod'                Alper Odabas
 #W                                                                & Enver Uslu
-##  version 2.43, 06/10/2015 
+##  version 2.43, 07/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al 
 #Y   
@@ -1014,41 +1014,73 @@ end );
 
 #############################################################################
 ##
-#M  AllXMods  . . . . . . . . all crossed modules in the given order interval
+#M  AllXModsWithGroups . . . . . . . . all xmods with given source and range
 ##
-InstallMethod( AllXMods, "generic method for crossed modules", true, 
-    [ IsInt, IsInt ], 0,
-function( min, max )
+InstallMethod( AllXModsWithGroups, "generic method for a pair of groups", 
+    true, [ IsGroup, IsGroup ], 0,
+function( T, G )
 
-    local  list, i1, s1, j1, T, autT, i2, s2, j2, G, itTG, itGA, b1, a1, obj;
+    local  list, autT, itTG, itGA, b1, a1, obj;
 
-    list := [];
-    for i1 in [min..max] do
-        s1 := Length(IdsOfAllSmallGroups(i1));        
-        for j1 in [1..s1] do
-            T := SmallGroup(i1,j1);
-            autT := AutomorphismGroup(T); 
-            for i2 in [min..max] do
-                s2 := Length(IdsOfAllSmallGroups(i2));        
-                for j2 in [1..s2] do
-                    G := SmallGroup(i2,j2);
-                    itTG := Iterator( AllHomomorphisms(T,G) );
-                    while not IsDoneIterator( itTG ) do 
-                        b1 := NextIterator( itTG ); 
-                        itGA := Iterator( AllHomomorphisms(G,autT) );
-                        while not IsDoneIterator( itGA ) do 
-                            a1 := NextIterator( itGA ); 
-                            obj := PreXModObj( b1, a1 );  
-                            if ( IsPreXMod( obj ) and IsXMod( obj ) ) then 
-                                Add( list, obj );
-                            fi;
-                        od;
-                    od;
-                od;
-            od;
+    list := [ ];
+    autT := AutomorphismGroup(T); 
+    itTG := Iterator( AllHomomorphisms(T,G) );
+    while not IsDoneIterator( itTG ) do 
+        b1 := NextIterator( itTG ); 
+        itGA := Iterator( AllHomomorphisms(G,autT) );
+        while not IsDoneIterator( itGA ) do 
+            a1 := NextIterator( itGA ); 
+            obj := PreXModObj( b1, a1 );  
+            if ( IsPreXMod( obj ) and IsXMod( obj ) ) then 
+                Add( list, obj );
+            fi;
         od; 
     od;
     return list;
+end );
+
+#############################################################################
+##
+#F  AllXMods( <T>, <G> )             xmods with given source and range 
+#F  AllXMods( <size> )               xmods with a given size 
+#F  AllXMods( <order> )              xmods whose cat1-group has a given order
+## 
+InstallGlobalFunction( AllXMods, function( arg )
+
+    local  nargs, a, list, s1, j1, s2, j2, T, G, sizes; 
+
+    nargs := Length( arg ); 
+    if ( nargs = 2 ) then 
+        ## given source and range 
+        if ( IsGroup( arg[1] ) and IsGroup( arg[2] ) ) then 
+            return AllXModsWithGroups( arg[1], arg[2] ); 
+        fi; 
+    elif ( nargs = 1 ) then 
+        a := arg[1]; 
+        ## given size 
+        if ( IsList(a) and (Length(a)=2) and IsInt(a[1]) and IsInt(a[2]) ) then 
+            list := [ ]; 
+            s1 := NumberSmallGroups( a[1] ); 
+            for j1 in [1..s1] do
+                T := SmallGroup( a[1], j1 );
+                s2 := NumberSmallGroups( a[2] );        
+                for j2 in [1..s2] do
+                    G := SmallGroup( a[2], j2 );
+                    Append( list, AllXModsWithGroups( T, G ) ); 
+                od; 
+            od;
+            return list; 
+        ## given total size 
+        elif IsInt(a) then 
+            sizes := List( DivisorsInt(a), d -> [d,a/d] ); 
+            list := [ ];
+            for s1 in sizes do
+                Append( list, AllXMods( s1 ) ); 
+            od;
+            return list; 
+        fi; 
+    fi; 
+    Error( "standard usage: AllXMods(S,R), AllXMods([n,m]), AllXMods(n)" ); 
 end );
 
 #############################################################################

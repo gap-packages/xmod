@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2obj.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  version 2.43, 05/10/2015                                           --> 
+<!--  version 2.43, 07/10/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2015, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
@@ -65,7 +65,8 @@ There are a variety of constructors for crossed modules:
    <Oper Name="DirectProduct"
          Arg="X1 X2" />
 <Description>
-Here are the standard constructions which these implement:
+The global function <C>XMod</C> implements one of the following
+standard constructions:
 <List>
 <Item>
 A <E>trivial action crossed module</E>  <M>(\partial : S \to R)</M>

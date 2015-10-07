@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.gd              GAP4 package `XMod'                Alper Odabas
 #W                                                               & Enver Uslu
-##  version 2.43, 06/10/2015 
+##  version 2.43, 07/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al 
 ##
@@ -130,13 +130,15 @@ DeclareOperation( "AllPreXMods", [  IsInt, IsInt ] );
 
 #############################################################################
 ##
-#O AllXMods  . . . . . . . . . all crossed modules in the given order interval
+#F AllXMods
+#O AllXModsWithGroups  . . . . . . . . . all xmods with given source and range
 ##
-DeclareOperation( "AllXMods", [  IsInt, IsInt ] );
+DeclareGlobalFunction( "AllXMods" );
+DeclareOperation( "AllXModsWithGroups", [ IsGroup, IsGroup ] );
 
 #############################################################################
 ##
-#O IsoclinicXModFamily  . . . . . . . . . all crossed modules in the list which are isoclinic to the crossed module
+#O IsoclinicXModFamily  . . . . . . all xmods in list isoclinic to given xmod
 ##
 DeclareOperation( "IsoclinicXModFamily", [  Is2dGroup, IsList ] );
 

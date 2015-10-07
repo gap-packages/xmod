@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.tst               XMOD test file                   Alper Odabas
 #W                                                               & Enver Uslu
-##  version 2.43, 06/10/2015 
+##  version 2.43, 07/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 ##
@@ -225,23 +225,26 @@ gap> MappingGeneratorsImages( Boundary( CQX5 ) );
 gap> CentralQuotientHomomorphism(X5);    
 [[..] => [..]]
 
-gap> px24 := AllPreXMods( 2, 4 );;
-gap> Length( px24 );              
-122
-gap> x24 := AllXMods( 2, 4 );;   
-gap> Length( x24 );           
-94
+gap> xc6s3 := AllXMods( SmallGroup(6,2), SmallGroup(6,1) );;   
+gap> Length( xc6s3 );           
+4
+gap> x66 := AllXMods( [6,6] );;   
+gap> Length( x66 );
+17
+gap> x36 := AllXMods( 36 );; 
+gap> Length( x36 ); 
+205
 
-gap> IsomorphismXMods( x24[7], x24[8] );
-[[Group( [ f1 ] )->Group( [ f1, f2 ] )] => [Group( [ f1 ] )->Group( 
+gap> IsomorphismXMods( x66[1], x66[2] );
+[[Group( [ f1, f2 ] )->Group( [ f1, f2 ] )] => [Group( [ f1, f2 ] )->Group( 
 [ f1, f2 ] )]]
-gap> L := ListWithIdenticalEntries( 94, 1 );;
-gap> for i in [1..93] do 
+gap> L := ListWithIdenticalEntries( 17, 1 );;
+gap> for i in [1..16] do 
 >      if ( L[i] = 1 ) then 
->        X1 := x24[i]; 
->        for j in [i+1..94] do 
+>        X1 := x66[i]; 
+>        for j in [i+1..17] do 
 >          if ( L[j] = 1 ) then 
->            X2 := x24[j];            
+>            X2 := x66[j];            
 >            mor := IsomorphismXMods( X1, X2 ); 
 >            if ( mor <> fail ) then L[j]:=0; fi; 
 >          fi;
@@ -249,10 +252,8 @@ gap> for i in [1..93] do
 >      fi;
 >    od;
 gap> L;
-[ 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 
-  1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 
-  1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 
-  1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1 ]
+[ 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0 ]
 gap> Sum( L );
-60
+9
+
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
