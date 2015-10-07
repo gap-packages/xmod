@@ -124,17 +124,15 @@ DeclareOperation( "IsomorphismXMods", [  Is2dGroup, Is2dGroup ] );
 
 #############################################################################
 ##
-#O AllPreXMods  . . . . . . all precrossed modules in the given order interval
-##
-DeclareOperation( "AllPreXMods", [  IsInt, IsInt ] );
-
-#############################################################################
-##
 #F AllXMods
 #O AllXModsWithGroups  . . . . . . . . . all xmods with given source and range
+#F AllPreXMods
+#O AllPreXModsWithGroups  . . . . . . all prexmods with given source and range
 ##
 DeclareGlobalFunction( "AllXMods" );
 DeclareOperation( "AllXModsWithGroups", [ IsGroup, IsGroup ] );
+DeclareGlobalFunction( "AllPreXMods" );
+DeclareOperation( "AllPreXModsWithGroups", [ IsGroup, IsGroup ] );
 
 #############################################################################
 ##

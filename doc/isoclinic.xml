@@ -320,6 +320,7 @@ In the example we see that there are <M>4</M> crossed modules
 <M>(C_6 \to S_3)</M>; forming a subset of the <M>17</M> crossed modules 
 with size <C>[6,6]</C>; and that these form a subset of the <M>205</M> 
 crossed modules whose cat1-group has size <M>36</M>. 
+There are <M>40</M> precrossed modules with size <C>[6,6]</C>. 
 </Description>
 </ManSection>
 <Example>
@@ -333,6 +334,9 @@ gap> Length( x66 );
 gap> x36 := AllXMods( 36 );; 
 gap> Length( all36 ); 
 205
+gap> px66 := AllPreXMods( [6,6] );;   
+gap> Length( px66 );
+40
 ]]>
 </Example>
 

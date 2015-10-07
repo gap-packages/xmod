@@ -234,6 +234,9 @@ gap> Length( x66 );
 gap> x36 := AllXMods( 36 );; 
 gap> Length( x36 ); 
 205
+gap> px66 := AllPreXMods( [6,6] );;   
+gap> Length( px66 );
+40
 
 gap> IsomorphismXMods( x66[1], x66[2] );
 [[Group( [ f1, f2 ] )->Group( [ f1, f2 ] )] => [Group( [ f1, f2 ] )->Group( 
