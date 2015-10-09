@@ -966,9 +966,8 @@ function(XM1,XM2)
         return fail; 
     fi; 
     iterT := Iterator( AllAutomorphisms( T2 ) ); 
-
     while not IsDoneIterator( iterT ) do
-		iterG := Iterator( AllAutomorphisms( G2 ) ); 
+        iterG := Iterator( AllAutomorphisms( G2 ) ); 
         alp := isoT * NextIterator( iterT ); 
         while not IsDoneIterator( iterG ) do 
             ph := isoG * NextIterator( iterG ); 

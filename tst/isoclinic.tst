@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.tst               XMOD test file                   Alper Odabas
 #W                                                               & Enver Uslu
-##  version 2.43, 07/10/2015 
+##  version 2.43, 09/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 ##
@@ -255,6 +255,41 @@ gap> L;
 [ 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0 ]
 gap> Sum( L );
 9
+
+############################################################################# 
+gap> all44 := AllXMods( [4,4] );; 
+gap> Length( last );
+60
+gap> iso44 := IsoAllXMods( all44 );;
+gap> Length( last );
+18 
+gap> L := ListWithIdenticalEntries( 60, 1 );;
+gap> for i in [1..59] do 
+>      if ( L[i] = 1 ) then 
+>        L[i] := [i]; 
+>        Y1 := all44[i]; 
+>        for j in [i+1..60] do 
+>          if ( L[j] = 1 ) then 
+>            Y2 := all44[j];            
+>            mor := IsomorphismXMods( Y1, Y2 ); 
+>            if ( mor <> fail ) then 
+>              L[j]:=0; 
+>              Add( L[i], j );
+>            fi; 
+>          fi;
+>        od;
+>      fi;
+>    od;
+gap> L := Filtered( L, k -> k<>0 );
+[ [ 1 ], [ 2 ], [ 3, 6 ], [ 4 ], [ 5 ], [ 7 ], [ 8, 9, 10 ], [ 11, 13, 15 ], 
+  [ 12, 14, 16 ], [ 17 ], [ 18, 19, 20 ], [ 21, 23, 25 ], [ 22, 24, 26 ], 
+  [ 27 ], [ 28, 29, 30, 31, 32, 33, 34, 35, 36 ], 
+  [ 37, 39, 41, 43, 45, 49, 52, 55, 59 ], 
+  [ 38, 40, 42, 44, 46, 50, 53, 56, 60 ], [ 47, 48, 51, 54, 57, 58 ] ]
+
+
+
+
 
 ############################################################################# 
 ##  Example 6 from the paper 
