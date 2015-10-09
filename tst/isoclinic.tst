@@ -179,6 +179,9 @@ gap> [ IsFaithful2dGroup(X5), IsFaithful2dGroup(X24) ];
 gap> DX24 := DerivedSubXMod( X24 ); 
 [Group( [ f4, f4^2, f3*f4, f2*f4^2 ] )->Group( [ f2, f5 ] )]
 
+
+#### testing isoclinism of groups #### 
+
 gap> G := SmallGroup( 64, 6 );
 <pc group of size 64 with 6 generators>
 gap> Q := CentralQuotient( G );
@@ -289,7 +292,14 @@ gap> L := Filtered( L, k -> k<>0 );
 
 
 
+#### testing isoclinism of groups #### 
 
+gap> IdGroup( X24 );
+[ [ 24, 6 ], [ 48, 38 ] ]
+gap> IdGroup( CentreXMod(X24) );     
+[ [ 2, 1 ], [ 1, 1 ] ]
+gap> IdGroup( CentralQuotient(X24) );
+[ [ 12, 4 ], [ 48, 38 ] ]
 
 ############################################################################# 
 ##  Example 6 from the paper 
@@ -337,12 +347,14 @@ gap> morF := IsomorphismXMods( FX8, FX9 );
 gap> morD := IsomorphismXMods( DX8, DX9 );
 [[Group( [ f3*f4, f4 ] )->Group( <identity> of ... )] => [Group( 
 [ f3*f5, f5 ] )->Group( <identity> of ... )]]
-gap> AreIsoclinicXMods( X8, X9 );
-false
+
 
 gap> IsStemXMod(X8);
 true
 gap> IsStemXMod(X9);
 false
+gap> AreIsoclinicXMods( X8, X9 );
+false
+
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 

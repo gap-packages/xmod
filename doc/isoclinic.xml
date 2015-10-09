@@ -373,6 +373,42 @@ gap> Sum( L );
 ]]>
 </Example>
 
+The <M>60</M> crossed modules with source and range of size <M>4</M> 
+retured by <C>AllXMods([4,4]);</C> form <M>18</M> isomorphism classes. 
+<Example>
+<![CDATA[
+gap> all44 := AllXMods( [4,4] );; 
+gap> Length( last );
+60
+gap> iso44 := IsoAllXMods( all44 );;
+gap> Length( last );
+18 
+gap> L := ListWithIdenticalEntries( 60, 1 );;
+gap> for i in [1..59] do 
+>      if ( L[i] = 1 ) then 
+>        L[i] := [i]; 
+>        Y1 := all44[i]; 
+>        for j in [i+1..60] do 
+>          if ( L[j] = 1 ) then 
+>            Y2 := all44[j];            
+>            mor := IsomorphismXMods( Y1, Y2 ); 
+>            if ( mor <> fail ) then 
+>              L[j]:=0; 
+>              Add( L[i], j );
+>            fi; 
+>          fi;
+>        od;
+>      fi;
+>    od;
+gap> L := Filtered( L, k -> k<>0 );
+[ [ 1 ], [ 2 ], [ 3, 6 ], [ 4 ], [ 5 ], [ 7 ], [ 8, 9, 10 ], [ 11, 13, 15 ], 
+  [ 12, 14, 16 ], [ 17 ], [ 18, 19, 20 ], [ 21, 23, 25 ], [ 22, 24, 26 ], 
+  [ 27 ], [ 28, 29, 30, 31, 32, 33, 34, 35, 36 ], 
+  [ 37, 39, 41, 43, 45, 49, 52, 55, 59 ], 
+  [ 38, 40, 42, 44, 46, 50, 53, 56, 60 ], [ 47, 48, 51, 54, 57, 58 ] ]
+]]>
+</Example>
+
 
 
 
@@ -435,6 +471,26 @@ gap> AreIsoclinicGroups(G,K);
 false
 ]]>
 </Example>
+
+<Example>
+<![CDATA[
+gap> G := SmallGroup( 64, 6 );
+<pc group of size 64 with 6 generators>
+gap> Q := CentralQuotient( G );
+Group([ f1, f2, f3, <identity> of ..., <identity> of ..., <identity> of ... ])
+gap> H := SmallGroup( 32, 41 );
+<pc group of size 32 with 5 generators>
+gap> iso := Isoclinism( G, H );
+[ [ f1, f2, f3, <identity> of ..., <identity> of ..., <identity> of ... ] -> 
+    [ f1, f2*f3, f3, <identity> of ..., <identity> of ..., <identity> of ... ]
+    , [ f3, f5 ] -> [ f4*f5, f5 ] ]
+gap> K := SmallGroup( 32, 43 );
+<pc group of size 32 with 5 generators>
+gap> AreIsoclinicGroups(G,K);
+false
+]]>
+</Example>
+
 
 <ManSection>
    <Prop Name="IsStemGroup"
@@ -514,80 +570,51 @@ gap> RankXMod(X1);
          Arg="X0" /> 
    <Attr Name="CentralQuotientHomomorphism"
          Arg="X0" />
-   <Oper Name="AreIsoclinicGroups"
-         Arg="G H" />
 <Description>
-Let <M>\mathcal{X},\mathcal{Y}</M> be crossed modules with central quotients 
-<M>Q(\mathcal{X}) = \mathcal{X}/Z(\mathcal{X})</M> 
-and <M>Q(\mathcal{Y}) = \mathcal{Y}/Z(\mathcal{Y})</M> 
-and derived subcrossed modules <M>[\mathcal{X},\mathcal{X}]</M> 
-and <M>[\mathcal{Y},\mathcal{Y}]</M> respectively. 
-Let <M>c_G : Q(G) \times Q(G) \to [G,G]</M> 
-and <M>c_H : Q(H) \times Q(H) \to [H,H]</M> be the two commutator maps.  
-An <E>isoclinism</E> <M>G \sim H</M> is a pair of isomorphisms 
-<M>(\eta,\xi)</M> where <M>\eta : Q(G) \to Q(H)</M> and 
-<M>\xi : [G,G] \to [H,H]</M> such that
-<M>c_G * \xi = (\eta \times \eta) * c_H</M>. 
-Isoclinism is an equivalence relation, and all abelian groups are isoclinic 
-to the trivial group.
+The <E>central quotient</E> of a crossed module <M>\mathcal{X}</M> 
+is the quotient <M>Q(\mathcal{X}) = \mathcal{X}/Z(\mathcal{X})</M> 
+of <M>\mathcal{X}</M> by its centre. 
 <P/>
 </Description>
 </ManSection>
 <Example>
 <![CDATA[
-gap> G := SmallGroup( 64, 6 );
-<pc group of size 64 with 6 generators>
-gap> Q := CentralQuotient( G );
-Group([ f1, f2, f3, <identity> of ..., <identity> of ..., <identity> of ... ])
-gap> H := SmallGroup( 32, 41 );
-<pc group of size 32 with 5 generators>
-gap> iso := Isoclinism( G, H );
-[ [ f1, f2, f3, <identity> of ..., <identity> of ..., <identity> of ... ] -> 
-    [ f1, f2*f3, f3, <identity> of ..., <identity> of ..., <identity> of ... ]
-    , [ f3, f5 ] -> [ f4*f5, f5 ] ]
-gap> K := SmallGroup( 32, 43 );
-<pc group of size 32 with 5 generators>
-gap> AreIsoclinicGroups(G,K);
-false
+gap> IdGroup( X24 );
+[ [ 24, 6 ], [ 48, 38 ] ]
+gap> IdGroup( CentreXMod(X24) );     
+[ [ 2, 1 ], [ 1, 1 ] ]
+gap> IdGroup( CentralQuotient(X24) );
+[ [ 12, 4 ], [ 48, 38 ] ]
 ]]>
 </Example>
 
-The <M>60</M> crossed modules with source and range of size <M>4</M> 
-retured by <C>AllXMods([4,4]);</C> form <M>18</M> isomorphism classes. 
-<Example>
-<![CDATA[
-gap> all44 := AllXMods( [4,4] );; 
-gap> Length( last );
-60
-gap> iso44 := IsoAllXMods( all44 );;
-gap> Length( last );
-18 
-gap> L := ListWithIdenticalEntries( 60, 1 );;
-gap> for i in [1..59] do 
->      if ( L[i] = 1 ) then 
->        L[i] := [i]; 
->        Y1 := all44[i]; 
->        for j in [i+1..60] do 
->          if ( L[j] = 1 ) then 
->            Y2 := all44[j];            
->            mor := IsomorphismXMods( Y1, Y2 ); 
->            if ( mor <> fail ) then 
->              L[j]:=0; 
->              Add( L[i], j );
->            fi; 
->          fi;
->        od;
->      fi;
->    od;
-gap> L := Filtered( L, k -> k<>0 );
-[ [ 1 ], [ 2 ], [ 3, 6 ], [ 4 ], [ 5 ], [ 7 ], [ 8, 9, 10 ], [ 11, 13, 15 ], 
-  [ 12, 14, 16 ], [ 17 ], [ 18, 19, 20 ], [ 21, 23, 25 ], [ 22, 24, 26 ], 
-  [ 27 ], [ 28, 29, 30, 31, 32, 33, 34, 35, 36 ], 
-  [ 37, 39, 41, 43, 45, 49, 52, 55, 59 ], 
-  [ 38, 40, 42, 44, 46, 50, 53, 56, 60 ], [ 47, 48, 51, 54, 57, 58 ] ]
-]]>
-</Example>
-
+<ManSection>
+   <Oper Name="AreIsoclinicXMods"
+         Arg="X0 Y0" />
+   <Oper Name="Isoclinism"
+         Arg="X0 Y0" />
+<Description>
+Let <M>\mathcal{X},\mathcal{Y}</M> be crossed modules with central quotients 
+<M>Q(\mathcal{X})</M> and <M> Q(\mathcal{Y})</M>,  
+and derived subcrossed modules <M>[\mathcal{X},\mathcal{X}]</M> 
+and <M>[\mathcal{Y},\mathcal{Y}]</M> respectively. 
+Let <M>c_\mathcal{X} : Q(\mathcal{X}) \times Q(\mathcal{X}) 
+                    \to [\mathcal{X},\mathcal{X}]</M> 
+and <M>c_\mathcal{Y} : Q(\mathcal{Y}) \times Q(\mathcal{Y}) 
+                    \to [\mathcal{Y},\mathcal{Y}]</M> 
+be the two commutator maps.  
+An <E>isoclinism</E> <M>\mathcal{X} \sim \mathcal{Y}</M> 
+is a pair of bijective morphisms 
+<M>(\eta,\xi)</M> where <M>\eta : Q(\mathcal{X}) \to Q(\mathcal{Y})</M> 
+and <M>\xi : [\mathcal{X},\mathcal{X}] \to [\mathcal{Y},\mathcal{Y}]</M> 
+such that
+<M>c_\mathcal{X} * \xi = (\eta \times \eta) * c_\mathcal{Y}</M>. 
+Isoclinism is an equivalence relation, and all abelian crossed modules 
+are isoclinic to the trivial crossed module. 
+(IS THIS TRUE ???)
+<P/>
+</Description>
+</ManSection>
 
 Here is Example 6 from the paper (with <C>X1,X2</C> renumbdered <C>X8,X9</C>). 
 <Example>

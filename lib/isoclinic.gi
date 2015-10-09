@@ -781,36 +781,31 @@ function(XM1,XM2)
     b2 := Boundary(DXM2);
     a2 := XModAction(DXM2);
     T2 := Source(DXM2);
-    G2 := Range(DXM2);
-    
+    G2 := Range(DXM2); 
+
+    ## check condition 2 : require T1 ~ T2 and G1 ~ G2 
     isoT := IsomorphismGroups(T1,T2); 
     isoG := IsomorphismGroups(G1,G2);
     if ( ( isoT = fail ) or (isoG = fail ) ) then 
         return false; 
     fi;
 
-    ## alpha1 := AllIsomorphisms( T1, T2 ); 
+    ##  m1_ler = all isomorphisms between the commutator subxmods 
+    m1_ler := []; 
     iterT2 := Iterator( AllAutomorphisms(T2) ); 
-    m1_ler := [];        
-    ## for alp in alpha1 do
     while not IsDoneIterator( iterT2 ) do 
         alp := isoT * NextIterator( iterT2 ); 
-        ## phi1 := AllIsomorphisms( G1, G2 ); 
-        ## for ph in phi1 do 
         iterG2 := Iterator( AllAutomorphisms(G2) ); 
         while not IsDoneIterator( iterG2 ) do 
             ph := isoG * NextIterator( iterG2 ); 
             mor := Make2dGroupMorphism(DXM1,DXM2,alp,ph); 
-            if IsPreXModMorphism( mor ) then 
-                if IsXModMorphism( mor ) then 
-                    Add( m1_ler, mor );
-                fi; 
+            if ( IsPreXModMorphism( mor ) and IsXModMorphism( mor ) ) then 
+                Add( m1_ler, mor );
             fi;
         od;
     od;    
-    ## m1_ler := Filtered(m1_ler,IsXModMorphism); 
     if ( Length(m1_ler) = 0 ) then
-        Info( InfoXMod, 1, "There is no morphism CXM1 -> CXM2" );
+        Info( InfoXMod, 1, "there is no isomorphism CXM1 -> CXM2" );
         return false;
     fi;
     
@@ -826,21 +821,18 @@ function(XM1,XM2)
     a12 := XModAction(FXM2);
     T12 := Source(FXM2);
     G12 := Range(FXM2);
-        
+    ## check condition 1 : require T11 ~ T12 and G11 ~ G12 
     isoT1 := IsomorphismGroups(T11,T12); 
     isoG1 := IsomorphismGroups(G11,G12);
     if ( ( isoT1 = fail ) or ( isoG1 = fail ) ) then 
         return false;
     fi;
     
-    ## alpha11 := AllIsomorphisms(T11,T12);
-    iterT12 := Iterator( AllAutomorphisms( T12 ) ); 
+    ##  m2_ler = all isomorphisms between the central quotients 
     m2_ler := [];        
-    ## for alp in alpha11 do 
+    iterT12 := Iterator( AllAutomorphisms( T12 ) ); 
     while not IsDoneIterator( iterT12 ) do 
         alp := isoT1 * NextIterator( iterT12 ); 
-        ## phi11 := AllIsomorphisms(G11,G12); 
-        ## for ph in phi11 do 
         iterG12 := Iterator( AllAutomorphisms( G12 ) ); 
         while not IsDoneIterator( iterG12 ) do 
             ph := isoG1 * NextIterator( iterG12 ); 
@@ -851,17 +843,18 @@ function(XM1,XM2)
         od;
     od;
     if ( Length(m2_ler) = 0 ) then
-        Info( InfoXMod, 1, "There is no morphism FXM1 -> FXM2" );
+        Info( InfoXMod, 1, "there is no isomorphism FXM1 -> FXM2" );
         return false;
     fi;
     
-    QXM1 := Intersection( Centre(G), 
+    ##  
+    QXM1 := Intersection( Centre( G ), 
                 StabilizerSubgroupXMod( XM1, T, G ) ); 
     nhom1 := NaturalHomomorphismByNormalSubgroup( G, QXM1 ); 
     kG11 := Image( nhom1 );
     cakma3 := GroupHomomorphismByImages( kG11, G11, GeneratorsOfGroup(kG11), 
                                                     GeneratorsOfGroup(G11) );
-    QXM2 := Intersection( Centre(H), 
+    QXM2 := Intersection( Centre( H ), 
                 StabilizerSubgroupXMod( XM2, S, H ) ); 
     nhom2 := NaturalHomomorphismByNormalSubgroup( H, QXM2 ); 
     kG12 := Image( nhom2 );
@@ -897,18 +890,19 @@ function(XM1,XM2)
                     gy := PreImagesRepresentative(nhom2,Image(cakma4,gz2));    
                     gor1 := Image(pisi1,Image(Image(XModAction(XM1),y),x)*x^-1);    
                     gor2 := Image(Image(XModAction(XM2),gy),gx)*gx^-1;
-                    if (gor1 <> gor2) then
+                    if (gor1 <> gor2) then 
+                        ## condition 3 is not true for this pair 
                         sonuc := false;
                         yeni_iso := true;
                         break;            
                     fi;
                 od;
-                if ( yeni_iso = true ) then        
+                if yeni_iso then        
                     break;
                 fi;
             od;
             ### end check diagram 1
-            if ( yeni_iso = true ) then        
+            if yeni_iso then        
                 break;
             fi;
 
@@ -929,20 +923,20 @@ function(XM1,XM2)
                         break; 
                     fi;
                 od;
-                if ( yeni_iso = true ) then        
+                if yeni_iso then        
                     break;
                 fi;
             od;
             ### end check diagram 2
-            if ( yeni_iso = true ) then        
+            if yeni_iso then        
                 break;
             fi;
-            if ( sonuc = true ) then    
+            if sonuc then    
                 return sonuc;
             fi;    
         od;
     od;
-    Info( InfoXMod, 1, "there is no morphism that provides conditions" );    
+    Info( InfoXMod, 1, "no morphism exists satisfying the conditions" );    
     return sonuc;
 end );
 
