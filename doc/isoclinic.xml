@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  isclinic.xml          XMod documentation             Alper Odabas  -->
 <!--                                                       & Enver Uslu  -->
-<!--  version 2.43, 07/10/2015                                           --> 
+<!--  version 2.43, 08/10/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2015, Chris Wensley et al                       --> 
 <!--                                                                     -->
@@ -388,14 +388,30 @@ gap> Sum( L );
          Arg="G" /> 
    <Attr Name="CentralQuotientHomomorphism"
          Arg="G" />
-   <Oper Name="AreIsoclinicGroups"
-         Arg="G H" />
 <Description>
 Let <M>G,H</M> be groups with central quotients 
 <M>Q(G)=G/Z(G)</M> and <M>Q(H)=H/Z(H)</M> 
 and derived subgroups <M>[G,G]</M> and <M>[H,H]</M> respectively. 
 Let <M>c_G : Q(G) \times Q(G) \to [G,G]</M> 
 and <M>c_H : Q(H) \times Q(H) \to [H,H]</M> be the two commutator maps.  
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> G := SmallGroup( 64, 6 );
+<pc group of size 64 with 6 generators>
+gap> Q := CentralQuotient( G );
+Group([ f1, f2, f3, <identity> of ..., <identity> of ..., <identity> of ... ])
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="AreIsoclinicGroups"
+         Arg="G H" />
+   <Oper Name="Isoclinism"
+         Arg="G H" />
+<Description>
 An <E>isoclinism</E> <M>G \sim H</M> is a pair of isomorphisms 
 <M>(\eta,\xi)</M> where <M>\eta : Q(G) \to Q(H)</M> and 
 <M>\xi : [G,G] \to [H,H]</M> such that
@@ -407,10 +423,6 @@ to the trivial group.
 </ManSection>
 <Example>
 <![CDATA[
-gap> G := SmallGroup( 64, 6 );
-<pc group of size 64 with 6 generators>
-gap> Q := CentralQuotient( G );
-Group([ f1, f2, f3, <identity> of ..., <identity> of ..., <identity> of ... ])
 gap> H := SmallGroup( 32, 41 );
 <pc group of size 32 with 5 generators>
 gap> iso := Isoclinism( G, H );
@@ -497,6 +509,49 @@ gap> RankXMod(X1);
 
 <Section><Heading>Isoclinism of Crossed Modules</Heading>
 
+<ManSection>
+   <Attr Name="CentralQuotient"
+         Arg="X0" /> 
+   <Attr Name="CentralQuotientHomomorphism"
+         Arg="X0" />
+   <Oper Name="AreIsoclinicGroups"
+         Arg="G H" />
+<Description>
+Let <M>\mathcal{X},\mathcal{Y}</M> be crossed modules with central quotients 
+<M>Q(\mathcal{X}) = \mathcal{X}/Z(\mathcal{X})</M> 
+and <M>Q(\mathcal{Y}) = \mathcal{Y}/Z(\mathcal{Y})</M> 
+and derived subcrossed modules <M>[\mathcal{X},\mathcal{X}]</M> 
+and <M>[\mathcal{Y},\mathcal{Y}]</M> respectively. 
+Let <M>c_G : Q(G) \times Q(G) \to [G,G]</M> 
+and <M>c_H : Q(H) \times Q(H) \to [H,H]</M> be the two commutator maps.  
+An <E>isoclinism</E> <M>G \sim H</M> is a pair of isomorphisms 
+<M>(\eta,\xi)</M> where <M>\eta : Q(G) \to Q(H)</M> and 
+<M>\xi : [G,G] \to [H,H]</M> such that
+<M>c_G * \xi = (\eta \times \eta) * c_H</M>. 
+Isoclinism is an equivalence relation, and all abelian groups are isoclinic 
+to the trivial group.
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> G := SmallGroup( 64, 6 );
+<pc group of size 64 with 6 generators>
+gap> Q := CentralQuotient( G );
+Group([ f1, f2, f3, <identity> of ..., <identity> of ..., <identity> of ... ])
+gap> H := SmallGroup( 32, 41 );
+<pc group of size 32 with 5 generators>
+gap> iso := Isoclinism( G, H );
+[ [ f1, f2, f3, <identity> of ..., <identity> of ..., <identity> of ... ] -> 
+    [ f1, f2*f3, f3, <identity> of ..., <identity> of ..., <identity> of ... ]
+    , [ f3, f5 ] -> [ f4*f5, f5 ] ]
+gap> K := SmallGroup( 32, 43 );
+<pc group of size 32 with 5 generators>
+gap> AreIsoclinicGroups(G,K);
+false
+]]>
+</Example>
+
 Here is Example 6 from the paper (with <C>X1,X2</C> renumbdered <C>X8,X9</C>). 
 <Example>
 <![CDATA[
@@ -574,7 +629,7 @@ brk> quit;
    <Prop Name="IsStemXMod"
          Arg="X0" />
 <Description>
-A crossed module <M>\mathcal{X}</M> is a <E>stem stem crossed module</E> 
+A crossed module <M>\mathcal{X}</M> is a <E>stem crossed module</E> 
 if <M>Z(\mathcal{X}) \leq [\mathcal{X},\mathcal{X}]</M>. 
 Every crossed module is isoclinic to a stem crossed module, 
 but distinct stem crossed modules may be isoclinic. 

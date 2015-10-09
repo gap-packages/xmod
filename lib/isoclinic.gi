@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.gi               GAP4 package `XMod'                Alper Odabas
 #W                                                                & Enver Uslu
-##  version 2.43, 07/10/2015 
+##  version 2.43, 09/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al 
 #Y   
@@ -789,6 +789,31 @@ function(XM1,XM2)
         return false; 
     fi;
 
+    ## alpha1 := AllIsomorphisms( T1, T2 ); 
+    iterT2 := Iterator( AllAutomorphisms(T2) ); 
+    m1_ler := [];        
+    ## for alp in alpha1 do
+    while not IsDoneIterator( iterT2 ) do 
+        alp := isoT * NextIterator( iterT2 ); 
+        ## phi1 := AllIsomorphisms( G1, G2 ); 
+        ## for ph in phi1 do 
+        iterG2 := Iterator( AllAutomorphisms(G2) ); 
+        while not IsDoneIterator( iterG2 ) do 
+            ph := isoG * NextIterator( iterG2 ); 
+            mor := Make2dGroupMorphism(DXM1,DXM2,alp,ph); 
+            if IsPreXModMorphism( mor ) then 
+                if IsXModMorphism( mor ) then 
+                    Add( m1_ler, mor );
+                fi; 
+            fi;
+        od;
+    od;    
+    ## m1_ler := Filtered(m1_ler,IsXModMorphism); 
+    if ( Length(m1_ler) = 0 ) then
+        Info( InfoXMod, 1, "There is no morphism CXM1 -> CXM2" );
+        return false;
+    fi;
+    
     CXM1 := CentreXMod(XM1);
     CXM2 := CentreXMod(XM2);
     FXM1 := FactorXMod(XM1,CXM1); 
@@ -808,52 +833,25 @@ function(XM1,XM2)
         return false;
     fi;
     
-    ## alpha1 := AllIsomorphisms( T1, T2 ); 
-    iterT2 := Iterator( AllAutomorphisms(T2) ); 
-    ## phi1 := AllIsomorphisms( G1, G2 ); 
-    iterG2 := Iterator( AllAutomorphisms(G2) ); 
-    m1_ler := [];        
-    ## for alp in alpha1 do
-    while not IsDoneIterator( iterT2 ) do 
-        alp := isoT * NextIterator( iterT2 ); 
-        ## for ph in phi1 do 
-        while not IsDoneIterator( iterG2 ) do 
-            ph := isoG * NextIterator( iterG2 ); 
-            mor := Make2dGroupMorphism(DXM1,DXM2,alp,ph); 
-            if IsPreXModMorphism( mor ) then 
-                if IsXModMorphism( mor ) then 
-                    Add( m1_ler, mor );
-                fi; 
-            fi;
-        od;
-    od;    
-    ## m1_ler := Filtered(m1_ler,IsXModMorphism); 
-    if ( Length(m1_ler) = 0 ) then
-        Info( InfoXMod, 1, "There is no morphism" );
-        return false;
-    fi;
-    
     ## alpha11 := AllIsomorphisms(T11,T12);
     iterT12 := Iterator( AllAutomorphisms( T12 ) ); 
-    ## phi11 := AllIsomorphisms(G11,G12); 
-    iterG12 := Iterator( AllAutomorphisms( G12 ) ); 
     m2_ler := [];        
     ## for alp in alpha11 do 
     while not IsDoneIterator( iterT12 ) do 
         alp := isoT1 * NextIterator( iterT12 ); 
+        ## phi11 := AllIsomorphisms(G11,G12); 
         ## for ph in phi11 do 
+        iterG12 := Iterator( AllAutomorphisms( G12 ) ); 
         while not IsDoneIterator( iterG12 ) do 
             ph := isoG1 * NextIterator( iterG12 ); 
             mor := Make2dGroupMorphism( FXM1, FXM2, alp, ph ); 
-            if IsPreXModMorphism( mor ) then 
-                if IsXModMorphism( mor ) then 
-                    Add( m2_ler, mor );
-                fi; 
+            if ( IsPreXModMorphism( mor ) and IsXModMorphism( mor ) ) then 
+                Add( m2_ler, mor );  
             fi;
         od;
     od;
     if ( Length(m2_ler) = 0 ) then
-        Info( InfoXMod, 1, "There is no morphism" );
+        Info( InfoXMod, 1, "There is no morphism FXM1 -> FXM2" );
         return false;
     fi;
     
