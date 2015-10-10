@@ -354,7 +354,7 @@ true
 gap> IsStemXMod(X9);
 false
 gap> AreIsoclinicXMods( X8, X9 );
-false
+true
 
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 

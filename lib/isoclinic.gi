@@ -881,13 +881,13 @@ function(XM1,XM2)
             yeni_iso := false;    
             ### start check diagram 1    
             for z1 in kT11 do
-                x := PreImagesRepresentative(nhom3,z1);
+                x := Representative(PreImages(nhom3,z1));
                 gz1 := Image(nisi1,Image(cakma,z1));
-                gx := PreImagesRepresentative(nhom4,Image(cakma2,gz1));
+				gx := Representative(PreImages(nhom4,Image(cakma2,gz1)));
                 for z2 in kG11 do
-                    y := PreImagesRepresentative(nhom1,z2);
+					y := Representative(PreImages(nhom1,z2));
                     gz2 := Image(nisi0,Image(cakma3,z2));
-                    gy := PreImagesRepresentative(nhom2,Image(cakma4,gz2));    
+					gy := Representative(PreImages(nhom2,Image(cakma4,gz2)));
                     gor1 := Image(pisi1,Image(Image(XModAction(XM1),y),x)*x^-1);    
                     gor2 := Image(Image(XModAction(XM2),gy),gx)*gx^-1;
                     if (gor1 <> gor2) then 
@@ -908,14 +908,14 @@ function(XM1,XM2)
 
             ### start check diagram 2    
             for z1 in kG11 do
-                x := PreImagesRepresentative(nhom1,z1);
+                x := Representative(PreImages(nhom1,z1));
                 gz1 := Image(nisi0,Image(cakma3,z1));
-                gx := PreImagesRepresentative(nhom2,Image(cakma4,gz1));
+				gx := Representative(PreImages(nhom2,Image(cakma4,gz1)));
                 for z2 in kG11 do
-                    y := PreImagesRepresentative(nhom1,z2);
+                    y := Representative(PreImages(nhom1,z2));
                     gz2 := Image(nisi0,Image(cakma3,z2));
-                    gy := PreImagesRepresentative(nhom2,Images(cakma4,gz2));            
-                    gor1 := Image(pisi0,Comm(x,y));    
+					gy := Representative(PreImages(nhom2,Images(cakma4,gz2)));
+					gor1 := Image(pisi0,Comm(x,y));    
                     gor2 := Comm(gx,gy);
                     if (gor1 <> gor2) then
                         sonuc := false;
