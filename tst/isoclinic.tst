@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.tst               XMOD test file                   Alper Odabas
 #W                                                               & Enver Uslu
-##  version 2.43, 09/10/2015 
+##  version 2.43, 15/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 ##
@@ -53,7 +53,7 @@ gap> X3 := SubXMod( X24, N3, R3 );
 [Group( [ f1*f2*f3*f4^2, f3, f4 ] )->Group( [ f1*f2^2*f3*f5, f2^2, f2 ] )]
 gap> X4 := SubXMod( X24, N4, R4 );
 [Group( [ f1, f3, f4 ] )->Group( [ f1*f3, f2^2, f2 ] )]
-gap> X6 := IntersectionSubXMod( X24, X3, X4 );
+gap> X6 := IntersectionSubXMods( X24, X3, X4 );
 [Group( [ f3, f4, f3*f4, f4^2, f3*f4^2 ] )->Group( [ f2, f2^2 ] )]
 gap> Size( X6 );
 [ 6, 3 ]
@@ -63,6 +63,8 @@ gap> Size(Y6);
 [ 6, 3 ]
 gap> X6 = Y6;
 false
+gap> Q24 := CentralQuotient( D24) ;                     
+[D24->Group( [ f1, f2, f3 ] )]
 
 
 gap> G24:= SmallGroup( 24, 14 );
@@ -121,7 +123,7 @@ gap> nat := NaturalMorphismByNormalSubXMod( X24, nsx[30] );
 
 
 gap> ZX5 := CentreXMod( X5 );      
-[Group( [ f3*f4 ] )->Group( [ f3*f4 ] )]
+[Group( [ f3*f4 ] )->Z(D24)]
 gap> IdGroup( ZX5 );
 [ [ 2, 1 ], [ 2, 1 ] ]
 gap> CDX5 := Centralizer( X5, DX5 );
@@ -182,22 +184,28 @@ gap> DX24 := DerivedSubXMod( X24 );
 
 #### testing isoclinism of groups #### 
 
-gap> G := SmallGroup( 64, 6 );
-<pc group of size 64 with 6 generators>
-gap> Q := CentralQuotient( G );
-Group([ f1, f2, f3, <identity> of ..., <identity> of ..., <identity> of ... ])
-gap> H := SmallGroup( 32, 41 );
-<pc group of size 32 with 5 generators>
-gap> iso := Isoclinism( G, H );
-[ [ f1, f2, f3, <identity> of ..., <identity> of ..., <identity> of ... ] -> 
-    [ f1, f2*f3, f3, <identity> of ..., <identity> of ..., <identity> of ... ]
-    , [ f3, f5 ] -> [ f4*f5, f5 ] ]
-gap> K := SmallGroup(32,43);
-<pc group of size 32 with 5 generators>
-gap> AreIsoclinicGroups(G,K);
+gap> G := SmallGroup( 64, 6 );;  StructureDescription( G ); 
+"(C8 x C4) : C2"
+gap> Q := CentralQuotient( G );;  IdGroup( Q );
+[ [ 64, 6 ], [ 8, 3 ] ]
+gap> Boundary( Q );
+[ f1, f2, f3, f4, f5, f6 ] -> [ f1, f2, f3, <identity> of ..., 
+  <identity> of ..., <identity> of ... ]
+
+gap> H := SmallGroup( 32, 41 );;  StructureDescription( H );
+"C2 x Q16"
+gap> IdGroup( CentralQuotient( H ) );
+[ [ 32, 41 ], [ 8, 3 ] ]
+gap> Isoclinism( G, H );
+[ [ f1, f2, f3 ] -> [ f1, f2*f3, f3 ], [ f3, f5 ] -> [ f4*f5, f5 ] ]
+gap> K := SmallGroup( 32, 43 );;  StructureDescription( K );
+"(C2 x D8) : C2"
+gap> IdGroup( CentralQuotient( K ) );                       
+[ [ 32, 43 ], [ 16, 11 ] ]
+gap> AreIsoclinicDomains( G, K );
 false
 
-gap> CommutatorSubgroup( G, G );
+gap> DerivedSubgroup(G);     
 Group([ f3, f5 ])
 gap> IsStemGroup( G );
 false
@@ -222,11 +230,14 @@ gap> RankXMod( X1 );
 [ 2.32193, 2. ]
 
 gap> CQX5 := CentralQuotient(X5);            
-X5/Z(X5)
-gap> MappingGeneratorsImages( Boundary( CQX5 ) );
+crossed square with:
+      up = [Group( [ f3, f4 ] )->Group( [ f1^2, f1 ] )]
+    left = X5
+    down = [D24->D24/Z(D24)]
+   right = X5/Z(X5)
+
+gap> MappingGeneratorsImages( Boundary( Right2dGroup( CQX5 ) ) );
 [ [ f1^2, f1 ], [ f3^2, f3 ] ]
-gap> CentralQuotientHomomorphism(X5);    
-[[..] => [..]]
 
 gap> xc6s3 := AllXMods( SmallGroup(6,2), SmallGroup(6,1) );;   
 gap> Length( xc6s3 );           
@@ -298,8 +309,15 @@ gap> IdGroup( X24 );
 [ [ 24, 6 ], [ 48, 38 ] ]
 gap> IdGroup( CentreXMod(X24) );     
 [ [ 2, 1 ], [ 1, 1 ] ]
-gap> IdGroup( CentralQuotient(X24) );
-[ [ 12, 4 ], [ 48, 38 ] ]
+gap> CQX24 := CentralQuotient( X24 );
+crossed square with:
+      up = [D24->Group( [ f1, f2, f3^2, f3 ] )]
+    left = [D24->PAut(D24)]
+    down = [PAut(D24)->PAut(D24)]
+   right = [D24->PAut(D24)]/Z([D24->PAut(D24)])
+
+gap> IdGroup( CQX24 );
+[ [ [ 24, 6 ], [ 12, 4 ] ], [ [ 48, 38 ], [ 48, 38 ] ] ]
 
 ############################################################################# 
 ##  Example 6 from the paper 
@@ -353,7 +371,7 @@ gap> IsStemXMod(X8);
 true
 gap> IsStemXMod(X9);
 false
-gap> AreIsoclinicXMods( X8, X9 );
+gap> Isoclinism( X8, X9 );
 true
 
 

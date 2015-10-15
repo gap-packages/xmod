@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.gd              GAP4 package `XMod'                Alper Odabas
 #W                                                               & Enver Uslu
-##  version 2.43, 07/10/2015 
+##  version 2.43, 15/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al 
 ##
@@ -33,9 +33,9 @@ DeclareAttribute( "DerivedSubXMod", IsXMod );
 
 #############################################################################
 ##
-#O IntersectionSubXMod  . . . . .intersection of subcrossed modules SH and RK
+#O IntersectionSubXMods . . . . .intersection of subcrossed modules SH and RK
 ##
-DeclareOperation( "IntersectionSubXMod", [  IsXMod, IsXMod, IsXMod ] );
+DeclareOperation( "IntersectionSubXMods", [  IsXMod, IsXMod, IsXMod ] );
 
 #############################################################################
 ##
@@ -78,6 +78,20 @@ DeclareProperty( "IsFaithful2dGroup", Is2dGroup );
 DeclareProperty( "IsNilpotent2dGroup", Is2dGroup );
 DeclareAttribute( "NilpotencyClassOf2dGroup", Is2dGroup );
 
+#############################################################################
+##
+#O IsomorphismXMods  . . . . . check that two crossed modules are isomorphic
+##
+DeclareOperation( "IsomorphismXMods", [  Is2dGroup, Is2dGroup ] );
+
+#############################################################################
+##
+#F AllXMods
+#O AllXModsWithGroups  . . . . . . . . . all xmods with given source and range
+##
+DeclareGlobalFunction( "AllXMods" );
+DeclareOperation( "AllXModsWithGroups", [ IsGroup, IsGroup ] );
+
 
 ############################################################################# 
 #####                FUNCTIONS FOR ISOCLINISM OF GROUPS                 ##### 
@@ -93,15 +107,21 @@ DeclareProperty( "IsStemGroup", IsGroup );
 DeclareOperation( "AllStemGroupIds", [ IsPosInt ] );
 DeclareOperation( "AllStemGroupFamilies", [ IsPosInt ] );
 DeclareAttribute( "CentralQuotient", IsGroup ); 
-DeclareAttribute( "CentralQuotientHomomorphism", IsGroup ); 
 DeclareAttribute( "MiddleLength", IsGroup ); 
-DeclareOperation( "Isoclinism", [ IsGroup, IsGroup ] );
-DeclareOperation( "AreIsoclinicGroups", [ IsGroup, IsGroup ] );
+
+#############################################################################
+##
+#A IsoclinicStemGroup . . . . . . . . . . . find a stem group for the group G 
+#O Isoclinism . . . find a homomorphism between the stem groups of two groups
+#O AreIsoclinic . . . . check if an isoclinism exists between two (2d-)groups
+##
 DeclareAttribute( "IsoclinicStemGroup", IsGroup );
+DeclareOperation( "Isoclinism", [ IsGroup, IsGroup ] );
+DeclareOperation( "AreIsoclinicDomains", [ IsDomain, IsDomain ] );
 
 
 ############################################################################# 
-#####                FUNCTIONS FOR ISOCLINISM OF GROUPS                 ##### 
+#####           FUNCTIONS FOR ISOCLINISM OF CROSSED MODULES             ##### 
 ############################################################################# 
 
 #############################################################################
@@ -109,26 +129,6 @@ DeclareAttribute( "IsoclinicStemGroup", IsGroup );
 #P IsStemXMod . . check that the centre xmod is a subxmod of the derived xmod
 ## 
 DeclareProperty( "IsStemXMod", IsXMod );
-
-#############################################################################
-##
-#O AreIsoclinicXMods  . . . . . . check that two crossed modules are isoclinic
-##
-DeclareOperation( "AreIsoclinicXMods", [ IsXMod, IsXMod ] );
-
-#############################################################################
-##
-#O IsomorphismXMods  . . . . . check that two crossed modules are isomorphic
-##
-DeclareOperation( "IsomorphismXMods", [  Is2dGroup, Is2dGroup ] );
-
-#############################################################################
-##
-#F AllXMods
-#O AllXModsWithGroups  . . . . . . . . . all xmods with given source and range
-##
-DeclareGlobalFunction( "AllXMods" );
-DeclareOperation( "AllXModsWithGroups", [ IsGroup, IsGroup ] );
 
 #############################################################################
 ##

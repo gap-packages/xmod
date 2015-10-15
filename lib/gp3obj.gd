@@ -2,7 +2,7 @@
 ##
 ##  gp3obj.gd                 GAP4 package `XMod'                Chris Wensley
 ##
-##  version 2.43, 23/09/2015 
+##  version 2.43, 14/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -39,7 +39,7 @@ DeclareProperty( "IsPc3dGroup", Is3dGroup );
 #P  IsFpPreXSq( <PM> ) 
 #P  IsPcPreXSq( <PM> }
 ##
-DeclareProperty( "IsPreXSq", Is3dDomain );
+DeclareProperty( "IsPreXSq", Is3dGroup );
 DeclareSynonym( "IsPermPreXSq", IsPreXSq and IsPerm3dGroup );
 DeclareSynonym( "IsFpPreXSq", IsPreXSq and IsFp3dGroup );
 DeclareSynonym( "IsPcPreXSq", IsPreXSq and IsPc3dGroup );
@@ -126,6 +126,8 @@ DeclareAttribute( "Down2dGroup", Is3dGroup );
 DeclareAttribute( "Right2dGroup", Is3dGroup );
 DeclareAttribute( "DiagonalAction", Is3dGroup );
 DeclareAttribute( "XPair", Is3dGroup );
+DeclareAttribute( "LeftRightMorphism", Is3dGroup );
+DeclareAttribute( "UpDownMorphism", Is3dGroup ); 
 
 #############################################################################
 ##

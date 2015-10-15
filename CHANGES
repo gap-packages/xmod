@@ -16,8 +16,11 @@ Problems:
               (construction worked OK with isomorphic perm groups). 
 
 #############################################################################
-2.42 -> 2.43 (07/10/2015) 
+2.42 -> 2.43 (15/10/2015) 
 
+ - (15/10/15) fixed Iterator bug in Isoclinism for groups 
+ - (13/10/15) CentralQuotient now a crossed module or a crossed square 
+              added LeftRightMorphism and UpDownMorphism for crossed squares 
  - (07/10/15) AllXMods and AllPreXMods now global functions 
               added property IsStemXMod 
  - (06/10/15) renamed IsIsomorphicXMod as IsomorphismXMods; 

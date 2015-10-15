@@ -5,7 +5,7 @@
 ##  This file implements generic methods for (pre-)crossed squares and
 ##  (pre-)cat2-groups.
 ##
-##  version 2.43, 16/09/2015 
+##  version 2.43, 14/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -133,7 +133,7 @@ InstallMethod( ImageElmXPair, "for crossed pairing", true,
 #M  IsPreXSq . . . . . . . . . . . . . . . . .  check that the square commutes
 ##
 InstallMethod( IsPreXSq, "generic method for a pre-crossed square",
-    true, [ Is3dDomain ], 0,
+    true, [ Is3dGroup ], 0,
 function( P )
 
     local  u, d, l, r, ul, dl, ur, dr, bu, bd, bl, br, blbd, bubr,
@@ -219,6 +219,25 @@ function( u, l, d, r, a, p )
     # ok := IsXSq( PS );
     # name:= Name( PS );
     return PS;
+end );
+
+##############################################################################
+##
+#M  LeftRightMorphism . . . . . . . . . . . . . . . . for a precrossed square
+#M  UpDownMorphism . . . . . . . . . . . . . . . . . for a precrossed square
+##
+InstallMethod( LeftRightMorphism, "for a precrossed square", true,
+    [ IsPreXSq ], 0,
+function( s )
+    return XModMorphismByHoms( Left2dGroup(s), Right2dGroup(s), 
+               Boundary( Up2dGroup(s) ), Boundary( Down2dGroup(s) ) ); 
+end );
+
+InstallMethod( UpDownMorphism, "for a precrossed square", true,
+    [ IsPreXSq ], 0,
+function( s )
+    return XModMorphismByHoms( Up2dGroup(s), Down2dGroup(s), 
+               Boundary( Left2dGroup(s) ), Boundary( Right2dGroup(s) ) ); 
 end );
 
 ##############################################################################
@@ -343,6 +362,19 @@ function( PS )
     SetName( PS, name );
     return name;
 end );
+
+#############################################################################
+##
+#M  IdGroup . . . . . . . . . . . . . . . . . . . . . . . . . for a 3d-domain
+##
+InstallOtherMethod( IdGroup, "method for a 3d-domain", true, [ Is3dDomain ], 0,
+function( dom )
+    local  u, d;
+    u := Up2dGroup( dom ); 
+    d := Down2dGroup( dom ); 
+    return [ [ IdGroup( Source(u) ), IdGroup( Range(u) ) ], 
+             [ IdGroup( Source(d) ), IdGroup( Range(d) ) ] ]; 
+end ); 
 
 #############################################################################
 ##

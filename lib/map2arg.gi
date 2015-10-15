@@ -2,7 +2,7 @@
 ##
 #W  map2arg.gi                   XMOD Package                    Chris Wensley
 ##
-##  version 2.43, 16/09/2015 
+##  version 2.43, 13/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -12,11 +12,10 @@
 #F  Mapping2ArgumentsByFunction( <D>, <E>, <fun> ) . create map from function
 ##
 InstallGlobalFunction( Mapping2ArgumentsByFunction, function ( arg )
-    local   map;        # mapping <map>, result
+    local  map; 
 
     if not ( Length( arg ) = 3 ) then
-        # signal an error
-        Error( "usage: Mapping2ArgumentsByFunction( <D>, <E>, <fun> )" );
+        Error( "usage: Mapping2ArgumentsByFunction( <[D1,D2]>, <E>, <fun> )" );
     fi;
     # ensure that the entries in source and the range are domains
     if not ( IsList(arg[1]) and IsDomain(arg[1][1]) 
@@ -29,7 +28,7 @@ InstallGlobalFunction( Mapping2ArgumentsByFunction, function ( arg )
                              IsNonSPMappingByFunctionRep
                          and IsSingleValued
                          and IsTotal ),
-                       rec( fun:= arg[3] ) );
+                       rec( fun := arg[3] ) );
     SetIsMapping2ArgumentsByFunction( map, true );
     # deleted code re inverses
 

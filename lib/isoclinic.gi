@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.gi               GAP4 package `XMod'                Alper Odabas
 #W                                                                & Enver Uslu
-##  version 2.43, 09/10/2015 
+##  version 2.43, 15/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al 
 #Y   
@@ -253,9 +253,9 @@ end );
 
 #############################################################################
 ##
-#M  IntersectionSubXMod  . . . . intersection of subcrossed modules SH and RK
+#M  IntersectionSubXMods  . . . . intersection of subcrossed modules SH and RK
 ##
-InstallMethod( IntersectionSubXMod, "generic method for crossed modules", 
+InstallMethod( IntersectionSubXMods, "generic method for crossed modules", 
     true, [ IsXMod, IsXMod, IsXMod ], 0,
 function( XM, SH, RK)
 
@@ -457,6 +457,110 @@ function(XM)
     fi;
 end );
 
+#############################################################################
+##
+#M  IsomorphismXMods  . . check that the given crossed modules are isomorphic
+##
+InstallMethod( IsomorphismXMods, "generic method for crossed modules", true, 
+    [ Is2dGroup, Is2dGroup ], 0,
+function(XM1,XM2)
+
+    local  T1, G1, T2, G2, isoT, isoG, iterT, iterG, alp, ph, mor;
+
+    T1 := Source(XM1);
+    G1 := Range(XM1);
+    T2 := Source(XM2);
+    G2 := Range(XM2);
+    isoT := IsomorphismGroups(T1,T2); 
+    isoG := IsomorphismGroups(G1,G2);
+    if ( ( isoT = fail ) or ( isoG = fail ) ) then 
+        return fail; 
+    fi; 
+    iterT := Iterator( AllAutomorphisms( T2 ) ); 
+    while not IsDoneIterator( iterT ) do
+        iterG := Iterator( AllAutomorphisms( G2 ) ); 
+        alp := isoT * NextIterator( iterT ); 
+        while not IsDoneIterator( iterG ) do 
+            ph := isoG * NextIterator( iterG ); 
+            mor := Make2dGroupMorphism( XM1, XM2, alp, ph ); 
+            if ( IsPreXModMorphism( mor ) and IsXModMorphism( mor ) ) then 
+                return mor; 
+            fi;
+        od;
+    od;    
+    return fail;
+end );
+
+#############################################################################
+##
+#M  AllXModsWithGroups . . . . . . . . all xmods with given source and range
+##
+InstallMethod( AllXModsWithGroups, "generic method for a pair of groups", 
+    true, [ IsGroup, IsGroup ], 0,
+function( T, G )
+
+    local  list, autT, itTG, itGA, b1, a1, obj;
+
+    list := [ ];
+    autT := AutomorphismGroup(T); 
+    itTG := Iterator( AllHomomorphisms(T,G) );
+    while not IsDoneIterator( itTG ) do 
+        b1 := NextIterator( itTG ); 
+        itGA := Iterator( AllHomomorphisms(G,autT) );
+        while not IsDoneIterator( itGA ) do 
+            a1 := NextIterator( itGA ); 
+            obj := PreXModObj( b1, a1 );  
+            if ( IsPreXMod( obj ) and IsXMod( obj ) ) then 
+                Add( list, obj );
+            fi;
+        od; 
+    od;
+    return list;
+end );
+
+#############################################################################
+##
+#F  AllXMods( <T>, <G> )             xmods with given source and range 
+#F  AllXMods( <size> )               xmods with a given size 
+#F  AllXMods( <order> )              xmods whose cat1-group has a given order
+## 
+InstallGlobalFunction( AllXMods, function( arg )
+
+    local  nargs, a, list, s1, j1, s2, j2, T, G, sizes; 
+
+    nargs := Length( arg ); 
+    if ( nargs = 2 ) then 
+        ## given source and range 
+        if ( IsGroup( arg[1] ) and IsGroup( arg[2] ) ) then 
+            return AllXModsWithGroups( arg[1], arg[2] ); 
+        fi; 
+    elif ( nargs = 1 ) then 
+        a := arg[1]; 
+        ## given size 
+        if ( IsList(a) and (Length(a)=2) and IsInt(a[1]) and IsInt(a[2]) ) then 
+            list := [ ]; 
+            s1 := NumberSmallGroups( a[1] ); 
+            for j1 in [1..s1] do
+                T := SmallGroup( a[1], j1 );
+                s2 := NumberSmallGroups( a[2] );        
+                for j2 in [1..s2] do
+                    G := SmallGroup( a[2], j2 );
+                    Append( list, AllXModsWithGroups( T, G ) ); 
+                od; 
+            od;
+            return list; 
+        ## given total size 
+        elif IsInt(a) then 
+            sizes := List( DivisorsInt(a), d -> [d,a/d] ); 
+            list := [ ];
+            for s1 in sizes do
+                Append( list, AllXMods( s1 ) ); 
+            od;
+            return list; 
+        fi; 
+    fi; 
+    Error( "standard usage: AllXMods(S,R), AllXMods([n,m]), AllXMods(n)" ); 
+end );
 
 
 ############################################################################# 
@@ -513,7 +617,7 @@ function(a)
             gi := SmallGroup( id ); 
             for j in [i+1..len] do 
                 if not found[j] then 
-                    if AreIsoclinicGroups( gi, SmallGroup( ids[j] ) ) then
+                    if AreIsoclinicDomains( gi, SmallGroup( ids[j] ) ) then
                         found[j] := true; 
                         Add( new, ids[j] );
                     fi; 
@@ -527,74 +631,68 @@ end );
 
 #############################################################################
 ##
-#M CentralQuotient . . . . . . . . . . . . . . . . . . . . . . . . . . G/Z(G)
-#M CentralQuotientHomomorphism . . . . . . . . . . . . . . . . .  G -> G/Z(G)
+#M CentralQuotient . . . . . . . . . . . . . . . . . . . .  (G -> G/Z(G))
 ## 
 InstallMethod( CentralQuotient, "generic method for groups", true, 
     [ IsGroup ], 0,
 function( G ) 
 
-    local  ZG, Q, nat; 
+    local  ZG, Q, nat, XQ; 
 
     ZG := Centre( G ); 
     Q := FactorGroup( G, ZG ); 
-    if ( HasName(G) and not HasName(ZG) ) then 
-        SetName( ZG, Concatenation( "Z(", Name(G), ")" ) ); 
+    if HasName(G) then 
+        if not HasName(ZG) then 
+            SetName( ZG, Concatenation( "Z(", Name(G), ")" ) ); 
+        fi;
+        SetName( Q, Concatenation( Name(G), "/", Name(ZG) ) ); 
     fi; 
     nat := NaturalHomomorphismByNormalSubgroup( G, ZG ); 
-    if HasName(G) then 
-        SetName( Q, Concatenation( Name(G), "/", Name(ZG) ) ); 
-        SetName( nat, Concatenation( "central quotient homomorphism ", 
-                          Name(G), " -> ", Name(Q) ) ); 
-    fi;
-    SetCentralQuotientHomomorphism( G, nat ); 
-    return Q;
-end );
-
-InstallMethod( CentralQuotientHomomorphism, "generic method for groups", true, 
-    [ IsGroup ], 0,
-function( G ) 
-
-    local  Q; 
-
-    Q := CentralQuotient( G );
-    return NaturalHomomorphismByNormalSubgroup( G, Q ); 
+    XQ := XModByCentralExtension( nat ); 
+    return XQ;
 end );
 
 InstallOtherMethod( CentralQuotient, "generic method for crossed modules", 
     true, [ IsXMod ], 0,
 function( XM ) 
 
-    local  ZM, QM, nat; 
+    local  act, ZM, QM, ul, ur, dl, dr, nat, up, dn, gdl, gdr, iul, adg, 
+           prod, proj1, proj2, map, xp, xsq; 
 
+    act := XModAction( XM ); 
     ZM := CentreXMod( XM ); 
     QM := FactorXMod( XM, ZM ); 
+    ul := Source( XM ); 
+    dl := Range( XM );
+    ur := Source( QM ); 
+    dr := Range( QM );
     if ( HasName(XM) and not HasName(ZM) ) then 
         SetName( ZM, Concatenation( "Z(", Name(XM), ")" ) ); 
     fi; 
     nat := NaturalMorphismByNormalSubXMod( XM, ZM ); 
+    up := XModByCentralExtension( SourceHom(nat) );
+    dn := XModByCentralExtension( RangeHom(nat) );
+    gdl := GeneratorsOfGroup( dl ); 
+    gdr := List( gdl, r -> Image( Boundary(dn), r ) ); 
+    iul := List( gdl, r -> Image( act, r ) ); 
+    adg := GroupHomomorphismByImages( dr, Range(act), gdr, iul );
+    prod := DirectProduct( dl, ur );
+    proj1 := Projection( prod, 1 );
+    proj2 := Projection( prod, 2 );
+    map := MappingByFunction( prod, ul, 
+               function(c) 
+               local  a,s;
+               a := Image( act, Image(proj1,c) ); 
+               s := PreImagesRepresentative( Boundary(up), Image(proj2,c) );  
+               return Image(a,s^-1)*s; 
+               end );
+    xp := XPairObj( [dl,ur], ul, map );
+    xsq := PreXSqObj( up, XM, dn, QM, adg, xp );
+    SetIsXSq( xsq, true );
     if HasName(XM) then 
         SetName( QM, Concatenation( Name(XM), "/", Name(ZM) ) ); 
-        SetName( nat, Concatenation( "central quotient morphism ", 
-                          Name(XM), " -> ", Name(QM) ) ); 
     fi;
-    SetCentralQuotientHomomorphism( XM, nat ); 
-    return QM;
-end );
-
-InstallOtherMethod( CentralQuotientHomomorphism, "generic method for xmods", 
-    true, [ IsXMod ], 0,
-function( XM ) 
-
-    local  QM, nat; 
-
-    QM := CentralQuotient( XM );
-    nat := NaturalMorphismByNormalSubXMod( XM, QM ); 
-    if HasName(XM) then 
-        SetName( nat, Concatenation( "central quotient morphism ", 
-                          Name(XM), " -> ", Name(QM) ) ); 
-    fi;
-    return nat;
+    return xsq;
 end );
 
 #############################################################################
@@ -616,17 +714,19 @@ end );
 
 #############################################################################
 ##
-#M AreIsoclinicGroups . . . 
+#M AreIsoclinicDomains . . . . . . . . . . . for two domains: groups or xmods
 ## 
-InstallMethod( AreIsoclinicGroups, "generic method for two groups", true, 
-    [ IsGroup, IsGroup ], 0,
-function( G1, G2 ) 
-    local  iso; 
-    iso := Isoclinism( G1, G2 ); 
-    if ( iso = false ) then 
+InstallMethod( AreIsoclinicDomains, "generic method for two groups or xmods", 
+    true, [ IsDomain, IsDomain ], 0,
+function( D1, D2 ) 
+    local  iso;
+    if not ( ( IsGroup(D1) and IsGroup(D2) ) or 
+             ( Is2dGroup(D1) and Is2dGroup(D2) ) ) then 
+        Error( "D1 and D2 should be groups or 2dgroups" ); 
+    fi; 
+    iso := Isoclinism( D1, D2 );
+    if ( ( iso = fail ) or ( iso = false ) ) then 
         return false; 
-    elif ( iso = fail ) then 
-        return fail; 
     else 
         return true; 
     fi; 
@@ -640,66 +740,60 @@ InstallMethod( Isoclinism, "generic method for two groups", true,
     [ IsGroup, IsGroup ], 0,
 function( G1, G2 )
 
-    local  B1, B2, ComG1, ComG2, nhom1, nhom2, iterb1, iterb2, iterB, iterC, 
-           isoB, isoC, b1, b2, gb1, gb2, f, g, sonuc, x, y, 
-           gx, gy, gor1, gor2, yeni_iso;
+    local  CQ1, CQ2, Q1, Q2, D1, D2, nhom1, nhom2, sgQ1, lsgQ1, itAQ2, itAD2, 
+           isoQ, isoD, p1, q1, p2, q2, i, iq1, iq2, j, g1, h1, 
+           g2, h2, gor1, gor2, ok;
 
-    if (IsomorphismGroups(G1,G2) <> fail) then
+    if ( IsomorphismGroups(G1,G2) <> fail ) then 
+        Error( "not yet implemented" ); 
         return true;
     fi;
-    B1 := CentralQuotient(G1);
-    B2 := CentralQuotient(G2);
-    ComG1 := DerivedSubgroup(G1);
-    ComG2 := DerivedSubgroup(G2);
-    isoB := IsomorphismGroups(B1,B2);
-    isoC := IsomorphismGroups(ComG1,ComG2);
-    if ( ( isoB = fail ) or ( isoC = fail ) ) then 
-        return false;
+    CQ1 := CentralQuotient(G1);
+    Q1 := Range(CQ1);
+    CQ2 := CentralQuotient(G2);
+    Q2 := Range(CQ2);
+    D1 := DerivedSubgroup(G1);
+    D2 := DerivedSubgroup(G2);
+    isoQ := IsomorphismGroups(Q1,Q2);
+    isoD := IsomorphismGroups(D1,D2);
+    if ( ( isoQ = fail ) or ( isoD = fail ) ) then 
+        return fail;
     fi;
-    nhom1 := CentralQuotientHomomorphism(G1);
-    nhom2 := CentralQuotientHomomorphism(G2);
-    iterB := Iterator( AllAutomorphisms(B2) ); 
-    iterC := Iterator( AllAutomorphisms(ComG2) );
-    ### ilk iki ˛art˝ geÁerse 3. y¸ kontrol edelim
-    ### anlams˝z hata al˝yorum 
-    iterb1 := Iterator( B1 );
-    while not IsDoneIterator( iterB ) do 
-        f := isoB * NextIterator(iterB); 
-        while not IsDoneIterator( iterC ) do 
-            g := isoC * NextIterator(iterC); 
-            sonuc := true;
-            yeni_iso := false;
-            while ( ( not yeni_iso ) and ( not IsDoneIterator(iterb1) ) ) do 
-                b1 := NextIterator( iterb1 ); 
-                ## yeni_iso degeri dogru geliyorsa yeni f,g 
-                ## ikili iÁin dˆng¸y¸ k˝r.
-                ## if ( yeni_iso = true ) then        
-                ##     break;
-                ## fi;
-                x := PreImagesRepresentative(nhom1,b1);
-                gb1 := Image(f,b1);
-                gx := PreImagesRepresentative(nhom2,gb1);
-                iterb2 := Iterator( B1 );
-                while ( ( not yeni_iso ) and ( not IsDoneIterator(iterb2) ) ) do 
-                    b2 := NextIterator( iterb2 ); 
-                    y := PreImagesRepresentative(nhom1,b2);
-                    gb2 := Image(f,b2);
-                    gy := PreImagesRepresentative(nhom2,gb2);            
-                    gor1 := Image(g,Comm(x,y));    
-                    gor2 := Comm(gx,gy);
-                    if (gor1 <> gor2) then 
-                        yeni_iso := true;
-                        ## sonuc := false;
-                        ## 3. sart bu f,g ikilisi iÁin salanm˝yor 
-                        ## break; 
-                    fi;
+    nhom1 := Boundary( CQ1 );
+    nhom2 := Boundary( CQ2 );
+    itAQ2 := Iterator( AllAutomorphisms(Q2) ); 
+    sgQ1 := SmallGeneratingSet( Q1 );
+    lsgQ1 := Length( sgQ1 ); 
+    while not IsDoneIterator( itAQ2 ) do 
+        i := isoQ * NextIterator( itAQ2 ); 
+        ok := true;
+        itAD2 := Iterator( AllAutomorphisms(D2) );
+        while not IsDoneIterator( itAD2 ) do 
+            j := isoD * NextIterator(itAD2); 
+            ok := true;
+            p1 := 0; 
+            while ( ok and ( p1 < lsgQ1 ) ) do 
+                p1 := p1+1; 
+                q1 := sgQ1[p1]; 
+                g1 := PreImagesRepresentative( nhom1, q1 );
+                iq1 := Image( i, q1 );
+                h1 := PreImagesRepresentative( nhom2, iq1 );
+                p2 := 0;
+                while ( ok and ( p2 < lsgQ1 ) ) do 
+                    p2 := p2+1;
+                    q2 := sgQ1[p2];
+                    g2 := PreImagesRepresentative( nhom1, q2 );
+                    iq2 := Image( i, q2 ); 
+                    h2 := PreImagesRepresentative( nhom2, iq2 );            
+                    gor1 := Image( j, Comm(g1,g2) );    
+                    gor2 := Comm( h1, h2 );
+                    ok := ( gor1 = gor2 ); 
                 od;
             od;
-            ## 3. sart˝ salayan 1 tane f,g ikilisi bulunmas˝ yeterlidir.  
-            if sonuc then        
-                return [f,g];
+            if ok then 
+                return [i,j];
             fi;
-        od;
+        od; 
     od;
     return fail;
 end );
@@ -722,10 +816,10 @@ function(G)
     fi; 
     divs := DivisorsInt( Size(G) );
     len := Length( divs ); 
-    for i in divs{[1..len-1]} do 
+    for i in divs{[2..len-1]} do 
         for gi in AllSmallGroups( i ) do 
             if IsStemGroup( gi ) then
-                if AreIsoclinicGroups( G, gi ) then 
+                if AreIsoclinicDomains( G, gi ) then 
                     return gi; 
                 fi; 
             fi;        
@@ -752,11 +846,11 @@ end );
 
 #############################################################################
 ##
-#M  AreIsoclinicXMods
+#M  Isoclinism . . . 
 ##
-InstallMethod( AreIsoclinicXMods, "generic method for crossed modules", true, 
+InstallOtherMethod( Isoclinism, "generic method for crossed modules", true, 
     [ IsXMod, IsXMod ], 0,
-function(XM1,XM2)
+function( XM1, XM2 )
 
     local  cakma3, cakma4, kG12, kG11, T, G, S, H, sonuc, kT11, kT12, 
            cakma, cakma2, yeni_iso, x, y, z1, z2, gz1, gz2, gx, gy, 
@@ -883,11 +977,11 @@ function(XM1,XM2)
             for z1 in kT11 do
                 x := Representative(PreImages(nhom3,z1));
                 gz1 := Image(nisi1,Image(cakma,z1));
-				gx := Representative(PreImages(nhom4,Image(cakma2,gz1)));
+                gx := Representative(PreImages(nhom4,Image(cakma2,gz1)));
                 for z2 in kG11 do
-					y := Representative(PreImages(nhom1,z2));
+                    y := Representative(PreImages(nhom1,z2));
                     gz2 := Image(nisi0,Image(cakma3,z2));
-					gy := Representative(PreImages(nhom2,Image(cakma4,gz2)));
+                    gy := Representative(PreImages(nhom2,Image(cakma4,gz2)));
                     gor1 := Image(pisi1,Image(Image(XModAction(XM1),y),x)*x^-1);    
                     gor2 := Image(Image(XModAction(XM2),gy),gx)*gx^-1;
                     if (gor1 <> gor2) then 
@@ -910,12 +1004,12 @@ function(XM1,XM2)
             for z1 in kG11 do
                 x := Representative(PreImages(nhom1,z1));
                 gz1 := Image(nisi0,Image(cakma3,z1));
-				gx := Representative(PreImages(nhom2,Image(cakma4,gz1)));
+                gx := Representative(PreImages(nhom2,Image(cakma4,gz1)));
                 for z2 in kG11 do
                     y := Representative(PreImages(nhom1,z2));
                     gz2 := Image(nisi0,Image(cakma3,z2));
-					gy := Representative(PreImages(nhom2,Images(cakma4,gz2)));
-					gor1 := Image(pisi0,Comm(x,y));    
+                    gy := Representative(PreImages(nhom2,Images(cakma4,gz2)));
+                    gor1 := Image(pisi0,Comm(x,y));    
                     gor2 := Comm(gx,gy);
                     if (gor1 <> gor2) then
                         sonuc := false;
@@ -942,111 +1036,6 @@ end );
 
 #############################################################################
 ##
-#M  IsomorphismXMods  . . check that the given crossed modules are isomorphic
-##
-InstallMethod( IsomorphismXMods, "generic method for crossed modules", true, 
-    [ Is2dGroup, Is2dGroup ], 0,
-function(XM1,XM2)
-
-    local  T1, G1, T2, G2, isoT, isoG, iterT, iterG, alp, ph, mor;
-
-    T1 := Source(XM1);
-    G1 := Range(XM1);
-    T2 := Source(XM2);
-    G2 := Range(XM2);
-    isoT := IsomorphismGroups(T1,T2); 
-    isoG := IsomorphismGroups(G1,G2);
-    if ( ( isoT = fail ) or ( isoG = fail ) ) then 
-        return fail; 
-    fi; 
-    iterT := Iterator( AllAutomorphisms( T2 ) ); 
-    while not IsDoneIterator( iterT ) do
-        iterG := Iterator( AllAutomorphisms( G2 ) ); 
-        alp := isoT * NextIterator( iterT ); 
-        while not IsDoneIterator( iterG ) do 
-            ph := isoG * NextIterator( iterG ); 
-            mor := Make2dGroupMorphism( XM1, XM2, alp, ph ); 
-            if ( IsPreXModMorphism( mor ) and IsXModMorphism( mor ) ) then 
-                return mor; 
-            fi;
-        od;
-    od;    
-    return fail;
-end );
-
-#############################################################################
-##
-#M  AllXModsWithGroups . . . . . . . . all xmods with given source and range
-##
-InstallMethod( AllXModsWithGroups, "generic method for a pair of groups", 
-    true, [ IsGroup, IsGroup ], 0,
-function( T, G )
-
-    local  list, autT, itTG, itGA, b1, a1, obj;
-
-    list := [ ];
-    autT := AutomorphismGroup(T); 
-    itTG := Iterator( AllHomomorphisms(T,G) );
-    while not IsDoneIterator( itTG ) do 
-        b1 := NextIterator( itTG ); 
-        itGA := Iterator( AllHomomorphisms(G,autT) );
-        while not IsDoneIterator( itGA ) do 
-            a1 := NextIterator( itGA ); 
-            obj := PreXModObj( b1, a1 );  
-            if ( IsPreXMod( obj ) and IsXMod( obj ) ) then 
-                Add( list, obj );
-            fi;
-        od; 
-    od;
-    return list;
-end );
-
-#############################################################################
-##
-#F  AllXMods( <T>, <G> )             xmods with given source and range 
-#F  AllXMods( <size> )               xmods with a given size 
-#F  AllXMods( <order> )              xmods whose cat1-group has a given order
-## 
-InstallGlobalFunction( AllXMods, function( arg )
-
-    local  nargs, a, list, s1, j1, s2, j2, T, G, sizes; 
-
-    nargs := Length( arg ); 
-    if ( nargs = 2 ) then 
-        ## given source and range 
-        if ( IsGroup( arg[1] ) and IsGroup( arg[2] ) ) then 
-            return AllXModsWithGroups( arg[1], arg[2] ); 
-        fi; 
-    elif ( nargs = 1 ) then 
-        a := arg[1]; 
-        ## given size 
-        if ( IsList(a) and (Length(a)=2) and IsInt(a[1]) and IsInt(a[2]) ) then 
-            list := [ ]; 
-            s1 := NumberSmallGroups( a[1] ); 
-            for j1 in [1..s1] do
-                T := SmallGroup( a[1], j1 );
-                s2 := NumberSmallGroups( a[2] );        
-                for j2 in [1..s2] do
-                    G := SmallGroup( a[2], j2 );
-                    Append( list, AllXModsWithGroups( T, G ) ); 
-                od; 
-            od;
-            return list; 
-        ## given total size 
-        elif IsInt(a) then 
-            sizes := List( DivisorsInt(a), d -> [d,a/d] ); 
-            list := [ ];
-            for s1 in sizes do
-                Append( list, AllXMods( s1 ) ); 
-            od;
-            return list; 
-        fi; 
-    fi; 
-    Error( "standard usage: AllXMods(S,R), AllXMods([n,m]), AllXMods(n)" ); 
-end );
-
-#############################################################################
-##
 #M  IsoclinicXModFamily  . . . . all xmods in the list isoclinic to the xmod
 ##
 InstallMethod( IsoclinicXModFamily, "generic method for crossed modules", 
@@ -1058,7 +1047,7 @@ function( XM, XM1_ler )
     sonuc := [];
     sayi := 0;
     for XM1 in XM1_ler do
-        if AreIsoclinicXMods(XM,XM1) then
+        if AreIsoclinicDomains(XM,XM1) then
             Print(XM," ~ ",XM1,"\n" );    
             Add(sonuc,Position(XM1_ler,XM1));
             sayi := sayi + 1;            
@@ -1133,7 +1122,7 @@ function(XM)
     ZXMod := CentreXMod(XM);
     DXMod := DerivedSubXMod(XM);
     BXMod := FactorXMod(XM,ZXMod);
-    KXMod := IntersectionSubXMod(XM,ZXMod,DXMod);
+    KXMod := IntersectionSubXMods(XM,ZXMod,DXMod);
     m1 := Size(BXMod);
     m2 := Size(KXMod);
     l1 := Log2(Float(m1[1])) + Log2(Float(m2[1]));
@@ -1153,7 +1142,7 @@ function(XM)
 
     ZXMod := CentreXMod(XM);
     DXMod := DerivedSubXMod(XM);
-    KXMod := IntersectionSubXMod(XM,DXMod,ZXMod);
+    KXMod := IntersectionSubXMods(XM,DXMod,ZXMod);
     BXMod := FactorXMod(DXMod,KXMod);
     m1 := Size(BXMod);     
     l1 := Log2(Float(m1[1]));

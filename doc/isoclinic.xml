@@ -1,8 +1,8 @@
 <!-- ------------------------------------------------------------------- -->
 <!--                                                                     -->
-<!--  isclinic.xml          XMod documentation             Alper Odabas  -->
+<!--  isoclinic.xml          XMod documentation            Alper Odabas  -->
 <!--                                                       & Enver Uslu  -->
-<!--  version 2.43, 09/10/2015                                           --> 
+<!--  version 2.43, 15/10/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2015, Chris Wensley et al                       --> 
 <!--                                                                     -->
@@ -39,6 +39,7 @@ with the induced boundary and action maps.
 </ManSection>
 <Example>
 <![CDATA[
+gap> D24 := DihedralGroup(24);;  SetName( D24, "D24" );
 gap> X24 := XModByAutomorphismGroup( D24 ); 
 [D24->PAut(D24)]
 gap> Size(X24);
@@ -58,11 +59,27 @@ gap> nat := NaturalMorphismByNormalSubXMod( X24, nsx[30] );
 </Example>
 
 <ManSection>
-   <Oper Name="IntersectionSubXMod"
+   <Attr Name="CentralQuotient"
+         Arg="G" /> 
+<Description>
+The <C>CentralQuotient</C> of a group <M>G</M> is the crossed module 
+<M>(G \to G/Z(G))</M>, with the natural homomorphism as the boundary map. 
+This is a special case of <C>XModByCentralExtension</C>. 
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> Q24 := CentralQuotient( D24) ;                     
+[D24->Group( [ f1, f2, f3 ] )]
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="IntersectionSubXMods"
          Arg="X1 X2" />
 <Description>
 When <C>X1,X2</C> are subcrossed modules of <C>X0</C>, and when 
-<C>Y12 := IntersectionSubXMod(X1,X2)</C>, 
+<C>Y12 := IntersectionSubXMods(X1,X2)</C>, 
 then the source and range of <C>Y12</C> are the intersections of 
 the sources and ranges of <C>X1</C> and <C>X2</C>. 
 </Description>
@@ -78,7 +95,7 @@ gap> X3 := SubXMod( X24, N3, R3 );
 gap> R4 := Image( bdy, N4 );; 
 gap> X4 := SubXMod( X24, N4, R4 );
 [Group( [ f1, f3, f4 ] )->Group( [ f1*f3, f2^2, f2 ] )]
-gap> X6 := IntersectionSubXMod( X24, X3, X4 );
+gap> X6 := IntersectionSubXMods( X24, X3, X4 );
 [Group( [ f3, f4, f3*f4, f4^2, f3*f4^2 ] )->Group( [ f2, f2^2 ] )]
 gap> Size( X6 );
 [ 6, 3 ]
@@ -237,7 +254,7 @@ which lie in <M>S</M>.
 <Example>
 <![CDATA[
 gap> ZX5 := CentreXMod( X5 );      
-[Group( [ f3*f4 ] )->Group( [ f3*f4 ] )]
+[Group( [ f3*f4 ] )->Z(D24)]
 gap> IdGroup( ZX5 );
 [ [ 2, 1 ], [ 2, 1 ] ]
 gap> CDX5 := Centralizer( X5, DX5 );
@@ -330,9 +347,6 @@ gap> Length( x66 );
 gap> x36 := AllXMods( 36 );; 
 gap> Length( all36 ); 
 205
-gap> px66 := AllPreXMods( [6,6] );;   
-gap> Length( px66 );
-40
 ]]>
 </Example>
 
@@ -420,36 +434,17 @@ gap> L := Filtered( L, k -> k<>0 );
 <Section><Heading>Isoclinism of Groups</Heading>
 
 <ManSection>
-   <Attr Name="CentralQuotient"
-         Arg="G" /> 
-   <Attr Name="CentralQuotientHomomorphism"
-         Arg="G" />
-<Description>
-Let <M>G,H</M> be groups with central quotients 
-<M>Q(G)=G/Z(G)</M> and <M>Q(H)=H/Z(H)</M> 
-and derived subgroups <M>[G,G]</M> and <M>[H,H]</M> respectively. 
-Let <M>c_G : Q(G) \times Q(G) \to [G,G]</M> 
-and <M>c_H : Q(H) \times Q(H) \to [H,H]</M> be the two commutator maps.  
-<P/>
-</Description>
-</ManSection>
-<Example>
-<![CDATA[
-gap> G := SmallGroup( 64, 6 );
-<pc group of size 64 with 6 generators>
-gap> Q := CentralQuotient( G );
-Group([ f1, f2, f3, <identity> of ..., <identity> of ..., <identity> of ... ])
-]]>
-</Example>
-
-<ManSection>
    <Oper Name="AreIsoclinicGroups"
          Arg="G H" />
    <Oper Name="Isoclinism"
          Arg="G H" />
 <Description>
+Let <M>G,H</M> be groups with central quotients <M>Q(G)</M> and <M>Q(H)</M> 
+and derived subgroups <M>[G,G]</M> and <M>[H,H]</M> respectively. 
+Let <M>c_G : G/Z(G) \times G/Z(G) \to [G,G]</M> 
+and <M>c_H : H/Z(H) \times H/Z(H) \to [H,H]</M> be the two commutator maps.  
 An <E>isoclinism</E> <M>G \sim H</M> is a pair of isomorphisms 
-<M>(\eta,\xi)</M> where <M>\eta : Q(G) \to Q(H)</M> and 
+<M>(\eta,\xi)</M> where <M>\eta : G/Z(G) \to H/Z(H)</M> and 
 <M>\xi : [G,G] \to [H,H]</M> such that
 <M>c_G * \xi = (\eta \times \eta) * c_H</M>. 
 Isoclinism is an equivalence relation, and all abelian groups are isoclinic 
@@ -459,34 +454,21 @@ to the trivial group.
 </ManSection>
 <Example>
 <![CDATA[
-gap> H := SmallGroup( 32, 41 );
-<pc group of size 32 with 5 generators>
-gap> iso := Isoclinism( G, H );
-[ [ f1, f2, f3, <identity> of ..., <identity> of ..., <identity> of ... ] -> 
-    [ f1, f2*f3, f3, <identity> of ..., <identity> of ..., <identity> of ... ]
-    , [ f3, f5 ] -> [ f4*f5, f5 ] ]
-gap> K := SmallGroup( 32, 43 );
-<pc group of size 32 with 5 generators>
-gap> AreIsoclinicGroups(G,K);
-false
-]]>
-</Example>
-
-<Example>
-<![CDATA[
-gap> G := SmallGroup( 64, 6 );
-<pc group of size 64 with 6 generators>
-gap> Q := CentralQuotient( G );
-Group([ f1, f2, f3, <identity> of ..., <identity> of ..., <identity> of ... ])
-gap> H := SmallGroup( 32, 41 );
-<pc group of size 32 with 5 generators>
-gap> iso := Isoclinism( G, H );
-[ [ f1, f2, f3, <identity> of ..., <identity> of ..., <identity> of ... ] -> 
-    [ f1, f2*f3, f3, <identity> of ..., <identity> of ..., <identity> of ... ]
-    , [ f3, f5 ] -> [ f4*f5, f5 ] ]
-gap> K := SmallGroup( 32, 43 );
-<pc group of size 32 with 5 generators>
-gap> AreIsoclinicGroups(G,K);
+gap> G := SmallGroup( 64, 6 );;  StructureDescription( G ); 
+"(C8 x C4) : C2"
+gap> Q := CentralQuotient( G );;  IdGroup( Q );
+[ [ 64, 6 ], [ 8, 3 ] ]
+gap> H := SmallGroup( 32, 41 );;  StructureDescription( H );
+"C2 x Q16"
+gap> IdGroup( CentralQuotient( H ) );
+[ [ 32, 41 ], [ 8, 3 ] ]
+gap> Isoclinism( G, H );
+[ [ f1, f2, f3 ] -> [ f1, f2*f3, f3 ], [ f3, f5 ] -> [ f4*f5, f5 ] ]
+gap> K := SmallGroup( 32, 43 );;  StructureDescription( K );
+"(C2 x D8) : C2"
+gap> IdGroup( CentralQuotient( K ) );                       
+[ [ 32, 43 ], [ 16, 11 ] ]
+gap> AreIsoclinicDomains( G, K );
 false
 ]]>
 </Example>
@@ -495,12 +477,12 @@ false
 <ManSection>
    <Prop Name="IsStemGroup"
          Arg="G" />
+   <Attr Name="IsoclinicStemGroup"
+         Arg="G" />
    <Oper Name="AllStemGroupIds"
          Arg="n" />
    <Oper Name="AllStemGroupFamilies"
          Arg="n" />
-   <Attr Name="IsoclinicStemGroup"
-         Arg="G" />
 <Description>
 A group <M>G</M> is a <E>stem group</E> if <M>Z(G) \leq [G,G]</M>. 
 Every group is isoclinic to a stem group, but distinct stem groups 
@@ -516,7 +498,7 @@ splits this list into isoclinism families.
 </ManSection>
 <Example>
 <![CDATA[
-gap> CommutatorSubgroup( G, G );
+gap> DerivedSubgroup(G);     
 Group([ f3, f5 ])
 gap> IsStemGroup( G );
 false
@@ -585,6 +567,28 @@ gap> IdGroup( CentreXMod(X24) );
 [ [ 2, 1 ], [ 1, 1 ] ]
 gap> IdGroup( CentralQuotient(X24) );
 [ [ 12, 4 ], [ 48, 38 ] ]
+gap> Display( CentralQuotientHomomorphism( X24 ) );
+Morphism of crossed modules :- 
+: Source = [D24->PAut(D24)] with generating sets:
+  [ f1, f2, f3, f4 ]
+  [ f1, f2, f3, f4, f5 ]
+:  Range = [D24->PAut(D24)]/Z([D24->PAut(D24)]) with generating sets:
+  [ f1, f2, f3^2, f3 ]
+  [ f1, f2, f3, f4, f5 ]
+: Source Homomorphism maps source generators to:
+  [ f1, f2, f3^2, f3 ]
+: Range Homomorphism maps range generators to:
+  [ f1, f2, f3, f4, f5 ]
+gap> CQX5 := CentralQuotient(X5);            
+crossed square with:
+      up = [Group( [ f3, f4 ] )->Group( [ f1^2, f1 ] )]
+    left = X5
+    down = [D24->D24/Z(D24)]
+   right = X5/Z(X5)
+
+gap> MappingGeneratorsImages( Boundary( Right2dGroup( CQX5 ) ) );
+[ [ f1^2, f1 ], [ f3^2, f3 ] ]
+
 ]]>
 </Example>
 
@@ -611,7 +615,6 @@ such that
 <M>c_\mathcal{X} * \xi = (\eta \times \eta) * c_\mathcal{Y}</M>. 
 Isoclinism is an equivalence relation, and all abelian crossed modules 
 are isoclinic to the trivial crossed module. 
-(IS THIS TRUE ???) (YES IT IS TRUE)
 <P/>
 </Description>
 </ManSection>

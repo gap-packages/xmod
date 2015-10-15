@@ -2,9 +2,9 @@
 <!--                                                                     -->
 <!--  gp3objmap.xml         XMod documentation            Chris Wensley  -->
 <!--                                                                     -->
-<!--  version 2.31, 08/11/2014                                           --> 
+<!--  version 2.43, 13/09/2015                                           --> 
 <!--                                                                     --> 
-<!--  Copyright (C) 2001-2014, Murat Alp and Chris Wensley,              --> 
+<!--  Copyright (C) 2001-2015, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -48,7 +48,7 @@ and <M>S_{[2]}</M> which determine actions of
 via <M>\dot{\partial}_1</M> 
 and actions of 
 <M>S_{\{2\}}</M> on <M>S_{\{1\}}</M> and <M>S_{[2]}</M> 
-via <M>\dot{\partial}_2</M>~;
+via <M>\dot{\partial}_2\;</M>;
 </Item>
 <Item>
 a function <M>\boxtimes : S_{\{1\}} \times S_{\{2\}} \to S_{[2]}</M>.
@@ -60,7 +60,7 @@ n,n_1,n_2 \in S_{\{2\}},\; p \in S_{\emptyset}</M>:
 <List>
 <Item>
 the homomorphisms <M>\ddot{\partial}_1, \ddot{\partial}_2</M> 
-preserve the action of <M>S_{\emptyset}</M>~;
+preserve the action of <M>S_{\emptyset}\;</M>;
 </Item>
 <Item>
 each of 
@@ -96,14 +96,14 @@ are crossed modules (with actions via <M>S_{\emptyset}</M>);
   </List>
 </Item>
 <Item>
-<M>\ddot{\partial}_1 (m \boxtimes n) \;=\; (n^{-1})^{m}\;n</M>
+<M>\ddot{\partial}_1 (m \boxtimes n) \;=\; (n^{-1})^{m}\;n
 \quad \mbox{and} \quad
-<M>\ddot{\partial}_2 (m \boxtimes n) \;=\; m^{-1}\;m^{n}</M>,
+\ddot{\partial}_2 (m \boxtimes n) \;=\; m^{-1}\;m^{n}</M>,
 </Item>
 <Item>
-<M>(m \boxtimes \ddot{\partial}_1 l) \;=\; (l^{-1})^{m}\;l</M>
+<M>(m \boxtimes \ddot{\partial}_1 l) \;=\; (l^{-1})^{m}\;l
 \quad \mbox{and} \quad
-<M>(\ddot{\partial}_2 l \boxtimes n) \;=\; l^{-1}\;l^n</M>.
+(\ddot{\partial}_2 l \boxtimes n) \;=\; l^{-1}\;l^n</M>.
 </Item>
 </List>
 Note that the actions of  <M>S_{\{1\}}</M>  on  <M>S_{\{2\}}</M>  
@@ -142,7 +142,7 @@ though there is a lot still to do.
    <Attr Name="Name" 
          Arg="S0" />
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
-<!--   <Oper Name="XSqByXMods"             -->
+<!--   <Oper Name="XSqByXMods"                   -->
 <!--         Arg="X1 X2 X3 X4 action pairing" /> -->
 <!--   <Oper Name="AsXSq"                        -->
 <!--         Arg="obj" />                        -->
@@ -154,12 +154,12 @@ If <M>M, N</M> are normal subgroups of a group <M>P</M>,
 and <M>L = M \cap N</M>, then the four inclusions, 
 <M>L \to N,~ L \to M,~ M \to P,~ N \to P</M>, 
 together with the actions of <M>P</M> on <M>M, N</M> 
-and <M>L</M> given by conjugation, and the crossed pairing  
+and <M>L</M> given by conjugation, 
+form a crossed square with crossed pairing  
 <Display>
 \boxtimes \;:\; M \times N \to M\cap N, \quad 
-(m,n) \mapsto [m,n] \,=\, m^{-1}n^{-1}mn \,=\,(n^{-1})^mn \,=\, m^{-1}m^n
-</Display>
-is a crossed square. 
+(m,n) \mapsto [m,n] \,=\, m^{-1}n^{-1}mn \,=\,(n^{-1})^mn \,=\, m^{-1}m^n\,. 
+</Display>  
 This construction is implemented as <C>XSqByNormalSubgroups(P,N,M,L);</C>.
 </Item>
 <Item>

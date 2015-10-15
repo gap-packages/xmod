@@ -1,12 +1,13 @@
                        README file for the XMod package 
                        ================================ 
 
-Version 2.43, 1st October 2015 
+Version 2.43, 12th October 2015 
 
 Introduction 
 ------------
 This package allows for computation with crossed modules; cat1-groups; morphisms of these structures; derivations of crossed modules and the corresponding sections of cat1-groups.
-Experimental functions for crossed squares are now included.
+Experimental functions for crossed squares are now included. 
+In October 2015 a new section on isoclinism of crossed modules was added. 
 
 History
 -------
