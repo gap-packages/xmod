@@ -2,7 +2,7 @@
 ##
 #W  map2d3d.gd                 GAP4 package `XMod'               Chris Wensley
 ##
-##  version 2.43, 16/09/2015 
+##  version 2.43, 16/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -189,12 +189,12 @@ BindGlobal( "Family3dGroupMorphism",
 ##
 #P  IsPreSqMorphism( <map> ) 
 #P  IsPreCat2Morphism( <map> ) 
-#P  IsXSqMorphism( <map> ) 
+#P  IsCrossedSquareMorphism( <map> ) 
 #P  IsCat2Morphism( <map> ) 
 ##  
-DeclareProperty( "IsPreXSqMorphism", Is3dGroupMorphism );
+DeclareProperty( "IsPreCrossedSquareMorphism", Is3dGroupMorphism );
 DeclareProperty( "IsPreCat2Morphism", Is3dGroupMorphism );
-DeclareProperty( "IsXSqMorphism", Is3dGroupMorphism );
+DeclareProperty( "IsCrossedSquareMorphism", Is3dGroupMorphism );
 DeclareProperty( "IsCat2Morphism", Is3dGroupMorphism );
 
 #############################################################################

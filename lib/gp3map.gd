@@ -2,7 +2,7 @@
 ##
 #W  gp3map.gd                   GAP4 package `XMod'              Chris Wensley
 ##
-##  version 2.43, 16/09/2015 
+##  version 2.43, 16/10/2015 
 ##
 ##  This file declares functions for 3d-mappings: (pre-)crossed squares and 
 ##  (pre-)cat2-groups. 
@@ -12,15 +12,15 @@
 
 #############################################################################
 ##
-#F  PreXSqMorphism( <args> )
-#O  PreXSqMorphismByMorphisms( <src>, <rng>, <up>, <lt>, <rt>, <dn> )
+#F  PreCrossedSquareMorphism( <args> )
+#O  PreCrossedSquareMorphismByMorphisms( <src>, <rng>, <up>, <lt>, <rt>, <dn> )
 #F  PreCat2Morphism( <args> )
 #O  PreCat2MorphismByMorphisms( <src>, <rng>, <up>, <lt>, <rt>, <dn> )
 ##
-DeclareGlobalFunction( "PreXSqMorphism" );
-DeclareOperation( "PreXSqMorphismByMorphisms",
-    [ IsPreXSq, IsPreXSq, Is2dGroupMorphism, Is2dGroupMorphism, 
-                          Is2dGroupMorphism, Is2dGroupMorphism ] );
+DeclareGlobalFunction( "PreCrossedSquareMorphism" );
+DeclareOperation( "PreCrossedSquareMorphismByMorphisms",
+    [ IsPreCrossedSquare, IsPreCrossedSquare, Is2dGroupMorphism, 
+      Is2dGroupMorphism, Is2dGroupMorphism, Is2dGroupMorphism ] );
 DeclareGlobalFunction( "PreCat2Morphism" );
 DeclareOperation( "PreCat2MorphismByMorphisms",
     [ IsPreCat2, IsPreCat2, Is2dGroupMorphism, Is2dGroupMorphism, 
@@ -38,16 +38,16 @@ DeclareOperation( "Make3dGroupMorphism",
 
 #############################################################################
 ##
-#F  XSqMorphism( <args> )
-#O  XSqMorphismByMorphisms( <src>, <rng>, <up>, <lt>, <rt>, <dn> )
+#F  CrossedSquareMorphism( <args> )
+#O  CrossedSquareMorphismByMorphisms( <src>, <rng>, <up>, <lt>, <rt>, <dn> )
 #F  Cat2Morphism( <args> )
 #O  Cat2MorphismByMorphisms( <src>, <rng>, <up>, <lt>, <rt>, <dn> )
 #O  InclusionMorphism3dDomains( <obj>, <sub> )
 ##
-DeclareGlobalFunction( "XSqMorphism" );
-DeclareOperation( "XSqMorphismByMorphisms",
-    [ IsXSq, IsXSq, Is2dGroupMorphism, Is2dGroupMorphism, 
-                    Is2dGroupMorphism, Is2dGroupMorphism ] );
+DeclareGlobalFunction( "CrossedSquareMorphism" );
+DeclareOperation( "CrossedSquareMorphismByMorphisms",
+    [ IsCrossedSquare, IsCrossedSquare, Is2dGroupMorphism, 
+      Is2dGroupMorphism, Is2dGroupMorphism, Is2dGroupMorphism ] );
 DeclareGlobalFunction( "Cat2Morphism" );
 DeclareOperation( "Cat2MorphismByMorphisms",
     [ IsCat2, IsCat2, Is2dGroupMorphism, Is2dGroupMorphism, 
@@ -56,25 +56,25 @@ DeclareOperation( "InclusionMorphism3dDomains", [ Is3dDomain, Is3dDomain ] );
 
 #############################################################################
 ##
-#O  InnerAutomorphismXSq( <XM>, <r> )
+#O  InnerAutomorphismCrossedSquare( <XM>, <r> )
 #O  InnerAutomorphismCat2( <C1G>, <r> )
 ##
-DeclareOperation( "InnerAutomorphismXSq",
-    [ IsPreXSq, IsMultiplicativeElementWithInverse ] );
+DeclareOperation( "InnerAutomorphismCrossedSquare",
+    [ IsPreCrossedSquare, IsMultiplicativeElementWithInverse ] );
 DeclareOperation( "InnerAutomorphismCat2",
     [ IsPreCat2, IsMultiplicativeElementWithInverse ] );
 
 #############################################################################
 ##
-#A  XSqMorphismOfCat2Morphism( <mor> )
-#O  XSqMorphismByCat2Morphism( <mor> )
-#A  Cat2MorphismOfXSqMorphism( <mor> )
-#O  Cat2MorphismByXSqMorphism( <mor> )
+#A  CrossedSquareMorphismOfCat2Morphism( <mor> )
+#O  CrossedSquareMorphismByCat2Morphism( <mor> )
+#A  Cat2MorphismOfCrossedSquareMorphism( <mor> )
+#O  Cat2MorphismByCrossedSquareMorphism( <mor> )
 ##
-DeclareAttribute( "XSqMorphismOfCat2Morphism", IsCat2Morphism );
-DeclareOperation( "XSqMorphismByCat2Morphism", [ IsCat2Morphism ] );
-DeclareAttribute( "Cat2MorphismOfXSqMorphism", IsXSqMorphism );
-DeclareOperation( "Cat2MorphismByXSqMorphism", [ IsXSqMorphism ] );
+DeclareAttribute( "CrossedSquareMorphismOfCat2Morphism", IsCat2Morphism );
+DeclareOperation( "CrossedSquareMorphismByCat2Morphism", [ IsCat2Morphism ] );
+DeclareAttribute( "Cat2MorphismOfCrossedSquareMorphism", IsCrossedSquareMorphism );
+DeclareOperation( "Cat2MorphismByCrossedSquareMorphism", [ IsCrossedSquareMorphism ] );
 
 #############################################################################
 ##

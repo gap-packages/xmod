@@ -2,7 +2,7 @@
 ##
 #W  gp3objmap.g              XMOD example files                 Chris Wensley
 ##
-##  version 2.43, 18/09/2015 
+##  version 2.43, 16/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -26,7 +26,7 @@ SetName( s3b, "s3b" );
 c3 := Subgroup( d12, [ c^2 ] );
 SetName( c3, "c3" );
 
-XSconj := XSqByNormalSubgroups( d12, s3b, s3a, c3 );
+XSconj := CrossedSquareByNormalSubgroups( d12, s3b, s3a, c3 );
 Print( "Crossed square XSconj for normal subgroups of d12:\n" );
 Print( XSconj, "\n" );
 nconj := Name( XSconj );
@@ -41,7 +41,7 @@ AP12 := AutomorphismPermGroup( X12 );
 A12 := ActorXMod( X12 );
 Display( A12 );
 
-XSact := ActorXSq( X12 );
+XSact := ActorCrossedSquare( X12 );
 Print( "\nCrossed square XSact for the actor of [s3a -> d12]:\n" );
 Print( XSact, "\n" );
 
@@ -70,7 +70,7 @@ od;
 c6 := Subgroup( d12, [ c ] );
 SetName( c6, "c6" );
 
-XSub := XSqByNormalSubgroups( c6, c3, c3, c3 );
+XSub := CrossedSquareByNormalSubgroups( c6, c3, c3, c3 );
 Print( "\n\nCrossed square XSub for normal subgroups of c6:\n" );
 Print( XSub, "\n" );
 nsub := Name( XSub );
@@ -95,7 +95,7 @@ left := XModMorphismByHoms( leftconj, leftconj, idc3, as3a );
 down := XModMorphismByHoms( downconj, downconj, as3a, ad12 );
 right := XModMorphismByHoms( rightconj, rightconj, as3b, ad12 );
 
-autoconj := XSqMorphism( XSconj, XSconj, up, left, right, down );
+autoconj := CrossedSquareMorphism( XSconj, XSconj, up, left, right, down );
 ord := Order( autoconj );
 Print( "Automorphism of XSconj :-\n" );
 Display( autoconj );

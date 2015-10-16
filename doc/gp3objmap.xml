@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp3objmap.xml         XMod documentation            Chris Wensley  -->
 <!--                                                                     -->
-<!--  version 2.43, 13/09/2015                                           --> 
+<!--  version 2.43, 16/10/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2015, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
@@ -118,7 +118,8 @@ are compatible since
 
 
 
-<Section><Heading>Constructions for crossed squares</Heading>
+<Section Label="crossed square constructions">
+<Heading>Constructions for crossed squares</Heading>
 
 Analogously to the data structure used for crossed modules, 
 crossed squares are implemented as <C>3d-groups</C>. 
@@ -131,20 +132,20 @@ Morphisms of crossed squares have also been implemented,
 though there is a lot still to do.
 
 <ManSection>
-   <Func Name="XSq"
+   <Func Name="CrossedSquare"
          Arg="args" />
-   <Oper Name="XSqByNormalSubgroups"
+   <Oper Name="CrossedSquareByNormalSubgroups"
          Arg="P N M L" />
-   <Oper Name="ActorXSq" 
+   <Oper Name="ActorCrossedSquare" 
          Arg="X0" />
    <Attr Name="Transpose3dGroup" 
          Arg="S0" />
    <Attr Name="Name" 
          Arg="S0" />
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
-<!--   <Oper Name="XSqByXMods"                   -->
+<!--   <Oper Name="CrossedSquareByXMods"                   -->
 <!--         Arg="X1 X2 X3 X4 action pairing" /> -->
-<!--   <Oper Name="AsXSq"                        -->
+<!--   <Oper Name="AsCrossedSquare"                        -->
 <!--         Arg="obj" />                        -->
 <Description>
 Here are some standard examples of crossed squares.
@@ -160,7 +161,7 @@ form a crossed square with crossed pairing
 \boxtimes \;:\; M \times N \to M\cap N, \quad 
 (m,n) \mapsto [m,n] \,=\, m^{-1}n^{-1}mn \,=\,(n^{-1})^mn \,=\, m^{-1}m^n\,. 
 </Display>  
-This construction is implemented as <C>XSqByNormalSubgroups(P,N,M,L);</C>.
+This construction is implemented as <C>CrossedSquareByNormalSubgroups(P,N,M,L);</C>.
 </Item>
 <Item>
 The actor <M>\mathcal{A}(\mathcal{X}_0)</M> of a crossed module 
@@ -169,7 +170,7 @@ The crossed pairing is given by
 <Display>
 \boxtimes \;:\;  R \times W \,\to\, S, \quad (r,\chi) \,\mapsto\, \chi r~.
 </Display>
-This is implemented as <C>ActorXSq( X0 );</C>.
+This is implemented as <C>ActorCrossedSquare( X0 );</C>.
 </Item>
 <Item>
 The <E>transpose</E> of <M>\mathcal{S}</M> is the crossed square  
@@ -198,7 +199,7 @@ gap> s3b := Subgroup( d12, [ c^2, cd ] );;
 gap> c3 := Subgroup( d12, [ c^2 ] );;
 gap> SetName( d12, "d12");  SetName( s3a, "s3a" );
 gap> SetName( s3b, "s3b" );  SetName( c3, "c3" );
-gap> XSconj := XSqByNormalSubgroups( d12, s3b, s3a, c3 );
+gap> XSconj := CrossedSquareByNormalSubgroups( d12, s3b, s3a, c3 );
 [  c3 -> s3b ]
 [  |      |  ]
 [ s3a -> d12 ]
@@ -210,7 +211,7 @@ gap> XStrans := Transpose3dGroup( XSconj );
 [ s3b -> d12 ]
 gap> X12 := XModByNormalSubgroup( d12, s3a );
 [s3a->d12]
-gap> XSact := ActorXSq( X12 );
+gap> XSact := ActorCrossedSquare( X12 );
 crossed square with:
       up = Whitehead[s3a->d12]
     left = [s3a->d12]
@@ -219,8 +220,40 @@ crossed square with:
 ]]>
 </Example>
 
+
+<ManSection Label="CentralQuotientXMod">
+    <Attr Name="CentralQuotient"
+          Arg="X0" />
+<Description>
+The central quotient of a crossed module 
+<M>\mathcal{X} = (\partial : S \to R)</M> is the crossed square with: 
+<List>
+<Item>
+the left crossed module is <M>\mathcal{X}</M>; 
+</Item>
+<Item>
+the right crossed module is the quotient <M>\mathcal{X}/Z(\mathcal{X})</M> 
+(see <Ref Func="CentreXMod"/>); 
+</Item>
+<Item>
+the top and bottom homomorphisms are the natural homomorphisms 
+onto the quotient groups; 
+</Item>
+<Item>
+the crossed pairing <M>\boxtimes : (R \times F) \to S</M>, 
+where <M>F = Fix(\mathcal{X},S,R)</M>, is the displacement element 
+<M>\boxtimes(r,Fs) = \langle r,s \rangle = (s^{-1})^rs</M> 
+(see <Ref Func="Displacement"/> and section
+<Ref Sect="isoclinism of crossed modules"/>). 
+</Item>
+</List>
+This is the special case of an intended function 
+<C>CrossedSquareByCentralExtension</C> which has not yet been implemented. 
+</Description>
+</ManSection>
+
 <ManSection>
-   <Prop Name="IsXSq"
+   <Prop Name="IsCrossedSquare"
          Arg="obj" />
 <!--   <Prop Name="IsCat2"   -->
 <!--         Arg="obj" />    -->
@@ -232,7 +265,7 @@ crossed square with:
          Arg="obj" />
    <Prop Name="IsFp3dObject"
          Arg="obj" />
-   <Prop Name="IsPreXSq"
+   <Prop Name="IsPreCrossedSquare"
          Arg="obj" />
 <Description>
 These are the basic properties for 3d-groups, 
@@ -323,11 +356,11 @@ These functions return <C>fail</C> when invalid data is supplied.
 
 
 <ManSection>
-   <Prop Name="IsXSqMorphism"
+   <Prop Name="IsCrossedSquareMorphism"
          Arg="map" />
 <!--   <Prop Name="IsCat2Morphism"    -->
 <!--         Arg="map" />             -->
-   <Prop Name="IsPreXSqMorphism"
+   <Prop Name="IsPreCrossedSquareMorphism"
          Arg="map" />
 <!--   <Prop Name="IsPreCat2Morphism" -->
 <!--         Arg="map" />             -->
@@ -348,7 +381,7 @@ to that of <M>\mathcal{S}_2</M>,
 and <C>Right2dMorphism( mor )</C>. 
 These four morphisms are required to commute with the four boundary maps
 and to preserve the rest of the structure. 
-The current version of <C>IsXSqMorphism</C> does not perform all the 
+The current version of <C>IsCrossedSquareMorphism</C> does not perform all the 
 required checks.
 </Description>
 </ManSection>
@@ -371,7 +404,7 @@ gap> down := XModMorphismByHoms( downconj, downconj, as3a, ad12 );
 [[s3a->d12] => [s3a->d12]]
 gap> right := XModMorphismByHoms( rightconj, rightconj, as3b, ad12 );
 [[s3b->d12] => [s3b->d12]]
-gap> autoconj := XSqMorphism( XSconj, XSconj, up, left, down, right );; 
+gap> autoconj := CrossedSquareMorphism( XSconj, XSconj, up, left, down, right );; 
 gap> ord := Order( autoconj );;
 gap> Display( autoconj );
 Morphism of crossed squares :-
@@ -387,7 +420,7 @@ Morphism of crossed squares :-
   [ (11,12,13,14,15,16), (11,13)(14,16) ] ]
 gap> KnownPropertiesOfObject( autoconj );
 [ "IsTotal", "IsSingleValued", "IsInjective", "IsSurjective", "Is3dMapping",
-  "IsPreXSqMorphism", "IsXSqMorphism", "IsEndomorphism3dObject" ]
+  "IsPreCrossedSquareMorphism", "IsCrossedSquareMorphism", "IsEndomorphism3dObject" ]
 gap> IsAutomorphism3dObject( autoconj );
 true
 ]]>

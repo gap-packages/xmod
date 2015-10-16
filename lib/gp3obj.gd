@@ -2,7 +2,7 @@
 ##
 ##  gp3obj.gd                 GAP4 package `XMod'                Chris Wensley
 ##
-##  version 2.43, 14/10/2015 
+##  version 2.43, 16/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -12,12 +12,12 @@
 
 #############################################################################
 ##
-#R  IsPreXSqObj ( <obj> ) 
+#R  IsPreCrossedSquareObj ( <obj> ) 
 ##  A pre-crossed square is a square of pre-crossed modules 
 #R  IsPreCat2Obj( <obj> ) 
 ##  A pre-cat2-group is a square of pre-cat1 groups
 ##
-DeclareRepresentation( "IsPreXSqObj", Is3dGroup and IsAttributeStoringRep,
+DeclareRepresentation( "IsPreCrossedSquareObj", Is3dGroup and IsAttributeStoringRep,
     [ "up2d", "down2d", "left2d", "right2d", "action", "pairing" ] );
 DeclareRepresentation( " IsPreCat2Obj", Is3dGroup and IsAttributeStoringRep,
     [ "up2d", "down2d", "left2d", "right2d" ] );
@@ -34,28 +34,28 @@ DeclareProperty( "IsPc3dGroup", Is3dGroup );
 
 #############################################################################
 ##
-#P  IsPreXSq( <PM> } 
-#P  IsPermPreXSq( <PM> ) 
-#P  IsFpPreXSq( <PM> ) 
-#P  IsPcPreXSq( <PM> }
+#P  IsPreCrossedSquare( <PM> } 
+#P  IsPermPreCrossedSquare( <PM> ) 
+#P  IsFpPreCrossedSquare( <PM> ) 
+#P  IsPcPreCrossedSquare( <PM> }
 ##
-DeclareProperty( "IsPreXSq", Is3dGroup );
-DeclareSynonym( "IsPermPreXSq", IsPreXSq and IsPerm3dGroup );
-DeclareSynonym( "IsFpPreXSq", IsPreXSq and IsFp3dGroup );
-DeclareSynonym( "IsPcPreXSq", IsPreXSq and IsPc3dGroup );
+DeclareProperty( "IsPreCrossedSquare", Is3dGroup );
+DeclareSynonym( "IsPermPreCrossedSquare", IsPreCrossedSquare and IsPerm3dGroup );
+DeclareSynonym( "IsFpPreCrossedSquare", IsPreCrossedSquare and IsFp3dGroup );
+DeclareSynonym( "IsPcPreCrossedSquare", IsPreCrossedSquare and IsPc3dGroup );
 
 #############################################################################
 ##
-#P  IsXSq( <PM> ) 
-#P  IsPermXSq( <XS> } 
-#P  IsFpXSq( <XS> ) 
-#P  IsPcXSq( <XS> )
+#P  IsCrossedSquare( <PM> ) 
+#P  IsPermCrossedSquare( <XS> } 
+#P  IsFpCrossedSquare( <XS> ) 
+#P  IsPcCrossedSquare( <XS> )
 ##
-DeclareProperty( "IsXSq", Is3dGroup );
-InstallTrueMethod( IsPreXSq, IsXSq );
-DeclareSynonym( "IsPermXSq", IsXSq and IsPerm3dGroup );
-DeclareSynonym( "IsFpXSq", IsXSq and IsFp3dGroup );
-DeclareSynonym( "IsPcXSq", IsXSq and IsPc3dGroup );
+DeclareProperty( "IsCrossedSquare", Is3dGroup );
+InstallTrueMethod( IsPreCrossedSquare, IsCrossedSquare );
+DeclareSynonym( "IsPermCrossedSquare", IsCrossedSquare and IsPerm3dGroup );
+DeclareSynonym( "IsFpCrossedSquare", IsCrossedSquare and IsFp3dGroup );
+DeclareSynonym( "IsPcCrossedSquare", IsCrossedSquare and IsPc3dGroup );
 
 #############################################################################
 ##
@@ -107,7 +107,7 @@ DeclareSynonym( "IsPcCat2", IsCat2 and IsPc3dGroup );
 
 #############################################################################
 ##
-#O  PreXSqObj( <bdy>, <act> ) 
+#O  PreCrossedSquareObj( <bdy>, <act> ) 
 #O  PreCat20bj ( <arg> ) 
 #A  Up2dGroup( <PS> ) 
 #A  Down2dGroup ( <PS> ) 
@@ -116,7 +116,7 @@ DeclareSynonym( "IsPcCat2", IsCat2 and IsPc3dGroup );
 #A  DiagonalAction( <PS> ) 
 #A  XPair( <PS> )
 ##
-DeclareOperation( "PreXSqObj", 
+DeclareOperation( "PreCrossedSquareObj", 
     [ IsPreXMod, IsPreXMod, IsPreXMod, IsPreXMod, IsObject, IsObject] );
 DeclareOperation( "PreCat20bj", 
     [ IsPreCat1, IsPreCat1, IsPreCat1, IsPreCat1 ] );
@@ -131,19 +131,19 @@ DeclareAttribute( "UpDownMorphism", Is3dGroup );
 
 #############################################################################
 ##
-#F  XSq( <args> ) 
-#0  AsXSq( <arg> ) 
-#0  XSqByXMods( <up>, <left>, <down>, <right>, <action>, <pairing> ) 
-#0  XSqByNormalSubgroups( <P>, <N>, <M>, <L> )
-#A  ActorXSq( <xmod> )
-#A  Transpose3dGroup( <xsq> )
+#F  CrossedSquare( <args> ) 
+#0  AsCrossedSquare( <arg> ) 
+#0  CrossedSquareByXMods( <up>, <left>, <down>, <right>, <action>, <pairing> ) 
+#0  CrossedSquareByNormalSubgroups( <P>, <N>, <M>, <L> )
+#A  ActorCrossedSquare( <xmod> )
+#A  Transpose3dGroup( <CrossedSquare> )
 ##
-DeclareGlobalFunction( "XSq" );
-DeclareOperation( "XSqByXMods", 
+DeclareGlobalFunction( "CrossedSquare" );
+DeclareOperation( "CrossedSquareByXMods", 
   [ IsXMod, IsXMod, IsXMod, IsXMod, IsGroupHomomorphism, IsXPair ] );
-DeclareOperation( "XSqByNormalSubgroups", 
+DeclareOperation( "CrossedSquareByNormalSubgroups", 
     [ IsGroup, IsGroup, IsGroup, IsGroup ] );
-DeclareAttribute( "ActorXSq", IsXMod );
+DeclareAttribute( "ActorCrossedSquare", IsXMod );
 DeclareAttribute( "Transpose3dGroup", Is3dGroup );
 
 #############################################################################
@@ -152,52 +152,52 @@ DeclareAttribute( "Transpose3dGroup", Is3dGroup );
 #P  IsNormalSubgroup3dGroup( <obj> ) 
 #P  IsAutomorphismGroup3dGroup( <XS> ) 
 #P  IsAbelianSquare3dGroup( <obj> ) 
-#P  IsFreeXSq( <XS> )
+#P  IsFreeCrossedSquare( <XS> )
 ##
 DeclareProperty( "IsTrivialAction3dGroup", Is3dGroup );
 DeclareProperty( "IsNormalSubgroup3dGroup", Is3dGroup );
 DeclareProperty( "IsCentralExtension3dGroup", Is3dGroup );
 DeclareProperty( "IsAutomorphismGroup3dGroup", Is3dGroup );
 DeclareProperty( "IsAbelianSquare3dGroup", Is3dGroup );
-DeclareProperty( "IsFreeXSq", IsPreXSqObj );
+DeclareProperty( "IsFreeCrossedSquare", IsPreCrossedSquareObj );
 
 #############################################################################
 ##
-#0  IsSubPreXSq( <obj> ) 
-#0  IsSubXSq( <obj> ) 
+#0  IsSubPreCrossedSquare( <obj> ) 
+#0  IsSubCrossedSquare( <obj> ) 
 #0  IsSubPreCat2( <obj> ) 
 #0  IsSubCat2( <obj> )
 ##
-DeclareOperation( "IsSubPreXSq", [ Is3dGroup, Is3dGroup ] );
-DeclareOperation( "IsSubXSq", [ Is3dGroup, Is3dGroup ] );
+DeclareOperation( "IsSubPreCrossedSquare", [ Is3dGroup, Is3dGroup ] );
+DeclareOperation( "IsSubCrossedSquare", [ Is3dGroup, Is3dGroup ] );
 DeclareOperation( "IsSubPreCat2", [ Is3dGroup, Is3dGroup ] );
 DeclareOperation( "IsSubCat2", [ Is3dGroup, Is3dGroup ] );
 
 ##############################################################################
 ##
 #0  Sub3dGroup( <obj>, <src>, <rng> ) 
-#0  SubPreXSq( <PM, Ssrc, Srng> ) 
-#0  SubXSq( <PM, Ssrc, Srng> ) 
+#0  SubPreCrossedSquare( <PM, Ssrc, Srng> ) 
+#0  SubCrossedSquare( <PM, Ssrc, Srng> ) 
 #0  SubPreCat2( <C>, <H> )
 ##
 DeclareOperation( "Sub3dGroup", [ Is3dGroup, IsGroup, IsGroup ] );
-DeclareOperation( "SubPreXSq", [ IsPreXSq, IsGroup, IsGroup ] );
-DeclareOperation( "SubXSq", [ IsXSq, IsGroup, IsGroup ] );
+DeclareOperation( "SubPreCrossedSquare", [ IsPreCrossedSquare, IsGroup, IsGroup ] );
+DeclareOperation( "SubCrossedSquare", [ IsCrossedSquare, IsGroup, IsGroup ] );
 DeclareOperation( "SubPreCat2", [ IsPreCat2, IsGroup, IsGroup ] );
 DeclareOperation( "SubCat2", [ IsCat2, IsGroup, IsGroup ] );
 
 #############################################################################
 ##
 #0  TrivialSub3dGroup( <obj> ) 
-#A  TrivialSubPreXSq( <obj> ) 
-#A  TrivialSubXSq( <obj> ) 
+#A  TrivialSubPreCrossedSquare( <obj> ) 
+#A  TrivialSubCrossedSquare( <obj> ) 
 #A  TrivialSubPreCat2( <obj> ) 
 #A  TrivialSubCat2( <obj> ) 
 #P  IsIdentityCat2( <C1G> )
 ##
 DeclareOperation( "TrivialSub3dGroup", [ Is3dGroup ] );
-DeclareAttribute( "TrivialSubPreXSq", IsPreXSq );
-DeclareAttribute( "TrivialSubXSq", IsXSq );
+DeclareAttribute( "TrivialSubPreCrossedSquare", IsPreCrossedSquare );
+DeclareAttribute( "TrivialSubCrossedSquare", IsCrossedSquare );
 DeclareAttribute( "TrivialSubPreCat2", IsPreCat2 );
 DeclareAttribute( "TrivialSubCat2", IsCat2 );
 DeclareProperty( "IsIdentityCat2", IsCat2 );
@@ -213,19 +213,19 @@ DeclareOperation( "PreCat2ByPreCat1s ",
 
 #############################################################################
 ##
-#0  PreXSqByPreCat2( <PCG> ) 
-#0  PreCat2ByPreXSq( <PS> } 
-#A  XSqOfCat2( <C1G> } 
-#0  XSqByCat2( <C1G> } 
-#A  Cat20fXSq( <XS> ) 
-#0  Cat2ByXSq( <XS> )
+#0  PreCrossedSquareByPreCat2( <PCG> ) 
+#0  PreCat2ByPreCrossedSquare( <PS> } 
+#A  CrossedSquareOfCat2( <C1G> } 
+#0  CrossedSquareByCat2( <C1G> } 
+#A  Cat20fCrossedSquare( <XS> ) 
+#0  Cat2ByCrossedSquare( <XS> )
 ##
-DeclareOperation( "PreXSqByPreCat2", [ IsPreCat2 ] );
-DeclareOperation( "PreCat2ByPreXSq", [ IsPreXSq ] );
-DeclareAttribute( "XSqOfCat2", IsCat2 );
-DeclareOperation( "XSqByCat2", [ IsCat2 ] );
-DeclareAttribute( "Cat20fXSq", IsXSq );
-DeclareOperation( "Cat2ByXSq", [ IsXSq ] );
+DeclareOperation( "PreCrossedSquareByPreCat2", [ IsPreCat2 ] );
+DeclareOperation( "PreCat2ByPreCrossedSquare", [ IsPreCrossedSquare ] );
+DeclareAttribute( "CrossedSquareOfCat2", IsCat2 );
+DeclareOperation( "CrossedSquareByCat2", [ IsCat2 ] );
+DeclareAttribute( "Cat20fCrossedSquare", IsCrossedSquare );
+DeclareOperation( "Cat2ByCrossedSquare", [ IsCrossedSquare ] );
 
 #############################################################################
 ##
@@ -241,9 +241,9 @@ DeclareAttribute( "DirectProduct3dInfo", Is3dDomain, "mutable" );
 
 #############################################################################
 ##
-#A  NormalSubXSqs( <XS> } #A NormalSubXCat2s( <C1G> }
+#A  NormalSubCrossedSquares( <XS> } #A NormalSubXCat2s( <C1G> }
 ##
-DeclareAttribute( "NormalSubXSqs", IsXSq ); 
+DeclareAttribute( "NormalSubCrossedSquares", IsCrossedSquare ); 
 DeclareAttribute( "NormalSubCat2s", IsCat2 );
 
 #############################################################################

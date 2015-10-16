@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.gi               GAP4 package `XMod'                Alper Odabas
 #W                                                                & Enver Uslu
-##  version 2.43, 15/10/2015 
+##  version 2.43, 16/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al 
 #Y   
@@ -657,7 +657,7 @@ InstallOtherMethod( CentralQuotient, "generic method for crossed modules",
 function( XM ) 
 
     local  act, ZM, QM, ul, ur, dl, dr, nat, up, dn, gdl, gdr, iul, adg, 
-           prod, proj1, proj2, map, xp, xsq; 
+           prod, proj1, proj2, map, xp, CrossedSquare; 
 
     act := XModAction( XM ); 
     ZM := CentreXMod( XM ); 
@@ -687,12 +687,12 @@ function( XM )
                return Image(a,s^-1)*s; 
                end );
     xp := XPairObj( [dl,ur], ul, map );
-    xsq := PreXSqObj( up, XM, dn, QM, adg, xp );
-    SetIsXSq( xsq, true );
+    CrossedSquare := PreCrossedSquareObj( up, XM, dn, QM, adg, xp );
+    SetIsCrossedSquare( CrossedSquare, true );
     if HasName(XM) then 
         SetName( QM, Concatenation( Name(XM), "/", Name(ZM) ) ); 
     fi;
-    return xsq;
+    return CrossedSquare;
 end );
 
 #############################################################################

@@ -1,9 +1,8 @@
                        CHANGES to the XMod package
 
-Problems: 
+Problems and ToDos: 
 
- - (26/09/15) added NaturalHomomorphismByNormalSubXMod and methods for 
-              xmods for CentralQuotient & CentralQuotientHomomorphism 
+ - (15/10/15) need a function CrossedSquareByCentralExtension 
  - (24/09/15) at present IsSub2dDomain just returns 'fail' 
  - (03/09/15) XModCentre etc. fail with pc-groups 
  - (09/01/13) GroupGeneralMappingByImages in ghom.gi has changed, 
@@ -16,8 +15,9 @@ Problems:
               (construction worked OK with isomorphic perm groups). 
 
 #############################################################################
-2.42 -> 2.43 (15/10/2015) 
+2.42 -> 2.43 (16/10/2015) 
 
+ - (16/10/15) changed all occurrences of XSq to CrossedSquare 
  - (15/10/15) fixed Iterator bug in Isoclinism for groups 
  - (13/10/15) CentralQuotient now a crossed module or a crossed square 
               added LeftRightMorphism and UpDownMorphism for crossed squares 
@@ -29,6 +29,7 @@ Problems:
  - (02/10/15) added ExternalSetXMod 
  - (01/10/15) added operation Displacement
  - (28/09/15) added AllStemGroupFamilies and Set various Names 
+ - (26/09/15) added NaturalHomomorphismByNormalSubXMod  
  - (24/09/15) added CrossActionSubgroup 
  - (23/09/15) removed last occurrences of AllIsomorphisms 
  - (22/09/15) added functions for isoclinism of groups 

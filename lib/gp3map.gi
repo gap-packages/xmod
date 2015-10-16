@@ -2,7 +2,7 @@
 ##
 #W  gp3map.gi                    GAP4package `XMod'              Chris Wensley
 ##
-##  version 2.43, 16/09/2015 
+##  version 2.43, 16/10/2015 
 ##
 ##  This file implements functions for 3dMappings for (pre-)crossed squares 
 ##  and (pre-)cat2-groups. 
@@ -39,9 +39,9 @@ end );
 
 #############################################################################
 ##
-#M  IsPreXSqMorphism                check the axioms for a pre-crossed square
+#M  IsPreCrossedSquareMorphism      check the axioms for a pre-crossed square
 ##
-InstallMethod( IsPreXSqMorphism,
+InstallMethod( IsPreCrossedSquareMorphism,
     "generic method for pre-crossed module homomorphisms", true, 
     [ Is3dGroupMorphism ], 0,
 function( mor )
@@ -50,7 +50,7 @@ function( mor )
 
     PS := Source( mor );
     QS := Range( mor );
-    if not ( IsPreXSq( PS ) and IsPreXSq( QS ) ) then
+    if not ( IsPreCrossedSquare( PS ) and IsPreCrossedSquare( QS ) ) then
         return false;
     fi;
     ### (1) check that the morphisms commute
@@ -66,30 +66,30 @@ function( mor )
         return false;
     fi;
     ### (2) check the remaining axioms
-    Info( InfoXMod, 1, "Warning: IsPreXSqMorphism not fully implemented!" );
+    Info( InfoXMod, 1, "Warning: IsPreCrossedSquareMorphism not fully implemented!" );
     return true;
 end );
 
 #############################################################################
 ##
-#M  IsXSqMorphism
+#M  IsCrossedSquareMorphism
 ##
-InstallMethod( IsXSqMorphism, 
+InstallMethod( IsCrossedSquareMorphism, 
     "generic method for pre-crossed square morphisms", true, 
-    [ IsPreXSqMorphism ], 0,
+    [ IsPreCrossedSquareMorphism ], 0,
 function( mor )
-    return ( IsXSq( Source( mor ) ) and IsXSq(  Range( mor ) ) );
+    return ( IsCrossedSquare( Source( mor ) ) and IsCrossedSquare(  Range( mor ) ) );
 end );
 
-InstallMethod( IsXSqMorphism, "generic method for 3d-mappings", true,
+InstallMethod( IsCrossedSquareMorphism, "generic method for 3d-mappings", true,
     [ Is3dGroupMorphism ], 0,
 function( mor )
     local  ispre;
-    ispre := IsPreXSqMorphism( mor );
+    ispre := IsPreCrossedSquareMorphism( mor );
     if not ispre then
         return false;
     else
-        return ( IsXSq( Source( mor ) ) and IsXSq(  Range( mor ) ) );
+        return ( IsCrossedSquare( Source( mor ) ) and IsCrossedSquare(  Range( mor ) ) );
     fi;
 end );
 
@@ -124,7 +124,7 @@ end );
 
 #############################################################################
 ##
-#M  Name                                                       for a pre-xsq
+#M  Name                                                       for a pre-CrossedSquare
 ##
 InstallMethod( Name, "method for a 3d-mapping", true, [ Is3dMapping ], 0,
 function( mor )
@@ -160,8 +160,8 @@ InstallMethod( Display, "display a morphism of 3d-groups", true,
     Q := Range( mor );
     upmor := Up2dMorphism( mor );
     downmor := Down2dMorphism( mor );
-    if ( HasIsPreXSqMorphism( mor ) and IsPreXSqMorphism( mor ) ) then 
-        if ( HasIsXSqMorphism( mor ) and IsXSqMorphism( mor ) ) then
+    if ( HasIsPreCrossedSquareMorphism( mor ) and IsPreCrossedSquareMorphism( mor ) ) then 
+        if ( HasIsCrossedSquareMorphism( mor ) and IsCrossedSquareMorphism( mor ) ) then
             Print( "Morphism of crossed squares :- \n" );
         else
             Print( "Morphism of pre-crossed squares :- \n" );
@@ -206,8 +206,8 @@ function( obj )
     lt := IdentityMapping( Left2dGroup( obj ) );
     rt := IdentityMapping( Right2dGroup( obj ) );
     dn := IdentityMapping( Down2dGroup( obj ) );
-    if ( HasIsPreXSq( obj ) and IsPreXSq( obj ) ) then
-        return PreXSqMorphismByMorphisms( obj, obj, up, lt, rt, dn );
+    if ( HasIsPreCrossedSquare( obj ) and IsPreCrossedSquare( obj ) ) then
+        return PreCrossedSquareMorphismByMorphisms( obj, obj, up, lt, rt, dn );
     elif ( HasIsPreCat2( obj ) and IsPreCat2( obj ) ) then
         return PreCat2MorphismByMorphisms( obj, obj, up, lt, rt, dn );
     else
@@ -229,8 +229,8 @@ function( obj, sub )
     lt := InclusionMorphism2dDomains( Left2dGroup(obj), Left2dGroup(sub) );
     rt := InclusionMorphism2dDomains( Right2dGroup(obj), Right2dGroup(sub) );
     dn := InclusionMorphism2dDomains( Down2dGroup(obj), Down2dGroup(sub) );
-    if IsPreXSq( obj ) then
-        return PreXSqMorphismByMorphisms( sub, obj, up, lt, rt, dn );
+    if IsPreCrossedSquare( obj ) then
+        return PreCrossedSquareMorphismByMorphisms( sub, obj, up, lt, rt, dn );
     elif IsPreCat2( obj ) then
         return PreCat2MorphismByMorphisms( sub, obj, up, lt, rt, dn );
     else
@@ -240,60 +240,60 @@ end );
 
 ##############################################################################
 ##
-#F  XSqMorphism( <src>, <rng>, <up>, <lt>, <rt>, <dn> ) . . x-square morphism
+#F  CrossedSquareMorphism( <src>, <rng>, <up>, <lt>, <rt>, <dn> ) . . x-square morphism
 ##
 ##  (need to extend to other sets of parameters)
 ##
-InstallGlobalFunction( XSqMorphism, function( arg )
+InstallGlobalFunction( CrossedSquareMorphism, function( arg )
 
     local  nargs;
     nargs := Length( arg );
 
-    # two xsqs and two homomorphisms
-    if ( ( nargs = 6 ) and IsXSq( arg[1] ) and IsXSq( arg[2])
+    # two CrossedSquares and two homomorphisms
+    if ( ( nargs = 6 ) and IsCrossedSquare( arg[1] ) and IsCrossedSquare( arg[2])
              and IsXModMorphism( arg[3] ) and IsXModMorphism( arg[4] )
              and IsXModMorphism( arg[5] ) and IsXModMorphism( arg[6] ) ) then
-        return  XSqMorphismByMorphisms( arg[1], arg[2], arg[3], 
+        return  CrossedSquareMorphismByMorphisms( arg[1], arg[2], arg[3], 
                                         arg[4], arg[5], arg[6] );
     fi;
     # alternatives not allowed
-    Info( InfoXMod, 2, "usage: XSqMorphism( src, rng, up, lt, rt, dn );" );
+    Info( InfoXMod, 2, "usage: CrossedSquareMorphism( src, rng, up, lt, rt, dn );" );
     return fail;
 end );
 
 ###############################################################################
 ##
-#M  PreXSqMorphismByMorphisms( <src>, <rng>, <up>, <left>, <right>, <down> ) 
+#M  PreCrossedSquareMorphismByMorphisms( <src>, <rng>, <up>, <left>, <right>, <down> ) 
 ##
-InstallMethod( PreXSqMorphismByMorphisms,
+InstallMethod( PreCrossedSquareMorphismByMorphisms,
     "for two pre-crossed squares and four pre-xmod morphisms,", true,
-    [ IsPreXSq, IsPreXSq, IsPreXModMorphism, IsPreXModMorphism, 
+    [ IsPreCrossedSquare, IsPreCrossedSquare, IsPreXModMorphism, IsPreXModMorphism, 
       IsPreXModMorphism, IsPreXModMorphism ], 0,
 function( src, rng, up, lt, rt, dn )
 
     local  filter, fam, mor, ok, nsrc, nrng, name;
 
     mor := Make3dGroupMorphism( src, rng, up, lt, rt, dn );
-    if not IsPreXSqMorphism( mor ) then
+    if not IsPreCrossedSquareMorphism( mor ) then
         Info( InfoXMod, 2, "not a morphism of pre-crossed squares.\n" );
         return fail;
     fi;
-    ok := IsXSqMorphism( mor );
+    ok := IsCrossedSquareMorphism( mor );
     return mor;
 end );
 
 ##############################################################################
 ##
-#M  XSqMorphismByMorphisms( <Xs>, <Xr>, <up>, <lt>, <rt>, <dn> )  make xsq map
+#M  CrossedSquareMorphismByMorphisms( <Xs>, <Xr>, <up>, <lt>, <rt>, <dn> )  make CrossedSquare map
 ##
-InstallMethod( XSqMorphismByMorphisms, "for 2 xsqs and 4 morphisms", true,
-    [ IsXSq, IsXSq, IsXModMorphism, IsXModMorphism, IsXModMorphism, 
+InstallMethod( CrossedSquareMorphismByMorphisms, "for 2 CrossedSquares and 4 morphisms", true,
+    [ IsCrossedSquare, IsCrossedSquare, IsXModMorphism, IsXModMorphism, IsXModMorphism, 
       IsXModMorphism ], 0,
 function( src, rng, up, lt, rt, dn )
 
     local  mor, ok;
-    mor := PreXSqMorphismByMorphisms( src, rng, up, lt, rt, dn );
-    ok := IsXSqMorphism( mor );
+    mor := PreCrossedSquareMorphismByMorphisms( src, rng, up, lt, rt, dn );
+    ok := IsCrossedSquareMorphism( mor );
     if not ok then
         return fail;
     fi;
@@ -327,11 +327,12 @@ function( m2, m1 )
             SetIsCat2Morphism( comp, true );
         fi;
     else
-        if ( IsPreXSqMorphism( m1 ) and IsPreXSqMorphism( m2 ) ) then
-            SetIsPreXSqMorphism( comp, true );
+        if ( IsPreCrossedSquareMorphism( m1 ) and IsPreCrossedSquareMorphism( m2 ) ) then
+            SetIsPreCrossedSquareMorphism( comp, true );
         fi;
-        if ( IsXSqMorphism( m1 ) and IsXSqMorphism( m2 ) ) then
-            SetIsXSqMorphism( comp, true );
+        if ( IsCrossedSquareMorphism( m1 ) 
+             and IsCrossedSquareMorphism( m2 ) ) then
+            SetIsCrossedSquareMorphism( comp, true );
         fi;
     fi;
     return comp;

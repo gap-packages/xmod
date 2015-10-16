@@ -5,7 +5,7 @@
 ##  This file implements generic methods for (pre-)crossed squares and
 ##  (pre-)cat2-groups.
 ##
-##  version 2.43, 14/10/2015 
+##  version 2.43, 16/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -130,16 +130,16 @@ InstallMethod( ImageElmXPair, "for crossed pairing", true,
 
 #############################################################################
 ##
-#M  IsPreXSq . . . . . . . . . . . . . . . . .  check that the square commutes
+#M  IsPreCrossedSquare . . . . . . . . . . . . . . . . .  check that the square commutes
 ##
-InstallMethod( IsPreXSq, "generic method for a pre-crossed square",
+InstallMethod( IsPreCrossedSquare, "generic method for a pre-crossed square",
     true, [ Is3dGroup ], 0,
 function( P )
 
     local  u, d, l, r, ul, dl, ur, dr, bu, bd, bl, br, blbd, bubr,
            autu, autl, act, diag, ok, morud, morlr;
 
-    if not ( IsPreXSqObj ( P ) and HasDiagonalAction( P ) 
+    if not ( IsPreCrossedSquareObj ( P ) and HasDiagonalAction( P ) 
              and HasXPair( P ) ) then
         return false;
     fi;
@@ -193,16 +193,16 @@ end );
 
 ##############################################################################
 ##
-#M  PreXSqObj ( <up>, <down>, <left>, <right>, <act>, <pair> ) . .make a PreXSq
+#M  PreCrossedSquareObj ( <up>, <down>, <left>, <right>, <act>, <pair> ) . .make a PreCrossedSquare
 ##
-InstallMethod( PreXSqObj, "for prexmods, action and pairing", true,
+InstallMethod( PreCrossedSquareObj, "for prexmods, action and pairing", true,
     [ IsPreXMod, IsPreXMod, IsPreXMod, IsPreXMod, IsObject, IsObject ], 0,
 function( u, l, d, r, a, p )
 
     local  filter, fam, PS, ok, src, rng, aut, narne;
 
     fam := Family3dGroup;
-    filter := IsPreXSqObj;
+    filter := IsPreCrossedSquareObj;
     ## test commutativity here?
     PS := rec();
     ObjectifyWithAttributes( PS, NewType( fam, filter), 
@@ -213,10 +213,10 @@ function( u, l, d, r, a, p )
       XPair, p,
       DiagonalAction, a,
       Is3dGroup, true );
-    if not IsPreXSq( PS ) then
+    if not IsPreCrossedSquare( PS ) then
         Info( InfoXMod, 1, "Warning: not a pre-crossed square." );
     fi;
-    # ok := IsXSq( PS );
+    # ok := IsCrossedSquare( PS );
     # name:= Name( PS );
     return PS;
 end );
@@ -227,14 +227,14 @@ end );
 #M  UpDownMorphism . . . . . . . . . . . . . . . . . for a precrossed square
 ##
 InstallMethod( LeftRightMorphism, "for a precrossed square", true,
-    [ IsPreXSq ], 0,
+    [ IsPreCrossedSquare ], 0,
 function( s )
     return XModMorphismByHoms( Left2dGroup(s), Right2dGroup(s), 
                Boundary( Up2dGroup(s) ), Boundary( Down2dGroup(s) ) ); 
 end );
 
 InstallMethod( UpDownMorphism, "for a precrossed square", true,
-    [ IsPreXSq ], 0,
+    [ IsPreCrossedSquare ], 0,
 function( s )
     return XModMorphismByHoms( Up2dGroup(s), Down2dGroup(s), 
                Boundary( Left2dGroup(s) ), Boundary( Right2dGroup(s) ) ); 
@@ -242,9 +242,9 @@ end );
 
 ##############################################################################
 ##
-#M  XSqByNormalSubgroups          create a crossed square from normal M,N in P
+#M  CrossedSquareByNormalSubgroups          create a crossed square from normal M,N in P
 ##
-InstallMethod( XSqByNormalSubgroups, "conjugation crossed square",
+InstallMethod( CrossedSquareByNormalSubgroups, "conjugation crossed square",
     true, [ IsGroup, IsGroup, IsGroup, IsGroup ], 0,
 function( P, N, M, L )
 
@@ -268,12 +268,12 @@ function( P, N, M, L )
     a := XModAction( diag );
     ##  define the pairing as a commutator
     xp := XPairByNormalSubgroups( M, N, L );
-    XS := PreXSqObj( u, l, d, r, a, xp );
-    SetIsXSq( XS, true );
+    XS := PreCrossedSquareObj( u, l, d, r, a, xp );
+    SetIsCrossedSquare( XS, true );
     return XS;
 end );
 
-InstallOtherMethod( XSqByNormalSubgroups, "conjugation crossed square",
+InstallOtherMethod( CrossedSquareByNormalSubgroups, "conjugation crossed square",
     true, [ IsGroup, IsGroup, IsGroup ], 0,
 function( P, M, N )
 
@@ -283,14 +283,14 @@ function( P, M, N )
         return fail;
     fi;
     L := Intersection( M, N );
-    return XSqByNormalSubgroups( P, M, N, L );;
+    return CrossedSquareByNormalSubgroups( P, M, N, L );;
 end );
 
 ##############################################################################
 ##
-#M  ActorXSq                create a crossed square from an xmod and its actor
+#M  ActorCrossedSquare                create a crossed square from an xmod and its actor
 ##
-InstallMethod( ActorXSq, "actor crossed square", true, [ IsXMod ], 0,
+InstallMethod( ActorCrossedSquare, "actor crossed square", true, [ IsXMod ], 0,
 function( X0 )
 
     local  XS, WX, LX, NX, AX, xp, da;
@@ -302,8 +302,8 @@ function( X0 )
     da := XModAction( LX );
     ##  define the pairing as evaluation of a derivation
     xp := XPairByDerivations( X0 );
-    XS := PreXSqObj( WX, X0, NX, AX, da, xp );
-    SetIsXSq( XS, true );
+    XS := PreCrossedSquareObj( WX, X0, NX, AX, da, xp );
+    SetIsCrossedSquare( XS, true );
     return XS;
 end );
 
@@ -312,7 +312,7 @@ end );
 #M  Transpose3dGroup                        the transpose of a crossed square
 ##
 InstallMethod( Transpose3dGroup, "transposed crossed square", true, 
-    [ IsXSq ], 0,
+    [ IsCrossedSquare ], 0,
 function( XS )
 
     local  xpS, NM, L, map, xpT, XT;
@@ -323,9 +323,9 @@ function( XS )
     map := Mapping2ArgumentsByFunction( NM, L, 
              function(c) return ImageElmXPair( xpS, Reversed(c) )^(-1); end );
     xpT := XPairObj( NM, L, map );
-    XT := PreXSqObj( Left2dGroup(XS), Up2dGroup(XS), Right2dGroup(XS), 
+    XT := PreCrossedSquareObj( Left2dGroup(XS), Up2dGroup(XS), Right2dGroup(XS), 
                      Down2dGroup(XS), DiagonalAction(XS), xpT );
-    SetIsXSq( XT, true );
+    SetIsCrossedSquare( XT, true );
     return XT;
 end );    
 
@@ -333,7 +333,7 @@ end );
 ##
 #M  Name . . . . . . . . . . . . . . . . . . . . . . for a pre-crossed square
 ##
-InstallMethod( Name, "method for a pre-crossed square", true, [ IsPreXSq ], 0,
+InstallMethod( Name, "method for a pre-crossed square", true, [ IsPreCrossedSquare ], 0,
 function( PS )
 
     local  nul, nur, ndl, ndr, name, mor;
@@ -390,7 +390,7 @@ function( g3d )
     if HasName( g3d ) then
         Print( Name( g3d ), "\n" );
     else 
-        if ( HasIsPreXSq( g3d ) and IsPreXSq( g3d ) ) then 
+        if ( HasIsPreCrossedSquare( g3d ) and IsPreCrossedSquare( g3d ) ) then 
             ispsq := true; 
             arrow := " -> "; 
         else 
@@ -431,7 +431,7 @@ function( g3d )
             Print( " ]\n" );
         else 
             if ispsq then 
-                if ( HasIsXSq( g3d ) and IsXSq( g3d ) ) then 
+                if ( HasIsCrossedSquare( g3d ) and IsCrossedSquare( g3d ) ) then 
                     Print( "crossed square with:\n" ); 
                 else 
                     Print( "pre-crossed square with:\n" ); 
@@ -464,7 +464,7 @@ function( g3d )
     local  L, M, N, P, lenL, lenM, lenN, lenP, len1, len2, j, q1, q2, 
            ispsq, arrow, ok;
 
-    if ( HasIsPreXSq( g3d ) and IsPreXSq( g3d ) ) then 
+    if ( HasIsPreCrossedSquare( g3d ) and IsPreCrossedSquare( g3d ) ) then 
         ispsq := true; 
         arrow := " -> "; 
     else 

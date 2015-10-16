@@ -5,7 +5,7 @@
 ##
 ##  This file implements methods for actor crossed squares of crossed modules. 
 ##
-##  version 2.43, 29/09/2015 
+##  version 2.43, 16/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -38,7 +38,7 @@ function( XM )
     ker := Kernel( bdy );
     AS := AutomorphismGroup( S ); 
     genAS := GeneratorsOfGroup( AS );
-    a2pS := IsomorphismPermGroup( AS );    ### check if Smaller possible
+    a2pS := IsomorphismPermGroup( AS );    ### check if smaller possible
     PAS := Image( a2pS );
     genPAS := List( genAS, a -> Image( a2pS, a ) );
     p2aS := GroupHomomorphismByImages( PAS, AS, genPAS, genAS );
@@ -462,7 +462,7 @@ end );
 ##
 #M  ActorXMod( <XM> ) 
 ##
-InstallMethod( ActorXMod, "actor crossed module", true, [ IsPermXMod ], 0, 
+InstallMethod( ActorXMod, "actor crossed module", true, [ IsXMod ], 0, 
 function( XM )
 
     local  D, L, W, eW, P, genP, genpos, ngW, genW, invW, imdelta, 
@@ -470,6 +470,9 @@ function( XM )
            i, j, k, mor, imsrc, imrng, delta, GA, nGA, imact, rho, invrho, 
            impos, chi, chj, imgen, phi, id, aut, act, ActX, name;
 
+    if not IsPermXMod( XM ) then 
+        Error( "ActorXMod only implemented for permutation xmods" ); 
+    fi;
     D := RegularDerivations( XM );
     L := ImagesList( D );
     W := WhiteheadPermGroup( XM );

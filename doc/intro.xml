@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  intro.xml             XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  version 2.43, 03/09/2015                                           --> 
+<!--  version 2.43, 16/10/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2015, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
@@ -75,8 +75,7 @@ for example <C>ConjugationXMod</C> has become <C>XModByNormalSubgroup</C>.
 For a list of name changes see the file <F>names.pdf</F> 
 in the <F>doc</F> directory.
 <P/> 
-The current versions are 2.22 for &GAP; 4.6, released on January 25th 2013; 
-and &VERSION; for &GAP; 4.7, released on &LONGRELEASEDATE;. 
+The current version is &VERSION; for &GAP; 4.7, released on &LONGRELEASEDATE;. 
 <P/> 
 The package may be obtained as a compressed tar file 
 <File>&TARFILENAME;</File>

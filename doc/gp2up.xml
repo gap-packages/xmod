@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2up.xml             XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  version 2.43, 05/10/2015                                           --> 
+<!--  version 2.43, 16/10/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2015, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
@@ -247,7 +247,7 @@ gap> PrintListOneItemPerLine( ImagesTable( all3 ) );
          Arg="xi1 xi2" />
 <Description>
 The Whitehead product <M>\chi_1 \star \chi_2</M> is implemented as 
-<C>CompositeDerivation( &lt;chi1&gt;, &lt;chi2&gt; )</C>.
+<C>CompositeDerivation(&lt;chi1&gt;,&lt;chi2&gt;)</C>.
 The composite of two sections is just the composite of homomorphisms.
 </Description>
 </ManSection>

@@ -2,7 +2,7 @@
 ##
 #W  gp3objmap.tst                 XMOD test file                Chris Wensley
 ##
-##  version 2.43, 18/09/2015 
+##  version 2.43, 16/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -24,7 +24,7 @@ gap> s3b := Subgroup( d12, [ c^2, cd ] );;
 gap> c3 := Subgroup( d12, [ c^2 ] );;
 gap> SetName( d12, "d12");  SetName( s3a, "s3a" );
 gap> SetName( s3b, "s3b" );  SetName( c3, "c3" );
-gap> XSconj := XSqByNormalSubgroups( d12, s3b, s3a, c3 );
+gap> XSconj := CrossedSquareByNormalSubgroups( d12, s3b, s3a, c3 );
 [  c3 -> s3b ]
 [  |      |  ]
 [ s3a -> d12 ]
@@ -38,7 +38,7 @@ gap> XStrans := Transpose3dGroup( XSconj );
 
 gap> X12 := XModByNormalSubgroup( d12, s3a );
 [s3a->d12]
-gap> XSact := ActorXSq( X12 );
+gap> XSact := ActorCrossedSquare( X12 );
 crossed square with:
       up = Whitehead[s3a->d12]
     left = [s3a->d12]
@@ -78,7 +78,7 @@ gap> down := XModMorphismByHoms( downconj, downconj, as3a, ad12 );
 [[s3a->d12] => [s3a->d12]]
 gap> right := XModMorphismByHoms( rightconj, rightconj, as3b, ad12 );
 [[s3b->d12] => [s3b->d12]]
-gap> autoconj := XSqMorphism( XSconj, XSconj, up, left, right, down );; 
+gap> autoconj := CrossedSquareMorphism( XSconj, XSconj, up, left, right, down );; 
 gap> ord := Order( autoconj );;
 gap> Display( autoconj );
 Morphism of crossed squares :- 
@@ -94,8 +94,8 @@ Morphism of crossed squares :-
   [ (11,12,13,14,15,16), (11,13)(14,16) ] ]
 gap> KnownPropertiesOfObject( autoconj );
 [ "CanEasilyCompareElements", "CanEasilySortElements", "IsTotal", 
-  "IsSingleValued", "IsInjective", "IsSurjective", "IsPreXSqMorphism", 
-  "IsXSqMorphism", "IsEndomorphism3dDomain" ]
+  "IsSingleValued", "IsInjective", "IsSurjective", "IsPreCrossedSquareMorphism", 
+  "IsCrossedSquareMorphism", "IsEndomorphism3dDomain" ]
 gap> IsAutomorphism3dDomain( autoconj );
 true
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
