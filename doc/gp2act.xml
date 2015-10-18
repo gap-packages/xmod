@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2act.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  version 2.43, 05/10/2015                                           --> 
+<!--  version 2.43, 18/10/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2015, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
@@ -26,6 +26,50 @@ In this implementation, the source of the actor is a permutation
 representation <M>W</M> of the Whitehead group of regular derivations, 
 and the range is a permutation representation <M>A</M> 
 of the automorphism group <M>{\rm Aut}({\cal X})</M> of <M>{\cal X}</M>.
+
+<ManSection>
+   <Attr Name="AutomorphismPermGroup"
+         Arg="xmod" />
+   <Attr Name="GeneratingAutomorphisms"
+         Arg="xmod" />
+   <Attr Name="PermAutomorphismAsXModMorphism"
+         Arg="xmod perm" />
+<Description>
+The automorphisms <M>( \sigma, \rho )</M> of <M>\mathcal{X}</M> form a group 
+<M>Aut(\mathcal{X})</M> of crossed module isomorphisms. 
+The function <C>AutomorphismPermGroup</C> finds a set of 
+<C>GeneratingAutomorphisms</C> for <M>Aut(\mathcal{X})</M>, 
+and then constructs a permutation representation of this group, 
+which is used as the range of the actor crossed module of <M>\mathcal{X}</M>. 
+The individual automorphisms can be constructed from the permutation group 
+using the function <C>PermAutomorphismAsXModMorphism</C>.
+</Description>
+</ManSection>
+
+<Example>
+<![CDATA[
+gap> APX3 := AutomorphismPermGroup( X3 );
+Group([ (5,7,6), (1,2)(3,4)(6,7) ])
+gap> Size( APX3 );
+6
+gap> genX3 := GeneratingAutomorphisms( X3 );    
+[ [[c3->s3] => [c3->s3]], [[c3->s3] => [c3->s3]] ]
+gap> e6 := Elements( APX3 )[6];
+(1,2)(3,4)(5,7)
+gap> m6 := PermAutomorphismAsXModMorphism( X3, e6 );;
+gap> Display( m6 );
+Morphism of crossed modules :- 
+: Source = [c3->s3] with generating sets:
+  [ (1,2,3)(4,6,5) ]
+  [ (4,5,6), (2,3)(5,6) ]
+: Range = Source
+: Source Homomorphism maps source generators to:
+  [ (1,3,2)(4,5,6) ]
+: Range Homomorphism maps range generators to:
+  [ (4,6,5), (2,3)(4,5) ]
+]]>
+</Example>
+
 
 <ManSection>
    <Attr Name="WhiteheadXMod"
@@ -77,8 +121,6 @@ the actor crossed module of <M>{\cal X}</M>, on the right.
 <![CDATA[
 gap> WGX3 := WhiteheadPermGroup( X3 );
 Group([ (1,2,3)(4,5,6), (1,4)(2,6)(3,5) ])
-gap> APX3 := AutomorphismPermGroup( X3 );
-Group([ (5,7,6), (1,2)(3,4)(6,7) ])
 gap> WX3 := WhiteheadXMod( X3 );; 
 gap> Display( WX3 );
 Crossed module Whitehead[c3->s3] :- 

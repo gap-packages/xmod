@@ -2,7 +2,7 @@
 ##
 #W  gp2act.tst                    XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-##  version 2.43, 05/10/2015 
+##  version 2.43, 18/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley, et al
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -15,6 +15,29 @@ gap> SetInfoLevel( InfoXMod, 0 );;
 ## Chapter 5
 
 ## Section 5.1.1
+gap> X3;
+[c3->s3]
+gap> APX3 := AutomorphismPermGroup( X3 );
+Group([ (5,7,6), (1,2)(3,4)(6,7) ])
+gap> Size( APX3 );
+6
+gap> genX3 := GeneratingAutomorphisms( X3 );    
+[ [[c3->s3] => [c3->s3]], [[c3->s3] => [c3->s3]] ]
+gap> e6 := Elements( APX3 )[6];
+(1,2)(3,4)(5,7)
+gap> m6 := PermAutomorphismAsXModMorphism( X3, e6 );;
+gap> Display( m6 );
+Morphism of crossed modules :- 
+: Source = [c3->s3] with generating sets:
+  [ (1,2,3)(4,6,5) ]
+  [ (4,5,6), (2,3)(5,6) ]
+: Range = Source
+: Source Homomorphism maps source generators to:
+  [ (1,3,2)(4,5,6) ]
+: Range Homomorphism maps range generators to:
+  [ (4,6,5), (2,3)(4,5) ]
+
+## Section 5.1.2
 gap> X3;
 [c3->s3]
 gap> WGX3 := WhiteheadPermGroup( X3 );
@@ -97,7 +120,7 @@ Crossed module InnerActor[c3->s3] :-
   These 2 automorphisms generate the group of automorphisms.
 
 
-## Section 5.1.2
+## Section 5.1.3
 gap> IMX3 := InnerMorphism( X3 );; 
 gap> Display( IMX3 );
 Morphism of crossed modules :- 
