@@ -2,7 +2,7 @@
 ##
 #W  gp2obj.gi                 GAP4 package `XMod'               Chris Wensley
 #W                                                                & Murat Alp
-##  version 2.43, 14/10/2015 
+##  version 2.43, 19/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -1142,7 +1142,7 @@ InstallGlobalFunction( XMod, function( arg )
         return XModByCentralExtension( arg[1] );
 
     # convert a cat1-group
-    elif ( ( nargs = 1 ) and IsCat1( arg[1] ) ) then
+    elif ( ( nargs = 1 ) and HasIsCat1( arg[1] ) and IsCat1( arg[1] ) ) then
         return PreXModByPreCat1( arg[1] );
 
     # group of automorphisms

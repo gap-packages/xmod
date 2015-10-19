@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.tst               XMOD test file                   Alper Odabas
 #W                                                               & Enver Uslu
-##  version 2.43, 16/10/2015 
+##  version 2.43, 19/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 ##
@@ -23,7 +23,7 @@ gap> X5 := XModByNormalSubgroup( D24, N5 );
 gap> SetName( X5, "X5" );
 gap> Size( X5 );
 [ 6, 24 ]
-gap> d := Displacement( XModAction(X5), N5.1, D24.1 );
+gap> d := Displacement( XModAction(X5), D24.1, N5.1 );
 f4^2
 gap> Image( Boundary(X5), d ) = Comm( N5.1, D24.1 );  
 true
@@ -274,7 +274,7 @@ gap> Sum( L );
 gap> all44 := AllXMods( [4,4] );; 
 gap> Length( last );
 60
-gap> iso44 := IsoAllXMods( all44 );;
+gap> iso44 := AllXModsUpToIsomorphism( all44 );;
 gap> Length( last );
 18 
 gap> L := ListWithIdenticalEntries( 60, 1 );;
@@ -350,8 +350,6 @@ gap> X9 := XMod( C9 );
 [Group( [ f1*f2*f3, f3, f4, f5 ] )->Group( [ f2, f2 ] )]
 gap> IdGroup( X9 );
 [ [ 16, 5 ], [ 2, 1 ] ]
-gap> mor := IsomorphismXMods( X8, X9 ); 
-fail
 gap> ZX9 := CentreXMod( X9 );
 [Group( [ f4, f5 ] )->Group( <identity> of ... )]
 gap> FX9 := FactorXMod( X9, ZX9 );
@@ -365,13 +363,19 @@ gap> morF := IsomorphismXMods( FX8, FX9 );
 gap> morD := IsomorphismXMods( DX8, DX9 );
 [[Group( [ f3*f4, f4 ] )->Group( <identity> of ... )] => [Group( 
 [ f3*f5, f5 ] )->Group( <identity> of ... )]]
-
-
 gap> IsStemXMod(X8);
 true
 gap> IsStemXMod(X9);
 false
-gap> Isoclinism( X8, X9 );
+gap> iso89 := Isoclinism( X8, X9 );;
+gap> MappingGeneratorsImages( iso89[1] );
+[ [ [ f1, f2, <identity> of ... ], [ f1*f2, f2, <identity> of ... ] ], 
+  [ [ f2, f2 ], [ f2, f2 ] ] ]
+gap> MappingGeneratorsImages( iso89[2] );
+[ [ [ f3*f4, f4 ], [ f3, f5 ] ], [ [  ], [  ] ] ]
+gap> XG := XMod(G);; 
+gap> XH := XMod(H);;
+gap> AreIsoclinicDomains( XG, XH );
 true
 
 

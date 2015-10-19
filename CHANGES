@@ -15,8 +15,9 @@ Problems and ToDos:
               (construction worked OK with isomorphic perm groups). 
 
 #############################################################################
-2.42 -> 2.43 (16/10/2015) 
+2.42 -> 2.43 (19/10/2015) 
 
+ - (19/10/15) revised Isoclinism for xmods; IsoAllXMods -> AllXModsUpToIso..
  - (16/10/15) changed all occurrences of XSq to CrossedSquare 
  - (15/10/15) fixed Iterator bug in Isoclinism for groups 
  - (13/10/15) CentralQuotient now a crossed module or a crossed square 
