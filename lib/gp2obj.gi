@@ -2,7 +2,7 @@
 ##
 #W  gp2obj.gi                 GAP4 package `XMod'               Chris Wensley
 #W                                                                & Murat Alp
-##  version 2.43, 19/10/2015 
+##  version 2.43, 20/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -278,24 +278,33 @@ function( g2d )
            gensrc, genrng, ker, genker, mor, triv, imact, a, 
            t, h, e, b, k, imt, imh, ime, imb, imk;
 
-    name := Name( g2d );
     src := Source( g2d );
     rng := Range( g2d );
+    if ( HasName(src) and HasName(rng) ) then 
+        name := Name( g2d ); 
+    else 
+        name := "[??->??]"; 
+    fi;
     gensrc := GeneratorsOfGroup( src );
     genrng := GeneratorsOfGroup( rng ); 
     if ( HasIsPreXMod( g2d ) and IsPreXMod( g2d ) ) then 
         if ( HasIsXMod( g2d ) and IsXMod( g2d ) ) then
-            Print( "\nCrossed module ", name, " :- \n" );
+            Print( "\nCrossed module " );
         else
-            Print( "\nPre-crossed module ", name, " :- \n" );
+            Print( "\nPre-crossed module " );
         fi; 
     else 
         if ( HasIsCat1( g2d ) and IsCat1( g2d ) ) then 
-            Print( "\nCat1-group ", name, " :- \n" );
+            Print( "\nCat1-group " );
         else
-            Print( "\nPre-cat1-group ", name, " :- \n" ); 
+            Print( "\nPre-cat1-group " ); 
         fi; 
     fi; 
+    if HasName( g2d ) then 
+        Print( Name(g2d), " :- \n" ); 
+    else 
+        Print( ":- \n" ); 
+    fi;
     ispar := not HasParent( src );
     if ( ispar and HasName( src ) ) then
         Print( ": Source group ", src );

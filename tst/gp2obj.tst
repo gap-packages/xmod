@@ -2,7 +2,7 @@
 ##
 #W  gp2obj.tst                    XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-##  version 2.43, 05/10/2015 
+##  version 2.43, 20/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -168,7 +168,7 @@ gap> C18 := Cat1Select( 18, 4, 3 );
 [(C3 x C3) : C2=>Group( [ f1, <identity> of ..., f3 ] )]
 gap> Display( C18 );
 
-Cat1-group [(C3 x C3) : C2=>..] :- 
+Cat1-group :- 
 : Source group (C3 x C3) : C2 has generators:
   [ f1, f2, f3 ]
 : Range group has generators:
