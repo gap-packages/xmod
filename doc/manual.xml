@@ -3,7 +3,7 @@
 <!--  manual.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
 <!--                                                     & Alper Odabas  -->
-<!--  version 2.43, 03/09/2015                                           --> 
+<!--  version 2.43, 20/10/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2015, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
@@ -16,7 +16,12 @@
 
 <!DOCTYPE Book SYSTEM "gapdoc.dtd"
   [<!ENTITY xmod "<Package>XMod</Package>"> 
-   <#Include Label="PKGVERSIONDATA"> 
+   <#Include Label="PKGVERSIONDATA">,
+   <!ENTITY Act "\mathop{\textrm{Act}\rm}">
+   <!ENTITY Aut "\mathop{\textrm{Aut}\rm}">
+   <!ENTITY Disp "\mathop{\textrm{Disp}\rm}">
+   <!ENTITY Fix "\mathop{\textrm{Fix}\rm}">
+   <!ENTITY Stab "\mathop{\textrm{Stab}\rm}">
   ]> 
 
 <!DOCTYPE Book SYSTEM "gapdoc.dtd"
@@ -113,7 +118,6 @@ Bug reports, suggestions and comments are, of course, welcome.
 Please contact the last author at <Email>c.d.wensley@bangor.ac.uk</Email> 
 or submit an issue at <URL>http://github.com/gap-system/xmod/</URL>, 
 and complement the paper <Cite Key="OUI1" />
-
 </Abstract>
 
 <Copyright> 

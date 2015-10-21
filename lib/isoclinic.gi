@@ -856,7 +856,7 @@ function( X1, X2 )
     ## check condition 2 : require D1 ~ D2 
     isoD := IsomorphismXMods( D1, D2 ); 
     if ( isoD = fail ) then 
-        Print( "derived subcrossed modules are not isomorphic\n" );
+        Info( InfoXMod, 1, "derived subcrossed modules are not isomorphic" );
         return fail; 
     fi;
     autD2 := AutomorphismPermGroup( D2 ); 

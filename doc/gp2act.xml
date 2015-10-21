@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2act.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  version 2.43, 18/10/2015                                           --> 
+<!--  version 2.43, 20/10/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2015, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
@@ -17,15 +17,15 @@
 <Section><Heading>Actor of a crossed module</Heading>
 <Index>actor</Index>
 
-The <E>actor</E> of <M>{\cal X}</M>  is a crossed module
-<M>(\Delta  :  {\cal W}({\cal X}) \to {\rm Aut}({\cal X}))</M>
+The <E>actor</E> of <M>\mathcal{X}</M>  is a crossed module
+<M>(\Delta : \mathcal{W}(\mathcal{X}) \to &Aut;(\mathcal{X}))</M>
 which was shown by Lue and Norrie, in <Cite Key="N2" /> 
 and <Cite Key="N1" /> to give the automorphism object 
-of a crossed module <M>{\cal X}</M>.
+of a crossed module <M>\mathcal{X}</M>.
 In this implementation, the source of the actor is a permutation 
 representation <M>W</M> of the Whitehead group of regular derivations, 
-and the range is a permutation representation <M>A</M> 
-of the automorphism group <M>{\rm Aut}({\cal X})</M> of <M>{\cal X}</M>.
+and the range of the actor is a permutation representation <M>A</M> 
+of the automorphism group <M>&Aut;(\mathcal{X})</M> of <M>\mathcal{X}</M>.
 
 <ManSection>
    <Attr Name="AutomorphismPermGroup"
@@ -36,9 +36,9 @@ of the automorphism group <M>{\rm Aut}({\cal X})</M> of <M>{\cal X}</M>.
          Arg="xmod perm" />
 <Description>
 The automorphisms <M>( \sigma, \rho )</M> of <M>\mathcal{X}</M> form a group 
-<M>Aut(\mathcal{X})</M> of crossed module isomorphisms. 
+<M>&Aut;(\mathcal{X})</M> of crossed module isomorphisms. 
 The function <C>AutomorphismPermGroup</C> finds a set of 
-<C>GeneratingAutomorphisms</C> for <M>Aut(\mathcal{X})</M>, 
+<C>GeneratingAutomorphisms</C> for <M>&Aut;(\mathcal{X})</M>, 
 and then constructs a permutation representation of this group, 
 which is used as the range of the actor crossed module of <M>\mathcal{X}</M>. 
 The individual automorphisms can be constructed from the permutation group 
@@ -93,25 +93,26 @@ give five crossed modules forming a <E>crossed square</E>:
 <Index>crossed square</Index>
 <List>
 <Item>
-<M>{\cal X} = (\partial : S \to R)</M>,~  
+<M>\mathcal{X} = (\partial : S \to R),~</M>  
 the initial crossed module, on the left,
 </Item>
 <Item>
-<M>{\cal W(X)} = (\eta : S \to W)</M>,~  
-the Whitehead crossed module of <M>{\cal X}</M>, at the top,
+<M>\mathcal{W}(\mathcal{X}) = (\eta : S \to W),~</M>  
+the Whitehead crossed module of <M>\mathcal{X}</M>, at the top,
 </Item>
 <Item>
-<M>{\cal L(X)} = (\Delta\circ\eta = \alpha\circ\partial : S \to A)</M>,~  
-the Lue crossed module of <M>{\cal X}</M>, 
+<M>\mathcal{L}(\mathcal{X}) 
+   = (\Delta\circ\eta = \alpha\circ\partial : S \to A),~</M> 
+the Lue crossed module of <M>\mathcal{X}</M>, 
 along the top-left to bottom-right diagonal,
 </Item>
 <Item>
-<M>{\cal N(X)} = (\alpha : R \to A)</M>,~  
-the Norrie crossed module of <M>{\cal X}</M>, at the bottom, and 
+<M>\mathcal{N}(X) = (\alpha : R \to A),~</M> 
+the Norrie crossed module of <M>\mathcal{X}</M>, at the bottom, and 
 </Item>
 <Item>
-<M>{\rm Act}({\cal X}) = ( \Delta : W \to A)</M>,~  
-the actor crossed module of <M>{\cal X}</M>, on the right.
+<M>&Act;(\mathcal{X}) = ( \Delta : W \to A),~</M> 
+the actor crossed module of <M>\mathcal{X}</M>, on the right.
 </Item>
 </List>
 </Description>
