@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  isoclinic.gd              GAP4 package `XMod'          Chris Wensley &  Alper Odabas
-#W                                                                       & Enver Uslu
+#W  isoclinic.gd              GAP4 package `XMod'                Alper Odabas
+#W                                                               & Enver Uslu
 ##  version 2.43, 21/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al 

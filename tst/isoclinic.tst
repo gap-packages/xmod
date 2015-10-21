@@ -73,14 +73,14 @@ gap> b22 := Boundary( X22 );;
 gap> Image( b22, d ) = Comm( r, Image( b22, s ) );  
 true
 gap> DisplacementSubgroup( X22 );
-Group([ f4, f4^2 ])
+Group([ f4 ])
 
 gap> fix := FixedPointSubgroupXMod( X22, S22, R22 );
 Group([ f3*f4 ])
 gap> stab := StabilizerSubgroupXMod( X22, S22, R22 );
 Group([ f5, f2*f3 ])
 gap> DX22 := DerivedSubXMod( X22 );  
-[Group( [ f4, f4^2 ] )->Group( [ f2 ] )]
+[Group( [ f4 ] )->Group( [ f2 ] )]
 
 gap> C57 := CommutatorSubXMod( X24, X5, X7 );
 [Group( [ f2 ] )->Group( [ f2, f5 ] )]
@@ -338,14 +338,14 @@ gap> ZX8 := CentreXMod( X8 );
 gap> FX8 := FactorXMod( X8, ZX8 );
 [Group( [ f1, f2, <identity> of ... ] )->Group( [ f2, f2 ] )]
 gap> DX8 := DerivedSubXMod( X8 );
-[Group( [ f3, f4 ] )->Group( <identity> of ... )]
+[Group( [ f3 ] )->Group( <identity> of ... )]
 gap> RankXMod( X8 );  
 [ 3., 1. ]
 gap> MiddleLength( X8 );    
 [ 1., 0. ]
 gap> LowerCentralSeries(X8);
 [ [Group( [ f1*f2*f3, f3, f4 ] )->Group( [ f2, f2 ] )], 
-  [Group( [ f3, f4 ] )->Group( <identity> of ... )], 
+  [Group( [ f3 ] )->Group( <identity> of ... )], 
   [Group( [ f4 ] )->Group( <identity> of ... )], 
   [Group( <identity> of ... )->Group( <identity> of ... )] ]
 
@@ -361,13 +361,13 @@ gap> FX9 := FactorXMod( X9, ZX9 );
 [Group( [ f1, f2, <identity> of ..., <identity> of ... ] )->Group( 
 [ f2, f2 ] )]
 gap> DX9 := DerivedSubXMod( X9 );
-[Group( [ f3, f5 ] )->Group( <identity> of ... )]
+[Group( [ f3 ] )->Group( <identity> of ... )]
 gap> morF := IsomorphismXMods( FX8, FX9 );
 [[Group( [ f1, f2, <identity> of ... ] )->Group( [ f2, f2 ] )] => [Group( 
 [ f1, f2, <identity> of ..., <identity> of ... ] )->Group( [ f2, f2 ] )]]
 gap> morD := IsomorphismXMods( DX8, DX9 );
-[[Group( [ f3, f4 ] )->Group( <identity> of ... )] => [Group( 
-[ f3, f5 ] )->Group( <identity> of ... )]]
+[[Group( [ f3 ] )->Group( <identity> of ... )] => [Group( 
+[ f3 ] )->Group( <identity> of ... )]]
 gap> IsStemXMod(X8);
 true
 gap> IsStemXMod(X9);
@@ -377,7 +377,7 @@ gap> MappingGeneratorsImages( iso89[1] );
 [ [ [ f1, f2, <identity> of ... ], [ f1*f2, f2, <identity> of ... ] ], 
   [ [ f2, f2 ], [ f2, f2 ] ] ]
 gap> MappingGeneratorsImages( iso89[2] );
-[ [ [ f3, f4 ], [ f3*f5, f5 ] ], [ [  ], [  ] ] ]
+[ [ [ f3 ], [ f3*f5 ] ], [ [  ], [  ] ] ]
 gap> XG := XMod(G);; 
 gap> XH := XMod(H);;
 gap> AreIsoclinicDomains( XG, XH );

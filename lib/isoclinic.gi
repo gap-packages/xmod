@@ -1,7 +1,7 @@
 #############################################################################
 ##
-#W  isoclinic.gi               GAP4 package `XMod'    Chris Wensley & Alper Odabas
-#W                                                                  & Enver Uslu
+#W  isoclinic.gi               GAP4 package `XMod'               Alper Odabas
+#W                                                               & Enver Uslu
 ##  version 2.43, 21/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al 
@@ -161,9 +161,11 @@ function( XM )
             fi;
         od;
     od;
-    if ( Length( Set(list) ) = 0 ) then 
+    if ( Length(list) = 0 ) then 
         list := [ one ];
     fi;
+    sonuc := Subgroup( T, list );
+    list := SmallGeneratingSet( sonuc );
     return Subgroup( T, list );
 end );
 
@@ -333,11 +335,11 @@ InstallMethod( DerivedSubXMod, "generic method for crossed modules", true,
     [ IsXMod ], 0,
 function(XM)
 
-    local  D, dgt; 
+    local  der, dis; 
 
-    D := DerivedSubgroup( Range( XM ) );
-    dgt := DisplacementSubgroup( XM ); 
-    return SubXMod( XM, dgt, D ); 
+    dis := DisplacementSubgroup( XM ); 
+    der := DerivedSubgroup( Range( XM ) );
+    return SubXMod( XM, dis, der ); 
 end );
 
 #############################################################################
@@ -468,18 +470,18 @@ function(XM1,XM2)
     if ( ( isoT = fail ) or ( isoG = fail ) ) then 
         return fail; 
     fi; 
-    iterT := Iterator( Filtered(AllHomomorphisms(T1,T2),IsBijective) ); 
+    iterT := Iterator( AllAutomorphisms( T2 ) ); 
     while not IsDoneIterator( iterT ) do
-        iterG := Iterator( Filtered(AllHomomorphisms(G1,G2),IsBijective) ) ; 
-        alp := NextIterator( iterT ); 
+        iterG := Iterator( AllAutomorphisms( G2 ) ); 
+        alp := isoT * NextIterator( iterT ); 
         while not IsDoneIterator( iterG ) do 
-            ph := NextIterator( iterG ); 
+            ph := isoG * NextIterator( iterG ); 
             mor := Make2dGroupMorphism( XM1, XM2, alp, ph ); 
             if ( IsPreXModMorphism( mor ) and IsXModMorphism( mor ) ) then 
                 return mor; 
             fi;
         od;
-    od;    
+    od;
     return fail;
 end );
 
@@ -951,10 +953,10 @@ function( XM, XM1_ler )
     sonuc := [ ];
     for XM1 in XM1_ler do
         if AreIsoclinicDomains( XM, XM1 ) then
-            Print(XM," ~ ",XM1,"\n" );    
+            Info( InfoXMod, 2, XM, " ~ ", XM1 );    
             Add( sonuc, Position(XM1_ler,XM1) );
         else
-            Print(XM," |~ ",XM1,"\n" );            
+            Info( InfoXMod, 2, XM, " |~ ", XM1 );            
         fi;        
     od; 
     return sonuc;
