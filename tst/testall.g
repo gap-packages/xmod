@@ -2,7 +2,7 @@
 ##
 #W  testall.g                 GAP4 package `XMod'               Chris Wensley
 ## 
-##  version 2.43, 03/09/2015 
+##  version 2.43, 21/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al 
 ##

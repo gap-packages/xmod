@@ -3,7 +3,7 @@
 #W  gp2up.gi                    GAP4 package `XMod'              Chris Wensley
 #W                                                                 & Murat Alp
 ##
-##  version 2.43, 30/09/2015 
+##  version 2.43, 21/10/2015 
 ##
 ##  This file contains implementations of UpMappings, Derivations and Sections
 ##

@@ -2,7 +2,7 @@
 ##
 #W  readall.g                     GAP4 package `XMod'            Chris Wensley
 #W             
-##  version 2.43, 18/09/2015 
+##  version 2.43, 21/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 

@@ -2,7 +2,7 @@
 ##
 #W  gp2obj.tst                    XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-##  version 2.43, 20/10/2015 
+##  version 2.43, 21/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 

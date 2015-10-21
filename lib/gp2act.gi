@@ -5,7 +5,7 @@
 ##
 ##  This file implements methods for actor crossed squares of crossed modules. 
 ##
-##  version 2.43, 16/10/2015 
+##  version 2.43, 21/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 

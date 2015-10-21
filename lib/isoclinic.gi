@@ -1,8 +1,8 @@
 #############################################################################
 ##
-#W  isoclinic.gi               GAP4 package `XMod'                Alper Odabas
-#W                                                                & Enver Uslu
-##  version 2.43, 20/10/2015 
+#W  isoclinic.gi               GAP4 package `XMod'    Chris Wensley & Alper Odabas
+#W                                                                  & Enver Uslu
+##  version 2.43, 21/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al 
 #Y   
@@ -468,12 +468,12 @@ function(XM1,XM2)
     if ( ( isoT = fail ) or ( isoG = fail ) ) then 
         return fail; 
     fi; 
-    iterT := Iterator( AllAutomorphisms( T2 ) ); 
+    iterT := Iterator( Filtered(AllHomomorphisms(T1,T2),IsBijective) ); 
     while not IsDoneIterator( iterT ) do
-        iterG := Iterator( AllAutomorphisms( G2 ) ); 
-        alp := isoT * NextIterator( iterT ); 
+        iterG := Iterator( Filtered(AllHomomorphisms(G1,G2),IsBijective) ) ; 
+        alp := NextIterator( iterT ); 
         while not IsDoneIterator( iterG ) do 
-            ph := isoG * NextIterator( iterG ); 
+            ph := NextIterator( iterG ); 
             mor := Make2dGroupMorphism( XM1, XM2, alp, ph ); 
             if ( IsPreXModMorphism( mor ) and IsXModMorphism( mor ) ) then 
                 return mor; 
