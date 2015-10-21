@@ -16,7 +16,12 @@
 
 <!DOCTYPE Book SYSTEM "gapdoc.dtd"
   [<!ENTITY xmod "<Package>XMod</Package>"> 
-   <#Include Label="PKGVERSIONDATA"> 
+   <#Include Label="PKGVERSIONDATA">,
+   <!ENTITY Act "\mathop{\textrm{Act}\rm}">
+   <!ENTITY Aut "\mathop{\textrm{Aut}\rm}">
+   <!ENTITY Disp "\mathop{\textrm{Disp}\rm}">
+   <!ENTITY Fix "\mathop{\textrm{Fix}\rm}">
+   <!ENTITY Stab "\mathop{\textrm{Stab}\rm}">
   ]> 
 
 <!DOCTYPE Book SYSTEM "gapdoc.dtd"
@@ -113,7 +118,6 @@ Bug reports, suggestions and comments are, of course, welcome.
 Please contact the last author at <Email>c.d.wensley@bangor.ac.uk</Email> 
 or submit an issue at <URL>http://github.com/gap-system/xmod/</URL>, 
 and complement the paper <Cite Key="OUI1" />
-
 </Abstract>
 
 <Copyright> 
