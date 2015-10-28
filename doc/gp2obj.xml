@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2obj.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  version 2.43, 21/10/2015                                           --> 
+<!--  version 2.43, 28/10/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2015, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
@@ -130,9 +130,6 @@ and range <M>R</M> of <M>\partial</M>, the boundary <C>Boundary(X0)</C>;
 <Item>
 <C>XModAction(X0)</C> is a homomorphism from <M>R</M> to <C>AutoGroup(X0)</C>.
 </Item>
-<Item>
-<C>ExternalSetXMod(X0)</C> is the group <M>S</M> as an <M>R</M>-set.
-</Item>
 </List>
 </Description>
 </ManSection>
@@ -151,7 +148,7 @@ More familiar attributes are <C>Size</C>, <C>Name</C> and <C>IdGroup</C>.
 The name is formed by concatenating the names of the source and range 
 (if these exist).
 <P/> 
-The <C>ExternalSetXMod"</C> for a crossed module is the course group considered as aG-set of the range group using the crossed module action. 
+The <C>ExternalSetXMod"</C> for a crossed module is the source group considered as a G-set of the range group using the crossed module action. 
 <P/> 
 An <C>Enumerator</C> function has not been implemented.
 <Index>display a 2d-group</Index>

@@ -1,8 +1,8 @@
-#############################################################################
+##############################################################################
 ##
-#W  isoclinic.gi               GAP4 package `XMod'               Alper Odabas
-#W                                                               & Enver Uslu
-##  version 2.43, 21/10/2015 
+#W  isoclinic.gi               GAP4 package `XMod'                Alper Odabas
+#W                                                                & Enver Uslu
+##  version 2.43, 28/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al 
 #Y   
@@ -161,12 +161,11 @@ function( XM )
             fi;
         od;
     od;
-    if ( Length(list) = 0 ) then 
+    if ( Length( Set(list) ) = 0 ) then 
         list := [ one ];
     fi;
     sonuc := Subgroup( T, list );
-    list := SmallGeneratingSet( sonuc );
-    return Subgroup( T, list );
+    return Subgroup( T, SmallGeneratingSet( sonuc ) ); 
 end );
 
 #############################################################################
@@ -205,6 +204,7 @@ function( XM, YM )
     srcN := Subgroup( S, gens ); 
     rngN := Intersection( Normalizer( G, H ), 
                 StabilizerSubgroupXMod( XM, S, G ) ); 
+    rngN := Subgroup( G, SmallGeneratingSet( rngN ) ); 
     return SubXMod( XM, srcN, rngN ); 
 end ); 
 
@@ -335,11 +335,11 @@ InstallMethod( DerivedSubXMod, "generic method for crossed modules", true,
     [ IsXMod ], 0,
 function(XM)
 
-    local  der, dis; 
+    local  D, dgt; 
 
-    dis := DisplacementSubgroup( XM ); 
-    der := DerivedSubgroup( Range( XM ) );
-    return SubXMod( XM, dis, der ); 
+    D := DerivedSubgroup( Range( XM ) );
+    dgt := DisplacementSubgroup( XM ); 
+    return SubXMod( XM, dgt, D ); 
 end );
 
 #############################################################################
@@ -481,7 +481,7 @@ function(XM1,XM2)
                 return mor; 
             fi;
         od;
-    od;
+    od;    
     return fail;
 end );
 
@@ -493,14 +493,104 @@ InstallMethod( AllXModsWithGroups, "generic method for a pair of groups",
     true, [ IsGroup, IsGroup ], 0,
 function( T, G )
 
-    local  list, autT, itTG, itGA, b1, a1, obj;
+    local  list, A, itTG, itGA, b1, a1, obj;
 
     list := [ ];
-    autT := AutomorphismGroup(T); 
+    A := AutomorphismGroup(T); 
     itTG := Iterator( AllHomomorphisms(T,G) );
     while not IsDoneIterator( itTG ) do 
         b1 := NextIterator( itTG ); 
-        itGA := Iterator( AllHomomorphisms(G,autT) );
+        itGA := Iterator( AllHomomorphisms(G,A) );
+        while not IsDoneIterator( itGA ) do 
+            a1 := NextIterator( itGA ); 
+            obj := PreXModObj( b1, a1 );  
+            if ( IsPreXMod( obj ) and IsXMod( obj ) ) then 
+                Add( list, obj );
+            fi;
+        od; 
+    od;
+    return list;
+end );
+
+InstallMethod( AllXModsWithGroups0, "generic method for a pair of groups", 
+    true, [ IsGroup, IsGroup ], 0,
+function( T, G )
+
+    local  list, A, allTG, allGA, b1, a1, obj;
+
+    list := [ ];
+    A := AutomorphismGroup(T); 
+    allTG := AllHomomorphisms(T,G);
+    allGA := AllHomomorphisms(G,A);
+    for b1 in allTG do  
+        for a1 in allGA do 
+            obj := PreXModObj( b1, a1 );  
+            if ( IsPreXMod( obj ) and IsXMod( obj ) ) then 
+                Add( list, obj );
+            fi;
+        od; 
+    od;
+    return list;
+end );
+
+InstallMethod( AllXModsWithGroups1, "generic method for a pair of groups", 
+    true, [ IsGroup, IsGroup ], 0,
+function( T, G )
+
+    local  list, A, itTG, itGA, b1, a1, obj;
+
+    list := [ ];
+    A := AutomorphismGroup(T); 
+    itTG := Iterator( AllHomomorphismClasses(T,G) );
+    while not IsDoneIterator( itTG ) do 
+        b1 := NextIterator( itTG ); 
+        itGA := Iterator( AllHomomorphisms(G,A) );
+        while not IsDoneIterator( itGA ) do 
+            a1 := NextIterator( itGA ); 
+            obj := PreXModObj( b1, a1 );  
+            if ( IsPreXMod( obj ) and IsXMod( obj ) ) then 
+                Add( list, obj );
+            fi;
+        od; 
+    od;
+    return list;
+end );
+
+InstallMethod( AllXModsWithGroups2, "generic method for a pair of groups", 
+    true, [ IsGroup, IsGroup ], 0,
+function( T, G )
+
+    local  list, A, itTG, itGA, b1, a1, obj;
+
+    list := [ ];
+    A := AutomorphismGroup(T); 
+    itTG := Iterator( AllHomomorphisms(T,G) );
+    while not IsDoneIterator( itTG ) do 
+        b1 := NextIterator( itTG ); 
+        itGA := Iterator( AllHomomorphismClasses(G,A) );
+        while not IsDoneIterator( itGA ) do 
+            a1 := NextIterator( itGA ); 
+            obj := PreXModObj( b1, a1 );  
+            if ( IsPreXMod( obj ) and IsXMod( obj ) ) then 
+                Add( list, obj );
+            fi;
+        od; 
+    od;
+    return list;
+end );
+
+InstallMethod( AllXModsWithGroups3, "generic method for a pair of groups", 
+    true, [ IsGroup, IsGroup ], 0,
+function( T, G )
+
+    local  list, A, itTG, itGA, b1, a1, obj;
+
+    list := [ ];
+    A := AutomorphismGroup(T); 
+    itTG := Iterator( AllHomomorphismClasses(T,G) );
+    while not IsDoneIterator( itTG ) do 
+        b1 := NextIterator( itTG ); 
+        itGA := Iterator( AllHomomorphismClasses(G,A) );
         while not IsDoneIterator( itGA ) do 
             a1 := NextIterator( itGA ); 
             obj := PreXModObj( b1, a1 );  
@@ -870,7 +960,7 @@ function( X1, X2 )
     ## check condition 1 : require Q1 ~ Q2 
     isoQ := IsomorphismXMods( Q1, Q2 ); 
     if ( isoQ = fail ) then 
-        Print( "factor crossed modules X/ZX are not isomorphic\n" );
+        Info( InfoXMod, 1, "factor crossed modules X/ZX are not isomorphic" );
         return fail; 
     fi;
 

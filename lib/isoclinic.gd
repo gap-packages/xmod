@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.gd              GAP4 package `XMod'                Alper Odabas
 #W                                                               & Enver Uslu
-##  version 2.43, 21/10/2015 
+##  version 2.43, 28/10/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al 
 ##
@@ -91,6 +91,10 @@ DeclareOperation( "IsomorphismXMods", [  Is2dGroup, Is2dGroup ] );
 ##
 DeclareGlobalFunction( "AllXMods" );
 DeclareOperation( "AllXModsWithGroups", [ IsGroup, IsGroup ] );
+DeclareOperation( "AllXModsWithGroups0", [ IsGroup, IsGroup ] );
+DeclareOperation( "AllXModsWithGroups1", [ IsGroup, IsGroup ] );
+DeclareOperation( "AllXModsWithGroups2", [ IsGroup, IsGroup ] );
+DeclareOperation( "AllXModsWithGroups3", [ IsGroup, IsGroup ] );
 
 
 ############################################################################# 
