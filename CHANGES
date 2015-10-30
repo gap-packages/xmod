@@ -15,8 +15,9 @@ Problems and ToDos:
               (construction worked OK with isomorphic perm groups). 
 
 #############################################################################
-2.42 -> 2.43 (20/10/2015) 
+2.42 -> 2.43 (30/10/2015) 
 
+ - (28/10/15) added MathJax to makedocrel.g 
  - (20/10/15) moved code from FactorXMod to NaturalMorphiusmByNormalSubXMod 
               corrected formulae in Displacement and DisplacementSubgroup 
  - (19/10/15) revised Isoclinism for xmods; IsoAllXMods -> AllXModsUpToIso..
