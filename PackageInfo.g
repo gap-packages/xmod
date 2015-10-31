@@ -9,15 +9,15 @@ PackageName := "XMod",
 Subtitle := "Crossed Modules and Cat1-Groups",
 
 Version := "2.43",
-Date := "28/10/2015",
+Date := "31/10/2015",
 
 ##  duplicate these values for inclusion in the manual: 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
 ##  <!ENTITY VERSION "2.43">
 ##  <!ENTITY TARFILENAME "xmod-2.43.tar.gz">
 ##  <!ENTITY HTMLFILENAME "xmod243.html">
-##  <!ENTITY RELEASEDATE "28/10/2015">
-##  <!ENTITY LONGRELEASEDATE "28th October 2015">
+##  <!ENTITY RELEASEDATE "31/10/2015">
+##  <!ENTITY LONGRELEASEDATE "31st October 2015">
 ##  <!ENTITY COPYRIGHTYEARS "1997-2015">
 ##  <#/GAPDoc>
 
@@ -106,18 +106,11 @@ PackageInfoURL :=
 ##    - Type and the URL of the source code repository
 ##    - URL of the public issue tracker
 ##    - Support email address
-##
-##  SourceRepository :=
-##    rec( Type := "git/hg/svn/cvs", # must be one of "git", "hg", "svn", "cvs"
-##         URL  := "http://hosting-service.com/mypackage"),
-##  IssueTrackerURL := "http://issue-tracker.com/mypackage",
-##  SupportEmail := "support@mypackage.org",
-#
-# SourceRepository :=
-#    rec( Type := "git/hg/svn/cvs", # must be one of "git", "hg", "svn", "cvs"
-#         URL := ""),
-# IssueTrackerURL := "",
-# SupportEmail := "",
+SourceRepository :=
+  rec( Type := "git", # must be one of "git", "hg", "svn", "cvs"
+       URL  := "http://github.com/gap-packages/xmod"),
+IssueTrackerURL := "http://github.com/gap-packages/xmod/issues",
+SupportEmail := "c.d.wensley@bangor.ac.uk",
 
 AbstractHTML :=
  "The <span class=\"pkgname\">XMod</span> package provides a collection \
