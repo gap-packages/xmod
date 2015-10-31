@@ -37,7 +37,7 @@ Problems and ToDos:
  - (24/09/15) added CrossActionSubgroup 
  - (23/09/15) removed last occurrences of AllIsomorphisms 
  - (22/09/15) added functions for isoclinism of groups 
- - (18/09/15) processsed a number of properties in the isoclinic files 
+ - (18/09/15) processed a number of properties in the isoclinic files 
  - (17/09/15) added example in manual subsection 2.1.4. 
  - (15/09/15) methods for InnerMorphism, ActorXMod, CentreXMod, etc. 
               now specified only for permutation crossed modules 
