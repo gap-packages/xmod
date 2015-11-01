@@ -9,7 +9,7 @@ PackageName := "XMod",
 Subtitle := "Crossed Modules and Cat1-Groups",
 
 Version := "2.43",
-Date := "31/10/2015",
+Date := "01/11/2015",
 
 ##  duplicate these values for inclusion in the manual: 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
@@ -17,7 +17,7 @@ Date := "31/10/2015",
 ##  <!ENTITY TARFILENAME "xmod-2.43.tar.gz">
 ##  <!ENTITY HTMLFILENAME "xmod243.html">
 ##  <!ENTITY RELEASEDATE "31/10/2015">
-##  <!ENTITY LONGRELEASEDATE "31st October 2015">
+##  <!ENTITY LONGRELEASEDATE "1st November 2015">
 ##  <!ENTITY COPYRIGHTYEARS "1997-2015">
 ##  <#/GAPDoc>
 

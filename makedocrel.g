@@ -1,10 +1,12 @@
-##  makedocrel.g,  version 16/10/15
-##  This builds the documentation of the XMod package
+##  makedocrel.g for package XMod, version 01/11/15
+##  This builds the documentation of the XMod package. 
 ##  Needs: GAPDoc package, latex, pdflatex, mkindex
 ##  
 LoadPackage( "GAPDoc" );
 
-MakeGAPDocDoc( "doc",     # path to the directory containing the main file
+XModDoc := Filename( DirectoriesPackageLibrary( "XMod", "doc" ), "" );
+
+MakeGAPDocDoc( XModDoc,   # path to the directory containing the main file
                "manual",  # the name of the main file (without extension)
                           # list of (probably source code) files relative 
                           # to path which contain pieces of documentation 
@@ -22,7 +24,7 @@ MakeGAPDocDoc( "doc",     # path to the directory containing the main file
 
 # Copy the *.css and *.js files from the styles directory of the GAPDoc 
 # package into the directory containing the package manual.
-CopyHTMLStyleFiles( "doc" );
+CopyHTMLStyleFiles( XModDoc );
 
 # Create the manual.lab file which is needed if the main manuals or another 
 # package is referring to your package
