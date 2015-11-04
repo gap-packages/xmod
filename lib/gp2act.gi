@@ -5,7 +5,7 @@
 ##
 ##  This file implements methods for actor crossed squares of crossed modules. 
 ##
-##  version 2.43, 21/10/2015 
+##  version 2.43, 04/11/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -141,8 +141,8 @@ function( XM )
     AR := Subgroup( autR, [ IdentityMapping( R ) ] );
     AS := Subgroup( autS, [ IdentityMapping( S ) ] );
     for ar in autR do
-        as := RestrictionMappingGroups( ar, S, S ); 
-        if not ( as = fail ) then 
+        as := GeneralRestrictedMapping( ar, S, S ); 
+        if not ( fail in MappingGeneratorsImages(as)[2] ) then 
             if not ( ar in AR ) then 
                 Add( genAR, ar );
                 Add( genAS, as );

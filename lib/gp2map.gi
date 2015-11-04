@@ -2,7 +2,7 @@
 ##
 #W  gp2map.gi                  GAP4 package `XMod'               Chris Wensley
 #W                                                                 & Murat Alp
-##  version 2.43, 21/10/2015 
+##  version 2.43, 04/11/2015 
 ##
 ##  This file installs methods for 2dMappings for crossed modules and 
 ##  cat1-groups. 
@@ -1439,7 +1439,7 @@ function( X0 )
         return IdentityMapping( X0 );
     else
         S1 := ImagesSource( bdy0 );
-        sigma := RestrictionMappingGroups( bdy0, S0, S1 );
+        sigma := GeneralRestrictedMapping( bdy0, S0, S1 );
         rho := IdentityMapping( R );
         ok := IsBijective( sigma ) and IsBijective( rho );
         return PreXModIsomorphismByIsomorphisms( X0, sigma, rho );

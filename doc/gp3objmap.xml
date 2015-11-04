@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp3objmap.xml         XMod documentation            Chris Wensley  -->
 <!--                                                                     -->
-<!--  version 2.43, 21/10/2015                                           --> 
+<!--  version 2.43, 04/11/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2015, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
@@ -244,7 +244,7 @@ the crossed pairing <M>\boxtimes : (R \times F) \to S</M>,
 where <M>F = Fix(\mathcal{X},S,R)</M>, is the displacement element 
 <M>\boxtimes(r,Fs) = \langle r,s \rangle = (s^{-1})^rs</M> 
 (see <Ref Func="Displacement"/> and section
-<Ref Sect="isoclinism of crossed modules"/>). 
+<Ref Sect="sect-isoclinic-xmods"/>). 
 </Item>
 </List>
 This is the special case of an intended function 

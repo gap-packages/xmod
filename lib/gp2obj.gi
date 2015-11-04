@@ -2,7 +2,7 @@
 ##
 #W  gp2obj.gi                 GAP4 package `XMod'               Chris Wensley
 #W                                                                & Murat Alp
-##  version 2.43, 21/10/2015 
+##  version 2.43, 04/11/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -1456,9 +1456,9 @@ function( C, G, R )
         Print( "restrictions of Ct, Ch to G must have common image R\n" );
         ok := false;
     fi;
-    t := RestrictionMappingGroups( Ct, G, R );
-    h := RestrictionMappingGroups( Ch, G, R );
-    e := RestrictionMappingGroups( Ce, R, G );
+    t := GeneralRestrictedMapping( Ct, G, R );
+    h := GeneralRestrictedMapping( Ch, G, R );
+    e := GeneralRestrictedMapping( Ce, R, G );
     SC := PreCat1ByTailHeadEmbedding( t, h, e );
     if not ( C = SC ) then
         SetParent( SC, C );
@@ -1951,7 +1951,7 @@ InstallOtherMethod( Kernel,
 ##
 InstallOtherMethod( Boundary,
     "method for a pre-cat1-group", true, [ IsPreCat1 ], 0,
-    C1G -> RestrictionMappingGroups( HeadMap(C1G), Kernel(C1G), Range(C1G) ) );
+    C1G -> GeneralRestrictedMapping( HeadMap(C1G), Kernel(C1G), Range(C1G) ) );
 
 #############################################################################
 ##

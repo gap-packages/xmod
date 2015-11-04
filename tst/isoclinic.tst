@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.tst               XMOD test file           Chris Wensley & Alper Odabas
 #W                                                                     & Enver Uslu
-##  version 2.43, 21/10/2015 
+##  version 2.43, 03/11/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 ##
@@ -17,38 +17,40 @@ gap> X24 := XModByAutomorphismGroup( D24 );
 gap> Size(X24);
 [ 24, 48 ]
 gap> nsx := NormalSubXMods( X24 );; 
-gap> Length( nsx ); 
-40
-gap> X30 := nsx[30]; 
+gap> ids := List( nsx, n -> IdGroup(n) );; 
+gap> pos1 := Position( ids, [ [4,1], [8,3] ] );;
+gap> Xn1 := nsx[pos1];
 [Group( [ f2*f4^2, f3*f4 ] )->Group( [ f3, f4, f5 ] )]
-gap> Size( X30 ); 
+gap> Size( Xn1 ); 
 [ 4, 8 ]
-gap> nat30 := NaturalMorphismByNormalSubXMod( X24, X30 ); 
+gap> natn := NaturalMorphismByNormalSubXMod( X24, Xn1 ); 
 [[D24->PAut(D24)] => [..]]
-gap> Q30 := FactorXMod( X24, X30 ); 
+gap> Qn1 := FactorXMod( X24, Xn1 ); 
 [Group( [ f1, f2, f2^2, f2 ] )->Group( 
 [ f1, f2, <identity> of ..., <identity> of ..., <identity> of ... ] )]
-gap> Size( Q30 );
+gap> Size( Qn1 );
 [ 6, 6 ]
-gap> nat := NaturalMorphismByNormalSubXMod( X24, X30 ); 
+gap> nat1 := NaturalMorphismByNormalSubXMod( X24, Xn1 ); 
 [[D24->PAut(D24)] => [..]]
 
-gap> X5 := nsx[5];
+gap> pos2 := Position( ids, [ [24,6], [12,4] ] );;
+gap> Xn2 := nsx[pos2]; 
 [D24->Group( [ f1*f3, f2, f5 ] )]
-gap> X7 := nsx[7];
+gap> pos3 := Position( ids, [ [12,2], [24,5] ] );;
+gap> Xn3 := nsx[pos3]; 
 [Group( [ f2, f3, f4 ] )->Group( [ f1, f2, f4, f5 ] )]
-gap> X57 := IntersectionSubXMods( X24, X5, X7 );
+gap> Xn23 := IntersectionSubXMods( X24, Xn2, Xn3 );
 [Group( [ f2, f3, f4 ] )->Group( [ f2, f5, f2^2, f2*f5, f2^2*f5 ] )]
-gap> Position( nsx, X57 );                              
-21
-gap> [ Size(X5), Size(X7), Size(X57) ];
+gap> [ Size(Xn2), Size(Xn3), Size(Xn23) ];
 [ [ 24, 12 ], [ 12, 24 ], [ 12, 6 ] ]
 
-gap> X22 := nsx[22];
-[Group( [ f3, f4 ] )->Group( [ f1, f2, f3, f5 ] )]
-gap> Display(X22);
+gap> pos4 := Position( ids, [ [6,2], [24,14] ] );;
+gap> Xn4 := nsx[pos4];; 
+gap> Sn4 := Source(Xn4);;  SetName( Sn4, "c6" ); 
+gap> Rn4 := Range(Xn4);;  SetName( Rn4, "c2c2s3" );
+gap> Display(Xn4);
 
-Crossed module :- 
+Crossed module [c6->c2c2s3] :- 
 : Source group has generators:
   [ f3, f4 ]
 : Range group has generators:
@@ -62,31 +64,27 @@ Crossed module :-
   f5 --> { source gens --> [ f3, f4 ] }
   These 4 automorphisms generate the group of automorphisms.
 
-gap> S22:=Source(X22);;  SetName( S22, "c6" ); 
-gap> R22 := Range(X22);;  SetName( R22, "c2c2s3" );
-gap> Name( X22 );
-"[c6->c2c2s3]"
-gap> r := R22.1;;  s := S22.1;; 
-gap> d := Displacement( XModAction(X22), r, s );
+gap> r := Rn4.1;;  s := Sn4.1;; 
+gap> d := Displacement( XModAction(Xn4), r, s );
 f4
-gap> b22 := Boundary( X22 );;
-gap> Image( b22, d ) = Comm( r, Image( b22, s ) );  
+gap> bn4 := Boundary( Xn4 );;
+gap> Image( bn4, d ) = Comm( r, Image( bn4, s ) );  
 true
-gap> DisplacementSubgroup( X22 );
+gap> DisplacementSubgroup( Xn4 );
 Group([ f4 ])
 
-gap> fix := FixedPointSubgroupXMod( X22, S22, R22 );
+gap> fix := FixedPointSubgroupXMod( Xn4, Sn4, Rn4 );
 Group([ f3*f4 ])
-gap> stab := StabilizerSubgroupXMod( X22, S22, R22 );
+gap> stab := StabilizerSubgroupXMod( Xn4, Sn4, Rn4 );
 Group([ f5, f2*f3 ])
-gap> DX22 := DerivedSubXMod( X22 );  
+gap> DXn4 := DerivedSubXMod( Xn4 );  
 [Group( [ f4 ] )->Group( [ f2 ] )]
 
-gap> C57 := CommutatorSubXMod( X24, X5, X7 );
+gap> Cn23 := CommutatorSubXMod( X24, Xn2, Xn3 );
 [Group( [ f2 ] )->Group( [ f2, f5 ] )]
-gap> Size(C57);
+gap> Size(Cn23);
 [ 12, 6 ]
-gap> X57 = C57;
+gap> Xn23 = Cn23;
 true
 gap> Q24 := CentralQuotient( D24) ;                     
 [D24->Group( [ f1, f2, f3 ] )]
@@ -95,53 +93,53 @@ gap> Q24 := CentralQuotient( D24) ;
 gap> G24:= SmallGroup( 24, 14 );
 <pc group of size 24 with 4 generators>
 gap> norm := NormalSubgroups( G24 );;
-gap> List( norm, n -> Size(n));   
-[ 24, 12, 12, 12, 12, 12, 12, 12, 6, 6, 6, 6, 6, 6, 6, 4, 2, 2, 2, 3, 1 ]
-gap> N2 := norm[2];
-Group([ f1, f3, f4 ])
-gap> X2 := XModByNormalSubgroup( G24, N2 );
-[Group( [ f1, f3, f4 ] )->Group( [ f1, f2, f3, f4 ] )]
-gap> stab := StabilizerSubgroupXMod( X2, N2, G24 );
+gap> ids2 := List( norm, n -> IdGroup(n) );;
+gap> pos5 := Position( ids2, [12,5] );;
+gap> N5 := norm[pos5];;
+gap> Xn5 := XModByNormalSubgroup( G24, N5 );
+[Group( [ f2, f3, f4 ] )->Group( [ f1, f2, f3, f4 ] )]
+gap> stab := StabilizerSubgroupXMod( Xn5, N5, G24 );
+Group([ f3, f2*f4 ])
+gap> fix := FixedPointSubgroupXMod( Xn5, N5, G24 );
 Group([ f2, f3 ])
-gap> fix := FixedPointSubgroupXMod( X2, N2, G24 );
-Group([ f3 ])
-gap> im := Image(Boundary(X2),fix);
-Group([ f3 ])
-gap> N9 := norm[9];
-Group([ f3, f4 ])
-gap> C9 := Centralizer( G24, N9 );
+gap> im := Image(Boundary(Xn5),fix);
+Group([ f2, f3 ])
+gap> pos6 := Position( ids2, [3,1] );;
+gap> N6 := norm[pos6];
+Group([ f4 ])
+gap> Cn6 := Centralizer( G24, N6 );
 Group([ f2, f3, f4 ])
-gap> inter := Intersection( stab, C9 );
-Group([ f2, f3 ])
-gap> stab=Intersection( stab, C9 );
+gap> inter := Intersection( stab, Cn6 );
+Group([ f3, f2*f4 ])
+gap> stab=Intersection( stab, Cn6 );
 true
-gap> Y9 := SubXMod( X2, fix, inter );
-[Group( [ f3 ] )->Group( [ f2, f3 ] )]
-gap> Display(Y9);
+gap> Y6 := SubXMod( Xn5, fix, inter );
+[Group( [ f2, f3 ] )->Group( [ f3, f2*f4 ] )]
+gap> Display(Y6);
 
 Crossed module :- 
 : Source group has generators:
-  [ f3 ]
-: Range group has generators:
   [ f2, f3 ]
+: Range group has generators:
+  [ f3, f2*f4 ]
 : Boundary homomorphism maps source generators to:
-  [ f3 ]
+  [ f2, f3 ]
   The automorphism group is trivial
 
-gap> Size(Y9);
-[ 2, 4 ]
+gap> Size(Y6);
+[ 4, 12 ]
 
-gap> ZX22 := CentreXMod( X22 );      
+gap> ZXn4 := CentreXMod( Xn4 );      
 [Group( [ f3*f4 ] )->Group( [ f3, f5 ] )]
-gap> IdGroup( ZX22 );
+gap> IdGroup( ZXn4 );
 [ [ 2, 1 ], [ 4, 2 ] ]
-gap> CDX22 := Centralizer( X22, DX22 );
+gap> CDXn4 := Centralizer( Xn4, DXn4 );
 [Group( [ f3*f4 ] )->Group( [ f2 ] )]
-gap> IdGroup( CDX22 );    
+gap> IdGroup( CDXn4 );    
 [ [ 2, 1 ], [ 3, 1 ] ]
-gap> NDX22 := Normalizer( X22, DX22 ); 
+gap> NDXn4 := Normalizer( Xn4, DXn4 ); 
 [Group( <identity> of ... )->Group( [ f5, f2*f3 ] )]
-gap> IdGroup( NDX22 );
+gap> IdGroup( NDXn4 );
 [ [ 1, 1 ], [ 12, 5 ] ]
 
 gap> LX1 := LowerCentralSeries( X1 );
@@ -176,13 +174,14 @@ gap> NilpotencyClassOf2dGroup( X1 );
 ## you can 'return;' to continue 
 
 
-gap> [ IsAbelian2dGroup(X22), IsAbelian2dGroup(X24) ];
+gap> [ IsAbelian2dGroup(Xn4), IsAbelian2dGroup(X24) ];
 [ false, false ]
-gap> [ IsAspherical2dGroup(nsx[38]), IsAspherical2dGroup(X24) ];
+gap> pos7 := Position( ids, [ [3,1], [6,1] ] );;
+gap> [ IsAspherical2dGroup(nsx[pos7]), IsAspherical2dGroup(X24) ];
 [ true, false ]
-gap> [ IsSimplyConnected2dGroup(X22), IsSimplyConnected2dGroup(X24) ];
+gap> [ IsSimplyConnected2dGroup(Xn4), IsSimplyConnected2dGroup(X24) ];
 [ true, true ]
-gap> [ IsFaithful2dGroup(X22), IsFaithful2dGroup(X24) ];              
+gap> [ IsFaithful2dGroup(Xn4), IsFaithful2dGroup(X24) ];              
 [ false, true ] 
 
 

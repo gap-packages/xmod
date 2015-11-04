@@ -2,7 +2,7 @@
 ##
 #W  util.tst                      XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-##  version 2.43, 21/10/2015 
+##  version 2.43, 04/11/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -27,8 +27,10 @@ gap> incd8;
 [ (11,13,15,17)(12,14,16,18), (12,18)(13,17)(14,16) ] -> 
 [ (11,13,15,17)(12,14,16,18), (12,18)(13,17)(14,16) ]
 gap> imd8 := Image( incd8 );; 
-gap> resd8 := RestrictionMappingGroups( incd8, c4, imd8 );
-[ (11,13,15,17)(12,14,16,18) ] -> [ (11,13,15,17)(12,14,16,18) ]
+gap> resd8 := GeneralRestrictedMapping( incd8, c4, imd8 );
+GeneralRestrictedMapping( [ (11,13,15,17)(12,14,16,18), (12,18)(13,17)(14,16) 
+ ] -> [ (11,13,15,17)(12,14,16,18), (12,18)(13,17)(14,16) ], c4, Group([ (11,
+13,15,17)(12,14,16,18), (12,18)(13,17)(14,16) ]) )
 gap> Source( resd8 ); Range( resd8 );
 c4
 Group([ (11,13,15,17)(12,14,16,18), (12,18)(13,17)(14,16) ])
