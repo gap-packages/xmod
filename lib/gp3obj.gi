@@ -5,7 +5,7 @@
 ##  This file implements generic methods for (pre-)crossed squares and
 ##  (pre-)cat2-groups.
 ##
-##  version 2.43, 21/10/2015 
+##  version 2.43, 04/11/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -286,9 +286,9 @@ function( P, M, N )
     return CrossedSquareByNormalSubgroups( P, M, N, L );;
 end );
 
-##############################################################################
+###############################################################################
 ##
-#M  ActorCrossedSquare                create a crossed square from an xmod and its actor
+#M  ActorCrossedSquare . . . create a crossed square from an xmod and its actor
 ##
 InstallMethod( ActorCrossedSquare, "actor crossed square", true, [ IsXMod ], 0,
 function( X0 )

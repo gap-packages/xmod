@@ -2,7 +2,7 @@
 ##
 #W  gp2ind.gi                      XMOD Package                  Chris Wensley
 ##
-##  version 2.43, 21/10/2015 
+##  version 2.43, 04/11/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -89,7 +89,7 @@ InstallGlobalFunction( InducedXMod, function( arg )
     else  ## split in two ##
         Info( InfoXMod, 2, "splitting into surjective and injective cases" );
         iP := ImagesSource( iota );
-        ires := RestrictionMappingGroups( iota, P, iP );
+        ires := GeneralRestrictedMapping( iota, P, iP );
         Info( InfoXMod, 2, "iota splits: ires =", ires );
         X1 := SurjectiveInducedXMod( X0, ires );
         if ( InfoLevel( InfoXMod ) > 0 ) then

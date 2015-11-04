@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2obj.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  version 2.43, 28/10/2015                                           --> 
+<!--  version 2.43, 04/11/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2015, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
@@ -229,7 +229,7 @@ These conditions ensure that  <M>M \ltimes N</M>  is normal in
 the semidirect product <M>R \ltimes S</M>. 
 <P/>
 A method for <C>IsNormal</C> is provided. 
-See section <Ref Sect="iso-ops"/> for quotient crossed modules. 
+See section <Ref Sect="sect-more-xmod-ops"/> for quotient crossed modules. 
 <P/> 
 The five normal subcrossed modules of <C>X4</C> found in the following 
 example are <C>[id,id], [k4,k4], [k4,a4], [a4,a4]</C> 

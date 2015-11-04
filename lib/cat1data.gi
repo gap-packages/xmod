@@ -2,7 +2,7 @@
 ##
 #W  cat1data.gi                GAP4 package `XMod'               Chris Wensley
 ##
-##  version 2.43, 21/10/2015 
+##  version 2.43, 04/11/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -484,9 +484,12 @@ function( gp, nn, kk, range )
         gpj := Source( Cj ); 
         iso := IsomorphismGroups( gpj, gp );
         Rj := Range( Cj ); 
-        res := RestrictionMappingGroups( iso, Rj, gp );
-        res := RestrictionMappingGroups( iso, Rj, Image(res) ); 
+        res := GeneralRestrictedMapping( iso, Rj, gp );
+        res := GeneralRestrictedMapping( iso, Rj, Image(res) ); 
         ok := IsBijective( iso ) and IsBijective( res ); 
+        if not ok then 
+            Error( "iso/res not bijective in CooectPartsAlreadyDone" ); 
+        fi;
         mor := PreCat1IsomorphismByIsomorphisms( Cj, iso, res ); 
         C1[j] := Range( mor ); 
     od; 
