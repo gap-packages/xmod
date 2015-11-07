@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.gi               GAP4 package `XMod'                Alper Odabas
 #W                                                                & Enver Uslu
-##  version 2.43, 04/11/2015 
+##  version 2.43, 07/11/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al 
 #Y   
@@ -283,7 +283,7 @@ InstallMethod( NaturalMorphismByNormalSubXMod,
 function( XM, PM )
 
     local  alpha1, alpha2, partial1, partial2, nhom1, nhom2, T, G, S, H, 
-           B1, B2, bdy, act, FM;
+           im1, im2, sg1, sg2, B1, B2, bdy, act, FM;
 
     if not IsNormal( XM, PM ) then 
         Error( "not a normal subcrossed module" ); 
@@ -298,8 +298,12 @@ function( XM, PM )
     H := Range(PM);
     nhom1 := NaturalHomomorphismByNormalSubgroup(T,S);
     nhom2 := NaturalHomomorphismByNormalSubgroup(G,H);
-    B1 := Image(nhom1); # T/S bölüm grubu
-    B2 := Image(nhom2); # G/H bölüm grubu
+    im1 := Image( nhom1 ); 
+    sg1 := SmallGeneratingSet( im1 );
+    B1 := GroupWithGenerators( sg1, One(im1) ); # T/S bölüm grubu 
+    im2 := Image( nhom2 ); 
+    sg2 := SmallGeneratingSet( im2 );
+    B2 := GroupWithGenerators( sg2, One(im2) ); # G/H bölüm grubu
     bdy := GroupHomomorphismByFunction( B1, B2, 
              a -> Image( nhom2, 
                Image(partial1,PreImagesRepresentative( nhom1, a ) ) ) );
@@ -653,9 +657,9 @@ end );
 
 #############################################################################
 ##
-#M IsStemGroup . . . check that the centre is a subgroup of the derived group
+#M IsStemDomain . . . check that the centre is a subgroup of the derived group
 ## 
-InstallMethod( IsStemGroup, "generic method for groups", true, [ IsGroup ], 0,
+InstallMethod( IsStemDomain, "generic method for groups", true, [ IsGroup ], 0,
 function(G)
     return IsSubgroup( DerivedSubgroup(G), Centre(G) );
 end );
@@ -672,7 +676,7 @@ function(a)
 
     sonuc := [ ]; 
     for g in AllSmallGroups( a ) do 
-        if IsStemGroup( g ) then 
+        if IsStemDomain( g ) then 
             Add( sonuc, IdGroup( g ) ); 
         fi;
     od; 
@@ -884,10 +888,10 @@ end );
 
 #############################################################################
 ##
-#M IsoclinicStemGroup . . . 
+#M IsoclinicStemDomain . . . ?? is this really the best way ??
 ## 
-InstallMethod( IsoclinicStemGroup, "generic method for a group", 
-    true, [ IsGroup ], 0,
+InstallMethod( IsoclinicStemDomain, "generic method for a group", true, 
+    [ IsGroup ], 0,
 function(G)
 
     local  i, len, divs, id, gi;
@@ -895,14 +899,14 @@ function(G)
     if ( HasIsAbelian(G) and IsAbelian(G) ) then 
         return [ [ 1, 1 ] ]; 
     fi;
-    if IsStemGroup(G) then 
+    if IsStemDomain(G) then 
         return G;
     fi; 
     divs := DivisorsInt( Size(G) );
     len := Length( divs ); 
     for i in divs{[2..len-1]} do 
         for gi in AllSmallGroups( i ) do 
-            if IsStemGroup( gi ) then
+            if IsStemDomain( gi ) then
                 if AreIsoclinicDomains( G, gi ) then 
                     return gi; 
                 fi; 
@@ -919,9 +923,9 @@ end );
 
 #############################################################################
 ##
-#M IsStemXMod . . check that the centre xmod is a subxmod of the derived xmod
+#M IsStemDomain . check that the centre xmod is a subxmod of the derived xmod
 ## 
-InstallMethod( IsStemXMod, "generic method for crossed modules", true, 
+InstallOtherMethod( IsStemDomain, "generic method for crossed modules", true, 
     [ IsXMod ], 0,
 function(X0)
     return IsSubXMod( DerivedSubXMod(X0), CentreXMod(X0) );
