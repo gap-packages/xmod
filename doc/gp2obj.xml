@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2obj.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  version 2.43, 04/11/2015                                           --> 
+<!--  version 2.43, 05/11/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2015, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
@@ -670,5 +670,40 @@ Cat1-group [..=>..] :-
 </Example>
 
 </Section>
+
+
+<Section Label="sect-extra-fns">
+<Heading>More functions for crossed modules and cat1-groups</Heading>
+
+Chapter <Ref Chap="chap-isclnc" /> contains functions for quotient 
+crossed modules; centre of a crossed module; 
+commutator and derived subcrossed modules; etc. 
+<P/> 
+Here we mention two functions for groups which have been extended to the 
+two-dimensional case. 
+<ManSection>
+   <Oper Name="IdGroup" 
+         Arg="2dgroup" /> 
+   <Oper Name="StructureDescription" 
+         Arg="2dgroup" /> 
+<Description>
+These two functions return two-element lists formed by applying the function 
+to the source and range of the 2d-group. 
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> IdGroup( X16 );
+[ [ 8, 3 ], [ 16, 7 ] ]
+gap> StructureDescription( C18 );
+[ "(C3 x C3) : C2", "S3" ]
+]]>
+</Example>
+
+
+</Section>
+
+
+
 
 </Chapter>

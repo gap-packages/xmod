@@ -15,8 +15,10 @@ Problems and ToDos:
               (construction worked OK with isomorphic perm groups). 
 
 #############################################################################
-2.42 -> 2.43 (04/11/2015) 
+2.42 -> 2.43 (07/11/2015) 
 
+ - (07/11/15) Revised manual, chapter 7, and isoclinic.tst
+ - (06/11/15) IsStemGroup & IsStemXMod -> IsStemDomain etc. 
  - (04/11/15) RestrictionMappingGroups -> GeneralRestgrictedMapping 
  - (01/11/15) makedocrel.g: added MathJax; changed "doc" to XModDoc 
  - (20/10/15) moved code from FactorXMod to NaturalMorphiusmByNormalSubXMod 

@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.gd              GAP4 package `XMod'                Alper Odabas
 #W                                                               & Enver Uslu
-##  version 2.43, 28/10/2015 
+##  version 2.43, 07/11/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al 
 ##
@@ -103,11 +103,11 @@ DeclareOperation( "AllXModsWithGroups3", [ IsGroup, IsGroup ] );
 
 #############################################################################
 ##
-#P IsStemGroup . . . check that the centre is a subgroup of the derived group
+#P IsStemDomain . . check that the centre is a subgroup of the derived domain
 #O AllStemGroupFamilies . . . . . all IdGroups of stem groups of chosen order 
 #A MiddleLength . . . 
 ## 
-DeclareProperty( "IsStemGroup", IsGroup );
+DeclareProperty( "IsStemDomain", IsGroup );
 DeclareOperation( "AllStemGroupIds", [ IsPosInt ] );
 DeclareOperation( "AllStemGroupFamilies", [ IsPosInt ] );
 DeclareAttribute( "CentralQuotient", IsGroup ); 
@@ -115,11 +115,11 @@ DeclareAttribute( "MiddleLength", IsGroup );
 
 #############################################################################
 ##
-#A IsoclinicStemGroup . . . . . . . . . . . find a stem group for the group G 
+#A IsoclinicStemDomain  . . . . . . . . . . find a stem group for the group G 
 #O Isoclinism . . . find a homomorphism between the stem groups of two groups
-#O AreIsoclinic . . . . check if an isoclinism exists between two (2d-)groups
+#O AreIsoclinicDomains . . . does an isoclinism exist between two (2d-)groups
 ##
-DeclareAttribute( "IsoclinicStemGroup", IsGroup );
+DeclareAttribute( "IsoclinicStemDomain", IsGroup );
 DeclareOperation( "Isoclinism", [ IsGroup, IsGroup ] );
 DeclareOperation( "AreIsoclinicDomains", [ IsDomain, IsDomain ] );
 
@@ -127,12 +127,6 @@ DeclareOperation( "AreIsoclinicDomains", [ IsDomain, IsDomain ] );
 ############################################################################# 
 #####           FUNCTIONS FOR ISOCLINISM OF CROSSED MODULES             ##### 
 ############################################################################# 
-
-#############################################################################
-##
-#P IsStemXMod . . check that the centre xmod is a subxmod of the derived xmod
-## 
-DeclareProperty( "IsStemXMod", IsXMod );
 
 #############################################################################
 ##

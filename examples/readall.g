@@ -2,7 +2,7 @@
 ##
 #W  readall.g                     GAP4 package `XMod'            Chris Wensley
 #W             
-##  version 2.43, 21/10/2015 
+##  version 2.43, 07/11/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -20,4 +20,5 @@ Read( Filename( xmod_examples_dir, "isoclinic.g" ) );
 Read( Filename( xmod_examples_dir, "gp3objmap.g" ) ); 
 Read( Filename( xmod_examples_dir, "gpd2obj.g" ) ); 
 Read( Filename( xmod_examples_dir, "sl25.g" ) ); 
+Read( Filename( xmod_examples_dir, "sl25pcg" ) ); 
 
