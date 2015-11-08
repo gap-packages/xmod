@@ -2,7 +2,7 @@
 ##
 #W  gp2map.gd                   GAP4 package `XMod'              Chris Wensley
 #W                                                                 & Murat Alp
-##  version 2.43, 21/10/2015 
+##  version 2.43, 08/11/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -106,23 +106,13 @@ DeclareOperation( "Cat1MorphismByXModMorphism", [ IsXModMorphism ] );
 
 #############################################################################
 ##
-#A  IsomorphismPermPreXMod( <pre-xmod> )
-#A  IsomorphismFpPreXMod( <pre-xmod> )
-#A  IsomorphismPcPreXMod( <pre-xmod> )
+#A  IsomorphismPerm2dGroup( <obj> )
+#A  IsomorphismFp2dgroup( <obj> )
+#A  IsomorphismPc2dgroup( <obj> )
 ##
-DeclareAttribute( "IsomorphismPermPreXMod", IsPreXMod );
-DeclareAttribute( "IsomorphismFpPreXMod", IsPreXMod );
-DeclareAttribute( "IsomorphismPcPreXMod", IsPreXMod );
-
-#############################################################################
-##
-#A  IsomorphismPermPreCat1( <pre-cat1> )
-#A  IsomorphismFpPreCat1( <pre-cat1> )
-#A  IsomorphismPcPreCat1( <pre-cat1> )
-##
-DeclareAttribute( "IsomorphismPermPreCat1", IsPreCat1 );
-DeclareAttribute( "IsomorphismFpPreCat1", IsPreCat1 );
-DeclareAttribute( "IsomorphismPcPreCat1", IsPreCat1 );
+DeclareAttribute( "IsomorphismPerm2dGroup", Is2dGroup );
+DeclareAttribute( "IsomorphismFp2dGroup", Is2dGroup );
+DeclareAttribute( "IsomorphismPc2dGroup", Is2dGroup );
 
 #############################################################################
 ##

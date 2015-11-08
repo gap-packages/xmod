@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2map.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  version 2.43, 21/10/2015                                           --> 
+<!--  version 2.43, 08/11/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2015, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
@@ -107,9 +107,9 @@ It is usually sufficient to verify that both the <C>SourceHom</C> and the
          Arg="X1 r" />
    <Attr Name="IdentityMapping"
          Arg="X1" />
-   <Func Name="IsomorphismPermObject"
+   <Func Name="IsomorphismPerm2dGroup"
          Arg="obj" />
-   <Func Name="IsomorphismPcObject"
+   <Func Name="IsomorphismPc2dGroup"
          Arg="obj" />
 <Description>
 These are the constructors for morphisms of pre-crossed and crossed modules.
@@ -118,7 +118,7 @@ In the following example we construct a simple automorphism of
 the crossed module  <C>X1</C>  constructed in the previous chapter.
 </Description>
 </ManSection>
-
+<P/>
 <Index>display a 2d-mapping</Index>
 <Index>order of a 2d-automorphism</Index>
 <Example>
@@ -191,13 +191,11 @@ e_2 \rho = \gamma e_1.
          Arg="C1 r" />
    <Attr Name="IdentityMapping"
          Arg="C1" />
-   <Func Name="IsomorphismPermObject"
-         Arg="obj" />
    <Func Name="SmallerDegreePerm2dDomain"
          Arg="obj" />
 <Description>
 The global function <C>IsomorphismPermObject</C> 
-calls <C>IsomorphismPermPreCat1</C>, 
+calls <C>IsomorphismPerm2dGroup</C>, 
 which constructs a morphism whose <C>SourceHom</C> and <C>RangeHom</C> 
 are calculated using <C>IsomorphismPermGroup</C> on the source and range.  
 Similarly <C>SmallerDegreePermutationRepresentation</C> is used on the
@@ -205,20 +203,24 @@ two groups to obtain <C>SmallerDegreePerm2dDomain</C>.
 Names are assigned automatically.
 </Description>
 </ManSection>
-
+<P/>
 <Example>
 <![CDATA[
-gap> iso2 := IsomorphismPermObject( C2 );; 
+gap> iso2 := IsomorphismPerm2dgroup( C2 );; 
 gap> Display( iso2 ); 
 Morphism of cat1-groups :- 
 : Source = [s3c4=>s3] with generating sets:
   [ f1, f2, f3, f4 ]
   [ f1, f2 ]
 :  Range = P[s3c4=>s3] with generating sets:
-  [ (6,7), (5,6,7), (1,2,3,4), (1,3)(2,4) ]
+  [ ( 2, 5)( 6, 9)( 7,10)(11,12), ( 1, 2, 5)( 3, 6, 9)( 4, 7,10)( 8,11,12), 
+  ( 1, 3, 4, 8)( 2, 6, 7,11)( 5, 9,10,12), ( 1, 4)( 2, 7)( 3, 8)( 5,10)( 6,11)
+    ( 9,12) ]
   [ (2,3), (1,2,3) ]
 : Source Homomorphism maps source generators to:
-  [ (6,7), (5,6,7), (1,2,3,4), (1,3)(2,4) ]
+  [ ( 2, 5)( 6, 9)( 7,10)(11,12), ( 1, 2, 5)( 3, 6, 9)( 4, 7,10)( 8,11,12), 
+  ( 1, 3, 4, 8)( 2, 6, 7,11)( 5, 9,10,12), ( 1, 4)( 2, 7)( 3, 8)( 5,10)( 6,11)
+    ( 9,12) ]
 : Range Homomorphism maps range generators to:
   [ (2,3), (1,2,3) ]
 ]]>
@@ -241,7 +243,7 @@ calls the <C>CompositionMorphism</C> function for maps acting on the left,
 applied to the appropriate type of 2d-mapping.
 </Description>
 </ManSection>
-
+<P/>
 <Example>
 <![CDATA[
 gap> GeneratorsOfGroup( d16 );
@@ -290,7 +292,7 @@ The inclusion of the kernel is a standard example of a crossed square,
 but these have not yet been implemented.
 </Description>
 </ManSection>
-
+<P/>
 <Example>
 <![CDATA[
 gap> c2 := Group( (19,20) );;

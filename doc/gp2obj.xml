@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2obj.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  version 2.43, 05/11/2015                                           --> 
+<!--  version 2.43, 08/11/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2015, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
@@ -16,7 +16,6 @@
 <Heading>2d-groups : crossed modules and cat1-groups</Heading>
 
 <Section Label="sect-constructions">
-
 <Heading>Constructions for crossed modules</Heading>
 
 <Index>crossed module</Index>
@@ -37,7 +36,13 @@ for all <M>s,s_1,s_2 \in S</M>  and  <M>r \in R</M>,
 {\bf XMod\ 2}  :   s_1^{\partial s_2} 
    = s_2^{-1}s_1 s_2
    = {s_1}^{s_2}.
-</Display>
+</Display> 
+When only the first of these axioms is satisfied, the resulting structure is 
+a <E>pre-crossed module</E> 
+(see section <Ref Sect="sect-precrossed-modules" />).
+(Much of the literature on crossed modules uses left actions, 
+but we have chosen to use right actions in this package 
+since that is the standard choice for group actions in &GAP;.) 
 <P/>
 The kernel of  <M>\partial</M>  is abelian.
 <P/>
@@ -61,7 +66,7 @@ There are a variety of constructors for crossed modules:
    <Oper Name="XModByGroupOfAutomorphisms"
          Arg="G A" />
    <Oper Name="XModByAbelianModule"
-         Arg="abgrp" />
+         Arg="abmod" />
    <Oper Name="DirectProduct"
          Arg="X1 X2" />
 <Description>
@@ -74,12 +79,12 @@ has  <M>s^r = s</M>  for all  <M>s \in S, \; r \in R</M>,
 the source is abelian and the image lies in the centre of the range.
 </Item>
 <Item>
-A <E>conjugation crossed module</E> is an inclusion of a normal subgroup  
+A <E>conjugation crossed module</E> is the inclusion of a normal subgroup  
 <M>S \unlhd R</M>, where <M>R</M> acts on <M>S</M> by conjugation.
 </Item>
 <Item>
 A <E>central extension crossed module</E> has as boundary a surjection
-<M>\partial : S \to R</M> with central kernel,
+<M>\partial : S \to R</M>, with central kernel,
 where <M>r \in R</M> acts on <M>S</M> by conjugation 
 with <M>\partial^{-1}r</M>.
 </Item>
@@ -144,21 +149,23 @@ and range <M>R</M> of <M>\partial</M>, the boundary <C>Boundary(X0)</C>;
    <Attr Name="ExternalSetXMod"
          Arg="X0" />
 <Description>
-More familiar attributes are <C>Size</C>, <C>Name</C> and <C>IdGroup</C>. 
+More familiar attributes are <C>Name</C>, <C>Size</C> and <C>IdGroup</C>. 
 The name is formed by concatenating the names of the source and range 
-(if these exist).
+(if these exist). 
+<C>Size</C> and <C>IdGroup</C> return two-element lists. 
 <P/> 
 The <C>ExternalSetXMod"</C> for a crossed module is the source group considered as a G-set of the range group using the crossed module action. 
 <P/> 
-An <C>Enumerator</C> function has not been implemented.
 <Index>display a 2d-group</Index>
 The <C>Display</C> function is used to print details of 2d-groups.
 </Description>
 </ManSection>
 
-Here is a simple example of an automorphism crossed module, 
+In the simple example below, <Code>X1</Code> is an automorphism crossed module, 
 using a cyclic group of size five.
-
+The <C>Print</C> statements at the end list the &GAP; representations, 
+properties and attributes of <Code>X1</Code>. 
+<P/>
 <Example>
 <![CDATA[
 gap> c5 := Group( (5,6,7,8,9) );;
@@ -176,25 +183,65 @@ Crossed module [c5 -> PAut(c5)] :-
 : Action homomorphism maps range generators to automorphisms:
   (1,2,3,4) --> { source gens --> [ (5,7,9,6,8) ] }
   This automorphism generates the group of automorphisms.
-gap> Size( X1 );
+gap> Size( X1 );  IdGroup( X1 ); 
 [ 5, 4 ]
-gap> IdGroup( X1 ); 
 [ [ 5, 1 ], [ 4, 1 ] ]
 gap> ext := ExternalSetXMod( X1 ); 
 <xset:[ (), (5,6,7,8,9), (5,7,9,6,8), (5,8,6,9,7), (5,9,8,7,6) ]>
 gap> Orbits( ext );
 [ [ () ], [ (5,6,7,8,9), (5,7,9,6,8), (5,9,8,7,6), (5,8,6,9,7) ] ]
-gap> Print( RepresentationsOfObject(X1), "\n" );
+gap> RepresentationsOfObject( X1 );
 [ "IsComponentObjectRep", "IsAttributeStoringRep", "IsPreXModObj" ]
-gap> Print( KnownPropertiesOfObject(X1), "\n" );
+gap> KnownPropertiesOfObject( X1 );
 [ "IsEmpty", "IsTrivial", "IsNonTrivial", "IsFinite", 
   "CanEasilyCompareElements", "CanEasilySortElements", "IsDuplicateFree", 
-  "IsPerm2dDomain", "IsPreXMod", "IsXMod", "IsAutomorphismGroup2dDomain" ]
-gap> Print( KnownAttributesOfObject(X1), "\n" );
+  "IsGeneratorsOfSemigroup", "IsPreXModDomain", "IsPerm2dGroup", "IsPreXMod", 
+  "IsXMod", "IsAutomorphismGroup2dGroup" ]
+gap> KnownAttributesOfObject( X1);
 [ "Name", "Size", "Range", "Source", "IdGroup", "Boundary", "AutoGroup", 
   "XModAction", "ExternalSetXMod" ]
 ]]>
 </Example>
+
+<Index>IsTrivialAction2dGroup</Index>
+<Index>IsNormalSubgroup2dGroup</Index>
+<Index>IsCentralExtension2dGroup</Index>
+<Index>IsAutomorphismGroup2dGroup</Index>
+<Index>IsAbelianModule2dGroup</Index>
+<ManSection>
+   <Prop Name="IsXMod"
+         Arg="X0" />
+   <Prop Name="IsPreXMod"
+         Arg="X0" />
+   <Prop Name="IsPerm2dGroup"
+         Arg="X0" />
+   <Prop Name="IsPc2dGroup"
+         Arg="X0" />
+   <Prop Name="IsFp2dGroup"
+         Arg="X0" />
+<Description>
+The underlying category structures for the objects constructed in this 
+chapter follow the sequence <C>Is2dDomain</C>; <C>Is2dMagma</C>; 
+<C>Is2dMagmaWithOne</C>; <C>Is2dMagmaWithInverses</C>, 
+mirroring the situation for (one-dimensional) groups. 
+From these we construct <C>Is2dSemigroup</C>, <C>Is2dMonoid</C> 
+and <C>Is2dGroup</C>. 
+<P/>
+A structure which has <C>IsPerm2dGroup</C> is a precrossed module 
+or a pre-cat1-group (see section <Ref Sect="sect-cat1" />) 
+whose source and range are both permutation groups. 
+The properties <C>IsPc2dGroup</C>, <C>IsFp2dGroup</C> 
+are defined similarly. 
+We see in the previous example that <Code>X1</Code> has 
+<C>IsPreXMod</C>, <C>IsXMod</C> and <C>IsPerm2dGroup</C>. 
+There are also properties corresponding to the various construction methods 
+listed in section <Ref Sect="sect-constructions" />: 
+<C>IsTrivialAction2dGroup</C>; <C>IsNormalSubgroup2dGroup</C>; 
+<C>IsCentralExtension2dGroup</C>; <C>IsAutomorphismGroup2dGroup</C>; 
+<C>IsAbelianModule2dGroup</C>. 
+</Description>
+</ManSection>
+
 
 <Index>IsNormal for crossed modules</Index>
 <ManSection>
@@ -222,20 +269,24 @@ is <E>normal</E> in <M>\mathcal{X} = (\partial : S \to R)</M>  if
 <M>n^r \in N</M>  for all  <M>n \in N,~r \in R</M>,
 </Item>
 <Item>
-<M>s^{-1}s^m \in N</M>  for all  <M>m \in M,~s \in S</M>.
+<M>(s^{-1})^ms \in N</M>  for all  <M>m \in M,~s \in S</M>.
 </Item>
 </List>
 These conditions ensure that  <M>M \ltimes N</M>  is normal in  
 the semidirect product <M>R \ltimes S</M>. 
+(Note that <M>\langle s,m \rangle = (s^{-1})^ms</M> 
+is a displacement: see <Ref Func="Displacement" />.)
 <P/>
-A method for <C>IsNormal</C> is provided. 
-See section <Ref Sect="sect-more-xmod-ops"/> for quotient crossed modules. 
+A method for <C>IsNormal</C> for crossed modules is provided. 
+See section <Ref Sect="sect-more-xmod-ops"/> for quotient crossed modules 
+and natural homomorphisms. 
 <P/> 
 The five normal subcrossed modules of <C>X4</C> found in the following 
 example are <C>[id,id], [k4,k4], [k4,a4], [a4,a4]</C> 
 and <C>X4</C> itself. 
 </Description>
 </ManSection>
+<P/>
 <Example>
 <![CDATA[
 gap> s4 := SymmetricGroup( IsPermGroup, 4 );
@@ -258,7 +309,8 @@ gap> Length( NX4 );
 </Section>
 
 
-<Section><Heading>Pre-crossed modules</Heading>
+<Section Label="sect-precrossed-modules">
+<Heading>Pre-crossed modules</Heading>
 
 <Index>pre-crossed module</Index>
 <ManSection>
@@ -271,7 +323,7 @@ If axiom  <M>{\bf XMod\ 2}</M> is <E>not</E> satisfied,
 the corresponding structure is known as a <E>pre-crossed module</E>.
 </Description>
 </ManSection>
-
+<P/>
 <Example>
 <![CDATA[
 gap> c := (11,12,13,14,15,16,17,18);;  d := (12,18)(13,17)(14,16);;
@@ -285,6 +337,8 @@ gap> aut16 := Group( [ h1, h2 ] );;
 gap> act16 := GroupHomomorphismByImages( sk4, aut16, [c^4,d], [h1,h2] );;
 gap> P16 := PreXModByBoundaryAndAction( bdy16, act16 );
 [d16->sk4]
+gap> IsXMod(P16);
+false
 ]]>
 </Example>
 
@@ -299,8 +353,9 @@ The <E>Peiffer subgroup</E> of a pre-crossed module <M>P</M> of <M>S</M>
 is the subgroup of  <M>{\rm ker}(\partial)</M>
 generated by  <E>Peiffer commutators</E>
 <Display>
-\langle s_1,s_2 \rangle \quad=\quad 
-(s_1^{-1})^{\partial s_2}~s_2^{-1}~s_1~s_2~.
+\lfloor s_1,s_2 \rfloor ~=~ 
+(s_1^{-1})^{\partial s_2}~s_2^{-1}~s_1~s_2 ~=~ 
+\langle \partial s_2, s_1 \rangle\ [s_1,s_2]~.
 </Display>
 Then  <M>\mathcal{P} = (0 : P \to \{1_R\})</M>
 is a normal sub-pre-crossed module of  <M>\mathcal{X}</M>
@@ -310,7 +365,7 @@ is a crossed module.
 In the following example the Peiffer subgroup is cyclic of size <M>4</M>.
 </Description>
 </ManSection>
-
+<P/>
 <Example>
 <![CDATA[
 gap> P := PeifferSubgroup( P16 );
@@ -332,16 +387,6 @@ Group([ (1,2), (3,4) ])
 ]]>
 </Example>
 
-<ManSection>
-   <Prop Name="IsPermXMod"
-         Arg="X0" />
-   <Prop Name="IsPcPreXMod"
-         Arg="X0" />
-<Description>
-When both source and range groups are of the same type,
-corresponding properties are assigned to the crossed module.
-</Description>
-</ManSection>
 </Section>
 
 
@@ -420,7 +465,7 @@ These are some of the constructors for pre-cat1-groups and cat1-groups.
 The following listing shows an example of a cat1-group of pc-groups:
 </Description>
 </ManSection>
-
+<P/>
 <Example>
 <![CDATA[
 gap> s3 := SymmetricGroup(IsPcGroup,3);;   
@@ -498,8 +543,7 @@ The action of  <M>R</M>  on  <M>S</M>  is conjugation in  <M>G</M>  via the embe
 of  <M>R</M>  in  <M>G</M>.
 </Description>
 </ManSection>
-
-
+<P/>
 <Example>
 <![CDATA[
 gap> SetName( Kernel( t2 ), "ker(t2)" );;
@@ -550,6 +594,7 @@ and the associated conjugation crossed module
 is given by the normal subgroup <C>c3</C> of <C>s3</C>.
 </Description>
 </ManSection>
+<P/>
 <Example>
 <![CDATA[
 gap> ## check the number of groups of size 18
@@ -634,6 +679,7 @@ up to groups of size 171, which is expected to appear in a future
 release of <Package>HAP</Package>. 
 </Description>
 </ManSection>
+<P/>
 <Example>
 <![CDATA[
 gap> gp := SmallGroup( 102, 2 ); 
@@ -691,6 +737,7 @@ These two functions return two-element lists formed by applying the function
 to the source and range of the 2d-group. 
 </Description>
 </ManSection>
+<P/>
 <Example>
 <![CDATA[
 gap> IdGroup( X16 );

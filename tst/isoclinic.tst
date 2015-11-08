@@ -11,7 +11,7 @@
 gap> saved_infolevel_xmod := InfoLevel( InfoXMod );; 
 gap> SetInfoLevel( InfoXMod, 0 );
 
-gap> ## 7.1.1 
+#### 7.1.1 
 gap> D24 := DihedralGroup(24);;  SetName( D24, "D24" );
 gap> X24 := XModByAutomorphismGroup( D24 );; 
 gap> Size(X24);
@@ -30,7 +30,7 @@ gap> Qn1 := FactorXMod( X24, Xn1 );
 gap> Size( Qn1 );
 [ 6, 6 ]
 
-gap> ## 7.1.2
+#### 7.1.2
 gap> pos2 := Position( ids, [ [24,6], [12,4] ] );;
 gap> Xn2 := nsx[pos2]; 
 [D24->Group( [ f1*f3, f2, f5 ] )]
@@ -42,7 +42,7 @@ gap> Xn23 := IntersectionSubXMods( X24, Xn2, Xn3 );
 gap> [ Size(Xn2), Size(Xn3), Size(Xn23) ];
 [ [ 24, 12 ], [ 12, 24 ], [ 12, 6 ] ]
 
-gap> ## 7.1.3
+#### 7.1.3
 gap> pos4 := Position( ids, [ [6,2], [24,14] ] );;
 gap> Xn4 := nsx[pos4];; 
 gap> Sn4 := Source(Xn4);; 
@@ -56,7 +56,7 @@ true
 gap> DisplacementSubgroup( Xn4 );
 Group([ f4 ])
 
-gap> ## 7.1.4
+#### 7.1.4
 gap> Cn23 := CommutatorSubXMod( X24, Xn2, Xn3 );
 [Group( [ f2 ] )->Group( [ f2, f5 ] )]
 gap> Size(Cn23);
@@ -66,17 +66,17 @@ true
 gap> Q24 := CentralQuotient( D24) ;                     
 [D24->Group( [ f1, f2, f3 ] )]
 
-gap> ## 7.1.5
+#### 7.1.5
 gap> DXn4 := DerivedSubXMod( Xn4 );  
 [Group( [ f4 ] )->Group( [ f2 ] )]
 
-gap> ## 7.1.6
+#### 7.1.6
 gap> fix := FixedPointSubgroupXMod( Xn4, Sn4, Rn4 );
 Group([ f3*f4 ])
 gap> stab := StabilizerSubgroupXMod( Xn4, Sn4, Rn4 );
 Group([ f5, f2*f3 ])
 
-gap> ## 7.1.7
+#### 7.1.7
 gap> ZXn4 := CentreXMod( Xn4 );      
 [Group( [ f3*f4 ] )->Group( [ f3, f5 ] )]
 gap> IdGroup( ZXn4 );
@@ -90,12 +90,12 @@ gap> NDXn4 := Normalizer( Xn4, DXn4 );
 gap> IdGroup( NDXn4 );
 [ [ 1, 1 ], [ 12, 5 ] ]
 
-gap> ## 7.1.8
+#### 7.1.8
 gap> Q24 := CentralQuotient( D24);  Size( Q24 );                     
 [D24->Group( [ f1, f2, f3 ] )]
 [ 24, 12 ]
 
-gap> ## 7.1.9
+#### 7.1.9
 gap> [ IsAbelian2dGroup(Xn4), IsAbelian2dGroup(X24) ];
 [ false, false ]
 gap> pos7 := Position( ids, [ [3,1], [6,1] ] );;
@@ -106,7 +106,7 @@ gap> [ IsSimplyConnected2dGroup(Xn4), IsSimplyConnected2dGroup(X24) ];
 gap> [ IsFaithful2dGroup(Xn4), IsFaithful2dGroup(X24) ];              
 [ false, true ] 
 
-gap> ## 7.1.10
+#### 7.1.10
 gap> LowerCentralSeries(X24);      
 [ [D24->PAut(D24)], [Group( [ f2 ] )->Group( [ f2, f5 ] )], 
   [Group( [ f3*f4^2 ] )->Group( [ f2 ] )], [Group( [ f4 ] )->Group( [ f2 ] )] 
@@ -116,7 +116,7 @@ false
 gap> NilpotencyClassOf2dGroup(X24);
 0
 
-gap> ## 7.1.11
+#### 7.1.11
 gap> xc6s3 := AllXMods( SmallGroup(6,2), SmallGroup(6,1) );;   
 gap> Length( xc6s3 );           
 4
@@ -132,14 +132,16 @@ gap> Collected( size36 );
   [ [ 6, 6 ], 17 ], [ [ 9, 4 ], 102 ], [ [ 12, 3 ], 8 ], [ [ 18, 2 ], 18 ], 
   [ [ 36, 1 ], 4 ] ]
 
-gap> ## 7.1.12
+#### 7.1.12
 gap> IsomorphismXMods( x66[1], x66[2] );
 [[Group( [ f1, f2 ] )->Group( [ f1, f2 ] )] => [Group( [ f1, f2 ] )->Group( 
 [ f1, f2 ] )]]
 gap> iso66 := AllXModsUpToIsomorphism( x66 );;  Length( iso66 ); 
 9 
 
-gap> ## 7.2.1
+#### testing isoclinism of groups #### 
+
+#### 7.2.1
 gap> G := SmallGroup( 64, 6 );;  StructureDescription( G ); 
 "(C8 x C4) : C2"
 gap> QG := CentralQuotient( G );;  IdGroup( QG );
@@ -157,7 +159,7 @@ gap> QK := CentralQuotient( K );;  IdGroup( QK );
 gap> AreIsoclinicDomains( G, K );
 false
 
-gap> ## 7.2.2
+#### 7.2.2
 gap> DerivedSubgroup(G);     
 Group([ f3, f5 ])
 gap> IsStemDomain( G );
@@ -175,13 +177,16 @@ gap> AllStemGroupFamilies( 32 );
       [ 32, 33 ], [ 32, 34 ], [ 32, 35 ] ], [ [ 32, 43 ], [ 32, 44 ] ], 
   [ [ 32, 49 ], [ 32, 50 ] ] ]
 
-gap> ## 7.2.3
+#### 7.2.3
 gap> MiddleLength(G);
 1.
 gap> RankXMod(X1);
 [ 2.32193, 2. ]
 
-gap> ## 7.3.1
+
+#### testing isoclinism of groups #### 
+
+#### 7.3.1
 gap> C8 := Cat1(16,8,1);;
 gap> X8 := XMod(C8);  IdGroup( X8 );
 [Group( [ f1*f2*f3, f3, f4 ] )->Group( [ f2, f2 ] )]
@@ -199,13 +204,13 @@ gap> Display( ism89 );
   [[Group( [ f3 ] )->Group( <identity> of ... )] => [Group( 
     [ f3 ] )->Group( <identity> of ... )]] ]
 
-gap> ## 7.3.2
+#### 7.3.2
 gap> IsStemDomain(X8);
 true
 gap> IsStemDomain(X9);
 false
 
-gap> ## 7.3.3
+#### 7.3.3
 gap> MiddleLength(X24);
 [ 2.58496, 2.58496 ]
 

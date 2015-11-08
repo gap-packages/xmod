@@ -3,7 +3,7 @@
 #W  util.gi                    GAP4 package `XMod'               Chris Wensley
 #W                                                                 & Murat Alp
 ##
-##  version 2.43, 21/10/2015 
+##  version 2.43, 08/11/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -907,9 +907,9 @@ InstallGlobalFunction( IsomorphismPermObject, function( obj )
     if IsGroup( obj ) then
         return IsomorphismPermGroup( obj );
     elif IsPreXMod( obj ) then
-        return IsomorphismPermPreXMod( obj );
+        return IsomorphismPerm2dGroup( obj );
     elif IsPreCat1( obj ) then
-        return IsomorphismPermPreCat1( obj );
+        return IsomorphismPerm2dGroup( obj );
     else
         return fail;
     fi;
@@ -919,9 +919,9 @@ InstallGlobalFunction( IsomorphismFpObject, function( obj )
     if IsGroup( obj ) then
         return IsomorphismFpGroup( obj );
     elif IsPreXMod( obj ) then
-        return IsomorphismFpPreXMod( obj );
+        return IsomorphismFp2dGroup( obj );
     elif IsPreCat1( obj ) then
-        return IsomorphismFpPreCat1( obj );
+        return IsomorphismFp2dGroup( obj );
     else
         return fail;
     fi;
@@ -931,9 +931,9 @@ InstallGlobalFunction( IsomorphismPcObject, function( obj )
     if IsGroup( obj ) then
         return IsomorphismPcGroup( obj );
     elif IsPreXMod( obj ) then
-        return IsomorphismPcPreXMod( obj );
+        return IsomorphismPc2dGroup( obj );
     elif IsPreCat1( obj ) then
-        return IsomorphismPcPreCat1( obj );
+        return IsomorphismPc2dGroup( obj );
     else
         return fail;
     fi;

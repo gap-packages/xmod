@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2act.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  version 2.43, 21/10/2015                                           --> 
+<!--  version 2.43, 08/11/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2015, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
@@ -45,7 +45,7 @@ The individual automorphisms can be constructed from the permutation group
 using the function <C>PermAutomorphismAsXModMorphism</C>.
 </Description>
 </ManSection>
-
+<P/>
 <Example>
 <![CDATA[
 gap> APX3 := AutomorphismPermGroup( X3 );
@@ -117,7 +117,7 @@ the actor crossed module of <M>\mathcal{X}</M>, on the right.
 </List>
 </Description>
 </ManSection>
-
+<P/>
 <Example>
 <![CDATA[
 gap> WGX3 := WhiteheadPermGroup( X3 );
@@ -214,7 +214,7 @@ In the example which follows, using the crossed module
 the inner morphism is an inclusion of crossed modules.
 </Description>
 </ManSection>
-
+<P/>
 <Example>
 <![CDATA[
 gap> IMX3 := InnerMorphism( X3 );; 

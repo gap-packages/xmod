@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2ind.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  version 2.43, 21/10/2015                                           --> 
+<!--  version 2.43, 08/11/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2015, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
@@ -12,7 +12,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Chapter Label="chap-gp2ind">
-<Heading>Induced Constructions</Heading>
+<Heading>Induced constructions</Heading>
 
 <Section><Heading>Induced crossed modules</Heading>
 <Index>induced crossed module</Index>
@@ -69,7 +69,7 @@ with kernel <C>k4</C>.
 The induced crossed module is isomorphic to <C>X3</C>.
 </Description>
 </ManSection>
-
+<P/>
 <Example>
 <![CDATA[
 gap> s4gens := [ (1,2), (2,3), (3,4) ];;
@@ -105,7 +105,7 @@ the conjugation crossed module <M>(\partial  :  c4 \to d8)</M> of Chapter 3,
 and for <M>\iota</M> the inclusion <C>incd8</C> of <C>d8</C> in <C>d16</C>.  
 The induced crossed module has <M>c4 \times c4</M> as source.
 (The groups in <C>indX8</C> vary from run to run due to random methods.) 
-
+<P/>
 <Example>
 <![CDATA[
 gap> incd8 := RangeHom( inc8 );;
@@ -155,7 +155,7 @@ Morphism of crossed modules :-
 For a third example we take the identity mapping on <C>s3</C> as boundary,
 and the inclusion of <C>s3</C> in <C>s4</C> as <C>iota</C>.
 The induced group is a general linear group <C>GL(2,3)</C>.
-
+<P/>
 <Example>
 <![CDATA[
 gap> s3b := Subgroup( s4, [ (2,3), (3,4) ] );;  

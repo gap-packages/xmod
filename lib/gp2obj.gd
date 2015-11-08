@@ -3,7 +3,7 @@
 #W  gp2obj.gd                  GAP4 package `XMod'               Chris Wensley
 #W                                                                 & Murat Alp
 ##
-##  version 2.43, 21/10/2015 
+##  version 2.43, 08/11/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -36,7 +36,6 @@ DeclareRepresentation( "IsPreCat1Obj", Is2dGroup and IsAttributeStoringRep,
 #P  IsFp2dGroup( <obj> )
 #P  IsPc2dGroup( <obj> )
 ##
-#?  DeclareSynonym( "IsPerm2dGroup", IsPermObject and Is2dGroup );  etc ??
 DeclareProperty( "IsPerm2dGroup", Is2dGroup );
 DeclareProperty( "IsFp2dGroup", Is2dGroup );
 DeclareProperty( "IsPc2dGroup", Is2dGroup );

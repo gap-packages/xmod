@@ -2,7 +2,7 @@
 ##
 #W  dom2d3d.gd                 GAP4 package `XMod'               Chris Wensley
 ##
-##  version 2.43, 21/10/2015 
+##  version 2.43, 08/11/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -85,7 +85,7 @@ DeclareGlobalFunction( "Make2dMonoid" );
 #################################  GROUPS  ##################################
 
 ##  A *2d-group* is a 2d-magma where source and range are both groups, 
-##  and so is a *pre-crossed module* - see file gp2obj.gd.
+##  and so is a pre-crossed module or pre-cat1-group - see file gp2obj.gd.
 
 #############################################################################
 ##
