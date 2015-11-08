@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  util.xml              XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  version 2.43, 04/11/2015                                           --> 
+<!--  version 2.43, 08/11/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2015, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
@@ -39,6 +39,7 @@ This function is used in Chapter 4 when printing image lists of derivations
 and sections. 
 </Description>
 </ManSection>
+<P/>
 <Example>
 <![CDATA[
 gap> L := [ [1,2,3,4], true, [ (1,2), (2,3) ] ];; 
@@ -70,7 +71,7 @@ The map <C>incd8</C> is the inclusion of <C>d8</C> in <C>d16</C>
 used in Section <Ref Sect="sect-oper-mor" />.
 </Description>
 </ManSection>
-
+<P/>
 <Example>
 <![CDATA[
 gap> Print( incd8, "\n" );
@@ -94,7 +95,7 @@ are calculated with the first of these functions,
 usually with <C>G</C> = <C>N</C>.
 </Description>
 </ManSection>
-
+<P/>
 <Example>
 <![CDATA[
 gap> autd8 := AutomorphismGroup( d8 );;
@@ -128,7 +129,7 @@ The resulting <C>Xabmod</C> is isomorphic to the output from
 <C>XModByAutomorphismGroup( k4 );</C>.
 </Description>
 </ManSection>
-
+<P/>
 <Example>
 <![CDATA[
 gap> x := (6,7)(8,9);;  y := (6,8)(7,9);;  z := (6,9)(7,8);;
@@ -191,7 +192,7 @@ for sets of left and right cosets of a subgroup <M>H</M> of a group <M>G</M>,
 although a greedy algorithm is usually quicker.
 </Description>
 </ManSection>
-
+<P/>
 <Example>
 <![CDATA[
 gap> J := [ [1,2,3], [3,4], [3,4], [1,2,4] ];

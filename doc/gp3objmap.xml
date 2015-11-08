@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp3objmap.xml         XMod documentation            Chris Wensley  -->
 <!--                                                                     -->
-<!--  version 2.43, 07/11/2015                                           --> 
+<!--  version 2.43, 08/11/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2015, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
@@ -187,7 +187,7 @@ The crossed pairing is given by
 </List>
 </Description>
 </ManSection>
-
+<P/>
 <Example>
 <![CDATA[
 gap> c := (11,12,13,14,15,16);;
@@ -253,6 +253,7 @@ In the example <C>Xn7</C> <M>\unlhd</M> <C>X24</C>,
 constructed in section <Ref Sect="sect-more-xmod-ops" />. 
 </Description>
 </ManSection>
+<P/>
 <Example>
 <![CDATA[
 gap> pos7 := Position( ids, [ [12,2], 24,5] ] );;
@@ -406,7 +407,7 @@ The current version of <C>IsCrossedSquareMorphism</C> does not perform all the
 required checks.
 </Description>
 </ManSection>
-
+<P/>
 <Example>
 <![CDATA[
 gap> ad12 := GroupHomomorphismByImages( d12, d12, [c,d], [c,d^c] );;

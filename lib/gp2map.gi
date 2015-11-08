@@ -2,7 +2,7 @@
 ##
 #W  gp2map.gi                  GAP4 package `XMod'               Chris Wensley
 #W                                                                 & Murat Alp
-##  version 2.43, 04/11/2015 
+##  version 2.43, 08/11/2015 
 ##
 ##  This file installs methods for 2dMappings for crossed modules and 
 ##  cat1-groups. 
@@ -599,9 +599,9 @@ end );
 
 ##############################################################################
 ##
-#M  IsomorphismPermPreXMod . . . . . . . . constructs isomorphic perm pre-xmod
+#M  IsomorphismPerm2dGroup . . . . . . . . constructs isomorphic perm pre-xmod
 ##
-InstallMethod( IsomorphismPermPreXMod,
+InstallMethod( IsomorphismPerm2dGroup,
      "generic method for pre-crossed modules", true, [ IsPreXMod ], 0,
 function( PM )
 
@@ -656,9 +656,9 @@ end );
 
 ##############################################################################
 ##
-#M  IsomorphismPermPreCat1 . . . . . . . . constructs isomorphic perm pre-cat1
+#M  IsomorphismPerm2dGroup . . . . . . . . constructs isomorphic perm pre-cat1
 ##
-InstallMethod( IsomorphismPermPreCat1,
+InstallMethod( IsomorphismPerm2dGroup,
      "generic method for pre-cat1-groups", true, [ IsPreCat1 ], 0,
 function( PCG )
 
@@ -708,9 +708,9 @@ end );
 
 ##############################################################################
 ##
-#M  IsomorphismPcPreXMod . . . . . . . . . . constructs isomorphic pc pre-xmod
+#M  IsomorphismPc2dGroup . . . . . . . . . . constructs isomorphic pc pre-xmod
 ##
-InstallMethod( IsomorphismPcPreXMod,
+InstallMethod( IsomorphismPc2dGroup,
      "generic method for pre-crossed modules", true, [ IsPreXMod ], 0,
 function( PM )
 
@@ -739,7 +739,7 @@ function( PM )
     fi;
     Prng := Range( PM ); 
     if ( HasIsNormalSubgroup2dGroup(PM) and IsNormalSubgroup2dGroup(PM) ) then 
-        Print( "#!  need to modify IsomorphismPcPreXMod to preserve the\n", 
+        Print( "#!  need to modify IsomorphismPc2dGroup to preserve the\n", 
                "#!  property of being IsNormalSubgroup2dGroup\n" ); 
     fi; 
     if IsPcGroup( Prng ) then
@@ -775,9 +775,9 @@ end );
 
 ##############################################################################
 ##
-#M  IsomorphismPcPreCat1 . . . . . . . . . . constructs isomorphic pc pre-cat1
+#M  IsomorphismPc2dGroup . . . . . . . . . . constructs isomorphic pc pre-cat1
 ##
-InstallMethod( IsomorphismPcPreCat1,
+InstallMethod( IsomorphismPc2dGroup,
      "generic method for pre-cat1-groups", true, [ IsPreCat1 ], 0,
 function( PCG )
 

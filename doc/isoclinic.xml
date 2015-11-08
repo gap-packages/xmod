@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  isoclinic.xml          XMod documentation            Alper Odabas  -->
 <!--                                                       & Enver Uslu  -->
-<!--  version 2.43, 07/11/2015                                           --> 
+<!--  version 2.43, 08/11/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2015, Chris Wensley et al                       --> 
 <!--                                                                     -->
@@ -11,7 +11,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Chapter Label="chap-isclnc">
-<Heading>Isoclinism of Crossed Modules</Heading>
+<Heading>Isoclinism of groups and crossed modules</Heading>
 
 This chapter describes some functions written by Alper Odaba&#x15f; and  
 Enver Uslu, and reported in their paper <Cite Key="OUI1" />. 
@@ -43,6 +43,7 @@ then the quotient crossed module is
 with the induced boundary and action maps. 
 </Description>
 </ManSection>
+<P/>
 <Example>
 <![CDATA[
 gap> D24 := DihedralGroup(24);;  SetName( D24, "D24" );
@@ -74,6 +75,7 @@ then the source and range of their intersection are the intersections
 of the sources and ranges of <C>X1</C> and <C>X2</C> respectively. 
 </Description>
 </ManSection>
+<P/>
 <Example>
 <![CDATA[
 gap> pos2 := Position( ids, [ [24,6], [12,4] ] );;
@@ -128,6 +130,7 @@ The identities imply
 so <M>&Disp;(\mathcal{X})</M> is normal in <M>S</M>. 
 </Description>
 </ManSection>
+<P/>
 <Example>
 <![CDATA[
 gap> pos4 := Position( ids, [ [6,2], [24,14] ] );;
@@ -162,6 +165,7 @@ has this subgroup as source and <M>[P,Q]</M> as range,
 and is normal in <M>\mathcal{X}</M>. 
 </Description>
 </ManSection>
+<P/>
 <Example>
 <![CDATA[
 gap> Cn23 := CommutatorSubXMod( X24, Xn2, Xn3 );
@@ -185,6 +189,7 @@ where <M>\partial'</M> is the restriction of <M>\partial</M>
 (see page 66 of Norrie's thesis <Cite Key="N2" />). 
 </Description>
 </ManSection>
+<P/>
 <Example>
 <![CDATA[
 gap> DXn4 := DerivedSubXMod( Xn4 );  
@@ -210,6 +215,7 @@ whose elements act trivially on the whole of <M>T \leqslant S</M>
 (see page 19 of Norrie's thesis <Cite Key="N2" />). 
 </Description>
 </ManSection>
+<P/>
 <Example>
 <![CDATA[
 gap> fix := FixedPointSubgroupXMod( Xn4, Sn4, Rn4 );
@@ -246,6 +252,7 @@ consisting of the displacements <M>\langle s,q \rangle</M>
 which lie in <M>S</M>. 
 </Description>
 </ManSection>
+<P/>
 <Example>
 <![CDATA[
 gap> ZXn4 := CentreXMod( Xn4 );      
@@ -279,6 +286,7 @@ Similarly, the central quotient of a crossed module
 (see section <Ref Sect="sect-xsq-constructions"/>). 
 </Description>
 </ManSection>
+<P/>
 <Example>
 <![CDATA[
 gap> Q24 := CentralQuotient( D24);  Size( Q24 );                     
@@ -308,6 +316,7 @@ has trivial cokernel.
 A crossed module is <E>faithful</E> if the action is faithful.
 </Description>
 </ManSection>
+<P/>
 <Example>
 <![CDATA[
 gap> [ IsAbelian2dGroup(Xn4), IsAbelian2dGroup(X24) ];
@@ -347,7 +356,7 @@ A factor <M>\mathcal{F}_i</M> is <E>central</E> if
 <M>\mathcal{F}_i</M> is a subcrossed module of the centre of 
 <M>\mathcal{X} / \mathcal{X}_{i-1}</M>.  
 <P/>
-A series is <E>central</E> is all its factors are central. 
+A series is <E>central</E> if all its factors are central. 
 <P/>
 <M>\mathcal{X}</M> is <E>soluble</E> if it has a series 
 all of whose factors are abelian. 
@@ -371,6 +380,7 @@ is the trivial crossed module is the <E>nilpotency class</E>
 of <M>\mathcal{X}</M>.
 </Description>
 </ManSection>
+<P/>
 <Example>
 <![CDATA[
 gap> LowerCentralSeries(X24);      
@@ -402,6 +412,7 @@ crossed modules whose cat1-group has size <M>36</M>.
 There are <M>40</M> precrossed modules with size <C>[6,6]</C>. 
 </Description>
 </ManSection>
+<P/>
 <Example>
 <![CDATA[
 gap> xc6s3 := AllXMods( SmallGroup(6,2), SmallGroup(6,1) );;   
@@ -438,6 +449,7 @@ The function <C>AllXModsUpToIsomorphism</C> takes a list of crossed modules
 and partitions them into isomorphism classes. 
 </Description>
 </ManSection>
+<P/>
 <Example>
 <![CDATA[
 gap> IsomorphismXMods( x66[1], x66[2] );
@@ -454,7 +466,7 @@ gap> iso66 := AllXModsUpToIsomorphism( x66 );;  Length( iso66 );
 
 
 <Section Label="sect-isoclinic-groups">
-<Heading>Isoclinism for Groups</Heading>
+<Heading>Isoclinism for groups</Heading>
 
 <ManSection>
    <Oper Name="Isoclinism"
@@ -475,6 +487,7 @@ to the trivial group.
 <P/>
 </Description>
 </ManSection>
+<P/>
 <Example>
 <![CDATA[
 gap> G := SmallGroup( 64, 6 );;  StructureDescription( G ); 
@@ -520,6 +533,7 @@ of the stem groups of a specified size, while <C>AllStemGroupFamilies</C>
 splits this list into isoclinism classes.  
 </Description>
 </ManSection>
+<P/>
 <Example>
 <![CDATA[
 gap> DerivedSubgroup(G);     
@@ -554,6 +568,7 @@ Also <M>\log_2 |Z(G) \cap [G,G]| + \log_2 |G/Z(G)|</M>
 is called the <E>rank</E> of <M>G</M>. 
 </Description>
 </ManSection>
+<P/>
 <Example>
 <![CDATA[
 gap> MiddleLength(G);
@@ -568,7 +583,7 @@ gap> RankXMod(X1);
 
 
 <Section Label="sect-isoclinic-xmods">
-<Heading>Isoclinism for Crossed Modules</Heading>
+<Heading>Isoclinism for crossed modules</Heading>
 
 <ManSection>
    <Oper Name="Isoclinism"
@@ -596,6 +611,7 @@ are isoclinic to the trivial crossed module.
 <P/>
 </Description>
 </ManSection>
+<P/>
 <Example>
 <![CDATA[
 gap> C8 := Cat1(16,8,1);;
@@ -631,6 +647,7 @@ but distinct stem crossed modules may be isoclinic.
 A method for <C>IsoclinicStemDomain</C> has yet to be implemented. 
 </Description>
 </ManSection>
+<P/>
 <Example>
 <![CDATA[
 gap> IsStemDomain(X8);
@@ -647,6 +664,7 @@ false
 Description required here. 
 </Description>
 </ManSection>
+<P/>
 <Example>
 <![CDATA[
 gap> MiddleLength(X24);

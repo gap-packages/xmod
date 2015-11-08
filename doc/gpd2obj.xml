@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gpd2obj.xml           XMod documentation            Chris Wensley  -->
 <!--                                                                     -->
-<!--  version 2.43, 21/10/2015                                           --> 
+<!--  version 2.43, 08/11/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2015, Murat Alp and Chris Wensley,              --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
@@ -43,7 +43,7 @@ The following example shows what has been achieved in an earlier version,
 but which fails in &GAP; 4.7. 
 </Description>
 </ManSection>
-
+<P/>
 <Example>
 <![CDATA[
 gap> d8 := Group( (1,2,3,4), (1,3) );;

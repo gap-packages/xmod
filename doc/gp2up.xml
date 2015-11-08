@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2up.xml             XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  version 2.43, 21/10/2015                                           --> 
+<!--  version 2.43, 08/11/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2015, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
@@ -100,7 +100,7 @@ where <C>X3</C> is isomorphic to the inclusion of the normal
 cyclic group <C>c3</C> in the symmetric group <C>s3</C>.
 </Description>
 </ManSection>
-
+<P/>
 <Example>
 <![CDATA[
 gap> g18 := Group( (1,2,3), (4,5,6), (2,3)(5,6) );;
@@ -166,6 +166,7 @@ are calculated, and these are all converted to sections
 using <C>SectionByDerivation</C>. 
 </Description>
 </ManSection>
+<P/>
 <Example>
 <![CDATA[
 gap> xi := SectionByDerivation( chi );
@@ -203,7 +204,7 @@ we find that there are just nine derivations,
 six of them regular, and the associated group is isomorphic to <C>s3</C>.
 </Description>
 </ManSection>
-
+<P/>
 <Example>
 <![CDATA[
 gap> all3 := AllDerivations( X3 );;
@@ -251,7 +252,7 @@ The Whitehead product <M>\chi_1 \star \chi_2</M> is implemented as
 The composite of two sections is just the composite of homomorphisms.
 </Description>
 </ManSection>
-
+<P/>
 <Example>
 <![CDATA[
 gap> reg3 := RegularDerivations( X3 );;
@@ -288,7 +289,7 @@ Multiplication tables for the Whitehead group or monoid
 enable the construction of permutation or transformation representations.
 </Description>
 </ManSection>
-
+<P/>
 <Example>
 <![CDATA[
 gap> wgt3 := WhiteheadGroupTable( X3 );; 
