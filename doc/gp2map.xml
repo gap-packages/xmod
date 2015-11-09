@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2map.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  version 2.43, 08/11/2015                                           --> 
+<!--  version 2.43, 09/11/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2015, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
@@ -58,8 +58,8 @@ is a pair  <M>(\sigma, \rho)</M>, where
 commute with the two boundary maps
 and are morphisms for the two actions:
 <Display>
-\partial_2 \sigma = \rho \partial_1, \qquad
-\sigma(s^r) = (\sigma s)^{\rho r}.
+\partial_2 \circ \sigma ~=~ \rho \circ \partial_1, \qquad
+\sigma(s^r) ~=~ (\sigma s)^{\rho r}.
 </Display>
 Thus  <M>\sigma</M> is the <C>SourceHom</C>  
 and  <M>\rho</M>  is the <C>RangeHom</C>.
@@ -167,9 +167,9 @@ is a pair  <M>(\gamma, \rho)</M>  where
 <M>\gamma : G_1 \to G_2</M>  and  <M>\rho : R_1 \to R_2</M>  
 are homomorphisms satisfying
 <Display>
-h_2 \gamma = \rho h_1, \qquad 
-t_2 \gamma = \rho t_1, \qquad 
-e_2 \rho = \gamma e_1. 
+h_2 \circ \gamma ~=~ \rho \circ h_1, \qquad 
+t_2 \circ \gamma ~=~ \rho \circ t_1, \qquad 
+e_2 \circ \rho ~=~ \gamma \circ e_1. 
 </Display>
 
 <ManSection>
@@ -206,23 +206,34 @@ Names are assigned automatically.
 <P/>
 <Example>
 <![CDATA[
-gap> iso2 := IsomorphismPerm2dgroup( C2 );; 
-gap> Display( iso2 ); 
+gap> iso2 := IsomorphismPerm2dGroup( C2 );
+[[G2=>d12] => [..]]
+gap> Display( iso2 );
 Morphism of cat1-groups :- 
-: Source = [s3c4=>s3] with generating sets:
-  [ f1, f2, f3, f4 ]
-  [ f1, f2 ]
-:  Range = P[s3c4=>s3] with generating sets:
-  [ ( 2, 5)( 6, 9)( 7,10)(11,12), ( 1, 2, 5)( 3, 6, 9)( 4, 7,10)( 8,11,12), 
-  ( 1, 3, 4, 8)( 2, 6, 7,11)( 5, 9,10,12), ( 1, 4)( 2, 7)( 3, 8)( 5,10)( 6,11)
-    ( 9,12) ]
-  [ (2,3), (1,2,3) ]
+: Source = [G2=>d12] with generating sets:
+  [ f1, f2, f3, f4, f5, f6, f7 ]
+  [ f1, f2, f3 ]
+:  Range = P[G2=>d12] with generating sets:
+  [ ( 6,12)( 8,15)( 9,16)(11,19)(13,26)(14,22)(17,27)(18,25)(20,21)(23,24), 
+  ( 2, 3)( 5,10)( 9,16)(11,18)(17,23)(19,25)(24,27), 
+  ( 4, 5, 7,10)( 6, 9,12,16)( 8,11,14,18)(13,17,20,23)(15,19,22,25)
+    (21,24,26,27), ( 4, 6, 7,12)( 5, 9,10,16)( 8,13,14,20)(11,17,18,23)
+    (15,21,22,26)(19,24,25,27), ( 4, 7)( 5,10)( 6,12)( 8,14)( 9,16)(11,18)
+    (13,20)(15,22)(17,23)(19,25)(21,26)(24,27), ( 1, 2, 3), 
+  ( 4, 8,15)( 5,11,19)( 6,13,21)( 7,14,22)( 9,17,24)(10,18,25)(12,20,26)
+    (16,23,27) ]
+  [ (2,6)(3,5), (1,2,3,4,5,6), (1,3,5)(2,4,6) ]
 : Source Homomorphism maps source generators to:
-  [ ( 2, 5)( 6, 9)( 7,10)(11,12), ( 1, 2, 5)( 3, 6, 9)( 4, 7,10)( 8,11,12), 
-  ( 1, 3, 4, 8)( 2, 6, 7,11)( 5, 9,10,12), ( 1, 4)( 2, 7)( 3, 8)( 5,10)( 6,11)
-    ( 9,12) ]
+  [ ( 6,12)( 8,15)( 9,16)(11,19)(13,26)(14,22)(17,27)(18,25)(20,21)(23,24), 
+  ( 2, 3)( 5,10)( 9,16)(11,18)(17,23)(19,25)(24,27), 
+  ( 4, 5, 7,10)( 6, 9,12,16)( 8,11,14,18)(13,17,20,23)(15,19,22,25)
+    (21,24,26,27), ( 4, 6, 7,12)( 5, 9,10,16)( 8,13,14,20)(11,17,18,23)
+    (15,21,22,26)(19,24,25,27), ( 4, 7)( 5,10)( 6,12)( 8,14)( 9,16)(11,18)
+    (13,20)(15,22)(17,23)(19,25)(21,26)(24,27), ( 1, 2, 3), 
+  ( 4, 8,15)( 5,11,19)( 6,13,21)( 7,14,22)( 9,17,24)(10,18,25)(12,20,26)
+    (16,23,27) ]
 : Range Homomorphism maps range generators to:
-  [ (2,3), (1,2,3) ]
+  [ (2,6)(3,5), (1,2,3,4,5,6), (1,3,5)(2,4,6) ]
 ]]>
 </Example>
 </Section>
@@ -237,46 +248,27 @@ Morphism of cat1-groups :-
    <Oper Name="CompositionMorphism"
          Arg="map2 map1" />
 <Description>
-Composition of morphisms, written <C>(&lt;map1&gt; * &lt;map2&gt;)</C> 
-for maps acting of the right,
-calls the <C>CompositionMorphism</C> function for maps acting on the left,
+Composition of morphisms (written <C>(&lt;map1&gt; * &lt;map2&gt;)</C> 
+when maps act on the right) 
+calls the <C>CompositionMorphism</C> function for maps (acting on the left),
 applied to the appropriate type of 2d-mapping.
 </Description>
 </ManSection>
 <P/>
 <Example>
 <![CDATA[
-gap> GeneratorsOfGroup( d16 );
-[ (11,12,13,14,15,16,17,18), (12,18)(13,17)(14,16) ]
-gap> d8 := Subgroup( d16, [ c^2, d ] );;
-gap> c4 := Subgroup( d8, [ c^2 ] );;
-gap> SetName( d8, "d8" );  SetName( c4, "c4" );
-gap> X16 := XModByNormalSubgroup( d16, d8 );
-[d8->d16]
-gap> X8 := SubXMod( X16, c4, d8 );
-[c4->d8]
-gap> IsSubXMod( X16, X8 );
+gap> H2 := Subgroup(G2,[G2.3,G2.4,G2.6,G2.7]);  SetName( H2, "H2" );
+Group([ f3, f4, f6, f7 ])
+gap> c6 := Subgroup( d12, [b,c] );  SetName( c6, "c6" );
+Group([ f2, f3 ])
+gap> SC2 := Sub2dGroup( C2, H2, c6 );
+[H2=>c6]
+gap> IsCat1( SC2 );
 true
-gap> inc8 := InclusionMorphism2dDomains( X16, X8 );
-[[c4->d8] => [d8->d16]]
-gap> rho := GroupHomomorphismByImages( d16, d16, [c,d], [c,d^(c^2)] );;
-gap> sigma := GroupHomomorphismByImages( d8, d8, [c^2,d], [c^2,d^(c^2)] );;
-gap> mor := XModMorphismByHoms( X16, X16, sigma, rho );
-[[d8->d16] => [d8->d16]]
-gap> comp := inc8 * mor;
-[[c4->d8] => [d8->d16]]
-gap> comp = CompositionMorphism(mor,inc8);
-true
-gap> c2 := Group( (19,20) );;
-gap> i2 := Subgroup( c2, [()] );;
-gap> X9 := XModByNormalSubgroup( c2, i2 );;
-gap> sigma9 := GroupHomomorphismByImages( c4, i2, [c^2], [()] );;
-gap> rho9 := GroupHomomorphismByImages( d8, c2, [c^2,d], [(),(19,20)] );;
-gap> mor9 := XModMorphism( X8, X9, sigma9, rho9 );
-[[c4->d8] => [..]]
-gap> K9 := Kernel( mor9 );
-[Group( [ (11,13,15,17)(12,14,16,18) ] )->Group( [ (11,13,15,17)(12,14,16,18)
- ] )]
+gap> inc2 := InclusionMorphism2dDomains( C2, SC2 );
+[[H2=>c6] => [G2=>d12]]
+gap> CompositionMorphism( iso2, inc );                  
+[[H2=>c6] => P[G2=>d12]]
 ]]>
 </Example>
 
@@ -295,15 +287,21 @@ but these have not yet been implemented.
 <P/>
 <Example>
 <![CDATA[
-gap> c2 := Group( (19,20) );;
-gap> i2 := Subgroup( c2, [()] );;
-gap> X9 := XModByNormalSubgroup( c2, i2 );;
-gap> sigma9 := GroupHomomorphismByImages( c4, i2, [c^2], [()] );;
-gap> rho9 := GroupHomomorphismByImages( d8, c2, [c^2,d], [(),(19,20)] );;
-gap> mor9 := XModMorphism( X8, X9, sigma9, rho9 );
-[[c4->d8] => [..]]
-gap> K9 := Kernel( mor9 );
-[Group( [ (11,13,15,17)(12,14,16,18) ] )->Group( [ (11,13,15,17)(12,14,16,18)
+gap> c2 := Group( (19,20) );                                    
+Group([ (19,20) ])
+gap> X0 := XModByNormalSubgroup( c2, c2 );  SetName( X0, "X0" );
+[Group( [ (19,20) ] )->Group( [ (19,20) ] )]
+gap>  SX2 := Source( X2 );;
+gap> genSX2 := GeneratorsOfGroup( SX2 ); 
+[ f1, f4, f5, f7 ]
+gap> sigma0 := GroupHomomorphismByImages(SX2,c2,genSX2,[(19,20),(),(),()]);
+[ f1, f4, f5, f7 ] -> [ (19,20), (), (), () ]
+gap> rho0 := GroupHomomorphismByImages(d12,c2,[a1,a2,a3],[(19,20),(),()]);
+[ f1, f2, f3 ] -> [ (19,20), (), () ]
+gap> mor0 := XModMorphism( X2, X0, sigma0, rho0 );;           
+gap> K0 := Kernel( mor0 );
+[Group( [ <identity> of ..., f4, f5, f7 ] )->Group( 
+[ <identity> of ..., f2, f3 ] )]
  ] )]
 ]]></Example>
 

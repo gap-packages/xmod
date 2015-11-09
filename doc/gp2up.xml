@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2up.xml             XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  version 2.43, 08/11/2015                                           --> 
+<!--  version 2.43, 09/11/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2015, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
@@ -56,13 +56,13 @@ crossed module is the <E>section</E>.
 <Index>Whitehead multiplication</Index>
 The monoid of sections of  <M>\mathcal{C} = (e;t,h : G \to R)</M>  
 is the set of group homomorphisms
-<M>\xi : R \to G</M>, with Whitehead multiplication  <M>\star</M>,  
-(on the <E>right</E>)  satisfying:
+<M>\xi : R \to G</M>, with Whitehead multiplication  <M>\star</M>  
+(on the <E>right</E>) satisfying:
 <Display>
-{\bf Sect\ 1}: t \xi ~=~ {\rm id}_R,
+{\bf Sect\ 1}: t \circ \xi ~=~ {\rm id}_R,
 \quad
 {\bf Sect\ 2}: (\xi_1 \star \xi_2)(r) 
-                ~=~ (\xi_1 r)(e h \xi_1 r)^{-1}(\xi_2 h \xi_1 r) 
+                ~=~ (\xi_1 r)(e h \xi_1 r)^{-1}(\xi_2 h \xi_1 r)  
                 ~=~ (\xi_2 h \xi_1 r)(e h \xi_1 r)^{-1}(\xi_1 r).
 </Display>
 The embedding  <M>e</M>  is the identity for this composition,
@@ -74,7 +74,9 @@ If  <M>\epsilon</M> denotes the inclusion of
 <M>S = {\rm ker} t</M>  in  <M>G</M>
 then  <M>\partial = h \epsilon : S \to R</M> and 
 <Display>
-\xi r ~=~ (e r)(e \chi r) ~=~ (r, \chi r) 
+\xi r ~=~ (e r)(e \chi r), 
+\quad\mbox{which equals}\quad  
+(r, \chi r) ~\in~ R \ltimes S, 
 </Display>
 determines a section  <M>\xi</M>  of  <M>\mathcal{C}</M>  
 in terms of the corresponding derivation  <M>\chi</M>  of
@@ -156,7 +158,7 @@ see <Cite Key="AW1" />.
 The default method for <C>AllDerivations</C> is to search for all possible
 sets of images using a backtracking procedure, and when all the derivations
 are found it is not known which are regular.
-In the &GAP;3 version of this package, the default method for 
+In early versions of this package, the default method for 
 <C>AllSections( &lt;C&gt; )</C> was to compute all endomorphisms
 on the range group <C>R</C> of <C>C</C> as possibilities 
 for the composite <M>h \xi</M>.
@@ -194,14 +196,15 @@ SectionByImages( s3, g18, [ (4,5,6), (2,3)(5,6) ], [ (1,2,3), (1,2)(4,6) ] )
          Arg="obj" />
 <Description>
 There are two functions to determine the elements of the Whitehead group 
-and the Whitehead monoid of <M>\mathcal{X}0</M>,
+and the Whitehead monoid of a crossed module,
 namely <C>RegularDerivations</C> and <C>AllDerivations</C>.  
 (The functions <C>RegularSections</C> and <C>AllSections</C> 
 perform corresponding tasks for a cat1-group.)
 <P/>
 Using our example  <C>X3</C> 
-we find that there are just nine derivations,
-six of them regular, and the associated group is isomorphic to <C>s3</C>.
+we find that there are just nine derivations. 
+(In fact, six of them regular, 
+and the associated group is isomorphic to <C>s3</C>.)
 </Description>
 </ManSection>
 <P/>

@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2act.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  version 2.43, 08/11/2015                                           --> 
+<!--  version 2.43, 09/11/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2015, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
@@ -86,7 +86,7 @@ Morphism of crossed modules :-
 An automorphism <M>( \sigma, \rho )</M> of <C>X</C> 
 acts on the Whitehead monoid by
 <M>\chi^{(\sigma,\rho)} = \sigma \circ \chi \circ \rho^{-1}</M>, 
-and this action determines the action for the actor.
+and this determines the action for the actor.
 In fact the four groups <M>R, S, W, A</M>,  the homomorphisms between them, 
 and the various actions, 
 give five crossed modules forming a <E>crossed square</E>:
@@ -101,18 +101,18 @@ the initial crossed module, on the left,
 the Whitehead crossed module of <M>\mathcal{X}</M>, at the top,
 </Item>
 <Item>
-<M>\mathcal{L}(\mathcal{X}) 
-   = (\Delta\circ\eta = \alpha\circ\partial : S \to A),~</M> 
-the Lue crossed module of <M>\mathcal{X}</M>, 
-along the top-left to bottom-right diagonal,
-</Item>
-<Item>
 <M>\mathcal{N}(X) = (\alpha : R \to A),~</M> 
-the Norrie crossed module of <M>\mathcal{X}</M>, at the bottom, and 
+the Norrie crossed module of <M>\mathcal{X}</M>, at the bottom, 
 </Item>
 <Item>
 <M>&Act;(\mathcal{X}) = ( \Delta : W \to A),~</M> 
-the actor crossed module of <M>\mathcal{X}</M>, on the right.
+the actor crossed module of <M>\mathcal{X}</M>, on the right, and 
+</Item>
+<Item>
+<M>\mathcal{L}(\mathcal{X}) 
+   = (\Delta\circ\eta = \alpha\circ\partial : S \to A),~</M> 
+the Lue crossed module of <M>\mathcal{X}</M>, 
+along the top-left to bottom-right diagonal. 
 </Item>
 </List>
 </Description>
@@ -209,9 +209,15 @@ and range elements to inner automorphisms.
 The image of <M>\mathcal{X}</M> under this morphism is the 
 <E>inner actor</E> of <M>\mathcal{X}</M>, 
 while the kernel is the <E>centre</E> of <M>\mathcal{X}</M>.
-In the example which follows, using the crossed module 
-<C>(X3 : c3 -> s3)</C> from Chapter <Ref Chap="chap-gp2up" />,
-the inner morphism is an inclusion of crossed modules.
+In the example which follows, the inner morphism of
+<Code>X3=(c3->s3)</Code>, from Chapter <Ref Chap="chap-gp2up" />,
+is an inclusion of crossed modules. 
+<P/>
+Note that we appear to have defined <E>two</E> sorts of <E>centre</E> 
+for a crossed module: <C>XModCentre</C> here, 
+and <Ref Func="CentreXMod" /> in the chapter on isoclinism. 
+We suspect that these two definitions give the same answer, 
+but this remains to be resolved.  
 </Description>
 </ManSection>
 <P/>
