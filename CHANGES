@@ -2,6 +2,7 @@
 
 Problems and ToDos: 
 
+ - (09/11/15) resolve whether XModCentre = CentreXMod 
  - (15/10/15) need a function CrossedSquareByCentralExtension 
  - (24/09/15) at present IsSub2dDomain just returns 'fail' 
  - (03/09/15) XModCentre etc. fail with pc-groups 

@@ -2,7 +2,7 @@
 ##
 #W  gp2obj.gi                 GAP4 package `XMod'               Chris Wensley
 #W                                                                & Murat Alp
-##  version 2.43, 05/11/2015 
+##  version 2.43, 09/11/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -213,6 +213,12 @@ function( bdy, act )
         ok := IsXMod( PM ); # for running properly the function AllXMods 
     fi;
     # name := Name( PM );
+    ## check the types 
+    if ( IsPermGroup(src) and IsPermGroup(rng) ) then 
+        SetIsPerm2dGroup( PM, true ); 
+    elif ( IsPcGroup(src) and IsPcGroup(rng) ) then 
+        SetIsPc2dGroup( PM, true ); 
+    fi;
     return PM;
 end );
 
@@ -1326,13 +1332,13 @@ end );
 InstallMethod( Sub2dGroup, "generic method for 2d-objects", true,
     [ Is2dGroup, IsGroup, IsGroup ], 0,
 function( obj, src, rng )
-    if IsXMod( obj ) then
+    if ( HasIsXMod(obj) and IsXMod(obj) ) then
         return SubXMod( obj, src, rng );
-    elif IsPreXMod( obj ) then
+    elif ( HasIsPreXMod(obj) and IsPreXMod(obj) ) then
         return SubPreXMod( obj, src, rng );
-    elif IsCat1( obj) then
+    elif ( HasIsCat1(obj) and IsCat1(obj) ) then
         return SubCat1( obj, src, rng );
-    elif IsPreCat1( obj ) then
+    elif ( HasIsPreCat1(obj) and IsPreCat1(obj) ) then
         return SubPreCat1( obj, src, rng );
     else
         Error( "unknown type of 2d-object" );
@@ -1824,6 +1830,12 @@ function( t, h, e )
     PC := PreCat1Obj( tres, hres, eres );
     SetBoundary( PC, bdy );
     SetKernelEmbedding( PC, f );
+    ## check the types 
+    if ( IsPermGroup(G) and IsPermGroup(R) ) then 
+        SetIsPerm2dGroup( PC, true ); 
+    elif ( IsPcGroup(G) and IsPcGroup(R) ) then 
+        SetIsPc2dGroup( PC, true ); 
+    fi;
     return PC;
 end );
 

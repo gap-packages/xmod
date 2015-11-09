@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.tst                 XMOD test file                 Alper Odabas
 #W                                                               & Enver Uslu
-##  version 2.43, 07/11/2015 
+##  version 2.43, 09/11/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 ##
@@ -12,8 +12,8 @@ gap> saved_infolevel_xmod := InfoLevel( InfoXMod );;
 gap> SetInfoLevel( InfoXMod, 0 );
 
 #### 7.1.1 
-gap> D24 := DihedralGroup(24);;  SetName( D24, "D24" );
-gap> X24 := XModByAutomorphismGroup( D24 );; 
+gap> d24 := DihedralGroup(24);;  SetName( d24, "d24" );
+gap> X24 := XModByAutomorphismGroup( d24 );; 
 gap> Size(X24);
 [ 24, 48 ]
 gap> nsx := NormalSubXMods( X24 );; 
@@ -24,7 +24,7 @@ gap> Xn1 := nsx[pos1];
 gap> Size( Xn1 );
 [ 4, 8 ]
 gap> natn := NaturalMorphismByNormalSubXMod( X24, Xn1 ); 
-[[D24->PAut(D24)] => [..]]
+[[d24->PAut(d24)] => [..]]
 gap> Qn1 := FactorXMod( X24, Xn1 ); 
 [Group( [ f1, f2 ] )->Group( [ f1, f2 ] )]
 gap> Size( Qn1 );
@@ -33,7 +33,7 @@ gap> Size( Qn1 );
 #### 7.1.2
 gap> pos2 := Position( ids, [ [24,6], [12,4] ] );;
 gap> Xn2 := nsx[pos2]; 
-[D24->Group( [ f1*f3, f2, f5 ] )]
+[d24->Group( [ f1*f3, f2, f5 ] )]
 gap> pos3 := Position( ids, [ [12,2], [24,5] ] );;
 gap> Xn3 := nsx[pos3]; 
 [Group( [ f2, f3, f4 ] )->Group( [ f1, f2, f4, f5 ] )]
@@ -63,8 +63,8 @@ gap> Size(Cn23);
 [ 12, 6 ]
 gap> Xn23 = Cn23;
 true
-gap> Q24 := CentralQuotient( D24) ;                     
-[D24->Group( [ f1, f2, f3 ] )]
+gap> Q24 := CentralQuotient( d24) ;                     
+[d24->Group( [ f1, f2, f3 ] )]
 
 #### 7.1.5
 gap> DXn4 := DerivedSubXMod( Xn4 );  
@@ -91,8 +91,8 @@ gap> IdGroup( NDXn4 );
 [ [ 1, 1 ], [ 12, 5 ] ]
 
 #### 7.1.8
-gap> Q24 := CentralQuotient( D24);  Size( Q24 );                     
-[D24->Group( [ f1, f2, f3 ] )]
+gap> Q24 := CentralQuotient( d24);  Size( Q24 );                     
+[d24->Group( [ f1, f2, f3 ] )]
 [ 24, 12 ]
 
 #### 7.1.9
@@ -108,7 +108,7 @@ gap> [ IsFaithful2dGroup(Xn4), IsFaithful2dGroup(X24) ];
 
 #### 7.1.10
 gap> LowerCentralSeries(X24);      
-[ [D24->PAut(D24)], [Group( [ f2 ] )->Group( [ f2, f5 ] )], 
+[ [d24->PAut(d24)], [Group( [ f2 ] )->Group( [ f2, f5 ] )], 
   [Group( [ f3*f4^2 ] )->Group( [ f2 ] )], [Group( [ f4 ] )->Group( [ f2 ] )] 
  ]
 gap> IsNilpotent2dGroup(X24);      

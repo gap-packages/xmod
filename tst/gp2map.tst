@@ -2,7 +2,7 @@
 ##
 #W  gp2map.tst                    XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-##  version 2.43, 21/10/2015 
+##  version 2.43, 09/11/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -44,46 +44,40 @@ gap> KnownAttributesOfObject(mor1);
 [ "Name", "Order", "Range", "Source", "SourceHom", "RangeHom" ]
 
 ## Section 3.3.1
-gap> iso2 := IsomorphismPermObject( C2 ); 
-[[s3c4=>s3] => [..]]
-
-## the following failed test using 4.dev, 22/01/13, so removed for now 
-## gap> Display( iso2 ); 
+gap> iso2 := IsomorphismPerm2dGroup( C2 );
+[[G2=>d12] => [..]]
 
 ## Section 3.4.1
-gap> GeneratorsOfGroup( d16 );
-[ (11,12,13,14,15,16,17,18), (12,18)(13,17)(14,16) ]
-gap> d8 := Subgroup( d16, [ c^2, d ] );;
-gap> c4 := Subgroup( d8, [ c^2 ] );;
-gap> SetName( d8, "d8" );  SetName( c4, "c4" );
-gap> X16 := XModByNormalSubgroup( d16, d8 );
-[d8->d16]
-gap> X8 := SubXMod( X16, c4, d8 );
-[c4->d8]
-gap> IsSubXMod( X16, X8 );
+gap> H2 := Subgroup(G2,[G2.3,G2.4,G2.6,G2.7]);  SetName( H2, "H2" );
+Group([ f3, f4, f6, f7 ])
+gap> c6 := Subgroup( d12, [a2,a3] );  SetName( c6, "c6" );
+Group([ f2, f3 ])
+gap> SC2 := Sub2dGroup( C2, H2, c6 );
+[H2=>c6]
+gap> IsCat1( SC2 );
 true
-gap> inc8 := InclusionMorphism2dDomains( X16, X8 );
-[[c4->d8] => [d8->d16]]
-gap> rho := GroupHomomorphismByImages( d16, d16, [c,d], [c,d^(c^2)] );;
-gap> sigma := GroupHomomorphismByImages( d8, d8, [c^2,d], [c^2,d^(c^2)] );;
-gap> mor := XModMorphismByHoms( X16, X16, sigma, rho );
-[[d8->d16] => [d8->d16]]
-gap> comp := inc8 * mor;
-[[c4->d8] => [d8->d16]]
-gap> comp = CompositionMorphism(mor,inc8);
-true
+gap> inc2 := InclusionMorphism2dDomains( C2, SC2 );
+[[H2=>c6] => [G2=>d12]]
+gap> CompositionMorphism( iso2, inc2 );                  
+[[H2=>c6] => P[G2=>d12]]
 
 ## Section 3.4.2
-gap> c2 := Group( (19,20) );;
-gap> i2 := Subgroup( c2, [()] );;
-gap> X9 := XModByNormalSubgroup( c2, i2 );;
-gap> sigma9 := GroupHomomorphismByImages( c4, i2, [c^2], [()] );;
-gap> rho9 := GroupHomomorphismByImages( d8, c2, [c^2,d], [(),(19,20)] );;
-gap> mor9 := XModMorphism( X8, X9, sigma9, rho9 );
-[[c4->d8] => [..]]
-gap> K9 := Kernel( mor9 );
-[Group( [ (11,13,15,17)(12,14,16,18) ] )->Group( [ (11,13,15,17)(12,14,16,18) 
- ] )]
+gap> c2 := Group( (19,20) );                                    
+Group([ (19,20) ])
+gap> X0 := XModByNormalSubgroup( c2, c2 );  SetName( X0, "X0" );
+[Group( [ (19,20) ] )->Group( [ (19,20) ] )]
+gap>  SX2 := Source( X2 );;
+gap> genSX2 := GeneratorsOfGroup( SX2 ); 
+[ f1, f4, f5, f7 ]
+gap> sigma0 := GroupHomomorphismByImages(SX2,c2,genSX2,[(19,20),(),(),()]);
+[ f1, f4, f5, f7 ] -> [ (19,20), (), (), () ]
+gap> rho0 := GroupHomomorphismByImages(d12,c2,[a1,a2,a3],[(19,20),(),()]);
+[ f1, f2, f3 ] -> [ (19,20), (), () ]
+gap> mor0 := XModMorphism( X2, X0, sigma0, rho0 );;           
+gap> K0 := Kernel( mor0 );
+[Group( [ <identity> of ..., f4, f5, f7 ] )->Group( 
+[ <identity> of ..., f2, f3 ] )]
+
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 
 #############################################################################

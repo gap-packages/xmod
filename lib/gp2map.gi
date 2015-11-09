@@ -2,7 +2,7 @@
 ##
 #W  gp2map.gi                  GAP4 package `XMod'               Chris Wensley
 #W                                                                 & Murat Alp
-##  version 2.43, 08/11/2015 
+##  version 2.43, 09/11/2015 
 ##
 ##  This file installs methods for 2dMappings for crossed modules and 
 ##  cat1-groups. 

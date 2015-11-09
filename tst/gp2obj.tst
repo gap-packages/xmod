@@ -2,7 +2,7 @@
 ##
 #W  gp2obj.tst                    XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-##  version 2.43, 21/10/2015 
+##  version 2.43, 09/11/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -61,15 +61,15 @@ gap> Length( NX4 );
 5
 
 ## Section 2.2.1
-gap> c := (11,12,13,14,15,16,17,18);;  d := (12,18)(13,17)(14,16);;
-gap> d16 := Group( c, d );;
-gap> sk4 := Subgroup( d16, [ c^4, d ] );;
+gap> d1 := (11,12,13,14,15,16,17,18);;  d2 := (12,18)(13,17)(14,16);;
+gap> d16 := Group( d1, d2 );;
+gap> sk4 := Subgroup( d16, [ d1^4, d2 ] );;
 gap> SetName( d16, "d16" );  SetName( sk4, "sk4" );
-gap> bdy16 := GroupHomomorphismByImages( d16, sk4, [c,d], [c^4*d,d] );;
-gap> h1 := GroupHomomorphismByImages( d16, d16, [c,d], [c^5,d] );;
-gap> h2 := GroupHomomorphismByImages( d16, d16, [c,d], [c,c^4*d] );;
+gap> bdy16 := GroupHomomorphismByImages( d16, sk4, [d1,d2], [d1^4*d2,d2] );;
+gap> h1 := GroupHomomorphismByImages( d16, d16, [d1,d2], [d1^5,d2] );;
+gap> h2 := GroupHomomorphismByImages( d16, d16, [d1,d2], [d1,d1^4*d2] );;
 gap> aut16 := Group( [ h1, h2 ] );;
-gap> act16 := GroupHomomorphismByImages( sk4, aut16, [c^4,d], [h1,h2] );;
+gap> act16 := GroupHomomorphismByImages( sk4, aut16, [d1^4,d2], [h1,h2] );;
 gap> P16 := PreXModByBoundaryAndAction( bdy16, act16 );
 [d16->sk4]
 
@@ -77,10 +77,10 @@ gap> P16 := PreXModByBoundaryAndAction( bdy16, act16 );
 gap> P := PeifferSubgroup( P16 );
 Group([ (11,15)(12,16)(13,17)(14,18), (11,13,15,17)(12,14,16,18) ])
 gap> X16 := XModByPeifferQuotient( P16 );
-[d16/P->sk4]
+[D16/P->sk4]
 gap> Display( X16 );
 
-Crossed module [d16/P->sk4] :- 
+Crossed module [D16/P->sk4] :- 
 : Source group has generators:
   [ f1, f2 ]
 : Range group has generators:
@@ -94,58 +94,65 @@ gap> S16 := Image( iso16 );
 Group([ (1,2), (3,4) ])
 
 ## Section 2.3.2
-gap> s3 := SymmetricGroup(IsPcGroup,3);;   SetName(s3,"s3");
-gap> gens3 := GeneratorsOfGroup(s3);;
-gap> pc4 := CyclicGroup(4);;  SetName( pc4, "pc4" );
-gap> s3c4 := DirectProduct( s3, pc4 );;  SetName( s3c4, "s3c4" );  
-gap> gens3c4 := GeneratorsOfGroup( s3c4 );;
-gap> a := gens3[1];;  b := gens3[2];;  one := One(s3);;
-gap> t2 := GroupHomomorphismByImages( s3c4, s3, gens3c4, [a,b,one,one] );
-[ f1, f2, f3, f4 ] -> [ f1, f2, <identity> of ..., <identity> of ... ]
-gap> e2 := Embedding( s3c4, 1 );
-Pcgs([ f1, f2 ]) -> [ f1, f2 ]
-gap> C2 := Cat1( t2, t2, e2 ); 
-[s3c4=>s3]
-gap> Display( C2 );
-
-Cat1-group [s3c4=>s3] :- 
-: Source group s3c4 has generators:
-  [ f1, f2, f3, f4 ]
-: Range group s3 has generators:
-  [ f1, f2 ]
-: tail homomorphism maps source generators to:
-  [ f1, f2, <identity> of ..., <identity> of ... ]
-: head homomorphism maps source generators to:
-  [ f1, f2, <identity> of ..., <identity> of ... ]
-: range embedding maps range generators to:
-  [ f1, f2 ]
-: kernel has generators:
-  [ f3, f4 ]
-: boundary homomorphism maps generators of kernel to:
-  [ <identity> of ..., <identity> of ... ]
-: kernel embedding maps generators of kernel to:
-  [ f3, f4 ]
-
-gap> IsPcCat1(C2);
+gap> G2 := SmallGroup( 288, 956 );  SetName( G2, "G2" );
+<pc group of size 288 with 7 generators>
+gap> d12 := DihedralGroup( 12 );  SetName( d12, "d12" );
+<pc group of size 12 with 3 generators>
+gap> a1 := d12.1;;  a2 := d12.2;;  a3 := d12.3;;  one := One( d12 );;
+gap> gensG2 := GeneratorsOfGroup( G2 );;
+gap> t2 := GroupHomomorphismByImages( G2, d12, gensG2,
+>           [ one, a1*a3, a2*a3, one, one, a3, one ] );;
+gap> h2 := GroupHomomorphismByImages( G2, d12, gensG2,
+>           [ a1*a2*a3, one, one, a2*a3, one, one, a3^2 ] );;                   
+gap> e2 := GroupHomomorphismByImages( d12, G2, [a1,a2,a3],
+>        [ G2.1*G2.2*G2.4*G2.6^2, G2.3*G2.4*G2.6^2*G2.7, G2.6*G2.7^2 ] );
+[ f1, f2, f3 ] -> [ f1*f2*f4*f6^2, f3*f4*f6^2*f7, f6*f7^2 ]
+gap> C2 := PreCat1ByTailHeadEmbedding( t2, h2, e2 );
+[G2=>d12]
+gap> IsCat1( C2 );
 true
-gap> Size(C2);
-[ 24, 6 ]
+gap> Display(C2);
+
+Cat1-group [G2=>d12] :- 
+: Source group G2 has generators:
+  [ f1, f2, f3, f4, f5, f6, f7 ]
+: Range group d12 has generators:
+  [ f1, f2, f3 ]
+: tail homomorphism maps source generators to:
+  [ <identity> of ..., f1*f3, f2*f3, <identity> of ..., <identity> of ..., 
+  f3, <identity> of ... ]
+: head homomorphism maps source generators to:
+  [ f1*f2*f3, <identity> of ..., <identity> of ..., f2*f3, <identity> of ..., 
+  <identity> of ..., f3^2 ]
+: range embedding maps range generators to:
+  [ f1*f2*f4*f6^2, f3*f4*f6^2*f7, f6*f7^2 ]
+: kernel has generators:
+  [ f1, f4, f5, f7 ]
+: boundary homomorphism maps generators of kernel to:
+  [ f1*f2*f3, f2*f3, <identity> of ..., f3^2 ]
+: kernel embedding maps generators of kernel to:
+  [ f1, f4, f5, f7 ]
 
 ## Section 2.3.3
-gap> SetName( Kernel( t2 ), "ker(t2)" );
 gap> X2 := XModOfCat1( C2 );;
 gap> Display( X2 );
 
-Crossed module X([s3c4=>s3]) :- 
+Crossed module X([G2=>d12]) :- 
 : Source group has generators:
-  [ f3, f4 ]
-: Range group s3 has generators:
-  [ f1, f2 ]
+  [ f1, f4, f5, f7 ]
+: Range group d12 has generators:
+  [ f1, f2, f3 ]
 : Boundary homomorphism maps source generators to:
-  [ <identity> of ..., <identity> of ... ]
-  The automorphism group is trivial
-: associated cat1-group is [s3c4=>s3]
+  [ f1*f2*f3, f2*f3, <identity> of ..., f3^2 ]
+: Action homomorphism maps range generators to automorphisms:
+  f1 --> { source gens --> [ f1*f5, f4*f5, f5, f7^2 ] }
+  f2 --> { source gens --> [ f1*f5*f7^2, f4, f5, f7 ] }
+  f3 --> { source gens --> [ f1*f7, f4, f5, f7 ] }
+  These 3 automorphisms generate the group of automorphisms.
+: associated cat1-group is [G2=>d12]
 
+gap> StructureDescription(X2);
+[ "D24", "D12" ]
 
 ## Section 2.4.1
 gap> L18 := Cat1Select( 18 ); 
