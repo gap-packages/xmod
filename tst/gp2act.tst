@@ -12,9 +12,9 @@
 gap> saved_infolevel_xmod := InfoLevel( InfoXMod );; 
 gap> SetInfoLevel( InfoXMod, 0 );;
 
-## Chapter 5
+## Chapter 6
 
-## Section 5.1.1
+## Section 6.1.1
 gap> X3;
 [c3->s3]
 gap> APX3 := AutomorphismPermGroup( X3 );
@@ -37,7 +37,7 @@ Morphism of crossed modules :-
 : Range Homomorphism maps range generators to:
   [ (4,6,5), (2,3)(4,5) ]
 
-## Section 5.1.2
+## Section 6.1.2
 gap> X3;
 [c3->s3]
 gap> WGX3 := WhiteheadPermGroup( X3 );
@@ -120,7 +120,7 @@ Crossed module InnerActor[c3->s3] :-
   These 2 automorphisms generate the group of automorphisms.
 
 
-## Section 5.1.3
+## Section 6.1.3
 gap> IMX3 := InnerMorphism( X3 );; 
 gap> Display( IMX3 );
 Morphism of crossed modules :- 

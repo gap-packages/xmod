@@ -2,7 +2,7 @@
 ##
 #W  gp3objmap.tst                 XMOD test file                Chris Wensley
 ##
-##  version 2.43, 04/11/2015 
+##  version 2.43, 10/11/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -12,86 +12,107 @@
 gap> saved_infolevel_xmod := InfoLevel( InfoXMod );; 
 gap> SetInfoLevel( InfoXMod, 0 );;
 
-## Chapter 7
+## Chapter 8
 
-## Section 7.1.1
-gap> c := (11,12,13,14,15,16);;
-gap> d := (12,16)(13,15);;
-gap> cd := c*d;;
-gap> d12 := Group( [ c, d ] );;
-gap> s3a := Subgroup( d12, [ c^2, d ] );;
-gap> s3b := Subgroup( d12, [ c^2, cd ] );;
-gap> c3 := Subgroup( d12, [ c^2 ] );;
-gap> SetName( d12, "d12");  SetName( s3a, "s3a" );
-gap> SetName( s3b, "s3b" );  SetName( c3, "c3" );
-gap> XSconj := CrossedSquareByNormalSubgroups( d12, s3b, s3a, c3 );
-[  c3 -> s3b ]
-[  |      |  ]
-[ s3a -> d12 ]
+## Section 8.1.1
+gap> d20 := DihedralGroup( IsPermGroup, 20 );;
+gap> gend20 := GeneratorsOfGroup( d20 ); 
+[ (1,2,3,4,5,6,7,8,9,10), (2,10)(3,9)(4,8)(5,7) ]
+gap> p1 := gend20[1];;  p2 := gend20[2];;  p12 := p1*p2; 
+(1,10)(2,9)(3,8)(4,7)(5,6)
+gap> d10a := Subgroup( d20, [ p1^2, p2 ] );;
+gap> d10b := Subgroup( d20, [ p1^2, p12 ] );;
+gap> c5d := Subgroup( d20, [ p1^2 ] );;
+gap> SetName( d20, "d20" );  SetName( d10a, "d10a" ); 
+gap> SetName( d10b, "d10b" );  SetName( c5d, "c5d" ); 
+gap> XSconj := CrossedSquareByNormalSubgroups( d20, d10b, d10a, c5d );
+[  c5d -> d10b ]
+[   |      |   ]
+[ d10a -> d20  ]
 
 gap> Name( XSconj );
-"[c3->s3b,s3a->d12]"
-gap> XStrans := Transpose3dGroup( XSconj );
-[  c3 -> s3a ]
-[  |      |  ]
-[ s3b -> d12 ]
+"[c5d->d10b,d10a->d20]"
+gap> XStrans := Transpose3dGroup( XSconj ); 
+[  c5d -> d10a ]
+[   |      |   ]
+[ d10b -> d20  ]
 
-gap> X12 := XModByNormalSubgroup( d12, s3a );
-[s3a->d12]
-gap> XSact := ActorCrossedSquare( X12 );
+gap> X20 := XModByNormalSubgroup( d20, d10a );
+[d10a->d20]
+gap> XSact := ActorCrossedSquare( X20 );
 crossed square with:
-      up = Whitehead[s3a->d12]
-    left = [s3a->d12]
-    down = Norrie[s3a->d12]
-   right = Actor[s3a->d12]
+      up = Whitehead[d10a->d20]
+    left = [d10a->d20]
+    down = Norrie[d10a->d20]
+   right = Actor[d10a->d20]
 
+## Section 8.1.2
+gap> pos7 := Position( ids, [ [12,2], [24,5] ] );;
+gap> Xn7 := nsx[pos7]; 
+[Group( [ f2, f3, f4 ] )->Group( [ f1, f2, f4, f5 ] )]
+gap> IdGroup( CentreXMod(Xn7) );  
+[ [ 4, 1 ], [ 4, 1 ] ]
+gap> CQXn7 := CentralQuotient( Xn7 );
+crossed square with:
+      up = [Group( [ f2, f3, f4 ] )->Group( [ f1 ] )]
+    left = [Group( [ f2, f3, f4 ] )->Group( [ f1, f2, f4, f5 ] )]
+    down = [Group( [ f1, f2, f4, f5 ] )->Group( [ f1, f2 ] )]
+   right = [Group( [ f1 ] )->Group( [ f1, f2 ] )]
 
-## Section 7.1.3
+gap> IdGroup( CQXn7 );
+[ [ [ 12, 2 ], [ 3, 1 ] ], [ [ 24, 5 ], [ 6, 1 ] ] ]
+
+## Section 8.1.3
 gap> Up2dGroup( XSconj );
-[c3->s3b]
+[c5d->d10b]
 gap> Right2dGroup( XSact );
-Actor[s3a->d12]
-gap> xpconj := XPair( XSconj );;
-gap> ImageElmXPair( xpconj, [ (12,16)(13,15), (11,16)(12,15)(13,14) ] );
-(11,15,13)(12,16,14)
-gap> diag := DiagonalAction( XSact );; 
-gap> List( [ (2,3)(5,6), (1,2)(4,6) ], x -> ImageElm( diag, x ) ); 
-[ [ (11,15,13)(12,16,14), (12,16)(13,15) ] -> 
-    [ (11,13,15)(12,14,16), (12,16)(13,15) ], 
-  [ (11,15,13)(12,16,14), (11,13)(14,16) ] -> 
-    [ (11,13,15)(12,14,16), (12,16)(13,15) ] ]
+Actor[d10a->d20]
+gap> xpconj := XPairing( XSconj );;
+gap> ImageElmXPairing( xpconj, [ p2, p12 ] );
+(1,9,7,5,3)(2,10,8,6,4)
+gap> diag := DiagonalAction( XSact );
+[ (1,3,5,2,4)(6,10,14,8,12)(7,11,15,9,13), (1,2,5,4)(6,8,14,12)(7,11,13,9) 
+ ] -> 
+[ [ (1,3,5,7,9)(2,4,6,8,10), (2,10)(3,9)(4,8)(5,7) ] -> 
+    [ (1,3,5,7,9)(2,4,6,8,10), (1,5)(2,4)(6,10)(7,9) ], 
+  [ (1,3,5,7,9)(2,4,6,8,10), (2,10)(3,9)(4,8)(5,7) ] -> 
+    [ (1,7,3,9,5)(2,8,4,10,6), (1,3)(4,10)(5,9)(6,8) ] ]
 
-## Section 7.2.2
-gap> ad12 := GroupHomomorphismByImages( d12, d12, [c,d], [c,d^c] );;
-gap> as3a := GroupHomomorphismByImages( s3a, s3a, [c^2,d], [c^2,d^c] );;
-gap> as3b := GroupHomomorphismByImages( s3b, s3b, [c^2,cd], [c^2,cd^c] );;
-gap> idc3 := IdentityMapping( c3 );;
+## Section 8.2.2
+gap> ad20 := GroupHomomorphismByImages( d20, d20, [p1,p2], [p1,p2^p1] );;
+gap> ad10a := GroupHomomorphismByImages( d10a, d10a, [p1^2,p2], [p1^2,p2^p1] );;
+gap> ad10b := GroupHomomorphismByImages( d10b, d10b, [p1^2,p12], [p1^2,p12^p1] );;
+gap> idc5d := IdentityMapping( c5d );;
 gap> upconj := Up2dGroup( XSconj );;
 gap> leftconj := Left2dGroup( XSconj );; 
 gap> downconj := Down2dGroup( XSconj );; 
 gap> rightconj := Right2dGroup( XSconj );; 
-gap> up := XModMorphismByHoms( upconj, upconj, idc3, as3b );
-[[c3->s3b] => [c3->s3b]]
-gap> left := XModMorphismByHoms( leftconj, leftconj, idc3, as3a );
-[[c3->s3a] => [c3->s3a]]
-gap> down := XModMorphismByHoms( downconj, downconj, as3a, ad12 );
-[[s3a->d12] => [s3a->d12]]
-gap> right := XModMorphismByHoms( rightconj, rightconj, as3b, ad12 );
-[[s3b->d12] => [s3b->d12]]
+gap> up := XModMorphismByHoms( upconj, upconj, idc5d, ad10b );
+[[c5d->d10b] => [c5d->d10b]]
+gap> left := XModMorphismByHoms( leftconj, leftconj, idc5d, ad10a );
+[[c5d->d10a] => [c5d->d10a]]
+gap> down := XModMorphismByHoms( downconj, downconj, ad10a, ad20 );
+[[d10a->d20] => [d10a->d20]]
+gap> right := XModMorphismByHoms( rightconj, rightconj, ad10b, ad20 );
+[[d10b->d20] => [d10b->d20]]
 gap> autoconj := CrossedSquareMorphism( XSconj, XSconj, up, left, right, down );; 
 gap> ord := Order( autoconj );;
 gap> Display( autoconj );
 Morphism of crossed squares :- 
-:    Source = [c3->s3b,s3a->d12]
-:     Range = [c3->s3b,s3a->d12]
-:     order = 3
-:    up-left: [ [ (11,13,15)(12,14,16) ], [ (11,13,15)(12,14,16) ] ]
-:   up-right: [ [ (11,13,15)(12,14,16), (11,16)(12,15)(13,14) ], 
-  [ (11,13,15)(12,14,16), (11,12)(13,16)(14,15) ] ]
-:  down-left: [ [ (11,13,15)(12,14,16), (12,16)(13,15) ], 
-  [ (11,13,15)(12,14,16), (11,13)(14,16) ] ]
-: down-right: [ [ (11,12,13,14,15,16), (12,16)(13,15) ], 
-  [ (11,12,13,14,15,16), (11,13)(14,16) ] ]
+:    Source = [c5d->d10b,d10a->d20]
+:     Range = [c5d->d10b,d10a->d20]
+:     order = 5
+:    up-left: [ [ ( 1, 3, 5, 7, 9)( 2, 4, 6, 8,10) ], 
+  [ ( 1, 3, 5, 7, 9)( 2, 4, 6, 8,10) ] ]
+:   up-right: 
+[ [ ( 1, 3, 5, 7, 9)( 2, 4, 6, 8,10), ( 1,10)( 2, 9)( 3, 8)( 4, 7)( 5, 6) ], 
+  [ ( 1, 3, 5, 7, 9)( 2, 4, 6, 8,10), ( 1, 2)( 3,10)( 4, 9)( 5, 8)( 6, 7) ] ]
+:  down-left: 
+[ [ ( 1, 3, 5, 7, 9)( 2, 4, 6, 8,10), ( 2,10)( 3, 9)( 4, 8)( 5, 7) ], 
+  [ ( 1, 3, 5, 7, 9)( 2, 4, 6, 8,10), ( 1, 3)( 4,10)( 5, 9)( 6, 8) ] ]
+: down-right: 
+[ [ ( 1, 2, 3, 4, 5, 6, 7, 8, 9,10), ( 2,10)( 3, 9)( 4, 8)( 5, 7) ], 
+  [ ( 1, 2, 3, 4, 5, 6, 7, 8, 9,10), ( 1, 3)( 4,10)( 5, 9)( 6, 8) ] ]
 gap> KnownPropertiesOfObject( autoconj );
 [ "CanEasilyCompareElements", "CanEasilySortElements", "IsTotal", 
   "IsSingleValued", "IsInjective", "IsSurjective", "IsPreCrossedSquareMorphism", 

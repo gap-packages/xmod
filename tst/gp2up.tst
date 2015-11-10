@@ -2,7 +2,7 @@
 ##
 #W  gp2up.tst                     XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-##  version 2.43, 21/10/2015 
+##  version 2.43, 10/11/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -12,9 +12,9 @@
 gap> saved_infolevel_xmod := InfoLevel( InfoXMod );; 
 gap> SetInfoLevel( InfoXMod, 0 );;
 
-## Chapter 4
+## Chapter 5
 
-## Section 4.1.2
+## Section 5.1.2
 gap> g18 := Group( (1,2,3), (4,5,6), (2,3)(5,6) );;
 gap> SetName( g18, "g18" );
 gap> gen18 := GeneratorsOfGroup( g18 );;
@@ -48,11 +48,11 @@ gap> chi := DerivationByImages( X3, imchi );
 DerivationByImages( s3, c3, [ (4,5,6), (2,3)(5,6) ], 
 [ (1,2,3)(4,6,5), (1,2,3)(4,6,5) ] )
 
-## Section 4.1.3
+## Section 5.1.3
 gap> xi := SectionByDerivation( chi );
 SectionByImages( s3, g18, [ (4,5,6), (2,3)(5,6) ], [ (1,2,3), (1,2)(4,6) ] )
 
-## Section 4.2.1
+## Section 5.2.1
 gap> all3 := AllDerivations( X3 );;
 gap> imall3 := ImagesList( all3 );; 
 gap> PrintListOneItemPerLine( imall3 );
@@ -78,9 +78,10 @@ gap> PrintListOneItemPerLine( ImagesTable( all3 ) );
   [ 1, 2, 3, 2, 3, 1 ]
   ]
 
-## Section 4.2.2
+## Section 5.2.2
 gap> reg3 := RegularDerivations( X3 );;
-gap> imder3 := ImagesList( reg3 );;
+gap> imder3 := ImagesList( reg3 );;  Length( imder3 ); 
+6
 gap> chi4 := DerivationByImages( X3, imder3[4] );
 DerivationByImages( s3, c3, [ (4,5,6), (2,3)(5,6) ], [ (1,3,2)(4,5,6), () ] )
 gap> chi5 := DerivationByImages( X3, imder3[5] );
@@ -94,10 +95,10 @@ gap> chi45 := chi4 * chi5;
 DerivationByImages( s3, c3, [ (4,5,6), (2,3)(5,6) ], [ (), (1,3,2)(4,5,6) ] )
 gap> im45 := UpImagePositions( chi45 );
 [ 1, 1, 1, 3, 3, 3 ]
-gap> pos := Position( imder3, UpGeneratorImages( chi45 ) );
+gap> Position( imder3, UpGeneratorImages( chi45 ) );
 2
 
-## Section 4.2.3
+## Section 5.2.3
 gap> wgt3 := WhiteheadGroupTable( X3 );; 
 gap> PrintListOneItemPerLine( wgt3 );
 [ [ 1, 2, 3, 4, 5, 6 ],

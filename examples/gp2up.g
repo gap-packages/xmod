@@ -2,14 +2,14 @@
 ##
 #W  gp2up.g                  XMOD example files                 Chris Wensley
 #W                                                                & Murat Alp
-##  version 2.43, 21/10/2015 
+##  version 2.43, 10/11/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 #############################################################################
 
-Print("\nXMod example file gp2up.g (version 18/09/15) :-");
+Print("\nXMod example file gp2up.g (version 10/11/15) :-");
 Print("\ntesting derivations of crossed modules\n\n");
 
 c5 := Group( (5,6,7,8,9) );
@@ -140,18 +140,20 @@ Print("chi4 * chi5 is the derivation in position ", pos, "\n" );
 
 Print("\n\n################################################\n\n");
 
-Print("Testing principal derivations in X2\n\n");
-gens2 := GeneratorsOfGroup( Source( X2 ) );
+Print("Testing principal derivations in PX2 = perm rep of X2:\n\n");
+isoPX2 := IsomorphismPermObject( X2 );
+PX2 := Image( isoPX2 ); 
+gens2 := GeneratorsOfGroup( Source( PX2 ) );
 g1 := gens2[1];  g2 := gens2[2];
-iotag1 := PrincipalDerivation( X2, g1 );
+iotag1 := PrincipalDerivation( PX2, g1 );
 ipos1 := UpImagePositions( iotag1 );
 Print("iota(g1) has image positions : ", ipos1, "\n" );
-iotag2 := PrincipalDerivation( X2, g2 );
+iotag2 := PrincipalDerivation( PX2, g2 );
 ipos2 := UpImagePositions( iotag2 );
 Print("iota(g2) has image positions : ", ipos2, "\n" );
 g3 := g1*g2;
 Print("g3 = g1*g2 = ", g3, "\n");
-iotag3 := PrincipalDerivation( X2, g3 );
+iotag3 := PrincipalDerivation( PX2, g3 );
 ipos3 := UpImagePositions( iotag3 );
 Print("iota(g3) has image positions : ", ipos3, "\n" );
 prod12 := iotag1 * iotag2; 

@@ -2,14 +2,14 @@
 ##
 #W  gp2map.g                 XMOD example files                 Chris Wensley
 #W                                                                & Murat Alp
-##  version 2.43, 21/10/2015 
+##  version 2.43, 10/11/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 #############################################################################
 
-Print("\nXMod example file gp2map.g (version 18/09/15) :-");
+Print("\nXMod example file gp2map.g (version 10/11/15) :-");
 Print("\ntesting constructions of crossed module morphisms\n\n");
 
 msl23 := SpecialLinearGroup( 2, 3 );
@@ -127,32 +127,6 @@ Display( C18 );
 XC18 := XModOfCat1( C18 );
 Print("associated crossed module XC18 = ", XC18, "\n" );
 Display( XC18 );
-
-ida4 := IdentityMapping( a4 );
-AC4 := Cat1( ida4, ida4, ida4 );
-Print("identity cat1-group AC4 = ", AC4, "\n" );
-Display( AC4 );
-GAC4 := Source( AC4 );
-GCX4 := Source( CX4 );
-genGAC4 := GeneratorsOfGroup( GAC4 );
-genGCX4 := GeneratorsOfGroup( GCX4 );
-im144 := genGCX4{[1..2]};
-s144 := GroupHomomorphismByImages( GAC4, GCX4, genGAC4, im144 );
-r144 := InclusionMappingGroups( a4, a4 );
-m144 := Cat1Morphism( AC4, CX4, s144, r144 );
-Print("\nmorphism of cat1-groups AC4 => CX4  :  ", m144, "\n" );
-Display(m144);
-Print("Properties; Attributes; Representations of m144 :-\n");
-Print( KnownPropertiesOfObject(m144), "\n" );
-Print( KnownAttributesOfObject(m144), "\n" );
-Print( RepresentationsOfObject(m144), "\n\n" );
-
-RCX20 := Reverse( CX20 );
-Print("reverse cat1-group to CX20 is RCX20 = ", RCX20, "\n" );
-Display( RCX20 );
-reviso := ReverseIsomorphism( CX20 );
-Print("reverse isomorphism CX20 -> RCX20 is:\n", reviso, "\n" );
-Display(reviso);
 
 Cmor23 := Cat1MorphismOfXModMorphism( mor23 );
 Print("the cat1-morphism corresponding to mor23 is :-\n");

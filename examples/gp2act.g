@@ -2,14 +2,14 @@
 ##
 #W  gp2act.g                 XMOD example files                 Chris Wensley
 #W                                                                & Murat Alp
-##  version 2.43, 21/10/2015 
+##  version 2.43, 10/11/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 #############################################################################
 
-Print("\nXMod example file gp2act.g (version 18/09/15) :-");
+Print("\nXMod example file gp2act.g (version 10/11/15) :-");
 Print("\ntesting actor functions\n\n");
 
 s3 := Group( (1,2), (2,3) );  

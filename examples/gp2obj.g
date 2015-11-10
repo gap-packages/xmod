@@ -2,14 +2,14 @@
 ##
 #W  gp2obj.g                 XMOD example files                 Chris Wensley
 #W                                                                & Murat Alp
-##  version 2.43, 21/10/2015 
+##  version 2.43, 10/11/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 #############################################################################
 
-Print("\nXMod test file gp2obj.g (version 18/09/15) :-");
+Print("\nXMod test file gp2obj.g (version 10/11/15) :-");
 Print("\ntesting constructions of crossed modules\n\n");
 
 c5 := Group( (5,6,7,8,9) );
@@ -22,25 +22,11 @@ Print( KnownPropertiesOfObject(X1), "\n" );
 Print( KnownAttributesOfObject(X1), "\n" );
 Print( RepresentationsOfObject(X1), "\n" );
 Print("X1 has size ", Size(X1), "\n\n" );
+ext := ExternalSetXMod( X1 ); 
+Print( "X1 has external set:\n", ext, "\n" ); 
+Print( "and this has orbits:\n", Orbits(ext), "\n" );
 
-s3c4 := Group( (1,2), (2,3), (4,5,6,7) );
-SetName( s3c4, "s3c4" );
-s3 := Subgroup( s3c4, [ (1,2), (2,3) ] );
-SetName( s3, "s3" );
-gens3c4 := GeneratorsOfGroup( s3c4 );
-imb := [ (1,2), (2,3), () ];
-bX2 := GroupHomomorphismByImages( s3c4, s3, gens3c4, imb );
-im1 := List( gens3c4, g -> g^(1,2) );
-a1 := GroupHomomorphismByImages( s3c4, s3c4, gens3c4, im1 );
-im2 := List( gens3c4, g -> g^(2,3) );
-a2 := GroupHomomorphismByImages( s3c4, s3c4, gens3c4, im2 );
-A := Group( a1, a2 );
-aX2 := GroupHomomorphismByImages( s3, A, [(1,2),(2,3)], [a1,a2] );
-X2 := XMod( bX2, aX2 );
-Print("crossed module X2 = ",X2,"\n");
-Display(X2);
-
-s4 := Group( (1,2,3,4), (1,2) );
+s4 := Group( (1,2), (2,3), (3,4) );
 SetName( s4, "s4");
 a4 := Subgroup( s4, [ (1,2,3), (2,3,4) ] );
 SetName( a4, "a4" );
@@ -49,6 +35,12 @@ SetName( k4, "k4" );
 X4 := XModByNormalSubgroup( a4, k4 );
 Print("crossed module X4 = ",X4,"\n");
 Display(X4);
+Y4 := SubXMod( X4, k4, a4 ); 
+Print("subcrossed module Y4 = ",Y4,"\n");
+Display(Y4);
+Print( "Y4 is normal in X4? ", IsNormal(X4,Y4), "\n" );
+NX4 := NormalSubXMods( X4 ); 
+Print( "X4 has ", Length(NX4), " normal subcrossed modules\n\n" ); 
 
 d8 := Subgroup( s4, [ (1,2,3,4), (1,3) ] );
 SetName( d8, "d8" );
@@ -97,23 +89,25 @@ Print("Direct product of X1 and X4 = ", X14, "\n" );
 Display( X14 );
 e1 := Embedding( X14, 1 );
 e2 := Embedding( X14, 2 );
-Print("Direct Product Information for X14:\n", DirectProductInfo(X14), "\n");
+Print("Direct Product Information for X14:\n", DirectProductInfo(X14), "\n\n");
 
 Print("\nPre-XMods:\n");
-c := (11,12,13,14,15,16,17,18); 
-d := (12,18)(13,17)(14,16);
-d16 := Group( c, d );
+b1 := (11,12,13,14,15,16,17,18); 
+b2 := (12,18)(13,17)(14,16);
+d16 := Group( b1, b2 );
 SetName( d16, "d16" );
-sk4 := Subgroup( d16, [ c^4, d ] );
+sk4 := Subgroup( d16, [ b1^4, b2 ] );
 SetName( sk4, "sk4" );
-bdy16 := GroupHomomorphismByImages( d16, sk4, [c,d], [c^4,d] );
-h1 := GroupHomomorphismByImages( d16, d16, [c,d], [c^5,d] );
-h2 := GroupHomomorphismByImages( d16, d16, [c,d], [c,c^4*d] );
-aut16 := Group( [h1,h2] );
-act16 := GroupHomomorphismByImages( sk4, aut16, [c^4,d], [h1,h2] );
+bdy16 := GroupHomomorphismByImages( d16, sk4, [b1,b2], [b1^4,b2] );
+aut1 := GroupHomomorphismByImages( d16, d16, [b1,b2], [b1^5,b2] );
+aut2 := GroupHomomorphismByImages( d16, d16, [b1,b2], [b1,b1^4*b2] );
+aut16 := Group( [aut1, aut2] );
+act16 := GroupHomomorphismByImages( sk4, aut16, [b1^4,b2], [aut1,aut2] );
 P16 := PreXModByBoundaryAndAction( bdy16, act16 );
 Print("pre-crossed module P16 = ",P16,"\n");
 Display(P16);
+Print( "IsXMod( P16 ) ? ", IsXMod(P16), "\n\n" ); 
+
 P := PeifferSubgroup( P16 );
 Print( "P16 has Peiffer subgroup:\n", P, "\n" );
 X16 := XModByPeifferQuotient( P16 );
@@ -125,35 +119,26 @@ Print("S16 = ", S16, "\n\n" );
 
 Print("\n=========================================================\n");
 Print("\ntesting constructions of cat1-groups\n");
-Print("\nFirst, a permutation group example:\n\n");
+Print("\nFirst, a pc-group example:\n\n");
 
-t2 := GroupHomomorphismByImages( s3c4, s3, gens3c4, [(1,2),(2,3),()] );
-e2 := InclusionMappingGroups( s3c4, s3 );
-C2 := Cat1( t2, t2, e2 );
-Print("cat1-group C2 = ",C2,"\n" );
-Display( C2 );
-XC2 := XModOfCat1( C2 );
-Print("associated crossed module is XC2 = ", XC2, "\n" );
-Display( XC2 );
+G2 := SmallGroup( 288, 956 );  SetName( G2, "G2" );
+Print( "G2 = ", G2, "\n" );
+d12 := DihedralGroup( 12 );  SetName( d12, "d12" );
+Print( "d12 = ", d12, "\n" );
+a1 := d12.1;;  a2 := d12.2;;  a3 := d12.3;;  a0 := One( d12 );;
+gensG2 := GeneratorsOfGroup( G2 );;
+t2 := GroupHomomorphismByImages( G2, d12, gensG2,
+          [ a0, a1*a3, a2*a3, a0, a0, a3, a0 ] );;
+h2 := GroupHomomorphismByImages( G2, d12, gensG2,
+          [ a1*a2*a3, a0, a0, a2*a3, a0, a0, a3^2 ] );;                   
+e2 := GroupHomomorphismByImages( d12, G2, [a1,a2,a3],
+          [ G2.1*G2.2*G2.4*G2.6^2, G2.3*G2.4*G2.6^2*G2.7, G2.6*G2.7^2 ] );
+C2 := PreCat1ByTailHeadEmbedding( t2, h2, e2 );
+Print( "C2 is the pre-cat-group ", C2, "\n" );
+Print( "C2 is a cat1-group? ", IsCat1(C2), "\n" );
+Display(C2);
 
-Print("\nSecondly, the PcGroup version:\n\n");
-ps3 := SymmetricGroup(IsPcGroup,3);;   SetName(ps3,"ps3");
-genps3 := GeneratorsOfGroup(ps3);
-pc4 := CyclicGroup(4);;  SetName( pc4, "pc4" );
-ps3c4 := DirectProduct( ps3, pc4 );;  SetName( ps3c4, "ps3c4" );  
-genps3c4 := GeneratorsOfGroup( ps3c4 );
-a := genps3[1];;  b := genps3[2];;  one := One(ps3);;
-pt2 := GroupHomomorphismByImages( ps3c4, ps3, genps3c4, [a,b,one,one] );
-Print("\npt2 = ", pt2, "\n" );
-SetName( Kernel(pt2), "ker(pt2)" );
-pe2 := Embedding( ps3c4, 1 );
-Print("\npe2 = ", pe2, "\n" );
-pC2 := Cat1( pt2, pt2, pe2 );
-Display( pC2 );
-Print("IsPcCat1( pC2 ) ? ", IsPcCat1(pC2), "\n" );
-Print("\npC2 has size ", Size(pC2), "\n" );
-pX2 := XModOfCat1( pC2 );
-Display( pX2 );
+
 
 Print("==============================================================\n\n");
 
@@ -180,20 +165,11 @@ Print( KnownAttributesOfObject(C20), "\n" );
 Print( RepresentationsOfObject(C20), "\n" );
 Print("C20 has size ", Size(C20), "\n\n" );
 
-c5 := Subgroup( hol20, [ (5,6,7,8,9) ] );
-SetName( c5, "c5" );
-X20 := XModByNormalSubgroup( hol20, c5 );
-Print("normal inclusion crossed module X20 = ",X20,"\n" );
-Display( X20 );
-CX20 := Cat1OfXMod( X20 );
-Print("associated cat1-group CX20 = ",CX20,"\n" );
-Display( CX20 );
-G20 := Source( CX20 );
-Print("CX20 has source ",G20,", with Properties, Attributes:\n");
-Print(KnownPropertiesOfObject(G20),"\n");
-Print(KnownAttributesOfObject(G20),"\n");
-sdp20 := SemidirectProductInfo(G20);
-Print("The SemidirectProductInfo of G20 is:\n",sdp20,"\n");
+X2 := XModOfCat1( C2 ); 
+Print( "the crossed module obtained from C2 is X2 =\n" ); 
+Display( X2 );
+Print( "X2 has structure ", StructureDescription(X2), "\n\n" ); 
+
 
 Print("\nSelecting from data file cat1data.g :-\n" );
 Print("(1) Listing groups of given order:\n");

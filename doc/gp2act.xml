@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2act.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  version 2.43, 09/11/2015                                           --> 
+<!--  version 2.43, 10/11/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2015, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
@@ -42,7 +42,9 @@ The function <C>AutomorphismPermGroup</C> finds a set of
 and then constructs a permutation representation of this group, 
 which is used as the range of the actor crossed module of <M>\mathcal{X}</M>. 
 The individual automorphisms can be constructed from the permutation group 
-using the function <C>PermAutomorphismAsXModMorphism</C>.
+using the function <C>PermAutomorphismAsXModMorphism</C>. 
+The example below uses the crossed module <Code>X3=[c3->s3]</Code> 
+constructed in section <Ref Sect="sect-whitehead-mult" />. 
 </Description>
 </ManSection>
 <P/>

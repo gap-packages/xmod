@@ -2,7 +2,7 @@
 ##
 #W  sl25pc.g                  XMOD example files                Chris Wensley
 ##
-##  version 2.43, 21/10/2015 
+##  version 2.43, 10/11/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -10,7 +10,7 @@
 #############################################################################
 
 SetInfoLevel( InfoXMod, 2 ); 
-Print("\nXMod test file sl25pc.g (version 30/07/15) :-\n\n");
+Print("\nXMod test file sl25pc.g (version 10/11/15) :-\n\n");
 
 sl25pc := SpecialLinearGroup(2,5); 
 SetName( sl25pc, "sl25-pc" ); 
@@ -33,7 +33,7 @@ fgensim := FreeGeneratorsOfFpGroup( imisofp );
 gensim := GeneratorsOfGroup( imisofp ); 
 ok := fgensim=gensim;
 Print( "free gens = gens? ", ok, "\n" ); 
-ok := ok[3]; 
+## ok := ok[3]; 
 
 ccgl := ConjugacyClassesSubgroups( gl25pc ); 
 repsgl := List( ccgl, c -> Representative(c) );  
