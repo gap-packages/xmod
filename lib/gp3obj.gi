@@ -5,7 +5,7 @@
 ##  This file implements generic methods for (pre-)crossed squares and
 ##  (pre-)cat2-groups.
 ##
-##  version 2.43, 04/11/2015 
+##  version 2.43, 11/11/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -42,41 +42,41 @@ end );
 
 ##############################################################################
 ##
-#M  IsXPair
+#M  IsXPairing
 ##
-InstallMethod( IsXPair, "generic method for mappings", true, 
+InstallMethod( IsXPairing, "generic method for mappings", true, 
     [ IsGeneralMapping ], 0,
 function( map )
     return ( HasSource( map ) and HasRange( map ) 
-             and HasXPairMap( map ) );
+             and HasXPairingMap( map ) );
 end );
 
 ##############################################################################
 ##
-#M  XPairObj( [<src1>,<src2>],<rng>,<map> ) .. make a crossed pairing
+#M  XPairingObj( [<src1>,<src2>],<rng>,<map> ) .. make a crossed pairing
 ##
-InstallMethod( XPairObj, "for a general mapping", true,
+InstallMethod( XPairingObj, "for a general mapping", true,
     [ IsList, IsGroup, IsGeneralMapping ], 0,
 function( src, rng, map )
 
     local  filter, fam, obj;
 
     fam := FamilyObj( [ src, rng, map ] );
-    filter := IsXPairObj;
+    filter := IsXPairingObj;
     obj := rec();
     ObjectifyWithAttributes( obj, NewType( fam, filter ),
         Source, src,
         Range, rng, 
-        XPairMap, map,
-        IsXPair, true );
+        XPairingMap, map,
+        IsXPairing, true );
     return obj;
 end );
 
 ##############################################################################
 ##
-#M  XPairByNormalSubgroups( <grp>, <grp>, <grp> ) . . . make an xpair
+#M  XPairingByNormalSubgroups( <grp>, <grp>, <grp> ) . . . make an XPairing
 ##
-InstallMethod( XPairByNormalSubgroups, 
+InstallMethod( XPairingByNormalSubgroups, 
     "for the intersection of two normal subgroups", true,
     [ IsGroup, IsGroup, IsGroup ], 0,
 function( M, N, L )
@@ -88,15 +88,15 @@ function( M, N, L )
     fi;
     map := Mapping2ArgumentsByFunction( [M,N], L, 
                function(c) return Comm( c[1], c[2] ); end );
-    xp := XPairObj( [M,N], L, map );
+    xp := XPairingObj( [M,N], L, map );
     return xp;
 end );
 
 ##############################################################################
 ##
-#M  XPairByDerivations( <xmod> ) . . .  make an actor crossed pairing
+#M  XPairingByDerivations( <xmod> ) . . .  make an actor crossed pairing
 ##
-InstallMethod( XPairByDerivations, "for a crossed module", true,
+InstallMethod( XPairingByDerivations, "for a crossed module", true,
     [ IsXMod ], 0,
 function( X0 )
 
@@ -115,17 +115,17 @@ function( X0 )
                chi := DerivationByImages( X0, imlist[pos] ); 
                return DerivationImage( chi, r ); 
                end );
-    return XPairObj( [RX,WX], SX, map );
+    return XPairingObj( [RX,WX], SX, map );
 end );
 
 #############################################################################
 ##
-#M  ImageElmXPair( <map>, <elm> )  . . . . . . . for crossed pairing
+#M  ImageElmXPairing( <map>, <elm> )  . . . . . . . for crossed pairing
 ##
-InstallMethod( ImageElmXPair, "for crossed pairing", true, 
-    [ IsXPair, IsList ], 0,
+InstallMethod( ImageElmXPairing, "for crossed pairing", true, 
+    [ IsXPairing, IsList ], 0,
     function ( xp, elm ) 
-        return ImageElm( XPairMap( xp ), elm );
+        return ImageElm( XPairingMap( xp ), elm );
     end );
 
 #############################################################################
@@ -140,7 +140,7 @@ function( P )
            autu, autl, act, diag, ok, morud, morlr;
 
     if not ( IsPreCrossedSquareObj ( P ) and HasDiagonalAction( P ) 
-             and HasXPair( P ) ) then
+             and HasXPairing( P ) ) then
         return false;
     fi;
     u := Up2dGroup( P );
@@ -210,7 +210,7 @@ function( u, l, d, r, a, p )
       Left2dGroup, l,
       Down2dGroup, d,
       Right2dGroup, r,
-      XPair, p,
+      XPairing, p,
       DiagonalAction, a,
       Is3dGroup, true );
     if not IsPreCrossedSquare( PS ) then
@@ -267,7 +267,7 @@ function( P, N, M, L )
     diag := XModByNormalSubgroup( P, L );
     a := XModAction( diag );
     ##  define the pairing as a commutator
-    xp := XPairByNormalSubgroups( M, N, L );
+    xp := XPairingByNormalSubgroups( M, N, L );
     XS := PreCrossedSquareObj( u, l, d, r, a, xp );
     SetIsCrossedSquare( XS, true );
     return XS;
@@ -301,7 +301,7 @@ function( X0 )
     LX := LueXMod( X0 );
     da := XModAction( LX );
     ##  define the pairing as evaluation of a derivation
-    xp := XPairByDerivations( X0 );
+    xp := XPairingByDerivations( X0 );
     XS := PreCrossedSquareObj( WX, X0, NX, AX, da, xp );
     SetIsCrossedSquare( XS, true );
     return XS;
@@ -317,12 +317,12 @@ function( XS )
 
     local  xpS, NM, L, map, xpT, XT;
 
-    xpS := XPair( XS );
+    xpS := XPairing( XS );
     NM := Reversed( Source( xpS ) );
     L := Range( xpS );
     map := Mapping2ArgumentsByFunction( NM, L, 
-             function(c) return ImageElmXPair( xpS, Reversed(c) )^(-1); end );
-    xpT := XPairObj( NM, L, map );
+             function(c) return ImageElmXPairing( xpS, Reversed(c) )^(-1); end );
+    xpT := XPairingObj( NM, L, map );
     XT := PreCrossedSquareObj( Left2dGroup(XS), Up2dGroup(XS), Right2dGroup(XS), 
                      Down2dGroup(XS), DiagonalAction(XS), xpT );
     SetIsCrossedSquare( XT, true );

@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2up.xml             XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  version 2.43, 09/11/2015                                           --> 
+<!--  version 2.43, 10/11/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2015, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
@@ -15,7 +15,8 @@
 <Heading>Derivations and Sections</Heading>
 <Index>up 2d-mapping of 2d-group</Index>
 
-<Section><Heading>Whitehead Multiplication</Heading>
+<Section Label="sect-whitehead-mult">
+<Heading>Whitehead Multiplication</Heading>
 <Index>Whitehead multiplication</Index>
 
 <ManSection>
@@ -203,8 +204,8 @@ perform corresponding tasks for a cat1-group.)
 <P/>
 Using our example  <C>X3</C> 
 we find that there are just nine derivations. 
-(In fact, six of them regular, 
-and the associated group is isomorphic to <C>s3</C>.)
+(In fact, six of them regular, as we shall see in the next section. 
+The associated group is isomorphic to the symmetric group <C>s3</C>.)
 </Description>
 </ManSection>
 <P/>
@@ -259,7 +260,8 @@ The composite of two sections is just the composite of homomorphisms.
 <Example>
 <![CDATA[
 gap> reg3 := RegularDerivations( X3 );;
-gap> imder3 := ImagesList( reg3 );;
+gap> imder3 := ImagesList( reg3 );;  Length( imder3 );
+6
 gap> chi4 := DerivationByImages( X3, imder3[4] );
 DerivationByImages( s3, c3, [ (4,5,6), (2,3)(5,6) ], [ (1,3,2)(4,5,6), () ] )
 gap> chi5 := DerivationByImages( X3, imder3[5] );
@@ -273,7 +275,7 @@ gap> chi45 := chi4 * chi5;
 DerivationByImages( s3, c3, [ (4,5,6), (2,3)(5,6) ], [ (), (1,3,2)(4,5,6) ] )
 gap> im45 := UpImagePositions( chi45 );
 [ 1, 1, 1, 3, 3, 3 ]
-gap> pos := Position( imder3, UpGeneratorImages( chi45 ) );
+gap> Position( imder3, UpGeneratorImages( chi45 ) );
 2
 ]]>
 </Example>

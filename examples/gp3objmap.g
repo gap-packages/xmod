@@ -2,14 +2,14 @@
 ##
 #W  gp3objmap.g              XMOD example files                 Chris Wensley
 ##
-##  version 2.43, 21/10/2015 
+##  version 2.43, 10/11/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 #############################################################################
 
-Print("\nXMod example file gp3objmap.g (version 18/09/15) :-");
+Print("\nXMod example file gp3objmap.g (version 10/11/15) :-");
 Print("\ntesting functions for crossed squares\n\n");
 
 ## SetInfoLevel( InfoXMod, 2 );
@@ -45,7 +45,7 @@ XSact := ActorCrossedSquare( X12 );
 Print( "\nCrossed square XSact for the actor of [s3a -> d12]:\n" );
 Print( XSact, "\n" );
 
-xp12 := XPair( XSact );
+xp12 := XPairing( XSact );
 Print( "WP12 has elements:\n", Elements(WP12), "\n" ); 
 Print( "d12 has elements:\n", Elements(d12), "\n" ); 
 Print( "and images table:\n", ImagesTable(RegularDerivations(X12)), "\n" );
@@ -54,15 +54,15 @@ Print( "\nStrongGeneratorsStabChain: ", strong, "\n\n" );
 Print( "the crossed pairing images are:\n" );
 for p in WP12 do 
     genM := GeneratorsOfGroup( Range( X12 ) );
-    imxp := List( genM, m -> ImageElmXPair( xp12, [m,p] ) );
+    imxp := List( genM, m -> ImageElmXPairing( xp12, [m,p] ) );
     Print( p, " -> ", imxp, "\n" );
 od;
 Print( "\nRepeat this calculation on the transposed crossed square:\n" );
 XTact := Transpose3dGroup( XSact );
-xt12 := XPair( XTact );
+xt12 := XPairing( XTact );
 for p in WP12 do 
     genM := GeneratorsOfGroup( Range( X12 ) );
-    imxt := List( genM, m -> ImageElmXPair( xt12, [p,m] ) );
+    imxt := List( genM, m -> ImageElmXPairing( xt12, [p,m] ) );
     Print( p, " -> ", imxt, "\n" );
 od;
 

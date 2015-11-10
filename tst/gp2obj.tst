@@ -2,7 +2,7 @@
 ##
 #W  gp2obj.tst                    XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-##  version 2.43, 09/11/2015 
+##  version 2.43, 10/11/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -45,8 +45,7 @@ gap> Print( KnownAttributesOfObject(X1), "\n" );
   "XModAction", "ExternalSetXMod" ]
 
 ## Section 2.1.4
-gap> s4 := SymmetricGroup( IsPermGroup, 4 );
-Sym( [ 1 .. 4 ] )
+gap> s4 := Group( (1,2), (2,3), (3,4) );; 
 gap> a4 := Subgroup( s4, [ (1,2,3), (2,3,4) ] );; 
 gap> k4 := Subgroup( a4, [ (1,2)(3,4), (1,3)(2,4) ] );; 
 gap> SetName(s4,"s4");  SetName(a4,"a4");  SetName(k4,"k4"); 
@@ -61,15 +60,15 @@ gap> Length( NX4 );
 5
 
 ## Section 2.2.1
-gap> d1 := (11,12,13,14,15,16,17,18);;  d2 := (12,18)(13,17)(14,16);;
-gap> d16 := Group( d1, d2 );;
-gap> sk4 := Subgroup( d16, [ d1^4, d2 ] );;
+gap> b1 := (11,12,13,14,15,16,17,18);;  b2 := (12,18)(13,17)(14,16);;
+gap> d16 := Group( b1, b2 );;
+gap> sk4 := Subgroup( d16, [ b1^4, b2 ] );;
 gap> SetName( d16, "d16" );  SetName( sk4, "sk4" );
-gap> bdy16 := GroupHomomorphismByImages( d16, sk4, [d1,d2], [d1^4*d2,d2] );;
-gap> h1 := GroupHomomorphismByImages( d16, d16, [d1,d2], [d1^5,d2] );;
-gap> h2 := GroupHomomorphismByImages( d16, d16, [d1,d2], [d1,d1^4*d2] );;
-gap> aut16 := Group( [ h1, h2 ] );;
-gap> act16 := GroupHomomorphismByImages( sk4, aut16, [d1^4,d2], [h1,h2] );;
+gap> bdy16 := GroupHomomorphismByImages( d16, sk4, [b1,b2], [b1^4*b2,b2] );;
+gap> aut1 := GroupHomomorphismByImages( d16, d16, [b1,b2], [b1^5,b2] );;
+gap> aut2 := GroupHomomorphismByImages( d16, d16, [b1,b2], [b1,b1^4*b2] );;
+gap> aut16 := Group( [ aut1, aut2 ] );;
+gap> act16 := GroupHomomorphismByImages( sk4, aut16, [b1^4,b2], [aut1,aut2] );;
 gap> P16 := PreXModByBoundaryAndAction( bdy16, act16 );
 [d16->sk4]
 
@@ -77,10 +76,10 @@ gap> P16 := PreXModByBoundaryAndAction( bdy16, act16 );
 gap> P := PeifferSubgroup( P16 );
 Group([ (11,15)(12,16)(13,17)(14,18), (11,13,15,17)(12,14,16,18) ])
 gap> X16 := XModByPeifferQuotient( P16 );
-[D16/P->sk4]
+[d16/P->sk4]
 gap> Display( X16 );
 
-Crossed module [D16/P->sk4] :- 
+Crossed module [d16/P->sk4] :- 
 : Source group has generators:
   [ f1, f2 ]
 : Range group has generators:
@@ -98,12 +97,12 @@ gap> G2 := SmallGroup( 288, 956 );  SetName( G2, "G2" );
 <pc group of size 288 with 7 generators>
 gap> d12 := DihedralGroup( 12 );  SetName( d12, "d12" );
 <pc group of size 12 with 3 generators>
-gap> a1 := d12.1;;  a2 := d12.2;;  a3 := d12.3;;  one := One( d12 );;
+gap> a1 := d12.1;;  a2 := d12.2;;  a3 := d12.3;;  a0 := One( d12 );;
 gap> gensG2 := GeneratorsOfGroup( G2 );;
 gap> t2 := GroupHomomorphismByImages( G2, d12, gensG2,
->           [ one, a1*a3, a2*a3, one, one, a3, one ] );;
+>           [ a0, a1*a3, a2*a3, a0, a0, a3, a0 ] );;
 gap> h2 := GroupHomomorphismByImages( G2, d12, gensG2,
->           [ a1*a2*a3, one, one, a2*a3, one, one, a3^2 ] );;                   
+>           [ a1*a2*a3, a0, a0, a2*a3, a0, a0, a3^2 ] );;                   
 gap> e2 := GroupHomomorphismByImages( d12, G2, [a1,a2,a3],
 >        [ G2.1*G2.2*G2.4*G2.6^2, G2.3*G2.4*G2.6^2*G2.7, G2.6*G2.7^2 ] );
 [ f1, f2, f3 ] -> [ f1*f2*f4*f6^2, f3*f4*f6^2*f7, f6*f7^2 ]

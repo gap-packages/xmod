@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.gi               GAP4 package `XMod'                Alper Odabas
 #W                                                                & Enver Uslu
-##  version 2.43, 07/11/2015 
+##  version 2.43, 10/11/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al 
 #Y   
@@ -774,7 +774,7 @@ function( XM )
                s := PreImagesRepresentative( Boundary(up), Image(proj2,c) );  
                return Image(a,s^-1)*s; 
                end );
-    xp := XPairObj( [dl,ur], ul, map );
+    xp := XPairingObj( [dl,ur], ul, map );
     CrossedSquare := PreCrossedSquareObj( up, XM, dn, QM, adg, xp );
     SetIsCrossedSquare( CrossedSquare, true );
     if HasName(XM) then 

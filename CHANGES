@@ -18,6 +18,8 @@ Problems and ToDos:
 #############################################################################
 2.42 -> 2.43 (11/11/2015) 
 
+ - (10/11/15) changes examples in tests to avoid repeated variable names 
+ - (09/11/15) XPair -> XPairing, etc.
  - (08/11/15) IsomorphismPermPre(XMod/Cat1) -> IsomorphismPerm2dGroup, etc. 
  - (07/11/15) Revised manual, chapter 7, and isoclinic.tst
  - (06/11/15) IsStemGroup & IsStemXMod -> IsStemDomain etc. 

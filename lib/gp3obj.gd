@@ -2,7 +2,7 @@
 ##
 ##  gp3obj.gd                 GAP4 package `XMod'                Chris Wensley
 ##
-##  version 2.43, 21/10/2015 
+##  version 2.43, 10/11/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -59,27 +59,27 @@ DeclareSynonym( "IsPcCrossedSquare", IsCrossedSquare and IsPc3dGroup );
 
 #############################################################################
 ##
-#P  IsXPair( <map> )
-#R  IsXPairObj( <obj> )
-#O  XPairObj( <src>, <rng>, <map> )
-#A  XPairMap( <xp> )
-#O  ImageElmXPair( <xp>, <elm> ) 
+#P  IsXPairing( <map> )
+#R  IsXPairingObj( <obj> )
+#O  XPairingObj( <src>, <rng>, <map> )
+#A  XPairingMap( <xp> )
+#O  ImageElmXPairing( <xp>, <elm> ) 
 ##
-DeclareProperty( "IsXPair", IsGeneralMapping );
-DeclareRepresentation( "IsXPairObj", IsXPair and IsAttributeStoringRep,
-    [ "Source", "Range", "XPairMap" ] );
-DeclareOperation( "XPairObj", [ IsList, IsGroup, IsGeneralMapping ] );
-DeclareAttribute( "XPairMap", IsXPair );
-DeclareOperation( "ImageElmXPair", [ IsXPair, IsObject ] );
+DeclareProperty( "IsXPairing", IsGeneralMapping );
+DeclareRepresentation( "IsXPairingObj", IsXPairing and IsAttributeStoringRep,
+    [ "Source", "Range", "XPairingMap" ] );
+DeclareOperation( "XPairingObj", [ IsList, IsGroup, IsGeneralMapping ] );
+DeclareAttribute( "XPairingMap", IsXPairing );
+DeclareOperation( "ImageElmXPairing", [ IsXPairing, IsObject ] );
 
 #############################################################################
 ##
-#O  XPairByNormalSubgroups
-#O  XPairByDerivations
+#O  XPairingByNormalSubgroups
+#O  XPairingByDerivations
 ##
-DeclareOperation( "XPairByNormalSubgroups", 
+DeclareOperation( "XPairingByNormalSubgroups", 
     [ IsGroup, IsGroup, IsGroup ] );
-DeclareOperation( "XPairByDerivations", [ IsXMod ] );
+DeclareOperation( "XPairingByDerivations", [ IsXMod ] );
 
 #############################################################################
 ##
@@ -114,7 +114,7 @@ DeclareSynonym( "IsPcCat2", IsCat2 and IsPc3dGroup );
 #A  Left2dGroup( <PS> ) 
 #A  Right2dGroup( <PS> ) 
 #A  DiagonalAction( <PS> ) 
-#A  XPair( <PS> )
+#A  XPairing( <PS> )
 ##
 DeclareOperation( "PreCrossedSquareObj", 
     [ IsPreXMod, IsPreXMod, IsPreXMod, IsPreXMod, IsObject, IsObject] );
@@ -125,7 +125,7 @@ DeclareAttribute( "Left2dGroup", Is3dGroup );
 DeclareAttribute( "Down2dGroup", Is3dGroup );
 DeclareAttribute( "Right2dGroup", Is3dGroup );
 DeclareAttribute( "DiagonalAction", Is3dGroup );
-DeclareAttribute( "XPair", Is3dGroup );
+DeclareAttribute( "XPairing", Is3dGroup );
 DeclareAttribute( "LeftRightMorphism", Is3dGroup );
 DeclareAttribute( "UpDownMorphism", Is3dGroup ); 
 
@@ -140,7 +140,7 @@ DeclareAttribute( "UpDownMorphism", Is3dGroup );
 ##
 DeclareGlobalFunction( "CrossedSquare" );
 DeclareOperation( "CrossedSquareByXMods", 
-  [ IsXMod, IsXMod, IsXMod, IsXMod, IsGroupHomomorphism, IsXPair ] );
+  [ IsXMod, IsXMod, IsXMod, IsXMod, IsGroupHomomorphism, IsXPairing ] );
 DeclareOperation( "CrossedSquareByNormalSubgroups", 
     [ IsGroup, IsGroup, IsGroup, IsGroup ] );
 DeclareAttribute( "ActorCrossedSquare", IsXMod );
