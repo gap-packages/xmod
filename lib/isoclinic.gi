@@ -838,7 +838,14 @@ function( G1, G2 )
     nhom1 := Boundary( CQ1 );
     nhom2 := Boundary( CQ2 );
     itAQ2 := Iterator( AllAutomorphisms(Q2) ); 
-    sgQ1 := SmallGeneratingSet( Q1 );
+    ## there is a problem here! 
+    ## examples have been found where using SmallGeneratingSet 
+    ## gives an incorrect answer! 
+    ## perhaps GeneratorsOfGroup would be insuffient, but, 
+    ## to play safe, we use Elements(Q1) for now, though very slow! 
+    ## sgQ1 := SmallGeneratingSet( Q1 );
+    ## sgQ1 := GeneratorsOfGroup( Q1 );
+    sgQ1 := Elements( Q1 );
     lsgQ1 := Length( sgQ1 ); 
     while not IsDoneIterator( itAQ2 ) do 
         i := isoQ * NextIterator( itAQ2 ); 

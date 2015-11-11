@@ -2,6 +2,9 @@
 
 Problems and ToDos: 
 
+ - (11/11/15) resolve the problem of the best 'sgQ1' to use in Isoclinism, and 
+              more generally, check whether using SmallGeneratingSet elsewhere 
+              allows for spurious results in the isoclinism functions
  - (09/11/15) resolve whether XModCentre = CentreXMod 
  - (15/10/15) need a function CrossedSquareByCentralExtension 
  - (24/09/15) at present IsSub2dDomain just returns 'fail' 
