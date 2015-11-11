@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.gd              GAP4 package `XMod'                Alper Odabas
 #W                                                               & Enver Uslu
-##  version 2.43, 07/11/2015 
+##  version 2.43, 11/11/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al 
 ##
@@ -105,13 +105,11 @@ DeclareOperation( "AllXModsWithGroups3", [ IsGroup, IsGroup ] );
 ##
 #P IsStemDomain . . check that the centre is a subgroup of the derived domain
 #O AllStemGroupFamilies . . . . . all IdGroups of stem groups of chosen order 
-#A MiddleLength . . . 
 ## 
 DeclareProperty( "IsStemDomain", IsGroup );
 DeclareOperation( "AllStemGroupIds", [ IsPosInt ] );
 DeclareOperation( "AllStemGroupFamilies", [ IsPosInt ] );
 DeclareAttribute( "CentralQuotient", IsGroup ); 
-DeclareAttribute( "MiddleLength", IsGroup ); 
 
 #############################################################################
 ##
@@ -149,9 +147,11 @@ DeclareOperation( "AllXModsUpToIsomorphism", [ IsList ] );
 
 #############################################################################
 ##
-#O RankXMod  . . . . . . . . . the rank of the crossed module
+#A IsoclinicMiddleLength . .  the middle length of a group or crossed module
+#A IsoclinicRank   . . . . . . . . . . the rank of a group or crossed module
 ##
-DeclareOperation( "RankXMod", [ Is2dGroup ] );
+DeclareAttribute( "IsoclinicMiddleLength", IsGroup ); 
+DeclareAttribute( "IsoclinicRank", IsGroup );
 
 #############################################################################
 ##

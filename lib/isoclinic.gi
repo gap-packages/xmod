@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.gi               GAP4 package `XMod'                Alper Odabas
 #W                                                                & Enver Uslu
-##  version 2.43, 10/11/2015 
+##  version 2.43, 11/11/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al 
 #Y   
@@ -787,18 +787,6 @@ end );
 ##
 #M MiddleLength . . .
 ## 
-InstallMethod( MiddleLength, "generic method for groups", true, 
-    [ IsGroup ], 0,
-function( G ) 
-
-    local sonuc, ZG, DG, BG, KG, m1, l1, l2;
-
-    ZG := Center(G);
-    DG := DerivedSubgroup(G);
-    KG := Intersection(DG,ZG);
-    BG := FactorGroup(DG,KG);
-    return Log2( Float( Size(BG) ) );     
-end );
 
 #############################################################################
 ##
@@ -1105,43 +1093,78 @@ end );
 
 #############################################################################
 ##
-#M  RankXMod  . . . . . . . . . . . . . . . . the rank of the crossed module
+#M  IsoclinicMiddleLength . .  the middle length of a group or crossed module
+#M  IsoclinicRank . . . . . . . . . . . the rank of a group or crossed module
 ##
-InstallMethod( RankXMod, "generic method for crossed modules", true, 
+InstallMethod( IsoclinicRank, "generic method for groups", true, 
+    [ IsGroup ], 0,
+function(G)
+
+    local  ZG, DG, QG, KG; 
+
+    if not IsPrimePowerInt( Size(G) ) then 
+        return fail; 
+    fi;
+    ZG := Centre(G); 
+    DG := DerivedSubgroup(G); 
+    QG := G/ZG;
+    KG := Intersection( ZG, DG ); 
+    return Tau( Size(KG) ) + Tau( Size(QG) ) - 2;
+end );
+
+InstallOtherMethod( IsoclinicRank, "generic method for crossed modules", true, 
     [ Is2dGroup ], 0,
 function(XM)
 
-    local  ZXMod, DXMod, BXMod, KXMod, m1, m2, l1, l2;
+    local  size, ZXMod, DXMod, QXMod, KXMod, m1, m2, l1, l2;
 
+    size := Size( XM );
+    if not ( IsPrimePowerInt(size[1]) and IsPrimePowerInt(size[2]) ) then 
+        return fail; 
+    fi;
     ZXMod := CentreXMod(XM);
     DXMod := DerivedSubXMod(XM);
-    BXMod := FactorXMod(XM,ZXMod);
+    QXMod := FactorXMod(XM,ZXMod);
     KXMod := IntersectionSubXMods(XM,ZXMod,DXMod);
-    m1 := Size(BXMod);
+    m1 := Size(QXMod);
     m2 := Size(KXMod);
-    l1 := Log2(Float(m1[1])) + Log2(Float(m2[1]));
-    l2 := Log2(Float(m1[2])) + Log2(Float(m2[2]));
+    l1 := Tau( m1[1] ) + Tau( m2[1] ) - 2;
+    l2 := Tau( m1[2] ) + Tau( m2[2] ) - 2;
     return [l1,l2];
 end );
 
-#############################################################################
-##
-#M  MiddleLength  . . . . . . . the middle length of the crossed module
-##
-InstallOtherMethod( MiddleLength, "generic method for crossed modules", true, 
-    [ Is2dGroup ], 0,
+InstallMethod( IsoclinicMiddleLength, "generic method for groups", true, 
+    [ IsGroup ], 0,
+function(G)
+
+    local  ZG, DG, QG, KG; 
+
+    if not IsPrimePowerInt( Size(G) ) then 
+        return fail; 
+    fi;
+    ZG := Centre(G); 
+    DG := DerivedSubgroup(G); 
+    KG := Intersection( ZG, DG );
+    QG := DG/KG;
+    return Tau( Size(QG) ) - 1;
+end );
+
+InstallOtherMethod( IsoclinicMiddleLength, 
+    "generic method for crossed modules", true, [ Is2dGroup ], 0,
 function(XM)
 
-    local  sonuc, ZXMod, DXMod, BXMod, KXMod, m1, l1, l2;
+    local  size, ZXMod, DXMod, QXMod, KXMod;
 
+    size := Size( XM );
+    if not ( IsPrimePowerInt(size[1]) and IsPrimePowerInt(size[2]) ) then 
+        return fail; 
+    fi;
     ZXMod := CentreXMod(XM);
     DXMod := DerivedSubXMod(XM);
-    KXMod := IntersectionSubXMods(XM,DXMod,ZXMod);
-    BXMod := FactorXMod(DXMod,KXMod);
-    m1 := Size(BXMod);     
-    l1 := Log2(Float(m1[1]));
-    l2 := Log2(Float(m1[2]));
-    return [l1,l2];
+    KXMod := IntersectionSubXMods(XM,ZXMod,DXMod);
+    QXMod := FactorXMod(DXMod,KXMod);
+    size := Size(QXMod);     
+    return [ Tau(size[1])-1, Tau(size[2])-1 ];
 end );
 
 #############################################################################
@@ -1159,15 +1182,16 @@ function(XM,XM_ler)
     
 Print("---------------------------------------------------------------------------------------------------------------------------------- \n");
 Print("---------------------------------------------------------------------------------------------------------------------------------- \n");
-Print("Number","\t","Rank","\t\t","M. L.","\t\t","Class","\t","|G/Z|","\t\t","|g2|","\t\t","|g3|","\t\t","|g4|","\t\t","|g5| \n");
+Print("Number","\t","Rank","\t\t","M. L.","\t\t","Class","\t","|G/Z|","\t\t",
+      "|g2|","\t\t","|g3|","\t\t","|g4|","\t\t","|g5| \n");
 Print("---------------------------------------------------------------------------------------------------------------------------------- \n");
-Print(Length(sinif),"\t",RankXMod(XM),"\t",MiddleLength(XM),"\t",NilpotencyClassOf2dGroup(XM),"\t",Size(FactorXMod(XM,CentreXMod(XM))));    
+Print(Length(sinif),"\t",IsoclinicRank(XM),"\t",IsoclinicMiddleLength(XM),"\t",
+      NilpotencyClassOf2dGroup(XM),"\t",Size(FactorXMod(XM,CentreXMod(XM))));    
 
 if Length(B) > 1 then
 for i in [2..Length(B)] do
         Print("\t");
-        Print(Size(B[i]));
-        
+        Print(Size(B[i]));  
 od;
 fi;
 

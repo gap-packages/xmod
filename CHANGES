@@ -18,6 +18,7 @@ Problems and ToDos:
 #############################################################################
 2.42 -> 2.43 (11/11/2015) 
 
+ - (11/11/15) renamed Rank and MiddleLength and now for p-groups only 
  - (10/11/15) changes examples in tests to avoid repeated variable names 
  - (09/11/15) XPair -> XPairing, etc.
  - (08/11/15) IsomorphismPermPre(XMod/Cat1) -> IsomorphismPerm2dGroup, etc. 
