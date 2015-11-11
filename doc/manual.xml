@@ -3,7 +3,7 @@
 <!--  manual.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
 <!--                                                     & Alper Odabas  -->
-<!--  version 2.43, 08/11/2015                                           --> 
+<!--  version 2.43, 11/11/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2015, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
@@ -104,7 +104,7 @@ were included in the January 2004 release 2.002 for &GAP; 4.4.
 In October 2015 functions for computing isoclinism classes of 
 crossed modules, written by Alper Odaba&#x15f; and Enver Uslu, were added. 
 These are contained in Chapter <Ref Chap="chap-isclnc" />, 
-and are described in detail in the paper <Cite Key="OUI1" />. 
+and are described in detail in the paper <Cite Key="IOU1" />. 
 <P/>
 The current version is &VERSION;, released &LONGRELEASEDATE; for &GAP; 4.7. 
 <P/>

@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.g               XMOD example files   Chris Wensley & Alper Odabas
 ##                                                               & Enver Uslu
-##  version 2.43, 10/11/2015 
+##  version 2.43, 11/11/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -149,7 +149,7 @@ Print( "and these form families:\n" );
 Print( AllStemGroupFamilies(32), "\n\n" );
 
 Print( "G has middle length ", MiddleLength(G), "\n" );
-Print( "X1 has rank ", RankXMod(X1), "\n\n" ); 
+Print( "X1 has rank ", IsoclinicRank(X1), "\n\n" ); 
 
 C8 := Cat1(16,8,1);
 Print( "C8 := Cat1(16,8,1) = ", C8, "\n" ); 

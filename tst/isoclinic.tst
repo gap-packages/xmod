@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.tst                 XMOD test file                 Alper Odabas
 #W                                                               & Enver Uslu
-##  version 2.43, 10nat1/11/2015 
+##  version 2.43, 11/11/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 ##
@@ -180,11 +180,10 @@ gap> AllStemGroupFamilies( 32 );
   [ [ 32, 49 ], [ 32, 50 ] ] ]
 
 #### 4.2.3
-gap> MiddleLength(G);
-1.
-gap> RankXMod(X1);
-[ 2.32193, 2. ]
-
+gap> IsoclinicMiddleLength(G);
+1
+gap> IsoclinicRank( G );
+4
 
 #### testing isoclinism of groups #### 
 
@@ -213,9 +212,9 @@ gap> IsStemDomain(X9);
 false
 
 #### 4.3.3
-gap> MiddleLength(X24);
-[ 2.58496, 2.58496 ]
-
-
+gap> IsoclinicMiddleLength(X8);
+[ 1, 0 ]
+gap> IsoclinicRank(X8);        
+[ 3, 1 ]
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 

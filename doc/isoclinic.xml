@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  isoclinic.xml          XMod documentation            Alper Odabas  -->
 <!--                                                       & Enver Uslu  -->
-<!--  version 2.43, 10/11/2015                                           --> 
+<!--  version 2.43, 11/11/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2015, Chris Wensley et al                       --> 
 <!--                                                                     -->
@@ -14,7 +14,7 @@
 <Heading>Isoclinism of groups and crossed modules</Heading>
 
 This chapter describes some functions written by Alper Odaba&#x15f; and  
-Enver Uslu, and reported in their paper <Cite Key="OUI1" />. 
+Enver Uslu, and reported in their paper <Cite Key="IOU1" />. 
 Section <Ref Sect="sect-more-xmod-ops" /> contains some additional 
 basic functions for crossed modules, 
 constructing quotients, centres, centralizers and normalizers.
@@ -24,7 +24,10 @@ there are functions dealing specifically with isoclinism
 for groups and for crossed modules. 
 Since these functions represent a recent addition to the package 
 (as of November 2015), 
-the function names are liable to change in future versions.
+the function names are liable to change in future versions. 
+The notion of isoclinism has been crucial to the enumeration of groups 
+of prime power order, see for example James, Newman and O'Brien, 
+<Cite Key="JNO" />.
 
 <Section Label="sect-more-xmod-ops">
 <Heading>More operations for crossed modules</Heading>
@@ -47,8 +50,7 @@ with the induced boundary and action maps.
 <Example>
 <![CDATA[
 gap> d24 := DihedralGroup(24);;  SetName( d24, "d24" );
-gap> X24 := XModByAutomorphismGroup( d24 );; 
-gap> Size(X24);
+gap> X24 := XModByAutomorphismGroup( d24 );;  Size(X24);
 [ 24, 48 ]
 gap> nsx := NormalSubXMods( X24 );; 
 gap> ids := List( nsx, n -> IdGroup(n) );; 
@@ -59,8 +61,7 @@ gap> Size( Xn1 );
 [ 4, 8 ]
 gap> nat1 := NaturalMorphismByNormalSubXMod( X24, Xn1 ); 
 [[d24->PAut(d24)] => [..]]
-gap> Qn1 := FactorXMod( X24, Xn1 ); 
-[Group( [ f1, f2 ] )->Group( [ f1, f2 ] )]
+gap> Qn1 := FactorXMod( X24, Xn1 );; 
 gap> Size( Qn1 );
 [ 6, 6 ]
 ]]>
@@ -555,26 +556,28 @@ gap> AllStemGroupFamilies( 32 );
 ]]>
 </Example>
 
-<ManSection>
-   <Attr Name="MiddleLength"
+<ManSection Label="group-rank">
+   <Attr Name="IsoclinicRank"
          Arg="G" />
-   <Attr Name="RankXMod"
-         Arg="X0" />
+   <Attr Name="IsoclinicMiddleLength"
+         Arg="G" />
 <Description>
-Let <M>G</M> be a finite group. 
-Then <M>\log_2 |[G,G] / (Z(G) \cap [G,G])|</M> is called the 
+Let <M>G</M> be a finite <M>p</M>-group. 
+Then <M>\log_p |[G,G] / (Z(G) \cap [G,G])|</M> is called the 
 <E>middle length</E> of <M>G</M>. 
-Also <M>\log_2 |Z(G) \cap [G,G]| + \log_2 |G/Z(G)|</M> 
+Also <M>\log_p |Z(G) \cap [G,G]| + \log_p |G/Z(G)|</M> 
 is called the <E>rank</E> of <M>G</M>. 
+These invariants appear in the tables of isoclinism families of 
+groups of order 128 in <Cite Key="JNO" />.
 </Description>
 </ManSection>
 <P/>
 <Example>
 <![CDATA[
-gap> MiddleLength(G);
-1.
-gap> RankXMod(X1);
-[ 2.32193, 2. ]
+gap> IsoclinicMiddleLength(G);
+1
+gap> IsoclinicRank(G);
+4
 ]]>
 </Example>
 
@@ -658,17 +661,22 @@ false
 </Example>
 
 <ManSection>
-   <Attr Name="MiddleLength"
+   <Attr Name="IsoclinicRank"
+         Arg="X0" />
+   <Attr Name="IsoclinicMiddleLength"
          Arg="X0" />
 <Description>
-Description required here. 
+The formulae in subsection <Ref Subsect="group-rank" /> 
+are applied to the crossed module.
 </Description>
 </ManSection>
 <P/>
 <Example>
 <![CDATA[
-gap> MiddleLength(X24);
-[ 2.58496, 2.58496 ]
+gap> IsoclinicMiddleLength(X8);
+[ 1, 0 ]
+gap> IsoclinicRank(X8);        
+[ 3, 1 ]
 ]]>
 </Example>
 
