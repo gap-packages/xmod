@@ -8,23 +8,23 @@ SetPackageInfo( rec(
 PackageName := "XMod",
 Subtitle := "Crossed Modules and Cat1-Groups",
 
-Version := "2.43",
-Date := "11/11/2015",
+Version := "2.44",
+Date := "13/11/2015",
 
 ##  duplicate these values for inclusion in the manual: 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "2.43">
-##  <!ENTITY TARFILENAME "xmod-2.43.tar.gz">
-##  <!ENTITY HTMLFILENAME "xmod243.html">
-##  <!ENTITY RELEASEDATE "11/11/2015">
-##  <!ENTITY LONGRELEASEDATE "11th November 2015">
+##  <!ENTITY VERSION "2.44">
+##  <!ENTITY TARFILENAME "xmod-2.44.tar.gz">
+##  <!ENTITY HTMLFILENAME "xmod244.html">
+##  <!ENTITY RELEASEDATE "13/11/2015">
+##  <!ENTITY LONGRELEASEDATE "13th November 2015">
 ##  <!ENTITY COPYRIGHTYEARS "1997-2015">
 ##  <#/GAPDoc>
 
 PackageWWWHome := 
   "http://pages.bangor.ac.uk/~mas023/chda/xmod/",
 
-ArchiveURL := "http://pages.bangor.ac.uk/~mas023/chda/xmod/xmod-2.43", 
+ArchiveURL := "http://pages.bangor.ac.uk/~mas023/chda/xmod/xmod-2.44", 
 ArchiveFormats := ".tar.gz",
 
 Persons := [
