@@ -8,23 +8,23 @@ SetPackageInfo( rec(
 PackageName := "XMod",
 Subtitle := "Crossed Modules and Cat1-Groups",
 
-Version := "2.44",
-Date := "13/11/2015",
+Version := "2.45",
+Date := "29/12/2015",
 
 ##  duplicate these values for inclusion in the manual: 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY VERSION "2.44">
-##  <!ENTITY TARFILENAME "xmod-2.44.tar.gz">
-##  <!ENTITY HTMLFILENAME "xmod244.html">
-##  <!ENTITY RELEASEDATE "13/11/2015">
-##  <!ENTITY LONGRELEASEDATE "13th November 2015">
+##  <!ENTITY VERSION "2.45">
+##  <!ENTITY TARFILENAME "xmod-2.45.tar.gz">
+##  <!ENTITY HTMLFILENAME "xmod245.html">
+##  <!ENTITY RELEASEDATE "29/12/2015">
+##  <!ENTITY LONGRELEASEDATE "29th December 2015">
 ##  <!ENTITY COPYRIGHTYEARS "1997-2015">
 ##  <#/GAPDoc>
 
 PackageWWWHome := 
   "http://pages.bangor.ac.uk/~mas023/chda/xmod/",
 
-ArchiveURL := "http://pages.bangor.ac.uk/~mas023/chda/xmod/xmod-2.44", 
+ArchiveURL := "http://pages.bangor.ac.uk/~mas023/chda/xmod/xmod-2.45", 
 ArchiveFormats := ".tar.gz",
 
 Persons := [
@@ -129,7 +129,7 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">=4.7",
+  GAP := ">=4.8",
   NeededOtherPackages := [ ["Gpd", ">= 1.34"], 
                            ["Hap", ">= 1.10"],
                            ["autpgrp", ">= 1.5"] ], 
@@ -140,7 +140,7 @@ Dependencies := rec(
 AvailabilityTest := ReturnTrue,
 
 BannerString := Concatenation( 
-  "Loading XMod ", String( ~.Version ), " for GAP 4.7", 
+  "Loading XMod ", String( ~.Version ), " for GAP 4.8", 
   " - methods for crossed modules and cat1-groups\n",
   "by Chris Wensley (c.d.wensley@bangor.ac.uk), with contributions by:\n", 
   "    Murat Alp (muratalp@nigde.edu.tr),\n", 

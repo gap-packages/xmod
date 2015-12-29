@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  history.xml           XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  version 2.43, 10/11/2015                                           --> 
+<!--  version 2.45, 29/12/2015                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2015, Murat Alp and Chris Wensley,              --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
@@ -122,7 +122,7 @@ and correct file protection codes. </Item>
 </Section> 
 
 
-<Section><Heading>Versions for &GAP; 4.5, 4.6 and 4.7</Heading>
+<Section><Heading>Versions for &GAP; [4.5 .. 4.8]</Heading>
 
 Version 2.19, released on 9th June 2012, included the following changes:  
 <List>
@@ -165,7 +165,7 @@ The material on isoclinism in Chapter 4 was added.
 </Item>
 <Item>
 The package webpage has moved to 
-<URL>http://pages.bangor.ac.uk/~mass023/chda/</URL>. 
+<URL>http://pages.bangor.ac.uk/~mas023/chda/</URL>. 
 </Item>
 <Item>
 A GitHub repository was started at: 

@@ -2,7 +2,7 @@
 ##
 #W  gp2obj.tst                    XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-##  version 2.43, 10/11/2015 
+##  version 2.45, 29/12/2015 
 ##
 #Y  Copyright (C) 2001-2015, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -23,11 +23,11 @@ Crossed module [c5->PAut(c5)] :-
 : Source group c5 has generators:
   [ (5,6,7,8,9) ]
 : Range group PAut(c5) has generators:
-  [ (1,2,3,4) ]
+  [ (1,2,4,3) ]
 : Boundary homomorphism maps source generators to:
   [ () ]
 : Action homomorphism maps range generators to automorphisms:
-  (1,2,3,4) --> { source gens --> [ (5,7,9,6,8) ] }
+  (1,2,4,3) --> { source gens --> [ (5,7,9,6,8) ] }
   This automorphism generates the group of automorphisms.
 
 gap> Size( X1 );

@@ -1,7 +1,7 @@
                        README file for the XMod package 
                        ================================ 
 
-Version 2.44, 13th November 2015 
+Version 2.45, 29th December 2015 
 
 Introduction 
 ------------
@@ -13,7 +13,7 @@ History
 -------
 Version 1 of ``XMod'' was accepted for GAP3R4P4 in December 1996.
 The first version for GAP4 was XMod 2.001, released in April 2002. 
-The latest Version, 2.44, was released on 13th November 2015 for GAP 4.7. 
+The latest Version, 2.45, was released on 29th December 2015 for GAP 4.8. 
 A more detailed history is included as Chapter 11 of the manual, 
 with minor changes detailed in the file CHANGES.
 
@@ -36,7 +36,7 @@ For details, see \URL{http://www.gnu.org/licenses/gpl.html}
 
 Installation
 ------------
-1) unpack `xmod-2.44.tar.gz' in the `pkg' subdirectory of the GAP root directory.
+1) unpack `xmod-2.45.tar.gz' in the `pkg' subdirectory of the GAP root directory.
 2) From within GAP load the package with:
 gap> LoadPackage("XMod");
 true
@@ -46,4 +46,4 @@ Contact
 -------
 If you have a question relating to XMod, encounter any problems, or have a suggestion for extending the package in any way, please 
  - email c.d.wensley@bangor.ac.uk 
- - or report an issue at https://github.com/gap-system/xmod/issues/new 
+ - or report an issue at https://github.com/gap-packages/xmod/issues/new 
