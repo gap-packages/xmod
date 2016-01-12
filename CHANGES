@@ -19,6 +19,11 @@ Problems and ToDos:
               (construction worked OK with isomorphic perm groups). 
 
 #############################################################################
+2.45 -> 2.51 (12/01/2016) 
+
+ - (12/01/16) started new version
+
+#############################################################################
 2.44 -> 2.45 (29/12/2015) 
 
  - (29/12/15) fixed changes in output from .tst files 

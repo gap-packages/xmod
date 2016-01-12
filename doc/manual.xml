@@ -2,9 +2,9 @@
 <!--                                                                     -->
 <!--  manual.xml     XMod documentation        Chris Wensley & Murat Alp -->
 <!--                                         & Alper Odabas & Enver Uslu -->
-<!--  version 2.45, 29/12/2015                                           --> 
+<!--  version 2.51, 12/01/2016                                           --> 
 <!--                                                                     --> 
-<!--  Copyright (C) 2001-2015, Chris Wensley et al,                      --> 
+<!--  Copyright (C) 2001-2016, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -33,8 +33,8 @@
 <TitlePage>
   <Title>&XMod;</Title>
   <Subtitle>Crossed modules and cat1-groups in &GAP;</Subtitle>
-  <Version>Version &VERSION;</Version>
-  <Date>&RELEASEDATE;</Date> 
+  <Version>Version &XMODVERSION;</Version>
+  <Date>&XMODRELEASEDATE;</Date> 
   <Author> Murat Alp
     <Email>muratalp@nigde.edu.tr</Email>
     <Address>
@@ -105,7 +105,8 @@ crossed modules, written by Alper Odaba&#x15f; and Enver Uslu, were added.
 These are contained in Chapter <Ref Chap="chap-isclnc" />, 
 and are described in detail in the paper <Cite Key="IOU1" />. 
 <P/>
-The current version is &VERSION;, released &LONGRELEASEDATE; for &GAP; 4.8. 
+The current version is &XMODVERSION;, 
+released &XMODLONGRELEASEDATE; for &GAP; 4.8. 
 <P/>
 Bug reports, suggestions and comments are, of course, welcome. 
 Please contact the last author at <Email>c.d.wensley@bangor.ac.uk</Email> 
@@ -114,7 +115,7 @@ or submit an issue at <URL>http://github.com/gap-packages/xmod/issues/</URL>.
 
 <Copyright> 
 <Index>License</Index>
-&copyright; &COPYRIGHTYEARS; Chris Wensley et al.  
+&copyright; &XMODCOPYRIGHTYEARS; Chris Wensley et al.  
 
 &xmod; is free software; you can redistribute it 
 and/or modify it under the terms of the 

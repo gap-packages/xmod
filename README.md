@@ -1,7 +1,7 @@
                        README file for the XMod package 
                        ================================ 
 
-Version 2.45, 29th December 2015 
+Version 2.51, 12th January 2016 
 
 Introduction 
 ------------
@@ -13,7 +13,7 @@ History
 -------
 Version 1 of ``XMod'' was accepted for GAP3R4P4 in December 1996.
 The first version for GAP4 was XMod 2.001, released in April 2002. 
-The latest Version, 2.45, was released on 29th December 2015 for GAP 4.8. 
+The latest Version, 2.51, was released on 12th January 2016 for GAP 4.8. 
 A more detailed history is included as Chapter 11 of the manual, 
 with minor changes detailed in the file CHANGES.
 
@@ -27,7 +27,7 @@ Computational Higher-dimensional Discrete Algebra at:
 
 Copyright
 ---------
-The XMod package is Copyright {\copyright} Chris Wensley et al, 1997--2015. 
+The XMod package is Copyright {\copyright} Chris Wensley et al, 1997--2016. 
 XMod is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 2 of the License, or
@@ -36,7 +36,7 @@ For details, see \URL{http://www.gnu.org/licenses/gpl.html}
 
 Installation
 ------------
-1) unpack `xmod-2.45.tar.gz' in the `pkg' subdirectory of the GAP root directory.
+1) unpack `xmod-2.51.tar.gz' in the `pkg' subdirectory of the GAP root directory.
 2) From within GAP load the package with:
 gap> LoadPackage("XMod");
 true
