@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  manual.xml     XMod documentation        Chris Wensley & Murat Alp -->
 <!--                                         & Alper Odabas & Enver Uslu -->
-<!--  version 2.51, 12/01/2016                                           --> 
+<!--  version 2.51, 15/01/2016                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2016, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
@@ -14,7 +14,7 @@
 <!-- Reading data chunk from the PackageInfo.g file --> 
 
 <!DOCTYPE Book SYSTEM "gapdoc.dtd"
-  [<!ENTITY xmod "<Package>XMod</Package>"> 
+  [<!ENTITY XMod "<Package>XMod</Package>"> 
    <#Include Label="PKGVERSIONDATA">,
    <!ENTITY Act "\mathop{\textrm{Act}\rm}">
    <!ENTITY Aut "\mathop{\textrm{Aut}\rm}">
@@ -22,9 +22,6 @@
    <!ENTITY Fix "\mathop{\textrm{Fix}\rm}">
    <!ENTITY Stab "\mathop{\textrm{Stab}\rm}">
   ]> 
-
-<!DOCTYPE Book SYSTEM "gapdoc.dtd"
-[<!ENTITY XMod "<Package>XMod</Package>">] >
 
 <!-- The documentation to the XMod package. -->
 
@@ -69,7 +66,7 @@
   </Author>
 
 <Abstract>
-The &xmod; package provides functions for computation with 
+The &XMod; package provides functions for computation with 
 <List> 
 <Item>
 finite crossed modules of groups and cat1-groups, 
@@ -93,7 +90,7 @@ crossed modules of finite groupoids (experimental version).
 </Item>
 </List> 
 <P/>
-&xmod; was originally implemented in 1997 using the &GAP;3 language, when the first author was studying for a Ph.D. <Cite Key="A1"/> in Bangor.
+&XMod; was originally implemented in 1997 using the &GAP;3 language, when the first author was studying for a Ph.D. <Cite Key="A1"/> in Bangor.
 <P/>
 In April 2002 the first and third parts were converted to &GAP;4, 
 the pre-structures were added, and version 2.001 was released. 
@@ -117,7 +114,7 @@ or submit an issue at <URL>http://github.com/gap-packages/xmod/issues/</URL>.
 <Index>License</Index>
 &copyright; &XMODCOPYRIGHTYEARS; Chris Wensley et al.  
 
-&xmod; is free software; you can redistribute it 
+&XMod; is free software; you can redistribute it 
 and/or modify it under the terms of the 
 <URL Text="GNU General Public License">http://www.fsf.org/licenses/gpl.html</URL> 
 as published by the Free Software Foundation; 
