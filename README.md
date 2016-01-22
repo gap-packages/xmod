@@ -1,7 +1,7 @@
                        README file for the XMod package 
                        ================================ 
 
-Version 2.51, 12th January 2016 
+Version 2.51, 22nd January 2016 
 
 Introduction 
 ------------
