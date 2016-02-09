@@ -2,11 +2,13 @@
 ##
 #W  testall.g                 GAP4 package `XMod'               Chris Wensley
 ## 
-##  version 2.43, 21/10/2015 
+##  version 2.52, 09/02/2016 
 ##
-#Y  Copyright (C) 2001-2015, Chris Wensley et al 
+#Y  Copyright (C) 2001-2016, Chris Wensley et al 
 ##
 #############################################################################
+
+LoadPackage( "xmod" ); 
 
 TestXMod := function( pkgname )
     local  pkgdir, testfiles, testresult, ff, fn;

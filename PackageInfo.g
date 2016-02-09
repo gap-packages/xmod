@@ -8,23 +8,23 @@ SetPackageInfo( rec(
 PackageName := "XMod",
 Subtitle := "Crossed Modules and Cat1-Groups",
 
-Version := "2.51",
-Date := "12/01/2016",
+Version := "2.52",
+Date := "10/02/2016",
 
 ##  duplicate these values for inclusion in the manual: 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY XMODVERSION "2.51">
-##  <!ENTITY XMODTARFILENAME "xmod-2.51.tar.gz">
+##  <!ENTITY XMODVERSION "2.52">
+##  <!ENTITY XMODTARFILENAME "xmod-2.52.tar.gz">
 ##  <!ENTITY XMODHTMLFILENAME "xmod.html">
-##  <!ENTITY XMODRELEASEDATE "12/01/2016">
-##  <!ENTITY XMODLONGRELEASEDATE "12th January 2016">
+##  <!ENTITY XMODRELEASEDATE "10/02/2016">
+##  <!ENTITY XMODLONGRELEASEDATE "10th February 2016">
 ##  <!ENTITY XMODCOPYRIGHTYEARS "1997-2016">
 ##  <#/GAPDoc>
 
 PackageWWWHome := 
   "http://pages.bangor.ac.uk/~mas023/chda/xmod/",
 
-ArchiveURL := "http://pages.bangor.ac.uk/~mas023/chda/xmod/xmod-2.51", 
+ArchiveURL := "http://pages.bangor.ac.uk/~mas023/chda/xmod/xmod-2.52", 
 ArchiveFormats := ".tar.gz",
 
 Persons := [
@@ -34,7 +34,7 @@ Persons := [
     IsAuthor      := true,
     IsMaintainer  := true,
     Email         := "c.d.wensley@bangor.ac.uk",
-    WWWHome       := "http://www.bangor.ac.uk/~mas023/",
+    WWWHome       := "http://pages.bangor.ac.uk/~mas023/",
     PostalAddress := Concatenation( [
                        "Dr. C.D. Wensley\n",
                        "School of Computer Science\n",
@@ -130,9 +130,9 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">=4.8",
-  NeededOtherPackages := [ ["Gpd", ">= 1.34"], 
-                           ["Hap", ">= 1.10"],
-                           ["autpgrp", ">= 1.5"] ], 
+  NeededOtherPackages := [ ["Gpd", ">= 1.41"], 
+                           ["Hap", ">= 1.11"],
+                           ["autpgrp", ">= 1.6"] ], 
   SuggestedOtherPackages := [ ["GAPDoc", ">= 1.5.1"] ],
   ExternalConditions := [ ]
 ),

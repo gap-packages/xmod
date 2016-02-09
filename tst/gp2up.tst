@@ -2,9 +2,9 @@
 ##
 #W  gp2up.tst                     XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-##  version 2.45, 29/12/2015 
+##  version 2.51, 08/02/2016 
 ##
-#Y  Copyright (C) 2001-2015, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2016, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 #############################################################################

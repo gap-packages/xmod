@@ -2,9 +2,9 @@
 ##
 #W  isoclinic.tst                 XMOD test file                 Alper Odabas
 #W                                                               & Enver Uslu
-##  version 2.43, 11/11/2015 
+##  version 2.51, 09/02/2016 
 ##
-#Y  Copyright (C) 2001-2015, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2016, Chris Wensley et al, 
 ##
 #############################################################################
 
@@ -168,16 +168,10 @@ gap> IsStemDomain( G );
 false
 gap> IsoclinicStemDomain( G );
 <pc group of size 16 with 4 generators>
-gap> AllStemGroupIds( 32 );
-[ [ 32, 6 ], [ 32, 7 ], [ 32, 8 ], [ 32, 18 ], [ 32, 19 ], [ 32, 20 ], 
-  [ 32, 27 ], [ 32, 28 ], [ 32, 29 ], [ 32, 30 ], [ 32, 31 ], [ 32, 32 ], 
-  [ 32, 33 ], [ 32, 34 ], [ 32, 35 ], [ 32, 43 ], [ 32, 44 ], [ 32, 49 ], 
-  [ 32, 50 ] ]
-gap> AllStemGroupFamilies( 32 );
-[ [ [ 32, 6 ], [ 32, 7 ], [ 32, 8 ] ], [ [ 32, 18 ], [ 32, 19 ], [ 32, 20 ] ],
-  [ [ 32, 27 ], [ 32, 28 ], [ 32, 29 ], [ 32, 30 ], [ 32, 31 ], [ 32, 32 ], 
-      [ 32, 33 ], [ 32, 34 ], [ 32, 35 ] ], [ [ 32, 43 ], [ 32, 44 ] ], 
-  [ [ 32, 49 ], [ 32, 50 ] ] ]
+gap> AllStemGroupIds( 16 );     
+[ [ 16, 7 ], [ 16, 8 ], [ 16, 9 ] ]
+gap> AllStemGroupFamilies( 16 );
+[ [ [ 16, 7 ], [ 16, 8 ], [ 16, 9 ] ] ]
 
 #### 4.2.3
 gap> IsoclinicMiddleLength(G);
@@ -185,7 +179,7 @@ gap> IsoclinicMiddleLength(G);
 gap> IsoclinicRank( G );
 4
 
-#### testing isoclinism of groups #### 
+#### testing isoclinism of crossed modules #### 
 
 #### 4.3.1
 gap> C8 := Cat1(16,8,1);;

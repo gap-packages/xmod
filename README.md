@@ -1,7 +1,7 @@
                        README file for the XMod package 
                        ================================ 
 
-Version 2.51, 22nd January 2016 
+Version 2.51, 9th February 2016 
 
 Introduction 
 ------------
@@ -13,7 +13,7 @@ History
 -------
 Version 1 of ``XMod'' was accepted for GAP3R4P4 in December 1996.
 The first version for GAP4 was XMod 2.001, released in April 2002. 
-The latest Version, 2.51, was released on 12th January 2016 for GAP 4.8. 
+The latest Version, 2.51, was released on 9th February 2016 for GAP 4.8. 
 A more detailed history is included as Chapter 11 of the manual, 
 with minor changes detailed in the file CHANGES.
 
