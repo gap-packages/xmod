@@ -2,12 +2,10 @@
 ##
 #W  gp3map.gi                    GAP4package `XMod'              Chris Wensley
 ##
-##  version 2.43, 04/11/2015 
-##
 ##  This file implements functions for 3dMappings for (pre-)crossed squares 
 ##  and (pre-)cat2-groups. 
 ##
-#Y  Copyright (C) 2001-2015, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2016, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 ##############################################################################

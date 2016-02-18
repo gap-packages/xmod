@@ -3,11 +3,9 @@
 #W  gp2up.gi                    GAP4 package `XMod'              Chris Wensley
 #W                                                                 & Murat Alp
 ##
-##  version 2.43, 21/10/2015 
-##
 ##  This file contains implementations of UpMappings, Derivations and Sections
 ##
-#Y  Copyright (C) 2001-2015, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2016, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 ##############################################################################

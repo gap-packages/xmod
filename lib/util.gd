@@ -3,9 +3,7 @@
 #W  util.gd                    GAP4 package `XMod'               Chris Wensley
 #W                                                                 & Murat Alp
 ##
-##  version 2.43, 04/11/2015 
-##
-#Y  Copyright (C) 2001-2015, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2016, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 #? replace by IsEndoMapping and (IsEndomapping and IsBijective) ??

@@ -2,9 +2,7 @@
 ##
 #W  isoclinic.g               XMOD example files   Chris Wensley & Alper Odabas
 ##                                                               & Enver Uslu
-##  version 2.43, 11/11/2015 
-##
-#Y  Copyright (C) 2001-2015, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2016, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 #############################################################################

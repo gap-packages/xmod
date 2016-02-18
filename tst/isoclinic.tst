@@ -2,8 +2,6 @@
 ##
 #W  isoclinic.tst                 XMOD test file                 Alper Odabas
 #W                                                               & Enver Uslu
-##  version 2.51, 09/02/2016 
-##
 #Y  Copyright (C) 2001-2016, Chris Wensley et al, 
 ##
 #############################################################################

@@ -19,8 +19,9 @@ Problems and ToDos:
               (construction worked OK with isomorphic perm groups). 
 
 #############################################################################
-2.51 -> 2.52 (16/02/2016) 
+2.51 -> 2.52 (18/02/2016) 
 
+ - (18/02/16) removed date/version info from file headers 
  - (16/02/16) require Gpd >= 1.42;  rename README.md -> README 
 
 #############################################################################
