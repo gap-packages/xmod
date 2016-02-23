@@ -6,24 +6,6 @@
 #Y  Copyright (C) 2001-2016, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
-#? replace by IsEndoMapping and (IsEndomapping and IsBijective) ??
-
-##############################################################################
-##
-#O  PrintListOneItemPerLine( <L> )
-##  
-DeclareOperation( "PrintListOneItemPerLine", [ IsList ] );
-
-#############################################################################
-##
-## #P  IsEndomorphismOfGroup( <f> )
-## #P  IsAutomorphismOfGroup( <f> )
-##
-## DeclareProperty( "IsEndomorphismOfGroup", IsGroupHomomorphism );
-## DeclareProperty( "IsAutomorphismOfGroup", IsGroupHomomorphism );
-## InstallTrueMethod( IsAutomorphismOfGroup, 
-##     IsEndomorphismOfGroup and IsBijective );
-
 ##############################################################################
 ##
 #O  InnerAutomorphismsByNormalSubgroup( <G>, <N> )
@@ -71,18 +53,6 @@ DeclareAttribute( "GenerationPairs", IsGroup );
 DeclareOperation( "CheckGenerationPairs", [ IsGroup ] );
 
 ####################### items added May 2002 ################################
-
-#############################################################################
-##
-#O  DistinctRepresentatives( <L> )
-#O  CommonRepresentatives( <J>, <K> )
-#O  CommonTransversal( <G>, <H> )
-#O  IsCommonTransversal( <G>, <H>, <T> )
-##
-DeclareOperation( "DistinctRepresentatives", [ IsList ] );
-DeclareOperation( "CommonRepresentatives", [ IsList, IsList ] );
-DeclareOperation( "CommonTransversal", [ IsGroup, IsGroup ] );
-DeclareOperation( "IsCommonTransversal", [ IsGroup, IsGroup, IsList ] );
 
 #############################################################################
 ##

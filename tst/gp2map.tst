@@ -21,12 +21,12 @@ gap> Display( mor1 );
 Morphism of crossed modules :- 
 : Source = [c5->PAut(c5)] with generating sets:
   [ (5,6,7,8,9) ]
-  [ (1,2,4,3) ]
+  [ (1,2,3,4) ]
 : Range = Source
 : Source Homomorphism maps source generators to:
   [ (5,9,8,7,6) ]
 : Range Homomorphism maps range generators to:
-  [ (1,2,4,3) ]
+  [ (1,2,3,4) ]
 gap> IsAutomorphism2dDomain(mor1);
 true
 gap> Order(mor1);

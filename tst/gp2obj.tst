@@ -21,11 +21,11 @@ Crossed module [c5->PAut(c5)] :-
 : Source group c5 has generators:
   [ (5,6,7,8,9) ]
 : Range group PAut(c5) has generators:
-  [ (1,2,4,3) ]
+  [ (1,2,3,4) ]
 : Boundary homomorphism maps source generators to:
   [ () ]
 : Action homomorphism maps range generators to automorphisms:
-  (1,2,4,3) --> { source gens --> [ (5,7,9,6,8) ] }
+  (1,2,3,4) --> { source gens --> [ (5,7,9,6,8) ] }
   This automorphism generates the group of automorphisms.
 
 gap> Size( X1 );

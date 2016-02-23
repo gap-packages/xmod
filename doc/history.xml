@@ -155,7 +155,7 @@ The authors are indebted to Van Luyen Le in Galway for pointing out a number
 of errors in the version of this list distributed with version 2.24 of this package.  
 </Subsection>
 
-<Subsection><Heading>Version 2.43</Heading>
+<Subsection><Heading>Versions 2.43 - 2.56</Heading>
 Version 2.43, released on 11th November 2015, included the following changes:  
 <List>
 <Item> 
@@ -168,6 +168,10 @@ The package webpage has moved to
 <Item>
 A GitHub repository was started at: 
 <URL>https://github.com/gap-packages/xmod</URL>. 
+</Item>
+<Item>
+The section on <E>Distinct and Common Representatives</E> 
+was moved to the <Package>Utils</Package> package. 
 </Item>
 </List> 
 </Subsection>
