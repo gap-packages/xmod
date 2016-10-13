@@ -45,6 +45,7 @@ Persons := [
     LastName      := "Alp",
     FirstNames    := "Murat",
     IsAuthor      := true,
+    IsMaintainer  := false,
     Email         := "muratalp@nigde.edu.tr",
     PostalAddress := Concatenation( [ 
                        "Prof. Dr. M. Alp\n",
@@ -60,6 +61,7 @@ Persons := [
     LastName      := "Odabas",
     FirstNames    := "Alper",
     IsAuthor      := true,
+    IsMaintainer  := false,
     Email         := "aodabas@ogu.edu.tr",
     PostalAddress := Concatenation( [ 
                        "Dr. A. Odabas \n",
@@ -75,6 +77,7 @@ Persons := [
     LastName      := "Uslu",
     FirstNames    := "Enver Onder",
     IsAuthor      := true,
+    IsMaintainer  := false,
     Email         := "enveruslu@ogu.edu.tr",
     PostalAddress := Concatenation( [ 
                        "Dr. E. O. Uslu \n",
