@@ -17,6 +17,7 @@ ReadPackage( "xmod", "lib/gp2act.gi" );
 ReadPackage( "xmod", "lib/gp2ind.gi" );
 ReadPackage( "xmod", "lib/map2arg.gi" );
 ReadPackage( "xmod", "lib/isoclinic.gi" ); 
+ReadPackage( "xmod", "lib/hap.gi" );
 ReadPackage( "xmod", "lib/gp3obj.gi" ); 
 ReadPackage( "xmod", "lib/gp3map.gi" ); 
 ReadPackage( "xmod", "lib/gpd2obj.gi" ); 

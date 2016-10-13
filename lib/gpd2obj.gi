@@ -45,12 +45,13 @@ function( obs, bdy, act )
       Boundary, bdy,
       AutoGroup, aut,
       XModAction, act,
-      Is2dDomain, true );
+      Is2dDomain, true, 
+      IsPreXModDomain, true );
     if not IsPreXMod( PM ) then
         Info( InfoXMod, 1, "Warning: not a pre-crossed module." );
     fi; 
     SetIsPreXModWithObjects( PM, true ); 
-    Print( "#I  now need to be able to test:   ok := IsXMod( PM );\n" ); 
+    ok := IsXMod( PM ); 
     # name := Name( PM );
     return PM;
 end );
@@ -63,22 +64,24 @@ InstallMethod( IsXMod, "generic method for pre-crossed modules",
     true, [ IsPreXModWithObjects ], 0,
     function( XM )
 
-    local  gensrc, genrng, x2, y2, w2, z2, hom, act;
+    local  gensrc, genrng, x2, y2, a2, w2, z2, bdy, act;
 
     Info( InfoXMod, 2, "using IsXMod from gpd2obj.gi" ); 
-    hom := Boundary( XM );
+    bdy := Boundary( XM );
     act := XModAction( XM );
     gensrc := Flat( GeneratorsOfGroupoid( Source( XM ) ) );
     genrng := GeneratorsOfGroupoid( Range( XM ) );
     for x2 in gensrc do
         for y2 in gensrc do
-            Print( "x2,y2 = ", x2, ",  ", y2, "\n" ); 
-            z2 := x2 ^ ImageElm( act, ImageElm( hom, y2 ) ); 
-            w2 := x2 ^ y2;
+            Info( InfoXMod, 3, "x2,y2 = ", x2, ",  ", y2 ); 
+            a2 := ImageElm( act, ImageElm( bdy, y2 ) ); 
+            z2 := ImageElm( a2![1], x2 ); 
+            w2 := ConjugateArrow( x2, y2 );
+            Info( InfoXMod, 3, "w2,z2 = ", w2, ",  ", z2 ); 
             if ( z2 <> w2 ) then
                 Info( InfoXMod, 2,
                       "CM2) fails at  x2 = ", x2, ",  y2 = ", y2, "\n",
-                      "x2^(hom(y2)) = ", z2, "\n","      x2^y2 = ", w2, "\n" );
+                      "x2^(bdy(y2)) = ", z2, "\n","      x2^y2 = ", w2, "\n" );
                 return false;
             fi;
         od;
@@ -107,11 +110,10 @@ function( R, gpS )
         Error( "gpS not a subgroup of the root group gpR of gpd" ); 
     fi; 
     S := DiscreteSubgroupoid( R, List( obs, o -> gpS ), obs ); 
-    Display( S ); 
     ok := IsHomogeneousDiscreteGroupoid( S );
     inc := InclusionMappingGroupoids( R, S ); 
-    AR := AutomorphismGroup( R ); 
-    AS := AutomorphismGroup( S ); 
+    AR := AutomorphismGroupOfGroupoid( R ); 
+    AS := AutomorphismGroupOfGroupoid( S ); 
     idS := One( AS ); 
     AS0 := DomainWithSingleObject( AS, 0 ); 
     gengpR := GeneratorsOfGroup( gpR ); 

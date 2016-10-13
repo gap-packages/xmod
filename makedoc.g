@@ -1,4 +1,4 @@
-##  makedocrel.g for package XMod, version 01/11/15
+##  makedoc.g for package XMod, version 16/03/16
 ##  This builds the documentation of the XMod package. 
 ##  Needs: GAPDoc package, latex, pdflatex, mkindex
 ##  

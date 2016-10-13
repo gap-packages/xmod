@@ -21,14 +21,17 @@ single piece groupoid:
     group: a4 = <[ (1,2,3), (2,3,4) ]>
 gap> GeneratorsOfGroup( k4 );
 [ (1,2)(3,4), (1,3)(2,4) ]
-gap> PXO := DiscreteNormalPreXModWithObjects( Ga4, k4 );
-homogeneous, discrete groupoid with:
-  group: k4 = <[ (1,2)(3,4), (1,3)(2,4) ]> >
-objects: [ -9, -8, -7 ]
-#I  now need to be able to test:   ok := IsXMod( PM );
-<semigroup>
-gap> Source( PXO ); 
-perm homogeneous, discrete groupoid: < k4, [ -9, -8, -7 ] >
+gap> PXO := DiscreteNormalPreXModWithObjects( Ga4, k4 );;
+gap> Print( PXO, "\n" );
+[perm homogeneous, discrete groupoid: < k4, [ -9, -8, -7 ] >
+->  perm single piece groupoid: < a4, [ -9, -8, -7 ] >]
+
+gap> IsXMod( PXO );
+true
+gap> SetName( Ga4, "Ga4" );; 
+gap> SetName( Source(PXO), "Dk4" );; 
+gap> Name( PXO );
+"[Dk4->Ga4]"
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> SetInfoLevel( InfoGpd, saved_infolevel_gpd );; 

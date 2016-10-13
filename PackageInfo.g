@@ -6,26 +6,21 @@
 
 SetPackageInfo( rec(
 PackageName := "XMod",
+Packagename := "xmod",
 Subtitle := "Crossed Modules and Cat1-Groups",
 
-Version := "2.56",
-Date := "23/02/2016",
+Version := "2.57",
+Date := "13/10/2016",
 
 ##  duplicate these values for inclusion in the manual: 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY XMODVERSION "2.56">
-##  <!ENTITY XMODTARFILENAME "xmod-2.56.tar.gz">
+##  <!ENTITY XMODVERSION "2.57">
+##  <!ENTITY XMODTARFILENAME "xmod-2.57.tar.gz">
 ##  <!ENTITY XMODHTMLFILENAME "xmod.html">
-##  <!ENTITY XMODRELEASEDATE "23/02/2016">
-##  <!ENTITY XMODLONGRELEASEDATE "23th February 2016">
+##  <!ENTITY XMODRELEASEDATE "13/10/2016">
+##  <!ENTITY XMODLONGRELEASEDATE "13th October 2016">
 ##  <!ENTITY XMODCOPYRIGHTYEARS "1997-2016">
 ##  <#/GAPDoc>
-
-PackageWWWHome := 
-  "http://pages.bangor.ac.uk/~mas023/chda/xmod/",
-
-ArchiveURL := "http://pages.bangor.ac.uk/~mas023/chda/xmod/xmod-2.56", 
-ArchiveFormats := ".tar.gz",
 
 Persons := [
   rec(
@@ -35,14 +30,14 @@ Persons := [
     IsMaintainer  := true,
     Email         := "c.d.wensley@bangor.ac.uk",
     WWWHome       := "http://pages.bangor.ac.uk/~mas023/",
-    PostalAddress := Concatenation( [
-                       "Dr. C.D. Wensley\n",
-                       "School of Computer Science\n",
-                       "Bangor University\n",
-                       "Dean Street\n",
-                       "Bangor\n",
-                       "Gwynedd LL57 1UT\n",
-                       "UK"] ),
+    ## PostalAddress := Concatenation( [
+    ##                    "Dr. C.D. Wensley\n",
+    ##                    "School of Computer Science\n",
+    ##                    "Bangor University\n",
+    ##                    "Dean Street\n",
+    ##                    "Bangor\n",
+    ##                    "Gwynedd LL57 1UT\n",
+    ##                    "UK"] ),
     Place         := "Bangor",
     Institution   := "Bangor University"
   ),
@@ -97,20 +92,19 @@ Status := "accepted",
 CommunicatedBy := "Derek Holt (Warwick)",
 AcceptDate := "12/1996",
 
-README_URL := 
-  Concatenation( ~.PackageWWWHome, "README" ),
-PackageInfoURL := 
-  Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
-
-##  Optional:
-##    - Type and the URL of the source code repository
-##    - URL of the public issue tracker
-##    - Support email address
-SourceRepository :=
-  rec( Type := "git", # must be one of "git", "hg", "svn", "cvs"
-       URL  := "http://github.com/gap-packages/xmod"),
-IssueTrackerURL := "http://github.com/gap-packages/xmod/issues",
-SupportEmail := "c.d.wensley@bangor.ac.uk",
+SourceRepository := rec( 
+  Type := "git", 
+  URL := "https://github.com/gap-packages/xmod"
+),
+IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
+PackageWWWHome  := "http://gap-packages.github.io/xmod/",
+README_URL      := Concatenation( ~.PackageWWWHome, "README" ),
+PackageInfoURL  := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
+ArchiveURL      := Concatenation( ~.SourceRepository.URL, 
+                                  "/releases/download/v", ~.Version, 
+                                  "/", ~.PackageName, "-", ~.Version ), 
+SupportEmail := "cdwensley.maths@btinternet.com",
+ArchiveFormats  := ".tar.gz",
 
 AbstractHTML :=
  "The <span class=\"pkgname\">XMod</span> package provides a collection \
@@ -129,11 +123,11 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">=4.8",
-  NeededOtherPackages := [ ["Utils", ">= 0.30"], 
-                           ["Gpd", ">= 1.42"], 
+  GAP := ">=4.8.2",
+  NeededOtherPackages := [ ["Utils", ">= 0.40"], 
+                           ["Gpd", ">= 1.44"], 
                            ["Hap", ">= 1.11"],
-                           ["autpgrp", ">= 1.6"] ], 
+                           ["AutPGrp", ">= 1.6"] ], 
   SuggestedOtherPackages := [ ["GAPDoc", ">= 1.5.1"] ],
   ExternalConditions := [ ]
 ),
@@ -141,13 +135,15 @@ Dependencies := rec(
 AvailabilityTest := ReturnTrue,
 
 BannerString := Concatenation( 
-  "Loading XMod ", String( ~.Version ), " for GAP 4.8", 
-  " - methods for crossed modules and cat1-groups\n",
-  "by Chris Wensley (c.d.wensley@bangor.ac.uk), with contributions by:\n", 
+  "Loading XMod ", String( ~.Version ), 
+  " (methods for crossed modules and cat1-groups)\n",
+  "by Chris Wensley (http://pages.bangor.ac.uk/~mas023/),", 
+  " with contributions by:\n", 
   "    Murat Alp (muratalp@nigde.edu.tr),\n", 
   "    Alper Odabas (aodabas@ogu.edu.tr),\n", 
-  "and Enver Uslu (enveruslu@ogu.edu.tr).\n" 
-),
+  "and Enver Uslu (enveruslu@ogu.edu.tr).\n", 
+  "----------",
+  "-------------------------------------------------------------------\n" ), 
 
 TestFile := "tst/testall.g",
 

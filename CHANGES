@@ -2,6 +2,8 @@
 
 Problems and ToDos: 
 
+ - (27/09/16) errors when running the tests
+ - (16/06/16) document more utility functions or move them to Utils
  - (11/11/15) resolve the problem of the best 'sgQ1' to use in Isoclinism, and 
               more generally, check whether using SmallGeneratingSet elsewhere 
               allows for spurious results in the isoclinism functions
@@ -19,7 +21,14 @@ Problems and ToDos:
               (construction worked OK with isomorphic perm groups). 
 
 #############################################################################
-2.51 -> 2.52 (23/02/2016) 
+2.56 -> 2.57 (13/10/2016) 
+
+ - (13/10/16) changed email address and web page to github.io 
+ - (24/03/16) added files hap.gd, hap.gi
+ - (16/03/16) edited utils.tst to remove functions transferred to Utils
+
+#############################################################################
+2.51 -> 2.56 (08/03/2016) 
 
  - (23/02/16) remove functions from util.g(d/i) now in Utils; require Utils 
  - (18/02/16) removed date/version info from file headers 

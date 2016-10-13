@@ -107,12 +107,13 @@ Morphism of crossed squares :-
 : down-right: 
 [ [ ( 1, 2, 3, 4, 5, 6, 7, 8, 9,10), ( 2,10)( 3, 9)( 4, 8)( 5, 7) ], 
   [ ( 1, 2, 3, 4, 5, 6, 7, 8, 9,10), ( 1, 3)( 4,10)( 5, 9)( 6, 8) ] ]
-gap> KnownPropertiesOfObject( autoconj );
-[ "CanEasilyCompareElements", "CanEasilySortElements", "IsTotal", 
-  "IsSingleValued", "IsInjective", "IsSurjective", "IsPreCrossedSquareMorphism", 
-  "IsCrossedSquareMorphism", "IsEndomorphism3dDomain" ]
 gap> IsAutomorphism3dDomain( autoconj );
 true
+gap> KnownPropertiesOfObject( autoconj );
+[ "CanEasilyCompareElements", "CanEasilySortElements", "IsTotal", 
+  "IsSingleValued", "IsInjective", "IsSurjective", 
+  "IsPreCrossedSquareMorphism", "IsCrossedSquareMorphism", 
+  "IsEndomorphism3dDomain", "IsAutomorphism3dDomain" ]
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 
 #############################################################################

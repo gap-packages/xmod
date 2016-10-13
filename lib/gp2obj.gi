@@ -263,9 +263,21 @@ InstallMethod( PrintObj, "method for a 2d-domain", true, [ Is2dDomain ], 0,
     if HasName( g2d ) then
         Print( Name( g2d ), "\n" );
     elif ( HasIsPreXModDomain( g2d ) and IsPreXModDomain( g2d ) ) then 
-        Print( "[", Source( g2d ), "->", Range( g2d ), "]" ); 
+        Print( "[", Source( g2d ) ); 
+        if IsGroupoid( Source( g2d ) ) then 
+            Print( "\n->  " ); 
+        else 
+            Print( "->" ); 
+        fi; 
+        Print( Range( g2d ), "]" ); 
     elif ( HasIsPreCat1Domain( g2d ) and IsPreCat1Domain( g2d ) ) then 
-        Print( "[", Source( g2d ), "=>", Range( g2d ), "]" );
+        Print( "[", Source( g2d ) ); 
+        if IsGroupoid( Source( g2d ) ) then 
+            Print( "\n=>  " ); 
+        else 
+            Print( "=>" ); 
+        fi; 
+        Print( Range( g2d ), "]" ); 
     else 
         TryNextMethod(); 
     fi;

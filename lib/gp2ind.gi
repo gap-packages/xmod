@@ -626,7 +626,7 @@ end );
 
 ###############################################################################
 ##
-#M  SurjectiveInducedXMod( <grp>, <hom> ) . . induced xmod
+#M  SurjectiveInducedXMod( <xmod>, <hom> ) . . induced xmod
 ##
 InstallMethod( SurjectiveInducedXMod, "for xmod and homomorphism",
     true, [ IsXMod, IsGroupHomomorphism ], 0,
