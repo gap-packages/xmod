@@ -31,6 +31,14 @@
   <Subtitle>Crossed modules and cat1-groups in &GAP;</Subtitle>
   <Version>Version &XMODVERSION;</Version>
   <Date>&XMODRELEASEDATE;</Date> 
+  <Author> Chris Wensley
+    <Email>cdwensley.maths@btinternet.com</Email>
+    <Homepage>http://pages.bangor.ac.uk/~mas023/</Homepage>
+<!--    <Address>                                              -->
+<!--      School of Computer Science, Bangor University,<Br/>. -->
+<!--      Dean Street, Bangor, Gwynedd, LL57 1UT, U.K.         -->
+<!--    </Address>                                             -->
+  </Author>
   <Author> Murat Alp
     <Email>muratalp@nigde.edu.tr</Email>
     <Address>
@@ -53,14 +61,6 @@
     <Address>
       Department of Mathematics and Computer Science,<Br/>
       Osmangazi University, Eski&#x15f;ehir, Turkey
-    </Address>
-  </Author>
-  <Author> Chris Wensley
-    <Email>c.d.wensley@bangor.ac.uk</Email>
-    <Homepage>http://pages.bangor.ac.uk/~mas023/</Homepage>
-    <Address>
-      School of Computer Science, Bangor University,<Br/>
-      Dean Street, Bangor, Gwynedd, LL57 1UT, U.K.
     </Address>
   </Author>
 
@@ -105,8 +105,10 @@ The current version is &XMODVERSION;,
 released &XMODLONGRELEASEDATE; for &GAP; 4.8. 
 <P/>
 Bug reports, suggestions and comments are, of course, welcome. 
-Please contact the last author at <Email>c.d.wensley@bangor.ac.uk</Email> 
-or submit an issue at <URL>http://github.com/gap-packages/xmod/issues/</URL>. 
+Please submit an issue at 
+<URL>http://github.com/gap-packages/xmod/issues/</URL> 
+or send an email to the first author at 
+<Email>cdwensley.maths@btinternet.com</Email>. 
 </Abstract>
 
 <Copyright> 
