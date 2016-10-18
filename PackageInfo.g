@@ -10,15 +10,15 @@ Packagename := "xmod",
 Subtitle := "Crossed Modules and Cat1-Groups",
 
 Version := "2.57",
-Date := "13/10/2016",
+Date := "18/10/2016",
 
 ##  duplicate these values for inclusion in the manual: 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
 ##  <!ENTITY XMODVERSION "2.57">
 ##  <!ENTITY XMODTARFILENAME "xmod-2.57.tar.gz">
 ##  <!ENTITY XMODHTMLFILENAME "xmod.html">
-##  <!ENTITY XMODRELEASEDATE "13/10/2016">
-##  <!ENTITY XMODLONGRELEASEDATE "13th October 2016">
+##  <!ENTITY XMODRELEASEDATE "18/10/2016">
+##  <!ENTITY XMODLONGRELEASEDATE "18th October 2016">
 ##  <!ENTITY XMODCOPYRIGHTYEARS "1997-2016">
 ##  <#/GAPDoc>
 
