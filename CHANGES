@@ -21,10 +21,10 @@ Problems and ToDos:
               (construction worked OK with isomorphic perm groups). 
 
 #############################################################################
-2.56 -> 2.57 (18/10/2016) 
+2.56 -> 2.58 (20/10/2016) 
 
  - (18/10/16) now using bibliography file bib.xml of type "bibxmlext.dtd"
- - (13/10/16) changed email address and web page to github.io 
+ - (13/10/16) changed package releases to https://gap-packages.github.io/xmod
  - (24/03/16) added files hap.gd, hap.gi
  - (16/03/16) edited utils.tst to remove functions transferred to Utils
 

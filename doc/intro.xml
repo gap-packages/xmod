@@ -2,7 +2,6 @@
 <!--                                                                     -->
 <!--  intro.xml             XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  version 2.51, 12/01/2016                                           --> 
 <!--                                                                     --> 
 <!--  Copyright (C) 2001-2016, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
@@ -208,7 +207,7 @@ gap> ReadPackage( "xmod", "tst/testall.g" );
 </Example>
 <P/>
 Additional information can be found on the
-<E>Computational Higher-dimensional Discrete Algebra</E> website at
-<URL>http://pages.bangor.ac.uk/~mas023/chda/</URL>. 
+<E>Computational Higher-dimensional Discrete Algebra</E> website at: 
+<URL>http://pages.bangor.ac.uk/~mas023/chda/intro.html</URL>. 
 
 </Chapter>

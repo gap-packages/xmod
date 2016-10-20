@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE file SYSTEM "bibxmlext.dtd">
 <file>
+
+<entry id="GAPDoc"><manual>
+  <author>
+    <name><first>Frank</first><last>Lübeck</last></name>
+    <name><first>Max</first><last>Neunhöffer</last></name>
+  </author>
+  <title><C>GAPDoc (Version 1.5.1)</C></title>
+  <organization>RWTH Aachen</organization>
+  <year>2012</year>
+  <other type="note">
+    GAP package, 
+    <URL>http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/index.html</URL>
+  </other>
+</manual></entry>
+
+<entry id="GitHubPagesForGAP"><manual>
+  <author>
+    <name><first>Max</first><last>Horn</last></name>
+  </author>
+  <title><C>GitHubPagesForGAP - Template for easily using GitHub Pages within GAP packages (Version 0.1)</C></title>
+  <year>2014</year>
+  <other type="note">
+    GAP package, <URL>https://github.com/fingolfin/GitHubPagesForGAP/</URL>
+  </other>
+</manual></entry>
+
 <entry id="A1"><phdthesis>
   <author>
     <name><first>M.</first><last>Alp</last></name>
@@ -11,6 +37,7 @@
   <year>1997</year>
   <type>Ph.{D}.~thesis</type>
 </phdthesis></entry>
+
 <entry id="AW1"><article>
   <author>
     <name><first>M.</first><last>Alp</last></name>
@@ -22,6 +49,7 @@
   <volume>10</volume>
   <pages>407--424</pages>
 </article></entry>
+
 <entry id="AW2"><article>
   <author>
     <name><first>M.</first><last>Alp</last></name>
@@ -33,6 +61,7 @@
   <volume>18</volume>
   <pages>473-495</pages>
 </article></entry>
+
 <entry id="B82"><inproceedings>
   <author>
     <name><first>R.</first><last>Brown</last></name>
@@ -49,6 +78,7 @@
   <pages>215--238</pages>
   <publisher>Cambridge University Press</publisher>
 </inproceedings></entry>
+
 <entry id="BH1"><article>
   <author>
     <name><first>R.</first><last>Brown</last></name>
@@ -61,6 +91,7 @@
   <volume>36</volume>
   <pages>193--212</pages>
 </article></entry>
+
 <entry id="brow:hig:siv"><book>
   <author>
     <name><first>R.</first><last>Brown</last></name>
@@ -73,6 +104,7 @@
   <volume>15</volume>
   <series>Tracts in Mathematics</series>
 </book></entry>
+
 <entry id="brow:lod"><article>
   <author>
     <name><first>R.</first><last>Brown</last></name>
@@ -84,6 +116,7 @@
   <volume>26</volume>
   <pages>311--335</pages>
 </article></entry>
+
 <entry id="BW1"><article>
   <author>
     <name><first>R.</first><last>Brown</last></name>
@@ -96,6 +129,7 @@
   <volume>1</volume>
   <pages>54--71</pages>
 </article></entry>
+
 <entry id="BW2"><article>
   <author>
     <name><first>R.</first><last>Brown</last></name>
@@ -109,6 +143,7 @@
   <volume>2</volume>
   <pages>3--16</pages>
 </article></entry>
+
 <entry id="BW3"><article>
   <author>
     <name><first>R.</first><last>Brown</last></name>
@@ -121,6 +156,7 @@
   <volume>35</volume>
   <pages>59--72</pages>
 </article></entry>
+
 <entry id="E1"><phdthesis>
   <author>
     <name><first>G.</first><last>Ellis</last></name>
@@ -130,6 +166,7 @@
   <year>1984</year>
   <type>Ph.{D}.~thesis</type>
 </phdthesis></entry>
+
 <entry id="ell:st"><article>
   <author>
     <name><first>G.</first><last>Ellis</last></name>
@@ -142,6 +179,7 @@
   <volume>46</volume>
   <pages>117--136</pages>
 </article></entry>
+
 <entry id="G1"><article>
   <author>
     <name><first>N. D.</first><last>Gilbert</last></name>
@@ -152,6 +190,7 @@
   <volume>18</volume>
   <pages>2703--2734</pages>
 </article></entry>
+
 <entry id="IOU1"><article>
   <author>
     <name><first>E.</first><last>Ilgaz</last></name>
@@ -165,6 +204,7 @@
   <pages>1--17</pages>
   <note>http://dx.doi.org/10.1016/j.jsc.2015.08.006</note>
 </article></entry>
+
 <entry id="JNO"><article>
   <author>
     <name><first>R.</first><last>James</last></name>
@@ -177,6 +217,7 @@
   <volume>129</volume>
   <pages>136--158</pages>
 </article></entry>
+
 <entry id="L1"><article>
   <author>
     <name><first>J. L.</first><last>Loday</last></name>
@@ -187,6 +228,7 @@
   <volume>24</volume>
   <pages>179--202</pages>
 </article></entry>
+
 <entry id="M1"><phdthesis>
   <author>
     <name><first>E. J.</first><last>Moore</last></name>
@@ -197,6 +239,7 @@
   <year>2001</year>
   <type>Ph.{D}.~thesis</type>
 </phdthesis></entry>
+
 <entry id="N2"><phdthesis>
   <author>
     <name><first>K. J.</first><last>Norrie</last></name>
@@ -206,6 +249,7 @@
   <year>1987</year>
   <type>Ph.{D}.~thesis</type>
 </phdthesis></entry>
+
 <entry id="N1"><article>
   <author>
     <name><first>K. J.</first><last>Norrie</last></name>
@@ -216,6 +260,7 @@
   <volume>118</volume>
   <pages>129--146</pages>
 </article></entry>
+
 <entry id="W2"><article>
   <author>
     <name><first>J. H. C.</first><last>Whitehead</last></name>
@@ -226,6 +271,7 @@
   <volume>49</volume>
   <pages>610--640</pages>
 </article></entry>
+
 <entry id="W1"><article>
   <author>
     <name><first>J. H. C.</first><last>Whitehead</last></name>
@@ -236,4 +282,5 @@
   <volume>55</volume>
   <pages>453--496</pages>
 </article></entry>
+
 </file>

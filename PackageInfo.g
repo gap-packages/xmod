@@ -9,16 +9,16 @@ PackageName := "XMod",
 Packagename := "xmod",
 Subtitle := "Crossed Modules and Cat1-Groups",
 
-Version := "2.57",
-Date := "18/10/2016",
+Version := "2.58",
+Date := "20/10/2016",
 
 ##  duplicate these values for inclusion in the manual: 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY XMODVERSION "2.57">
-##  <!ENTITY XMODTARFILENAME "xmod-2.57.tar.gz">
+##  <!ENTITY XMODVERSION "2.58">
+##  <!ENTITY XMODTARFILENAME "xmod-2.58.tar.gz">
 ##  <!ENTITY XMODHTMLFILENAME "xmod.html">
-##  <!ENTITY XMODRELEASEDATE "18/10/2016">
-##  <!ENTITY XMODLONGRELEASEDATE "18th October 2016">
+##  <!ENTITY XMODRELEASEDATE "20/10/2016">
+##  <!ENTITY XMODLONGRELEASEDATE "20th October 2016">
 ##  <!ENTITY XMODCOPYRIGHTYEARS "1997-2016">
 ##  <#/GAPDoc>
 
@@ -30,14 +30,14 @@ Persons := [
     IsMaintainer  := true,
     Email         := "c.d.wensley@bangor.ac.uk",
     WWWHome       := "http://pages.bangor.ac.uk/~mas023/",
-    ## PostalAddress := Concatenation( [
-    ##                    "Dr. C.D. Wensley\n",
-    ##                    "School of Computer Science\n",
-    ##                    "Bangor University\n",
-    ##                    "Dean Street\n",
-    ##                    "Bangor\n",
-    ##                    "Gwynedd LL57 1UT\n",
-    ##                    "UK"] ),
+    PostalAddress := Concatenation( [
+                       "Dr. C.D. Wensley\n",
+                       "School of Computer Science\n",
+                       "Bangor University\n",
+                       "Dean Street\n",
+                       "Bangor\n",
+                       "Gwynedd LL57 1UT\n",
+                       "UK"] ),
     Place         := "Bangor",
     Institution   := "Bangor University"
   ),
@@ -106,7 +106,7 @@ PackageInfoURL  := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 ArchiveURL      := Concatenation( ~.SourceRepository.URL, 
                                   "/releases/download/v", ~.Version, 
                                   "/", ~.PackageName, "-", ~.Version ), 
-SupportEmail := "cdwensley.maths@btinternet.com",
+SupportEmail := "c.d.wensley@bangor.ac.uk",
 ArchiveFormats  := ".tar.gz",
 
 AbstractHTML :=

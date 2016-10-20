@@ -32,12 +32,12 @@
   <Version>Version &XMODVERSION;</Version>
   <Date>&XMODRELEASEDATE;</Date> 
   <Author> Chris Wensley
-    <Email>cdwensley.maths@btinternet.com</Email>
+    <Email>c.d.wensley@bangor.ac.uk</Email>
     <Homepage>http://pages.bangor.ac.uk/~mas023/</Homepage>
-<!--    <Address>                                              -->
-<!--      School of Computer Science, Bangor University,<Br/>. -->
-<!--      Dean Street, Bangor, Gwynedd, LL57 1UT, U.K.         -->
-<!--    </Address>                                             -->
+    <Address> 
+      School of Computer Science, Bangor University,<Br/> 
+      Dean Street, Bangor, Gwynedd, LL57 1UT, U.K. 
+    </Address> 
   </Author>
   <Author> Murat Alp
     <Email>muratalp@nigde.edu.tr</Email>
@@ -108,7 +108,7 @@ Bug reports, suggestions and comments are, of course, welcome.
 Please submit an issue at 
 <URL>http://github.com/gap-packages/xmod/issues/</URL> 
 or send an email to the first author at 
-<Email>cdwensley.maths@btinternet.com</Email>. 
+<Email>c.d.wensley@bangor.ac.uk</Email>. 
 </Abstract>
 
 <Copyright> 
@@ -124,11 +124,12 @@ either version 2 of the License, or (at your option) any later version.
 
 <Acknowledgements>
 This documentation was prepared with the <Package>GAPDoc</Package> 
-package of Frank L&#xfc;beck and Max Neunh&#xf6;ffer. 
+package <Cite Key="GAPDoc" /> of Frank L&#xfc;beck and Max Neunh&#xf6;ffer. 
 <P/> 
 The procedure used to mount new releases on GitHub uses the packages 
-<Package>GitHubPagesForGAP</Package> and <Package>ReleaseTools</Package> 
-of Max Horn. 
+<Package>GitHubPagesForGAP</Package> 
+<Cite Key="GitHubPagesForGAP" /> 
+and <Package>ReleaseTools</Package> of Max Horn. 
 <P/>
 The second author wishes to acknowledge support from 
 Dumlupinar University and the Turkish government. 
