@@ -10,15 +10,15 @@ Packagename := "xmod",
 Subtitle := "Crossed Modules and Cat1-Groups",
 
 Version := "2.58",
-Date := "20/10/2016",
+Date := "02/11/2016",
 
 ##  duplicate these values for inclusion in the manual: 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
 ##  <!ENTITY XMODVERSION "2.58">
 ##  <!ENTITY XMODTARFILENAME "xmod-2.58.tar.gz">
 ##  <!ENTITY XMODHTMLFILENAME "xmod.html">
-##  <!ENTITY XMODRELEASEDATE "20/10/2016">
-##  <!ENTITY XMODLONGRELEASEDATE "20th October 2016">
+##  <!ENTITY XMODRELEASEDATE "02/11/2016">
+##  <!ENTITY XMODLONGRELEASEDATE "2nd November 2016">
 ##  <!ENTITY XMODCOPYRIGHTYEARS "1997-2016">
 ##  <#/GAPDoc>
 
@@ -127,8 +127,8 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">=4.8.2",
-  NeededOtherPackages := [ ["Utils", ">= 0.40"], 
-                           ["Gpd", ">= 1.44"], 
+  NeededOtherPackages := [ ["Utils", ">= 0.43"], 
+                           ["Gpd", ">= 1.45"], 
                            ["Hap", ">= 1.11"],
                            ["AutPGrp", ">= 1.6"] ], 
   SuggestedOtherPackages := [ ["GAPDoc", ">= 1.5.1"] ],
