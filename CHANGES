@@ -21,6 +21,11 @@ Problems and ToDos:
               (construction worked OK with isomorphic perm groups). 
 
 #############################################################################
+2.58 -> 2.59 (14/11/2016) 
+
+ - (14/11/16) "first author" -> "second author" in manual.xml (issue #4) 
+
+#############################################################################
 2.56 -> 2.58 (02/11/2016) 
 
  - (18/10/16) now using bibliography file bib.xml of type "bibxmlext.dtd"

@@ -89,7 +89,7 @@ crossed modules of finite groupoids (experimental version).
 </Item>
 </List> 
 <P/>
-&XMod; was originally implemented in 1997 using the &GAP;3 language, when the first author was studying for a Ph.D. <Cite Key="A1"/> in Bangor.
+&XMod; was originally implemented in 1997 using the &GAP;3 language, when the second author was studying for a Ph.D. <Cite Key="A1"/> in Bangor.
 <P/>
 In April 2002 the first and third parts were converted to &GAP;4, 
 the pre-structures were added, and version 2.001 was released. 
