@@ -100,7 +100,7 @@ SourceRepository := rec(
   URL := "https://github.com/gap-packages/xmod"
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-PackageWWWHome  := "http://gap-packages.github.io/xmod/",
+PackageWWWHome  := "https://gap-packages.github.io/xmod/",
 README_URL      := Concatenation( ~.PackageWWWHome, "README" ),
 PackageInfoURL  := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 ArchiveURL      := Concatenation( ~.SourceRepository.URL, 
