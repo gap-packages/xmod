@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2ind.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  Copyright (C) 2001-2016, Chris Wensley et al,                      --> 
+<!--  Copyright (C) 2001-2017, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -41,7 +41,8 @@ building blocks for constructing pushouts in the categories
 <P/>
 Data for the cases of algebraic interest is provided by a conjugation
 crossed module  <M>{\cal X} = (\partial  :  S \to R)</M>
-and a homomorphism  <M>\iota</M>  from  <M>R</M>  to a third group  <M>Q</M>.
+and a homomorphism  <M>\iota</M>  from  <M>R</M>  to a third group  <M>Q</M>. 
+(It is hoped to implement more general cases in due course.) 
 The output from the calculation is a crossed module
 <M>\iota_{\ast}{\cal X} = (\delta  :  \iota_{\ast}S \to Q)</M>
 together with a morphism of crossed modules

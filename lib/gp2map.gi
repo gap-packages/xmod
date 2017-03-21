@@ -685,8 +685,12 @@ function( PCG )
         rhom := IdentityMapping( Prng );
         rinv := rhom;
     else
-        Prgen := GeneratorsOfGroup( Prng );
-        rhom := IsomorphismSmallPermGroup( Prng );
+        Prgen := GeneratorsOfGroup( Prng ); 
+        if IsEndomorphismPreCat1( PCG ) then 
+            rhom := RestrictedMapping( shom, Prng ); 
+        else 
+            rhom := IsomorphismSmallPermGroup( Prng );
+        fi;
         Qrng := Image( rhom );
         Qrgen := List( Prgen, r -> Image( rhom, r ) );
         rhom := GroupHomomorphismByImages( Prng, Qrng, Prgen, Qrgen );

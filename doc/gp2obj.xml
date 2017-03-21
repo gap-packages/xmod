@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2obj.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  Copyright (C) 2001-2016, Chris Wensley et al,                      --> 
+<!--  Copyright (C) 2001-2017, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -152,7 +152,7 @@ The name is formed by concatenating the names of the source and range
 (if these exist). 
 <C>Size</C> and <C>IdGroup</C> return two-element lists. 
 <P/> 
-The <C>ExternalSetXMod"</C> for a crossed module is the source group considered as a G-set of the range group using the crossed module action. 
+The <C>ExternalSetXMod</C> for a crossed module is the source group considered as a G-set of the range group using the crossed module action. 
 <P/> 
 <Index>display a 2d-group</Index>
 The <C>Display</C> function is used to print details of 2d-groups.
@@ -190,22 +190,37 @@ gap> Orbits( ext );
 [ [ () ], [ (5,6,7,8,9), (5,7,9,6,8), (5,9,8,7,6), (5,8,6,9,7) ] ]
 gap> RepresentationsOfObject( X1 );
 [ "IsComponentObjectRep", "IsAttributeStoringRep", "IsPreXModObj" ]
-gap> KnownPropertiesOfObject( X1 );
-[ "IsEmpty", "IsTrivial", "IsNonTrivial", "IsFinite", 
-  "CanEasilyCompareElements", "CanEasilySortElements", "IsDuplicateFree", 
-  "IsGeneratorsOfSemigroup", "IsPreXModDomain", "IsPerm2dGroup", "IsPreXMod", 
-  "IsXMod", "IsAutomorphismGroup2dGroup" ]
 gap> KnownAttributesOfObject( X1);
 [ "Name", "Size", "Range", "Source", "IdGroup", "Boundary", "AutoGroup", 
   "XModAction", "ExternalSetXMod" ]
 ]]>
 </Example>
 
+</Section>
+
+
+<Section Label="sect-properties-xmod">
+<Heading>Properties of crossed modules</Heading>
+
+
+<Index>Is2dDomain</Index>
+<Index>Is2dGroup</Index>
 <Index>IsTrivialAction2dGroup</Index>
 <Index>IsNormalSubgroup2dGroup</Index>
 <Index>IsCentralExtension2dGroup</Index>
 <Index>IsAutomorphismGroup2dGroup</Index>
 <Index>IsAbelianModule2dGroup</Index>
+
+The underlying category structures for the objects constructed in this 
+chapter follow the sequence <C>Is2dDomain</C>; <C>Is2dMagma</C>; 
+<C>Is2dMagmaWithOne</C>; <C>Is2dMagmaWithInverses</C>, 
+mirroring the situation for (one-dimensional) groups. 
+From these we construct <C>Is2dSemigroup</C>, <C>Is2dMonoid</C> 
+and <C>Is2dGroup</C>. 
+<P/>
+There are then a variety of properties associated with crossed modules, 
+starting with <C>IsPreXMod</C> and <C>IsXMod</C>. 
+<P/> 
 <ManSection>
    <Prop Name="IsXMod"
          Arg="X0" />
@@ -218,19 +233,12 @@ gap> KnownAttributesOfObject( X1);
    <Prop Name="IsFp2dGroup"
          Arg="X0" />
 <Description>
-The underlying category structures for the objects constructed in this 
-chapter follow the sequence <C>Is2dDomain</C>; <C>Is2dMagma</C>; 
-<C>Is2dMagmaWithOne</C>; <C>Is2dMagmaWithInverses</C>, 
-mirroring the situation for (one-dimensional) groups. 
-From these we construct <C>Is2dSemigroup</C>, <C>Is2dMonoid</C> 
-and <C>Is2dGroup</C>. 
-<P/>
 A structure which has <C>IsPerm2dGroup</C> is a precrossed module 
 or a pre-cat1-group (see section <Ref Sect="sect-cat1" />) 
 whose source and range are both permutation groups. 
 The properties <C>IsPc2dGroup</C>, <C>IsFp2dGroup</C> 
 are defined similarly. 
-We see in the previous example that <Code>X1</Code> has 
+In the example below we see that <Code>X1</Code> has 
 <C>IsPreXMod</C>, <C>IsXMod</C> and <C>IsPerm2dGroup</C>. 
 There are also properties corresponding to the various construction methods 
 listed in section <Ref Sect="sect-constructions" />: 
@@ -240,6 +248,15 @@ listed in section <Ref Sect="sect-constructions" />:
 </Description>
 </ManSection>
 
+<Example>
+<![CDATA[
+gap> KnownPropertiesOfObject( X1 );
+[ "IsEmpty", "IsTrivial", "IsNonTrivial", "IsFinite", 
+  "CanEasilyCompareElements", "CanEasilySortElements", "IsDuplicateFree", 
+  "IsGeneratorsOfSemigroup", "IsPreXModDomain", "IsPerm2dGroup", "IsPreXMod", 
+  "IsXMod", "IsAutomorphismGroup2dGroup" ]
+]]>
+</Example>
 
 <Index>IsNormal for crossed modules</Index>
 <ManSection>
@@ -508,6 +525,46 @@ Cat1-group [G2=>d12] :-
 ]]>
 </Example>
 
+</Section> 
+
+<Section Label="sect-properties-cat1">
+<Heading>Properties of cat1-groups</Heading>
+
+Many of the properties listed in section <Ref Sect="sect-properties-xmod"/> 
+apply to pre-cat1-groups and to cat1-groups since these are also 2d-groups. 
+There are also more specific properties. 
+
+<ManSection>
+   <Prop Name="IsCat1"
+         Arg="C0" />
+   <Prop Name="IsPreXCat1"
+         Arg="C0" />
+   <Prop Name="IsIdentityCat1"
+         Arg="C0" />
+   <Prop Name="IsEndomorphismPreCat1"
+         Arg="C0" />
+<Description>
+<C>IsIdentityCat1(C0)</C> is true when the head and tail maps of <C>C0</C> 
+are identity mappings. 
+<C>IsEndomorphismPreCat1(C0)</C> is true when the range of <C>C0</C> 
+is a subgroup of the source.
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> KnownPropertiesOfObject( C2 );
+[ "CanEasilyCompareElements", "CanEasilySortElements", "IsDuplicateFree", 
+  "IsGeneratorsOfSemigroup", "IsPreCat1Domain", "IsPerm2dGroup", 
+  "IsPc2dGroup", "IsPreCat1", "IsCat1", "IsIdentityCat1", 
+  "IsEndomorphismPreCat1" ]
+gap> IsEndomorphissmPreCat1( C2 ); 
+false
+]]>
+</Example>
+
+
+
 <ManSection>
    <Attr Name="Cat1OfXMod"
          Arg="X0" />
@@ -624,7 +681,7 @@ gap> C18 := Cat1( 18, 4, 3 );
 gap> ## convert from a pc-cat1-group to a permutation cat1-group
 gap> iso18 := IsomorphismPermObject( C18 );;
 gap> PC18 := Image( iso18 );;
-gap> Display( PC18 );                     
+gap> Display( PC18 );
 Cat1-group :- 
 : Source group has generators:
   [ (2,3)(5,6), (4,5,6), (1,2,3) ]
@@ -720,10 +777,10 @@ to the source and range of the 2d-group.
 <P/>
 <Example>
 <![CDATA[
-gap> IdGroup( X16 );
-[ [ 8, 3 ], [ 16, 7 ] ]
+gap> IdGroup( X2 );
+[ [ 24, 6 ], [ 12, 4 ] ]
 gap> StructureDescription( C2 );
-[ "(S3 x d24) : C2", "d12" ]
+[ "(S3 x D24) : C2", "D12" ]
 ]]>
 </Example>
 
