@@ -2,7 +2,7 @@
 ##
 #W  gp2obj.tst                    XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2016, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2017, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 #############################################################################
@@ -42,7 +42,7 @@ gap> Print( KnownAttributesOfObject(X1), "\n" );
 [ "Name", "Size", "Range", "Source", "IdGroup", "Boundary", "AutoGroup", 
   "XModAction", "ExternalSetXMod" ]
 
-## Section 2.1.4
+## Section 2.2.2
 gap> s4 := Group( (1,2), (2,3), (3,4) );; 
 gap> a4 := Subgroup( s4, [ (1,2,3), (2,3,4) ] );; 
 gap> k4 := Subgroup( a4, [ (1,2)(3,4), (1,3)(2,4) ] );; 
@@ -57,7 +57,7 @@ gap> NX4 := NormalSubXMods( X4 );;
 gap> Length( NX4 ); 
 5
 
-## Section 2.2.1
+## Section 2.3.1
 gap> b1 := (11,12,13,14,15,16,17,18);;  b2 := (12,18)(13,17)(14,16);;
 gap> d16 := Group( b1, b2 );;
 gap> sk4 := Subgroup( d16, [ b1^4, b2 ] );;
@@ -70,7 +70,7 @@ gap> act16 := GroupHomomorphismByImages( sk4, aut16, [b1^4,b2], [aut1,aut2] );;
 gap> P16 := PreXModByBoundaryAndAction( bdy16, act16 );
 [d16->sk4]
 
-## Section 2.2.2
+## Section 2.3.2
 gap> P := PeifferSubgroup( P16 );
 Group([ (11,15)(12,16)(13,17)(14,18), (11,13,15,17)(12,14,16,18) ])
 gap> X16 := XModByPeifferQuotient( P16 );
@@ -90,7 +90,7 @@ gap> iso16 := IsomorphismPermGroup( Source( X16 ) );;
 gap> S16 := Image( iso16 );
 Group([ (1,2), (3,4) ])
 
-## Section 2.3.2
+## Section 2.4.2
 gap> G2 := SmallGroup( 288, 956 );  SetName( G2, "G2" );
 <pc group of size 288 with 7 generators>
 gap> d12 := DihedralGroup( 12 );  SetName( d12, "d12" );
@@ -130,7 +130,11 @@ Cat1-group [G2=>d12] :-
 : kernel embedding maps generators of kernel to:
   [ f1, f4, f5, f7 ]
 
-## Section 2.3.3
+## Section 2.5.1
+gap> IsEndomorphismPreCat1( C2 ); 
+false
+
+## Section 2.5.2
 gap> X2 := XModOfCat1( C2 );;
 gap> Display( X2 );
 
@@ -151,7 +155,7 @@ Crossed module X([G2=>d12]) :-
 gap> StructureDescription(X2);
 [ "D24", "D12" ]
 
-## Section 2.4.1
+## Section 2.6.1
 gap> L18 := Cat1Select( 18 ); 
 Usage:  Cat1Select( size, gpnum, num );
 [ "D18", "C18", "C3 x S3", "(C3 x C3) : C2", "C6 x C3" ]
@@ -170,27 +174,31 @@ Using small generating set [ f1, f2, f2*f3 ] for source of homs.
 4
 gap> C18 := Cat1Select( 18, 4, 3 );
 [(C3 x C3) : C2=>Group( [ f1, <identity> of ..., f3 ] )]
-gap> Display( C18 );
+gap> iso18 := IsomorphismPermObject( C18 );;
+gap> PC18 := Image( iso18 ); 
+[Group( [ (2,3)(5,6), (4,5,6), (1,2,3) ] )=>Group( [ (2,3)(5,6), (), (1,2,3) 
+ ] )]
+gap> X18 := XModByCat1( PC18 ); 
+[Group( [ (4,5,6) ] )->Group( [ (2,3)(5,6), (), (1,2,3) ] )]
 
-Cat1-group :- 
-: Source group (C3 x C3) : C2 has generators:
-  [ f1, f2, f3 ]
-: Range group has generators:
-  [ f1, <identity> of ..., f3 ]
-: tail homomorphism maps source generators to:
-  [ f1, <identity> of ..., f3 ]
-: head homomorphism maps source generators to:
-  [ f1, f3^2, f3 ]
-: range embedding maps range generators to:
-  [ f1, <identity> of ..., f3 ]
-: kernel has generators:
-  [ f2 ]
-: boundary homomorphism maps generators of kernel to:
-  [ f3^2 ]
-: kernel embedding maps generators of kernel to:
-  [ f2 ]
-: associated crossed module is [Group( [ f2 ] )->Group( 
-[ f1, <identity> of ..., f3 ] )]
+## Section 2.6.2 
+gap> gp := SmallGroup( 102, 2 ); 
+<pc group of size 102 with 3 generators>
+gap> StructureDescription( gp ); 
+"C3 x D34"
+gap> all := AllCat1sBasic( gp );
+#I Edit last line of .../xmod/lib/nn.kk.out to end with ] ] ] ] ]
+[ [Group( [ f1, f2, f3 ] )=>Group( [ f1, <identity> of ..., <identity> of ... 
+     ] )], [Group( [ f1, f2, f3 ] )=>Group( [ f1, f2, <identity> of ... ] )], 
+  [Group( [ f1, f2, f3 ] )=>Group( [ f1, <identity> of ..., f3 ] )], 
+  [Group( [ f1, f2, f3 ] )=>Group( [ f1, f2, f3 ] )] ]
+
+## Section 2.7.1
+gap> IdGroup( X2 );
+[ [ 24, 6 ], [ 12, 4 ] ]
+gap> StructureDescription( C2 );
+[ "(S3 x D24) : C2", "D12" ]
+
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 

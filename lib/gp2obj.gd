@@ -2,7 +2,7 @@
 ##
 #W  gp2obj.gd                  GAP4 package `XMod'               Chris Wensley
 #W                                                                 & Murat Alp
-#Y  Copyright (C) 2001-2016, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2017, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 #############################################################################
@@ -192,7 +192,8 @@ DeclareOperation( "SubCat1", [ IsCat1, IsGroup, IsGroup ] );
 #A  TrivialSubXMod( <obj> )
 #A  TrivialSubPreCat1( <obj> )
 #A  TrivialSubCat1( <obj> )
-#P  IsIdentityCat1( <C1G> )
+#P  IsIdentityCat1( <obj> )
+#P  IsEndomorphismPreCat1( <obj> )
 ##
 DeclareOperation( "TrivialSub2dGroup", [ Is2dGroup ] );
 DeclareAttribute( "TrivialSubPreXMod", IsPreXMod );
@@ -200,6 +201,7 @@ DeclareAttribute( "TrivialSubXMod", IsXMod );
 DeclareAttribute( "TrivialSubPreCat1", IsPreCat1 );
 DeclareAttribute( "TrivialSubCat1", IsCat1 );
 DeclareProperty( "IsIdentityCat1", IsCat1 );
+DeclareProperty( "IsEndomorphismPreCat1", IsPreCat1 ); 
 
 #############################################################################
 ##

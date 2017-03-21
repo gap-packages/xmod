@@ -2,7 +2,7 @@
 ##
 #W  gp2obj.gi                 GAP4 package `XMod'               Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2016, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2017, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 ##  This file contains generic methods for (pre-)crossed modules and
@@ -583,6 +583,7 @@ InstallMethod( PreCat1Obj, "for tail, head, embedding", true,
     if not ok then
         Error( "not a pre-cat1-group" );
     fi;
+    ok := IsEndomorphismPreCat1( C1G ); 
     return C1G;
 end );
 
@@ -1539,12 +1540,18 @@ end );
 #############################################################################
 ##
 #M  IsIdentityCat1
+#M  IsEndomorphismPreCat1 
 ##
+InstallMethod( IsEndomorphismPreCat1, "test a pre-cat1-group", true, 
+    [ IsPreCat1 ], 0,
+function( obj )
+    return IsSubgroup( Source(obj), Range(obj) ); 
+end );
+
 InstallMethod( IsIdentityCat1, "test a cat1-group", true, [ IsCat1 ], 0,
 function( C1G )
-
     return ( ( TailMap( C1G ) = IdentityMapping( Source( C1G ) ) ) and
-             ( TailMap( C1G ) = IdentityMapping( Source( C1G ) ) ) );
+             ( HeadMap( C1G ) = IdentityMapping( Source( C1G ) ) ) );
 end );
 
 #############################################################################
@@ -1875,7 +1882,7 @@ function( et, eh )
     t := GroupHomomorphismByImages( G, R, gG, List( gG, g->Image(et,g) ) );
     h := GroupHomomorphismByImages( G, R, gG, List( gG, g->Image(eh,g) ) );
     e := InclusionMappingGroups( G, R );
-    return PreCat1ByTailHeadEmbedding( t, h, e );
+    return PreCat1ByTailHeadEmbedding( t, h, e ); 
 end );
 
 #############################################################################
