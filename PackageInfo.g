@@ -9,16 +9,16 @@ PackageName := "XMod",
 Packagename := "xmod",
 Subtitle := "Crossed Modules and Cat1-Groups",
 
-Version := "2.59",
-Date := "21/03/2017",
+Version := "2.61",
+Date := "22/03/2017",
 
 ##  duplicate these values for inclusion in the manual: 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY XMODVERSION "2.59">
-##  <!ENTITY XMODTARFILENAME "xmod-2.59.tar.gz">
+##  <!ENTITY XMODVERSION "2.61">
+##  <!ENTITY XMODTARFILENAME "xmod-2.61.tar.gz">
 ##  <!ENTITY XMODHTMLFILENAME "xmod.html">
-##  <!ENTITY XMODRELEASEDATE "21/03/2017">
-##  <!ENTITY XMODLONGRELEASEDATE "21st March 2017">
+##  <!ENTITY XMODRELEASEDATE "22/03/2017">
+##  <!ENTITY XMODLONGRELEASEDATE "22nd March 2017">
 ##  <!ENTITY XMODCOPYRIGHTYEARS "1997-2017">
 ##  <#/GAPDoc>
 

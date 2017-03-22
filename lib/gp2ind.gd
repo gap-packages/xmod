@@ -2,7 +2,7 @@
 ##
 #W  gp2ind.gd                   GAP4 package `XMod'               Chris Wensley
 ##
-#Y  Copyright (C) 2001-2016, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2017, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file declares functions for induced crossed modules. 
@@ -40,6 +40,12 @@
 ##  #A  InducedXModData( <IX> )
 ##
 ##  DeclareAttribute( "InducedXModData", Is2dDomain, "mutable" );
+
+#############################################################################
+##
+#O  CoproductXMod( <xmod>, <xmod> )
+##
+DeclareOperation( "CoproductXMod", [ IsXMod, IsXMod ] );
 
 #############################################################################
 ##
