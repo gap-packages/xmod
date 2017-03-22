@@ -22,6 +22,11 @@ Problems and ToDos:
               (construction worked OK with isomorphic perm groups). 
 
 #############################################################################
+2.59 -> 2.61 (22/03/2017) 
+
+ - (22/03/17) added operation CoproductXMod and files coprod.g, coprod.tst 
+
+#############################################################################
 2.58 -> 2.59 (21/03/2017) 
 
  - (21/03/17) added property IsEndomorphismPreCat1 

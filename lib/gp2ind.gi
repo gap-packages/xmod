@@ -9,6 +9,89 @@
 
 ##############################################################################
 ##
+#M  CoproductXMod( <xmod>, <xmod> ) . . . . . . . . . . coproduct of two xmods
+##
+InstallMethod( CoproductXMod, "for two crossed modules", true, 
+    [ IsXMod, IsXMod ], 0,
+function( X1, X2 )
+
+    local  f, S1, S2, R, act1, act2, aut2, gen1, gen2, bdy1, bdy2, 
+           orb12, act12, hom12, imu, mu, sdp, proj, emb1, emb2, 
+           gens, lens, fgens, gens1, gens2, imbdy, i, j, g, r, genR, lenR, 
+           cbdy, a1, a2, alpha, imalpha, cact, imcact, caut, 
+           prexmod, peiffer, coprod; 
+
+    ##  function to split a semedirectproduct element into two parts 
+    f := function( g ) 
+        local  x, x1, y1, y; 
+        x := Image( proj, g );
+        x1 := Image( emb1, x ); 
+        y1 := x1^-1 * g;
+        y := PreImagesRepresentative( emb2, y1 );
+        if not ( g = x1 * Image( emb2, y ) ) then 
+            Error( "problem with factoring g" ); 
+        fi;
+        return [x,y]; 
+    end;
+
+    S1 := Source( X1 );
+    S2 := Source( X2 );
+    R := Range( X1 ); 
+    if not ( Range( X2 ) = R ) then 
+        Error( "X1 and X2 do not have the same range" ); 
+    fi;
+    gen1 := GeneratorsOfGroup( S1 ); 
+    gen2 := GeneratorsOfGroup( S2 ); 
+    genR := GeneratorsOfGroup( R );
+    lenR := Length( genR );
+    bdy1 := Boundary( X1 );
+    bdy2 := Boundary( X2 );
+    act1 := XModAction( X1 ); 
+    act2 := XModAction( X2 ); 
+    aut2 := AutoGroup( X2 );
+    imu := List( gen1, g -> Image( act2, Image( bdy1, g ) ) ); 
+    mu := GroupHomomorphismByImages( S1, aut2, gen1, imu ); 
+    sdp := SemidirectProduct( S1, mu, S2 ); 
+    proj := Projection( sdp ); 
+    emb1 := Embedding( sdp, 1 );
+    emb2 := Embedding( sdp, 2 );
+    gens := GeneratorsOfGroup( sdp ); 
+    lens := Length( gens );
+    fgens := List( gens, g -> f(g) ); 
+    gens1 := List( fgens, z -> z[1] ); 
+    gens2 := List( fgens, z -> z[2] );
+    ## now construct the pre-xmod boundary (sdp->R)
+    imbdy := ListWithIdenticalEntries( lens, 0 ); 
+    for i in [1..lens] do 
+        imbdy[i] := Image(bdy1,gens1[i]) * Image(bdy2,gens2[i]);
+    od;
+    cbdy := GroupHomomorphismByImages( sdp, R, gens, imbdy );
+    ## now construct the pre-xmod action 
+    imcact := ListWithIdenticalEntries( lenR, 0 ); 
+    for j in [1..lenR] do 
+        r := genR[j];  
+        imalpha := ListWithIdenticalEntries( lens, 0 ); 
+        a1 := Image( act1, r ); 
+        a2 := Image( act2, r );
+        for i in [1..lens] do 
+            imalpha[i] := Image( emb1, Image(a1,gens1[i]) ) 
+                          * Image( emb2, Image(a2,gens2[i]) );
+        od; 
+        imcact[j] := GroupHomomorphismByImages( sdp, sdp, gens, imalpha ); 
+    od; 
+    caut := Group( imcact );
+    cact := GroupHomomorphismByImages( R, caut, genR, imcact ); 
+    prexmod := PreXModByBoundaryAndAction( cbdy, cact ); 
+    Info( InfoXMod, 1, "prexmod is ", StructureDescription(prexmod) ); 
+    peiffer := PeifferSubgroup( prexmod ); 
+    Info( InfoXMod, 1, "peiffer subgroup is ", StructureDescription(peiffer) ); 
+    coprod := XModByPeifferQuotient( prexmod ); 
+    Info( InfoXMod, 1, "the coproduct is ", StructureDescription(coprod) ); 
+    return coprod; 
+end ); 
+
+##############################################################################
+##
 #F  InducedXMod( <grp>, <grp>, <grp>, <trans> )         crossed module induced 
 #F  InducedXMod( <xmod>, <hom> [, <trans>] )             by group homomorphism
 ##

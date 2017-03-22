@@ -12,6 +12,55 @@
 <Chapter Label="chap-gp2ind">
 <Heading>Induced constructions</Heading>
 
+Before describing general functions for computing induced structures, 
+we consider coproducts of crossed modules which provide induced 
+crossed modules in certain cases. 
+
+
+<Section><Heading>Coproducts of crossed modules</Heading>
+
+Need to add here a reference (or two) for coproducts. 
+
+<ManSection>
+   <Oper Name="CoproductXMod"
+         Arg="X1, X2" />
+<Description>
+This function calculates the coproduct crossed module of
+crossed modules <M>{\mathcal X}_1 = (\partial_1 : S_1 \to R)</M> 
+and <M>{\mathcal X}_2 = (\partial_2 : S_2 \to R)</M> 
+which have a common range <M>R</M>. 
+The source <M>S_2</M> of <M>{\mathcal X}_2</M> acts on <M>S_1</M> 
+via <M>\partial_2</M> and the action of <M>{\mathcal X}_1</M>, 
+so we can form a precrossed module 
+<M>(\partial' : S_1 \ltimes S_2 \to R)</M> 
+where <M>\partial'(s_1,s_2) = (\partial_1 s_1)(\partial_2 s_2)</M>. 
+The action of this precrossed module is the diagonal action 
+<M>(s_1,s_2)^r = (s_1^r,s_2^r)</M>. 
+Factoring out by the Peiffer subgroup, we obtain the coproduct 
+crossed module <M>{\mathcal X}_1 \circ {\mathcal X}_2</M>. 
+In the example the structure descriptions of the precrossed module, 
+the Peiffer subgroup, and the resulting coproduct are printed out 
+when <C>InfoLevel(InfoXMod}</C> is at least <M>1</M>. 
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> q8 := Group( (1,2,3,4)(5,8,7,6), (1,5,3,7)(2,6,4,8) );;
+gap> X8 := XModByAutomorphismGroup( q8 );;
+gap> s4 := Range( X8 );;
+gap> a4 := NormalSubgroups( s4 )[2];; 
+gap> Y8 := XModByNormalSubgroup( s4, a4 );; 
+gap> YX8 := CoproductXMod( Y8, X8 );
+#I  prexmod is [ "((C2 x D8) : C2) : C3", "S4" ]
+#I  peiffer subgroup is Q8
+#I  the coproduct is [ "A4", "S4" ]
+]]>
+</Example>
+
+</Section>
+
+
 <Section><Heading>Induced crossed modules</Heading>
 <Index>induced crossed module</Index>
 
@@ -26,13 +75,13 @@
          Arg="xmod" />
 <Description>
 A morphism of crossed modules
-<M>(\sigma, \rho) : {\cal X}_1 \to {\cal X}_2</M>
+<M>(\sigma, \rho) : {\mathcal X}_1 \to {\mathcal X}_2</M>
 factors uniquely through an induced crossed module
-<M>\rho_{\ast} {\cal X}_1 = (\delta  :  \rho_{\ast} S_1 \to R_2)</M>.
+<M>\rho_{\ast} {\mathcal X}_1 = (\delta  :  \rho_{\ast} S_1 \to R_2)</M>.
 Similarly, a morphism of cat1-groups factors through an induced cat1-group.
-Calculation of induced crossed modules of <M>{\cal X}</M> also
+Calculation of induced crossed modules of <M>{\mathcal X}</M> also
 provides an algebraic means of determining the homotopy <M>2</M>-type
-of homotopy pushouts of the classifying space of <M>{\cal X}</M>.
+of homotopy pushouts of the classifying space of <M>{\mathcal X}</M>.
 For more background from algebraic topology see references in
 <Cite Key="BH1" />, <Cite Key="BW1" />, <Cite Key="BW2" />.
 Induced crossed modules and induced cat1-groups also provide the
@@ -40,13 +89,13 @@ building blocks for constructing pushouts in the categories
 <E>XMod</E> and <E>Cat1</E>.
 <P/>
 Data for the cases of algebraic interest is provided by a conjugation
-crossed module  <M>{\cal X} = (\partial  :  S \to R)</M>
+crossed module  <M>{\mathcal X} = (\partial  :  S \to R)</M>
 and a homomorphism  <M>\iota</M>  from  <M>R</M>  to a third group  <M>Q</M>. 
 (It is hoped to implement more general cases in due course.) 
 The output from the calculation is a crossed module
-<M>\iota_{\ast}{\cal X} = (\delta  :  \iota_{\ast}S \to Q)</M>
+<M>\iota_{\ast}{\mathcal X} = (\delta  :  \iota_{\ast}S \to Q)</M>
 together with a morphism of crossed modules
-<M>{\cal X} \to \iota_{\ast}{\cal X}</M>.
+<M>{\mathcal X} \to \iota_{\ast}{\mathcal X}</M>.
 When <M>\iota</M> is a surjection with kernel <M>K</M> then
 <M>\iota_{\ast}S = [S,K]</M> (see <Cite Key="BH1" />).
 When <M>\iota</M> is an inclusion the induced crossed module may be
@@ -61,7 +110,7 @@ crossed module is constructed.
 These constructions use Tietze transformation routines in 
 the library file <C>tietze.gi</C>.
 <P/>
-As a first, surjective example, we take for <M>{\cal X}</M> 
+As a first, surjective example, we take for <M>{\mathcal X}</M> 
 the normal inclusion crossed module of <C>a4</C> in <C>s4</C>,
 and for <M>\iota</M> the surjection from <C>s4</C> to <C>s3</C> 
 with kernel <C>k4</C>.  
@@ -99,7 +148,7 @@ gap> morX4 := MorphismOfInducedXMod( indX4 );
 ]]>
 </Example>
 
-For a second, injective example we take for <M>{\cal X}</M> 
+For a second, injective example we take for <M>{\mathcal X}</M> 
 a conjugation crossed module. 
 <P/>
 <Example>
