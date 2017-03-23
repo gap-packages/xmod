@@ -36,6 +36,11 @@ function( X1, X2 )
 
     S1 := Source( X1 );
     S2 := Source( X2 );
+    if ( Size(S1) = 1 ) then 
+        return X2; 
+    elif ( Size(S2) = 1 ) then 
+        return X1; 
+    fi; 
     R := Range( X1 ); 
     if not ( Range( X2 ) = R ) then 
         Error( "X1 and X2 do not have the same range" ); 
