@@ -9,6 +9,8 @@
 LoadPackage( "xmod", false ); 
 xmod_examples_dir := DirectoriesPackageLibrary( "xmod", "examples" ); 
 
+level := InfoLevel( InfoXMod ); 
+SetInfoLevel( InfoXMod, 0 ); 
 Read( Filename( xmod_examples_dir, "gp2obj.g" ) ); 
 Read( Filename( xmod_examples_dir, "gp2map.g" ) ); 
 Read( Filename( xmod_examples_dir, "gp2up.g" ) ); 
@@ -21,3 +23,4 @@ Read( Filename( xmod_examples_dir, "sl25.g" ) );
 Read( Filename( xmod_examples_dir, "coprod.g" ) ); 
 ## Read( Filename( xmod_examples_dir, "sl25pc.g" ) ); 
 Print( "\n#I not running sl25pc.g because of errors there\n" );
+SetInfoLevel( InfoXMod, level ); 

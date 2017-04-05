@@ -2,14 +2,15 @@
 ##
 #W  gp2ind.g                  XMOD example files                Chris Wensley
 ##
-#Y  Copyright (C) 2001-2016, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2017, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 #############################################################################
 
-Print("\nXMod test file gp2ind.g (version 18/09/15) :-");
-
+Print("\nXMod test file gp2ind.g (version 05/04/17) :-");
 Print("\nSurjective example :-\n" ); 
+level := InfoLevel( InfoXMod ); 
+SetInfoLevel( InfoXMod, 0 ); 
 
 s4gens := [ (1,2), (2,3), (3,4) ];
 s4 := Group( s4gens ); SetName(s4,"s4");
@@ -163,6 +164,7 @@ ccsl27 := ConjugacyClassesSubgroups( sl27 );
 Print( "length: ", List( ccsl27, c -> Size(c) ), "\n" ); 
 Print( "orders: ", List( ccsl27, c -> Size(Representative(c)) ), "\n" ); 
 
+SetInfoLevel( InfoXMod, 0 ); 
 #############################################################################
 ##
 #E  gp2ind.g  . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

@@ -69,11 +69,11 @@ gap> copWY := CoproductXMod( W8, Y8 );;  copYW := CoproductXMod( Y8, W8 );;
 #I  prexmod is [ "A4 x SL(2,3)", "S4" ]
 #I  peiffer subgroup is Q8
 #I  the coproduct is [ "C3 x A4", "S4" ]
-#I  prexmod is [ "((SL(2,3) : C2) : C2) : C3", "S4" ]
+#I  prexmod is [ "(((C2 x D8) : C2) : C3) : C3", "S4" ]
 #I  peiffer subgroup is Q8
 #I  the coproduct is [ "C3 x A4", "S4" ]
 gap> ## coproducts  W8 o Z8  and  Z8 o W8 
-gap> copWY := CoproductXMod( W8, Z8 );;  copYW := CoproductXMod( Z8, W8 );;
+gap> copWZ := CoproductXMod( W8, Z8 );;  copZW := CoproductXMod( Z8, W8 );;
 #I  prexmod is [ "(C2 x C2 x Q8) : C3", "S4" ]
 #I  peiffer subgroup is Q8
 #I  the coproduct is [ "A4", "S4" ]
@@ -81,7 +81,7 @@ gap> copWY := CoproductXMod( W8, Z8 );;  copYW := CoproductXMod( Z8, W8 );;
 #I  peiffer subgroup is Q8
 #I  the coproduct is [ "A4", "S4" ]
 gap> ## coproducts  X8 o Y8  and  Y8 o X8 
-gap> copYX := CoproductXMod( X8, Y8 );;  copXY := CoproductXMod( Y8, X8 );;
+gap> copXY := CoproductXMod( X8, Y8 );;  copYX := CoproductXMod( Y8, X8 );;
 #I  prexmod is [ "A4 x Q8", "S4" ]
 #I  peiffer subgroup is Q8
 #I  the coproduct is [ "A4", "S4" ]
@@ -89,7 +89,7 @@ gap> copYX := CoproductXMod( X8, Y8 );;  copXY := CoproductXMod( Y8, X8 );;
 #I  peiffer subgroup is Q8
 #I  the coproduct is [ "A4", "S4" ]
 gap> ## coproducts  X8 o Z8  and  Z8 o X8 
-gap> copYX := CoproductXMod( X8, Z8 );;  copXY := CoproductXMod( Z8, X8 );;
+gap> copXZ := CoproductXMod( X8, Z8 );;  copZX := CoproductXMod( Z8, X8 );;
 #I  prexmod is [ "C2 x C2 x Q8", "S4" ]
 #I  peiffer subgroup is C2
 #I  the coproduct is [ "C2 x C2 x C2 x C2", "S4" ]
@@ -97,7 +97,7 @@ gap> copYX := CoproductXMod( X8, Z8 );;  copXY := CoproductXMod( Z8, X8 );;
 #I  peiffer subgroup is C2
 #I  the coproduct is [ "C2 x C2 x C2 x C2", "S4" ]
 gap> ## coproducts  Y8 o Z8  and  Z8 o Y8 
-gap> copYX := CoproductXMod( Y8, Z8 );;  copXY := CoproductXMod( Z8, Y8 );;
+gap> copYZ := CoproductXMod( Y8, Z8 );;  copZY := CoproductXMod( Z8, Y8 );;
 #I  prexmod is [ "(C2 x C2 x C2 x C2) : C3", "S4" ]
 #I  peiffer subgroup is C2 x C2
 #I  the coproduct is [ "A4", "S4" ]

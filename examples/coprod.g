@@ -7,8 +7,10 @@
 ##  
 ##############################################################################
 
-Print("\nXMod test file coprod.g (version 22/03/17) :-");
+Print("\nXMod test file coprod.g (version 05/04/17) :-");
 Print("\ntesting constructions of crossed modules\n\n");
+level := InfoLevel( InfoXMod ); 
+SetInfoLevel( InfoXMod, 1 ); 
 
 q8 := Group( (1,2,3,4)(5,8,7,6), (1,5,3,7)(2,6,4,8) );
 SetName( q8, "q8" ); 
@@ -70,7 +72,6 @@ copYX := CoproductXMod( Y8, Z8 );
 copXY := CoproductXMod( Z8, Y8 );
 
 SetInfoLevel( InfoXMod, level ); 
-
 #############################################################################
 ##
 #E  coprod.g  . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

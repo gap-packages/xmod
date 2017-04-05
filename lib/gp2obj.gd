@@ -102,10 +102,12 @@ DeclareAttribute( "ExternalSetXMod", IsPreXMod );
 #############################################################################
 ##
 #A  PeifferSubgroup( <obj> )
+#A  PeifferSub2dGroup( <obj> )
 #O  PeifferSubgroupPreXMod( <PM> )
 #O  PeifferSubgroupPreCat1( <P1C> )
 ##
 DeclareAttribute( "PeifferSubgroup", Is2dGroup );
+DeclareAttribute( "PeifferSub2dGroup", Is2dGroup );
 DeclareOperation( "PeifferSubgroupPreXMod", [ IsPreXMod ] );
 DeclareOperation( "PeifferSubgroupPreCat1", [ IsPreCat1 ] );
 
@@ -224,7 +226,7 @@ DeclareAttribute( "KernelEmbedding", IsPreCat1 );
 #O  PreCat1ByTailHeadEmbedding( <t>, <h>, <e> )
 #O  PreCat1ByEndomorphisms( <tail>, <head> )
 #O  PreCat1ByNormalSubgroup( <G>, <N> )
-#A  Reverse( <PCG> )
+#A  ReverseCat1( <PCG> )
 ##
 DeclareGlobalFunction( "PreCat1" );
 DeclareOperation( "PreCat1ByTailHeadEmbedding",
@@ -232,7 +234,7 @@ DeclareOperation( "PreCat1ByTailHeadEmbedding",
 DeclareOperation( "PreCat1ByEndomorphisms",
     [ IsGroupHomomorphism, IsGroupHomomorphism ] );
 DeclareOperation( "PreCat1ByNormalSubgroup", [ IsGroup, IsGroup ] );
-DeclareAttribute( "Reverse", IsPreCat1 );
+DeclareAttribute( "ReverseCat1", IsPreCat1 );
 
 #############################################################################
 ##
@@ -264,17 +266,21 @@ DeclareAttribute( "SourceEmbedding", IsPreXMod );
 #O  Cat1Select( <size>, <gpnum>, <num> )
 #O  PermCat1Select( <size>, <gpnum>, <num> )
 #O  Cat1ByPeifferQuotient( <PM> )
+#O  DiagonalCat1( <list> )
 ##
 DeclareGlobalFunction( "Cat1" );
 DeclareOperation( "Cat1Select", [ IsInt, IsInt, IsInt ] );
 DeclareOperation( "PermCat1Select", [ IsInt, IsInt, IsInt ] );
 DeclareOperation( "Cat1ByPeifferQuotient", [ IsPreCat1 ] );
+DeclareOperation( "DiagonalCat1", [ IsList ] ); 
 
 #############################################################################
 ##
 #A  DirectProduct2dInfo( <D> )
+#A  Coproduct2dInfo( <D> )
 ##
 DeclareAttribute( "DirectProduct2dInfo", Is2dDomain, "mutable" );
+DeclareAttribute( "Coproduct2dInfo", Is2dDomain, "mutable" );
 
 #############################################################################
 ##

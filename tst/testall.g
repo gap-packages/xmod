@@ -26,9 +26,9 @@ TestXMod := function( pkgname )
         fi;
     od;
     if testresult then
-        Print("#I  No errors detected while testing package ", pkgname, "\n");
+        Print("#I  No errors detected while testing package XMod\n");
     else
-        Print("#I  Errors detected while testing package ", pkgname, "\n");
+        Print("#I  Errors detected while testing package XMod\n");
     fi;
 end;
 

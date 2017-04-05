@@ -44,8 +44,10 @@
 #############################################################################
 ##
 #O  CoproductXMod( <xmod>, <xmod> )
+#A  CoproductInfo( <xmod> ) 
 ##
-DeclareOperation( "CoproductXMod", [ IsXMod, IsXMod ] );
+DeclareOperation( "CoproductXMod", [ IsXMod, IsXMod ] ); 
+DeclareAttribute( "CoproductInfo", IsXMod, "mutable" );
 
 #############################################################################
 ##

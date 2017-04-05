@@ -2,13 +2,15 @@
 ##
 #W  gp3objmap.g              XMOD example files                 Chris Wensley
 ##
-#Y  Copyright (C) 2001-2016, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2017, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 #############################################################################
 
-Print("\nXMod example file gp3objmap.g (version 10/11/15) :-");
+Print("\nXMod example file gp3objmap.g (version 05/04/17) :-");
 Print("\ntesting functions for crossed squares\n\n");
+level := InfoLevel( InfoXMod ); 
+SetInfoLevel( InfoXMod, 0 );
 
 ## SetInfoLevel( InfoXMod, 2 );
 
@@ -99,6 +101,7 @@ Print( "Automorphism of XSconj :-\n" );
 Display( autoconj );
 Print("\n");
 
+SetInfoLevel( InfoXMod, level ); 
 ##############################################################################
 ##
 #E  gp3objmap.g  . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

@@ -595,13 +595,13 @@ end );
 
 #############################################################################
 ##
-#M  Reverse                                              for a pre-cat1-group
+#M  ReverseCat1                                          for a pre-cat1-group
 ##
-InstallMethod( Reverse, "method for a cat1-group", true, [ IsPreCat1 ], 0,
+InstallMethod( ReverseCat1, "method for a cat1-group", true, [ IsPreCat1 ], 0,
 function( C1G )
     local rev;
     rev := PreCat1( HeadMap(C1G), TailMap(C1G), RangeEmbedding(C1G ) );
-    SetReverse( rev, C1G );
+    SetReverseCat1( rev, C1G );
     return rev;
 end );
 
@@ -1019,7 +1019,7 @@ InstallMethod( PeifferSubgroupPreXMod, "generic method for pre-crossed xmods",
                true, [ IsPreXMod ], 0,
 function( PM )
 
-    local  Pf, s1, s2, a1, src, gensrc, comm, bdy, act;
+    local  Pf, s1, s2, a1, src, gensrc, comm, bdy, act, ok, XPf;
 
     # this code mimics that of DerivedSubgroup
     src := Source( PM );
@@ -1039,7 +1039,10 @@ function( PM )
     Pf := NormalClosure( src, Pf );
     if ( Pf = src ) then
         Pf := src;
-    fi;
+    fi; 
+    XPf := Sub2dGroup( PM, Pf, TrivialSubgroup( Range(PM) ) ); 
+    ok := IsNormal( PM, XPf );
+    SetPeifferSub2dGroup( PM, XPf ); 
     return Pf;
 end );
 
@@ -1069,18 +1072,25 @@ end );
 ##
 InstallMethod( PeifferSubgroup, "generic method for 2d-groups",
                true, [ Is2dGroup ], 0,
-function( obj )
+function( obj ) 
+    local  P, ok, NP;
     if IsPreXModObj( obj ) then
         if IsXMod( obj ) then
             return Subgroup( Source( obj ), [ One( Source( obj ) ) ] );
         else
-            return PeifferSubgroupPreXMod( obj );
+            P := PeifferSubgroupPreXMod( obj );
+            NP := SubPreXMod( obj, P, TrivialSubgroup( Range(obj) ) );
+            ok := IsNormal( obj, NP );
+            return P; 
         fi;
     elif IsPreCat1Obj( obj ) then
         if IsCat1( obj ) then
             return Subgroup( Source( obj ), [ One( Source( obj ) ) ] );
         else
-            return PeifferSubgroupPreCat1( obj );
+            P := PeifferSubgroupPreCat1( obj );
+            NP := SubPreCat1( obj, P, TrivialSubgroup( Range(obj) ) );
+            ok := IsNormal( obj, NP );            
+            return P; 
         fi;
     else
         return fail;
@@ -1096,54 +1106,28 @@ InstallMethod( XModByPeifferQuotient,
     [ IsPreXMod ], 0,
 function( PM )
 
-    local  XM, PMrng, genrng, PMsrc, gensrc, PMbdy, PMact, pf, name, quot, a,
-           qgen, pqgen, nat, impqgen, autgen, imautgen, phi, bdy, aut, act, r;
+    local  pfsub, pfxmod, name, nat, ok, FM;
     
     if IsXMod( PM ) then
         Info( InfoXMod, 1, "this object is already a crossed module!" );
         return PM;
     fi;
-    PMrng := Range( PM ) ;
-    genrng := GeneratorsOfGroup( PMrng );
-    PMsrc := Source( PM );
-    gensrc := GeneratorsOfGroup( PMsrc );
-    PMbdy := Boundary( PM );
-    # construct the quotient
-    pf := PeifferSubgroup( PM );
-    if not IsNormal( PMsrc, pf ) then
+    pfsub := PeifferSubgroup( PM );
+    if not IsNormal( Source( PM ), pfsub ) then
         Error( "Peiffer subgroup not normal in source group" );
     fi;
-    nat := NaturalHomomorphismByNormalSubgroup( PMsrc, pf );
-    quot := Image( nat );
-    qgen := GeneratorsOfGroup( quot );
-    if HasName( Source( PM ) ) then
-        name := Name( Source( PM ) );
-        if HasName( pf ) then
-            SetName( quot, Concatenation( name, "/", Name( pf ) ) );
-        else
-            SetName( quot, Concatenation( name, "/P" ) );
-        fi;
+    pfxmod := SubPreXMod( PM, pfsub, TrivialSubgroup( Range(PM) ) ); 
+    ok := IsNormal( PM, pfxmod ); 
+    if not ok then 
+        Error( "Peiffer precrossed module not normal!" ); 
+    fi; 
+    FM := FactorPreXMod( PM, pfxmod ); 
+    nat := ProjectionOfFactorPreXMod( FM );
+    if HasName( PM ) then
+        name := Name( PM ); 
+        SetName( FM, Concatenation( "Peiffer(", name, ")" ) ); 
     fi;
-    # construct the boundary
-    pqgen := List( qgen, x -> PreImagesRepresentative( nat, x ) );
-    impqgen := List( pqgen, x -> Image( PMbdy, x ) );
-    bdy := GroupHomomorphismByImages( quot, PMrng, qgen, impqgen );
-    # construct the action
-    PMact := XModAction( PM );
-    imautgen := [ ];
-    for r in genrng do
-        a := Image( PMact, r );
-        autgen := List( pqgen, p -> Image( nat, Image( a, p ) ) ); 
-        phi := GroupHomomorphismByImages( quot, quot, qgen, autgen );
-        Add( imautgen, phi );
-    od;
-    aut := Group( imautgen );
-    act := GroupHomomorphismByImages( PMrng, aut, genrng, imautgen );
-    XM := XModByBoundaryAndAction( bdy, act );
-    if not IsXMod( XM ) then
-        Error( "fails to be a crossed module" );
-    fi;
-    return XM;
+    return FM; 
 end );
     
 #############################################################################
@@ -2040,15 +2024,64 @@ function( PC )
     return C1G;
 end );
 
+##############################################################################
+##
+#M  DiagonalCat1 . . . . . . . . . . . . cat1 of the form (GxG => G) with t<>h
+##
+InstallMethod( DiagonalCat1, "cat1-group from a list of generators",
+    true, [ IsList ], 0,
+function( gen1 )
+
+    local  m, lgen, gen2, genR, i, p, L1, len1, L2, j, 
+           G, R, genG, one, ids, t, h, e, C;
+
+    m := Maximum( List( gen1, g -> LargestMovedPoint(g) ) ); 
+    lgen := Length( gen1 ); 
+    gen2 := ShallowCopy( gen1 ); 
+    genR := ShallowCopy( gen1 ); 
+    for i in [1..lgen] do 
+        p := gen1[i]; 
+        L1 := ListPerm( p ); 
+        len1 := Length( L1 ); 
+        L2 := [1..2*m]; 
+        for j in [1..len1] do 
+            L2[m+j] := L1[j]+m; 
+        od; 
+        gen2[i] := PermList( L2 ); 
+        for j in [1..len1] do 
+            L2[j] := L1[j]; 
+        od; 
+        genR[i] := PermList( L2 ); 
+    od;
+    genG := Concatenation( gen1, gen2 ); 
+    G := Group( genG ); 
+    R := Group( genR ); 
+    one := One( G ); 
+    ids := ListWithIdenticalEntries( lgen, one ); 
+    t := GroupHomomorphismByImages( G, R, genG, Concatenation( genR, ids ) ); 
+    h := GroupHomomorphismByImages( G, R, genG, Concatenation( ids, genR ) );
+    e := GroupHomomorphismByImages( R, G, genR, genR ); 
+    C := PreCat1ByTailHeadEmbedding( t, h, e ); 
+    return C;
+end );
+
 #############################################################################
 ##
 #M  DirectProductInfo( <obj> ) . . . . . . . . . . . . . . . . for 2d-objects
+#M  Coproduct2dInfo( <obj> ) . . . . . . . . . . . . . . . . . . for 2d-objects
 #M  DirectProductOp(  ) . . . . . . .  (bdy1 x bdy2) : (S1 x S2) --> (R1 x R2)
 ##
-InstallOtherMethod( DirectProductInfo, "generic method for 2d-objects",
-               true, [ Is2dDomain ], 0,
+InstallOtherMethod( DirectProductInfo, "generic method for 2d-objects", true, 
+    [ Is2dDomain ], 0,
 function( obj )
+    return rec( objects := [ ],
+                embeddings := [ ],
+                projections := [ ] );
+end );
 
+InstallMethod( Coproduct2dInfo, "generic method for 2d-objects", true, 
+    [ Is2dDomain ], 0,
+function( obj )
     return rec( objects := [ ],
                 embeddings := [ ],
                 projections := [ ] );
@@ -2216,7 +2249,7 @@ end );
 InstallOtherMethod( Embedding, "generic method for (pre-)xmods & (pre-)cat1s",
     true, [ Is2dGroup, IsPosInt ], 0,
 function( D, i )
-    local  info, eS, eR, mor;
+    local  info, eS, eR, obj, mor;
 
     info := DirectProductInfo( D );
     if IsBound( info!.embeddings[i] ) then
@@ -2226,10 +2259,11 @@ function( D, i )
     eR := Embedding( Range( D ), i );
     Info( InfoXMod, 3, "SourceEmbedding: ", eS );
     Info( InfoXMod, 3, " RangeEmbedding: ", eR );
+    obj := info!.objects[i]; 
     if IsPreXMod( D ) then
-        mor := PreXModMorphism( info!.objects[i], D, eS, eR );
+        mor := PreXModMorphism( obj, D, eS, eR );
     elif IsPreCat1( D ) then
-        mor := PreCat1Morphism( info!.objects[i], D, eS, eR );
+        mor := PreCat1Morphism( obj, D, eS, eR );
     else
         mor := fail;
     fi;
@@ -2340,13 +2374,13 @@ end );
 ##
 #M  IsNormal . . . . . . . . . . . . . . . . . . . . . . . . .  for 2d-objects
 ##
-InstallOtherMethod( IsNormal, "for crossed modules", IsIdenticalObj,
-    [ IsXMod, IsXMod ], 0,
+InstallOtherMethod( IsNormal, "for precrossed modules", IsIdenticalObj,
+    [ IsPreXMod, IsPreXMod ], 0,
 function( XM, SM )
 
-    local  xr, a, ss, im, xs, sr, Ssrc, Xact;
+    local  xr, a, ss, im, xs, sr, Ssrc, Xact, snat, rnat;
 
-    if not IsSubXMod( XM, SM ) then
+    if not IsSubPreXMod( XM, SM ) then
         return false;
     fi;
     Ssrc := Source( SM );
@@ -2370,7 +2404,7 @@ function( XM, SM )
                 return false;
             fi;
         od;
-    od;
+    od; 
     return true;
 end );
 

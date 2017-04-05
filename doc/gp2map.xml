@@ -229,13 +229,27 @@ e_2 \circ \rho ~=~ \gamma \circ e_1.
    <Attr Name="IdentityMapping"
          Arg="C1" />
 <Description>
-hello
+For an example we use the operation <C>DiagonalCat1</C> 
+to construct a pair of cat1-groups, then construct a suitable 
+pair of homomorphisms <M>(\gamma,\rho)</M>. 
 </Description>
 </ManSection> 
 <P/>
 <Example>
 <![CDATA[
-gap> ..
+gap> C4 := DiagonalCat1( [ (1,2), (2,3), (3,4) ] );; 
+gap> SetName( C4, "C4" );;
+gap> C3 := DiagonalCat1( [ (1,2), (2,3) ] );; 
+gap> SetName( C3, "C3" );;
+gap> genG := GeneratorsOfGroup( Source(C4) );; 
+gap> gamma := GroupHomomorphismByImages( Source(C4), Source(C3), genG, 
+>             [ (1,2), (2,3), (1,2), (4,5), (5,6), (4,5) ] );; 
+gap> genR := GeneratorsOfGroup( Range(C4) );; 
+gap> rho := GroupHomomorphismByImages( Range(C4), Range(C3), genR, 
+>             [ (1,2)(4,5), (2,3)(5,6), (1,2)(4,5) ] );; 
+gap> mor := PreCat1Morphism( C4, C3, gamma, rho );; 
+gap> Display( mor );
+
 ]]>
 </Example>
 

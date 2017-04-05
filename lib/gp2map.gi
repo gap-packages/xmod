@@ -10,34 +10,106 @@
 
 ##############################################################################
 ##
-#M  Make2dGroupMorphism( <src>, <rng>, <shom>, <rhom> ) . . . . . 2d-group map 
+#M  Is2dGroupMorphismData( <list> ) . . . . . . . . . . . . . . . 2d-group map 
+##
+##  this functions tests that boundaries are ok but no checks on actions 
+##
+InstallMethod( Is2dGroupMorphismData,
+    "for list [ 2d-group, 2d-group, homomorphism, homomorphism ]", true,
+    [ IsList ], 0,
+function( L )
+
+    local  src, rng, shom, rhom, mor, ok, sbdy, rbdy, st, sh, se, rt, rh, re, 
+           sgen, rgen, im1, im2;
+
+    ok := ( Length(L) = 4 ); 
+    if not ok then 
+        Info( InfoXMod, 2, "require list with 2 2dgroups and 2 group homs" ); 
+        return fail; 
+    fi;
+    src := L[1];  rng := L[2];  shom := L[3];  rhom := L[4]; 
+    ok := ( Is2dGroup( src ) and Is2dGroup( rng ) 
+            and IsGroupHomomorphism( shom) and IsGroupHomomorphism( rhom ) ); 
+    if not ok then 
+        Info( InfoXMod, 2, "require two 2dgroups and two group homs" ); 
+        return fail; 
+    fi;
+    ok := ( ( Source( src ) = Source( shom ) ) 
+            and (  Range( src ) = Source( rhom ) ) 
+            and IsSubgroup( Source( rng ), Range( shom ) ) 
+            and IsSubgroup(  Range( rng ), Range( rhom ) ) );
+    if not ok then
+        Info( InfoXMod, 2, "sources and ranges do not match" );
+        return false;
+    fi; 
+    sgen := GeneratorsOfGroup( Source(src) ); 
+    rgen := GeneratorsOfGroup( Range(src) );
+    if ( IsPreXMod( src ) and IsPreXMod( rng ) ) then 
+        sbdy := Boundary( src ); 
+        rbdy := Boundary( rng ); 
+        im1 := List( sgen, g -> Image( rbdy, Image(shom,g) ) ); 
+        im2 := List( sgen, g -> Image( rhom, Image(sbdy,g) ) ); 
+        if not ( im1 = im2 ) then 
+            Info( InfoXMod, 2, "boundaries and homs do not commute" ); 
+            return false; 
+        fi; 
+    elif ( IsPreCat1( src ) and IsPreCat1( rng ) ) then 
+        st := TailMap( src ); 
+        rt := TailMap( rng ); 
+        im1 := List( sgen, g -> Image( rt, Image(shom,g) ) ); 
+        im2 := List( sgen, g -> Image( rhom, Image(st,g) ) ); 
+        if not ( im1 = im2 ) then 
+            Info( InfoXMod, 2, "tail maps and homs do not commute" ); 
+            return false; 
+        fi; 
+        sh := HeadMap( src ); 
+        rh := HeadMap( rng ); 
+        im1 := List( sgen, g -> Image( rh, Image(shom,g) ) ); 
+        im2 := List( sgen, g -> Image( rhom, Image(sh,g) ) ); 
+        if not ( im1 = im2 ) then 
+            Info( InfoXMod, 2, "head maps and homs do not commute" ); 
+            return false; 
+        fi; 
+        se := RangeEmbedding( src ); 
+        re := RangeEmbedding( rng ); 
+        im1 := List( rgen, g -> Image( re, Image(rhom,g) ) ); 
+        im2 := List( rgen, g -> Image( shom, Image(se,g) ) ); 
+        if not ( im1 = im2 ) then 
+            Info( InfoXMod, 2, "range embeddings and homs do not commute" ); 
+            return false; 
+        fi; 
+    else 
+        Info( InfoXMod, 2, "require 2 prexmods or precat1s, not one of each" );
+    fi; 
+    return true; 
+end ); 
+
+##############################################################################
+##
+#M  Make2dGroupMorphism( <list> ) . . . . . . . . . . . . . . . . 2d-group map 
 ##
 InstallMethod( Make2dGroupMorphism,
-    "for 2d-group, 2d-group, homomorphism, homomorphism", true,
-    [ Is2dGroup, Is2dGroup, IsGroupHomomorphism, IsGroupHomomorphism ], 0,
-function( src, rng, shom, rhom )
+    "for list [2d-group, 2d-group, homomorphism, homomorphism ]", true,
+    [ IsList ], 0,
+function( L )
 
     local  filter, fam, mor, ok;
 
     fam := Family2dGroupMorphism; 
     filter := Is2dMappingRep;
-    #### 04/07/06 #### why are these checks here?
-    #### surely they should have been performed already?
-    ok := ( ( Source( src ) = Source( shom ) ) and
-            (  Range( src ) = Source( rhom ) ) and
-            ( Source( rng ) = Range( shom ) ) and
-            (  Range( rng ) = Range( rhom ) ) );
+    ok := Is2dGroupMorphismData( L ); 
+## Print( "\n***** ", ok, " *****\n\n" ); 
     if not ok then
-        Info( InfoXMod, 2, "sources and ranges do not match" );
-        return fail;
+        return fail; 
     fi;
     mor := rec();
     ObjectifyWithAttributes( mor, 
         NewType( fam, filter ),
-        Source, src,
-        Range, rng,
-        SourceHom, shom,
-        RangeHom, rhom );
+        Source, L[1],
+        Range, L[2],
+        SourceHom, L[3],
+        RangeHom, L[4] );
+## Print( mor, "\n" );
     return mor;
 end );
 
@@ -287,7 +359,7 @@ function( mor2, mor1 )
     fi;
     srchom := CompositionMapping2( SourceHom( mor2 ), SourceHom( mor1 ) );
     rnghom := CompositionMapping2( RangeHom( mor2 ), RangeHom( mor1 ) );
-    comp := Make2dGroupMorphism( Source( mor1 ), Range( mor2 ), srchom, rnghom );
+    comp := Make2dGroupMorphism([ Source(mor1), Range(mor2), srchom, rnghom ]);
     if IsPreCat1( Source( mor1 ) ) then
         if ( IsPreCat1Morphism( mor1 ) and IsPreCat1Morphism( mor2 ) ) then
             SetIsPreCat1Morphism( comp, true );
@@ -311,15 +383,15 @@ end );
 ##
 #M  InverseGeneralMapping . . . . . . . . . . . . . . . . . . for a 2d-mapping
 ##
-#?  (29/06/12) only works if more is _already_ known to be bijective, 
+#?  (29/06/12) only works if mor is _already_ known to be bijective, 
 #?             so perhaps move IsBijective into the code ?? 
 ## 
 InstallOtherMethod( InverseGeneralMapping, "generic method for 2d-mapping",
-    true, [ Is2dMapping and IsBijective ], 0,
+    true, [ Is2dMapping and IsBijective ], 0, 
 function( mor )
     local inv, ok;
-    inv := Make2dGroupMorphism( Range( mor ), Source( mor ),
-                          SourceHom( mor )^(-1), RangeHom( mor )^(-1) );
+    inv := Make2dGroupMorphism( 
+        [ Range(mor), Source(mor), SourceHom(mor)^(-1), RangeHom(mor)^(-1) ] );
     if IsPreXModMorphism( mor ) then 
         SetIsPreXModMorphism( inv, true );
         if IsXModMorphism( mor ) then 
@@ -385,18 +457,19 @@ end );
 ##
 InstallGlobalFunction( PreXModMorphism, function( arg )
 
-    local  nargs;
+    local  ok, mor, nargs;
     nargs := Length( arg );
 
     # two pre-xmods and two homomorphisms
-    if ( ( nargs = 4 ) and IsPreXMod( arg[1] ) and IsPreXMod( arg[2])
-                       and IsGroupHomomorphism( arg[3] )
-                       and IsGroupHomomorphism( arg[4] ) ) then
-        return PreXModMorphismByHoms( arg[1], arg[2], arg[3], arg[4] );
-    fi;
-    # alternatives not allowed
-    Info( InfoXMod, 2, "usage: PreXModMorphism( src, rng, srchom, rnghom );" );
-    return fail;
+    if ( nargs = 4 ) then 
+        mor := Make2dGroupMorphism( [ arg[1], arg[2], arg[3], arg[4] ] ); 
+    else 
+        # alternatives not allowed
+        Info( InfoXMod, 2, "usage: PreXModMorphism([src,rng,srchom,rnghom]);" );
+        return fail;
+    fi; 
+    ok := IsPreXModMorphism( mor ); 
+    return mor;
 end );
 
 ###############################################################################
@@ -922,7 +995,7 @@ function( src, rng, srchom, rnghom )
         Info( InfoXMod, 2, "source and range mappings must be group homs" );
         return fail;
     fi;
-    mor := Make2dGroupMorphism( src, rng, srchom, rnghom );
+    mor := Make2dGroupMorphism( [ src, rng, srchom, rnghom ] );
     if not IsPreXModMorphism( mor ) then
         Info( InfoXMod, 2, "not a morphism of pre-crossed modules.\n" );
         return fail;
@@ -955,7 +1028,7 @@ function( src, rng, srchom, rnghom )
 
     local  filter, fam, mor, ok, nsrc, nrng, name;
 
-    mor := Make2dGroupMorphism( src, rng, srchom, rnghom ); 
+    mor := Make2dGroupMorphism( [ src, rng, srchom, rnghom ] ); 
     if not IsPreCat1Morphism( mor ) then
         Info( InfoXMod, 2, "not a morphism of pre-cat1 groups.\n" );
         return fail;
@@ -1029,7 +1102,7 @@ InstallMethod( ReverseIsomorphism, "method for a cat1-group", true,
     [ IsPreCat1 ], 0,
 function( C1G )
     local rev, shom, rhom, src, gensrc, t, h, e, im;
-    rev := Reverse( C1G );
+    rev := ReverseCat1( C1G );
     src := Source( C1G );
     gensrc := GeneratorsOfGroup( src );
     t := TailMap( C1G );

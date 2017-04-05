@@ -22,8 +22,14 @@ Problems and ToDos:
               (construction worked OK with isomorphic perm groups). 
 
 #############################################################################
-2.59 -> 2.61 (22/03/2017) 
+2.59 -> 2.61 (05/04/2017) 
 
+ - (04/04/17) added CoproductInfo for coproducts 
+              FactorXMod now FactorPreXMod (ditto NaturalMorphisms) 
+ - (27/03/17) added Is2dGroupMorphismData and modified construction functions 
+              Method for IsNormal now applies to precrossed modules 
+              added PeifferSub2dGroup 
+ - (24/03/17) added operation DiagonalCat1 and example S3xS3 => S3
  - (22/03/17) added operation CoproductXMod and files coprod.g, coprod.tst 
 
 #############################################################################

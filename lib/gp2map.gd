@@ -25,12 +25,14 @@ DeclareOperation( "PreCat1MorphismByHoms",
 
 #############################################################################
 ##
-#O  Make2dGroupMorphism( <src>, <rng>, <srchom>, <rnghom> )
+#O  Is2dGroupMorphismData( <list> )
+#O  Make2dGroupMorphism( <list> )
 ##
-##  A pre-crossed module or pre-cat1-group morphism is a pair of group homs
+##  A pre-crossed module or pre-cat1-group morphism is a pair of commuting 
+##  group homomorphisms: at this stage actions not checked 
 ##
-DeclareOperation( "Make2dGroupMorphism",
-    [ Is2dGroup, Is2dGroup, IsGroupHomomorphism, IsGroupHomomorphism ] );
+DeclareOperation( "Is2dGroupMorphismData", [ IsList ] );
+DeclareOperation( "Make2dGroupMorphism", [ IsList ] );
 
 #############################################################################
 ##
