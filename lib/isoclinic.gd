@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.gd              GAP4 package `XMod'                Alper Odabas
 #W                                                               & Enver Uslu
-#Y  Copyright (C) 2001-2016, Chris Wensley et al 
+#Y  Copyright (C) 2001-2017, Chris Wensley et al 
 ##
 
 #############################################################################
@@ -37,12 +37,14 @@ DeclareOperation( "IntersectionSubXMods", [  IsXMod, IsXMod, IsXMod ] );
 
 #############################################################################
 ##
-#O FactorXMod  . . . . . . . . . . . . . . . . . the quotient crossed module
-#O NaturalMorphismByNormalSubXMod . . . . . . . . the quotient xmod morphism
+#O FactorPreXMod  . . . . . . . . . . . . . . the quotient precrossed module
+#O NaturalMorphismByNormalSubPreXMod . . . . . the quotient prexmod morphism
 ##
-DeclareOperation( "FactorXMod", [  IsXMod, IsXMod ] );
-DeclareOperation( "NaturalMorphismByNormalSubXMod", [  IsXMod, IsXMod ] );
-
+DeclareOperation( "FactorPreXMod", [ IsPreXMod, IsPreXMod ] );
+DeclareOperation( "NaturalMorphismByNormalSubPreXMod", 
+    [ IsPreXMod, IsPreXMod ] );
+DeclareAttribute( "ProjectionOfFactorPreXMod", IsPreXMod ); 
+ 
 #############################################################################
 ##
 #O CommutatorSubXMod  . . . . . . . commutator subxmod of two normal subxmods

@@ -2,13 +2,15 @@
 ##
 #W  sl25.g                    XMOD example files                Chris Wensley
 ##
-#Y  Copyright (C) 2001-2016, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2017, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 #############################################################################
 
+Print("\nXMod test file sl25.g (version 05/04/17) :-\n"); 
+Print( "testing crossed modules of linear groups:\n\n" );
+level := InfoLevel( InfoXMod ); 
 SetInfoLevel( InfoXMod, 2 ); 
-Print("\nXMod test file sl25.g (version 18/09/15) :-\n\n");
 
 sl25pc := SpecialLinearGroup(2,5); 
 SetName( sl25pc, "sl25-pc" ); 
@@ -44,3 +46,8 @@ indX25 := InducedXMod( X25, inc25 );
 Display( indX25 ); 
 h25 := Source( indX25 ); 
 Print( "h25 = ", StructureDescription( h25 ), "\n" ); 
+
+SetInfoLevel( InfoXMod, level );
+#############################################################################
+##
+#E  sl25.g  . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

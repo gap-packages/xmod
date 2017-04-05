@@ -74,10 +74,10 @@ gap> P16 := PreXModByBoundaryAndAction( bdy16, act16 );
 gap> P := PeifferSubgroup( P16 );
 Group([ (11,15)(12,16)(13,17)(14,18), (11,13,15,17)(12,14,16,18) ])
 gap> X16 := XModByPeifferQuotient( P16 );
-[d16/P->sk4]
+Peiffer([d16->sk4])
 gap> Display( X16 );
 
-Crossed module [d16/P->sk4] :- 
+Crossed module Peiffer([d16->sk4]) :- 
 : Source group has generators:
   [ f1, f2 ]
 : Range group has generators:

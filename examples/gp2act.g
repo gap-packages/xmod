@@ -2,13 +2,15 @@
 ##
 #W  gp2act.g                 XMOD example files                 Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2016, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2017, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 #############################################################################
 
-Print("\nXMod example file gp2act.g (version 10/11/15) :-");
+Print("\nXMod example file gp2act.g (version 05/04/17) :-");
 Print("\ntesting actor functions\n\n");
+level := InfoLevel( InfoXMod );
+SetInfoLevel( InfoXMod, 0 ); 
 
 s3 := Group( (1,2), (2,3) );  
 SetName( s3, "s3" );
@@ -202,6 +204,7 @@ Print("\nInner actor crossed module for X44:\n");
 IAX44 := InnerActorXMod( X44 );
 Display( IAX44 );
 
+SetInfoLevel( InfoXMod, level );
 ###############################################################################
 ##
 #E  gp2act.g . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

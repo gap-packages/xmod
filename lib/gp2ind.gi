@@ -15,11 +15,11 @@ InstallMethod( CoproductXMod, "for two crossed modules", true,
     [ IsXMod, IsXMod ], 0,
 function( X1, X2 )
 
-    local  f, S1, S2, R, act1, act2, aut2, gen1, gen2, bdy1, bdy2, 
-           orb12, act12, hom12, imu, mu, sdp, proj, emb1, emb2, 
-           gens, lens, fgens, gens1, gens2, imbdy, i, j, g, r, genR, lenR, 
-           cbdy, a1, a2, alpha, imalpha, cact, imcact, caut, 
-           prexmod, peiffer, coprod; 
+    local  f, S1, S2, R, act1, act2, aut2, gen1, gen2, bdy1, bdy2, idR, ok, 
+           orb12, act12, hom12, imu, mu, sdp, proj, mgi1, mgi2, emb1, emb2, 
+           emor1, emor2, gens, lens, fgens, gens1, gens2, imbdy, i, j, g, r, 
+           genR, lenR, cbdy, a1, a2, alpha, imalpha, cact, imcact, caut, 
+           prexmod, peiffer, pmor, pmor1, pmor2, info, coprod; 
 
     ##  function to split a semedirectproduct element into two parts 
     f := function( g ) 
@@ -45,6 +45,7 @@ function( X1, X2 )
     if not ( Range( X2 ) = R ) then 
         Error( "X1 and X2 do not have the same range" ); 
     fi;
+    idR := IdentityMapping( R ); 
     gen1 := GeneratorsOfGroup( S1 ); 
     gen2 := GeneratorsOfGroup( S2 ); 
     genR := GeneratorsOfGroup( R );
@@ -58,8 +59,10 @@ function( X1, X2 )
     mu := GroupHomomorphismByImages( S1, aut2, gen1, imu ); 
     sdp := SemidirectProduct( S1, mu, S2 ); 
     proj := Projection( sdp ); 
-    emb1 := Embedding( sdp, 1 );
-    emb2 := Embedding( sdp, 2 );
+    mgi1 := MappingGeneratorsImages( Embedding( sdp, 1 ) ); 
+    emb1 := GroupHomomorphismByImages( S1, sdp, mgi1[1], mgi1[2] ); 
+    mgi2 := MappingGeneratorsImages( Embedding( sdp, 2 ) );
+    emb2 := GroupHomomorphismByImages( S2, sdp, mgi2[1], mgi2[2] ); 
     gens := GeneratorsOfGroup( sdp ); 
     lens := Length( gens );
     fgens := List( gens, g -> f(g) ); 
@@ -88,10 +91,25 @@ function( X1, X2 )
     cact := GroupHomomorphismByImages( R, caut, genR, imcact ); 
     prexmod := PreXModByBoundaryAndAction( cbdy, cact ); 
     Info( InfoXMod, 1, "prexmod is ", StructureDescription(prexmod) ); 
+    emor1 := Make2dGroupMorphism( [ X1, prexmod, emb1, idR ] ); 
+    ok := IsPreXModMorphism( emor1 ); 
+    emor2 := Make2dGroupMorphism( [ X2, prexmod, emb2, idR ] ); 
+    ok := IsPreXModMorphism( emor2 ); 
     peiffer := PeifferSubgroup( prexmod ); 
     Info( InfoXMod, 1, "peiffer subgroup is ", StructureDescription(peiffer) ); 
     coprod := XModByPeifferQuotient( prexmod ); 
     Info( InfoXMod, 1, "the coproduct is ", StructureDescription(coprod) ); 
+    if HasProjectionOfFactorPreXMod( coprod ) then 
+        pmor := ProjectionOfFactorPreXMod( coprod ); 
+        ok := IsPreXModMorphism( pmor ); 
+        pmor1 := emor1 * pmor; 
+        pmor2 := emor2 * pmor; 
+    else 
+        pmor1 := emor1; 
+        pmor2 := emor2; 
+    fi; 
+    SetCoproductInfo( coprod,
+        rec( embeddings := [ pmor1, pmor2 ], xmods := [ X1, X2 ] ) );
     return coprod; 
 end ); 
 

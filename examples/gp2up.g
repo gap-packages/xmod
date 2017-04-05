@@ -2,13 +2,15 @@
 ##
 #W  gp2up.g                  XMOD example files                 Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2016, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2017, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 #############################################################################
 
-Print("\nXMod example file gp2up.g (version 10/11/15) :-");
+Print("\nXMod example file gp2up.g (version 05/04/17) :-");
 Print("\ntesting derivations of crossed modules\n\n");
+level := InfoLevel( InfoXMod ); 
+SetInfoLevel( InfoXMod, 0 ); 
 
 c5 := Group( (5,6,7,8,9) );
 SetName( c5, "c5" );
@@ -169,6 +171,7 @@ Print( "\nX3 has principal derivations:\n", prin3, "\n" );
 
 Print("\nStill a problem with  SectionByDerivation ? \n\n" );
 
+SetInfoLevel( InfoXMod, level );
 ###############################################################################
 ##
 #E  gp2up.g  . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

@@ -2,13 +2,15 @@
 ##
 #W  gp2obj.g                 XMOD example files                 Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2016, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2017, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 #############################################################################
 
-Print("\nXMod test file gp2obj.g (version 10/11/15) :-");
+Print("\nXMod test file gp2obj.g (version 05/04/17) :-");
 Print("\ntesting constructions of crossed modules\n\n");
+level := InfoLevel( InfoXMod ); 
+SetInfoLevel( InfoXMod, 0 ); 
 
 c5 := Group( (5,6,7,8,9) );
 SetName( c5, "c5" );
@@ -30,7 +32,7 @@ a4 := Subgroup( s4, [ (1,2,3), (2,3,4) ] );
 SetName( a4, "a4" );
 k4 := Subgroup( s4, [ (1,2)(3,4), (1,3)(2,4) ] );
 SetName( k4, "k4" );
-X4 := XModByNormalSubgroup( a4, k4 );
+X4 := XModByNormalSubgroup( s4, a4 );
 Print("crossed module X4 = ",X4,"\n");
 Display(X4);
 Y4 := SubXMod( X4, k4, a4 ); 
@@ -168,7 +170,6 @@ Print( "the crossed module obtained from C2 is X2 =\n" );
 Display( X2 );
 Print( "X2 has structure ", StructureDescription(X2), "\n\n" ); 
 
-
 Print("\nSelecting from data file cat1data.g :-\n" );
 Print("(1) Listing groups of given order:\n");
 L18 := Cat1Select( 18 );
@@ -183,6 +184,7 @@ Display( PC18 );
 X18 := XModByCat1( PC18 );
 Display( X18 ); 
 
+SetInfoLevel( InfoXMod, level );
 #############################################################################
 ##
 #E  gp2obj.g . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

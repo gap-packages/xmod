@@ -38,9 +38,12 @@ The action of this precrossed module is the diagonal action
 <M>(s_1,s_2)^r = (s_1^r,s_2^r)</M>. 
 Factoring out by the Peiffer subgroup, we obtain the coproduct 
 crossed module <M>{\mathcal X}_1 \circ {\mathcal X}_2</M>. 
+<P/>
 In the example the structure descriptions of the precrossed module, 
 the Peiffer subgroup, and the resulting coproduct are printed out 
 when <C>InfoLevel(InfoXMod}</C> is at least <M>1</M>. 
+The coproduct comes supplied with attribute <C>CoproductInfo</C>, 
+which includes the embedding morphisms of the two factors. 
 </Description>
 </ManSection>
 <P/>
@@ -48,13 +51,20 @@ when <C>InfoLevel(InfoXMod}</C> is at least <M>1</M>.
 <![CDATA[
 gap> q8 := Group( (1,2,3,4)(5,8,7,6), (1,5,3,7)(2,6,4,8) );;
 gap> X8 := XModByAutomorphismGroup( q8 );;
-gap> s4 := Range( X8 );;
-gap> a4 := NormalSubgroups( s4 )[2];; 
-gap> Y8 := XModByNormalSubgroup( s4, a4 );; 
-gap> YX8 := CoproductXMod( Y8, X8 );
-#I  prexmod is [ "((C2 x D8) : C2) : C3", "S4" ]
-#I  peiffer subgroup is Q8
-#I  the coproduct is [ "A4", "S4" ]
+gap> s4 := Range( X8 );; 
+gap> SetName( q8, "q8" );  SetName( s4, "s4" ); 
+gap> k4 := NormalSubgroups( s4 )[3];;  SetName( k4, "k4" );
+gap> Z8 := XModByNormalSubgroup( s4, k4 );;
+gap> SetName( X8, "X8" );  SetName( Z8, "Z8" );  
+gap> SetInfoLevel( InfoXMod, 1 ); 
+gap> XZ8 := CoproductXMod( X8, Z8 );
+#I  prexmod is [ "C2 x C2 x Q8", "S4" ]
+#I  peiffer subgroup is C2
+#I  the coproduct is [ "C2 x C2 x C2 x C2", "S4" ]
+[Group( [ f1, f2, f3, f4 ] )->s4]
+gap> SetName( XZ8, "XZ8" ); 
+gap> info := CoproductInfo( XZ8 );
+rec( embeddings := [ [X8 => XZ8], [Z8 => XZ8] ], xmods := [ X8, Z8 ] )
 ]]>
 </Example>
 

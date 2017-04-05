@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.tst                 XMOD test file                 Alper Odabas
 #W                                                               & Enver Uslu
-#Y  Copyright (C) 2001-2016, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2017, Chris Wensley et al, 
 ##
 #############################################################################
 
@@ -23,9 +23,9 @@ gap> Xn1 := nsx[pos1];
 [Group( [ f2*f4^2, f3*f4 ] )->Group( [ f3, f4, f5 ] )]
 gap> Size( Xn1 );
 [ 4, 8 ]
-gap> nat1 := NaturalMorphismByNormalSubXMod( X24, Xn1 ); 
+gap> nat1 := NaturalMorphismByNormalSubPreXMod( X24, Xn1 ); 
 [[d24->PAut(d24)] => [..]]
-gap> Qn1 := FactorXMod( X24, Xn1 ); 
+gap> Qn1 := FactorPreXMod( X24, Xn1 ); 
 [Group( [ f1, f2 ] )->Group( [ f1, f2 ] )]
 gap> Size( Qn1 );
 [ 6, 6 ]
@@ -193,8 +193,8 @@ gap> AreIsoclinicDomains( X8, X9 );
 true
 gap> ism89 := Isoclinism( X8, X9 );;
 gap> Display( ism89 );
-[ [[Group( [ f1 ] )->Group( [ f2 ] )] => [Group( [ f1 ] )->Group( [ f2 ] )]], 
-  [[Group( [ f3 ] )->Group( <identity> of ... )] => [Group( 
+[ [[Group( [ f1 ] )->Group( [ f2, f2 ] )] => [Group( [ f1 ] )->Group( 
+    [ f2, f2 ] )]], [[Group( [ f3 ] )->Group( <identity> of ... )] => [Group( 
     [ f3 ] )->Group( <identity> of ... )]] ]
 
 #### 4.3.2

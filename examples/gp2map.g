@@ -2,13 +2,15 @@
 ##
 #W  gp2map.g                 XMOD example files                 Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2016, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2017, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 #############################################################################
 
-Print("\nXMod example file gp2map.g (version 10/11/15) :-");
+Print("\nXMod example file gp2map.g (version 05/04/17) :-");
 Print("\ntesting constructions of crossed module morphisms\n\n");
+level := InfoLevel( InfoXMod ); 
+SetInfoLevel( InfoXMod, 0 ); 
 
 msl23 := SpecialLinearGroup( 2, 3 );
 isl23 := IsomorphismPermGroup( msl23 );
@@ -131,8 +133,25 @@ Print("the cat1-morphism corresponding to mor23 is :-\n");
 Display(Cmor23);
 Print("\nmor23 and Cmor23 have attributes:\n");
 Print(KnownAttributesOfObject(mor23),"\n");
-Print(KnownAttributesOfObject(Cmor23),"\n\n");
+Print(KnownAttributesOfObject(Cmor23),"\n\n"); 
 
+## added 24/03/17 after defining DiagonalCat1
+
+C4 := DiagonalCat1( [ (1,2), (2,3), (3,4) ] ); 
+SetName( C4, "C4" );
+C3 := DiagonalCat1( [ (1,2), (2,3) ] ); 
+SetName( C3, "C3" );
+genG := GeneratorsOfGroup( Source(C4) ); 
+gamma := GroupHomomorphismByImages( Source(C4), Source(C3), genG, 
+             [ (1,2), (2,3), (1,2), (4,5), (5,6), (4,5) ] ); 
+genR := GeneratorsOfGroup( Range(C4) ); 
+rho := GroupHomomorphismByImages( Range(C4), Range(C3), genR, 
+             [ (1,2)(4,5), (2,3)(5,6), (1,2)(4,5) ] ); 
+mor := PreCat1Morphism( C4, C3, gamma, rho ); 
+Print( "precat1 morphism, mor : C4 -> C3\n" ); 
+Display( mor );
+
+SetInfoLevel( InfoXMod, level );
 #############################################################################
 ##
 #E  gp2map.g . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

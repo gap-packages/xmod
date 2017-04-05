@@ -1,13 +1,16 @@
 #############################################################################
 ##
-#W  isoclinic.g               XMOD example files   Chris Wensley & Alper Odabas
+#W  isoclinic.g         XMOD example files       Chris Wensley & Alper Odabas
 ##                                                               & Enver Uslu
-#Y  Copyright (C) 2001-2016, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2017, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 #############################################################################
 
-Print("\nXMod test file isoclinic.g (version 010/11/15) :-\n\n");
+Print("\nXMod test file isoclinic.g (version 05/04/17) :-\n\n");
+Print("isoclinism tests\n\n" ); 
+level := InfoLevel( InfoXMod ); 
+SetInfoLevel( InfoXMod, 0 );
 
 d24 := DihedralGroup(24);  
 SetName( d24, "d24" );
@@ -19,9 +22,9 @@ pos1 := Position( ids, [ [4,1], [8,3] ] );
 Xn1 := nsx[pos1];  
 Print( "normal subxmod Xn1 = ", Xn1, "\n" ); 
 Print( "Xn1 has size ", Size( Xn1 ), "\n" );
-nat1 := NaturalMorphismByNormalSubXMod( X24, Xn1 ); 
+nat1 := NaturalMorphismByNormalSubPreXMod( X24, Xn1 ); 
 Print( "nat1 = ", nat1, "\n" ); 
-Qn1 := FactorXMod( X24, Xn1 );  
+Qn1 := FactorPreXMod( X24, Xn1 );  
 Print( "factor xmod Qn1 has size ", Size( Qn1 ), "\n\n" );
 
 
@@ -146,7 +149,7 @@ Print( AllStemGroupIds(32), "\n" );
 Print( "and these form families:\n" );
 Print( AllStemGroupFamilies(32), "\n\n" );
 
-Print( "G has middle length ", MiddleLength(G), "\n" );
+Print( "G has middle length ", IsoclinicMiddleLength(G), "\n" );
 Print( "X1 has rank ", IsoclinicRank(X1), "\n\n" ); 
 
 C8 := Cat1(16,8,1);
@@ -165,4 +168,9 @@ ism89 := Isoclinism( X8, X9 );
 Display(ism89); 
 Print( "X8 is a stem crossed module? ", IsStemDomain(X8), "\n" );;
 Print( "X9 is a stem crossed module? ", IsStemDomain(X9), "\n" );;
-Print( "X24 has middle length ", MiddleLength(X24), "\n" );
+Print( "X24 has middle length ", IsoclinicMiddleLength(X24), "\n" );
+
+SetInfoLevel( InfoXMod, level );
+#############################################################################
+##
+#E  isoclinic.g . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

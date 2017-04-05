@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.gi               GAP4 package `XMod'                Alper Odabas
 #W                                                                & Enver Uslu
-#Y  Copyright (C) 2001-2016, Chris Wensley et al 
+#Y  Copyright (C) 2001-2017, Chris Wensley et al 
 #Y   
 ##  This file contains generic methods for finding isoclinism classes 
 ##  of crossed modules. 
@@ -18,7 +18,7 @@ function( XM, T, Q )
 
     local  genQ, act, ext, orb, elts, fix, gens;
 
-    if not ( IsSubgroup( Source(XM), T ) and IsSubgroup( Range(XM), Q ) ) then 
+    if not ( IsSubgroup( Source( XM ), T ) and IsSubgroup( Range( XM ), Q ) ) then 
         Error( "T,Q not subgroups of S,R" ); 
     fi; 
     genQ := GeneratorsOfGroup( Q ); 
@@ -42,10 +42,10 @@ function( XM, T, Q )
 
     local alpha, sonuc, t, q, list, sgp;
 
-    if not ( IsSubgroup( Source(XM), T ) and IsSubgroup( Range(XM), Q ) ) then 
+    if not ( IsSubgroup( Source( XM ), T ) and IsSubgroup( Range( XM ), Q ) ) then 
         Error( "T,Q not subgroups of S,R" ); 
     fi; 
-    alpha := XModAction(XM);
+    alpha := XModAction( XM );
     list := [];
     for q in Q do
         if ForAll( T, t -> Image(Image(alpha,q),t)=t ) then
@@ -70,12 +70,10 @@ InstallMethod( CentreXMod, "generic method for crossed modules", true,
     [ IsXMod ], 0,
 function( XM )
 
-    local alpha, T, G, partial, fix, k_partial, k_alpha, PM, K;
+    local  T, G, K, fix;
 
-    T := Source(XM);
-    G := Range(XM);
-    alpha := XModAction(XM);
-    partial := Boundary(XM);
+    T := Source( XM );
+    G := Range( XM );
     K := Intersection( Centre(G), StabilizerSubgroupXMod( XM, T, G ) );
     fix := FixedPointSubgroupXMod( XM, T, G );
     return SubXMod( XM, fix, K ); 
@@ -105,10 +103,10 @@ function( XM, YM )
     gens := SmallGeneratingSet( fix ); 
     srcC := Subgroup( srcX, gens ); 
     rngC := Intersection( StabilizerSubgroupXMod( XM, srcX, rngY ), 
-                          Centralizer( Range(XM), rngY ) );
+                          Centralizer( Range( XM ), rngY ) );
     if ( srcC = srcX ) then 
         srcC := srcX; 
-        if ( rngC = Range(XM) ) then 
+        if ( rngC = Range( XM ) ) then 
             return XM; 
         fi;
     fi; 
@@ -145,9 +143,9 @@ function( XM )
 
     local  alpha, alp, sonuc, T, G, t, t0, g, list, one;
 
-    T := Source(XM);
-    G := Range(XM);
-    alpha := XModAction(XM);
+    T := Source( XM );
+    G := Range( XM );
+    alpha := XModAction( XM );
     list := []; 
     one := One( T );
     for g in GeneratorsOfGroup( G ) do 
@@ -257,12 +255,12 @@ InstallMethod( IntersectionSubXMods, "generic method for crossed modules",
     true, [ IsXMod, IsXMod, IsXMod ], 0,
 function( XM, SH, RK)
 
-    local alpha, T, G, S, H, R, K, partial, k_partial, k_alpha, SR, HK;
+    local alpha, T, G, S, H, R, K, bdy, k_bdy, k_alpha, SR, HK;
 
-    T := Source(XM);
-    G := Range(XM);
-    alpha := XModAction(XM);
-    partial := Boundary(XM);
+    T := Source( XM );
+    G := Range( XM );
+    alpha := XModAction( XM );
+    bdy := Boundary( XM );
     S := Source(SH);
     H := Range(SH);
     R := Source(RK);
@@ -274,59 +272,77 @@ end );
 
 #############################################################################
 ##
-#M  NaturalMorphismByNormalSubXMod . . . . . . . . the quotient xmod morphism
+#M  NaturalMorphismByNormalSubPreXMod . . . . . the quotient prexmod morphism
 ##
-InstallMethod( NaturalMorphismByNormalSubXMod, 
-    "generic method for crossed modules", true, [ IsXMod, IsXMod ], 0,
-function( XM, PM )
+InstallMethod( NaturalMorphismByNormalSubPreXMod, 
+    "generic method for crossed modules", true, [ IsPreXMod, IsPreXMod ], 0,
+function( XM, SM )
 
-    local  alpha1, alpha2, partial1, partial2, nhom1, nhom2, T, G, S, H, 
-           im1, im2, sg1, sg2, B1, B2, bdy, act, FM;
+    local  actX, bdyX, nhomQ, nhomF, T, G, S, H, Q, F, sgQ, sgF, imbdy, bdy, 
+           lenF, psgQ, psgF, asgF, i, autF, aut, act, FM;
 
-    if not IsNormal( XM, PM ) then 
+    if not IsNormal( XM, SM ) then 
         Error( "not a normal subcrossed module" ); 
     fi;
-    alpha1 := XModAction(XM);
-    partial1 := Boundary(XM);
-    T := Source(XM);
-    G := Range(XM);
-    alpha2 := XModAction(PM);
-    partial2 := Boundary(PM);
-    S := Source(PM);
-    H := Range(PM);
-    nhom1 := NaturalHomomorphismByNormalSubgroup(T,S);
-    nhom2 := NaturalHomomorphismByNormalSubgroup(G,H);
-    im1 := Image( nhom1 ); 
-    sg1 := SmallGeneratingSet( im1 );
-    B1 := GroupWithGenerators( sg1, One(im1) ); # T/S bölüm grubu 
-    im2 := Image( nhom2 ); 
-    sg2 := SmallGeneratingSet( im2 );
-    B2 := GroupWithGenerators( sg2, One(im2) ); # G/H bölüm grubu
-    bdy := GroupHomomorphismByFunction( B1, B2, 
-             a -> Image( nhom2, 
-               Image(partial1,PreImagesRepresentative( nhom1, a ) ) ) );
-    act := GroupHomomorphismByFunction( B2, AutomorphismGroup(B1), 
-             b -> GroupHomomorphismByFunction( B1, B1, 
-               c -> Image( nhom1, 
-                   (Image(Image(alpha1,PreImagesRepresentative(nhom2,b)), 
-                       PreImagesRepresentative(nhom1,c) ) ) ) ) );
-    FM := XModByBoundaryAndAction( bdy, act );
-    if ( HasName(XM) and HasName(PM) ) then 
-        SetName( FM, Concatenation( Name(XM), "/", Name(PM) ) ); 
+    actX := XModAction( XM );
+    bdyX := Boundary( XM );
+    T := Source( XM );
+    S := Source( SM );
+    nhomQ := NaturalHomomorphismByNormalSubgroup( T, S );
+    Q := ImagesSource( nhomQ ); 
+    sgQ := SmallGeneratingSet( Q ); 
+    Q := GroupWithGenerators( sgQ, One(Q) );           # T/S bölüm grubu 
+    psgQ := List( sgQ, q -> PreImagesRepresentative( nhomQ, q ) ); 
+    G := Range( XM );
+    H := Range( SM );
+    if IsTrivial( H ) then 
+        F := G; 
+        nhomF := IdentityMapping( G ); 
+        sgF := SmallGeneratingSet( G ); 
+        psgF := SmallGeneratingSet( G ); 
+    else 
+        nhomF := NaturalHomomorphismByNormalSubgroup( G, H );
+        F := ImagesSource( nhomF ); 
+        sgF := SmallGeneratingSet( F ); 
+        F := GroupWithGenerators( sgF, One(F) );       # G/H bölüm grubu
+        psgF := List( sgF, f -> PreImagesRepresentative( nhomF, f ) ); 
     fi; 
-    return XModMorphismByHoms( XM, FM, nhom1, nhom2 ); 
+    imbdy := List( sgQ, q -> Image( nhomF, Image( bdyX, 
+                             PreImagesRepresentative( nhomQ, q ) ) ) );
+    bdy := GroupHomomorphismByImages( Q, F, sgQ, imbdy ); 
+    lenF := Length( psgF );
+    asgF := List( psgF, g -> Image( actX, g ) ); 
+    autF := ListWithIdenticalEntries( lenF, 0 ); 
+    for i in [1..lenF] do 
+        autF[i] := GroupHomomorphismByImages( Q, Q, sgQ, 
+                   List( psgQ, t -> Image( nhomQ, Image(asgF[i],t) ) ) ); 
+    od; 
+    if ( lenF = 0 ) then 
+        aut := Group( IdentityMapping( Q ) ); 
+    else 
+        aut := Group( autF ); 
+    fi;
+    SetIsGroupOfAutomorphisms( aut, true ); 
+    act := GroupHomomorphismByImages( F, aut, sgF, autF ); 
+    FM := XModByBoundaryAndAction( bdy, act );
+    if ( HasName( XM ) and HasName( SM ) ) then 
+        SetName( FM, Concatenation( Name( XM ), "/", Name( SM ) ) ); 
+    fi; 
+    return PreXModMorphismByHoms( XM, FM, nhomQ, nhomF ); 
 end );
 
 #############################################################################
 ##
-#M  FactorXMod  . . . . . . . . . . . . . . . . . the quotient crossed module
+#M  FactorPreXMod  . . . . . . . . . . . . . . the quotient precrossed module
 ##
-InstallMethod( FactorXMod, "generic method for crossed modules", true, 
-    [ IsXMod, IsXMod ], 0,
-function( XM, PM )
-    local  nat; 
-    nat := NaturalMorphismByNormalSubXMod( XM, PM ); 
-    return Range( nat ); 
+InstallMethod( FactorPreXMod, "generic method for precrossed modules", true, 
+    [ IsPreXMod, IsPreXMod ], 0,
+function( XM, SM )
+    local  nat, FM; 
+    nat := NaturalMorphismByNormalSubPreXMod( XM, SM ); 
+    FM := Range( nat ); 
+    SetProjectionOfFactorPreXMod( FM, nat ); 
+    return FM;  
 end );
 
 #############################################################################
@@ -335,7 +351,7 @@ end );
 ##
 InstallMethod( DerivedSubXMod, "generic method for crossed modules", true, 
     [ IsXMod ], 0,
-function(XM)
+function( XM )
 
     local  D, dgt; 
 
@@ -365,7 +381,7 @@ end );
 ##
 InstallOtherMethod( LowerCentralSeries, "generic method for crossed modules", 
     true, [ IsXMod ], 0,
-function(XM)
+function( XM )
 
     local  list, C;
 
@@ -395,7 +411,7 @@ end );
 InstallMethod( IsAspherical2dGroup, "generic method for crossed modules", 
     true, [ IsXMod ], 0,
 function( XM )
-    return ( Size( Kernel( Boundary(XM) ) ) = 1 ); 
+    return ( Size( Kernel( Boundary( XM ) ) ) = 1 ); 
 end );
 
 #############################################################################
@@ -405,7 +421,7 @@ end );
 InstallMethod( IsSimplyConnected2dGroup, "generic method for crossed modules", 
     true, [ IsXMod ], 0,
 function( XM )
-    return ( Size( CoKernel( Boundary(XM) ) ) = 1 );
+    return ( Size( CoKernel( Boundary( XM ) ) ) = 1 );
 end );
 
 #############################################################################
@@ -415,7 +431,7 @@ end );
 InstallMethod( IsFaithful2dGroup, "generic method for crossed modules", true, 
     [ IsXMod ], 0,
 function( XM )
-    return ( Size( StabilizerSubgroupXMod( XM, Source(XM), Range(XM) ) ) = 1 ); 
+    return ( Size( StabilizerSubgroupXMod( XM, Source( XM ), Range( XM ) ) ) = 1 ); 
 end );
 
 #############################################################################
@@ -424,7 +440,7 @@ end );
 ##
 InstallMethod( IsNilpotent2dGroup, "generic method for crossed modules", 
     true, [ IsXMod ], 0,
-function(XM)
+function( XM )
 
     local  S, n, sonuc;
 
@@ -444,12 +460,12 @@ end );
 ##
 InstallMethod( NilpotencyClassOf2dGroup, "generic method for crossed modules", 
     true, [ IsXMod ], 0,
-function(XM)
+function( XM )
 
-    if not IsNilpotent2dGroup(XM) then
+    if not IsNilpotent2dGroup( XM ) then
         return 0;
     else
-        return Length( LowerCentralSeries(XM) ) - 1;        
+        return Length( LowerCentralSeries( XM ) ) - 1;        
     fi;
 end );
 
@@ -478,8 +494,9 @@ function(XM1,XM2)
         alp := isoT * NextIterator( iterT ); 
         while not IsDoneIterator( iterG ) do 
             ph := isoG * NextIterator( iterG ); 
-            mor := Make2dGroupMorphism( XM1, XM2, alp, ph ); 
-            if ( IsPreXModMorphism( mor ) and IsXModMorphism( mor ) ) then 
+            mor := Make2dGroupMorphism( [ XM1, XM2, alp, ph ] ); 
+            if ( not( mor = fail ) and IsPreXModMorphism( mor ) 
+                                   and IsXModMorphism( mor ) ) then 
                 return mor; 
             fi;
         od;
@@ -747,15 +764,15 @@ function( XM )
 
     act := XModAction( XM ); 
     ZM := CentreXMod( XM ); 
-    QM := FactorXMod( XM, ZM ); 
+    QM := FactorPreXMod( XM, ZM ); 
     ul := Source( XM ); 
     dl := Range( XM );
     ur := Source( QM ); 
     dr := Range( QM );
-    if ( HasName(XM) and not HasName(ZM) ) then 
-        SetName( ZM, Concatenation( "Z(", Name(XM), ")" ) ); 
+    if ( HasName( XM ) and not HasName(ZM) ) then 
+        SetName( ZM, Concatenation( "Z(", Name( XM ), ")" ) ); 
     fi; 
-    nat := NaturalMorphismByNormalSubXMod( XM, ZM ); 
+    nat := NaturalMorphismByNormalSubPreXMod( XM, ZM ); 
     up := XModByCentralExtension( SourceHom(nat) );
     dn := XModByCentralExtension( RangeHom(nat) );
     gdl := GeneratorsOfGroup( dl ); 
@@ -775,16 +792,11 @@ function( XM )
     xp := XPairingObj( [dl,ur], ul, map );
     CrossedSquare := PreCrossedSquareObj( up, XM, dn, QM, adg, xp );
     SetIsCrossedSquare( CrossedSquare, true );
-    if HasName(XM) then 
-        SetName( QM, Concatenation( Name(XM), "/", Name(ZM) ) ); 
+    if HasName( XM ) then 
+        SetName( QM, Concatenation( Name( XM ), "/", Name(ZM) ) ); 
     fi;
     return CrossedSquare;
 end );
-
-#############################################################################
-##
-#M MiddleLength . . .
-## 
 
 #############################################################################
 ##
@@ -1119,7 +1131,7 @@ end );
 
 InstallOtherMethod( IsoclinicRank, "generic method for crossed modules", true, 
     [ Is2dGroup ], 0,
-function(XM)
+function( XM )
 
     local  size, ZXMod, DXMod, QXMod, KXMod, m1, m2, l1, l2;
 
@@ -1127,9 +1139,9 @@ function(XM)
     if not ( IsPrimePowerInt(size[1]) and IsPrimePowerInt(size[2]) ) then 
         return fail; 
     fi;
-    ZXMod := CentreXMod(XM);
-    DXMod := DerivedSubXMod(XM);
-    QXMod := FactorXMod(XM,ZXMod);
+    ZXMod := CentreXMod( XM );
+    DXMod := DerivedSubXMod( XM );
+    QXMod := FactorPreXMod(XM,ZXMod);
     KXMod := IntersectionSubXMods(XM,ZXMod,DXMod);
     m1 := Size(QXMod);
     m2 := Size(KXMod);
@@ -1156,18 +1168,19 @@ end );
 
 InstallOtherMethod( IsoclinicMiddleLength, 
     "generic method for crossed modules", true, [ Is2dGroup ], 0,
-function(XM)
+function( XM )
 
     local  size, ZXMod, DXMod, QXMod, KXMod;
 
     size := Size( XM );
     if not ( IsPrimePowerInt(size[1]) and IsPrimePowerInt(size[2]) ) then 
+        Info( InfoXMod, 1, "not a crossed module of prime power order" ); 
         return fail; 
     fi;
-    ZXMod := CentreXMod(XM);
-    DXMod := DerivedSubXMod(XM);
+    ZXMod := CentreXMod( XM );
+    DXMod := DerivedSubXMod( XM );
     KXMod := IntersectionSubXMods(XM,ZXMod,DXMod);
-    QXMod := FactorXMod(DXMod,KXMod);
+    QXMod := FactorPreXMod(DXMod,KXMod);
     size := Size(QXMod);     
     return [ Tau(size[1])-1, Tau(size[2])-1 ];
 end );
@@ -1190,8 +1203,8 @@ Print("-------------------------------------------------------------------------
 Print("Number","\t","Rank","\t\t","M. L.","\t\t","Class","\t","|G/Z|","\t\t",
       "|g2|","\t\t","|g3|","\t\t","|g4|","\t\t","|g5| \n");
 Print("---------------------------------------------------------------------------------------------------------------------------------- \n");
-Print(Length(sinif),"\t",IsoclinicRank(XM),"\t",IsoclinicMiddleLength(XM),"\t",
-      NilpotencyClassOf2dGroup(XM),"\t",Size(FactorXMod(XM,CentreXMod(XM))));    
+Print(Length(sinif),"\t",IsoclinicRank( XM ),"\t",IsoclinicMiddleLength( XM ),"\t",
+      NilpotencyClassOf2dGroup( XM ),"\t",Size(FactorPreXMod(XM,CentreXMod( XM ))));    
 
 if Length(B) > 1 then
 for i in [2..Length(B)] do
