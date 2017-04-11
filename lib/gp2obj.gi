@@ -1852,14 +1852,17 @@ function( et, eh )
     local  G, gG, R, t, h, e;
 
     if not ( IsEndoMapping( et ) and IsEndoMapping( eh ) ) then
-        Error( "et, eh must both be group endomorphisms" );
+        Print( "et, eh must both be group endomorphisms \n" );
+		return fail;
     fi;
     if not ( Source( et ) = Source( eh ) ) then
-        Error( "et and eh must have same source" );
+        Print( "et and eh must have same source \n" );
+		return fail;
     fi;
     G := Source( et );
     if not ( Image( et ) = Image( eh ) ) then
-        Error( "et and eh must have same image" );
+        Print( "et and eh must have same image \n" );
+		return fail;
     fi;
     R := Image( et );
     gG := GeneratorsOfGroup( G );
