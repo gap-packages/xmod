@@ -13,7 +13,7 @@
 #F  PreCrossedSquareMorphism( <args> )
 #O  PreCrossedSquareMorphismByMorphisms( <src>, <rng>, <up>, <lt>, <rt>, <dn> )
 #F  PreCat2Morphism( <args> )
-#O  PreCat2MorphismByMorphisms( <src>, <rng>, <up>, <lt>, <rt>, <dn> )
+#O  PreCat2MorphismByMorphisms( <src>, <rng>, <up>, <dn> )
 ##
 DeclareGlobalFunction( "PreCrossedSquareMorphism" );
 DeclareOperation( "PreCrossedSquareMorphismByMorphisms",
@@ -21,8 +21,7 @@ DeclareOperation( "PreCrossedSquareMorphismByMorphisms",
       Is2dGroupMorphism, Is2dGroupMorphism, Is2dGroupMorphism ] );
 DeclareGlobalFunction( "PreCat2Morphism" );
 DeclareOperation( "PreCat2MorphismByMorphisms",
-    [ IsPreCat2, IsPreCat2, Is2dGroupMorphism, Is2dGroupMorphism, 
-                            Is2dGroupMorphism, Is2dGroupMorphism ] );
+    [ IsPreCat2, IsPreCat2, Is2dGroupMorphism, Is2dGroupMorphism ] );
 
 #############################################################################
 ##
@@ -33,13 +32,16 @@ DeclareOperation( "PreCat2MorphismByMorphisms",
 DeclareOperation( "Make3dGroupMorphism",
     [ Is3dGroup, Is3dGroup, Is2dGroupMorphism, Is2dGroupMorphism, 
                             Is2dGroupMorphism, Is2dGroupMorphism ] );
+							
+DeclareOperation( "Make3dGroupMorphism",
+    [ Is3dGroup, Is3dGroup, Is2dGroupMorphism, Is2dGroupMorphism ] );
 
 #############################################################################
 ##
 #F  CrossedSquareMorphism( <args> )
 #O  CrossedSquareMorphismByMorphisms( <src>, <rng>, <up>, <lt>, <rt>, <dn> )
 #F  Cat2Morphism( <args> )
-#O  Cat2MorphismByMorphisms( <src>, <rng>, <up>, <lt>, <rt>, <dn> )
+#O  Cat2MorphismByMorphisms( <src>, <rng>, <up>, <dn> )
 #O  InclusionMorphism3dDomains( <obj>, <sub> )
 ##
 DeclareGlobalFunction( "CrossedSquareMorphism" );
@@ -48,8 +50,7 @@ DeclareOperation( "CrossedSquareMorphismByMorphisms",
       Is2dGroupMorphism, Is2dGroupMorphism, Is2dGroupMorphism ] );
 DeclareGlobalFunction( "Cat2Morphism" );
 DeclareOperation( "Cat2MorphismByMorphisms",
-    [ IsCat2, IsCat2, Is2dGroupMorphism, Is2dGroupMorphism, 
-                      Is2dGroupMorphism, Is2dGroupMorphism ] );
+    [ IsCat2, IsCat2, Is2dGroupMorphism, Is2dGroupMorphism ] );
 DeclareOperation( "InclusionMorphism3dDomains", [ Is3dDomain, Is3dDomain ] );
 
 #############################################################################
