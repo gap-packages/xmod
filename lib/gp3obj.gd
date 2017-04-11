@@ -17,8 +17,8 @@
 ##
 DeclareRepresentation( "IsPreCrossedSquareObj", Is3dGroup and IsAttributeStoringRep,
     [ "up2d", "down2d", "left2d", "right2d", "action", "pairing" ] );
-DeclareRepresentation( " IsPreCat2Obj", Is3dGroup and IsAttributeStoringRep,
-    [ "up2d", "down2d", "left2d", "right2d" ] );
+DeclareRepresentation( "IsPreCat2Obj", Is3dGroup and IsAttributeStoringRep,
+[ "up2d", "down2d" ] );
 
 #############################################################################
 ##
@@ -116,8 +116,8 @@ DeclareSynonym( "IsPcCat2", IsCat2 and IsPc3dGroup );
 ##
 DeclareOperation( "PreCrossedSquareObj", 
     [ IsPreXMod, IsPreXMod, IsPreXMod, IsPreXMod, IsObject, IsObject] );
-DeclareOperation( "PreCat20bj", 
-    [ IsPreCat1, IsPreCat1, IsPreCat1, IsPreCat1 ] );
+DeclareOperation( "PreCat2Obj", 
+    [ IsPreCat1, IsPreCat1 ] );
 DeclareAttribute( "Up2dGroup", Is3dGroup );
 DeclareAttribute( "Left2dGroup", Is3dGroup );
 DeclareAttribute( "Down2dGroup", Is3dGroup );
@@ -207,7 +207,7 @@ DeclareProperty( "IsIdentityCat2", IsCat2 );
 ##
 DeclareGlobalFunction( "PreCat2" );
 DeclareOperation( "PreCat2ByPreCat1s ", 
-    [ IsPreCat1, IsPreCat1, IsPreCat1, IsPreCat1 ] );
+    [ IsPreCat1, IsPreCat1 ] );
 
 #############################################################################
 ##

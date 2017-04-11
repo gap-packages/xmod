@@ -219,6 +219,176 @@ function( u, l, d, r, a, p )
     return PS;
 end );
 
+#############################################################################
+##
+#M  IsPreCat2 . . . . . . . . . . . . . . . . .  check that the is pre-cat2
+##
+InstallMethod( IsPreCat2, "generic method for a pre-cat2",
+    true, [ Is3dGroup ], 0,
+function( P )
+
+    local  u, d, h1, t1, h2, t2, h1h2, h2h1, t1t2, t2t1, h1t2, 
+		   t2h1, h2t1, t1h2, G, gensrc, x, y, z;
+
+    if not ( IsPreCat2Obj ( P )  ) then
+        return false;
+    fi;
+	
+    u := Up2dGroup( P );
+    d := Down2dGroup( P );
+	if not ( IsPerm2dGroup( u ) ) then
+		u := Image(IsomorphismPermObject( u ) );
+	fi;
+	if not ( IsPerm2dGroup( d ) ) then
+		d := Image(IsomorphismPermObject( d ) );
+	fi;	
+	
+	h1 := HeadMap( u );
+    t1 := TailMap( u );
+	h2 := HeadMap( d );
+    t2 := TailMap( d );
+
+    if not ( ( Source(h1) = Source(t1) ) and ( Range(h1) = Range(t1) ) and
+             ( Source(h2) = Source(t2) ) and ( Range(h2) = Range(t2) ) ) then
+        Info( InfoXMod, 2, "Incompatible source/range" );
+        return false;
+    fi;
+	
+    if not ( ( Source(h1) = Source(h2) ) and ( Source(t1) = Source(t2) ) ) then
+        Info( InfoXMod, 2, "Incompatible source" );
+        return false;
+    fi;
+	
+	G := Source(h1);
+	gensrc := GeneratorsOfGroup(G);
+	
+	h1 := GroupHomomorphismByImagesNC(G, G, gensrc,  List(gensrc, x -> Image( h1, x ) )  );
+    t1 := GroupHomomorphismByImagesNC(G, G, gensrc,  List(gensrc, x -> Image( t1, x ) )  );
+	h2 := GroupHomomorphismByImagesNC(G, G, gensrc,  List(gensrc, x -> Image( h2, x ) )  );
+    t2 := GroupHomomorphismByImagesNC(G, G, gensrc,  List(gensrc, x -> Image( t2, x ) )  );
+	
+	 h1h2 := h1 * h2;
+	 h2h1 := h2 * h1;
+	 t1t2 := t1 * t2;
+	 t2t1 := t2 * t1;
+	 h1t2 := h1 * t2;
+	 t2h1 := t2 * h1;
+	 h2t1 := h2 * t1;
+	 t1h2 := t1 * h2;
+		
+	# check the condition 1 
+	if not ( h1h2 = h2h1 ) then
+        Info( InfoXMod, 2, "Condition 1 is not provided" );
+	#	Print("Condition 1 is not provided \n");
+        return false;
+    fi;
+	
+	
+	# check the condition 2
+	if not ( t1t2 = t2t1 ) then
+        Info( InfoXMod, 2, "Condition 2 is not provided" );
+	#	Print("Condition 2 is not provided \n");
+        return false;
+    fi;
+	
+	# check the condition 3
+	if not ( h1t2 = t2h1 ) then
+        Info( InfoXMod, 2, "Condition 3 is not provided" );
+	#	Print("Condition 3 is not provided \n");
+        return false;
+    fi;
+	
+	# check the condition 4
+	if not ( h2t1 = t1h2 ) then
+        Info( InfoXMod, 2, "Condition 4 is not provided" );
+	#	Print("Condition 4 is not provided \n");
+        return false;
+    fi;	 
+	
+        return true;
+end );
+
+#############################################################################
+##
+#M  IsCat2 . . . . . . . . . . . . . . . . .  check that the is cat2
+##
+InstallMethod( IsCat2, "generic method for a cat2",
+    true, [ Is3dGroup ], 0,
+function( P )
+
+    local  u, d;
+
+    if not ( IsPreCat2(P) ) then
+        Info( InfoXMod, 2, "Pre-Cat2 is not provided" );
+        return false;
+    fi;
+	
+	u := Up2dGroup( P );
+    d := Down2dGroup( P );
+	
+	if not ( ( IsCat1( u ) ) and ( IsCat1( d ) ) )  then
+        Info( InfoXMod, 2, "Up2dGroup and Down2dGroup must be Cat1" );
+        return false;
+    fi;
+	
+    return true;
+end );
+
+##############################################################################
+##
+#M  PreCat2Obj ( <up>, <down> ) . .make a PreCat2
+##
+InstallMethod( PreCat2Obj, "for precat2", true,
+    [ IsPreCat1, IsPreCat1 ], 0,
+function( u, d )
+
+    local  filter, fam, PC, ok, name;
+
+    fam := Family3dGroup;
+    filter := IsPreCat2Obj;
+    PC := rec();
+    ObjectifyWithAttributes( PC, NewType( fam, filter), 
+      Up2dGroup, u, 
+      Down2dGroup, d,
+      Is3dGroup, true );
+    if not IsPreCat2( PC ) then
+        Info( InfoXMod, 1, "Warning: not a pre-cat2." );
+    fi;
+    # ok := IsCat2( PC );
+    # name:= Name( PC );
+    return PC;
+end );
+
+#############################################################################
+##
+#F  Cat2( <size>, <gpnum>, <num> )     cat2-group from data in CAT2_LIST
+#F  Cat2( C1G1, C1G2 )                 cat2-group from two cat1-groups
+##
+InstallGlobalFunction( Cat2, function( arg )
+
+    local  nargs, C1G1, C1G2, C2G, ok;
+
+    nargs := Length( arg );
+    if ( ( nargs < 2 ) or ( nargs > 3 ) ) then
+        Print( "standard usage: Cat2( cat1, cat1 );\n" );
+        Print( "            or: Cat2( size, gpnum, num );\n" );
+        return fail;
+    elif not IsInt( arg[1] ) then
+        if ( nargs = 2 ) then
+            C2G := PreCat2Obj( arg[1], arg[2] );
+        fi;
+        ok := IsCat2( C2G );
+        if ok then
+            return C2G;
+        else
+            return fail;
+        fi;
+    else   
+		Print( "Cat2Select was not implemented yet \n" );
+        # return Cat2Select( arg[1], arg[2], arg[3] );
+    fi;
+end );
+
 ##############################################################################
 ##
 #M  LeftRightMorphism . . . . . . . . . . . . . . . . for a precrossed square
@@ -374,6 +544,26 @@ function( dom )
              [ IdGroup( Source(d) ), IdGroup( Range(d) ) ] ]; 
 end ); 
 
+##############################################################################
+##
+#M  \=( <dom1>, <dom2> ) . . . . . test if two 3d-objects are equal
+##
+InstallMethod( \=,
+    "generic method for two 3d-domain",
+    IsIdenticalObj, [ Is3dGroup, Is3dGroup ], 0,
+    function ( dom1, dom2 )
+	
+	if ( IsPreCat2( dom1 ) and IsPreCat2( dom2 ) ) then
+	    return ( ( Up2dGroup( dom1 ) = Up2dGroup( dom2 ) )
+             and ( Down2dGroup( dom1 ) = Down2dGroup( dom2 ) )  );
+    else
+	    return ( ( Up2dGroup( dom1 ) = Up2dGroup( dom2 ) )
+             and ( Down2dGroup( dom1 ) = Down2dGroup( dom2 ) )
+             and ( Right2dGroup( dom1 ) = Right2dGroup( dom2 ) )
+             and ( Left2dGroup( dom1 ) = Left2dGroup( dom2 ) ) );
+	fi;
+end );
+
 #############################################################################
 ##
 #M  PrintObj( <g3d> . . . . . . . . . . . . . . . . . . . . print a 3d-group 
@@ -434,17 +624,19 @@ function( g3d )
                 else 
                     Print( "pre-crossed square with:\n" ); 
                 fi; 
-            else 
-                if ( HasIsCat2( g3d ) and IsCat2( g3d ) ) then  
-                    Print( "cat2-group with:\n" ); 
-                else 
-                    Print( "(pre-)cat2-group with:\n" ); 
-                fi; 
-            fi; 
             Print( "      up = ",    Up2dGroup( g3d ), "\n" );
-            Print( "    left = ",  Left2dGroup( g3d ), "\n" );
+			Print( "    left = ",  Left2dGroup( g3d ), "\n" );
             Print( "    down = ",  Down2dGroup( g3d ), "\n" );
-            Print( "   right = ", Right2dGroup( g3d ), "\n" );
+			Print( "   right = ", Right2dGroup( g3d ), "\n" );
+            else 
+               if ( HasIsCat2( g3d ) and IsCat2( g3d ) ) then  
+                   Print( "cat2-group with:\n" ); 
+               else 
+                   Print( "(pre-)cat2-group with:\n" ); 
+               fi; 
+            Print( "      up = ",    Up2dGroup( g3d ), "\n" );
+            Print( "    down = ",  Down2dGroup( g3d ), "\n" );
+            fi; 
         fi;
     fi;
 end );
@@ -503,14 +695,17 @@ function( g3d )
         Print( " ]\n" );
     else 
         if ispsq then 
-            Print( "(pre-)crossed square with:\n" ); 
-        else 
-            Print( "(pre-)cat2-group with:\n" ); 
-        fi; 
+        Print( "(pre-)crossed square with:\n" ); 
         Print( "      up = ",    Up2dGroup( g3d ), "\n" );
         Print( "    left = ",  Left2dGroup( g3d ), "\n" );
         Print( "    down = ",  Down2dGroup( g3d ), "\n" );
         Print( "   right = ", Right2dGroup( g3d ), "\n" );
+        else 
+        Print( "(pre-)cat2-group with:\n" ); 
+        Print( "      up = ",    Up2dGroup( g3d ), "\n" );
+        Print( "    down = ",  Down2dGroup( g3d ), "\n" );
+        fi; 
+
     fi; 
 end ); 
 
