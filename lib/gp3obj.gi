@@ -1,11 +1,11 @@
 ##############################################################################
 ##
 #W  gp3obj.gi                   GAP4 package `XMod'              Chris Wensley
+##                                                                Alper Odabas
+##  This file implements generic methods for (pre-)crossed squares 
+##  and (pre-)cat2-groups.
 ##
-##  This file implements generic methods for (pre-)crossed squares and
-##  (pre-)cat2-groups.
-##
-#Y  Copyright (C) 2001-2016, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2017, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 #############################################################################
@@ -40,41 +40,41 @@ end );
 
 ##############################################################################
 ##
-#M  IsXPairing
+#M  IsCrossedPairing
 ##
-InstallMethod( IsXPairing, "generic method for mappings", true, 
+InstallMethod( IsCrossedPairing, "generic method for mappings", true, 
     [ IsGeneralMapping ], 0,
 function( map )
     return ( HasSource( map ) and HasRange( map ) 
-             and HasXPairingMap( map ) );
+             and HasCrossedPairingMap( map ) );
 end );
 
 ##############################################################################
 ##
-#M  XPairingObj( [<src1>,<src2>],<rng>,<map> ) .. make a crossed pairing
+#M  CrossedPairingObj( [<src1>,<src2>],<rng>,<map> ) .. make a crossed pairing
 ##
-InstallMethod( XPairingObj, "for a general mapping", true,
+InstallMethod( CrossedPairingObj, "for a general mapping", true,
     [ IsList, IsGroup, IsGeneralMapping ], 0,
 function( src, rng, map )
 
     local  filter, fam, obj;
 
     fam := FamilyObj( [ src, rng, map ] );
-    filter := IsXPairingObj;
+    filter := IsCrossedPairingObj;
     obj := rec();
     ObjectifyWithAttributes( obj, NewType( fam, filter ),
         Source, src,
         Range, rng, 
-        XPairingMap, map,
-        IsXPairing, true );
+        CrossedPairingMap, map,
+        IsCrossedPairing, true );
     return obj;
 end );
 
 ##############################################################################
 ##
-#M  XPairingByNormalSubgroups( <grp>, <grp>, <grp> ) . . . make an XPairing
+#M  CrossedPairingByNormalSubgroups( <grp>, <grp>, <grp> ) . . . make an CrossedPairing
 ##
-InstallMethod( XPairingByNormalSubgroups, 
+InstallMethod( CrossedPairingByNormalSubgroups, 
     "for the intersection of two normal subgroups", true,
     [ IsGroup, IsGroup, IsGroup ], 0,
 function( M, N, L )
@@ -86,15 +86,15 @@ function( M, N, L )
     fi;
     map := Mapping2ArgumentsByFunction( [M,N], L, 
                function(c) return Comm( c[1], c[2] ); end );
-    xp := XPairingObj( [M,N], L, map );
+    xp := CrossedPairingObj( [M,N], L, map );
     return xp;
 end );
 
 ##############################################################################
 ##
-#M  XPairingByDerivations( <xmod> ) . . .  make an actor crossed pairing
+#M  CrossedPairingByDerivations( <xmod> ) . . .  make an actor crossed pairing
 ##
-InstallMethod( XPairingByDerivations, "for a crossed module", true,
+InstallMethod( CrossedPairingByDerivations, "for a crossed module", true,
     [ IsXMod ], 0,
 function( X0 )
 
@@ -113,22 +113,22 @@ function( X0 )
                chi := DerivationByImages( X0, imlist[pos] ); 
                return DerivationImage( chi, r ); 
                end );
-    return XPairingObj( [RX,WX], SX, map );
+    return CrossedPairingObj( [RX,WX], SX, map );
 end );
 
 #############################################################################
 ##
-#M  ImageElmXPairing( <map>, <elm> )  . . . . . . . for crossed pairing
+#M  ImageElmCrossedPairing( <map>, <elm> )  . . . . . . . for crossed pairing
 ##
-InstallMethod( ImageElmXPairing, "for crossed pairing", true, 
-    [ IsXPairing, IsList ], 0,
+InstallMethod( ImageElmCrossedPairing, "for crossed pairing", true, 
+    [ IsCrossedPairing, IsList ], 0,
     function ( xp, elm ) 
-        return ImageElm( XPairingMap( xp ), elm );
+        return ImageElm( CrossedPairingMap( xp ), elm );
     end );
 
 #############################################################################
 ##
-#M  IsPreCrossedSquare . . . . . . . . . . . . . . . . .  check that the square commutes
+#M  IsPreCrossedSquare . . . . . . . . . . . . check that the square commutes
 ##
 InstallMethod( IsPreCrossedSquare, "generic method for a pre-crossed square",
     true, [ Is3dGroup ], 0,
@@ -138,7 +138,7 @@ function( P )
            autu, autl, act, diag, ok, morud, morlr;
 
     if not ( IsPreCrossedSquareObj ( P ) and HasDiagonalAction( P ) 
-             and HasXPairing( P ) ) then
+             and HasCrossedPairing( P ) ) then
         return false;
     fi;
     u := Up2dGroup( P );
@@ -191,7 +191,8 @@ end );
 
 ##############################################################################
 ##
-#M  PreCrossedSquareObj ( <up>, <down>, <left>, <right>, <act>, <pair> ) . .make a PreCrossedSquare
+#M  PreCrossedSquareObj ( <up>, <down>, <left>, <right>, <act>, <pair> ) 
+##                                               . . . make a PreCrossedSquare
 ##
 InstallMethod( PreCrossedSquareObj, "for prexmods, action and pairing", true,
     [ IsPreXMod, IsPreXMod, IsPreXMod, IsPreXMod, IsObject, IsObject ], 0,
@@ -208,7 +209,7 @@ function( u, l, d, r, a, p )
       Left2dGroup, l,
       Down2dGroup, d,
       Right2dGroup, r,
-      XPairing, p,
+      CrossedPairing, p,
       DiagonalAction, a,
       Is3dGroup, true );
     if not IsPreCrossedSquare( PS ) then
@@ -262,10 +263,14 @@ function( P )
 	G := Source(h1);
 	gensrc := GeneratorsOfGroup(G);
 	
-	h1 := GroupHomomorphismByImagesNC(G, G, gensrc,  List(gensrc, x -> Image( h1, x ) )  );
-    t1 := GroupHomomorphismByImagesNC(G, G, gensrc,  List(gensrc, x -> Image( t1, x ) )  );
-	h2 := GroupHomomorphismByImagesNC(G, G, gensrc,  List(gensrc, x -> Image( h2, x ) )  );
-    t2 := GroupHomomorphismByImagesNC(G, G, gensrc,  List(gensrc, x -> Image( t2, x ) )  );
+	h1 := GroupHomomorphismByImagesNC(G, G, gensrc, 
+                  List(gensrc, x -> Image( h1, x ) )  );
+    t1 := GroupHomomorphismByImagesNC(G, G, gensrc, 
+                  List(gensrc, x -> Image( t1, x ) )  );
+	h2 := GroupHomomorphismByImagesNC(G, G, gensrc, 
+                  List(gensrc, x -> Image( h2, x ) )  );
+    t2 := GroupHomomorphismByImagesNC(G, G, gensrc, 
+                  List(gensrc, x -> Image( t2, x ) )  );
 	
 	 h1h2 := h1 * h2;
 	 h2h1 := h2 * h1;
@@ -310,7 +315,7 @@ end );
 
 #############################################################################
 ##
-#M  IsCat2 . . . . . . . . . . . . . . . . .  check that the is cat2
+#M  IsCat2 . . . . . . . . . . . . . . . . .  check that the object is a cat2
 ##
 InstallMethod( IsCat2, "generic method for a cat2",
     true, [ Is3dGroup ], 0,
@@ -348,11 +353,11 @@ function( u, d )
     filter := IsPreCat2Obj;
     PC := rec();
     ObjectifyWithAttributes( PC, NewType( fam, filter), 
-      Up2dGroup, u, 
-      Down2dGroup, d,
-      Is3dGroup, true );
+        Up2dGroup, u, 
+        Down2dGroup, d,
+        Is3dGroup, true );
     if not IsPreCat2( PC ) then
-        Info( InfoXMod, 1, "Warning: not a pre-cat2." );
+        Info( InfoXMod, 1, "Warning: not a pre-cat2-group" );
     fi;
     # ok := IsCat2( PC );
     # name:= Name( PC );
@@ -384,7 +389,7 @@ InstallGlobalFunction( Cat2, function( arg )
             return fail;
         fi;
     else   
-		Print( "Cat2Select was not implemented yet \n" );
+        Print( "Cat2Select is not yet implemented\n" );
         # return Cat2Select( arg[1], arg[2], arg[3] );
     fi;
 end );
@@ -410,7 +415,8 @@ end );
 
 ##############################################################################
 ##
-#M  CrossedSquareByNormalSubgroups          create a crossed square from normal M,N in P
+#M  CrossedSquareByNormalSubgroups 
+##                                create a crossed square from normal M,N in P
 ##
 InstallMethod( CrossedSquareByNormalSubgroups, "conjugation crossed square",
     true, [ IsGroup, IsGroup, IsGroup, IsGroup ], 0,
@@ -435,7 +441,7 @@ function( P, N, M, L )
     diag := XModByNormalSubgroup( P, L );
     a := XModAction( diag );
     ##  define the pairing as a commutator
-    xp := XPairingByNormalSubgroups( M, N, L );
+    xp := CrossedPairingByNormalSubgroups( M, N, L );
     XS := PreCrossedSquareObj( u, l, d, r, a, xp );
     SetIsCrossedSquare( XS, true );
     return XS;
@@ -469,7 +475,7 @@ function( X0 )
     LX := LueXMod( X0 );
     da := XModAction( LX );
     ##  define the pairing as evaluation of a derivation
-    xp := XPairingByDerivations( X0 );
+    xp := CrossedPairingByDerivations( X0 );
     XS := PreCrossedSquareObj( WX, X0, NX, AX, da, xp );
     SetIsCrossedSquare( XS, true );
     return XS;
@@ -485,12 +491,12 @@ function( XS )
 
     local  xpS, NM, L, map, xpT, XT;
 
-    xpS := XPairing( XS );
+    xpS := CrossedPairing( XS );
     NM := Reversed( Source( xpS ) );
     L := Range( xpS );
     map := Mapping2ArgumentsByFunction( NM, L, 
-             function(c) return ImageElmXPairing( xpS, Reversed(c) )^(-1); end );
-    xpT := XPairingObj( NM, L, map );
+      function(c) return ImageElmCrossedPairing( xpS, Reversed(c) )^(-1); end );
+    xpT := CrossedPairingObj( NM, L, map );
     XT := PreCrossedSquareObj( Left2dGroup(XS), Up2dGroup(XS), Right2dGroup(XS), 
                      Down2dGroup(XS), DiagonalAction(XS), xpT );
     SetIsCrossedSquare( XT, true );

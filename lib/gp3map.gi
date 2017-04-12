@@ -1,7 +1,7 @@
 ##############################################################################
 ##
 #W  gp3map.gi                    GAP4package `XMod'              Chris Wensley
-##
+##                                                                Alper Odabas
 ##  This file implements functions for 3dMappings for (pre-)crossed squares 
 ##  and (pre-)cat2-groups. 
 ##

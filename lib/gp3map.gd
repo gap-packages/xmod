@@ -1,11 +1,11 @@
 ##############################################################################
 ##
 #W  gp3map.gd                   GAP4 package `XMod'              Chris Wensley
+##                                                                Alper Odabas
+##  This file declares functions for 3d-mappings: (pre-)crossed squares  
+##  and (pre-)cat2-groups. 
 ##
-##  This file declares functions for 3d-mappings: (pre-)crossed squares and 
-##  (pre-)cat2-groups. 
-##
-#Y  Copyright (C) 2001-2016, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2017, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 #############################################################################

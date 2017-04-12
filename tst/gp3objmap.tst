@@ -2,7 +2,7 @@
 ##
 #W  gp3objmap.tst                 XMOD test file                Chris Wensley
 ##
-#Y  Copyright (C) 2001-2016, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2017, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 #############################################################################
@@ -65,8 +65,8 @@ gap> Up2dGroup( XSconj );
 [c5d->d10b]
 gap> Right2dGroup( XSact );
 Actor[d10a->d20]
-gap> xpconj := XPairing( XSconj );;
-gap> ImageElmXPairing( xpconj, [ p2, p12 ] );
+gap> xpconj := CrossedPairing( XSconj );;
+gap> ImageElmCrossedPairing( xpconj, [ p2, p12 ] );
 (1,9,7,5,3)(2,10,8,6,4)
 gap> diag := DiagonalAction( XSact );
 [ (1,3,5,2,4)(6,10,14,8,12)(7,11,15,9,13), (1,2,5,4)(6,8,14,12)(7,11,13,9) 
@@ -112,8 +112,9 @@ true
 gap> KnownPropertiesOfObject( autoconj );
 [ "CanEasilyCompareElements", "CanEasilySortElements", "IsTotal", 
   "IsSingleValued", "IsInjective", "IsSurjective", 
-  "IsPreCrossedSquareMorphism", "IsCrossedSquareMorphism", 
-  "IsEndomorphism3dDomain", "IsAutomorphism3dDomain" ]
+  "IsPreCrossedSquareMorphism", "IsPreCat2Morphism", 
+  "IsCrossedSquareMorphism", "IsEndomorphism3dDomain", 
+  "IsAutomorphism3dDomain" ]
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 
 #############################################################################

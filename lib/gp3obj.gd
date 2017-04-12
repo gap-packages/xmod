@@ -1,8 +1,8 @@
 ##############################################################################
 ##
 ##  gp3obj.gd                 GAP4 package `XMod'                Chris Wensley
-##
-#Y  Copyright (C) 2001-2016, Chris Wensley et al,  
+##                                                                Alper Odabas
+#Y  Copyright (C) 2001-2017, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file declares generic methods for (pre-)crossed squares and
@@ -57,27 +57,27 @@ DeclareSynonym( "IsPcCrossedSquare", IsCrossedSquare and IsPc3dGroup );
 
 #############################################################################
 ##
-#P  IsXPairing( <map> )
-#R  IsXPairingObj( <obj> )
-#O  XPairingObj( <src>, <rng>, <map> )
-#A  XPairingMap( <xp> )
-#O  ImageElmXPairing( <xp>, <elm> ) 
+#P  IsCrossedPairing( <map> )
+#R  IsCrossedPairingObj( <obj> )
+#O  CrossedPairingObj( <src>, <rng>, <map> )
+#A  CrossedPairingMap( <xp> )
+#O  ImageElmCrossedPairing( <xp>, <elm> ) 
 ##
-DeclareProperty( "IsXPairing", IsGeneralMapping );
-DeclareRepresentation( "IsXPairingObj", IsXPairing and IsAttributeStoringRep,
-    [ "Source", "Range", "XPairingMap" ] );
-DeclareOperation( "XPairingObj", [ IsList, IsGroup, IsGeneralMapping ] );
-DeclareAttribute( "XPairingMap", IsXPairing );
-DeclareOperation( "ImageElmXPairing", [ IsXPairing, IsObject ] );
+DeclareProperty( "IsCrossedPairing", IsGeneralMapping );
+DeclareRepresentation( "IsCrossedPairingObj", IsCrossedPairing and IsAttributeStoringRep,
+    [ "Source", "Range", "CrossedPairingMap" ] );
+DeclareOperation( "CrossedPairingObj", [ IsList, IsGroup, IsGeneralMapping ] );
+DeclareAttribute( "CrossedPairingMap", IsCrossedPairing );
+DeclareOperation( "ImageElmCrossedPairing", [ IsCrossedPairing, IsObject ] );
 
 #############################################################################
 ##
-#O  XPairingByNormalSubgroups
-#O  XPairingByDerivations
+#O  CrossedPairingByNormalSubgroups
+#O  CrossedPairingByDerivations
 ##
-DeclareOperation( "XPairingByNormalSubgroups", 
+DeclareOperation( "CrossedPairingByNormalSubgroups", 
     [ IsGroup, IsGroup, IsGroup ] );
-DeclareOperation( "XPairingByDerivations", [ IsXMod ] );
+DeclareOperation( "CrossedPairingByDerivations", [ IsXMod ] );
 
 #############################################################################
 ##
@@ -112,7 +112,7 @@ DeclareSynonym( "IsPcCat2", IsCat2 and IsPc3dGroup );
 #A  Left2dGroup( <PS> ) 
 #A  Right2dGroup( <PS> ) 
 #A  DiagonalAction( <PS> ) 
-#A  XPairing( <PS> )
+#A  CrossedPairing( <PS> )
 ##
 DeclareOperation( "PreCrossedSquareObj", 
     [ IsPreXMod, IsPreXMod, IsPreXMod, IsPreXMod, IsObject, IsObject] );
@@ -123,7 +123,7 @@ DeclareAttribute( "Left2dGroup", Is3dGroup );
 DeclareAttribute( "Down2dGroup", Is3dGroup );
 DeclareAttribute( "Right2dGroup", Is3dGroup );
 DeclareAttribute( "DiagonalAction", Is3dGroup );
-DeclareAttribute( "XPairing", Is3dGroup );
+DeclareAttribute( "CrossedPairing", Is3dGroup );
 DeclareAttribute( "LeftRightMorphism", Is3dGroup );
 DeclareAttribute( "UpDownMorphism", Is3dGroup ); 
 
@@ -138,7 +138,7 @@ DeclareAttribute( "UpDownMorphism", Is3dGroup );
 ##
 DeclareGlobalFunction( "CrossedSquare" );
 DeclareOperation( "CrossedSquareByXMods", 
-  [ IsXMod, IsXMod, IsXMod, IsXMod, IsGroupHomomorphism, IsXPairing ] );
+  [ IsXMod, IsXMod, IsXMod, IsXMod, IsGroupHomomorphism, IsCrossedPairing ] );
 DeclareOperation( "CrossedSquareByNormalSubgroups", 
     [ IsGroup, IsGroup, IsGroup, IsGroup ] );
 DeclareAttribute( "ActorCrossedSquare", IsXMod );
@@ -203,7 +203,7 @@ DeclareProperty( "IsIdentityCat2", IsCat2 );
 #############################################################################
 ##
 #F  PreCat2( <arg> ) 
-#0  PreCat2ByPreCat1s( <up>, <down>, <left>, <right> )
+#0  PreCat2ByPreCat1s( <first>, <second> )
 ##
 DeclareGlobalFunction( "PreCat2" );
 DeclareOperation( "PreCat2ByPreCat1s ", 
@@ -215,14 +215,14 @@ DeclareOperation( "PreCat2ByPreCat1s ",
 #0  PreCat2ByPreCrossedSquare( <PS> } 
 #A  CrossedSquareOfCat2( <C1G> } 
 #0  CrossedSquareByCat2( <C1G> } 
-#A  Cat20fCrossedSquare( <XS> ) 
+#A  Cat2OfCrossedSquare( <XS> ) 
 #0  Cat2ByCrossedSquare( <XS> )
 ##
 DeclareOperation( "PreCrossedSquareByPreCat2", [ IsPreCat2 ] );
 DeclareOperation( "PreCat2ByPreCrossedSquare", [ IsPreCrossedSquare ] );
 DeclareAttribute( "CrossedSquareOfCat2", IsCat2 );
 DeclareOperation( "CrossedSquareByCat2", [ IsCat2 ] );
-DeclareAttribute( "Cat20fCrossedSquare", IsCrossedSquare );
+DeclareAttribute( "Cat2OfCrossedSquare", IsCrossedSquare );
 DeclareOperation( "Cat2ByCrossedSquare", [ IsCrossedSquare ] );
 
 #############################################################################

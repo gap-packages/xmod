@@ -18,7 +18,7 @@ function( XM, T, Q )
 
     local  genQ, act, ext, orb, elts, fix, gens;
 
-    if not ( IsSubgroup( Source( XM ), T ) and IsSubgroup( Range( XM ), Q ) ) then 
+    if not ( IsSubgroup( Source(XM), T ) and IsSubgroup( Range(XM), Q ) ) then 
         Error( "T,Q not subgroups of S,R" ); 
     fi; 
     genQ := GeneratorsOfGroup( Q ); 
@@ -42,7 +42,7 @@ function( XM, T, Q )
 
     local alpha, sonuc, t, q, list, sgp;
 
-    if not ( IsSubgroup( Source( XM ), T ) and IsSubgroup( Range( XM ), Q ) ) then 
+    if not ( IsSubgroup( Source(XM), T ) and IsSubgroup( Range(XM), Q ) ) then 
         Error( "T,Q not subgroups of S,R" ); 
     fi; 
     alpha := XModAction( XM );
@@ -789,7 +789,7 @@ function( XM )
                s := PreImagesRepresentative( Boundary(up), Image(proj2,c) );  
                return Image(a,s^-1)*s; 
                end );
-    xp := XPairingObj( [dl,ur], ul, map );
+    xp := CrossedPairingObj( [dl,ur], ul, map );
     CrossedSquare := PreCrossedSquareObj( up, XM, dn, QM, adg, xp );
     SetIsCrossedSquare( CrossedSquare, true );
     if HasName( XM ) then 
