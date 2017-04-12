@@ -13,12 +13,17 @@
 
 <Heading>2d-groups : crossed modules and cat1-groups</Heading>
 
+<Index>2d-domain</Index>
+<Index>2d-group</Index>
+The term <E>2d-group</E> refers to a set of equivalent categories 
+of which the most common are the categories of 
+<E>crossed modules</E>; <E>cat1-groups</E>; and <E>group-groupoids</E>, 
+all of which involve a pair of groups. 
+
 <Section Label="sect-constructions">
 <Heading>Constructions for crossed modules</Heading>
 
 <Index>crossed module</Index>
-<Index>2d-domain</Index>
-<Index>2d-group</Index>
 A crossed module (of groups)  <M>\mathcal{X} = (\partial : S \to R )</M> 
 consists of a group homomorphism <M>\partial </M>, 
 called the <E>boundary</E> of <M>\mathcal{X}</M>, 

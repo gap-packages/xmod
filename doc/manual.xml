@@ -1,9 +1,8 @@
 <!-- ------------------------------------------------------------------- -->
 <!--                                                                     -->
-<!--  manual.xml     XMod documentation        Chris Wensley & Murat Alp -->
-<!--                                         & Alper Odabas & Enver Uslu -->
+<!--  manual.xml                  XMod documentation                     -->
 <!--                                                                     -->
-<!--  Copyright (C) 2001-2016, Chris Wensley et al,                      --> 
+<!--  Copyright (C) 2001-2017, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -56,8 +55,6 @@
     </Address>
   </Author>
   <Author> Enver &#xd6;nder Uslu 
-    <Email>enveruslu@ogu.edu.tr</Email>
-    <Homepage>http://fef.ogu.edu.tr/matbil/enveruslu/</Homepage>
     <Address>
       Department of Mathematics and Computer Science,<Br/>
       Osmangazi University, Eski&#x15f;ehir, Turkey

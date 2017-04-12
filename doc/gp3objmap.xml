@@ -11,12 +11,18 @@
 
 <Chapter Label="chap-obj3">
 
-<Heading>Crossed squares and their morphisms</Heading>
+<Heading>3d-groups and 3d-mappings : crossed squares and cat2-groups</Heading>
 
-<Index>crossed module</Index>
-<Index>cat2-group</Index>
 <Index>3d-group</Index>
+<Index>3d-domain</Index>
+The term <E>3d-group</E> refers to a set of equivalent categories 
+of which the most common are the categories of 
+<E>crossed squares</E> and <E>cat2-groups</E>. 
 
+<Section Label="sect-xsq-definition">
+<Heading>Definition of a crossed square</Heading>
+
+<Index>crossed square</Index>
 Crossed squares were introduced by Guin-Wal&#xE9;ry and Loday 
 (see, for example, <Cite Key="brow:lod"/>)
 as fundamental crossed squares of commutative squares of spaces,
@@ -115,9 +121,13 @@ are compatible since
 <P/>
 (A <E>precrossed square</E> is a similar structure which satisfies 
 some subset of these axioms.) 
+[More needed here.]
 <P/>
-[More needed here.] 
+In what follows we shall generally use the following notation for the 
+<M>S_J</M>, namely <M>L = S_{[2]};~ M = S_{\{1\}};~ N = S_{\{2\}}</M> 
+and <M>P = S_{\emptyset}</M>.  
 
+</Section> 
 
 
 <Section Label="sect-xsq-constructions">
@@ -246,7 +256,7 @@ onto the quotient groups;
 </Item>
 <Item>
 the crossed pairing <M>\boxtimes : (R \times F) \to S</M>, 
-where <M>F = Fix(\mathcal{X},S,R)</M>, is the displacement element 
+where <M>F = &Fix;(\mathcal{X},S,R)</M>, is the displacement element 
 <M>\boxtimes(r,Fs) = \langle r,s \rangle = (s^{-1})^rs\quad</M> 
 (see <Ref Func="Displacement"/> and section
 <Ref Sect="sect-isoclinic-xmods"/>). 
@@ -317,7 +327,7 @@ and crossed squares in particular.
 <Description>
 In this implementation the attributes used in the construction of
 a crossed square <C>XS</C> are the four crossed modules (2d-groups) 
-on the sides of the square; 
+on the sides of the square (up; down, left; and right); 
 the diagonal action of <M>P</M> on <M>L</M>; 
 and the crossed pairing.
 <P/>
@@ -459,8 +469,15 @@ true
 ]]>
 </Example>
 
-
 </Section>
 
+<Section Label="sect-cat2-definition">
+<Heading>Definition and constructions for cat2-groups and their morphisms 
+</Heading>
+
+<Index>cat2-group</Index>
+(To be added.) 
+
+</Section> 
 
 </Chapter>
