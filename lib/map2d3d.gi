@@ -2,24 +2,26 @@
 ##
 #W  map2d3d.gi                 GAP4 package `XMod'               Chris Wensley
 ##
-#Y  Copyright (C) 2001-2016, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2017, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 #############################################################################
 ##
-#M  Is2dSemigroupMorphism
-#M  Is2dMonoidMorphism 
+#M  Is2DimensionalSemigroupMorphism
+#M  Is2DimensionalMonoidMorphism 
 ##
-InstallMethod( Is2dSemigroupMorphism, 
-    "for a 2d-mapping", true, [ Is2dMagmaMorphism ], 0,
+InstallMethod( Is2DimensionalSemigroupMorphism, 
+    "for a 2d-mapping", true, [ Is2DimensionalMagmaMorphism ], 0,
     function( map ) 
-    return ( Is2dSemigroup( Source(map) ) and Is2dSemigroup( Range(map) ) ); 
+    return ( Is2DimensionalSemigroup( Source(map) ) 
+             and Is2DimensionalSemigroup( Range(map) ) ); 
 end );
 
-InstallMethod( Is2dMonoidMorphism, "for a 2d-mapping", 
-    true, [ Is2dMagmaMorphism ], 0,
-    function( map ) 
-    return ( Is2dMonoid( Source(map) ) and Is2dMonoid( Range(map) ) ); 
+InstallMethod( Is2DimensionalMonoidMorphism, "for a 2d-mapping", 
+    true, [ Is2DimensionalMagmaMorphism ], 0,
+function( map ) 
+    return ( Is2DimensionalMonoid( Source(map) ) 
+             and Is2DimensionalMonoid( Range(map) ) ); 
 end );
 
 ##############################################################################
@@ -28,8 +30,8 @@ end );
 ##
 InstallMethod( \=,
     "generic method for two 2d-morphisms",
-    IsIdenticalObj, [ Is2dMapping, Is2dMapping ], 0,
-    function ( mor, phi )
+    IsIdenticalObj, [ Is2DimensionalMapping, Is2DimensionalMapping ], 0,
+function ( mor, phi )
     return (     ( Source( mor ) = Source( phi ) )
              and ( Range( mor ) = Range( phi ) )
              and ( SourceHom( mor ) = SourceHom( phi ) )

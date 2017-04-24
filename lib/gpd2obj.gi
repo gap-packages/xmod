@@ -2,7 +2,7 @@
 ##
 #W  gpd2obj.gi                 GAP4 package `XMod'               Chris Wensley
 ##
-#Y  Copyright (C) 2001-2016, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2017, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 ##############################################################################
@@ -16,7 +16,7 @@ function( obs, bdy, act )
 
     local  filter, fam, PM, ok, src, rng, aut, name;
 
-    fam := Family2dGroupWithObjects;
+    fam := Family2DimensionalGroupWithObjects;
     filter := IsPreXModWithObjectsObj; 
     if not IsConstantOnObjects( bdy ) then 
         Error( "objects not fixed by the boundary" ); 
@@ -45,7 +45,7 @@ function( obs, bdy, act )
       Boundary, bdy,
       AutoGroup, aut,
       XModAction, act,
-      Is2dDomain, true, 
+      Is2DimensionalDomain, true, 
       IsPreXModDomain, true );
     if not IsPreXMod( PM ) then
         Info( InfoXMod, 1, "Warning: not a pre-crossed module." );

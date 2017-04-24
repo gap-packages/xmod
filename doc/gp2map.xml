@@ -13,7 +13,7 @@
 <Heading>2d-mappings</Heading>
 <Index>2d-mapping</Index>
 
-<Section><Heading>Morphisms of 2d-groups</Heading>
+<Section><Heading>Morphisms of 2-dimensional groups</Heading>
 
 <Index>morphism of 2d-group</Index>
 <Index>crossed module morphism</Index>
@@ -30,9 +30,11 @@ and (pre-)cat1-groups.
    <Attr Name="RangeHom"
          Arg="map" />
 <Description>
-Morphisms of <E>2d-groups</E> are implemented as <E>2d-mappings</E>.
-These have a pair of 2d-groups as source and range, together with two
-group homomorphisms mapping between corresponding source and range groups.
+Morphisms of <E>2-dimensional groups</E> are implemented as 
+<E>2-dimensional mappings</E>.
+These have a pair of 2-dimensional groups as source and range, 
+together with two group homomorphisms mapping between corresponding 
+source and range groups.
 These functions return <C>fail</C> when invalid data is supplied.
 </Description>
 </ManSection>
@@ -81,7 +83,7 @@ by <M>{\rm Aut}(\mathcal{X}_1 )</M>.
          Arg="map" />
    <Prop Name="IsBijective"
          Arg="map" />
-   <Prop Name="IsEndo2dMapping"
+   <Prop Name="IsEndo2DimensionalMapping"
          Arg="map" />
 <Description>
 The usual properties of mappings are easily checked.
@@ -99,7 +101,7 @@ It is usually sufficient to verify that both the <C>SourceHom</C> and the
          Arg="args" />
    <Oper Name="PreXModMorphismByHoms"
          Arg="P1 P2 sigma rho" />
-   <Oper Name="InclusionMorphism2dDomains"
+   <Oper Name="InclusionMorphism2DimensionalDomains"
          Arg="X1 S1" />
    <Oper Name="InnerAutomorphismXMod"
          Arg="X1 r" />
@@ -133,17 +135,17 @@ Morphism of crossed modules :-
   [ (5,9,8,7,6) ]
 : Range Homomorphism maps range generators to:
   [ (1,2,3,4) ]
-gap> IsAutomorphism2dDomain( mor1 );
+gap> IsAutomorphism2DimensionalDomain( mor1 );
 true 
 gap> Order( mor1 );
 2
 gap> RepresentationsOfObject( mor1 );
-[ "IsComponentObjectRep", "IsAttributeStoringRep", "Is2dMappingRep" ]
+[ "IsComponentObjectRep", "IsAttributeStoringRep", "Is2DimensionalMappingRep" ]
 gap> KnownPropertiesOfObject( mor1 );
 [ "CanEasilyCompareElements", "CanEasilySortElements", "IsTotal", 
   "IsSingleValued", "IsInjective", "IsSurjective", "RespectsMultiplication", 
-  "IsPreXModMorphism", "IsXModMorphism", "IsEndomorphism2dDomain", 
-  "IsAutomorphism2dDomain" ]
+  "IsPreXModMorphism", "IsXModMorphism", "IsEndomorphism2DimensionalDomain", 
+  "IsAutomorphism2DimensionalDomain" ]
 gap> KnownAttributesOfObject( mor1 );
 [ "Name", "Order", "Range", "Source", "SourceHom", "RangeHom" ]
 ]]>
@@ -152,9 +154,9 @@ gap> KnownAttributesOfObject( mor1 );
 <ManSection>
    <Oper Name="PreXModIsomorphismByIsomorphisms"
          Arg="X1 sigma rho" />
-   <Attr Name="IsomorphismPerm2dGroup"
+   <Attr Name="IsomorphismPerm2DimensionalGroup"
          Arg="obj" />
-   <Attr Name="IsomorphismPc2dGroup"
+   <Attr Name="IsomorphismPc2DimensionalGroup"
          Arg="obj" />
 <Description>
 When <M>{\mathcal X} = (\partial : S \to R)</M> and 
@@ -177,7 +179,7 @@ or a crossed module of pc-groups isomorphic to a given crossed module.
 gap> q8 := SmallGroup(8,4);;   ## quaternion group 
 gap> Xq8 := XModByAutomorphismGroup( q8 );
 [Group( [ f1, f2, f3 ] )->Group( [ f1, f2, f3, f4 ] )]
-gap> iso := IsomorphismPerm2dGroup( Xq8 );;
+gap> iso := IsomorphismPerm2DimensionalGroup( Xq8 );;
 gap> Yq8 := Image( iso );
 [Group( [ (1,2,4,6)(3,8,7,5), (1,3,4,7)(2,5,6,8), (1,4)(2,6)(3,7)(5,8) 
  ] )->Group( [ (2,6,5,4), (1,2,4)(3,5,6), (2,5)(4,6), (1,3)(2,5) ] )]
@@ -222,7 +224,7 @@ e_2 \circ \rho ~=~ \gamma \circ e_1.
          Arg="args" />
    <Oper Name="PreCat1MorphismByHoms"
          Arg="P1 P2 gamma rho" />
-   <Oper Name="InclusionMorphism2dDomains"
+   <Oper Name="InclusionMorphism2DimensionalDomains"
          Arg="C1 S1" />
    <Oper Name="InnerAutomorphismCat1"
          Arg="C1 r" />
@@ -256,30 +258,30 @@ gap> Display( mor );
 <ManSection>
    <Func Name="IsomorphismPermObject" 
          Arg="obj" />
-   <Attr Name="IsomorphismPerm2dGroup" 
-         Arg="2dgroup" />
-   <Attr Name="IsomorphismFp2dgroup"
-         Arg="2dgroup" />
-   <Attr Name="IsomorphismPc2dgroup"
-         Arg="2dgroup" />
-   <Func Name="SmallerDegreePerm2dDomain"
-         Arg="2dDomain" />
+   <Attr Name="IsomorphismPerm2DimensionalGroup" 
+         Arg="2DimensionalGroup" />
+   <Attr Name="IsomorphismFp2DimensionalGroup"
+         Arg="2DimensionalGroup" />
+   <Attr Name="IsomorphismPc2DimensionalGroup"
+         Arg="2DimensionalGroup" />
+   <Func Name="SmallerDegreePerm2DimensionalDomain"
+         Arg="2DimensionalDomain" />
    <Oper Name="PreCat1IsomorphismByIsomorphisms"
          Arg="C1 gamma rho" />
 <Description>
 The global function <C>IsomorphismPermObject</C> 
-calls <C>IsomorphismPerm2dGroup</C>, 
+calls <C>IsomorphismPerm2DimensionalGroup</C>, 
 which constructs a morphism whose <C>SourceHom</C> and <C>RangeHom</C> 
 are calculated using <C>IsomorphismPermGroup</C> on the source and range.  
 Similarly <C>SmallerDegreePermutationRepresentation</C> may be used on the
-two groups to obtain <C>SmallerDegreePerm2dDomain</C>.
+two groups to obtain <C>SmallerDegreePerm2DimensionalDomain</C>.
 Names are assigned automatically.
 </Description>
 </ManSection>
 <P/>
 <Example>
 <![CDATA[
-gap> iso2 := IsomorphismPerm2dGroup( C2 );
+gap> iso2 := IsomorphismPerm2DimensionalGroup( C2 );
 [[G2=>d12] => [..]]
 gap> Display( iso2 );
 Morphism of cat1-groups :- 
@@ -333,11 +335,11 @@ gap> H2 := Subgroup(G2,[G2.3,G2.4,G2.6,G2.7]);  SetName( H2, "H2" );
 Group([ f3, f4, f6, f7 ])
 gap> c6 := Subgroup( d12, [b,c] );  SetName( c6, "c6" );
 Group([ f2, f3 ])
-gap> SC2 := Sub2dGroup( C2, H2, c6 );
+gap> SC2 := Sub2DimensionalGroup( C2, H2, c6 );
 [H2=>c6]
 gap> IsCat1( SC2 );
 true
-gap> inc2 := InclusionMorphism2dDomains( C2, SC2 );
+gap> inc2 := InclusionMorphism2DimensionalDomains( C2, SC2 );
 [[H2=>c6] => [G2=>d12]]
 gap> CompositionMorphism( iso2, inc );                  
 [[H2=>c6] => P[G2=>d12]]
@@ -347,7 +349,7 @@ gap> CompositionMorphism( iso2, inc );
 <ManSection>
    <Oper Name="Kernel"
          Arg="map" />
-   <Attr Name="Kernel2dMapping"
+   <Attr Name="Kernel2DimensionalMapping"
          Arg="map" />
 <Description>
 The kernel of a morphism of crossed modules is a normal subcrossed module 

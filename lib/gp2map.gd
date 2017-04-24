@@ -5,8 +5,8 @@
 #Y  Copyright (C) 2001-2017, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
-##  This file contains implementations of 2dMappings for crossed modules and 
-##  cat1-groups.
+##  This file contains implementations of 2DimensionalMappings 
+##  for crossed modules and cat1-groups.
 ##
 
 #############################################################################
@@ -25,14 +25,14 @@ DeclareOperation( "PreCat1MorphismByHoms",
 
 #############################################################################
 ##
-#O  Is2dGroupMorphismData( <list> )
-#O  Make2dGroupMorphism( <list> )
+#O  Is2DimensionalGroupMorphismData( <list> )
+#O  Make2DimensionalGroupMorphism( <list> )
 ##
 ##  A pre-crossed module or pre-cat1-group morphism is a pair of commuting 
 ##  group homomorphisms: at this stage actions not checked 
 ##
-DeclareOperation( "Is2dGroupMorphismData", [ IsList ] );
-DeclareOperation( "Make2dGroupMorphism", [ IsList ] );
+DeclareOperation( "Is2DimensionalGroupMorphismData", [ IsList ] );
+DeclareOperation( "Make2DimensionalGroupMorphism", [ IsList ] );
 
 #############################################################################
 ##
@@ -40,7 +40,7 @@ DeclareOperation( "Make2dGroupMorphism", [ IsList ] );
 #O  XModMorphismByHoms( <src>, <rng>, <srchom>, <rnghom> )
 #F  Cat1Morphism( <args> )
 #O  Cat1MorphismByHoms( <src>, <rng>, <srchom>, <rnghom> )
-#O  InclusionMorphism2dDomains( <obj>, <sub> )
+#O  InclusionMorphism2DimensionalDomains( <obj>, <sub> )
 ##
 DeclareGlobalFunction( "XModMorphism" );
 DeclareOperation( "XModMorphismByHoms",
@@ -48,7 +48,8 @@ DeclareOperation( "XModMorphismByHoms",
 DeclareGlobalFunction( "Cat1Morphism" );
 DeclareOperation( "Cat1MorphismByHoms",
     [ IsCat1, IsCat1, IsGroupHomomorphism, IsGroupHomomorphism ] );
-DeclareOperation( "InclusionMorphism2dDomains", [ Is2dDomain, Is2dDomain ] );
+DeclareOperation( "InclusionMorphism2DimensionalDomains", 
+    [ Is2DimensionalDomain, Is2DimensionalDomain ] );
 
 #############################################################################
 ##
@@ -62,11 +63,11 @@ DeclareOperation( "InnerAutomorphismCat1",
 
 #############################################################################
 ##
-#P  IsEndomorphism2dDomain( <mor> )
-#P  IsAutomorphism2dDomain( <mor> )
+#P  IsEndomorphism2DimensionalDomain( <mor> )
+#P  IsAutomorphism2DimensionalDomain( <mor> )
 ##
-DeclareProperty( "IsEndomorphism2dDomain", Is2dMapping );
-DeclareProperty( "IsAutomorphism2dDomain", Is2dMapping );
+DeclareProperty( "IsEndomorphism2DimensionalDomain", Is2DimensionalMapping );
+DeclareProperty( "IsAutomorphism2DimensionalDomain", Is2DimensionalMapping );
 
 #############################################################################
 ##
@@ -82,7 +83,7 @@ DeclareProperty( "IsPermPreCat1Morphism", IsPreCat1Morphism );
 #O  CompositionMorphism( <mor2>, <mor1> )
 ##
 DeclareAttribute( "ReverseIsomorphism", IsPreCat1 );
-DeclareOperation( "CompositionMorphism", [ Is2dMapping, Is2dMapping ] );
+DeclareOperation( "CompositionMorphism", [ Is2DimensionalMapping, Is2DimensionalMapping ] );
 
 #############################################################################
 ##
@@ -106,13 +107,13 @@ DeclareOperation( "Cat1MorphismByXModMorphism", [ IsXModMorphism ] );
 
 #############################################################################
 ##
-#A  IsomorphismPerm2dGroup( <obj> )
-#A  IsomorphismFp2dgroup( <obj> )
-#A  IsomorphismPc2dgroup( <obj> )
+#A  IsomorphismPerm2DimensionalGroup( <obj> )
+#A  IsomorphismFp2DimensionalGroup( <obj> )
+#A  IsomorphismPc2DimensionalGroup( <obj> )
 ##
-DeclareAttribute( "IsomorphismPerm2dGroup", Is2dGroup );
-DeclareAttribute( "IsomorphismFp2dGroup", Is2dGroup );
-DeclareAttribute( "IsomorphismPc2dGroup", Is2dGroup );
+DeclareAttribute( "IsomorphismPerm2DimensionalGroup", Is2DimensionalGroup );
+DeclareAttribute( "IsomorphismFp2DimensionalGroup", Is2DimensionalGroup );
+DeclareAttribute( "IsomorphismPc2DimensionalGroup", Is2DimensionalGroup );
 
 #############################################################################
 ##
@@ -124,14 +125,14 @@ DeclareAttribute( "IsomorphismXModByNormalSubgroup", IsXMod );
 ##
 #O  PreXModIsomorphismByIsomorphisms( <pre-xmod>, <sigma>, <rho> )
 #O  PreCat1IsomorphismByIsomorphisms( <pre-cat1>, <sigma>, <rho> )
-#F  SmallerDegreePerm2dGroup( <args> )
+#F  SmallerDegreePerm2DimensionalGroup( <args> )
 #A  SmallerDegreePermPreXMod( <XM> )
 ##
 DeclareOperation( "PreXModIsomorphismByIsomorphisms", 
     [ IsPreXMod, IsBijective, IsBijective ] );
 DeclareOperation( "PreCat1IsomorphismByIsomorphisms", 
     [ IsPreCat1, IsBijective, IsBijective ] );
-DeclareGlobalFunction( "SmallerDegreePerm2dGroup" );
+DeclareGlobalFunction( "SmallerDegreePerm2DimensionalGroup" );
 DeclareAttribute( "SmallerDegreePermPreXMod", IsPreXMod );
 
 #############################################################################

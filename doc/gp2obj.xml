@@ -208,20 +208,21 @@ gap> KnownAttributesOfObject( X1);
 <Heading>Properties of crossed modules</Heading>
 
 
-<Index>Is2dDomain</Index>
-<Index>Is2dGroup</Index>
-<Index>IsTrivialAction2dGroup</Index>
-<Index>IsNormalSubgroup2dGroup</Index>
-<Index>IsCentralExtension2dGroup</Index>
-<Index>IsAutomorphismGroup2dGroup</Index>
-<Index>IsAbelianModule2dGroup</Index>
+<Index>Is2DimensionalDomain</Index>
+<Index>Is2DimensionalGroup</Index>
+<Index>IsTrivialAction2DimensionalGroup</Index>
+<Index>IsNormalSubgroup2DimensionalGroup</Index>
+<Index>IsCentralExtension2DimensionalGroup</Index>
+<Index>IsAutomorphismGroup2DimensionalGroup</Index>
+<Index>IsAbelianModule2DimensionalGroup</Index>
 
 The underlying category structures for the objects constructed in this 
-chapter follow the sequence <C>Is2dDomain</C>; <C>Is2dMagma</C>; 
-<C>Is2dMagmaWithOne</C>; <C>Is2dMagmaWithInverses</C>, 
+chapter follow the sequence <C>Is2DimensionalDomain</C>; 
+<C>Is2DimensionalMagma</C>; <C>Is2DimensionalMagmaWithOne</C>; 
+<C>Is2DimensionalMagmaWithInverses</C>, 
 mirroring the situation for (one-dimensional) groups. 
-From these we construct <C>Is2dSemigroup</C>, <C>Is2dMonoid</C> 
-and <C>Is2dGroup</C>. 
+From these we construct <C>Is2DimensionalSemigroup</C>, 
+<C>Is2DimensionalMonoid</C> and <C>Is2DimensionalGroup</C>. 
 <P/>
 There are then a variety of properties associated with crossed modules, 
 starting with <C>IsPreXMod</C> and <C>IsXMod</C>. 
@@ -231,25 +232,26 @@ starting with <C>IsPreXMod</C> and <C>IsXMod</C>.
          Arg="X0" />
    <Prop Name="IsPreXMod"
          Arg="X0" />
-   <Prop Name="IsPerm2dGroup"
+   <Prop Name="IsPerm2DimensionalGroup"
          Arg="X0" />
-   <Prop Name="IsPc2dGroup"
+   <Prop Name="IsPc2DimensionalGroup"
          Arg="X0" />
-   <Prop Name="IsFp2dGroup"
+   <Prop Name="IsFp2DimensionalGroup"
          Arg="X0" />
 <Description>
-A structure which has <C>IsPerm2dGroup</C> is a precrossed module 
+A structure which has <C>IsPerm2DimensionalGroup</C> is a precrossed module 
 or a pre-cat1-group (see section <Ref Sect="sect-cat1" />) 
 whose source and range are both permutation groups. 
-The properties <C>IsPc2dGroup</C>, <C>IsFp2dGroup</C> 
+The properties <C>IsPc2DimensionalGroup</C>, <C>IsFp2DimensionalGroup</C> 
 are defined similarly. 
 In the example below we see that <Code>X1</Code> has 
-<C>IsPreXMod</C>, <C>IsXMod</C> and <C>IsPerm2dGroup</C>. 
+<C>IsPreXMod</C>, <C>IsXMod</C> and <C>IsPerm2DimensionalGroup</C>. 
 There are also properties corresponding to the various construction methods 
 listed in section <Ref Sect="sect-constructions" />: 
-<C>IsTrivialAction2dGroup</C>; <C>IsNormalSubgroup2dGroup</C>; 
-<C>IsCentralExtension2dGroup</C>; <C>IsAutomorphismGroup2dGroup</C>; 
-<C>IsAbelianModule2dGroup</C>. 
+<C>IsTrivialAction2DimensionalGroup</C>; 
+<C>IsNormalSubgroup2DimensionalGroup</C>; 
+<C>IsCentralExtension2DimensionalGroup</C>; <C>IsAutomorphismGroup2DimensionalGroup</C>; 
+<C>IsAbelianModule2DimensionalGroup</C>. 
 </Description>
 </ManSection>
 
@@ -258,8 +260,8 @@ listed in section <Ref Sect="sect-constructions" />:
 gap> KnownPropertiesOfObject( X1 );
 [ "IsEmpty", "IsTrivial", "IsNonTrivial", "IsFinite", 
   "CanEasilyCompareElements", "CanEasilySortElements", "IsDuplicateFree", 
-  "IsGeneratorsOfSemigroup", "IsPreXModDomain", "IsPerm2dGroup", "IsPreXMod", 
-  "IsXMod", "IsAutomorphismGroup2dGroup" ]
+  "IsGeneratorsOfSemigroup", "IsPreXModDomain", "IsPerm2DimensionalGroup", 
+  "IsPreXMod", "IsXMod", "IsAutomorphismGroup2DimensionalGroup" ]
 ]]>
 </Example>
 
@@ -438,7 +440,7 @@ in this implementation.
 <P/>
 In <Cite Key="L1" />, Loday reformulated the notion of a 
 crossed module as a cat1-group, 
-namely a group <M>G</M> with a pair of homomorphisms <M>t,h : G \to G</M>
+namely a group <M>G</M> with a pair of endomorphisms <M>t,h : G \to G</M>
 having  a common image <M>R</M> and satisfying certain axioms.
 We find it convenient to define a cat1-group 
 <M>\mathcal{C} = (e;t,h : G \to R )</M>  as having source group  <M>G</M>,
@@ -450,8 +452,8 @@ range group <M>R</M>,  and three homomorphisms:  two surjections
 {\bf Cat\ 2}  :  ~[\ker t, \ker h] ~=~ \{ 1_G \}.
 </Display>
 It follows that  
-<M>\;t \circ e \circ h = h</M>,\; <M>h \circ e \circ t = t</M>, 
-<M>\;t \circ e \circ t = t</M>,\; <M>h \circ e \circ h = h</M>.
+<M>\;t \circ e \circ h = h,~ h \circ e \circ t = t,~ 
+     t \circ e \circ t = t,~ h \circ e \circ h = h</M>.
 <P/>
 The maps  <M>t,h</M>  are often referred to as the 
 <E>source</E> and <E>target</E>,
@@ -563,8 +565,8 @@ is a subgroup of the source.
 <![CDATA[
 gap> KnownPropertiesOfObject( C2 );
 [ "CanEasilyCompareElements", "CanEasilySortElements", "IsDuplicateFree", 
-  "IsGeneratorsOfSemigroup", "IsPreCat1Domain", "IsPerm2dGroup", "IsPreCat1", 
-  "IsEndomorphismPreCat1" ]
+  "IsGeneratorsOfSemigroup", "IsPreCat1Domain", "IsPerm2DimensionalGroup", 
+  "IsPreCat1", "IsEndomorphismPreCat1" ]
 gap> IsEndomorphismPreCat1( C2 );
 true
 ]]>
@@ -773,9 +775,9 @@ Here we mention two functions for groups which have been extended to the
 two-dimensional case. 
 <ManSection>
    <Oper Name="IdGroup" 
-         Arg="2dgroup" /> 
+         Arg="2DimensionalGroup" /> 
    <Oper Name="StructureDescription" 
-         Arg="2dgroup" /> 
+         Arg="2DimensionalGroup" /> 
 <Description>
 These functions return two-element lists formed by applying the function 
 to the source and range of the 2d-group. 

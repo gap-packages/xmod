@@ -96,24 +96,30 @@ gap> Q24 := CentralQuotient( d24);  Size( Q24 );
 [ 24, 12 ]
 
 #### 4.1.9
-gap> [ IsAbelian2dGroup(Xn4), IsAbelian2dGroup(X24) ];
+gap> [ IsAbelian2DimensionalGroup(Xn4), IsAbelian2DimensionalGroup(X24) ];
 [ false, false ]
 gap> pos7 := Position( ids, [ [3,1], [6,1] ] );;
-gap> [ IsAspherical2dGroup(nsx[pos7]), IsAspherical2dGroup(X24) ];
-[ true, false ]
-gap> [ IsSimplyConnected2dGroup(Xn4), IsSimplyConnected2dGroup(X24) ];
-[ true, true ]
-gap> [ IsFaithful2dGroup(Xn4), IsFaithful2dGroup(X24) ];              
-[ false, true ] 
+gap> IsAspherical2DimensionalGroup( nsx[pos7] );
+true
+gap> IsAspherical2DimensionalGroup( X24 );
+false
+gap> IsSimplyConnected2DimensionalGroup( Xn4 ); 
+true
+gap> IsSimplyConnected2DimensionalGroup( X24 );
+true
+gap> IsFaithful2DimensionalGroup( Xn4 ); 
+false
+gap> IsFaithful2DimensionalGroup( X24 );
+true
 
 #### 4.1.10
-gap> LowerCentralSeries(X24);      
+gap> LowerCentralSeries( X24 );      
 [ [d24->PAut(d24)], [Group( [ f2 ] )->Group( [ f2, f5 ] )], 
   [Group( [ f3*f4^2 ] )->Group( [ f2 ] )], [Group( [ f4 ] )->Group( [ f2 ] )] 
  ]
-gap> IsNilpotent2dGroup(X24);      
+gap> IsNilpotent2DimensionalGroup( X24 );      
 false
-gap> NilpotencyClassOf2dGroup(X24);
+gap> NilpotencyClassOf2DimensionalGroup( X24 );
 0
 
 #### 4.1.11

@@ -71,7 +71,7 @@ function( XM )
         for ar in AR do 
             ear := Image( emAR, ar );
             if not ( eas*ear in P ) then
-                mor := Make2dGroupMorphism( [ XM, XM, as, ar ] );
+                mor := Make2DimensionalGroupMorphism( [ XM, XM, as, ar ] );
                 ispre := ( not( mor = fail ) and IsPreXModMorphism( mor ) );
                 if ispre then 
                     ismor := IsXModMorphism( mor );
@@ -116,7 +116,7 @@ end );
 #######  special version for XModByNormalSubgroup, 23/06/06  #######
 
 InstallMethod( AutomorphismPermGroup, "automorphism perm group of xmod", 
-    true, [ IsXMod and IsNormalSubgroup2dGroup ], 0, 
+    true, [ IsXMod and IsNormalSubgroup2DimensionalGroup ], 0, 
 function( XM )
 
     local  S, genS, R, genR, autR, autS, AR, genAR, ngAR, AS, genAS, 

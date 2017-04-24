@@ -295,13 +295,13 @@ gap> Q24 := CentralQuotient( d24 );  Size( Q24 );
 </Example>
 
 <ManSection>
-   <Prop Name="IsAbelian2dGroup"
+   <Prop Name="IsAbelian2DimensionalGroup"
          Arg="X0" />
-   <Prop Name="IsAspherical2dGroup"
+   <Prop Name="IsAspherical2DimensionalGroup"
          Arg="X0" />
-   <Prop Name="IsSimplyConnected2dGroup"
+   <Prop Name="IsSimplyConnected2DimensionalGroup"
          Arg="X0" />
-   <Prop Name="IsFaithful2dGroup"
+   <Prop Name="IsFaithful2DimensionalGroup"
          Arg="X0" />
 <Description>
 A crossed module is <E>abelian</E> if it equal to its centre. 
@@ -318,14 +318,14 @@ A crossed module is <E>faithful</E> if the action is faithful.
 <P/>
 <Example>
 <![CDATA[
-gap> [ IsAbelian2dGroup(Xn4), IsAbelian2dGroup(X24) ];
+gap> [ IsAbelian2DimensionalGroup(Xn4), IsAbelian2DimensionalGroup(X24) ];
 [ false, false ]
 gap> pos7 := Position( ids, [ [3,1], [6,1] ] );;
-gap> [ IsAspherical2dGroup(nsx[pos7]), IsAspherical2dGroup(X24) ];
+gap> [ IsAspherical2DimensionalGroup(nsx[pos7]), IsAspherical2DimensionalGroup(X24) ];
 [ true, false ]
-gap> [ IsSimplyConnected2dGroup(Xn4), IsSimplyConnected2dGroup(X24) ];
+gap> [ IsSimplyConnected2DimensionalGroup(Xn4), IsSimplyConnected2DimensionalGroup(X24) ];
 [ true, true ]
-gap> [ IsFaithful2dGroup(Xn4), IsFaithful2dGroup(X24) ];              
+gap> [ IsFaithful2DimensionalGroup(Xn4), IsFaithful2DimensionalGroup(X24) ];              
 [ false, true ] 
 ]]>
 </Example>
@@ -333,9 +333,9 @@ gap> [ IsFaithful2dGroup(Xn4), IsFaithful2dGroup(X24) ];
 <ManSection>
    <Attr Name="LowerCentralSeriesOfXMod"
          Arg="X0" />
-   <Prop Name="IsNilpotent2dGroup"
+   <Prop Name="IsNilpotent2DimensionalGroup"
          Arg="X0" />
-   <Attr Name="NilpotencyClass2dGroup"
+   <Attr Name="NilpotencyClass2DimensionalGroup"
          Arg="X0" />
 <Description>
 Let <M>\mathcal{Y}</M> be a subcrossed module of <M>\mathcal{X}</M>. 
@@ -386,9 +386,9 @@ gap> LowerCentralSeries(X24);
 [ [d24->PAut(d24)], [Group( [ f2 ] )->Group( [ f2, f5 ] )], 
   [Group( [ f3*f4^2 ] )->Group( [ f2 ] )], [Group( [ f4 ] )->Group( [ f2 ] )] 
  ]
-gap> IsNilpotent2dGroup(X24);      
+gap> IsNilpotent2DimensionalGroup(X24);      
 false
-gap> NilpotencyClassOf2dGroup(X24);
+gap> NilpotencyClassOf2DimensionalGroup(X24);
 0
 ]]>
 </Example>

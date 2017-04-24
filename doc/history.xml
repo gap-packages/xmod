@@ -1,8 +1,8 @@
 <!-- ------------------------------------------------------------------- -->
 <!--                                                                     -->
 <!--  history.xml           XMod documentation            Chris Wensley  -->
-<!--                                                        & Murat Alp  -->
-<!--  Copyright (C) 2001-2016, Murat Alp and Chris Wensley,              --> 
+<!--                                                                     -->
+<!--  Copyright (C) 2001-2017, Murat Alp and Chris Wensley,              --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -175,6 +175,17 @@ was moved to the <Package>Utils</Package> package.
 </Item>
 </List> 
 </Subsection>
+
+<Subsection><Heading>Version 2.61</Heading>
+Major changes in names took place, with 
+<C>2dDomain, 2dGroup, 2dMapping</C>, etc. becoming 
+<C>2DimensionalDomain, 2DimensionalGroup, 2DimensionalMapping</C>, etc., 
+and similarly for 3-dimensional versions. 
+Also <C>HigherDimensionalDomain</C> and related categories, domains, 
+properties, attributes and operations were introduced. 
+At the same time, functions for cat2-groups were introduced by Alper Odabas.   
+</Subsection>
+
 
 <Subsection><Heading>Latest Version</Heading>
 The latest version, &XMODVERSION;, was released on &XMODLONGRELEASEDATE;. 

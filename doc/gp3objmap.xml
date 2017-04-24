@@ -20,7 +20,8 @@ of which the most common are the categories of
 <E>crossed squares</E> and <E>cat2-groups</E>. 
 
 <Section Label="sect-xsq-definition">
-<Heading>Definition of a crossed square</Heading>
+<Heading>Definition of a crossed square 
+and a crossed <M>n</M>-cube of groups</Heading>
 
 <Index>crossed square</Index>
 Crossed squares were introduced by Guin-Wal&#xE9;ry and Loday 
@@ -34,7 +35,7 @@ as given by Ellis and Steiner <Cite Key="ell:st"/>.
 A <E>crossed square</E> <M>\mathcal{S}</M> consists of the following:
 <List>
 <Item>
-Groups <M>S_J</M> for each of the four subsets <M>J \subseteq [2]</M>;
+groups <M>S_J</M> for each of the four subsets <M>J \subseteq [2]</M>;
 </Item>
 <Item>
 a commutative diagram of group homomorphisms:
@@ -120,12 +121,40 @@ are compatible since
 </Display>
 <P/>
 (A <E>precrossed square</E> is a similar structure which satisfies 
-some subset of these axioms.) 
-[More needed here.]
+some subset of these axioms.  [More needed here.]) 
 <P/>
 In what follows we shall generally use the following notation for the 
 <M>S_J</M>, namely <M>L = S_{[2]};~ M = S_{\{1\}};~ N = S_{\{2\}}</M> 
 and <M>P = S_{\emptyset}</M>.  
+<P/> 
+Crossed squares are the <M>n=2</M> case of a 
+crossed <M>n</M>-cube of groups, defined as follows. 
+(This is an attempt to translate Definition 2.1 in Ronnie's 
+<E>Computing homotopy types using crossed n-cubes of groups</E> 
+into right actions -- but this definition is not yet completely understood!) 
+<P/>
+A <E>crossed</E> <M>n</M><E>-cube of groups</E> consists of the following: 
+<List>
+<Item> 
+groups <M>S_A</M> for every subset <M>A \subseteq [n]</M>; 
+</Item>
+<Item>
+a commutative diagram of group homomorphisms 
+<M>\partial_i : S_A \to S_{A \setminus \{i\}},\; i \in [n]</M>; 
+with composites 
+<M>\partial_B : S_A \to S_{A \setminus B},\; B \subseteq [n]</M>;
+</Item>
+<Item>
+actions of <M>S_{\emptyset}</M> on each <M>S_A</M>; 
+and hence actions of <M>S_B</M> on <M>S_A</M> via <M>\partial_B</M>
+for each <M>B \subseteq [n]</M>; 
+</Item>
+<Item> 
+functions <M>\boxtimes_{A,B} : S_A \times S_B \to S_{A \cup B}, 
+(A,B \subseteq [n])</M>. 
+</Item> 
+</List>
+The following axioms must be satisfied (long list to be added). 
 
 </Section> 
 
@@ -310,13 +339,13 @@ and crossed squares in particular.
 </ManSection>
 
 <ManSection>
-   <Attr Name="Up2dGroup"
+   <Attr Name="Up2DimensionalGroup"
          Arg="XS" />
-   <Attr Name="Left2dGroup"
+   <Attr Name="Left2DimensionalGroup"
          Arg="XS" />
-   <Attr Name="Down2dGroup"
+   <Attr Name="Down2DimensionalGroup"
          Arg="XS" />
-   <Attr Name="Right2dGroup"
+   <Attr Name="Right2DimensionalGroup"
          Arg="XS" />
    <Attr Name="DiagonalAction"
          Arg="XS" />
@@ -341,9 +370,9 @@ As a temporary measure, crossed pairings have been implemented using
 <P/>
 <Example>
 <![CDATA[
-gap> Up2dGroup( XSconj );
+gap> Up2DimensionalGroup( XSconj );
 [c5d->d10b]
-gap> Right2dGroup( XSact );
+gap> Right2DimensionalGroup( XSact );
 Actor[d10a->d20]
 gap> xpconj := CrossedPairing( XSconj );;
 gap> ImageElmCrossedPairing( xpconj, [ p2, p12 ] );
@@ -373,13 +402,13 @@ This section describes an initial implementation of morphisms of
          Arg="map" />
    <Attr Name="Range"
          Arg="map" />
-   <Attr Name="Up2dMorphism"
+   <Attr Name="Up2DimensionalMorphism"
          Arg="map" />
-   <Attr Name="Left2dMorphism"
+   <Attr Name="Left2DimensionalMorphism"
          Arg="map" />
-   <Attr Name="Down2dMorphism"
+   <Attr Name="Down2DimensionalMorphism"
          Arg="map" />
-   <Attr Name="Right2dMorphism"
+   <Attr Name="Right2DimensionalMorphism"
          Arg="map" />
 <Description>
 Morphisms of <C>3dObjects</C> are implemented as <C>3dMappings</C>.
@@ -410,11 +439,11 @@ These functions return <C>fail</C> when invalid data is supplied.
 A morphism <C>mor</C> between two pre-crossed squares 
 <M>\mathcal{S}_{1}</M> and  <M>\mathcal{S}_{2}</M> 
 consists of four crossed module morphisms  
-<C>Up2dMorphism( mor )</C>, 
-mapping the <C>Up2dGroup</C> of <M>\mathcal{S}_1</M> 
+<C>Up2DimensionalMorphism( mor )</C>, 
+mapping the <C>Up2DimensionalGroup</C> of <M>\mathcal{S}_1</M> 
 to that of <M>\mathcal{S}_2</M>, 
-<C>Left2dMorphism( mor )</C>, <C>Down2dMorphism( mor )</C> 
-and <C>Right2dMorphism( mor )</C>. 
+<C>Left2DimensionalMorphism( mor )</C>, <C>Down2DimensionalMorphism( mor )</C> 
+and <C>Right2DimensionalMorphism( mor )</C>. 
 These four morphisms are required to commute with the four boundary maps
 and to preserve the rest of the structure. 
 The current version of <C>IsCrossedSquareMorphism</C> does not perform all the 
@@ -428,10 +457,10 @@ gap> ad20 := GroupHomomorphismByImages( d20, d20, [p1,p2], [p1,p2^p1] );;
 gap> ad10a := GroupHomomorphismByImages( d10a, d10a, [p1^2,p2], [p1^2,p2^p1] );;
 gap> ad10b := GroupHomomorphismByImages( d10b, d10b, [p1^2,p12], [p1^2,p12^p1] );;
 gap> idc5d := IdentityMapping( c5d );;
-gap> upconj := Up2dGroup( XSconj );;
-gap> leftconj := Left2dGroup( XSconj );; 
-gap> downconj := Down2dGroup( XSconj );; 
-gap> rightconj := Right2dGroup( XSconj );; 
+gap> upconj := Up2DimensionalGroup( XSconj );;
+gap> leftconj := Left2DimensionalGroup( XSconj );; 
+gap> downconj := Down2DimensionalGroup( XSconj );; 
+gap> rightconj := Right2DimensionalGroup( XSconj );; 
 gap> up := XModMorphismByHoms( upconj, upconj, idc5d, ad10b );
 [[c5d->d10b] => [c5d->d10b]]
 gap> left := XModMorphismByHoms( leftconj, leftconj, idc5d, ad10a );
@@ -471,12 +500,40 @@ true
 
 </Section>
 
-<Section Label="sect-cat2-definition">
-<Heading>Definition and constructions for cat2-groups and their morphisms 
+<Section Label="sect-catn-definition">
+<Heading>Definition and constructions for catn-groups and their morphisms 
 </Heading>
 
 <Index>cat2-group</Index>
-(To be added.) 
+<Index>catn-group</Index>
+We are interested here in cat2-groups, but it is convenient to give 
+the more general definition. 
+<P/>
+A <E>catn-group</E> is a group <M>G</M> together with <M>2n</M> 
+homomorphisms <M>t_i,\ h_i : G \to R,\; 1 \leqslant i \leqslant n</M>, 
+and an embedding <M>e : R \to G</M>, 
+such that for all <M>1 \leqslant i,j \leqslant n</M>, 
+<Display>
+{\bf Cat\ 1}  :  ~t_i \circ e ~=~ h_i \circ e = {\rm id}_R,
+\qquad 
+{\bf Cat\ 2}  :  ~[\ \ker t_i,\ \ker h_i\ ] ~=~ \{ 1_G \}, 
+</Display>
+<Display>
+{\bf Cat\ 3}  :  ~t_i \circ e \circ t_j = t_j \circ e \circ t_i, \quad
+                  h_i \circ e \circ h_j = h_j \circ e \circ h_i, \quad
+                  t_i \circ e \circ h_j = h_j \circ e \circ t_i, \quad 
+(i \neq j). 
+</Display>
+It follows that 
+<Display>
+t_i \circ e \circ h_i = h_i,\quad h_i \circ e \circ t_i = t_i,\quad 
+t_i \circ e \circ t_i = t_i,\quad h_i \circ e \circ h_i = h_i \quad 
+(1 \leqslant i \leqslant n). 
+</Display> 
+
+
+
+
 
 </Section> 
 

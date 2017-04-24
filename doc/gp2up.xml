@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2up.xml             XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  Copyright (C) 2001-2016, Chris Wensley et al,                      --> 
+<!--  Copyright (C) 2001-2017, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -22,7 +22,7 @@
          Arg="map" />
    <Prop Name="IsSection"
          Arg="map" />
-   <Prop Name="IsUp2dMapping"
+   <Prop Name="IsUp2DimensionalMapping"
          Arg="map" />
 <Description>
 <Index>derivation, of crossed module</Index>

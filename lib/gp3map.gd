@@ -2,8 +2,8 @@
 ##
 #W  gp3map.gd                   GAP4 package `XMod'              Chris Wensley
 ##                                                                Alper Odabas
-##  This file declares functions for 3d-mappings: (pre-)crossed squares  
-##  and (pre-)cat2-groups. 
+##  This file declares functions for 3dimensional-mappings: 
+##  (pre-)crossed squares and (pre-)cat2-groups. 
 ##
 #Y  Copyright (C) 2001-2017, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -17,24 +17,27 @@
 ##
 DeclareGlobalFunction( "PreCrossedSquareMorphism" );
 DeclareOperation( "PreCrossedSquareMorphismByMorphisms",
-    [ IsPreCrossedSquare, IsPreCrossedSquare, Is2dGroupMorphism, 
-      Is2dGroupMorphism, Is2dGroupMorphism, Is2dGroupMorphism ] );
+    [ IsPreCrossedSquare, IsPreCrossedSquare, Is2DimensionalGroupMorphism, 
+      Is2DimensionalGroupMorphism, Is2DimensionalGroupMorphism, Is2DimensionalGroupMorphism ] );
 DeclareGlobalFunction( "PreCat2Morphism" );
 DeclareOperation( "PreCat2MorphismByMorphisms",
-    [ IsPreCat2, IsPreCat2, Is2dGroupMorphism, Is2dGroupMorphism ] );
+    [ IsPreCat2, IsPreCat2, Is2DimensionalGroupMorphism, 
+      Is2DimensionalGroupMorphism ] );
 
 #############################################################################
 ##
-#O  Make3dGroupMorphism( <src>, <rng>, <up>, <lt>, <rt>, <dn> )
+#O  Make3DimensionalGroupMorphism( <src>, <rng>, <up>, <lt>, <rt>, <dn> )
 ##
 ##  A 3d-group morphism is a quadruple of 2d-group homs
 ##
-DeclareOperation( "Make3dGroupMorphism",
-    [ Is3dGroup, Is3dGroup, Is2dGroupMorphism, Is2dGroupMorphism, 
-                            Is2dGroupMorphism, Is2dGroupMorphism ] );
+DeclareOperation( "Make3DimensionalGroupMorphism",
+    [ Is3DimensionalGroup, Is3DimensionalGroup, Is2DimensionalGroupMorphism, 
+      Is2DimensionalGroupMorphism, Is2DimensionalGroupMorphism, 
+      Is2DimensionalGroupMorphism ] );
 							
-DeclareOperation( "Make3dGroupMorphism",
-    [ Is3dGroup, Is3dGroup, Is2dGroupMorphism, Is2dGroupMorphism ] );
+DeclareOperation( "Make3DimensionalGroupMorphism",
+    [ Is3DimensionalGroup, Is3DimensionalGroup, Is2DimensionalGroupMorphism, 
+      Is2DimensionalGroupMorphism ] );
 
 #############################################################################
 ##
@@ -42,16 +45,17 @@ DeclareOperation( "Make3dGroupMorphism",
 #O  CrossedSquareMorphismByMorphisms( <src>, <rng>, <up>, <lt>, <rt>, <dn> )
 #F  Cat2Morphism( <args> )
 #O  Cat2MorphismByMorphisms( <src>, <rng>, <up>, <dn> )
-#O  InclusionMorphism3dDomains( <obj>, <sub> )
+#O  InclusionMorphism3DimensionalDomains( <obj>, <sub> )
 ##
 DeclareGlobalFunction( "CrossedSquareMorphism" );
 DeclareOperation( "CrossedSquareMorphismByMorphisms",
-    [ IsCrossedSquare, IsCrossedSquare, Is2dGroupMorphism, 
-      Is2dGroupMorphism, Is2dGroupMorphism, Is2dGroupMorphism ] );
+    [ IsCrossedSquare, IsCrossedSquare, Is2DimensionalGroupMorphism, 
+      Is2DimensionalGroupMorphism, Is2DimensionalGroupMorphism, Is2DimensionalGroupMorphism ] );
 DeclareGlobalFunction( "Cat2Morphism" );
 DeclareOperation( "Cat2MorphismByMorphisms",
-    [ IsCat2, IsCat2, Is2dGroupMorphism, Is2dGroupMorphism ] );
-DeclareOperation( "InclusionMorphism3dDomains", [ Is3dDomain, Is3dDomain ] );
+    [ IsCat2, IsCat2, Is2DimensionalGroupMorphism, Is2DimensionalGroupMorphism ] );
+DeclareOperation( "InclusionMorphism3DimensionalDomains", 
+    [ Is3DimensionalDomain, Is3DimensionalDomain ] );
 
 #############################################################################
 ##
@@ -72,16 +76,18 @@ DeclareOperation( "InnerAutomorphismCat2",
 ##
 DeclareAttribute( "CrossedSquareMorphismOfCat2Morphism", IsCat2Morphism );
 DeclareOperation( "CrossedSquareMorphismByCat2Morphism", [ IsCat2Morphism ] );
-DeclareAttribute( "Cat2MorphismOfCrossedSquareMorphism", IsCrossedSquareMorphism );
-DeclareOperation( "Cat2MorphismByCrossedSquareMorphism", [ IsCrossedSquareMorphism ] );
+DeclareAttribute( "Cat2MorphismOfCrossedSquareMorphism", 
+    IsCrossedSquareMorphism );
+DeclareOperation( "Cat2MorphismByCrossedSquareMorphism", 
+    [ IsCrossedSquareMorphism ] );
 
 #############################################################################
 ##
-#P  IsEndomorphism3dDomain( <mor> )
-#P  IsAutomorphism3dDomain( <mor> )
+#P  IsEndomorphism3DimensionalDomain( <mor> )
+#P  IsAutomorphism3DimensionalDomain( <mor> )
 ##
-DeclareProperty( "IsEndomorphism3dDomain", Is3dMapping );
-DeclareProperty( "IsAutomorphism3dDomain", Is3dMapping );
+DeclareProperty( "IsEndomorphism3DimensionalDomain", Is3DimensionalMapping );
+DeclareProperty( "IsAutomorphism3DimensionalDomain", Is3DimensionalMapping );
 
 #############################################################################
 ##

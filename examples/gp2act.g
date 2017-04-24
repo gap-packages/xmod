@@ -7,7 +7,7 @@
 ##
 #############################################################################
 
-Print("\nXMod example file gp2act.g (version 05/04/17) :-");
+Print("\nXMod example file gp2act.g (version 23/04/17) :-");
 Print("\ntesting actor functions\n\n");
 level := InfoLevel( InfoXMod );
 SetInfoLevel( InfoXMod, 0 ); 
@@ -34,7 +34,7 @@ sgsc3 := StrongGeneratorsStabChain( StabChain( wpg3 ) );
 Print("WhitehadPermGroup has StrongGeneratorsStabChain\n", sgsc3, "\n" );
 genchi3 := WhiteheadGroupGeneratingDerivations( X3 );
 Print("Generating derivations are:\n", genchi3, "\n" );
-genmor3 := List( genchi3, c -> Object2dEndomorphism( c ) );
+genmor3 := List( genchi3, c -> Object2DimensionalEndomorphism( c ) );
 Print("Generating morphisms are:\n", genmor3, "\n\n" );
 
 Print("\n\n=======================================================\n");

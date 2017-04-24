@@ -5,38 +5,38 @@
 ##
 ##  This file contains implementations of UpMappings, Derivations and Sections
 ##
-#Y  Copyright (C) 2001-2016, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2017, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 ##############################################################################
 ##
-#M  IsUp2dMapping  (19/07/11) : no longer needed now this is a category
+#M  IsUp2DimensionalMapping  (19/07/11) : no longer needed now a category
 ##
-##InstallMethod( IsUp2dMapping, "generic method for derivations and sections",
-##    true, [ IsGeneralMapping ], 0,
+##  InstallMethod( IsUp2DimensionalMapping, 
+##  "generic method for derivations and sections", true, [IsGeneralMapping], 0,
 ##function( map )
 ##    return ( HasObject2d( map ) and HasUpGeneratorImages( map ) );
 ##end );
 
 ##############################################################################
 ##
-#M  Up2dMappingObj( <obj>, <ims> ) . . . . . . . . . . . . . . make up-mapping
+#M  Up2DimensionalMappingObj( <obj>, <ims> ) . . . . . . . . . make up-mapping
 ##
-InstallMethod( Up2dMappingObj, "for 2d-object and images", true,
-    [ Is2dDomain, IsHomogeneousList ], 0,
+InstallMethod( Up2DimensionalMappingObj, "for 2d-object and images", true,
+    [ Is2DimensionalDomain, IsHomogeneousList ], 0,
 function( obj, ims )
 
     local  filter, fam, map, genR, stgR, invR, ok, src, rng, aut, name, hom;
 
     fam := FamilyObj( [ obj, ims ] );
-    filter := IsUp2dMappingRep;
+    filter := IsUp2DimensionalMappingRep;
     src := Source( obj );
     rng := Range( obj );
     map := rec();
     ObjectifyWithAttributes( map, NewType( fam, filter ),
       Object2d, obj,
       UpGeneratorImages, ims,
-      IsUp2dMapping, true );
+      IsUp2DimensionalMapping, true );
     if IsPreXMod( obj ) then
         ok := IsDerivation( map );
         if ( ok and IsXMod( obj ) ) then
@@ -68,13 +68,13 @@ end );
 #M  Range( <map> )  . . . . . . . . . . . . . . . . . . . range for up-mapping
 ##
 InstallOtherMethod( Source, "generic method for an up-mapping",
-    [ IsUp2dMapping ], 0,
+    [ IsUp2DimensionalMapping ], 0,
 function ( map )
     return Source( Object2d( map ) );
 end );
 
 InstallOtherMethod( Range, "generic method for an up-mapping",
-    [ IsUp2dMapping ], 0,
+    [ IsUp2DimensionalMapping ], 0,
 function ( map )
     return Range( Object2d( map ) );
 end );
@@ -85,7 +85,7 @@ end );
 ##
 InstallMethod( \=,
     "generic method for two upmappings",
-    IsIdenticalObj, [ IsUp2dMapping, IsUp2dMapping ], 0,
+    IsIdenticalObj, [ IsUp2DimensionalMapping, IsUp2DimensionalMapping ], 0,
     function ( u1, u2 )
     return ( ( Object2d(u1) = Object2d(u2) )
          and ( UpGeneratorImages(u1) = UpGeneratorImages(u2) ) );
@@ -96,7 +96,7 @@ end );
 #M  IsDerivation
 ##
 InstallMethod( IsDerivation, "generic method for derivation of pre-xmod",
-    true, [ IsUp2dMapping ], 0,
+    true, [ IsUp2DimensionalMapping ], 0,
 function( chi )
 
     local  im, inv, XM, bdy, R, stgR, invR, oneR, ord, S, oneS,
@@ -170,7 +170,7 @@ end );
 #M  IsSection                    tests the section axioms for a pre-cat1-group
 ##
 InstallMethod( IsSection, "generic method for section of cat1-group",
-    true, [ IsUp2dMapping ], 0,
+    true, [ IsUp2DimensionalMapping ], 0,
 function( xi )
 
     local  hom, C, Crng, idrng, ok, reg;
@@ -198,7 +198,7 @@ end );
 #M  SourceEndomorphism                                        for an upmapping
 ##
 InstallMethod( SourceEndomorphism, "method for an upmapping", true,
-    [ IsUp2dMapping ], 0,
+    [ IsUp2DimensionalMapping ], 0,
 function( u )
 
     local  XM, S, bdy, genS, ngenS, imsigma, i, s, r, s2, sigma;
@@ -228,7 +228,7 @@ end );
 #M  RangeEndomorphism                                         for an upmapping
 ##
 InstallMethod( RangeEndomorphism, "method for an upmapping", true,
-    [ IsUp2dMapping ], 0,
+    [ IsUp2DimensionalMapping ], 0,
 function( u )
 
     local  XM, R, bdy, genR, ngenR, imrho, i, s, r, r2, rho;
@@ -258,7 +258,7 @@ end );
 #M  Object2dEndomorphism                                     for an upmapping
 ##
 InstallMethod( Object2dEndomorphism, "method for an upmapping", true,
-    [ IsUp2dMapping ], 0,
+    [ IsUp2DimensionalMapping ], 0,
 function( u )
 
     local  obj, sigma, rho, mor;
@@ -296,7 +296,7 @@ function( XM, im )
                    and ForAll( im, x -> ( x in S ) ) ) then
         Error( "<im> must be a list of |stgR| elements in S" );
     fi;
-    chi := Up2dMappingObj( XM, im );
+    chi := Up2DimensionalMappingObj( XM, im );
     ok := IsDerivation( chi );
     if not ok then 
         return fail;
@@ -605,8 +605,8 @@ function( C, hom )
 
     local  fam, filter, R, G, stgR, ngR, nargs, usage, isect, im, xi;
 
-    fam := Up2dMappingFamily; 
-    filter := IsUp2dMappingRep; 
+    fam := Up2DimensionalMappingFamily; 
+    filter := IsUp2DimensionalMappingRep; 
     G := Source( C );
     R := Range( C );
     stgR := StrongGeneratorsStabChain( StabChain( R ) );
@@ -752,19 +752,19 @@ end );
 
 ###############################################################################
 ##
-#M  MonoidOfUp2dMappingsObj( <obj>, <ims>, <str> )  construct upmappings record
+#M  MonoidOfUp2DimensionalMappingsObj( <obj>, <ims>, <str> )  construct upmappings record
 ##
-InstallMethod( MonoidOfUp2dMappingsObj, "for a 2dDomain", true,
-    [ Is2dDomain, IsHomogeneousList, IsString ], 0,
+InstallMethod( MonoidOfUp2DimensionalMappingsObj, "for a 2DimensionalDomain", true,
+    [ Is2DimensionalDomain, IsHomogeneousList, IsString ], 0,
 function( obj, images, str )
 
     local  filter, fam, mon;
 
     fam := FamilyObj( [ obj, images, str ] );
-    filter := IsMonoidOfUp2dMappingsObj;
+    filter := IsMonoidOfUp2DimensionalMappingsObj;
     mon := rec(); 
     ObjectifyWithAttributes( mon, NewType( fam, filter ), 
-      IsMonoidOfUp2dMappings, true,
+      IsMonoidOfUp2DimensionalMappings, true,
       Object2d, obj,
       ImagesList, images,
       AllOrRegular, str );
@@ -785,8 +785,8 @@ end );
 #M  PrintObj( <mon> )                  prints regular/all derivations/sections 
 #M  ViewObj( <mon> )                    views regular/all derivations/sections 
 ##
-InstallMethod( PrintObj, "for IsMonoidOfUp2dMappings", true,
-    [ IsMonoidOfUp2dMappings ], 0,
+InstallMethod( PrintObj, "for IsMonoidOfUp2DimensionalMappings", true,
+    [ IsMonoidOfUp2DimensionalMappings ], 0,
 function( mon ) 
 
     if IsMonoidOfDerivations( mon ) then 
@@ -799,8 +799,8 @@ function( mon )
     PrintListOneItemPerLine( ImagesList( mon ) ); 
 end ); 
 
-InstallMethod( ViewObj, "for IsMonoidOfUp2dMappings", true,
-    [ IsMonoidOfUp2dMappings ], 0, PrintObj ); 
+InstallMethod( ViewObj, "for IsMonoidOfUp2DimensionalMappings", true,
+    [ IsMonoidOfUp2DimensionalMappings ], 0, PrintObj ); 
 
 ##############################################################################
 ##
@@ -908,7 +908,7 @@ function( XM, str )
     len := Length( stgR );
     subs := List( [1..len], i -> Subgroup( R, stgR{[1..i]} ) ); 
     images := BacktrackDerivationsJ( XM, subs, [], [], 1, str );
-    derivrec := MonoidOfUp2dMappingsObj( XM, images, str );
+    derivrec := MonoidOfUp2DimensionalMappingsObj( XM, images, str );
     return derivrec;
 end );
 

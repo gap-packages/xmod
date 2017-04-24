@@ -7,7 +7,7 @@
 ##
 #############################################################################
 
-Print("\nXMod test file gp2ind.g (version 05/04/17) :-");
+Print("\nXMod test file gp2ind.g (version 23/04/17) :-");
 Print("\nSurjective example :-\n" ); 
 level := InfoLevel( InfoXMod ); 
 SetInfoLevel( InfoXMod, 0 ); 
@@ -43,7 +43,7 @@ Print( X16, "\n" );
 X8 := SubXMod( X16, c4, d8 );
 Print( X8, "\n" );
 Print( IsSubXMod( X16, X8 ), "\n" );
-inc8 := InclusionMorphism2dDomains( X16, X8 );
+inc8 := InclusionMorphism2DimensionalDomains( X16, X8 );
 Print( inc8, "\n" );
 rho := GroupHomomorphismByImages( d16, d16, [c,d], [c,d^(c^2)] );
 sigma := GroupHomomorphismByImages( d8, d8, [c^2,d], [c^2,d^(c^2)] );

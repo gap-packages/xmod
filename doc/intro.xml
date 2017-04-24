@@ -2,7 +2,6 @@
 <!--                                                                     -->
 <!--  intro.xml             XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--                                                                     --> 
 <!--  Copyright (C) 2001-2017, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
@@ -103,7 +102,7 @@ the package GitHub repository:
 <P/>
 Crossed modules and cat1-groups are special types of 
 <E>2-dimensional groups</E> <Cite Key="B82"/>, <Cite Key="brow:hig:siv"/>, 
-and are implemented as <C>2dDomains</C> and <C>2dGroups</C> 
+and are implemented as <C>2DimensionalDomains</C> and <C>2DimensionalGroups</C> 
 having a <C>Source</C> and a <C>Range</C>.
 <!--  See the file <F>notes.pdf</F> in the <F>doc</F> directory  --> 
 <!--  for an introductory account of these algebraic gadgets.    --> 

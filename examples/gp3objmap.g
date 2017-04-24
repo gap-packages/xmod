@@ -7,7 +7,7 @@
 ##
 #############################################################################
 
-Print("\nXMod example file gp3objmap.g (version 12/04/17) :-");
+Print("\nXMod example file gp3objmap.g (version 23/04/17) :-");
 Print("\ntesting functions for crossed squares\n\n");
 level := InfoLevel( InfoXMod ); 
 SetInfoLevel( InfoXMod, 0 );
@@ -86,10 +86,10 @@ ad12 := GroupHomomorphismByImages( d12, d12, [c,d], [c,d^c] );
 as3a := GroupHomomorphismByImages( s3a, s3a, [c^2,d], [c^2,d^c] );
 as3b := GroupHomomorphismByImages( s3b, s3b, [c^2,cd], [c^2,cd^c] );
 idc3 := IdentityMapping( c3 );
-upconj := Up2dGroup( XSconj ); 
-leftconj := Left2dGroup( XSconj ); 
-downconj := Down2dGroup( XSconj ); 
-rightconj := Right2dGroup( XSconj ); 
+upconj := Up2DimensionalimensionalGroup( XSconj ); 
+leftconj := Left2DimensionalGroup( XSconj ); 
+downconj := Down2DimensionalGroup( XSconj ); 
+rightconj := Right2DimensionalGroup( XSconj ); 
 up := XModMorphismByHoms( upconj, upconj, idc3, as3b );
 left := XModMorphismByHoms( leftconj, leftconj, idc3, as3a );
 down := XModMorphismByHoms( downconj, downconj, as3a, ad12 );

@@ -10,32 +10,33 @@
 
 #############################################################################
 ##
-#M  IsPerm3dGroup . . . . . . . . check whether the 4 sides are perm groups
-#M  IsFp3dGroup . . . . . . . . . check whether the 4 sides are fp groups
-#M  IsPc3dGroup . . . . . . . . . check whether the 4 sides are pc groups
+#M  IsPerm3DimensionalGroup . . . . check whether the 4 sides are perm groups
+#M  IsFp3DimensionalGroup . . . . . check whether the 4 sides are fp groups
+#M  IsPc3DimensionalGroup . . . . . check whether the 4 sides are pc groups
 ##
-InstallMethod( IsPerm3dGroup, "generic method for 3d-group objects",
-    true, [ Is3dGroup ], 0,
+InstallMethod( IsPerm3DimensionalGroup, "generic method for 3d-group objects",
+    true, [ Is3DimensionalGroup ], 0,
 function (obj)
-    return ( IsPermGroup( Up2dGroup(obj) ) and IsPermGroup( Range(obj) )
-             and IsPermGroup( Left2dGroup(obj) ) 
-             and IsPermGroup( Right2dGroup(obj) ) );
+    return ( IsPermGroup( Up2DimensionalGroup(obj) ) 
+             and IsPermGroup( Range(obj) )
+             and IsPermGroup( Left2DimensionalGroup(obj) ) 
+             and IsPermGroup( Right2DimensionalGroup(obj) ) );
 end );
 
-InstallMethod( IsFp3dGroup, "generic method for 3d-group objects",
-    true, [ Is3dGroup ], 0,
+InstallMethod( IsFp3DimensionalGroup, "generic method for 3d-group objects",
+    true, [ Is3DimensionalGroup ], 0,
 function (obj)
-    return ( IsFpGroup( Up2dGroup(obj) ) and IsFpGroup( Range(obj) )
-             and IsFpGroup( Left2dGroup(obj) ) 
-             and IsFpGroup( Right2dGroup(obj) ) );
+    return ( IsFpGroup( Up2DimensionalGroup(obj) ) and IsFpGroup( Range(obj) )
+             and IsFpGroup( Left2DimensionalGroup(obj) ) 
+             and IsFpGroup( Right2DimensionalGroup(obj) ) );
 end );
 
-InstallMethod( IsPc3dGroup, "generic method for 3d-group obj ects" ,
-    true, [ Is3dGroup ], 0,
+InstallMethod( IsPc3DimensionalGroup, "generic method for 3d-group obj ects" ,
+    true, [ Is3DimensionalGroup ], 0,
 function (obj)
-    return ( IsPcGroup( Up2dGroup(obj) ) and IsPcGroup( Range(obj) )
-             and IsPcGroup( Left2dGroup(obj) ) 
-             and IsPcGroup( Right2dGroup(obj) ) );
+    return ( IsPcGroup( Up2DimensionalGroup(obj) ) and IsPcGroup( Range(obj) )
+             and IsPcGroup( Left2DimensionalGroup(obj) ) 
+             and IsPcGroup( Right2DimensionalGroup(obj) ) );
 end );
 
 ##############################################################################
@@ -72,7 +73,8 @@ end );
 
 ##############################################################################
 ##
-#M  CrossedPairingByNormalSubgroups( <grp>, <grp>, <grp> ) . . . make an CrossedPairing
+#M  CrossedPairingByNormalSubgroups( <grp>, <grp>, <grp> ) 
+##                                                 . . . make a CrossedPairing
 ##
 InstallMethod( CrossedPairingByNormalSubgroups, 
     "for the intersection of two normal subgroups", true,
@@ -131,7 +133,7 @@ InstallMethod( ImageElmCrossedPairing, "for crossed pairing", true,
 #M  IsPreCrossedSquare . . . . . . . . . . . . check that the square commutes
 ##
 InstallMethod( IsPreCrossedSquare, "generic method for a pre-crossed square",
-    true, [ Is3dGroup ], 0,
+    true, [ Is3DimensionalGroup ], 0,
 function( P )
 
     local  u, d, l, r, ul, dl, ur, dr, bu, bd, bl, br, blbd, bubr,
@@ -141,10 +143,10 @@ function( P )
              and HasCrossedPairing( P ) ) then
         return false;
     fi;
-    u := Up2dGroup( P );
-    l := Left2dGroup( P );
-    d := Down2dGroup( P );
-    r := Right2dGroup( P );
+    u := Up2DimensionalGroup( P );
+    l := Left2DimensionalGroup( P );
+    d := Down2DimensionalGroup( P );
+    r := Right2DimensionalGroup( P );
     act := DiagonalAction( P );
     ul := Source( u );
     ur := Range( u );
@@ -200,18 +202,18 @@ function( u, l, d, r, a, p )
 
     local  filter, fam, PS, ok, src, rng, aut, narne;
 
-    fam := Family3dGroup;
+    fam := Family3DimensionalGroup;
     filter := IsPreCrossedSquareObj;
     ## test commutativity here?
     PS := rec();
     ObjectifyWithAttributes( PS, NewType( fam, filter), 
-      Up2dGroup, u, 
-      Left2dGroup, l,
-      Down2dGroup, d,
-      Right2dGroup, r,
+      Up2DimensionalGroup, u, 
+      Left2DimensionalGroup, l,
+      Down2DimensionalGroup, d,
+      Right2DimensionalGroup, r,
       CrossedPairing, p,
       DiagonalAction, a,
-      Is3dGroup, true );
+      Is3DimensionalGroup, true );
     if not IsPreCrossedSquare( PS ) then
         Info( InfoXMod, 1, "Warning: not a pre-crossed square." );
     fi;
@@ -225,28 +227,28 @@ end );
 #M  IsPreCat2 . . . . . . . . . . . . . . . . .  check that the is pre-cat2
 ##
 InstallMethod( IsPreCat2, "generic method for a pre-cat2",
-    true, [ Is3dGroup ], 0,
+    true, [ Is3DimensionalGroup ], 0,
 function( P )
 
     local  u, d, h1, t1, h2, t2, h1h2, h2h1, t1t2, t2t1, h1t2, 
-		   t2h1, h2t1, t1h2, G, gensrc, x, y, z;
+           t2h1, h2t1, t1h2, G, gensrc, x, y, z;
 
     if not ( IsPreCat2Obj ( P )  ) then
         return false;
     fi;
-	
-    u := Up2dGroup( P );
-    d := Down2dGroup( P );
-	if not ( IsPerm2dGroup( u ) ) then
-		u := Image(IsomorphismPermObject( u ) );
-	fi;
-	if not ( IsPerm2dGroup( d ) ) then
-		d := Image(IsomorphismPermObject( d ) );
-	fi;	
-	
-	h1 := HeadMap( u );
+    
+    u := Up2DimensionalGroup( P );
+    d := Down2DimensionalGroup( P );
+    if not ( IsPerm2DimensionalGroup( u ) ) then
+        u := Image(IsomorphismPermObject( u ) );
+    fi;
+    if not ( IsPerm2DimensionalGroup( d ) ) then
+        d := Image(IsomorphismPermObject( d ) );
+    fi;    
+    
+    h1 := HeadMap( u );
     t1 := TailMap( u );
-	h2 := HeadMap( d );
+    h2 := HeadMap( d );
     t2 := TailMap( d );
 
     if not ( ( Source(h1) = Source(t1) ) and ( Range(h1) = Range(t1) ) and
@@ -254,62 +256,62 @@ function( P )
         Info( InfoXMod, 2, "Incompatible source/range" );
         return false;
     fi;
-	
+    
     if not ( ( Source(h1) = Source(h2) ) and ( Source(t1) = Source(t2) ) ) then
         Info( InfoXMod, 2, "Incompatible source" );
         return false;
     fi;
-	
-	G := Source(h1);
-	gensrc := GeneratorsOfGroup(G);
-	
-	h1 := GroupHomomorphismByImagesNC(G, G, gensrc, 
+    
+    G := Source(h1);
+    gensrc := GeneratorsOfGroup(G);
+    
+    h1 := GroupHomomorphismByImagesNC(G, G, gensrc, 
                   List(gensrc, x -> Image( h1, x ) )  );
     t1 := GroupHomomorphismByImagesNC(G, G, gensrc, 
                   List(gensrc, x -> Image( t1, x ) )  );
-	h2 := GroupHomomorphismByImagesNC(G, G, gensrc, 
+    h2 := GroupHomomorphismByImagesNC(G, G, gensrc, 
                   List(gensrc, x -> Image( h2, x ) )  );
     t2 := GroupHomomorphismByImagesNC(G, G, gensrc, 
                   List(gensrc, x -> Image( t2, x ) )  );
-	
-	 h1h2 := h1 * h2;
-	 h2h1 := h2 * h1;
-	 t1t2 := t1 * t2;
-	 t2t1 := t2 * t1;
-	 h1t2 := h1 * t2;
-	 t2h1 := t2 * h1;
-	 h2t1 := h2 * t1;
-	 t1h2 := t1 * h2;
-		
-	# check the condition 1 
-	if not ( h1h2 = h2h1 ) then
+    
+     h1h2 := h1 * h2;
+     h2h1 := h2 * h1;
+     t1t2 := t1 * t2;
+     t2t1 := t2 * t1;
+     h1t2 := h1 * t2;
+     t2h1 := t2 * h1;
+     h2t1 := h2 * t1;
+     t1h2 := t1 * h2;
+        
+    # check the condition 1 
+    if not ( h1h2 = h2h1 ) then
         Info( InfoXMod, 2, "Condition 1 is not provided" );
-	#	Print("Condition 1 is not provided \n");
+    #    Print("Condition 1 is not provided \n");
         return false;
     fi;
-	
-	
-	# check the condition 2
-	if not ( t1t2 = t2t1 ) then
+    
+    
+    # check the condition 2
+    if not ( t1t2 = t2t1 ) then
         Info( InfoXMod, 2, "Condition 2 is not provided" );
-	#	Print("Condition 2 is not provided \n");
+    #    Print("Condition 2 is not provided \n");
         return false;
     fi;
-	
-	# check the condition 3
-	if not ( h1t2 = t2h1 ) then
+    
+    # check the condition 3
+    if not ( h1t2 = t2h1 ) then
         Info( InfoXMod, 2, "Condition 3 is not provided" );
-	#	Print("Condition 3 is not provided \n");
+    #    Print("Condition 3 is not provided \n");
         return false;
     fi;
-	
-	# check the condition 4
-	if not ( h2t1 = t1h2 ) then
+    
+    # check the condition 4
+    if not ( h2t1 = t1h2 ) then
         Info( InfoXMod, 2, "Condition 4 is not provided" );
-	#	Print("Condition 4 is not provided \n");
+    #    Print("Condition 4 is not provided \n");
         return false;
-    fi;	 
-	
+    fi;     
+    
         return true;
 end );
 
@@ -318,7 +320,7 @@ end );
 #M  IsCat2 . . . . . . . . . . . . . . . . .  check that the object is a cat2
 ##
 InstallMethod( IsCat2, "generic method for a cat2",
-    true, [ Is3dGroup ], 0,
+    true, [ Is3DimensionalGroup ], 0,
 function( P )
 
     local  u, d;
@@ -327,15 +329,14 @@ function( P )
         Info( InfoXMod, 2, "Pre-Cat2 is not provided" );
         return false;
     fi;
-	
-	u := Up2dGroup( P );
-    d := Down2dGroup( P );
-	
-	if not ( ( IsCat1( u ) ) and ( IsCat1( d ) ) )  then
-        Info( InfoXMod, 2, "Up2dGroup and Down2dGroup must be Cat1" );
+    u := Up2DimensionalGroup( P );
+    d := Down2DimensionalGroup( P );
+    
+    if not ( ( IsCat1( u ) ) and ( IsCat1( d ) ) )  then
+        Info( InfoXMod, 2, 
+            "Up2DimensionalGroup and Down2DimensionalGroup must be Cat1" );
         return false;
     fi;
-	
     return true;
 end );
 
@@ -349,13 +350,13 @@ function( u, d )
 
     local  filter, fam, PC, ok, name;
 
-    fam := Family3dGroup;
+    fam := Family3DimensionalGroup;
     filter := IsPreCat2Obj;
     PC := rec();
     ObjectifyWithAttributes( PC, NewType( fam, filter), 
-        Up2dGroup, u, 
-        Down2dGroup, d,
-        Is3dGroup, true );
+        Up2DimensionalGroup, u, 
+        Down2DimensionalGroup, d,
+        Is3DimensionalGroup, true );
     if not IsPreCat2( PC ) then
         Info( InfoXMod, 1, "Warning: not a pre-cat2-group" );
     fi;
@@ -402,15 +403,18 @@ end );
 InstallMethod( LeftRightMorphism, "for a precrossed square", true,
     [ IsPreCrossedSquare ], 0,
 function( s )
-    return XModMorphismByHoms( Left2dGroup(s), Right2dGroup(s), 
-               Boundary( Up2dGroup(s) ), Boundary( Down2dGroup(s) ) ); 
+    return XModMorphismByHoms( 
+        Left2DimensionalGroup(s), Right2DimensionalGroup(s), 
+        Boundary( Up2DimensionalGroup(s) ), 
+        Boundary( Down2DimensionalGroup(s) ) ); 
 end );
 
 InstallMethod( UpDownMorphism, "for a precrossed square", true,
     [ IsPreCrossedSquare ], 0,
 function( s )
-    return XModMorphismByHoms( Up2dGroup(s), Down2dGroup(s), 
-               Boundary( Left2dGroup(s) ), Boundary( Right2dGroup(s) ) ); 
+    return XModMorphismByHoms( Up2DimensionalGroup(s), Down2DimensionalGroup(s), 
+           Boundary( Left2DimensionalGroup(s) ), 
+           Boundary( Right2DimensionalGroup(s) ) ); 
 end );
 
 ##############################################################################
@@ -447,8 +451,8 @@ function( P, N, M, L )
     return XS;
 end );
 
-InstallOtherMethod( CrossedSquareByNormalSubgroups, "conjugation crossed square",
-    true, [ IsGroup, IsGroup, IsGroup ], 0,
+InstallOtherMethod( CrossedSquareByNormalSubgroups, 
+    "conjugation crossed square", true, [ IsGroup, IsGroup, IsGroup ], 0,
 function( P, M, N )
 
     local  XS, genP, genM, genN, L, genL, u, d, l, r, a, p, diag;
@@ -483,9 +487,9 @@ end );
 
 ##############################################################################
 ##
-#M  Transpose3dGroup                        the transpose of a crossed square
+#M  Transpose3DimensionalGroup . . . . . . . the transpose of a crossed square
 ##
-InstallMethod( Transpose3dGroup, "transposed crossed square", true, 
+InstallMethod( Transpose3DimensionalGroup, "transposed crossed square", true, 
     [ IsCrossedSquare ], 0,
 function( XS )
 
@@ -497,8 +501,9 @@ function( XS )
     map := Mapping2ArgumentsByFunction( NM, L, 
       function(c) return ImageElmCrossedPairing( xpS, Reversed(c) )^(-1); end );
     xpT := CrossedPairingObj( NM, L, map );
-    XT := PreCrossedSquareObj( Left2dGroup(XS), Up2dGroup(XS), Right2dGroup(XS), 
-                     Down2dGroup(XS), DiagonalAction(XS), xpT );
+    XT := PreCrossedSquareObj( Left2DimensionalGroup(XS), 
+              Up2DimensionalGroup(XS), Right2DimensionalGroup(XS), 
+              Down2DimensionalGroup(XS), DiagonalAction(XS), xpT );
     SetIsCrossedSquare( XT, true );
     return XT;
 end );    
@@ -507,28 +512,29 @@ end );
 ##
 #M  Name . . . . . . . . . . . . . . . . . . . . . . for a pre-crossed square
 ##
-InstallMethod( Name, "method for a pre-crossed square", true, [ IsPreCrossedSquare ], 0,
+InstallMethod( Name, "method for a pre-crossed square", true, 
+    [ IsPreCrossedSquare ], 0,
 function( PS )
 
     local  nul, nur, ndl, ndr, name, mor;
 
-    if HasName( Source( Up2dGroup( PS ) ) ) then
-        nul := Name( Source( Up2dGroup( PS ) ) );
+    if HasName( Source( Up2DimensionalGroup( PS ) ) ) then
+        nul := Name( Source( Up2DimensionalGroup( PS ) ) );
     else
         nul := "..";
     fi;
-    if HasName( Range( Up2dGroup( PS ) ) ) then
-        nur := Name( Range( Up2dGroup( PS ) ) );
+    if HasName( Range( Up2DimensionalGroup( PS ) ) ) then
+        nur := Name( Range( Up2DimensionalGroup( PS ) ) );
     else
         nur := "..";
     fi;
-    if HasName( Source( Down2dGroup( PS ) ) ) then
-        ndl := Name( Source( Down2dGroup( PS ) ) );
+    if HasName( Source( Down2DimensionalGroup( PS ) ) ) then
+        ndl := Name( Source( Down2DimensionalGroup( PS ) ) );
     else
         ndl := "..";
     fi;
-    if HasName( Range( Down2dGroup( PS ) ) ) then
-        ndr := Name( Range( Down2dGroup( PS ) ) );
+    if HasName( Range( Down2DimensionalGroup( PS ) ) ) then
+        ndr := Name( Range( Down2DimensionalGroup( PS ) ) );
     else
         ndr := "..";
     fi;
@@ -541,11 +547,12 @@ end );
 ##
 #M  IdGroup . . . . . . . . . . . . . . . . . . . . . . . . . for a 3d-domain
 ##
-InstallOtherMethod( IdGroup, "method for a 3d-domain", true, [ Is3dDomain ], 0,
+InstallOtherMethod( IdGroup, "method for a 3d-domain", true, 
+    [ Is3DimensionalDomain ], 0,    
 function( dom )
     local  u, d;
-    u := Up2dGroup( dom ); 
-    d := Down2dGroup( dom ); 
+    u := Up2DimensionalGroup( dom ); 
+    d := Down2DimensionalGroup( dom ); 
     return [ [ IdGroup( Source(u) ), IdGroup( Range(u) ) ], 
              [ IdGroup( Source(d) ), IdGroup( Range(d) ) ] ]; 
 end ); 
@@ -556,26 +563,30 @@ end );
 ##
 InstallMethod( \=,
     "generic method for two 3d-domain",
-    IsIdenticalObj, [ Is3dGroup, Is3dGroup ], 0,
+    IsIdenticalObj, [ Is3DimensionalGroup, Is3DimensionalGroup ], 0,
     function ( dom1, dom2 )
-	
-	if ( IsPreCat2( dom1 ) and IsPreCat2( dom2 ) ) then
-	    return ( ( Up2dGroup( dom1 ) = Up2dGroup( dom2 ) )
-             and ( Down2dGroup( dom1 ) = Down2dGroup( dom2 ) )  );
+    
+    if ( IsPreCat2( dom1 ) and IsPreCat2( dom2 ) ) then
+        return( 
+            ( Up2DimensionalGroup( dom1 ) = Up2DimensionalGroup( dom2 ) )
+        and ( Down2DimensionalGroup( dom1 ) = Down2DimensionalGroup( dom2 ) ) 
+        );
     else
-	    return ( ( Up2dGroup( dom1 ) = Up2dGroup( dom2 ) )
-             and ( Down2dGroup( dom1 ) = Down2dGroup( dom2 ) )
-             and ( Right2dGroup( dom1 ) = Right2dGroup( dom2 ) )
-             and ( Left2dGroup( dom1 ) = Left2dGroup( dom2 ) ) );
-	fi;
+        return( 
+            ( Up2DimensionalGroup( dom1 ) = Up2DimensionalGroup( dom2 ) )
+        and ( Down2DimensionalGroup( dom1 ) = Down2DimensionalGroup( dom2 ) ) 
+        and ( Right2DimensionalGroup( dom1 ) = Right2DimensionalGroup( dom2 ) ) 
+        and ( Left2DimensionalGroup( dom1 ) = Left2DimensionalGroup( dom2 ) ) );
+    fi;
 end );
 
 #############################################################################
 ##
-#M  PrintObj( <g3d> . . . . . . . . . . . . . . . . . . . . print a 3d-group 
-#M  ViewObj( <g2d> ) . . . . . . . . . . . . . . . . . . . . view a 3d-group 
+#M  PrintObj( <g3d> . . . . . . . . . . . . . . . print a 3Dimensional-group 
+#M  ViewObj( <g2d> ) . . . . . . . . . . . . . . . view a 3Dimensional-group 
 ##
-InstallMethod( PrintObj, "method for a 3d-group", true, [ Is3dGroup ], 0,
+InstallMethod( PrintObj, "method for a 3d-group", true, 
+    [ Is3DimensionalGroup ], 0,
 function( g3d )
 
     local  L, M, N, P, lenL, lenM, lenN, lenP, len1, len2, j, q1, q2, 
@@ -591,10 +602,10 @@ function( g3d )
             ispsq := false; 
             arrow := " => "; 
         fi; 
-        L := Source( Up2dGroup( g3d ) );
-        M := Source( Down2dGroup( g3d ) );
-        N := Range( Up2dGroup( g3d ) );
-        P := Range( Down2dGroup( g3d ) );
+        L := Source( Up2DimensionalGroup( g3d ) );
+        M := Source( Down2DimensionalGroup( g3d ) );
+        N := Range( Up2DimensionalGroup( g3d ) );
+        P := Range( Down2DimensionalGroup( g3d ) );
         ok := HasName(L) and HasName(M) and HasName(N) and HasName(P);
         if ok then
             lenL := Length( Name( L ) );
@@ -625,36 +636,37 @@ function( g3d )
             Print( " ]\n" );
         else 
             if ispsq then 
-                if ( HasIsCrossedSquare( g3d ) and IsCrossedSquare( g3d ) ) then 
+                if ( HasIsCrossedSquare(g3d) and IsCrossedSquare(g3d) ) then 
                     Print( "crossed square with:\n" ); 
                 else 
                     Print( "pre-crossed square with:\n" ); 
                 fi; 
-            Print( "      up = ",    Up2dGroup( g3d ), "\n" );
-			Print( "    left = ",  Left2dGroup( g3d ), "\n" );
-            Print( "    down = ",  Down2dGroup( g3d ), "\n" );
-			Print( "   right = ", Right2dGroup( g3d ), "\n" );
+            Print( "      up = ",    Up2DimensionalGroup( g3d ), "\n" );
+            Print( "    left = ",  Left2DimensionalGroup( g3d ), "\n" );
+            Print( "    down = ",  Down2DimensionalGroup( g3d ), "\n" );
+            Print( "   right = ", Right2DimensionalGroup( g3d ), "\n" );
             else 
                if ( HasIsCat2( g3d ) and IsCat2( g3d ) ) then  
                    Print( "cat2-group with:\n" ); 
                else 
                    Print( "(pre-)cat2-group with:\n" ); 
                fi; 
-            Print( "      up = ",    Up2dGroup( g3d ), "\n" );
-            Print( "    down = ",  Down2dGroup( g3d ), "\n" );
+            Print( "      up = ",    Up2DimensionalGroup( g3d ), "\n" );
+            Print( "    down = ",  Down2DimensionalGroup( g3d ), "\n" );
             fi; 
         fi;
     fi;
 end );
 
-InstallMethod( ViewObj, "method for a 3d-group", true, [ Is3dGroup ], 0,
+InstallMethod( ViewObj, "method for a 3d-group", true, 
+    [ Is3DimensionalGroup ], 0,
     PrintObj ); 
 
 #############################################################################
 ##
 #M Display( <g3d> . . . . . . . . . . . . . . . . . . . . display a 3d-group 
 ##
-InstallMethod( Display, "method for a 3d-group", true, [ Is3dGroup ], 0,
+InstallMethod( Display, "method for a 3d-group", true, [ Is3DimensionalGroup ], 0,
 function( g3d )
 
     local  L, M, N, P, lenL, lenM, lenN, lenP, len1, len2, j, q1, q2, 
@@ -667,10 +679,10 @@ function( g3d )
         ispsq := false; 
         arrow := " => "; 
     fi; 
-    L := Source( Up2dGroup( g3d ) );
-    M := Source( Down2dGroup( g3d ) );
-    N := Range( Up2dGroup( g3d ) );
-    P := Range( Down2dGroup( g3d ) );
+    L := Source( Up2DimensionalGroup( g3d ) );
+    M := Source( Down2DimensionalGroup( g3d ) );
+    N := Range( Up2DimensionalGroup( g3d ) );
+    P := Range( Down2DimensionalGroup( g3d ) );
     ok := HasName(L) and HasName(M) and HasName(N) and HasName(P);
     if ok then
         lenL := Length( Name( L ) );
@@ -702,14 +714,14 @@ function( g3d )
     else 
         if ispsq then 
         Print( "(pre-)crossed square with:\n" ); 
-        Print( "      up = ",    Up2dGroup( g3d ), "\n" );
-        Print( "    left = ",  Left2dGroup( g3d ), "\n" );
-        Print( "    down = ",  Down2dGroup( g3d ), "\n" );
-        Print( "   right = ", Right2dGroup( g3d ), "\n" );
+        Print( "      up = ",    Up2DimensionalGroup( g3d ), "\n" );
+        Print( "    left = ",  Left2DimensionalGroup( g3d ), "\n" );
+        Print( "    down = ",  Down2DimensionalGroup( g3d ), "\n" );
+        Print( "   right = ", Right2DimensionalGroup( g3d ), "\n" );
         else 
         Print( "(pre-)cat2-group with:\n" ); 
-        Print( "      up = ",    Up2dGroup( g3d ), "\n" );
-        Print( "    down = ",  Down2dGroup( g3d ), "\n" );
+        Print( "      up = ",    Up2DimensionalGroup( g3d ), "\n" );
+        Print( "    down = ",  Down2DimensionalGroup( g3d ), "\n" );
         fi; 
 
     fi; 

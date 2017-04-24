@@ -30,7 +30,7 @@ gap> XSconj := CrossedSquareByNormalSubgroups( d20, d10b, d10a, c5d );
 
 gap> Name( XSconj );
 "[c5d->d10b,d10a->d20]"
-gap> XStrans := Transpose3dGroup( XSconj ); 
+gap> XStrans := Transpose3DimensionalGroup( XSconj ); 
 [  c5d -> d10a ]
 [   |      |   ]
 [ d10b -> d20  ]
@@ -61,9 +61,9 @@ gap> IdGroup( CQXn7 );
 [ [ [ 12, 2 ], [ 3, 1 ] ], [ [ 24, 5 ], [ 6, 1 ] ] ]
 
 ## Section 8.1.3
-gap> Up2dGroup( XSconj );
+gap> Up2DimensionalGroup( XSconj );
 [c5d->d10b]
-gap> Right2dGroup( XSact );
+gap> Right2DimensionalGroup( XSact );
 Actor[d10a->d20]
 gap> xpconj := CrossedPairing( XSconj );;
 gap> ImageElmCrossedPairing( xpconj, [ p2, p12 ] );
@@ -77,10 +77,10 @@ gap> ad20 := GroupHomomorphismByImages( d20, d20, [p1,p2], [p1,p2^p1] );;
 gap> ad10a := GroupHomomorphismByImages( d10a, d10a, [p1^2,p2], [p1^2,p2^p1] );;
 gap> ad10b := GroupHomomorphismByImages( d10b, d10b, [p1^2,p12], [p1^2,p12^p1] );;
 gap> idc5d := IdentityMapping( c5d );;
-gap> upconj := Up2dGroup( XSconj );;
-gap> leftconj := Left2dGroup( XSconj );; 
-gap> downconj := Down2dGroup( XSconj );; 
-gap> rightconj := Right2dGroup( XSconj );; 
+gap> upconj := Up2DimensionalGroup( XSconj );;
+gap> leftconj := Left2DimensionalGroup( XSconj );; 
+gap> downconj := Down2DimensionalGroup( XSconj );; 
+gap> rightconj := Right2DimensionalGroup( XSconj );; 
 gap> up := XModMorphismByHoms( upconj, upconj, idc5d, ad10b );
 [[c5d->d10b] => [c5d->d10b]]
 gap> left := XModMorphismByHoms( leftconj, leftconj, idc5d, ad10a );
@@ -107,14 +107,14 @@ Morphism of crossed squares :-
 : down-right: 
 [ [ ( 1, 2, 3, 4, 5, 6, 7, 8, 9,10), ( 2,10)( 3, 9)( 4, 8)( 5, 7) ], 
   [ ( 1, 2, 3, 4, 5, 6, 7, 8, 9,10), ( 1, 3)( 4,10)( 5, 9)( 6, 8) ] ]
-gap> IsAutomorphism3dDomain( autoconj );
+gap> IsAutomorphism3DimensionalDomain( autoconj );
 true
 gap> KnownPropertiesOfObject( autoconj );
 [ "CanEasilyCompareElements", "CanEasilySortElements", "IsTotal", 
   "IsSingleValued", "IsInjective", "IsSurjective", 
   "IsPreCrossedSquareMorphism", "IsPreCat2Morphism", 
-  "IsCrossedSquareMorphism", "IsEndomorphism3dDomain", 
-  "IsAutomorphism3dDomain" ]
+  "IsCrossedSquareMorphism", "IsEndomorphism3DimensionalDomain", 
+  "IsAutomorphism3DimensionalDomain" ]
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 
 #############################################################################

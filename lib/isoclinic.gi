@@ -214,7 +214,8 @@ function( TG, SH, RK )
 
     local  alpha, alp, T, s, s0, k, r, r0, h, list, one, cas;
 
-    ## if not ( IsSub2dDomain(TG,SH) and IsSub2dDomain(TG,RK) ) then 
+    ## if not ( IsSub2DimensionalDomain(TG,SH) 
+    ##          and IsSub2DimensionalDomain(TG,RK) ) then 
     ##     Error( "SH,RK not subcrossed modules of TG" ); 
     ## fi; 
     T := Source(TG);
@@ -396,50 +397,50 @@ end );
     
 #############################################################################
 ##
-#M  IsAbelian2dGroup . . . . . . . . . check that a crossed module is abelian
+#M  IsAbelian2DimensionalGroup . . . . check that a crossed module is abelian
 ##
-InstallMethod( IsAbelian2dGroup, "generic method for crossed modules", true, 
-    [ IsXMod ], 0,
+InstallMethod( IsAbelian2DimensionalGroup, 
+    "generic method for crossed modules", true, [ IsXMod ], 0,
 function( XM )
     return ( XM = CentreXMod( XM ) );
 end );
 
 #############################################################################
 ##
-#M  IsAspherical2dGroup . . . . . . check that a crossed module is aspherical
+#M  IsAspherical2DimensionalGroup . check that a crossed module is aspherical
 ##
-InstallMethod( IsAspherical2dGroup, "generic method for crossed modules", 
-    true, [ IsXMod ], 0,
+InstallMethod( IsAspherical2DimensionalGroup, 
+    "generic method for crossed modules", true, [ IsXMod ], 0,
 function( XM )
     return ( Size( Kernel( Boundary( XM ) ) ) = 1 ); 
 end );
 
 #############################################################################
 ##
-#M  IsSimplyConnected2dGroup . check that a crossed module is simply connected
+#M  IsSimplyConnected2DimensionalGroup . . check an xmod is simply connected
 ##
-InstallMethod( IsSimplyConnected2dGroup, "generic method for crossed modules", 
-    true, [ IsXMod ], 0,
+InstallMethod( IsSimplyConnected2DimensionalGroup, 
+    "generic method for crossed modules", true, [ IsXMod ], 0,
 function( XM )
     return ( Size( CoKernel( Boundary( XM ) ) ) = 1 );
 end );
 
 #############################################################################
 ##
-#M  IsFaithful2dGroup . . . . . . . . check that a crossed module is faithful
+#M  IsFaithful2DimensionalGroup . . . check that a crossed module is faithful
 ##
-InstallMethod( IsFaithful2dGroup, "generic method for crossed modules", true, 
-    [ IsXMod ], 0,
+InstallMethod( IsFaithful2DimensionalGroup, 
+    "generic method for crossed modules", true, [ IsXMod ], 0,
 function( XM )
     return ( Size( StabilizerSubgroupXMod( XM, Source( XM ), Range( XM ) ) ) = 1 ); 
 end );
 
 #############################################################################
 ##
-#M  IsNilpotent2dGroup  . . . . . . . . . . . check that an xmod is nilpotent
+#M  IsNilpotent2DimensionalGroup  . . . . . . check that an xmod is nilpotent
 ##
-InstallMethod( IsNilpotent2dGroup, "generic method for crossed modules", 
-    true, [ IsXMod ], 0,
+InstallMethod( IsNilpotent2DimensionalGroup, 
+    "generic method for crossed modules", true, [ IsXMod ], 0,
 function( XM )
 
     local  S, n, sonuc;
@@ -456,13 +457,13 @@ end );
 
 #############################################################################
 ##
-#M  NilpotencyClassOf2dGroup . . . . .  nilpotency degree of a crossed module
+#M  NilpotencyClassOf2DimensionalGroup . nilpotency degree of a crossed module
 ##
-InstallMethod( NilpotencyClassOf2dGroup, "generic method for crossed modules", 
-    true, [ IsXMod ], 0,
+InstallMethod( NilpotencyClassOf2DimensionalGroup, 
+    "generic method for crossed modules", true, [ IsXMod ], 0,
 function( XM )
 
-    if not IsNilpotent2dGroup( XM ) then
+    if not IsNilpotent2DimensionalGroup( XM ) then
         return 0;
     else
         return Length( LowerCentralSeries( XM ) ) - 1;        
@@ -474,7 +475,7 @@ end );
 #M  IsomorphismXMods  . . check that the given crossed modules are isomorphic
 ##
 InstallMethod( IsomorphismXMods, "generic method for crossed modules", true, 
-    [ Is2dGroup, Is2dGroup ], 0,
+    [ Is2DimensionalGroup, Is2DimensionalGroup ], 0,
 function(XM1,XM2)
 
     local  T1, G1, T2, G2, isoT, isoG, iterT, iterG, alp, ph, mor;
@@ -494,7 +495,7 @@ function(XM1,XM2)
         alp := isoT * NextIterator( iterT ); 
         while not IsDoneIterator( iterG ) do 
             ph := isoG * NextIterator( iterG ); 
-            mor := Make2dGroupMorphism( [ XM1, XM2, alp, ph ] ); 
+            mor := Make2DimensionalGroupMorphism( [ XM1, XM2, alp, ph ] ); 
             if ( not( mor = fail ) and IsPreXModMorphism( mor ) 
                                    and IsXModMorphism( mor ) ) then 
                 return mor; 
@@ -807,8 +808,8 @@ InstallMethod( AreIsoclinicDomains, "generic method for two groups or xmods",
 function( D1, D2 ) 
     local  iso;
     if not ( ( IsGroup(D1) and IsGroup(D2) ) or 
-             ( Is2dGroup(D1) and Is2dGroup(D2) ) ) then 
-        Error( "D1 and D2 should be groups or 2dgroups" ); 
+             ( Is2DimensionalGroup(D1) and Is2DimensionalGroup(D2) ) ) then 
+        Error( "D1 and D2 should be groups or 2DimensionalGroups" ); 
     fi; 
     iso := Isoclinism( D1, D2 );
     if ( ( iso = fail ) or ( iso = false ) ) then 
@@ -963,9 +964,9 @@ function( X1, X2 )
     autD2 := AutomorphismPermGroup( D2 ); 
 
     CX1 := CentralQuotient( X1 );
-    Q1 := Right2dGroup( CX1 );
+    Q1 := Right2DimensionalGroup( CX1 );
     CX2 := CentralQuotient( X2 ); 
-    Q2 := Right2dGroup( CX2 ); 
+    Q2 := Right2DimensionalGroup( CX2 ); 
     ## check condition 1 : require Q1 ~ Q2 
     isoQ := IsomorphismXMods( Q1, Q2 ); 
     if ( isoQ = fail ) then 
@@ -1044,7 +1045,7 @@ end );
 #M  IsoclinicXModFamily  . . . . all xmods in the list isoclinic to the xmod
 ##
 InstallMethod( IsoclinicXModFamily, "generic method for crossed modules", 
-    true, [ Is2dGroup, IsList ], 0,
+    true, [ Is2DimensionalGroup, IsList ], 0,
 function( XM, XM1_ler )
 
     local  sonuc, XM1;
@@ -1066,7 +1067,7 @@ end );
 #M  IsomorphicXModFamily  . . . all xmods in the list isomorphic to the xmod
 ##
 InstallMethod( IsomorphicXModFamily, "generic method for crossed modules", 
-    true, [ Is2dGroup, IsList ], 0,
+    true, [ Is2DimensionalGroup, IsList ], 0,
 function( XM, XM1_ler )
 
     local  sonuc, iso, XM1;
@@ -1130,7 +1131,7 @@ function(G)
 end );
 
 InstallOtherMethod( IsoclinicRank, "generic method for crossed modules", true, 
-    [ Is2dGroup ], 0,
+    [ Is2DimensionalGroup ], 0,
 function( XM )
 
     local  size, ZXMod, DXMod, QXMod, KXMod, m1, m2, l1, l2;
@@ -1167,7 +1168,7 @@ function(G)
 end );
 
 InstallOtherMethod( IsoclinicMiddleLength, 
-    "generic method for crossed modules", true, [ Is2dGroup ], 0,
+    "generic method for crossed modules", true, [ Is2DimensionalGroup ], 0,
 function( XM )
 
     local  size, ZXMod, DXMod, QXMod, KXMod;
@@ -1190,7 +1191,7 @@ end );
 #M  TableRowXMod  . .. . table row for isoclinism families of crossed modules
 ##
 InstallMethod( TableRowXMod, "generic method for crossed modules", true, 
-    [ Is2dGroup, IsList ], 0,
+    [ Is2DimensionalGroup, IsList ], 0,
 function(XM,XM_ler)
 
     local  Eler, Iler, i, j, sinif, B;
@@ -1203,8 +1204,10 @@ Print("-------------------------------------------------------------------------
 Print("Number","\t","Rank","\t\t","M. L.","\t\t","Class","\t","|G/Z|","\t\t",
       "|g2|","\t\t","|g3|","\t\t","|g4|","\t\t","|g5| \n");
 Print("---------------------------------------------------------------------------------------------------------------------------------- \n");
-Print(Length(sinif),"\t",IsoclinicRank( XM ),"\t",IsoclinicMiddleLength( XM ),"\t",
-      NilpotencyClassOf2dGroup( XM ),"\t",Size(FactorPreXMod(XM,CentreXMod( XM ))));    
+Print( Length(sinif), "\t", IsoclinicRank( XM ), "\t", 
+       IsoclinicMiddleLength( XM ), "\t",
+       NilpotencyClassOf2DimensionalGroup( XM ), "\t", 
+       Size( FactorPreXMod( XM, CentreXMod( XM ) ) ) );    
 
 if Length(B) > 1 then
 for i in [2..Length(B)] do
@@ -1216,11 +1219,3 @@ fi;
 Print("\n---------------------------------------------------------------------------------------------------------------------------------- \n");
 return sinif;
 end );
-
-
-
-
-
-
-
-

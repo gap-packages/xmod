@@ -2,7 +2,7 @@
 ##
 #W  gp2ind.tst                    XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2016, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2017, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 #############################################################################
@@ -48,7 +48,7 @@ gap> Y16 := XModByNormalSubgroup( d16, d8 );
 [d8->d16]
 gap> Y8 := SubXMod( Y16, c4, d8 );            
 [c4->d8]
-gap> inc8 := InclusionMorphism2dDomains( Y16, Y8 ); 
+gap> inc8 := InclusionMorphism2DimensionalDomains( Y16, Y8 ); 
 [[c4->d8] => [d8->d16]]
 gap> incd8 := RangeHom( inc8 );;
 gap> indY8 := InducedXMod( Y8, incd8 );

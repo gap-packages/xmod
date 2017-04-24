@@ -7,7 +7,7 @@
 ##
 #############################################################################
 
-Print("\nXMod test file isoclinic.g (version 05/04/17) :-\n\n");
+Print("\nXMod test file isoclinic.g (version 23/04/17) :-\n\n");
 Print("isoclinism tests\n\n" ); 
 level := InfoLevel( InfoXMod ); 
 SetInfoLevel( InfoXMod, 0 );
@@ -92,21 +92,25 @@ Print( "the central quotient of d24 is Q24 = ", Q24, "\n" );
 Print( "Q24 has size ", Size( Q24 ) );
 Print( " and structure ", StructureDescription( Q24 ), "\n\n" );  
 
-Print( "Xn4 is abelian? ", IsAbelian2dGroup(Xn4), "\n" ); 
-Print( "X24 is abelian? ", IsAbelian2dGroup(X24), "\n" );
+Print( "Xn4 is abelian? ", IsAbelian2DimensionalGroup(Xn4), "\n" ); 
+Print( "X24 is abelian? ", IsAbelian2DimensionalGroup(X24), "\n" );
 pos7 := Position( ids, [ [3,1], [6,1] ] );;
 Print( "nsx[", pos7, "] is the normal subcrossed module:\n" ); 
 Print( nsx[pos7], "\n" );
 Print( "this crossed module is aspherical? ", 
-        IsAspherical2dGroup(nsx[pos7]), "\n" );
-Print( "X24 is aspherical? ", IsAspherical2dGroup(X24), "\n" );
-Print( "Xn4 is simply connected? ", IsSimplyConnected2dGroup(Xn4), "\n" ); Print( "X24 is simply connected? ", IsSimplyConnected2dGroup(X24), "\n" );
-Print( "Xn4 is faithful? ", IsFaithful2dGroup(Xn4), "\n" ); 
-Print( "X24 is faithful? ", IsFaithful2dGroup(X24), "\n" ); 
+        IsAspherical2DimensionalGroup(nsx[pos7]), "\n" );
+Print( "X24 is aspherical? ", IsAspherical2DimensionalGroup(X24), "\n" );
+Print( "Xn4 is simply connected? ", 
+        IsSimplyConnected2DimensionalGroup(Xn4), "\n" ); 
+Print( "X24 is simply connected? ", 
+        IsSimplyConnected2DimensionalGroup(X24), "\n" );
+Print( "Xn4 is faithful? ", IsFaithful2DimensionalGroup(Xn4), "\n" ); 
+Print( "X24 is faithful? ", IsFaithful2DimensionalGroup(X24), "\n" ); 
 
 Print( "X24 has lower central series:\n", LowerCentralSeries(X24), "\n" );
-Print( "X24 is nilpotent? ", IsNilpotent2dGroup(X24), "\n" ); 
-Print( "X24 has nilpotency class ", NilpotencyClassOf2dGroup(X24), "\n\n" );
+Print( "X24 is nilpotent? ", IsNilpotent2DimensionalGroup(X24), "\n" ); 
+Print( "X24 has nilpotency class ", 
+        NilpotencyClassOf2DimensionalGroup(X24), "\n\n" );
 
 xc6s3 := AllXMods( SmallGroup(6,2), SmallGroup(6,1) );;   
 Print( "there are ", Length(xc6s3), " crossed modules with\n" ); 

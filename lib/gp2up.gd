@@ -5,35 +5,36 @@
 ##
 ##  This file contains declarations for UpMappings, Derivations and Sections
 ##
-#Y  Copyright (C) 2001-2016, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2017, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 ##############################################################################
 ##
-#C  IsUp2dMapping( <map> )
-#R  IsUp2dMappingRep( <map> )
-#O  Up2dMappingObj( <obj>, <ims> )
+#C  IsUp2DimensionalMapping( <map> )
+#R  IsUp2DimensionalMappingRep( <map> )
+#O  Up2DimensionalMappingObj( <obj>, <ims> )
 ##
 ##  A section|derivation is determined by a cat1-group|xmod + generator images
 ##
-DeclareCategory( "IsUp2dMapping", IsGeneralMapping );
-DeclareRepresentation( "IsUp2dMappingRep", IsUp2dMapping and 
-    IsAttributeStoringRep, [ "Object2d", "UpGeneratorImages", 
-                             "UpHomomorphism", "UpImagePositions" ] );
-DeclareOperation( "Up2dMappingObj", [ Is2dDomain, IsHomogeneousList ] );
+DeclareCategory( "IsUp2DimensionalMapping", IsGeneralMapping );
+DeclareRepresentation( "IsUp2DimensionalMappingRep", 
+    IsUp2DimensionalMapping and IsAttributeStoringRep, 
+    [ "Object2d", "UpGeneratorImages", "UpHomomorphism", "UpImagePositions" ] );
+DeclareOperation( "Up2DimensionalMappingObj", 
+    [ Is2DimensionalDomain, IsHomogeneousList ] );
 
 #############################################################################
 ##
-#C  IsUp2dMappingCollection . . . . . . . . . category of colls of up-2d-maps
-#C  IsUp2dMappingCollColl . . . . . . . . . . category of colls of colls 
-#C  IsUp2dMappingCollCollColl . . . . . . . . category of colls, colls, colls
-#V  Up2dMappingFamily . . . . . . . . . . family for derivations and sections
+#C  IsUp2DimensionalMappingCollection . . . . category of colls of up-2d-maps
+#C  IsUp2DimensionalMappingCollColl . . . . . . .  category of colls of colls 
+#C  IsUp2DimensionalMappingCollCollColl . . . category of colls, colls, colls
+#V  Up2DimensionalMappingFamily . . . . . family for derivations and sections
 ##
-DeclareCategoryCollections( "IsUp2dMapping" );
-DeclareCategoryCollections( "IsUp2dMappingCollection" );
-DeclareCategoryCollections( "IsUp2dMappingCollColl" );
-BindGlobal( "Up2dMappingFamily", 
-    NewFamily( "Up2dMappingFamily", IsUp2dMapping, 
+DeclareCategoryCollections( "IsUp2DimensionalMapping" );
+DeclareCategoryCollections( "IsUp2DimensionalMappingCollection" );
+DeclareCategoryCollections( "IsUp2DimensionalMappingCollColl" );
+BindGlobal( "Up2DimensionalMappingFamily", 
+    NewFamily( "Up2DimensionalMappingFamily", IsUp2DimensionalMapping, 
                CanEasilySortElements, CanEasilySortElements ) ); 
 
 ##############################################################################
@@ -43,18 +44,18 @@ BindGlobal( "Up2dMappingFamily",
 #A  UpGeneratorImages( <map> )
 #A  UpImagePositions( <map> )
 ##
-DeclareAttribute( "Object2d", IsUp2dMapping ); 
-DeclareAttribute( "UpHomomorphism", IsUp2dMapping ); 
-DeclareAttribute( "UpGeneratorImages", IsUp2dMapping );
-DeclareAttribute( "UpImagePositions", IsUp2dMapping );
+DeclareAttribute( "Object2d", IsUp2DimensionalMapping ); 
+DeclareAttribute( "UpHomomorphism", IsUp2DimensionalMapping ); 
+DeclareAttribute( "UpGeneratorImages", IsUp2DimensionalMapping );
+DeclareAttribute( "UpImagePositions", IsUp2DimensionalMapping );
 
 #############################################################################
 ##
 #P  IsDerivation( <map> )
 #P  IsSection( <map> )
 ##
-DeclareProperty( "IsDerivation", IsUp2dMapping );
-DeclareProperty( "IsSection", IsUp2dMapping );
+DeclareProperty( "IsDerivation", IsUp2DimensionalMapping );
+DeclareProperty( "IsSection", IsUp2DimensionalMapping );
 
 
 ##############################################################################
@@ -66,8 +67,10 @@ DeclareProperty( "IsSection", IsUp2dMapping );
 #O  DerivationByImages                                     sets up the mapping
 #O  DerivationByImagesNC                                   sets up the mapping
 ##
-DeclareOperation( "DerivationByImages", [ Is2dDomain, IsHomogeneousList ] );
-DeclareOperation( "DerivationByImagesNC", [ Is2dDomain, IsHomogeneousList ] );
+DeclareOperation( "DerivationByImages", 
+    [ Is2DimensionalDomain, IsHomogeneousList ] );
+DeclareOperation( "DerivationByImagesNC", 
+    [ Is2DimensionalDomain, IsHomogeneousList ] );
 ##  usage: DerivationByImages( XM, im, [, true|false ] )
 
 ##############################################################################
@@ -108,9 +111,9 @@ DeclareProperty( "IsRegularDerivation", IsDerivation );
 #A  RangeEndomorphism        upmapping determines endomorphism of range group
 #A  Object2dEndomorphism     upmapping determines endomorphism of xmod or cat1
 ##
-DeclareAttribute( "SourceEndomorphism", IsUp2dMapping );
-DeclareAttribute( "RangeEndomorphism", IsUp2dMapping );
-DeclareAttribute( "Object2dEndomorphism", IsUp2dMapping );
+DeclareAttribute( "SourceEndomorphism", IsUp2DimensionalMapping );
+DeclareAttribute( "RangeEndomorphism", IsUp2DimensionalMapping );
+DeclareAttribute( "Object2dEndomorphism", IsUp2DimensionalMapping );
 
 #############################################################################
 ##
@@ -134,8 +137,10 @@ DeclareOperation( "ListInverseDerivations", [ IsXMod ] );
 #O  SectionByImages                                   sets up GroupHomByImages
 #O  SectionByImagesNC                                 sets up GroupHomByImages
 ##
-DeclareOperation( "SectionByImages", [ Is2dDomain, IsGroupHomomorphism ] );
-DeclareOperation( "SectionByImagesNC", [ Is2dDomain, IsGroupHomomorphism ] );
+DeclareOperation( "SectionByImages", 
+    [ Is2DimensionalDomain, IsGroupHomomorphism ] );
+DeclareOperation( "SectionByImagesNC", 
+    [ Is2DimensionalDomain, IsGroupHomomorphism ] );
 ##  usage: SectionByImages( C, im, [, true|false ] )
 
 ##############################################################################
@@ -157,14 +162,14 @@ DeclareOperation( "CompositeSection", [ IsSection, IsSection ] );
 
 #############################################################################
 ##
-#P  IsMonoidOfUp2dMappings( <obj> )
-#R  IsMonoidOfUp2dMappingsObj( <obj> )
+#P  IsMonoidOfUp2DimensionalMappings( <obj> )
+#R  IsMonoidOfUp2DimensionalMappingsObj( <obj> )
 ##
-##  An Up2dMappings record stores images lists and composition table
+##  An Up2DimensionalMappings record stores images lists and composition table
 ##
-DeclareProperty( "IsMonoidOfUp2dMappings", IsObject );
-DeclareRepresentation( "IsMonoidOfUp2dMappingsObj",
-    IsMonoidOfUp2dMappings and IsAttributeStoringRep,
+DeclareProperty( "IsMonoidOfUp2DimensionalMappings", IsObject );
+DeclareRepresentation( "IsMonoidOfUp2DimensionalMappingsObj",
+    IsMonoidOfUp2DimensionalMappings and IsAttributeStoringRep,
     [ "Object2d", "ImagesList" ] );
 
 ##############################################################################
@@ -173,20 +178,20 @@ DeclareRepresentation( "IsMonoidOfUp2dMappingsObj",
 #A  AllOrRegular                                    type of derivations record
 #A  ImagesTable                                   returns lists of image lists
 ##
-DeclareAttribute( "ImagesList", IsMonoidOfUp2dMappings );
-DeclareAttribute( "AllOrRegular", IsMonoidOfUp2dMappings );
-DeclareAttribute( "ImagesTable", IsMonoidOfUp2dMappings );
+DeclareAttribute( "ImagesList", IsMonoidOfUp2DimensionalMappings );
+DeclareAttribute( "AllOrRegular", IsMonoidOfUp2DimensionalMappings );
+DeclareAttribute( "ImagesTable", IsMonoidOfUp2DimensionalMappings );
 
 #############################################################################
 ##
-#O  MonoidOfUp2dMappingsObj( <obj>, <images>, <str> )
+#O  MonoidOfUp2DimensionalMappingsObj( <obj>, <images>, <str> )
 #P  IsMonoidOfDerivations                               
 #P  IsMonoidOfSections
 ##
-DeclareOperation( "MonoidOfUp2dMappingsObj",
-    [ Is2dDomain, IsHomogeneousList, IsString ] );
-DeclareProperty( "IsMonoidOfDerivations", IsMonoidOfUp2dMappings );
-DeclareProperty( "IsMonoidOfSections", IsMonoidOfUp2dMappings );
+DeclareOperation( "MonoidOfUp2DimensionalMappingsObj",
+    [ Is2DimensionalDomain, IsHomogeneousList, IsString ] );
+DeclareProperty( "IsMonoidOfDerivations", IsMonoidOfUp2DimensionalMappings );
+DeclareProperty( "IsMonoidOfSections", IsMonoidOfUp2DimensionalMappings );
 
 ##############################################################################
 ##
@@ -216,7 +221,7 @@ DeclareOperation( "BacktrackSectionsJ", [ IsRecord, IsInt, IsObject, IsInt ] );
 #A  WhiteheadMonoidTable( XM )               Table of products of derivations
 #A  WhiteheadGroupTable( XM )        Table of products of regular derivations
 ##
-##  ?? should these refer just to 2dDomains ??
+##  ?? should these refer just to 2DimensionalDomains ??
 ##
 DeclareAttribute( "WhiteheadMonoidTable", IsXMod );
 DeclareAttribute( "WhiteheadGroupTable", IsXMod );

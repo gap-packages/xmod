@@ -39,7 +39,7 @@
 ##
 ##  #A  InducedXModData( <IX> )
 ##
-##  DeclareAttribute( "InducedXModData", Is2dDomain, "mutable" );
+##  DeclareAttribute( "InducedXModData", Is2DimensionalDomain, "mutable" );
 
 #############################################################################
 ##

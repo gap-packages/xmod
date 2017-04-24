@@ -639,9 +639,9 @@ InstallGlobalFunction( IsomorphismPermObject, function( obj )
     if IsGroup( obj ) then
         return IsomorphismPermGroup( obj );
     elif IsPreXMod( obj ) then
-        return IsomorphismPerm2dGroup( obj );
+        return IsomorphismPerm2DimensionalGroup( obj );
     elif IsPreCat1( obj ) then
-        return IsomorphismPerm2dGroup( obj );
+        return IsomorphismPerm2DimensionalGroup( obj );
     else
         return fail;
     fi;
@@ -651,9 +651,9 @@ InstallGlobalFunction( IsomorphismFpObject, function( obj )
     if IsGroup( obj ) then
         return IsomorphismFpGroup( obj );
     elif IsPreXMod( obj ) then
-        return IsomorphismFp2dGroup( obj );
+        return IsomorphismFp2DimensionalGroup( obj );
     elif IsPreCat1( obj ) then
-        return IsomorphismFp2dGroup( obj );
+        return IsomorphismFp2DimensionalGroup( obj );
     else
         return fail;
     fi;
@@ -663,9 +663,9 @@ InstallGlobalFunction( IsomorphismPcObject, function( obj )
     if IsGroup( obj ) then
         return IsomorphismPcGroup( obj );
     elif IsPreXMod( obj ) then
-        return IsomorphismPc2dGroup( obj );
+        return IsomorphismPc2DimensionalGroup( obj );
     elif IsPreCat1( obj ) then
-        return IsomorphismPc2dGroup( obj );
+        return IsomorphismPc2DimensionalGroup( obj );
     else
         return fail;
     fi;

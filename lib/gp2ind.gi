@@ -90,15 +90,18 @@ function( X1, X2 )
     caut := Group( imcact );
     cact := GroupHomomorphismByImages( R, caut, genR, imcact ); 
     prexmod := PreXModByBoundaryAndAction( cbdy, cact ); 
-    Info( InfoXMod, 1, "prexmod is ", StructureDescription(prexmod) ); 
-    emor1 := Make2dGroupMorphism( [ X1, prexmod, emb1, idR ] ); 
+    Info( InfoXMod, 1, "prexmod is ", 
+        StructureDescription( prexmod:nice ), ", ", IdGroup( prexmod ) ); 
+    emor1 := Make2DimensionalGroupMorphism( [ X1, prexmod, emb1, idR ] ); 
     ok := IsPreXModMorphism( emor1 ); 
-    emor2 := Make2dGroupMorphism( [ X2, prexmod, emb2, idR ] ); 
+    emor2 := Make2DimensionalGroupMorphism( [ X2, prexmod, emb2, idR ] ); 
     ok := IsPreXModMorphism( emor2 ); 
     peiffer := PeifferSubgroup( prexmod ); 
-    Info( InfoXMod, 1, "peiffer subgroup is ", StructureDescription(peiffer) ); 
+    Info( InfoXMod, 1, "peiffer subgroup is ", 
+        StructureDescription( peiffer:nice ), ", ", IdGroup( peiffer ) ); 
     coprod := XModByPeifferQuotient( prexmod ); 
-    Info( InfoXMod, 1, "the coproduct is ", StructureDescription(coprod) ); 
+    Info( InfoXMod, 1, "the coproduct is ", 
+        StructureDescription( coprod:nice ), ", ", IdGroup( coprod ) ); 
     if HasProjectionOfFactorPreXMod( coprod ) then 
         pmor := ProjectionOfFactorPreXMod( coprod ); 
         ok := IsPreXModMorphism( pmor ); 
@@ -136,7 +139,7 @@ InstallGlobalFunction( InducedXMod, function( arg )
         return fail;
     fi;
     T := [ ];
-    if ( Is2dDomain( arg[1] ) and IsXMod( arg[1] ) ) then
+    if ( Is2DimensionalDomain( arg[1] ) and IsXMod( arg[1] ) ) then
         X0 := arg[1];
         M := Source( X0 );
         P := Range( X0 );
@@ -749,7 +752,7 @@ function( X0, iota )
 
     R := Range( X0 );
     S := Source( X0 );
-    ispc := IsPc2dGroup( X0 ); 
+    ispc := IsPc2DimensionalGroup( X0 ); 
     genS := GeneratorsOfGroup( S );
     bdy := Boundary( X0 );
     act := XModAction( X0 );
@@ -773,7 +776,7 @@ function( X0, iota )
     rcos := RightCosets( S, H );
     reps := List( rcos, r -> Representative( r ) );
     imb := List( genS, r -> Image( iota, Image( bdy, r ) ) );
-    #? (06/07/10) modified to make Pc2dDomain 
+    #? (06/07/10) modified to make Pc2DimensionalDomain 
     PI := Action( S, rcos, OnRight ); 
     actPI := ActionHomomorphism( S, PI ); 
     if ispc then 

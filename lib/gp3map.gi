@@ -2,58 +2,60 @@
 ##
 #W  gp3map.gi                    GAP4package `XMod'              Chris Wensley
 ##                                                                Alper Odabas
-##  This file implements functions for 3dMappings for (pre-)crossed squares 
-##  and (pre-)cat2-groups. 
+##  This file implements functions for 3Dimensional Mappings for 
+##  (pre-)crossed squares and (pre-)cat2-groups. 
 ##
-#Y  Copyright (C) 2001-2016, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2017, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 ##############################################################################
 ##
-#M  Make3dGroupMorphism( <src>, <rng>, <up>, <lt>, <rt>, <dn> ) . 3d-group map
+#M  Make3DimensionalGroupMorphism( <src>, <rng>, <up>, <lt>, <rt>, <dn> ) 
 ##
-InstallMethod( Make3dGroupMorphism,
+InstallMethod( Make3DimensionalGroupMorphism,
     "for two 3d-objects and four 2d-morphisms", true, 
-    [ Is3dGroup, Is3dGroup, Is2dGroupMorphism, Is2dGroupMorphism, 
-                            Is2dGroupMorphism, Is2dGroupMorphism ], 0,
+    [ Is3DimensionalGroup, Is3DimensionalGroup, Is2DimensionalGroupMorphism, 
+      Is2DimensionalGroupMorphism, Is2DimensionalGroupMorphism, 
+      Is2DimensionalGroupMorphism ], 0,
 function( src, rng, upmor, leftmor, rightmor, downmor )
 
     local  filter, fam, mor;
 
-    fam := Family3dGroupMorphism;
-    filter := Is3dMappingRep;
+    fam := Family3DimensionalGroupMorphism;
+    filter := Is3DimensionalMappingRep;
     mor := rec();
     ObjectifyWithAttributes( mor, 
       NewType( fam, filter ),
       Source, src,
       Range, rng,
-      Up2dMorphism, upmor,
-      Left2dMorphism, leftmor, 
-      Right2dMorphism, rightmor, 
-      Down2dMorphism, downmor );
+      Up2DimensionalMorphism, upmor,
+      Left2DimensionalMorphism, leftmor, 
+      Right2DimensionalMorphism, rightmor, 
+      Down2DimensionalMorphism, downmor );
     return mor; 
 end );
 
 ##############################################################################
 ##
-#M  Make3dGroupMorphism( <src>, <rng>, <up>, <lt>, <rt>, <dn> ) . 3d-group map
+#M  Make3DimensionalGroupMorphism( <src>, <rng>, <up>, <lt>, <rt>, <dn> ) 
 ##
-InstallMethod( Make3dGroupMorphism,
+InstallMethod( Make3DimensionalGroupMorphism,
     "for two 3d-objects and four 2d-morphisms", true, 
-    [ Is3dGroup, Is3dGroup, Is2dGroupMorphism, Is2dGroupMorphism ], 0,
+    [ Is3DimensionalGroup, Is3DimensionalGroup, Is2DimensionalGroupMorphism, 
+      Is2DimensionalGroupMorphism ], 0,
 function( src, rng, upmor, downmor )
 
     local  filter, fam, mor;
 
-    fam := Family3dGroupMorphism;
-    filter := Is3dMappingRep;
+    fam := Family3DimensionalGroupMorphism;
+    filter := Is3DimensionalMappingRep;
     mor := rec();
     ObjectifyWithAttributes( mor, 
       NewType( fam, filter ),
       Source, src,
       Range, rng,
-      Up2dMorphism, upmor,
-      Down2dMorphism, downmor );
+      Up2DimensionalMorphism, upmor,
+      Down2DimensionalMorphism, downmor );
     return mor; 
 end );
 
@@ -64,7 +66,7 @@ end );
 ##
 InstallMethod( IsPreCrossedSquareMorphism,
     "generic method for pre-crossed module homomorphisms", true, 
-    [ Is3dGroupMorphism ], 0,
+    [ Is3DimensionalGroupMorphism ], 0,
 function( mor )
 
     local  PS, QS, upmor, ltmor, dnmor, rtmor, ok;
@@ -75,10 +77,10 @@ function( mor )
         return false;
     fi;
     ### (1) check that the morphisms commute
-    upmor := Up2dMorphism( mor );
-    ltmor := Left2dMorphism( mor );
-    dnmor := Down2dMorphism( mor );
-    rtmor := Right2dMorphism( mor );
+    upmor := Up2DimensionalMorphism( mor );
+    ltmor := Left2DimensionalMorphism( mor );
+    dnmor := Down2DimensionalMorphism( mor );
+    rtmor := Right2DimensionalMorphism( mor );
     ok := ( ( SourceHom( upmor ) = SourceHom( ltmor ) ) and
             ( RangeHom( upmor ) = SourceHom( rtmor ) ) and
             ( RangeHom( ltmor ) = SourceHom( dnmor ) ) and
@@ -87,7 +89,8 @@ function( mor )
         return false;
     fi;
     ### (2) check the remaining axioms
-    Info( InfoXMod, 1, "Warning: IsPreCrossedSquareMorphism not fully implemented!" );
+    Info( InfoXMod, 1, 
+        "Warning: IsPreCrossedSquareMorphism not fully implemented!" );
     return true;
 end );
 
@@ -99,18 +102,20 @@ InstallMethod( IsCrossedSquareMorphism,
     "generic method for pre-crossed square morphisms", true, 
     [ IsPreCrossedSquareMorphism ], 0,
 function( mor )
-    return ( IsCrossedSquare( Source( mor ) ) and IsCrossedSquare(  Range( mor ) ) );
+    return ( IsCrossedSquare( Source( mor ) ) 
+             and IsCrossedSquare(  Range( mor ) ) );
 end );
 
 InstallMethod( IsCrossedSquareMorphism, "generic method for 3d-mappings", true,
-    [ Is3dGroupMorphism ], 0,
+    [ Is3DimensionalGroupMorphism ], 0,
 function( mor )
     local  ispre;
     ispre := IsPreCrossedSquareMorphism( mor );
     if not ispre then
         return false;
     else
-        return ( IsCrossedSquare( Source( mor ) ) and IsCrossedSquare(  Range( mor ) ) );
+        return ( IsCrossedSquare( Source( mor ) ) 
+                 and IsCrossedSquare(  Range( mor ) ) );
     fi;
 end );
 
@@ -120,7 +125,7 @@ end );
 ##
 InstallMethod( IsPreCat2Morphism,
     "generic method for pre-cat2 homomorphisms", true, 
-    [ Is3dGroupMorphism ], 0,
+    [ Is3DimensionalGroupMorphism ], 0,
 function( mor )
 
     local  PC, QC, upmor, dnmor, ok, d1, d2, u1, u2;
@@ -130,29 +135,29 @@ function( mor )
     if not ( IsPreCat2( PC ) and IsPreCat2( QC ) ) then
         return false;
     fi;
-	
-	upmor := Up2dMorphism( mor );
-    dnmor := Down2dMorphism( mor );
+    
+    upmor := Up2DimensionalMorphism( mor );
+    dnmor := Down2DimensionalMorphism( mor );
     if not ( IsPreCat1Morphism( upmor ) and IsPreCat1Morphism( dnmor ) ) then
         return false;
     fi;
-	
-	u1 := Up2dGroup( PC );
-	d1 := Down2dGroup( PC );
-	u2 := Up2dGroup( QC );
-	d2 := Down2dGroup( QC );
-	
-	if not (( Source( RangeHom( upmor ) ) = Range( u1 ) ) and 
-			( Source( RangeHom( dnmor ) ) = Range( d1 ) ) and 
-			( Range( RangeHom( upmor ) ) = Range( u2 ) ) and 
-			( Range( RangeHom( dnmor ) ) = Range( d2 ) )) then
+    
+    u1 := Up2DimensionalGroup( PC );
+    d1 := Down2DimensionalGroup( PC );
+    u2 := Up2DimensionalGroup( QC );
+    d2 := Down2DimensionalGroup( QC );
+    
+    if not (( Source( RangeHom( upmor ) ) = Range( u1 ) ) and 
+            ( Source( RangeHom( dnmor ) ) = Range( d1 ) ) and 
+            ( Range( RangeHom( upmor ) ) = Range( u2 ) ) and 
+            ( Range( RangeHom( dnmor ) ) = Range( d2 ) )) then
         return false;
     fi;
-	
+    
     ok := ( SourceHom( upmor ) = SourceHom( dnmor ) );
     if not ok then
-		# The cause of the wrong result : SmallGroup(n,m) <> SmallGroup(n,m) 
-		Print("Problem of equality of morphism \n");
+        # The cause of the wrong result : SmallGroup(n,m) <> SmallGroup(n,m) 
+        Print("Problem of equality of morphism \n");
         return false;
     fi;
     return true;
@@ -170,7 +175,7 @@ function( mor )
 end );
 
 InstallMethod( IsCat2Morphism, "generic method for 3d-mappings", true,
-    [ Is3dGroupMorphism ], 0,
+    [ Is3DimensionalGroupMorphism ], 0,
 function( mor )
     local  ispre;
     ispre := IsPreCat2Morphism( mor );
@@ -187,47 +192,54 @@ end );
 ##
 InstallMethod( \=,
     "generic method for two 3d-morphisms",
-    IsIdenticalObj, [ Is3dMapping, Is3dMapping ], 0,
+    IsIdenticalObj, [ Is3DimensionalMapping, Is3DimensionalMapping ], 0,
     function ( mor, phi )
-	
-	if ( IsPreCat2Morphism( mor ) and IsPreCat2Morphism( phi ) ) then
-	    return ( ( Source( mor ) = Source( phi ) )
+    
+    if ( IsPreCat2Morphism( mor ) and IsPreCat2Morphism( phi ) ) then
+        return ( ( Source( mor ) = Source( phi ) )
              and ( Range( mor ) = Range( phi ) )
-             and ( Up2dMorphism( mor ) = Up2dMorphism( phi ) )
-             and ( Down2dMorphism( mor ) = Down2dMorphism( phi ) ) );
+             and ( Up2DimensionalMorphism( mor ) 
+                   = Up2DimensionalMorphism( phi ) )
+             and ( Down2DimensionalMorphism( mor ) 
+                   = Down2DimensionalMorphism( phi ) ) );
     else
-	    return ( ( Source( mor ) = Source( phi ) )
+        return ( ( Source( mor ) = Source( phi ) )
              and ( Range( mor ) = Range( phi ) )
-             and ( Up2dMorphism( mor ) = Up2dMorphism( phi ) )
-             and ( Left2dMorphism( mor ) = Left2dMorphism( phi ) )
-             and ( Right2dMorphism( mor ) = Right2dMorphism( phi ) )
-             and ( Down2dMorphism( mor ) = Down2dMorphism( phi ) ) );
-	fi;
+             and ( Up2DimensionalMorphism( mor ) 
+                   = Up2DimensionalMorphism( phi ) )
+             and ( Left2DimensionalMorphism( mor ) 
+                   = Left2DimensionalMorphism( phi ) )
+             and ( Right2DimensionalMorphism( mor ) 
+                   = Right2DimensionalMorphism( phi ) )
+             and ( Down2DimensionalMorphism( mor ) 
+                   = Down2DimensionalMorphism( phi ) ) );
+    fi;
 end );
 
 #############################################################################
 ##
-#F  MappingGeneratorsImages( <map> ) . . . . . . . . . . . .  for a 3dMapping
+#F  MappingGeneratorsImages( <map> ) . . . . . . . . . . . .  for a 3DimensionalMapping
 ##
-InstallOtherMethod( MappingGeneratorsImages, "for a 3dMapping", true,
-    [ Is3dMapping ], 0,
+InstallOtherMethod( MappingGeneratorsImages, "for a 3DimensionalMapping", true,
+    [ Is3DimensionalMapping ], 0,
     function( map )
-	if ( IsPreCat2Morphism( map ) ) then
-		return [ MappingGeneratorsImages( Up2dMorphism( map ) ),
-				MappingGeneratorsImages( Down2dMorphism( map ) ) ];
+    if ( IsPreCat2Morphism( map ) ) then
+        return [ MappingGeneratorsImages( Up2DimensionalMorphism( map ) ), 
+                 MappingGeneratorsImages( Down2DimensionalMorphism( map ) ) ];
     else
-		return [ MappingGeneratorsImages( Up2dMorphism( map ) ),
-				MappingGeneratorsImages( Left2dMorphism( map ) ),
-				MappingGeneratorsImages( Right2dMorphism( map ) ),
-				MappingGeneratorsImages( Down2dMorphism( map ) ) ];
-	fi;
+        return [ MappingGeneratorsImages( Up2DimensionalMorphism( map ) ), 
+                 MappingGeneratorsImages( Left2DimensionalMorphism( map ) ), 
+                 MappingGeneratorsImages( Right2DimensionalMorphism( map ) ), 
+                 MappingGeneratorsImages( Down2DimensionalMorphism( map ) ) ];
+    fi;
 end );
 
 #############################################################################
 ##
-#M  Name                                                       for a pre-CrossedSquare
+#M  Name                                              for a pre-CrossedSquare
 ##
-InstallMethod( Name, "method for a 3d-mapping", true, [ Is3dMapping ], 0,
+InstallMethod( Name, "method for a 3d-mapping", true, 
+    [ Is3DimensionalMapping ], 0,
 function( mor )
 
     local  nsrc, nrng, name;
@@ -252,17 +264,19 @@ end );
 #F  Display( <mor> ) . . . . . . . . . print details of a 3d-group moprphism 
 ##
 InstallMethod( Display, "display a morphism of 3d-groups", true,
-    [ Is3dGroupMorphism ], 0,
+    [ Is3DimensionalGroupMorphism ], 0,
     function( mor )
 
     local  upmor, downmor, P, Q;
 
     P := Source( mor );
     Q := Range( mor );
-    upmor := Up2dMorphism( mor );
-    downmor := Down2dMorphism( mor );
-    if ( HasIsPreCrossedSquareMorphism( mor ) and IsPreCrossedSquareMorphism( mor ) ) then 
-        if ( HasIsCrossedSquareMorphism( mor ) and IsCrossedSquareMorphism( mor ) ) then
+    upmor := Up2DimensionalMorphism( mor );
+    downmor := Down2DimensionalMorphism( mor );
+    if ( HasIsPreCrossedSquareMorphism( mor ) and 
+         IsPreCrossedSquareMorphism( mor ) ) then 
+        if ( HasIsCrossedSquareMorphism( mor ) and 
+            IsCrossedSquareMorphism( mor ) ) then
             Print( "Morphism of crossed squares :- \n" );
         else
             Print( "Morphism of pre-crossed squares :- \n" );
@@ -298,16 +312,16 @@ end );
 #M  IdentityMapping( <obj> )
 ##
 InstallOtherMethod( IdentityMapping, "for 3d-group object", true,
-    [ Is3dGroup ], 0,
+    [ Is3DimensionalGroup ], 0,
 function( obj )
 
     local  up, lt, dn, rt;
 
-    up := IdentityMapping( Up2dGroup( obj ) );
-    dn := IdentityMapping( Down2dGroup( obj ) );
+    up := IdentityMapping( Up2DimensionalGroup( obj ) );
+    dn := IdentityMapping( Down2DimensionalGroup( obj ) );
     if ( HasIsPreCrossedSquare( obj ) and IsPreCrossedSquare( obj ) ) then
-		lt := IdentityMapping( Left2dGroup( obj ) );
-		rt := IdentityMapping( Right2dGroup( obj ) );
+        lt := IdentityMapping( Left2DimensionalGroup( obj ) );
+        rt := IdentityMapping( Right2DimensionalGroup( obj ) );
         return PreCrossedSquareMorphismByMorphisms( obj, obj, up, lt, rt, dn );
     elif ( HasIsPreCat2( obj ) and IsPreCat2( obj ) ) then
         return PreCat2MorphismByMorphisms( obj, obj, up, dn );
@@ -315,22 +329,26 @@ function( obj )
         return fail;
     fi;
 end );
-
+    
 ##############################################################################
 ##
-#M  InclusionMorphism3dDomains( <obj>, <sub> )
+#M  InclusionMorphism3DimensionalDomains( <obj>, <sub> )
 ##
-InstallMethod( InclusionMorphism3dDomains, "of one 3d-object in another", 
-    true, [ Is3dDomain, Is3dDomain ], 0,
+InstallMethod( InclusionMorphism3DimensionalDomains, "of one 3d-object in another", 
+    true, [ Is3DimensionalDomain, Is3DimensionalDomain ], 0,
 function( obj, sub )
 
     local  up, lt, rt, dn;
 
-    up := InclusionMorphism2dDomains( Up2dGroup(obj), Up2dGroup(sub) );
-    dn := InclusionMorphism2dDomains( Down2dGroup(obj), Down2dGroup(sub) );	
+    up := InclusionMorphism2DimensionalDomains( Up2DimensionalGroup(obj), 
+              Up2DimensionalGroup(sub) );
+    dn := InclusionMorphism2DimensionalDomains( Down2DimensionalGroup(obj), 
+              Down2DimensionalGroup(sub) );    
     if IsPreCrossedSquare( obj ) then
-		lt := InclusionMorphism2dDomains( Left2dGroup(obj), Left2dGroup(sub) );
-		rt := InclusionMorphism2dDomains( Right2dGroup(obj), Right2dGroup(sub) );
+        lt := InclusionMorphism2DimensionalDomains( Left2DimensionalGroup(obj), 
+              Left2DimensionalGroup(sub) );
+        rt := InclusionMorphism2DimensionalDomains( Right2DimensionalGroup(obj), 
+              Right2DimensionalGroup(sub) );
         return PreCrossedSquareMorphismByMorphisms( sub, obj, up, lt, rt, dn );
     elif IsPreCat2( obj ) then
         return PreCat2MorphismByMorphisms( sub, obj, up, dn );
@@ -395,7 +413,7 @@ function( src, rng, up, lt, rt, dn )
 
     local  filter, fam, mor, ok, nsrc, nrng, name;
 
-    mor := Make3dGroupMorphism( src, rng, up, lt, rt, dn );
+    mor := Make3DimensionalGroupMorphism( src, rng, up, lt, rt, dn );
     if not IsPreCrossedSquareMorphism( mor ) then
         Info( InfoXMod, 2, "not a morphism of pre-crossed squares.\n" );
         return fail;
@@ -415,7 +433,7 @@ function( src, rng, up, dn )
 
     local  filter, fam, mor, ok, nsrc, nrng, name;
 
-    mor := Make3dGroupMorphism( src, rng, up, dn );
+    mor := Make3DimensionalGroupMorphism( src, rng, up, dn );
     if not IsPreCat2Morphism( mor ) then
         Info( InfoXMod, 2, "not a morphism of pre-cat2.\n" );
         return fail;
@@ -464,7 +482,7 @@ end );
 #M  CompositionMorphism  . . . . . . . . . . . . . . . . . for two 3d-mappings
 ##
 InstallOtherMethod( CompositionMorphism, "generic method for 3d-mappings",
-    IsIdenticalObj, [ Is3dMapping, Is3dMapping ], 0,
+    IsIdenticalObj, [ Is3DimensionalMapping, Is3DimensionalMapping ], 0,
 function( m2, m1 )
 
     local  up, lt, rt, dn, comp, ok;
@@ -473,10 +491,12 @@ function( m2, m1 )
         Info( InfoXMod, 2, "Range(m1) <> Source(m2)" );
         return fail;
     fi;
-    up := CompositionMapping( Up2dMorphism(m2), Up2dMorphism(m1) );
-    dn := CompositionMapping( Down2dMorphism(m2), Down2dMorphism(m1) );
+    up := CompositionMapping( Up2DimensionalMorphism(m2), 
+                              Up2DimensionalMorphism(m1) );
+    dn := CompositionMapping( Down2DimensionalMorphism(m2), 
+                              Down2DimensionalMorphism(m1) );
     if IsPreCat2( Source( m1 ) ) then
-		comp := Make3dMapping( Source( m1 ), Range( m2 ), up, dn );
+        comp := Make3DimensionalMapping( Source( m1 ), Range( m2 ), up, dn );
         if ( IsPreCat2Morphism( m1 ) and IsPreCat2Morphism( m2 ) ) then
             SetIsPreCat2Morphism( comp, true );
         fi;
@@ -484,9 +504,11 @@ function( m2, m1 )
             SetIsCat2Morphism( comp, true );
         fi;
     else
-		lt := CompositionMapping( Left2dMorphism(m2), Left2dMorphism(m1) );
-		rt := CompositionMapping( Right2dMorphism(m2), Right2dMorphism(m1) );
-		comp := Make3dMapping( Source( m1 ), Range( m2 ), up, lt, rt, dn );
+        lt := CompositionMapping( Left2DimensionalMorphism(m2), 
+                                  Left2DimensionalMorphism(m1) );
+        rt := CompositionMapping( Right2DimensionalMorphism(m2), 
+                                  Right2DimensionalMorphism(m1) );
+        comp := Make3DimensionalMapping( Source( m1 ), Range( m2 ), up, lt, rt, dn );
         if ( IsPreCrossedSquareMorphism( m1 ) and IsPreCrossedSquareMorphism( m2 ) ) then
             SetIsPreCrossedSquareMorphism( comp, true );
         fi;
@@ -503,21 +525,24 @@ end );
 #M  Order . . . . . . . . . . . . . . . . . . . . . . . . . . for a 3d-mapping
 ##
 InstallOtherMethod( Order, "generic method for 3d-mapping", true, 
-    [ Is3dMapping ], 0,
+    [ Is3DimensionalMapping ], 0,
 function( mor )
 
     local ok;
 
-    if not ( IsEndomorphism3dDomain( mor ) and IsBijective( mor ) ) then
+    if not ( IsEndomorphism3DimensionalDomain(mor) and IsBijective(mor) ) then
        Info( InfoXMod, 2, "Parameter is not an automorphism" );
        return fail;
     fi;
-	if ( IsPreCat2Morphism( mor ) ) then
-			return  Lcm( Order( Up2dMorphism(mor) ), Order( Down2dMorphism(mor) ) );
+    if ( IsPreCat2Morphism( mor ) ) then
+        return  Lcm( Order( Up2DimensionalMorphism(mor) ), 
+                     Order( Down2DimensionalMorphism(mor) ) );
     else
-			return  Lcm( Order( Up2dMorphism(mor) ), Order( Left2dMorphism(mor) ),  
-					Order( Down2dMorphism(mor) ), Order( Right2dMorphism(mor) ) );
-	fi;
+        return Lcm( Order( Up2DimensionalMorphism(mor) ), 
+                    Order( Left2DimensionalMorphism(mor) ),  
+                    Order( Down2DimensionalMorphism(mor) ), 
+                    Order( Right2DimensionalMorphism(mor) ) );
+    fi;
 end );
 
 ##############################################################################
@@ -525,25 +550,25 @@ end );
 #M  IsInjective( map ) . . . . . . . . . . . . . . . . . . .  for a 3d-mapping
 ##
 InstallOtherMethod( IsInjective,
-    "method for a 3d-mapping", true, [ Is3dMapping ], 0,
+    "method for a 3d-mapping", true, [ Is3DimensionalMapping ], 0,
 function( map )
 
-	local ok;
-	
-	if ( IsPreCat2Morphism( map ) ) then
-	    ok := ( IsInjective( Up2dMorphism( map ) ) and
-				IsInjective( Down2dMorphism( map ) ) );
+    local ok;
+    
+    if ( IsPreCat2Morphism( map ) ) then
+        ok := ( IsInjective( Up2DimensionalMorphism( map ) ) and
+                IsInjective( Down2DimensionalMorphism( map ) ) );
     else
-	    ok := ( IsInjective( Up2dMorphism( map ) ) and
-				IsInjective( Left2dMorphism( map ) ) and
-				IsInjective( Right2dMorphism( map ) ) and
-				IsInjective( Down2dMorphism( map ) ) );
-	fi;
+        ok := ( IsInjective( Up2DimensionalMorphism( map ) ) and
+                IsInjective( Left2DimensionalMorphism( map ) ) and
+                IsInjective( Right2DimensionalMorphism( map ) ) and
+                IsInjective( Down2DimensionalMorphism( map ) ) );
+    fi;
 
     if not ok then
         return false;
-    fi;	
-	return true;
+    fi;    
+    return true;
 end );
 
 ##############################################################################
@@ -551,25 +576,25 @@ end );
 #M  IsSurjective( map ) . . . . . . . . . . . . . . . . . . . for a 3d-mapping
 ##
 InstallOtherMethod( IsSurjective,
-    "method for a 3d-mapping", true, [ Is3dMapping ], 0,
+    "method for a 3d-mapping", true, [ Is3DimensionalMapping ], 0,
 function( map )
 
-	local ok;
-	
-	if ( IsPreCat2Morphism( map ) ) then
-	    ok := ( IsSurjective( Up2dMorphism( map ) ) and
-				IsSurjective( Down2dMorphism( map ) ) );
+    local ok;
+    
+    if ( IsPreCat2Morphism( map ) ) then
+        ok := ( IsSurjective( Up2DimensionalMorphism( map ) ) and
+                IsSurjective( Down2DimensionalMorphism( map ) ) );
     else
-	    ok := ( IsSurjective( Up2dMorphism( map ) ) and
-				IsSurjective( Left2dMorphism( map ) ) and
-				IsSurjective( Right2dMorphism( map ) ) and
-				IsSurjective( Down2dMorphism( map ) ) );
-	fi;
+        ok := ( IsSurjective( Up2DimensionalMorphism( map ) ) and
+                IsSurjective( Left2DimensionalMorphism( map ) ) and
+                IsSurjective( Right2DimensionalMorphism( map ) ) and
+                IsSurjective( Down2DimensionalMorphism( map ) ) );
+    fi;
 
     if not ok then
         return false;
-    fi;	
-	return true;
+    fi;    
+    return true;
 end );
 
 ##############################################################################
@@ -577,25 +602,25 @@ end );
 #M  IsSingleValued( map ) . . . . . . . . . . . . . . . . . . for a 3d-mapping
 ##
 InstallOtherMethod( IsSingleValued,
-    "method for a 3d-mapping", true, [ Is3dMapping ], 0,
+    "method for a 3d-mapping", true, [ Is3DimensionalMapping ], 0,
 function( map )
 
-	local ok;
-	
-	if ( IsPreCat2Morphism( map ) ) then
-	    ok := ( IsSingleValued( Up2dMorphism( map ) ) and
-				IsSingleValued( Down2dMorphism( map ) ) );
+    local ok;
+    
+    if ( IsPreCat2Morphism( map ) ) then
+        ok := ( IsSingleValued( Up2DimensionalMorphism( map ) ) and
+                IsSingleValued( Down2DimensionalMorphism( map ) ) );
     else
-	    ok := ( IsSingleValued( Up2dMorphism( map ) ) and
-				IsSingleValued( Left2dMorphism( map ) ) and
-				IsSingleValued( Right2dMorphism( map ) ) and
-				IsSingleValued( Down2dMorphism( map ) ) );
-	fi;
+        ok := ( IsSingleValued( Up2DimensionalMorphism( map ) ) and
+                IsSingleValued( Left2DimensionalMorphism( map ) ) and
+                IsSingleValued( Right2DimensionalMorphism( map ) ) and
+                IsSingleValued( Down2DimensionalMorphism( map ) ) );
+    fi;
 
     if not ok then
         return false;
-    fi;	
-	return true;
+    fi;    
+    return true;
 end );
 
 ##############################################################################
@@ -603,25 +628,25 @@ end );
 #M  IsTotal( map ) . . . . . . . . . . . . . . . . . . . . .  for a 3d-mapping
 ##
 InstallOtherMethod( IsTotal,
-    "method for a 3d-mapping", true, [ Is3dMapping ], 0,
+    "method for a 3d-mapping", true, [ Is3DimensionalMapping ], 0,
 function( map )
 
-	local ok;
-	
-	if ( IsPreCat2Morphism( map ) ) then
-	    ok := ( IsTotal( Up2dMorphism( map ) ) and
-				IsTotal( Down2dMorphism( map ) ) );
+    local ok;
+    
+    if ( IsPreCat2Morphism( map ) ) then
+        ok := ( IsTotal( Up2DimensionalMorphism( map ) ) and
+                IsTotal( Down2DimensionalMorphism( map ) ) );
     else
-	    ok := ( IsTotal( Up2dMorphism( map ) ) and
-				IsTotal( Left2dMorphism( map ) ) and
-				IsTotal( Right2dMorphism( map ) ) and
-				IsTotal( Down2dMorphism( map ) ) );
-	fi;
+        ok := ( IsTotal( Up2DimensionalMorphism( map ) ) and
+                IsTotal( Left2DimensionalMorphism( map ) ) and
+                IsTotal( Right2DimensionalMorphism( map ) ) and
+                IsTotal( Down2DimensionalMorphism( map ) ) );
+    fi;
 
     if not ok then
         return false;
-    fi;	
-	return true;
+    fi;    
+    return true;
 end );
 
 ##############################################################################
@@ -629,58 +654,60 @@ end );
 #M  IsBijective( map ) . . . . . . . . . . . . . . . . . . .  for a 3d-mapping
 ##
 InstallOtherMethod( IsBijective,
-    "method for a 3d-mapping", true, [ Is3dMapping ], 0,
+    "method for a 3d-mapping", true, [ Is3DimensionalMapping ], 0,
 function( map )
 
-	local ok;
-	
-	if ( IsPreCat2Morphism( map ) ) then
-	    ok := ( IsBijective( Up2dMorphism( map ) ) and
-				IsBijective( Down2dMorphism( map ) ) );
+    local ok;
+    
+    if ( IsPreCat2Morphism( map ) ) then
+        ok := ( IsBijective( Up2DimensionalMorphism( map ) ) and
+                IsBijective( Down2DimensionalMorphism( map ) ) );
     else
-	    ok := ( IsBijective( Up2dMorphism( map ) ) and
-				IsBijective( Left2dMorphism( map ) ) and
-				IsBijective( Right2dMorphism( map ) ) and
-				IsBijective( Down2dMorphism( map ) ) );
-	fi;
+        ok := ( IsBijective( Up2DimensionalMorphism( map ) ) and
+                IsBijective( Left2DimensionalMorphism( map ) ) and
+                IsBijective( Right2DimensionalMorphism( map ) ) and
+                IsBijective( Down2DimensionalMorphism( map ) ) );
+    fi;
 
     if not ok then
         return false;
-    fi;	
-	return true;
+    fi;    
+    return true;
 end );
 
 ##############################################################################
 ##
-#M  IsEndomorphism3dDomain( map ) . . . . . . . . . . . . . . for a 3d-mapping
+#M  IsEndomorphism3DimensionalDomain( map ) . . . . . . . . . . . . . . for a 3d-mapping
 ##  temporary fix 08/01/04  ---  need to check correctness
-#M  IsAutomorphism3dDomain( map ) . . . . . . . . . . . . . . for a 3d-mapping
+#M  IsAutomorphism3DimensionalDomain( map ) . . . . . . . . . . . . . . for a 3d-mapping
 ##
-InstallMethod( IsEndomorphism3dDomain, 
-    "method for a 3d-mapping", true, [ Is3dMapping ], 0,
+InstallMethod( IsEndomorphism3DimensionalDomain, 
+    "method for a 3d-mapping", true, [ Is3DimensionalMapping ], 0,
 function( map )
 
-	local ok;
-	
-	if ( IsPreCat2Morphism( map ) ) then
-	    ok := ( IsEndomorphism2dDomain( Up2dMorphism( map ) ) and
-				IsEndomorphism2dDomain( Down2dMorphism( map ) ) );
+    local ok;
+    
+    if ( IsPreCat2Morphism( map ) ) then
+      ok := 
+        ( IsEndomorphism2DimensionalDomain( Up2DimensionalMorphism( map ) ) 
+      and IsEndomorphism2DimensionalDomain( Down2DimensionalMorphism( map ) ) );
     else
-	    ok := ( IsEndomorphism2dDomain( Up2dMorphism( map ) ) and
-				IsEndomorphism2dDomain( Left2dMorphism( map ) ) and
-				IsEndomorphism2dDomain( Right2dMorphism( map ) ) and
-				IsEndomorphism2dDomain( Down2dMorphism( map ) ) );
-	fi;
+      ok := 
+        ( IsEndomorphism2DimensionalDomain( Up2DimensionalMorphism( map ) ) 
+      and IsEndomorphism2DimensionalDomain( Left2DimensionalMorphism( map ) ) 
+      and IsEndomorphism2DimensionalDomain( Right2DimensionalMorphism( map ) ) 
+      and IsEndomorphism2DimensionalDomain( Down2DimensionalMorphism( map ) ) );
+    fi;
 
     if not ok then
         return false;
-    fi;	
-	return true;
+    fi;    
+    return true;
 end );
 
-InstallMethod( IsAutomorphism3dDomain, 
-    "method for a 3d-mapping", true, [ Is3dMapping ], 0,
-    map -> IsEndomorphism3dDomain( map ) and IsBijective( map ) );
+InstallMethod( IsAutomorphism3DimensionalDomain, 
+    "method for a 3d-mapping", true, [ Is3DimensionalMapping ], 0,
+    map -> IsEndomorphism3DimensionalDomain( map ) and IsBijective( map ) );
 
 ##############################################################################
 ##

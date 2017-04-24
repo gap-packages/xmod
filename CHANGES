@@ -24,8 +24,10 @@ Problems and ToDos:
 #############################################################################
 2.59 -> 2.61 (11/04/2017) 
 
+ - (24/04/17) 2d<anything> becomes 2Dimensional<anything> (except Object2d) 
+ - (22/04/17) Alper added lib/gpnobj.gd, lib/gpnobj.gi, tst/gpnobjmap.tst 
  - (10/04/17) Alper added a number of functions for cat2-groups and morphisms 
-              replaced XPairing with CrossedPairing 
+              Replaced XPairing with CrossedPairing 
  - (04/04/17) added CoproductInfo for coproducts 
               FactorXMod now FactorPreXMod (ditto NaturalMorphisms) 
  - (27/03/17) added Is2dGroupMorphismData and modified construction functions 

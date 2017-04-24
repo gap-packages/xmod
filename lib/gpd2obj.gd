@@ -2,47 +2,52 @@
 ##
 #W  gpd2obj.gd                 GAP4 package `XMod'               Chris Wensley
 ##
-#Y  Copyright (C) 2001-2016, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2017, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 #############################################################################
 ## 
-#C  Is2dDomainWithObjects( <obj> )
+#C  Is2DimensionalDomainWithObjects( <obj> )
 ##  
-DeclareCategory( "Is2dDomainWithObjects", Is2dDomain and IsDomainWithObjects ); 
+DeclareCategory( "Is2DimensionalDomainWithObjects", 
+    Is2DimensionalDomain and IsDomainWithObjects ); 
 
-############################################################################# 
+############################################################################## 
 ## 
-#C  Is2dMagmaWithObjects( <m2d> ) . . . . category of 2d magmas with objects
-#C  Is2dMagmaWithObjectsAndOnes( <m2d> ) . . . . . . . . . . . and with ones
-#C  Is2dMagmaWithObjectsAndInverses( <m2d> ) . .  and some inverses
-#C  Is2dGroupWithObjects( <m2d> )  . . . . . . . . . . . .  and all inverses
+#C  Is2DimensionalMagmaWithObjects( <m2d> ) category of 2d magmas with objects
+#C  Is2DimensionalMagmaWithObjectsAndOnes( <m2d> ) . . . . . . . and with ones
+#C  Is2DimensionalMagmaWithObjectsAndInverses( <m2d> ) . . . and some inverses
+#C  Is2DimensionalGroupWithObjects( <m2d> )  . . . . . . . .  and all inverses
 ##
-DeclareCategory( "Is2dMagmaWithObjects", Is2dDomainWithObjects and 
-    IsMagmaWithObjects ); 
-DeclareCategoryCollections( "Is2dMagmaWithObjects" ); 
-DeclareCategory( "Is2dMagmaWithObjectsAndOne", Is2dMagmaWithObjects and 
-    CategoryCollections( IsMultiplicativeElementWithObjectsAndOnes ) ); 
-DeclareCategory( "Is2dMagmaWithObjectsAndInverses", 
-    Is2dMagmaWithObjectsAndOne and CategoryCollections( 
-        IsMultiplicativeElementWithObjectsAndInverses ) ); 
-DeclareCategory( "Is2dGroupWithObjects", Is2dMagmaWithObjectsAndInverses and 
-    CategoryCollections( IsAssociativeElement ) ); 
+DeclareCategory( "Is2DimensionalMagmaWithObjects", 
+    Is2DimensionalDomainWithObjects and IsMagmaWithObjects ); 
+DeclareCategoryCollections( "Is2DimensionalMagmaWithObjects" ); 
+DeclareCategory( "Is2DimensionalMagmaWithObjectsAndOne", 
+    Is2DimensionalMagmaWithObjects 
+    and CategoryCollections( IsMultiplicativeElementWithObjectsAndOnes ) ); 
+DeclareCategory( "Is2DimensionalMagmaWithObjectsAndInverses", 
+    Is2DimensionalMagmaWithObjectsAndOne 
+    and CategoryCollections( IsMultiplicativeElementWithObjectsAndInverses ) ); 
+DeclareCategory( "Is2DimensionalGroupWithObjects", 
+    Is2DimensionalMagmaWithObjectsAndInverses 
+    and CategoryCollections( IsAssociativeElement ) ); 
 
 ############################################################################# 
 ##  
-#V  Family2dGroupWithObjects  . . . . . . . family for 2d-groups with objects
+#V  Family2DimensionalGroupWithObjects  . . family for 2d-groups with objects
 ##  
-BindGlobal( "Family2dGroupWithObjects", 
-    NewFamily( "Family2dGroupWithObjects", Is2dGroupWithObjects, 
-                CanEasilySortElements, CanEasilySortElements ) ); 
+BindGlobal( "Family2DimensionalGroupWithObjects", 
+    NewFamily( "Family2DimensionalGroupWithObjects", 
+               Is2DimensionalGroupWithObjects, 
+               CanEasilySortElements, CanEasilySortElements ) ); 
 
 #############################################################################
 ##
 #P  IsPreXModWithObjects( <PM> ) . . . . . . . . for a 2d-domain with objects 
 #P  IsXModWithObjects( <PM> )
 ##
-DeclareProperty( "IsPreXModWithObjects", IsPreXMod and Is2dDomainWithObjects );
+DeclareProperty( "IsPreXModWithObjects", 
+    IsPreXMod and Is2DimensionalDomainWithObjects );
 DeclareProperty( "IsXModWithObjects", IsPreXModWithObjects ); 
 
 #############################################################################
@@ -52,7 +57,7 @@ DeclareProperty( "IsXModWithObjects", IsPreXModWithObjects );
 ##  A pre-crossed module of groupoids is a morphism preserving an action
 ##
 DeclareRepresentation( "IsPreXModWithObjectsObj", 
-    Is2dDomainWithObjects and IsAttributeStoringRep, 
+    Is2DimensionalDomainWithObjects and IsAttributeStoringRep, 
     [ "objects", "boundary", "action" ] );
 
 #############################################################################

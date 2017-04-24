@@ -7,7 +7,7 @@
 ##
 #############################################################################
 
-Print("\nXMod example file gp2up.g (version 05/04/17) :-");
+Print("\nXMod example file gp2up.g (version 23/04/17) :-");
 Print("\ntesting derivations of crossed modules\n\n");
 level := InfoLevel( InfoXMod ); 
 SetInfoLevel( InfoXMod, 0 ); 
@@ -19,7 +19,7 @@ chi1 := DerivationByImages( X1, [ (), () ] );
 Print( "chi1 = ", chi1, "\n" );
 ok1 := IsDerivation( chi1 );
 Print("chi1 is a derivation? ", ok1, "\n" );
-Print("chi1 has Object2d = ", Object2d( chi1 ), "\n" );
+Print("chi1 has Object2Dimensional = ", Object2Dimensional( chi1 ), "\n" );
 Print("chi1 has UpGeneratorImages = ", UpGeneratorImages( chi1 ), "\n" );
 Print("chi1 has source = ", Source(chi1), "\n" );
 Print("chi1 has range = ", Range(chi1), "\n" );

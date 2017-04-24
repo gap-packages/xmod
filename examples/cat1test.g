@@ -7,7 +7,7 @@
 ##  
 ##############################################################################
 
-Print("\nXMod test file cat1test.g (version 23/03/17) :-");
+Print("\nXMod test file cat1test.g (version 23/04/17) :-");
 Print("\nThis is an example of running a test over all cat1-groups,\n");
 Print("or their associated crossed modules, in the database.\n");
 Print("In this test we check whether the coproduct square of (S->R)\n"); 
@@ -26,7 +26,7 @@ for i in [1..m] do
         for k in [1..p] do 
             Print( [i,j,k], "\n" ); 
             C0 := Cat1Select( i, j, k ); 
-            if not IsPerm2dGroup( C0 ) then 
+            if not IsPerm2DimensionalGroup( C0 ) then 
                 iso := IsomorphismPermObject( C0 ); 
                 P0 := Image( iso ); 
                 X0 := XModOfCat1( P0 ); 

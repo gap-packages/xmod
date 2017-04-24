@@ -7,7 +7,7 @@
 ##
 #############################################################################
 
-Print("\nXMod example file gp2map.g (version 05/04/17) :-");
+Print("\nXMod example file gp2map.g (version 23/04/17) :-");
 Print("\ntesting constructions of crossed module morphisms\n\n");
 level := InfoLevel( InfoXMod ); 
 SetInfoLevel( InfoXMod, 0 ); 
@@ -41,7 +41,7 @@ mor1 := XModMorphism( X1, X1, sigma1, rho1 );
 Print("mor1 = ",mor1, " is a morphism X1 -> X1 :-\n");
 Display( mor1 );
 Print("Is mor1 an automorphism? ", 
-  ( IsEndomorphism2dDomain(mor1) and IsBijective(mor1) ), "\n");
+  ( IsEndomorphism2DimensionalDomain(mor1) and IsBijective(mor1) ), "\n");
 Print("The order of mor1 is ", Order(mor1), "\n\n");
 
 gensl23 := GeneratorsOfGroup(sl23);
@@ -67,7 +67,7 @@ Print("subxmod S23 of X23 = ", S23, "\n" );
 Display( S23 );
 Print("S23 is a sub-xmod of X23 ? ", IsSubXMod( X23, S23 ), "\n" );
 Print("S23 is a normal sub-xmod of X23 ? ", IsNormal( X23, S23 ), "\n\n" );
-inc23 := InclusionMorphism2dDomains( X23, S23 );
+inc23 := InclusionMorphism2DimensionalDomains( X23, S23 );
 Print("inc23 = inclusion morphism\n", mor23, "\n");
 Display( inc23 );
 
@@ -95,7 +95,7 @@ SetName( c2, "c2" );
 SS23 := SubXMod( S23, c2, nq8 );
 Print("subxmod SS23 of S23 = ", SS23, "\n" );
 Display( SS23 );
-incSS := InclusionMorphism2dDomains( S23, SS23 );
+incSS := InclusionMorphism2DimensionalDomains( S23, SS23 );
 Print("inclusion morphism SS23 -> S23 = ", incSS, "\n");
 Display( incSS );
 T23 := PreXModBySourceHom( incSS );

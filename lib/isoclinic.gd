@@ -3,7 +3,6 @@
 #W  isoclinic.gd              GAP4 package `XMod'                Alper Odabas
 #W                                                               & Enver Uslu
 #Y  Copyright (C) 2001-2017, Chris Wensley et al 
-##
 
 #############################################################################
 ##
@@ -60,29 +59,30 @@ DeclareSynonym( "CenterXMod", CentreXMod );
 
 #############################################################################
 ##
-#O IsAbelian2dGroup  
-#O IsAspherical2dGroup  
-#O IsSimplyConnected2dGroup 
-#O IsFaithful2dGroup 
+#O IsAbelian2DimensionalGroup  
+#O IsAspherical2DimensionalGroup  
+#O IsSimplyConnected2DimensionalGroup 
+#O IsFaithful2DimensionalGroup 
 ##
-DeclareProperty( "IsAbelian2dGroup", Is2dGroup );
-DeclareProperty( "IsAspherical2dGroup", Is2dGroup );
-DeclareProperty( "IsSimplyConnected2dGroup", Is2dGroup );
-DeclareProperty( "IsFaithful2dGroup", Is2dGroup );
+DeclareProperty( "IsAbelian2DimensionalGroup", Is2DimensionalGroup );
+DeclareProperty( "IsAspherical2DimensionalGroup", Is2DimensionalGroup );
+DeclareProperty( "IsSimplyConnected2DimensionalGroup", Is2DimensionalGroup );
+DeclareProperty( "IsFaithful2DimensionalGroup", Is2DimensionalGroup );
 
 #############################################################################
 ##
-#P IsNilpotent2dGroup . . . . . check that an xmod or cat1-group is nilpotent
-#A NilpotencyClassOf2dGroup  . . . nilpotency degree of an xmod or cat1-group 
+#P IsNilpotent2DimensionalGroup . . check an xmod or cat1-group is nilpotent
+#A NilpotencyClassOf2DimensionalGroup . nilpotency degree of xmod/cat1-group 
 ## 
-DeclareProperty( "IsNilpotent2dGroup", Is2dGroup );
-DeclareAttribute( "NilpotencyClassOf2dGroup", Is2dGroup );
+DeclareProperty( "IsNilpotent2DimensionalGroup", Is2DimensionalGroup );
+DeclareAttribute( "NilpotencyClassOf2DimensionalGroup", Is2DimensionalGroup );
 
 #############################################################################
 ##
 #O IsomorphismXMods  . . . . . check that two crossed modules are isomorphic
 ##
-DeclareOperation( "IsomorphismXMods", [  Is2dGroup, Is2dGroup ] );
+DeclareOperation( "IsomorphismXMods", 
+    [ Is2DimensionalGroup, Is2DimensionalGroup ] );
 
 #############################################################################
 ##
@@ -130,14 +130,14 @@ DeclareOperation( "AreIsoclinicDomains", [ IsDomain, IsDomain ] );
 ##
 #O IsoclinicXModFamily  . . . . . . all xmods in list isoclinic to given xmod
 ##
-DeclareOperation( "IsoclinicXModFamily", [  Is2dGroup, IsList ] );
+DeclareOperation( "IsoclinicXModFamily", [  Is2DimensionalGroup, IsList ] );
 
 #############################################################################
 ##
 #O IsomorphicXModFamily  
 ## . . . . . . . all xmods in the list which are isomorphic to the given xmod
 ##
-DeclareOperation( "IsomorphicXModFamily", [  Is2dGroup, IsList ] );
+DeclareOperation( "IsomorphicXModFamily", [  Is2DimensionalGroup, IsList ] );
 
 #############################################################################
 ##
@@ -157,4 +157,4 @@ DeclareAttribute( "IsoclinicRank", IsGroup );
 ##
 #O TableRowXMod  . . . . table row for isoclinism families of crossed modules
 ##
-DeclareOperation( "TableRowXMod", [ Is2dGroup, IsList ] );
+DeclareOperation( "TableRowXMod", [ Is2DimensionalGroup, IsList ] );

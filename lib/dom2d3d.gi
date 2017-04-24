@@ -2,7 +2,7 @@
 ##
 #W  dom2d3d.gi                 GAP4 package `XMod'               Chris Wensley
 ##
-#Y  Copyright (C) 2001-2016, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2017, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 
@@ -10,9 +10,10 @@
 
 ############################################################################# 
 ## 
-#M  TypeOf2dDomain( <m2d> ) 
+#M  TypeOf2DimensionalDomain( <m2d> ) 
 ##
-InstallMethod( TypeOf2dDomain, "for list of 2d-domains", true, [ IsList ], 0, 
+InstallMethod( TypeOf2DimensionalDomain, "for list of 2Dimensional-domains", 
+    true, [ IsList ], 0, 
 
     function( pieces ) 
     local  type; 
@@ -26,21 +27,22 @@ end );
 
 ############################################################################# 
 ## 
-#F  Make2dMagma( <mag>, <obs> ) 
+#F  Make2DimensionalMagma( <mag>, <obs> ) 
 ##
-InstallGlobalFunction( Make2dMagma, function( arg ) 
+InstallGlobalFunction( Make2DimensionalMagma, function( arg ) 
 
     local  obs, mag;
-    Print( "Usage: Make2dMagma( <src>, <rng> ); but not yet installed\n" ); 
+    Print( "Usage: Make2DimensionalMagma( <src>, <rng> )" ); 
+    Print( " (but not yet installed\n" ); 
     return fail; 
 end ); 
 
 #############################################################################
 ##
-#M  \=( <m1>, <m2> )  . . . . . . . test if two 2d-magmas are equal
+#M  \=( <m1>, <m2> )  . . . . . . . test if two 2Dimensional-magmas are equal
 ##
-InstallMethod( \=, "for 2d-magmas", IsIdenticalObj,
-    [ Is2dMagma, Is2dMagma ], 0, 
+InstallMethod( \=, "for 2Dimensional-magmas", IsIdenticalObj,
+    [ Is2DimensionalMagma, Is2DimensionalMagma ], 0, 
 function ( m1, m2 ) 
     local  i, p1, p2;
     return fail; 
@@ -51,12 +53,11 @@ end );
 
 #############################################################################
 ##
-#F  IsSub2dDomain( <M>, <U> )
+#F  IsSub2DimensionalDomain( <M>, <U> )
 ##
-InstallMethod( IsSub2dDomain, "for two 2d-domains", true, 
-    [ Is2dDomain, Is2dDomain ], 0, 
-    function( D, U )
-
+InstallMethod( IsSub2DimensionalDomain, "for two 2Dimensional-domains", true, 
+    [ Is2DimensionalDomain, Is2DimensionalDomain ], 0, 
+function( D, U )
     local  compU, obj, p, ok; 
     return fail; 
 end );
@@ -66,12 +67,13 @@ end );
 
 ############################################################################# 
 ## 
-#F  Make2dSemigroup( <sgp>, <obs> ) 
+#F  Make2DimensionalSemigroup( <sgp>, <obs> ) 
 ##
-InstallGlobalFunction( Make2dSemigroup, function( arg ) 
+InstallGlobalFunction( Make2DimensionalSemigroup, function( arg ) 
 
     local  obs, sgp; 
-    Print( "Usage: Make2dSemegroup( <src>, <rng> ); not yet installed\n" ); 
+    Print( "Usage: Make2DimensionalSemegroup( <src>, <rng> )" ); 
+    Print( " (but not yet installed)\n" ); 
     return fail; 
 end ); 
 
@@ -80,12 +82,13 @@ end );
 
 ############################################################################# 
 ## 
-#F  Make2dMonoid( <mon>, <obs> ) 
+#F  Make2DimensionalMonoid( <mon>, <obs> ) 
 ##
-InstallGlobalFunction( Make2dMonoid, function( arg ) 
+InstallGlobalFunction( Make2DimensionalMonoid, function( arg ) 
 
     local  obs, mon;
-    Print( "Usage: Make2dMonoid( <src>, <rng> ); but not yet installed\n" ); 
+    Print( "Usage: Make2DimensionalMonoid( <src>, <rng> )" ); 
+    Print( " (but not yet installed)\n" ); 
     return fail; 
 end ); 
 

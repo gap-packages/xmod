@@ -2,7 +2,7 @@
 ##
 #W  gp2map.tst                    XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2016, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2017, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 #############################################################################
@@ -27,22 +27,22 @@ Morphism of crossed modules :-
   [ (5,9,8,7,6) ]
 : Range Homomorphism maps range generators to:
   [ (1,2,3,4) ]
-gap> IsAutomorphism2dDomain(mor1);
+gap> IsAutomorphism2DimensionalDomain(mor1);
 true
 gap> Order(mor1);
 2
 gap> RepresentationsOfObject(mor1);
-[ "IsComponentObjectRep", "IsAttributeStoringRep", "Is2dMappingRep" ]
+[ "IsComponentObjectRep", "IsAttributeStoringRep", "Is2DimensionalMappingRep" ]
 gap> KnownPropertiesOfObject(mor1);
 [ "CanEasilyCompareElements", "CanEasilySortElements", "IsTotal", 
   "IsSingleValued", "IsInjective", "IsSurjective", "RespectsMultiplication", 
-  "IsPreXModMorphism", "IsXModMorphism", "IsEndomorphism2dDomain", 
-  "IsAutomorphism2dDomain" ]
+  "IsPreXModMorphism", "IsXModMorphism", "IsEndomorphism2DimensionalDomain", 
+  "IsAutomorphism2DimensionalDomain" ]
 gap> KnownAttributesOfObject(mor1);
 [ "Name", "Order", "Range", "Source", "SourceHom", "RangeHom" ]
 
 ## Section 3.3.1
-gap> iso2 := IsomorphismPerm2dGroup( C2 );
+gap> iso2 := IsomorphismPerm2DimensionalGroup( C2 );
 [[G2=>d12] => [..]]
 
 ## Section 3.4.1
@@ -50,11 +50,11 @@ gap> H2 := Subgroup(G2,[G2.3,G2.4,G2.6,G2.7]);  SetName( H2, "H2" );
 Group([ f3, f4, f6, f7 ])
 gap> c6 := Subgroup( d12, [a2,a3] );  SetName( c6, "c6" );
 Group([ f2, f3 ])
-gap> SC2 := Sub2dGroup( C2, H2, c6 );
+gap> SC2 := Sub2DimensionalGroup( C2, H2, c6 );
 [H2=>c6]
 gap> IsCat1( SC2 );
 true
-gap> inc2 := InclusionMorphism2dDomains( C2, SC2 );
+gap> inc2 := InclusionMorphism2DimensionalDomains( C2, SC2 );
 [[H2=>c6] => [G2=>d12]]
 gap> CompositionMorphism( iso2, inc2 );                  
 [[H2=>c6] => P[G2=>d12]]
