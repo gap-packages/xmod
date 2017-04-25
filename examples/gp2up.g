@@ -7,7 +7,7 @@
 ##
 #############################################################################
 
-Print("\nXMod example file gp2up.g (version 23/04/17) :-");
+Print("\nXMod example file gp2up.g (version 25/04/17) :-");
 Print("\ntesting derivations of crossed modules\n\n");
 level := InfoLevel( InfoXMod ); 
 SetInfoLevel( InfoXMod, 0 ); 
@@ -19,14 +19,14 @@ chi1 := DerivationByImages( X1, [ (), () ] );
 Print( "chi1 = ", chi1, "\n" );
 ok1 := IsDerivation( chi1 );
 Print("chi1 is a derivation? ", ok1, "\n" );
-Print("chi1 has Object2Dimensional = ", Object2Dimensional( chi1 ), "\n" );
+Print("chi1 has Object2d = ", Object2d( chi1 ), "\n" );
 Print("chi1 has UpGeneratorImages = ", UpGeneratorImages( chi1 ), "\n" );
 Print("chi1 has source = ", Source(chi1), "\n" );
 Print("chi1 has range = ", Range(chi1), "\n" );
 Print("known properties of chi1:\n", KnownPropertiesOfObject(chi1), "\n" );
 Print("known attributes of chi1:\n", KnownAttributesOfObject(chi1), "\n" );
 
-C1 := Cat1OfXMod( X1 );
+C1 := Cat1GroupOfXMod( X1 );
 Print("\nX1 is associated to cat1-group C1 =\n", C1, "\n" );
 xi1 := SectionByDerivation( chi1 );
 Print("xi1 = ", xi1, "\n" );
@@ -70,12 +70,12 @@ t := GroupHomomorphismByImages( g18, s3, gen18, [ b,b,c] );
 h := GroupHomomorphismByImages( g18, s3, gen18, [(),b,c] );
 e := GroupHomomorphismByImages( s3, g18, [b,c], [b,c] );
 
-C3 := Cat1( t, h, e );
+C3 := Cat1Group( t, h, e );
 Print("the cat1-group C3 :-\n");
 Display(C3);
 SetName( Kernel(t), "c3" );
 
-X3 := XModOfCat1( C3 );
+X3 := XModOfCat1Group( C3 );
 Print("the crossed module X3 associated to C3 :-\n");
 Display( X3 );
 

@@ -21,7 +21,7 @@ DeclareOperation( "PreCrossedSquareMorphismByMorphisms",
       Is2DimensionalGroupMorphism, Is2DimensionalGroupMorphism, Is2DimensionalGroupMorphism ] );
 DeclareGlobalFunction( "PreCat2Morphism" );
 DeclareOperation( "PreCat2MorphismByMorphisms",
-    [ IsPreCat2, IsPreCat2, Is2DimensionalGroupMorphism, 
+    [ IsPreCat2Group, IsPreCat2Group, Is2DimensionalGroupMorphism, 
       Is2DimensionalGroupMorphism ] );
 
 #############################################################################
@@ -53,19 +53,19 @@ DeclareOperation( "CrossedSquareMorphismByMorphisms",
       Is2DimensionalGroupMorphism, Is2DimensionalGroupMorphism, Is2DimensionalGroupMorphism ] );
 DeclareGlobalFunction( "Cat2Morphism" );
 DeclareOperation( "Cat2MorphismByMorphisms",
-    [ IsCat2, IsCat2, Is2DimensionalGroupMorphism, Is2DimensionalGroupMorphism ] );
+    [ IsCat2Group, IsCat2Group, Is2DimensionalGroupMorphism, Is2DimensionalGroupMorphism ] );
 DeclareOperation( "InclusionMorphism3DimensionalDomains", 
     [ Is3DimensionalDomain, Is3DimensionalDomain ] );
 
 #############################################################################
 ##
 #O  InnerAutomorphismCrossedSquare( <XM>, <r> )
-#O  InnerAutomorphismCat2( <C1G>, <r> )
+#O  InnerAutomorphismCat2Group( <C1G>, <r> )
 ##
 DeclareOperation( "InnerAutomorphismCrossedSquare",
     [ IsPreCrossedSquare, IsMultiplicativeElementWithInverse ] );
-DeclareOperation( "InnerAutomorphismCat2",
-    [ IsPreCat2, IsMultiplicativeElementWithInverse ] );
+DeclareOperation( "InnerAutomorphismCat2Group",
+    [ IsPreCat2Group, IsMultiplicativeElementWithInverse ] );
 
 #############################################################################
 ##

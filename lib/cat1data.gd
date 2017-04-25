@@ -2,7 +2,7 @@
 ##
 #W  cat1data.gd                GAP4 package `XMod'               Chris Wensley
 ##
-#Y  Copyright (C) 2001-2016, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2017, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 ##  These functions are used in the construction of the data file cat1data.g 
@@ -10,24 +10,24 @@
 
 #############################################################################
 ##
-#F  AllCat1s( <arg> ) 
-#O  AllCat1sBasic( <gp> ) 
+#F  AllCat1Groups( <arg> ) 
+#O  AllCat1GroupsBasic( <gp> ) 
 #O  CollectPartsAlreadyDone( <gp>, <deg>, <num>, <ranger> ) 
-#O  AllCat1sInParts( <gp>, <reps>, <ids>, <range>, <cat1s> ) 
+#O  AllCat1GroupsInParts( <gp>, <reps>, <ids>, <range>, <cat1s> ) 
 #O  Cat1RepresentativesToFile( <gp> )
 #O  Cat1IdempotentsToFile( <gp>, <ireps>, <fst>, <lst> )
-#O  MakeAllCat1s( <gp> )
+#O  MakeAllCat1Groups( <gp> )
 ##
-DeclareGlobalFunction( "AllCat1s" );
-DeclareOperation( "AllCat1sBasic", [ IsGroup ] ); 
+DeclareGlobalFunction( "AllCat1Groups" );
+DeclareOperation( "AllCat1GroupsBasic", [ IsGroup ] ); 
 DeclareOperation( "CollectPartsAlreadyDone", 
     [ IsGroup, IsPosInt, IsPosInt, IsList ] ); 
-DeclareOperation( "AllCat1sInParts", 
+DeclareOperation( "AllCat1GroupsInParts", 
     [ IsGroup, IsList, IsList, IsList, IsList ] ); 
 DeclareOperation( "Cat1RepresentativesToFile", [ IsGroup ] );
 DeclareOperation( "Cat1IdempotentsToFile", 
     [ IsGroup, IsList, IsPosInt, IsPosInt ] );
-DeclareOperation( "MakeAllCat1s", [ IsPosInt, IsPosInt, IsPosInt ] );
+DeclareOperation( "MakeAllCat1Groups", [ IsPosInt, IsPosInt, IsPosInt ] );
 
 #############################################################################
 ##

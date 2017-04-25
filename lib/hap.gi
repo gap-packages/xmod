@@ -2,7 +2,7 @@
 ##
 #W  hap.gi                    GAP4 package `XMod'               Chris Wensley
 #W                                                              
-#Y  Copyright (C) 2001-2016, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2017, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 ##############################################################################
@@ -25,9 +25,9 @@ function( G )
     t := GeneralRestrictedMapping( tm, S, R ); 
     h := GeneralRestrictedMapping( hm, S, R ); 
     e := InclusionMappingGroups( S, R ); 
-    C := PreCat1ByTailHeadEmbedding( t, h, e ); 
+    C := PreCat1GroupByTailHeadEmbedding( t, h, e ); 
     SetCatOneGroupXModVersion( G, C ); 
-    SetCat1HapVersion( C, G ); 
+    SetCat1GroupHapVersion( C, G ); 
     return C; 
 end ); 
 

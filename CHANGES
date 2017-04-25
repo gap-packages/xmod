@@ -2,6 +2,7 @@
 
 Problems and ToDos: 
 
+ - (25/04/17) examples/gpd2obj.g needs more material 
  - (19/08/16) error report from Tedar Tegstrom: he discovered that 
               InducedXMod(X0,iota) fails when Boundary(X0) not mono. 
  - (16/06/16) document more utility functions or move them to Utils
@@ -22,7 +23,7 @@ Problems and ToDos:
               (construction worked OK with isomorphic perm groups). 
 
 #############################################################################
-2.59 -> 2.61 (11/04/2017) 
+2.59 -> 2.61 (25/04/2017) 
 
  - (24/04/17) 2d<anything> becomes 2Dimensional<anything> (except Object2d) 
  - (22/04/17) Alper added lib/gpnobj.gd, lib/gpnobj.gi, tst/gpnobjmap.tst 

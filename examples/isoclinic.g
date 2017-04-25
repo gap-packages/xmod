@@ -7,7 +7,7 @@
 ##
 #############################################################################
 
-Print("\nXMod test file isoclinic.g (version 23/04/17) :-\n\n");
+Print("\nXMod example file isoclinic.g (version 23/04/17) :-\n\n");
 Print("isoclinism tests\n\n" ); 
 level := InfoLevel( InfoXMod ); 
 SetInfoLevel( InfoXMod, 0 );
@@ -156,13 +156,13 @@ Print( AllStemGroupFamilies(32), "\n\n" );
 Print( "G has middle length ", IsoclinicMiddleLength(G), "\n" );
 Print( "X1 has rank ", IsoclinicRank(X1), "\n\n" ); 
 
-C8 := Cat1(16,8,1);
-Print( "C8 := Cat1(16,8,1) = ", C8, "\n" ); 
+C8 := Cat1Group(16,8,1);
+Print( "C8 := Cat1Group(16,8,1) = ", C8, "\n" ); 
 X8 := XMod(C8); 
 Print( "the associated crossed module is X8 = ", X8, "\n" ); 
 Print( "with IdGroup ", IdGroup( X8 ), "\n" );
-C9 := Cat1(32,9,1);
-Print( "C9 := Cat1(32,9,1) = ", C9, "\n" ); 
+C9 := Cat1Group(32,9,1);
+Print( "C9 := Cat1Group(32,9,1) = ", C9, "\n" ); 
 X9 := XMod(C9); 
 Print( "the associated crossed module is X9 = ", X9, "\n" ); 
 Print( "with IdGroup ", IdGroup( X9 ), "\n" );

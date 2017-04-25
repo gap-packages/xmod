@@ -2,7 +2,7 @@
 ##
 #W  cat1data.gi                GAP4 package `XMod'               Chris Wensley
 ##
-#Y  Copyright (C) 2001-2016, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2017, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 ##  These functions are used in the construction of the data file cat1data.g 
@@ -25,26 +25,26 @@
 ##  gap> Cat1IdempotentsToFile( gp, ireps, jj+1, jjj );   ## etc. etc. 
 ##                                          ## then look at  nn.kk.ids 
 ##  gap> Read( "lib/nn.kk.ids" );           ## read in the list of idempotents 
-##  gap> AllCat1sInParts( gp, ireps, idems, [1,jj], [ ] ); 
+##  gap> AllCat1GroupsInParts( gp, ireps, idems, [1,jj], [ ] ); 
 ##  gap> Cjj := ???  
-##  gap> AllCat1sInParts( gp, ireps, idems, [jj+1,jjj], Cjj );  ## etc. etc. 
+##  gap> AllCat1GroupsInParts( gp, ireps, idems, [jj+1,jjj], Cjj );  ## etc. 
 ##  
 ##  Finally, edit  nn.kk.out, deleting the final entry, 
 ##  and changing the last line of the file to finish with:  ] ] ] ] ],  
 
 ##############################################################################
 ##
-#M  AllCat1s . . . . . . . . . . . . . . . . . . . . . . . . . . . for a group
+#M  AllCat1Groups . . . . . . . . . . . . . . . . . . . . . . . . for a group
 ##
-InstallGlobalFunction( AllCat1s, function( arg )
+InstallGlobalFunction( AllCat1Groups, function( arg )
 
     local  nargs; 
 
     nargs := Length( arg ); 
     if ( nargs = 1 ) then 
-        return AllCat1sBasic( arg[1] ); 
+        return AllCat1GroupsBasic( arg[1] ); 
     elif ( nargs = 3 ) then 
-        return AllCat1sInParts( arg[1], arg[2], arg[3] ); 
+        return AllCat1GroupsInParts( arg[1], arg[2], arg[3] ); 
     else 
         Error( "length of arg neither 1 nor 3" ); 
     fi;  
@@ -52,9 +52,9 @@ end );
 
 ##############################################################################
 ##
-#M  AllCat1sBasic . . . . . . . . . . . . . . . . . . . . . . . . for a group
+#M  AllCat1GroupsBasic . . . . . . . . . . . . . . . . . . . . . . . . for a group
 ##
-InstallMethod( AllCat1sBasic, "construct all cat1-groups on a given group", 
+InstallMethod( AllCat1GroupsBasic, "construct all cat1-groups on a given group", 
     true, [ IsCyclic and IsPGroup ], 0,
 function( gp ) 
 
@@ -62,15 +62,15 @@ function( gp )
 
     C := [ 0, 0 ]; 
     zero := MappingToOne( gp, gp ); 
-    C[1] := PreCat1ByEndomorphisms( zero, zero ); 
-    IsCat1( C[1] ); 
+    C[1] := PreCat1GroupByEndomorphisms( zero, zero ); 
+    IsCat1Group( C[1] ); 
     one := IdentityMapping( gp ); 
-    C[2] := PreCat1ByEndomorphisms( one, one ); 
-    IsCat1( C[2] ); 
+    C[2] := PreCat1GroupByEndomorphisms( one, one ); 
+    IsCat1Group( C[2] ); 
     return C; 
 end ); 
 
-InstallMethod( AllCat1sBasic, "construct all cat1-groups on a given group", 
+InstallMethod( AllCat1GroupsBasic, "construct all cat1-groups on a given group", 
     true, [ IsGroup ], 0,
 function( gp )
 
@@ -184,15 +184,15 @@ function( gp )
                         Print( "t: ", MappingGeneratorsImages(t)[2], "\n" ); 
                         Print( "h: ", MappingGeneratorsImages(h)[2], "\n" ); 
                     fi; 
-                    CC := PreCat1ByEndomorphisms( t, h ); 
-                    if not IsCat1( CC ) then 
+                    CC := PreCat1GroupByEndomorphisms( t, h ); 
+                    if not IsCat1Group( CC ) then 
                         Error( "not a cat1-group" ); 
                     fi; 
                     g := Cnum; 
                     AICG := false;
                     while ( not AICG and ( g > 0 ) ) do
                         #? is this expensive? 
-                        isocg := IsomorphismPreCat1s( C[g], CC ); 
+                        isocg := IsomorphismPreCat1Groups( C[g], CC ); 
                         AICG := not ( isocg = fail ); 
                         g := g-1;
                     od;
@@ -465,7 +465,7 @@ end );
 ##
 #M  CollectPartsAlreadyDone . . . . . . . . . . . . . . . . . . . for a group
 ##
-InstallMethod( CollectPartsAlreadyDone, "preparation for AllCat1sInParts", 
+InstallMethod( CollectPartsAlreadyDone, "preparation for AllCat1GroupsInParts", 
     true, [ IsGroup, IsPosInt, IsPosInt, IsList ], 0,
 function( gp, nn, kk, range )
 
@@ -496,9 +496,9 @@ end );
 
 ##############################################################################
 ##
-#M  AllCat1sInParts . . . . . . . . . . . . . . . . . . . . . . . for a group
+#M  AllCat1GroupsInParts . . . . . . . . . . . . . . . . . . . . . . . for a group
 ##
-InstallMethod( AllCat1sInParts, "construct all cat1-groups on a given group", 
+InstallMethod( AllCat1GroupsInParts, "construct all cat1-groups on a given group", 
     true, [ IsGroup, IsList, IsList, IsList, IsList ], 0,
 function( gp, ireps, idems, range, C )
 
@@ -557,15 +557,15 @@ function( gp, ireps, idems, range, C )
                         Print( "t : ", MappingGeneratorsImages(t)[2], "\n",  
                                "h : ", MappingGeneratorsImages(h)[2], "\n" ); 
                         fi; 
-                    CC := PreCat1ByEndomorphisms( t, h ); 
-                    if not IsCat1( CC ) then 
+                    CC := PreCat1GroupByEndomorphisms( t, h ); 
+                    if not IsCat1Group( CC ) then 
                         Error( "not a cat1-group" ); 
                     fi; 
                     g := Cnum; 
                     AICG := false;
                     while ( not AICG and ( g > 0 ) ) do
                         #? is this expensive? 
-                        isocg := IsomorphismPreCat1s( C[g], CC ); 
+                        isocg := IsomorphismPreCat1Groups( C[g], CC ); 
                         AICG := not ( isocg = fail ); 
                         g := g-1;
                     od;
@@ -677,9 +677,9 @@ end );
 
 ##############################################################################
 ##
-#M  MakeAllCat1s . . . . . . . . . . . . . . . . . for three positive integers
+#M  MakeAllCat1Groups . . . . . . . . . . . . . . . . . for three positive integers
 ##
-InstallMethod( MakeAllCat1s, "construct all cat1-groups of a chosen order", 
+InstallMethod( MakeAllCat1Groups, "construct all cat1-groups of a chosen order", 
     true, [ IsPosInt, IsPosInt, IsPosInt ], 0,
 function( n, fst, lst )
 
@@ -711,7 +711,7 @@ function( n, fst, lst )
             else 
                 AppendTo(out, "[",n,",",j,",\"",struc,"\",",egensgp,",[\n" ); 
             fi; 
-            all := AllCat1sBasic( sgp ); 
+            all := AllCat1GroupsBasic( sgp ); 
             len := Length( all ); 
             if ( (len = 1) or ( (len = 2) and IsCommutative( sgp ) ) ) then 
                 AppendTo( out, " ] ],\n" ); 

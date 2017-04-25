@@ -7,7 +7,7 @@
 ##
 #############################################################################
 
-Print("\nXMod test file gp2obj.g (version 05/04/17) :-");
+Print("\nXMod test file gp2obj.g (version 25/04/17) :-");
 Print("\ntesting constructions of crossed modules\n\n");
 level := InfoLevel( InfoXMod ); 
 SetInfoLevel( InfoXMod, 0 ); 
@@ -119,7 +119,27 @@ Print("S16 = ", S16, "\n\n" );
 
 Print("\n=========================================================\n");
 Print("\ntesting constructions of cat1-groups\n");
-Print("\nFirst, a pc-group example:\n\n");
+
+Print("\nFirst, a permutation group example:\n\n"); 
+G4 := Group( (1,2,3,4), (3,4), (5,6,7,8), (7,8) ); 
+R4 := Group( (9,10,11,12), (11,12) );
+SetName( G4, "s4s4" );  SetName( R4, "s4d" ); 
+G4gens := GeneratorsOfGroup( G4 );; 
+R4gens := GeneratorsOfGroup( R4 );; 
+t := GroupHomomorphismByImages( G4, R4, G4gens, 
+         Concatenation( R4gens, [ (), () ] ) ); 
+h := GroupHomomorphismByImages( G4, R4, G4gens,  
+         Concatenation( [ (), () ], R4gens ) ); 
+e := GroupHomomorphismByImages( R4, G4, R4gens, 
+         [ (1,2,3,4)(5,6,7,8), (3,4)(7,8) ] ); 
+C4 := PreCat1GroupByTailHeadEmbedding( t, h, e ); 
+Print( "the cat1-group C4 :-\n" ); 
+Display( C4 ); 
+EC4 := EndomorphismPreCat1Group( C4 );
+Print( "C4 converted to an endomorphism cat1-group, EC4:-\n" ); 
+Display(EC4); 
+
+Print("\nNext, a pc-group example:\n\n");
 
 G2 := SmallGroup( 288, 956 );  SetName( G2, "G2" );
 Print( "G2 = ", G2, "\n" );
@@ -133,16 +153,16 @@ h2 := GroupHomomorphismByImages( G2, d12, gensG2,
           [ a1*a2*a3, a0, a0, a2*a3, a0, a0, a3^2 ] );;                   
 e2 := GroupHomomorphismByImages( d12, G2, [a1,a2,a3],
           [ G2.1*G2.2*G2.4*G2.6^2, G2.3*G2.4*G2.6^2*G2.7, G2.6*G2.7^2 ] );
-C2 := PreCat1ByTailHeadEmbedding( t2, h2, e2 );
+C2 := PreCat1GroupByTailHeadEmbedding( t2, h2, e2 );
 Print( "C2 is the pre-cat-group ", C2, "\n" );
-Print( "C2 is a cat1-group? ", IsCat1(C2), "\n" );
+Print( "C2 is a cat1-group? ", IsCat1Group(C2), "\n" );
 Display(C2);
 
 
 
 Print("==============================================================\n\n");
 
-CX1 := Cat1OfXMod( X1 );
+CX1 := Cat1GroupOfXMod( X1 );
 Print("cat1-group associated to X1 is CX1 = \n", CX1, "\n" );
 Display( CX1 );
 
@@ -155,7 +175,7 @@ im20 := [ (), (6,7,9,8) ];
 h20 := GroupHomomorphismByImages( hol20, c4, gen20, im20 );
 t20 := h20;
 e20 := InclusionMappingGroups( hol20, c4 );
-C20 := Cat1( t20, h20, e20 );
+C20 := Cat1Group( t20, h20, e20 );
 Print("cat1-group C20 = ",C20,"\n" );
 Display( C20 );
 
@@ -165,7 +185,7 @@ Print( KnownAttributesOfObject(C20), "\n" );
 Print( RepresentationsOfObject(C20), "\n" );
 Print("C20 has size ", Size(C20), "\n\n" );
 
-X2 := XModOfCat1( C2 ); 
+X2 := XModOfCat1Group( C2 ); 
 Print( "the crossed module obtained from C2 is X2 =\n" ); 
 Display( X2 );
 Print( "X2 has structure ", StructureDescription(X2), "\n\n" ); 
@@ -181,7 +201,7 @@ Display( C18 );
 iso18 := IsomorphismPermObject( C18 ); 
 PC18 := Image( iso18 ); 
 Display( PC18 ); 
-X18 := XModByCat1( PC18 );
+X18 := XModByCat1Group( PC18 );
 Display( X18 ); 
 
 SetInfoLevel( InfoXMod, level );

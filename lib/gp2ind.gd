@@ -74,22 +74,22 @@ DeclareOperation( "SurjectiveInducedXMod", [ IsXMod, IsGroupHomomorphism ] );
 
 ##############################################################################
 ##
-#F  InducedCat1( <args> )
+#F  InducedCat1Group( <args> )
 #O  InclusionInducedCat1Data( <grp>, <hom>, <trans> )
-#O  InducedCat1ByFreeProduct( [ <grp>, <hom> ] )  ???
+#O  InducedCat1GroupByFreeProduct( [ <grp>, <hom> ] )  ???
 ##
-DeclareGlobalFunction( "InducedCat1" );
+DeclareGlobalFunction( "InducedCat1Group" );
 DeclareOperation( "InclusionInducedCat1Data", 
-    [ IsCat1, IsGroupHomomorphism, IsList ] );
-DeclareOperation( "InducedCat1ByFreeProduct", [ IsList ] );
+    [ IsCat1Group, IsGroupHomomorphism, IsList ] );
+DeclareOperation( "InducedCat1GroupByFreeProduct", [ IsList ] );
 
 ##############################################################################
 ##
 #O  AllInducedXMods( <grp> )
-#O  AllInducedCat1s( <grp> )
+#O  AllInducedCat1Groups( <grp> )
 ##
 DeclareGlobalFunction( "AllInducedXMods" );
-DeclareGlobalFunction( "AllInducedCat1s" );
+DeclareGlobalFunction( "AllInducedCat1Groups" );
 
 ##############################################################################
 ##

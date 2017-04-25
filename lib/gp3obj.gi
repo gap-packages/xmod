@@ -224,16 +224,16 @@ end );
 
 #############################################################################
 ##
-#M  IsPreCat2 . . . . . . . . . . . . . . . . .  check that the is pre-cat2
+#M  IsPreCat2Group . . . . . . . . . . .  check that this is a pre-cat2-group
 ##
-InstallMethod( IsPreCat2, "generic method for a pre-cat2",
+InstallMethod( IsPreCat2Group, "generic method for a pre-cat2-group",
     true, [ Is3DimensionalGroup ], 0,
 function( P )
 
     local  u, d, h1, t1, h2, t2, h1h2, h2h1, t1t2, t2t1, h1t2, 
            t2h1, h2t1, t1h2, G, gensrc, x, y, z;
 
-    if not ( IsPreCat2Obj ( P )  ) then
+    if not ( IsPreCat2Obj( P )  ) then
         return false;
     fi;
     
@@ -317,24 +317,24 @@ end );
 
 #############################################################################
 ##
-#M  IsCat2 . . . . . . . . . . . . . . . . .  check that the object is a cat2
+#M  IsCat2Group . . . . . . . . . . . . check that the object is a cat2-group
 ##
-InstallMethod( IsCat2, "generic method for a cat2",
+InstallMethod( IsCat2Group, "generic method for a cat2-group",
     true, [ Is3DimensionalGroup ], 0,
 function( P )
 
     local  u, d;
 
-    if not ( IsPreCat2(P) ) then
-        Info( InfoXMod, 2, "Pre-Cat2 is not provided" );
+    if not ( IsPreCat2Group(P) ) then
+        Info( InfoXMod, 2, "pre-cat2-group is not provided" );
         return false;
     fi;
     u := Up2DimensionalGroup( P );
     d := Down2DimensionalGroup( P );
     
-    if not ( ( IsCat1( u ) ) and ( IsCat1( d ) ) )  then
+    if not ( ( IsCat1Group( u ) ) and ( IsCat1Group( d ) ) )  then
         Info( InfoXMod, 2, 
-            "Up2DimensionalGroup and Down2DimensionalGroup must be Cat1" );
+            "Up2DimensionalGroup, Down2DimensionalGroup must be Cat1Groups" );
         return false;
     fi;
     return true;
@@ -342,10 +342,10 @@ end );
 
 ##############################################################################
 ##
-#M  PreCat2Obj ( <up>, <down> ) . .make a PreCat2
+#M  PreCat2Obj( <up>, <down> ) . . . . . . . . . . . . . make a pre-cat2-group
 ##
 InstallMethod( PreCat2Obj, "for precat2", true,
-    [ IsPreCat1, IsPreCat1 ], 0,
+    [ IsPreCat1Group, IsPreCat1Group ], 0,
 function( u, d )
 
     local  filter, fam, PC, ok, name;
@@ -357,33 +357,33 @@ function( u, d )
         Up2DimensionalGroup, u, 
         Down2DimensionalGroup, d,
         Is3DimensionalGroup, true );
-    if not IsPreCat2( PC ) then
+    if not IsPreCat2Group( PC ) then
         Info( InfoXMod, 1, "Warning: not a pre-cat2-group" );
     fi;
-    # ok := IsCat2( PC );
+    # ok := IsCat2Group( PC );
     # name:= Name( PC );
     return PC;
 end );
 
 #############################################################################
 ##
-#F  Cat2( <size>, <gpnum>, <num> )     cat2-group from data in CAT2_LIST
-#F  Cat2( C1G1, C1G2 )                 cat2-group from two cat1-groups
+#F  Cat2Group( <size>, <gpnum>, <num> )     cat2-group from data in CAT2_LIST
+#F  Cat2Group( C1G1, C1G2 )                 cat2-group from two cat1-groups
 ##
-InstallGlobalFunction( Cat2, function( arg )
+InstallGlobalFunction( Cat2Group, function( arg )
 
     local  nargs, C1G1, C1G2, C2G, ok;
 
     nargs := Length( arg );
     if ( ( nargs < 2 ) or ( nargs > 3 ) ) then
-        Print( "standard usage: Cat2( cat1, cat1 );\n" );
-        Print( "            or: Cat2( size, gpnum, num );\n" );
+        Print( "standard usage: Cat2Group( cat1, cat1 );\n" );
+        Print( "            or: Cat2Group( size, gpnum, num );\n" );
         return fail;
     elif not IsInt( arg[1] ) then
         if ( nargs = 2 ) then
             C2G := PreCat2Obj( arg[1], arg[2] );
         fi;
-        ok := IsCat2( C2G );
+        ok := IsCat2Group( C2G );
         if ok then
             return C2G;
         else
@@ -559,14 +559,14 @@ end );
 
 ##############################################################################
 ##
-#M  \=( <dom1>, <dom2> ) . . . . . test if two 3d-objects are equal
+#M  \=( <dom1>, <dom2> ) . . . . . . . . . . test if two 3d-objects are equal
 ##
 InstallMethod( \=,
     "generic method for two 3d-domain",
     IsIdenticalObj, [ Is3DimensionalGroup, Is3DimensionalGroup ], 0,
     function ( dom1, dom2 )
     
-    if ( IsPreCat2( dom1 ) and IsPreCat2( dom2 ) ) then
+    if ( IsPreCat2Group( dom1 ) and IsPreCat2Group( dom2 ) ) then
         return( 
             ( Up2DimensionalGroup( dom1 ) = Up2DimensionalGroup( dom2 ) )
         and ( Down2DimensionalGroup( dom1 ) = Down2DimensionalGroup( dom2 ) ) 
@@ -646,7 +646,7 @@ function( g3d )
             Print( "    down = ",  Down2DimensionalGroup( g3d ), "\n" );
             Print( "   right = ", Right2DimensionalGroup( g3d ), "\n" );
             else 
-               if ( HasIsCat2( g3d ) and IsCat2( g3d ) ) then  
+               if ( HasIsCat2Group( g3d ) and IsCat2Group( g3d ) ) then  
                    Print( "cat2-group with:\n" ); 
                else 
                    Print( "(pre-)cat2-group with:\n" ); 
@@ -666,7 +666,8 @@ InstallMethod( ViewObj, "method for a 3d-group", true,
 ##
 #M Display( <g3d> . . . . . . . . . . . . . . . . . . . . display a 3d-group 
 ##
-InstallMethod( Display, "method for a 3d-group", true, [ Is3DimensionalGroup ], 0,
+InstallMethod( Display, "method for a 3d-group", true, 
+    [ Is3DimensionalGroup ], 0,
 function( g3d )
 
     local  L, M, N, P, lenL, lenM, lenN, lenP, len1, len2, j, q1, q2, 

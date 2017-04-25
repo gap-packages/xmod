@@ -470,67 +470,66 @@ It is frequently the case that <M>t=h</M>.
 </ManSection>
 
 <ManSection>
-   <Func Name="Cat1"
+   <Func Name="Cat1Group"
          Arg="args" />
-   <Oper Name="PreCat1ByTailHeadEmbedding"
+   <Oper Name="PreCat1GroupByTailHeadEmbedding"
          Arg="t h e" />
-   <Oper Name="PreCat1ByEndomorphisms"
+   <Oper Name="PreCat1GroupByEndomorphisms"
          Arg="t h" />
-   <Oper Name="PreCat1ByNormalSubgroup"
+   <Oper Name="PreCat1GroupByNormalSubgroup"
          Arg="G N" />
-   <Oper Name="Cat1ByPeifferQuotient"
+   <Oper Name="Cat1GroupByPeifferQuotient"
          Arg="P" />
-   <Attr Name="ReverseCat1"
+   <Attr Name="ReverseCat1Group"
          Arg="C0" />
-   <Oper Name="DiagonalCat1" 
+   <Oper Name="DiagonalCat1Group" 
          Arg="gen1" />
 <Description>
 These are some of the constructors for pre-cat1-groups and cat1-groups. 
 <P/>
 The following listing shows an example of a permutation cat1-group 
-of size <M>[36,6]</M> with source group <M>S_3 \times S_3</M>, 
-range group the diagonal subgroup <M>S_3</M>, and <M>t \neq h</M>. 
-This example may be reproduced using the command 
-<Code>C := DiagonalCat1([(1,2,3),(2,3)]);</Code> 
+of size <M>[576,24]</M> with source group <M>S_4 \times S_4</M>, 
+range group a third <M>S_4</M>, and <M>t \neq h</M>. 
+A similar example may be reproduced using the command 
+<Code>C := DiagonalCat1Group([(1,2,3,4),(3,4)]);</Code> 
 (see section <Ref Sect="sect-mor-pre-cat1"/>). 
 </Description>
 </ManSection>
 <P/>
 <Example>
 <![CDATA[
-gap> G := Group( (1,2,3), (2,3), (4,5,6), (5,6) );;
-gap> R := Subgroup( G, [ (1,2,3)(4,5,6), (2,3)(5,6) ] );;
-gap> SetName( G, "s3s3" );;  SetName( R, "s3d" );; 
-gap> Ggens := GeneratorsOfGroup( G );; 
-gap> Rgens := GeneratorsOfGroup( R );; 
-gap> t := GroupHomomorphismByImages( G, R, Ggens,             
->            [ (1,2,3)(4,5,6), (2,3)(5,6), (), () ] );; 
-gap> h := GroupHomomorphismByImages( G, R, Ggens, 
->            [ (), (), (1,2,3)(4,5,6), (2,3)(5,6) ] );;
-gap> e := GroupHomomorphismByImages( R, G, Rgens, Rgens );; 
-gap> C2 := PreCat1ByTailHeadEmbedding( t, h, e ); 
-[Group( [ (1,2,3), (2,3), (4,5,6), (5,6) ] )=>Group( 
-[ (1,2,3)(4,5,6), (2,3)(5,6) ] )]
-gap> C2 := PreCat1ByTailHeadEmbedding( t, h, e );;  
-gap> Display( C2 ); 
+gap> G4 := Group( (1,2,3,4), (3,4), (5,6,7,8), (7,8) );; 
+gap> R4 := Group( (9,10,11,12), (11,12) );;
+gap> SetName( G4, "s4s4" );  SetName( R4, "s4d" ); 
+gap> G4gens := GeneratorsOfGroup( G4 );; 
+gap> R4gens := GeneratorsOfGroup( R4 );; 
+gap> t := GroupHomomorphismByImages( G4, R4, G4gens, 
+>            Concatenation( R4gens, [ (), () ] ) );; 
+gap> h := GroupHomomorphismByImages( G4, R4, G4gens,  
+>            Concatenation( [ (), () ], R4gens ) );; 
+gap> e := GroupHomomorphismByImages( R4, G4, R4gens, 
+>            [ (1,2,3,4)(5,6,7,8), (3,4)(7,8) ] );; 
+gap> C4 := PreCat1GroupByTailHeadEmbedding( t, h, e ); 
+[s4s4=>s4d]
+gap> Display( C4 ); 
 
-Pre-cat1-group [s3s3=>s3d] :- 
-: Source group s3s3 has generators:
-  [ (1,2,3), (2,3), (4,5,6), (5,6) ]
-: Range group has generators:
-  [ (1,2,3)(4,5,6), (2,3)(5,6) ]
+Cat1-group [s4s4=>s4d] :- 
+: Source group s4s4 has generators:
+  [ (1,2,3,4), (3,4), (5,6,7,8), (7,8) ]
+: Range group s4d has generators:
+  [ ( 9,10,11,12), (11,12) ]
 : tail homomorphism maps source generators to:
-  [ (1,2,3)(4,5,6), (2,3)(5,6), (), () ]
+  [ ( 9,10,11,12), (11,12), (), () ]
 : head homomorphism maps source generators to:
-  [ (), (), (1,2,3)(4,5,6), (2,3)(5,6) ]
+  [ (), (), ( 9,10,11,12), (11,12) ]
 : range embedding maps range generators to:
-  [ (1,2,3)(4,5,6), (2,3)(5,6) ]
+  [ (1,2,3,4)(5,6,7,8), (3,4)(7,8) ]
 : kernel has generators:
-  [ (4,5,6), (5,6) ]
+  [ (5,6,7,8), (7,8) ]
 : boundary homomorphism maps generators of kernel to:
-  [ (1,2,3)(4,5,6), (2,3)(5,6) ]
+  [ ( 9,10,11,12), (11,12) ]
 : kernel embedding maps generators of kernel to:
-  [ (4,5,6), (5,6) ]
+  [ (5,6,7,8), (7,8) ]
 
 ]]>
 </Example>
@@ -538,26 +537,31 @@ Pre-cat1-group [s3s3=>s3d] :-
 </Section> 
 
 <Section Label="sect-properties-cat1">
-<Heading>Properties of cat1-groups</Heading>
+<Heading>Properties of cat1-groups and pre-cat1-groups</Heading>
 
 Many of the properties listed in section <Ref Sect="sect-properties-xmod"/> 
 apply to pre-cat1-groups and to cat1-groups since these are also 2d-groups. 
 There are also more specific properties. 
 
 <ManSection>
-   <Prop Name="IsCat1"
+   <Prop Name="IsCat1Group"
          Arg="C0" />
-   <Prop Name="IsPreXCat1"
+   <Prop Name="IsPreXCat1Group"
          Arg="C0" />
-   <Prop Name="IsIdentityCat1"
+   <Prop Name="IsIdentityCat1Group"
          Arg="C0" />
-   <Prop Name="IsEndomorphismPreCat1"
+   <Prop Name="IsEndomorphismPreCat1Group"
          Arg="C0" />
+   <Attr Name="EndomorphismPreCat1Group" 
+         Arg="C0" /> 
 <Description>
-<C>IsIdentityCat1(C0)</C> is true when the head and tail maps of <C>C0</C> 
+<C>IsIdentityCat1Group(C0)</C> is true when the head and tail maps of <C>C0</C> 
 are identity mappings. 
-<C>IsEndomorphismPreCat1(C0)</C> is true when the range of <C>C0</C> 
-is a subgroup of the source.
+<C>IsEndomorphismPreCat1Group(C0)</C> is true when the range of <C>C0</C> 
+is a subgroup of the source. 
+When this is not the case, replacing <M>t,h,e</M> by <M>t*e,h*e</M> 
+and the inclusion mapping of the image of <M>e</M> gives an isomorphic 
+cat1-groups for which <C>IsEndomorphismPreCat1Group</C> is true. 
 </Description>
 </ManSection>
 <P/>
@@ -566,22 +570,24 @@ is a subgroup of the source.
 gap> KnownPropertiesOfObject( C2 );
 [ "CanEasilyCompareElements", "CanEasilySortElements", "IsDuplicateFree", 
   "IsGeneratorsOfSemigroup", "IsPreCat1Domain", "IsPerm2DimensionalGroup", 
-  "IsPreCat1", "IsEndomorphismPreCat1" ]
-gap> IsEndomorphismPreCat1( C2 );
-true
+  "IsPreCat1Group", "IsCat1Group", "IsEndomorphismPreCat1Group" ]
+gap> IsEndomorphismPreCat1Group( C2 );
+false
+gap> EC4 := EndomorphismPreCat1Group( C4 );
+[s4s4=>Group( [ (1,2,3,4)(5,6,7,8), (3,4)(7,8), (), () ] )]
 ]]>
 </Example>
 
 
 
 <ManSection>
-   <Attr Name="Cat1OfXMod"
+   <Attr Name="Cat1GroupOfXMod"
          Arg="X0" />
-   <Attr Name="XModOfCat1"
+   <Attr Name="XModOfCat1Group"
          Arg="C0" />
-   <Attr Name="PreCat1OfPreXMod"
+   <Attr Name="PreCat1GroupOfPreXMod"
          Arg="P0" />
-   <Attr Name="PreXModOfPreCat1"
+   <Attr Name="PreXModOfPreCat1Group"
          Arg="P0" />
 <Description>
 The category of crossed modules is equivalent to the category of cat1-groups,
@@ -610,7 +616,7 @@ of  <M>R</M>  in  <M>G</M>.
 <P/>
 <Example>
 <![CDATA[
-gap> X2 := XModOfCat1( C2 );;
+gap> X2 := XModOfCat1Group( C2 );;
 gap> Display( X2 );
 
 Crossed module X([G2=>d12]) :- 
@@ -638,7 +644,7 @@ gap> StructureDescription(X2);
 <Section><Heading>Selection of a small cat1-group</Heading>
 <Index>selection of a small cat1-group</Index>
 
-The <C>Cat1</C> function may also be used to select a cat1-group 
+The <C>Cat1Group</C> function may also be used to select a cat1-group 
 from a data file.
 All cat1-structures on groups of size up to <M>70</M> 
 (ordered according to the &GAP; 4 numbering of small groups) 
@@ -685,7 +691,7 @@ Using small generating set [ f1, f2, f2*f3 ] for source of homs.
 (4)  [ [ f1, f2, f2*f3 ],  tail = head = identity mapping ]
 4
 gap> ## select the third of these cat1-structures 
-gap> C18 := Cat1( 18, 4, 3 );
+gap> C18 := Cat1Group( 18, 4, 3 );
 [(C3 x C3) : C2=>Group( [ f1, <identity> of ..., f3 ] )]
 gap> ## convert from a pc-cat1-group to a permutation cat1-group
 gap> iso18 := IsomorphismPermObject( C18 );;
@@ -709,7 +715,7 @@ Cat1-group :-
 : kernel embedding maps generators of kernel to:
   [ (4,5,6) ]
 gap> convert the result to the associated permutation crossed module 
-gap> X18 := XModByCat1( PC18 );; 
+gap> X18 := XModByCat1Group( PC18 );; 
 gap> Display( X18 ); 
 Crossed module:- 
 : Source group has generators:
@@ -728,7 +734,7 @@ Crossed module:-
 </Example>
 
 <ManSection>
-   <Oper Name="AllCat1sBasic" 
+   <Oper Name="AllCat1GroupsBasic" 
          Arg="gp" /> 
 <Description>
 For a group <M>G</M> of size greater than <M>70</M> which is reasonably 
@@ -752,7 +758,7 @@ gap> gp := SmallGroup( 102, 2 );
 <pc group of size 102 with 3 generators>
 gap> StructureDescription( gp ); 
 "C3 x D34"
-gap> all := AllCat1sBasic( gp );
+gap> all := AllCat1GroupsBasic( gp );
 #I Edit last line of .../xmod/lib/nn.kk.out to end with ] ] ] ] ]
 [ [Group( [ f1, f2, f3 ] )=>Group( [ f1, <identity> of ..., <identity> of ... 
      ] )], [Group( [ f1, f2, f3 ] )=>Group( [ f1, f2, <identity> of ... ] )], 

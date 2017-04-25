@@ -52,7 +52,7 @@ gap> c6 := Subgroup( d12, [a2,a3] );  SetName( c6, "c6" );
 Group([ f2, f3 ])
 gap> SC2 := Sub2DimensionalGroup( C2, H2, c6 );
 [H2=>c6]
-gap> IsCat1( SC2 );
+gap> IsCat1Group( SC2 );
 true
 gap> inc2 := InclusionMorphism2DimensionalDomains( C2, SC2 );
 [[H2=>c6] => [G2=>d12]]

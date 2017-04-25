@@ -53,7 +53,7 @@ function( L )
             Info( InfoXMod, 2, "boundaries and homs do not commute" ); 
             return false; 
         fi; 
-    elif ( IsPreCat1( src ) and IsPreCat1( rng ) ) then 
+    elif ( IsPreCat1Group( src ) and IsPreCat1Group( rng ) ) then 
         st := TailMap( src ); 
         rt := TailMap( rng ); 
         im1 := List( sgen, g -> Image( rt, Image(shom,g) ) ); 
@@ -189,7 +189,7 @@ end );
 ##
 InstallOtherMethod( MappingGeneratorsImages, "for a 2DimensionalMapping", 
     true, [ Is2DimensionalMapping ], 0,
-    function( map )
+function( map )
     return [ MappingGeneratorsImages( SourceHom( map ) ),
              MappingGeneratorsImages( RangeHom( map ) ) ];
 end );
@@ -233,7 +233,7 @@ end );
 
 #############################################################################
 ##
-#M  IsPreCat1Morphism . . . . . . . . . check diagram of group homs commutes
+#M  IsPreCat1Morphism . . . . . . . . . check diagram of group homs commutes 
 ##
 InstallMethod( IsPreCat1Morphism, "generic method for morphisms of 2d-groups", 
     true, [ Is2DimensionalGroupMorphism ], 0,
@@ -244,7 +244,7 @@ function( mor )
 
     PCG := Source( mor );
     QCG := Range( mor );
-    if not ( IsPreCat1( PCG ) and IsPreCat1( QCG ) ) then
+    if not ( IsPreCat1Group( PCG ) and IsPreCat1Group( QCG ) ) then
         return false;
     fi;
     Psrc := Source( PCG );
@@ -299,7 +299,7 @@ end );
 InstallMethod( IsCat1Morphism, "generic method for cat1-group homomorphisms",
     true, [ IsPreCat1Morphism ], 0,
 function( mor )
-    return ( IsCat1( Source( mor ) ) and IsCat1(  Range( mor ) ) );
+    return ( IsCat1Group( Source( mor ) ) and IsCat1Group(  Range( mor ) ) );
 end );
 
 #############################################################################
@@ -361,7 +361,7 @@ function( mor2, mor1 )
     rnghom := CompositionMapping2( RangeHom( mor2 ), RangeHom( mor1 ) );
     comp := Make2DimensionalGroupMorphism( 
                 [ Source(mor1), Range(mor2), srchom, rnghom ]);
-    if IsPreCat1( Source( mor1 ) ) then
+    if IsPreCat1Group( Source( mor1 ) ) then
         if ( IsPreCat1Morphism( mor1 ) and IsPreCat1Morphism( mor2 ) ) then
             SetIsPreCat1Morphism( comp, true );
         fi;
@@ -434,7 +434,7 @@ end );
 ##
 #M  InclusionMorphism2DimensionalDomains( <obj>, <sub> )
 ##
-InstallMethod( InclusionMorphism2DimensionalDomains, "of one 2d-object in another", 
+InstallMethod( InclusionMorphism2DimensionalDomains, "one 2d-object in another", 
     true, [ Is2DimensionalDomain, Is2DimensionalDomain ], 0,
 function( obj, sub )
 
@@ -463,7 +463,7 @@ InstallGlobalFunction( PreXModMorphism, function( arg )
 
     # two pre-xmods and two homomorphisms
     if ( nargs = 4 ) then 
-        mor := Make2DimensionalGroupMorphism( [ arg[1], arg[2], arg[3], arg[4] ] ); 
+        mor := Make2DimensionalGroupMorphism( [arg[1],arg[2],arg[3],arg[4] ] ); 
     else 
         # alternatives not allowed
         Info( InfoXMod, 2, "usage: PreXModMorphism([src,rng,srchom,rnghom]);" );
@@ -507,7 +507,7 @@ InstallGlobalFunction( PreCat1Morphism, function( arg )
     nargs := Length( arg );
 
     # two pre-cat1s and two homomorphisms
-    if ( ( nargs = 4 ) and IsPreCat1( arg[1] ) and IsPreCat1( arg[2])
+    if ( ( nargs = 4 ) and IsPreCat1Group( arg[1] ) and IsPreCat1Group( arg[2])
                        and IsGroupHomomorphism( arg[3] )
                        and IsGroupHomomorphism( arg[4] ) ) then
         return PreCat1MorphismByHoms( arg[1], arg[2], arg[3], arg[4] );
@@ -529,7 +529,7 @@ InstallGlobalFunction( Cat1Morphism, function( arg )
     nargs := Length( arg );
 
     # two cat1s and two homomorphisms
-    if ( ( nargs = 4 ) and IsCat1( arg[1] ) and IsCat1( arg[2])
+    if ( ( nargs = 4 ) and IsCat1Group( arg[1] ) and IsCat1Group( arg[2])
                        and IsGroupHomomorphism( arg[3] )
                        and IsGroupHomomorphism( arg[4] ) ) then
         return Cat1MorphismByHoms( arg[1], arg[2], arg[3], arg[4] );
@@ -582,10 +582,10 @@ end );
 
 ##############################################################################
 ##
-#M  InnerAutomorphismCat1( <C1G>, <r> ) . . . . .  conjugation of a cat1-group
+#M  InnerAutomorphismCat1Group( <C1G>, <r> ) . . . conjugation of a cat1-group
 ##
-InstallMethod( InnerAutomorphismCat1, "method for cat1-groups", true,
-    [ IsPreCat1, IsMultiplicativeElementWithInverse ], 0,
+InstallMethod( InnerAutomorphismCat1Group, "method for cat1-groups", true,
+    [ IsPreCat1Group, IsMultiplicativeElementWithInverse ], 0,
 function( C1G, r )
     local  Crng, Csrc, genrng, gensrc, rhom, shom, s;
     Crng := Range( C1G );
@@ -732,13 +732,13 @@ end );
 #M  IsomorphismPerm2DimensionalGroup . . . constructs isomorphic perm pre-cat1
 ##
 InstallMethod( IsomorphismPerm2DimensionalGroup,
-     "generic method for pre-cat1-groups", true, [ IsPreCat1 ], 0,
+     "generic method for pre-cat1-groups", true, [ IsPreCat1Group ], 0,
 function( PCG )
 
     local  shom, sinv, rhom, rinv, Psrc, Psgen, Qsrc, Qsgen, 
            Prng, Prgen, Qrng, Qrgen, Qt, Qh, Qe, QCG, iso;
 
-    if IsPermPreCat1( PCG ) then
+    if IsPermPreCat1Group( PCG ) then
         return IdentityMapping( PCG );
     fi;
     Psrc := Source( PCG );
@@ -761,7 +761,7 @@ function( PCG )
         rinv := rhom;
     else
         Prgen := GeneratorsOfGroup( Prng ); 
-        if IsEndomorphismPreCat1( PCG ) then 
+        if IsEndomorphismPreCat1Group( PCG ) then 
             rhom := RestrictedMapping( shom, Prng ); 
         else 
             rhom := IsomorphismSmallPermGroup( Prng );
@@ -774,7 +774,7 @@ function( PCG )
     Qt := CompositionMapping( rhom, TailMap( PCG ), sinv );
     Qh := CompositionMapping( rhom, HeadMap( PCG ), sinv );
     Qe := CompositionMapping( shom, RangeEmbedding( PCG ), rinv );
-    QCG := PreCat1ByTailHeadEmbedding( Qt, Qh, Qe );
+    QCG := PreCat1GroupByTailHeadEmbedding( Qt, Qh, Qe );
     if HasName( PCG ) then
         SetName( QCG, Concatenation( "P", Name( PCG ) ) );
     fi;
@@ -856,13 +856,13 @@ end );
 #M  IsomorphismPc2DimensionalGroup . . . . . constructs isomorphic pc pre-cat1
 ##
 InstallMethod( IsomorphismPc2DimensionalGroup,
-     "generic method for pre-cat1-groups", true, [ IsPreCat1 ], 0,
+     "generic method for pre-cat1-groups", true, [ IsPreCat1Group ], 0,
 function( PCG )
 
     local  shom, sinv, rhom, rinv, Psrc, Psgen, Qsrc, Qsgen, 
            Prng, Prgen, Qrng, Qrgen, Qt, Qh, Qe, QCG, iso;
 
-    if IsPcPreCat1( PCG ) then
+    if IsPcPreCat1Group( PCG ) then
         return IdentityMapping( PCG );
     fi;
     Psrc := Source( PCG );
@@ -900,7 +900,7 @@ function( PCG )
     Qt := CompositionMapping( rhom, TailMap( PCG ), sinv );
     Qh := CompositionMapping( rhom, HeadMap( PCG ), sinv );
     Qe := CompositionMapping( shom, RangeEmbedding( PCG ), rinv );
-    QCG := PreCat1ByTailHeadEmbedding( Qt, Qh, Qe );
+    QCG := PreCat1GroupByTailHeadEmbedding( Qt, Qh, Qe );
     if HasName( PCG ) then
         SetName( QCG, Concatenation( "P", Name( PCG ) ) );
     fi;
@@ -911,10 +911,10 @@ end );
 
 ###############################################################################
 ##
-#M  IsomorphismPreCat1s . . . . . isomorphism between a pair of pre-cat1-groups 
+#M  IsomorphismPreCat1Groups . . isomorphism between a pair of pre-cat1-groups 
 ##
-InstallMethod( IsomorphismPreCat1s, "generic method for two pre-cat1-groups", 
-    true, [ IsPreCat1, IsPreCat1 ], 0,
+InstallMethod( IsomorphismPreCat1Groups, "generic method for 2 pre-cat1-groups", 
+    true, [ IsPreCat1Group, IsPreCat1Group ], 0,
 function( C1, C2 )
 
     local  t1, h1, e1, t2, h2, e2, G1, G2, R1, R2, A, phi, psi, 
@@ -1027,7 +1027,7 @@ end );
 ##
 InstallMethod( PreCat1MorphismByHoms,
     "for pre-cat1-group, pre-cat1-group, homomorphism, homomorphism,", true,
-    [ IsPreCat1, IsPreCat1, IsGroupHomomorphism, IsGroupHomomorphism ], 0,
+    [ IsPreCat1Group, IsPreCat1Group, IsGroupHomomorphism, IsGroupHomomorphism ], 0,
 function( src, rng, srchom, rnghom )
 
     local  filter, fam, mor, ok, nsrc, nrng, name;
@@ -1058,7 +1058,7 @@ end );
 #M  Cat1MorphismByHoms( <Cs>, <Cr>, <hsrc>, <hrng> ) . . . make cat1 morphism
 ##
 InstallMethod( Cat1MorphismByHoms, "for 2 cat1s and 2 homomorphisms", true,
-    [ IsCat1, IsCat1, IsGroupHomomorphism, IsGroupHomomorphism ], 0,
+    [ IsCat1Group, IsCat1Group, IsGroupHomomorphism, IsGroupHomomorphism ], 0,
 function( src, rng, srchom, rnghom )
 
     local  mor, ok;
@@ -1103,10 +1103,10 @@ end );
 #M  ReverseIsomorphism                                   for a pre-cat1-group
 ##
 InstallMethod( ReverseIsomorphism, "method for a cat1-group", true,
-    [ IsPreCat1 ], 0,
+    [ IsPreCat1Group ], 0,
 function( C1G )
     local rev, shom, rhom, src, gensrc, t, h, e, im;
-    rev := ReverseCat1( C1G );
+    rev := ReverseCat1Group( C1G );
     src := Source( C1G );
     gensrc := GeneratorsOfGroup( src );
     t := TailMap( C1G );
@@ -1278,8 +1278,8 @@ function( phi )
     C1 := Source( phi );
     C2 := Range( phi );
     C1src := Source( C1 );
-    X1 := XModByCat1( C1 );
-    X2 := XModByCat1( C2 );
+    X1 := XModByCat1Group( C1 );
+    X2 := XModByCat1Group( C2 );
     X1src := Source( X1 );
     X1rng := Range( X1 );
     X2src := Source( X2 );
@@ -1330,8 +1330,8 @@ function( mor )
 
     X1 := Source( mor );
     X2 := Range( mor );
-    C1 := Cat1ByXMod( X1 );
-    C2 := Cat1ByXMod( X2 );
+    C1 := Cat1GroupByXMod( X1 );
+    C2 := Cat1GroupByXMod( X2 );
     smor := SourceHom( mor );
     rmor := RangeHom( mor );
     e2 := RangeEmbedding( C2 );
@@ -1445,7 +1445,7 @@ end );
 #M  PreCat1IsomorphismByIsomorphisms
 ##
 InstallMethod( PreCat1IsomorphismByIsomorphisms, "for two isomorphisms",
-    true, [ IsPreCat1, IsBijective, IsBijective ], 0,
+    true, [ IsPreCat1Group, IsBijective, IsBijective ], 0,
 function( P0, sigma, rho )
 
     local  S0, R0, isigma, irho, t0, h0, e0, S1, R1, t1, h1, e1, P1, mor; 
@@ -1466,12 +1466,12 @@ function( P0, sigma, rho )
     irho := InverseGeneralMapping( rho ); 
     e0 := RangeEmbedding( P0 ); 
     e1 := irho * e0 * sigma; 
-    P1 := PreCat1ByTailHeadEmbedding( t1, h1, e1  );
+    P1 := PreCat1GroupByTailHeadEmbedding( t1, h1, e1  );
     mor := PreCat1Morphism( P0, P1, sigma, rho );
     SetIsInjective( mor, true );
     SetIsSurjective( mor, true );
-    if ( HasIsCat1( P0 ) and IsCat1( P0 ) ) then
-        SetIsCat1( P1, true );
+    if ( HasIsCat1Group( P0 ) and IsCat1Group( P0 ) ) then
+        SetIsCat1Group( P1, true );
         SetIsCat1Morphism( mor, true );
     fi;
     return mor;

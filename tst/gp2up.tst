@@ -22,10 +22,10 @@ gap> SetName( s3, "s3" );;
 gap> t := GroupHomomorphismByImages( g18, s3, gen18, [g2,g2,g3] );;
 gap> h := GroupHomomorphismByImages( g18, s3, gen18, [(),g2,g3] );;
 gap> e := GroupHomomorphismByImages( s3, g18, [g2,g3], [g2,g3] );;
-gap> C3 := Cat1( t, h, e );
+gap> C3 := Cat1Group( t, h, e );
 [g18=>s3]
 gap> SetName( Kernel(t), "c3" );;
-gap> X3 := XModOfCat1( C3 );;
+gap> X3 := XModOfCat1Group( C3 );;
 gap> Display( X3 );
 
 Crossed module [c3->s3] :- 

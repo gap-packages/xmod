@@ -202,8 +202,8 @@ DeclareProperty( "IsMonoidOfSections", IsMonoidOfUp2DimensionalMappings );
 ##
 DeclareAttribute( "RegularDerivations", IsXMod );
 DeclareAttribute( "AllDerivations", IsXMod );
-DeclareAttribute( "RegularSections", IsCat1 );
-DeclareAttribute( "AllSections", IsCat1 );
+DeclareAttribute( "RegularSections", IsCat1Group );
+DeclareAttribute( "AllSections", IsCat1Group );
 
 ##############################################################################
 ##

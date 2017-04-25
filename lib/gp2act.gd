@@ -42,12 +42,12 @@ DeclareAttribute( "LueXMod", IsXMod );
 #F  Actor( <args> )
 #F  InnerActor( <args> )
 #A  ActorXMod( <XM> )
-#A  ActorCat1( <C> )
+#A  ActorCat1Group( <C> )
 ##
 DeclareGlobalFunction( "Actor" );
 DeclareGlobalFunction( "InnerActor" );
 DeclareAttribute( "ActorXMod", IsXMod );
-DeclareAttribute( "ActorCat1", IsCat1 );
+DeclareAttribute( "ActorCat1Group", IsCat1Group );
 
 #############################################################################
 ##

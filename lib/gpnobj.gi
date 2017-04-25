@@ -136,7 +136,7 @@ function( P )
     
     L := 2DimensionalGroups( P );
     
-    if ForAny( L, x -> not IsCat1(x) ) then 
+    if ForAny( L, x -> not IsCat1Group(x) ) then 
         Info( InfoXMod, 2, "each item in the list must be Cat1-Group" );
         return false;
     fi;

@@ -63,27 +63,28 @@ DeclareSynonym( "IsPcXMod", IsXMod and IsPc2DimensionalGroup );
 
 #############################################################################
 ##
-#P  IsPreCat1( <PCG> )
-#P  IsPermPreCat1( <PCG> )
-#P  IsFpPreCat1( <PCG> )
-#P  IsPcPreCat1( <PCG> )
+#P  IsPreCat1Group( <PCG> )
+#P  IsPermPreCat1Group( <PCG> )
+#P  IsFpPreCat1Group( <PCG> )
+#P  IsPcPreCat1Group( <PCG> )
 ##
-DeclareProperty( "IsPreCat1", Is2DimensionalGroup );
-DeclareSynonym( "IsPermPreCat1", IsPreCat1 and IsPerm2DimensionalGroup );
-DeclareSynonym( "IsFpPreCat1", IsPreCat1 and IsFp2DimensionalGroup );
-DeclareSynonym( "IsPcPreCat1", IsPreCat1 and IsPc2DimensionalGroup );
+DeclareProperty( "IsPreCat1Group", Is2DimensionalGroup );
+DeclareSynonym( "IsPermPreCat1Group", 
+    IsPreCat1Group and IsPerm2DimensionalGroup );
+DeclareSynonym( "IsFpPreCat1Group", IsPreCat1Group and IsFp2DimensionalGroup );
+DeclareSynonym( "IsPcPreCat1Group", IsPreCat1Group and IsPc2DimensionalGroup );
 
 #############################################################################
 ##
-#P  IsCat1( <C1G> )
-#P  IsPermCat1( <CG> )
-#P  IsFpCat1( <CG> )
-#P  IsPcCat1( <CG> )
+#P  IsCat1Group( <C1G> )
+#P  IsPermCat1Group( <CG> )
+#P  IsFpCat1Group( <CG> )
+#P  IsPcCat1Group( <CG> )
 ##
-DeclareProperty( "IsCat1", IsPreCat1 );
-DeclareSynonym( "IsPermCat1", IsCat1 and IsPerm2DimensionalGroup );
-DeclareSynonym( "IsFpCat1", IsCat1 and IsFp2DimensionalGroup );
-DeclareSynonym( "IsPcCat1", IsCat1 and IsPc2DimensionalGroup );
+DeclareProperty( "IsCat1Group", IsPreCat1Group );
+DeclareSynonym( "IsPermCat1Group", IsCat1Group and IsPerm2DimensionalGroup );
+DeclareSynonym( "IsFpCat1Group", IsCat1Group and IsFp2DimensionalGroup );
+DeclareSynonym( "IsPcCat1Group", IsCat1Group and IsPc2DimensionalGroup );
 
 #############################################################################
 ##
@@ -104,12 +105,12 @@ DeclareAttribute( "ExternalSetXMod", IsPreXMod );
 #A  PeifferSubgroup( <obj> )
 #A  PeifferSub2DimensionalGroup( <obj> )
 #O  PeifferSubgroupPreXMod( <PM> )
-#O  PeifferSubgroupPreCat1( <P1C> )
+#O  PeifferSubgroupPreCat1Group( <P1C> )
 ##
 DeclareAttribute( "PeifferSubgroup", Is2DimensionalGroup );
 DeclareAttribute( "PeifferSub2DimensionalGroup", Is2DimensionalGroup );
 DeclareOperation( "PeifferSubgroupPreXMod", [ IsPreXMod ] );
-DeclareOperation( "PeifferSubgroupPreCat1", [ IsPreCat1 ] );
+DeclareOperation( "PeifferSubgroupPreCat1Group", [ IsPreCat1Group ] );
 
 #############################################################################
 ##
@@ -166,47 +167,47 @@ DeclareProperty( "IsFreeXMod", IsPreXModObj );
 ##
 #O  IsSubPreXMod( <obj> )
 #O  IsSubXMod( <obj> )
-#O  IsSubPreCat1( <obj> )
-#O  IsSubCat1( <obj> )
+#O  IsSubPreCat1Group( <obj> )
+#O  IsSubCat1Group( <obj> )
 ##
 DeclareOperation( "IsSubPreXMod", 
     [ Is2DimensionalGroup, Is2DimensionalGroup ] );
 DeclareOperation( "IsSubXMod", [ Is2DimensionalGroup, Is2DimensionalGroup ] );
-DeclareOperation( "IsSubPreCat1", 
+DeclareOperation( "IsSubPreCat1Group", 
     [ Is2DimensionalGroup, Is2DimensionalGroup ] );
-DeclareOperation( "IsSubCat1", [ Is2DimensionalGroup, Is2DimensionalGroup ] );
+DeclareOperation( "IsSubCat1Group", [ Is2DimensionalGroup, Is2DimensionalGroup ] );
 
 ##############################################################################
 ##
 #O  Sub2DimensionalGroup( <obj>, <src>, <rng> )
 #O  SubPreXMod( <PM, Ssrc, Srng> )
 #O  SubXMod( <PM, Ssrc, Srng> )
-#O  SubPreCat1( <C>, <H> )                           
+#O  SubPreCat1Group( <C>, <H> )                           
 ##
 DeclareOperation( "Sub2DimensionalGroup", 
     [ Is2DimensionalGroup, IsGroup, IsGroup ] );
 DeclareOperation( "SubPreXMod", [ IsPreXMod, IsGroup, IsGroup ] );
 DeclareOperation( "SubXMod", [ IsXMod, IsGroup, IsGroup ] );
-DeclareOperation( "SubPreCat1", [ IsPreCat1, IsGroup, IsGroup ] );
-DeclareOperation( "SubCat1", [ IsCat1, IsGroup, IsGroup ] );
+DeclareOperation( "SubPreCat1Group", [ IsPreCat1Group, IsGroup, IsGroup ] );
+DeclareOperation( "SubCat1Group", [ IsCat1Group, IsGroup, IsGroup ] );
 
 #############################################################################
 ##
 #O  TrivialSub2DimensionalGroup( <obj> )
 #A  TrivialSubPreXMod( <obj> )
 #A  TrivialSubXMod( <obj> )
-#A  TrivialSubPreCat1( <obj> )
-#A  TrivialSubCat1( <obj> )
-#P  IsIdentityCat1( <obj> )
-#P  IsEndomorphismPreCat1( <obj> )
+#A  TrivialSubPreCat1Group( <obj> )
+#A  TrivialSubCat1Group( <obj> )
+#P  IsIdentityCat1Group( <obj> )
+#P  IsEndomorphismPreCat1Group( <obj> )
 ##
 DeclareOperation( "TrivialSub2DimensionalGroup", [ Is2DimensionalGroup ] );
 DeclareAttribute( "TrivialSubPreXMod", IsPreXMod );
 DeclareAttribute( "TrivialSubXMod", IsXMod );
-DeclareAttribute( "TrivialSubPreCat1", IsPreCat1 );
-DeclareAttribute( "TrivialSubCat1", IsCat1 );
-DeclareProperty( "IsIdentityCat1", IsCat1 );
-DeclareProperty( "IsEndomorphismPreCat1", IsPreCat1 ); 
+DeclareAttribute( "TrivialSubPreCat1Group", IsPreCat1Group );
+DeclareAttribute( "TrivialSubCat1Group", IsCat1Group );
+DeclareProperty( "IsIdentityCat1Group", IsCat1Group );
+DeclareProperty( "IsEndomorphismPreCat1Group", IsPreCat1Group ); 
 
 #############################################################################
 ##
@@ -218,64 +219,66 @@ DeclareProperty( "IsEndomorphismPreCat1", IsPreCat1 );
 ##
 DeclareOperation( "PreCat1Obj",
     [ IsGroupHomomorphism, IsGroupHomomorphism, IsGroupHomomorphism ] );
-DeclareAttribute( "HeadMap", IsPreCat1 );
-DeclareAttribute( "TailMap", IsPreCat1 );
-DeclareAttribute( "RangeEmbedding", IsPreCat1 );
-DeclareAttribute( "KernelEmbedding", IsPreCat1 );
+DeclareAttribute( "HeadMap", IsPreCat1Group );
+DeclareAttribute( "TailMap", IsPreCat1Group );
+DeclareAttribute( "RangeEmbedding", IsPreCat1Group );
+DeclareAttribute( "KernelEmbedding", IsPreCat1Group );
 
 #############################################################################
 ##
-#F  PreCat1( <arg> )
-#O  PreCat1ByTailHeadEmbedding( <t>, <h>, <e> )
-#O  PreCat1ByEndomorphisms( <tail>, <head> )
-#O  PreCat1ByNormalSubgroup( <G>, <N> )
-#A  ReverseCat1( <PCG> )
+#F  PreCat1Group( <arg> )
+#O  PreCat1GroupByTailHeadEmbedding( <t>, <h>, <e> )
+#O  PreCat1GroupByEndomorphisms( <tail>, <head> )
+#A  EndomorphismPreCat1Group( <PCG> ) 
+#O  PreCat1GroupByNormalSubgroup( <G>, <N> )
+#A  ReverseCat1Group( <PCG> )
 ##
-DeclareGlobalFunction( "PreCat1" );
-DeclareOperation( "PreCat1ByTailHeadEmbedding",
+DeclareGlobalFunction( "PreCat1Group" );
+DeclareOperation( "PreCat1GroupByTailHeadEmbedding",
     [ IsGroupHomomorphism, IsGroupHomomorphism, IsGroupHomomorphism ] );
-DeclareOperation( "PreCat1ByEndomorphisms",
+DeclareOperation( "PreCat1GroupByEndomorphisms",
     [ IsGroupHomomorphism, IsGroupHomomorphism ] );
-DeclareOperation( "PreCat1ByNormalSubgroup", [ IsGroup, IsGroup ] );
-DeclareAttribute( "ReverseCat1", IsPreCat1 );
+DeclareAttribute( "EndomorphismPreCat1Group", IsPreCat1Group ); 
+DeclareOperation( "PreCat1GroupByNormalSubgroup", [ IsGroup, IsGroup ] );
+DeclareAttribute( "ReverseCat1Group", IsPreCat1Group );
 
 #############################################################################
 ##
-#O  PreXModByPreCat1( <PCG> )
-#O  PreCat1ByPreXMod( <PM> )
-#A  XModOfCat1( <C1G> )
-#O  XModByCat1( <C1G> )
-#A  Cat1OfXMod( <XM> )
-#O  Cat1ByXMod( <XM> )
+#O  PreXModByPreCat1Group( <PCG> )
+#O  PreCat1GroupByPreXMod( <PM> )
+#A  XModOfCat1Group( <C1G> )
+#O  XModByCat1Group( <C1G> )
+#A  Cat1GroupOfXMod( <XM> )
+#O  Cat1GroupByXMod( <XM> )
 ##
-DeclareOperation( "PreXModByPreCat1", [ IsPreCat1 ] );
-DeclareOperation( "PreCat1ByPreXMod", [ IsPreXMod ] );
-DeclareAttribute( "XModOfCat1", IsCat1 );
-DeclareOperation( "XModByCat1", [ IsCat1 ] );
-DeclareAttribute( "Cat1OfXMod", IsXMod );
-DeclareOperation( "Cat1ByXMod", [ IsXMod ] );
+DeclareOperation( "PreXModByPreCat1Group", [ IsPreCat1Group ] );
+DeclareOperation( "PreCat1GroupByPreXMod", [ IsPreXMod ] );
+DeclareAttribute( "XModOfCat1Group", IsCat1Group );
+DeclareOperation( "XModByCat1Group", [ IsCat1Group ] );
+DeclareAttribute( "Cat1GroupOfXMod", IsXMod );
+DeclareOperation( "Cat1GroupByXMod", [ IsXMod ] );
 
 #############################################################################
 ##
 #A  SourceEmbedding( <XM> )
 ##
-##  homomorphism from Source(XM) to Source(Cat1OfXMod(XM))
+##  homomorphism from Source(XM) to Source(Cat1GroupOfXMod(XM))
 ##
 DeclareAttribute( "SourceEmbedding", IsPreXMod );
 
 #############################################################################
 ##
-#F  Cat1( <arg> )
+#F  Cat1Group( <arg> )
 #O  Cat1Select( <size>, <gpnum>, <num> )
 #O  PermCat1Select( <size>, <gpnum>, <num> )
-#O  Cat1ByPeifferQuotient( <PM> )
-#O  DiagonalCat1( <list> )
+#O  Cat1GroupByPeifferQuotient( <PM> )
+#O  DiagonalCat1Group( <list> )
 ##
-DeclareGlobalFunction( "Cat1" );
+DeclareGlobalFunction( "Cat1Group" );
 DeclareOperation( "Cat1Select", [ IsInt, IsInt, IsInt ] );
 DeclareOperation( "PermCat1Select", [ IsInt, IsInt, IsInt ] );
-DeclareOperation( "Cat1ByPeifferQuotient", [ IsPreCat1 ] );
-DeclareOperation( "DiagonalCat1", [ IsList ] ); 
+DeclareOperation( "Cat1GroupByPeifferQuotient", [ IsPreCat1Group ] );
+DeclareOperation( "DiagonalCat1Group", [ IsList ] ); 
 
 #############################################################################
 ##
@@ -288,10 +291,10 @@ DeclareAttribute( "Coproduct2dInfo", Is2DimensionalDomain, "mutable" );
 #############################################################################
 ##
 #A  NormalSubXMods( <XM> )
-#A  NormalSubXCat1s( <C1G> )
+#A  NormalSubXCat1Groups( <C1G> )
 ##
 DeclareAttribute( "NormalSubXMods", IsXMod );
-DeclareAttribute( "NormalSubCat1s", IsCat1 );
+DeclareAttribute( "NormalSubCat1Groups", IsCat1Group );
 
 #############################################################################
 ##

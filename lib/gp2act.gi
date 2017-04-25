@@ -551,9 +551,9 @@ end );
 
 #############################################################################
 ##
-#M  ActorCat1( <C> )
+#M  ActorCat1Group( <C> )
 ##
-InstallMethod( ActorCat1, "actor cat1-group", true, [ IsCat1 ], 0, 
+InstallMethod( ActorCat1Group, "actor cat1-group", true, [ IsCat1Group ], 0, 
 function( C )
     return 0;
 end );

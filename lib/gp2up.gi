@@ -44,7 +44,7 @@ function( obj, ims )
         fi;
         stgR := StrongGeneratorsStabChain( StabChain( rng ) );
         invR := List( stgR, r -> r^(-1) );
-    elif IsPreCat1( obj ) then
+    elif IsPreCat1Group( obj ) then
         genR := GeneratorsOfGroup( rng );
         hom := GroupHomomorphismByImages( rng, src, genR, ims );
         if RespectsMultiplication( hom ) then
@@ -53,7 +53,7 @@ function( obj, ims )
             Error( "proposed section not a group homomorphism" );
         fi;
         ok := IsSection( map );
-        if ( ok and IsCat1( obj ) ) then
+        if ( ok and IsCat1Group( obj ) ) then
             SetIsSection( map, true );
         fi;
     else
@@ -600,7 +600,7 @@ function( XM )
 #M  SectionByImages                                   sets up GroupHomByImages
 ##
 InstallMethod( SectionByImages, "method for a cat1-group", true,
-    [ IsCat1, IsGroupHomomorphism ], 0,
+    [ IsCat1Group, IsGroupHomomorphism ], 0,
 function( C, hom )
 
     local  fam, filter, R, G, stgR, ngR, nargs, usage, isect, im, xi;
@@ -656,7 +656,7 @@ function( chi )
     R := Range( XM );
     stgR := StrongGeneratorsStabChain( StabChain( R ) );
     ngR := Length( stgR );
-    C := Cat1OfXMod( XM );
+    C := Cat1GroupOfXMod( XM );
     eR := RangeEmbedding( C );
     eK := KernelEmbedding( C );
     imchi := UpGeneratorImages( chi );
@@ -689,7 +689,7 @@ function( xi )
     fi;
     C := xi.cat1;
     imxi := UpGeneratorImages( xi );
-    XM := XModOfCat1( C );
+    XM := XModOfCat1Group( C );
     S := C.kernel;
     R := Range( C );
     stgR := StrongGeneratorsStabChain( StabChain( R ) );
@@ -770,7 +770,7 @@ function( obj, images, str )
       AllOrRegular, str );
     if IsXMod( obj ) then
         SetIsMonoidOfDerivations( mon, true );
-    elif IsCat1( obj ) then
+    elif IsCat1Group( obj ) then
         SetIsMonoidOfSections( mon, true );
     else
         Error( "<obj> not an xmod nor a cat1" );

@@ -29,9 +29,9 @@ for i in [1..m] do
             if not IsPerm2DimensionalGroup( C0 ) then 
                 iso := IsomorphismPermObject( C0 ); 
                 P0 := Image( iso ); 
-                X0 := XModOfCat1( P0 ); 
+                X0 := XModOfCat1Group( P0 ); 
             else 
-                X0 := XModOfCat1( C0 );
+                X0 := XModOfCat1Group( C0 );
             fi;
             ## now apply the required test to X0 
             XX0 := CoproductXMod( X0, X0 ); 

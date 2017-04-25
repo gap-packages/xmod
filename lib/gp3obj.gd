@@ -13,7 +13,7 @@
 #R  IsPreCrossedSquareObj ( <obj> ) 
 ##  A pre-crossed square is a square of pre-crossed modules 
 #R  IsPreCat2Obj( <obj> ) 
-##  A pre-cat2-group is a square of pre-cat1 groups
+##  A pre-cat2-group is a square of pre-cat1-groups
 ##
 DeclareRepresentation( "IsPreCrossedSquareObj", 
     Is3DimensionalGroup and IsAttributeStoringRep,
@@ -89,32 +89,33 @@ DeclareOperation( "CrossedPairingByDerivations", [ IsXMod ] );
 
 #############################################################################
 ##
-#P  IsPreCat2( <PCG> ) 
-#P  IsPermPreCat2( <PCG> ) 
-#P  IsFpPreCat2( <PCG> ) 
-#P  IsPcPreCat2( <PCG> )
+#P  IsPreCat2Group( <PCG> ) 
+#P  IsPermPreCat2Group( <PCG> ) 
+#P  IsFpPreCat2Group( <PCG> ) 
+#P  IsPcPreCat2Group( <PCG> )
 ##
-DeclareProperty( "IsPreCat2", Is3DimensionalGroup );
-DeclareSynonym( "IsPermPreCat2", IsPreCat2 and IsPerm3DimensionalGroup );
-DeclareSynonym( "IsFpPreCat2", IsPreCat2 and IsFp3DimensionalGroup ); 
-DeclareSynonym( "IsPcPreCat2", IsPreCat2 and IsPc3DimensionalGroup );
+DeclareProperty( "IsPreCat2Group", Is3DimensionalGroup );
+DeclareSynonym( "IsPermPreCat2Group", 
+    IsPreCat2Group and IsPerm3DimensionalGroup );
+DeclareSynonym( "IsFpPreCat2Group", IsPreCat2Group and IsFp3DimensionalGroup ); 
+DeclareSynonym( "IsPcPreCat2Group", IsPreCat2Group and IsPc3DimensionalGroup );
 
 #############################################################################
 ##
-#P  IsCat2( <C1G> ) 
-#P  IsPermCat2( <CG> ) 
-#P  IsFpCat2( <CG> ) 
-#P  IsPcCat2( <CG> )
+#P  IsCat2Group( <C1G> ) 
+#P  IsPermCat2Group( <CG> ) 
+#P  IsFpCat2Group( <CG> ) 
+#P  IsPcCat2Group( <CG> )
 ##
-DeclareProperty( "IsCat2", Is3DimensionalGroup );
-DeclareSynonym( "IsPermCat2", IsCat2 and IsPerm3DimensionalGroup );
-DeclareSynonym( "IsFpCat2", IsCat2 and IsFp3DimensionalGroup );
-DeclareSynonym( "IsPcCat2", IsCat2 and IsPc3DimensionalGroup );
+DeclareProperty( "IsCat2Group", Is3DimensionalGroup );
+DeclareSynonym( "IsPermCat2Group", IsCat2Group and IsPerm3DimensionalGroup );
+DeclareSynonym( "IsFpCat2Group", IsCat2Group and IsFp3DimensionalGroup );
+DeclareSynonym( "IsPcCat2Group", IsCat2Group and IsPc3DimensionalGroup );
 
 #############################################################################
 ##
 #O  PreCrossedSquareObj( <bdy>, <act> ) 
-#O  PreCat20bj ( <arg> ) 
+#O  PreCat2Group0bj ( <arg> ) 
 #A  Up2DimensionalGroup( <PS> ) 
 #A  Down2DimensionalGroup ( <PS> ) 
 #A  Left2DimensionalGroup( <PS> ) 
@@ -125,7 +126,7 @@ DeclareSynonym( "IsPcCat2", IsCat2 and IsPc3DimensionalGroup );
 DeclareOperation( "PreCrossedSquareObj", 
     [ IsPreXMod, IsPreXMod, IsPreXMod, IsPreXMod, IsObject, IsObject] );
 DeclareOperation( "PreCat2Obj", 
-    [ IsPreCat1, IsPreCat1 ] );
+    [ IsPreCat1Group, IsPreCat1Group ] );
 DeclareAttribute( "Up2DimensionalGroup", Is3DimensionalGroup );
 DeclareAttribute( "Left2DimensionalGroup", Is3DimensionalGroup );
 DeclareAttribute( "Down2DimensionalGroup", Is3DimensionalGroup );
@@ -171,16 +172,16 @@ DeclareProperty( "IsFreeCrossedSquare", IsPreCrossedSquareObj );
 ##
 #0  IsSubPreCrossedSquare( <obj> ) 
 #0  IsSubCrossedSquare( <obj> ) 
-#0  IsSubPreCat2( <obj> ) 
-#0  IsSubCat2( <obj> )
+#0  IsSubPreCat2Group( <obj> ) 
+#0  IsSubCat2Group( <obj> )
 ##
 DeclareOperation( "IsSubPreCrossedSquare", 
     [ Is3DimensionalGroup, Is3DimensionalGroup ] );
 DeclareOperation( "IsSubCrossedSquare", 
     [ Is3DimensionalGroup, Is3DimensionalGroup ] );
-DeclareOperation( "IsSubPreCat2", 
+DeclareOperation( "IsSubPreCat2Group", 
     [ Is3DimensionalGroup, Is3DimensionalGroup ] );
-DeclareOperation( "IsSubCat2", 
+DeclareOperation( "IsSubCat2Group", 
     [ Is3DimensionalGroup, Is3DimensionalGroup ] );
 
 ##############################################################################
@@ -188,61 +189,62 @@ DeclareOperation( "IsSubCat2",
 #0  Sub3DimensionalGroup( <obj>, <src>, <rng> ) 
 #0  SubPreCrossedSquare( <PM, Ssrc, Srng> ) 
 #0  SubCrossedSquare( <PM, Ssrc, Srng> ) 
-#0  SubPreCat2( <C>, <H> )
+#0  SubPreCat2Group( <C>, <H> )
 ##
 DeclareOperation( "Sub3DimensionalGroup", 
     [ Is3DimensionalGroup, IsGroup, IsGroup ] );
 DeclareOperation( "SubPreCrossedSquare", 
     [ IsPreCrossedSquare, IsGroup, IsGroup ] );
 DeclareOperation( "SubCrossedSquare", [ IsCrossedSquare, IsGroup, IsGroup ] );
-DeclareOperation( "SubPreCat2", [ IsPreCat2, IsGroup, IsGroup ] );
-DeclareOperation( "SubCat2", [ IsCat2, IsGroup, IsGroup ] );
+DeclareOperation( "SubPreCat2Group", [ IsPreCat2Group, IsGroup, IsGroup ] );
+DeclareOperation( "SubCat2Group", [ IsCat2Group, IsGroup, IsGroup ] );
 
 #############################################################################
 ##
 #0  TrivialSub3DimensionalGroup( <obj> ) 
 #A  TrivialSubPreCrossedSquare( <obj> ) 
 #A  TrivialSubCrossedSquare( <obj> ) 
-#A  TrivialSubPreCat2( <obj> ) 
-#A  TrivialSubCat2( <obj> ) 
-#P  IsIdentityCat2( <C1G> )
+#A  TrivialSubPreCat2Group( <obj> ) 
+#A  TrivialSubCat2Group( <obj> ) 
+#P  IsIdentityCat2Group( <C1G> )
 ##
 DeclareOperation( "TrivialSub3DimensionalGroup", [ Is3DimensionalGroup ] );
 DeclareAttribute( "TrivialSubPreCrossedSquare", IsPreCrossedSquare );
 DeclareAttribute( "TrivialSubCrossedSquare", IsCrossedSquare );
-DeclareAttribute( "TrivialSubPreCat2", IsPreCat2 );
-DeclareAttribute( "TrivialSubCat2", IsCat2 );
-DeclareProperty( "IsIdentityCat2", IsCat2 );
+DeclareAttribute( "TrivialSubPreCat2Group", IsPreCat2Group );
+DeclareAttribute( "TrivialSubCat2Group", IsCat2Group );
+DeclareProperty( "IsIdentityCat2Group", IsCat2Group );
 
 #############################################################################
 ##
-#F  PreCat2( <arg> ) 
-#0  PreCat2ByPreCat1s( <first>, <second> )
+#F  PreCat2Group( <arg> ) 
+#0  PreCat2GroupByPreCat1Groups( <first>, <second> )
 ##
-DeclareGlobalFunction( "PreCat2" );
-DeclareOperation( "PreCat2ByPreCat1s", [ IsPreCat1, IsPreCat1 ] );
+DeclareGlobalFunction( "PreCat2GroupGroup" );
+DeclareOperation( "PreCat2GroupGroupByPreCat1Groups", 
+    [ IsPreCat1Group, IsPreCat1Group ] );
 
 #############################################################################
 ##
-#0  PreCrossedSquareByPreCat2( <PCG> ) 
-#0  PreCat2ByPreCrossedSquare( <PS> } 
-#A  CrossedSquareOfCat2( <C1G> } 
-#0  CrossedSquareByCat2( <C1G> } 
-#A  Cat2OfCrossedSquare( <XS> ) 
-#0  Cat2ByCrossedSquare( <XS> )
+#0  PreCrossedSquareByPreCat2Group( <PCG> ) 
+#0  PreCat2GroupByPreCrossedSquare( <PS> } 
+#A  CrossedSquareOfCat2Group( <C1G> } 
+#0  CrossedSquareByCat2Group( <C1G> } 
+#A  Cat2GroupOfCrossedSquare( <XS> ) 
+#0  Cat2GroupByCrossedSquare( <XS> )
 ##
-DeclareOperation( "PreCrossedSquareByPreCat2", [ IsPreCat2 ] );
-DeclareOperation( "PreCat2ByPreCrossedSquare", [ IsPreCrossedSquare ] );
-DeclareAttribute( "CrossedSquareOfCat2", IsCat2 );
-DeclareOperation( "CrossedSquareByCat2", [ IsCat2 ] );
-DeclareAttribute( "Cat2OfCrossedSquare", IsCrossedSquare );
-DeclareOperation( "Cat2ByCrossedSquare", [ IsCrossedSquare ] );
+DeclareOperation( "PreCrossedSquareByPreCat2Group", [ IsPreCat2Group ] );
+DeclareOperation( "PreCat2GroupByPreCrossedSquare", [ IsPreCrossedSquare ] );
+DeclareAttribute( "CrossedSquareOfCat2Group", IsCat2Group );
+DeclareOperation( "CrossedSquareByCat2Group", [ IsCat2Group ] );
+DeclareAttribute( "Cat2GroupOfCrossedSquare", IsCrossedSquare );
+DeclareOperation( "Cat2GroupByCrossedSquare", [ IsCrossedSquare ] );
 
 #############################################################################
 ##
-#F  Cat2( <arg> }
+#F  Cat2Group( <arg> }
 ##
-DeclareGlobalFunction( "Cat2" );
+DeclareGlobalFunction( "Cat2Group" );
 
 #############################################################################
 ##
@@ -252,10 +254,10 @@ DeclareAttribute( "DirectProduct3dInfo", Is3DimensionalDomain, "mutable" );
 
 #############################################################################
 ##
-#A  NormalSubCrossedSquares( <XS> } #A NormalSubXCat2s( <C1G> }
+#A  NormalSubCrossedSquares( <XS> } #A NormalSubXCat2Groups( <C1G> }
 ##
 DeclareAttribute( "NormalSubCrossedSquares", IsCrossedSquare ); 
-DeclareAttribute( "NormalSubCat2s", IsCat2 );
+DeclareAttribute( "NormalSubCat2Groups", IsCat2Group );
 
 #############################################################################
 ##

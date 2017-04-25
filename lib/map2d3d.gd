@@ -206,22 +206,22 @@ DeclareProperty( "IsCat2Morphism", Is3DimensionalGroupMorphism );
 #############################################################################
 ##
 #R  Is3DimensionalMappingRep( <mor> )
-#A  Up2DimensionalMorphismphism( <mor> )
-#A  Left2DimensionalMorphismphism( <mor> )
-#A  Down2DimensionalMorphismphism( <mor> )
-#A  Right2DimensionalMorphismphism( <mor> )
+#A  Up2DimensionalMorphism( <mor> )
+#A  Left2DimensionalMorphism( <mor> )
+#A  Down2DimensionalMorphism( <mor> )
+#A  Right2DimensionalMorphism( <mor> )
 #O  Make3DimensionalMapping( <src>, <rng>, <srchom>, <rnghom> )
 ##
 ##  A pre-crossed square or pre-cat2-group morphism contains 4 group homs
 ##
 DeclareRepresentation( "Is3DimensionalMappingRep", 
     Is3DimensionalMapping and IsAttributeStoringRep,
-    [ "Source", "Range", "Up2DimensionalMorphismphism", "Left2DimensionalMorphismphism", 
-      "Right2DimensionalMorphismphism", "Down2DimensionalMorphismphism" ] );
-DeclareAttribute( "Up2DimensionalMorphismphism", Is3DimensionalMapping );
-DeclareAttribute( "Left2DimensionalMorphismphism", Is3DimensionalMapping );
-DeclareAttribute( "Down2DimensionalMorphismphism", Is3DimensionalMapping );
-DeclareAttribute( "Right2DimensionalMorphismphism", Is3DimensionalMapping );
+    [ "Source", "Range", "Up2DimensionalMorphism", "Left2DimensionalMorphism", 
+      "Right2DimensionalMorphism", "Down2DimensionalMorphism" ] );
+DeclareAttribute( "Up2DimensionalMorphism", Is3DimensionalMapping );
+DeclareAttribute( "Left2DimensionalMorphism", Is3DimensionalMapping );
+DeclareAttribute( "Down2DimensionalMorphism", Is3DimensionalMapping );
+DeclareAttribute( "Right2DimensionalMorphism", Is3DimensionalMapping );
 DeclareOperation( "Make3DimensionalMapping",
     [ Is3DimensionalDomain, Is3DimensionalDomain, Is2DimensionalMapping, 
       Is2DimensionalMapping, Is2DimensionalMapping, Is2DimensionalMapping ] );

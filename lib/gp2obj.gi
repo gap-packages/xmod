@@ -312,7 +312,7 @@ function( g2d )
             Print( "\nPre-crossed module " );
         fi; 
     else 
-        if ( HasIsCat1( g2d ) and IsCat1( g2d ) ) then 
+        if ( HasIsCat1Group( g2d ) and IsCat1Group( g2d ) ) then 
             Print( "\nCat1-group " );
         else
             Print( "\nPre-cat1-group " ); 
@@ -407,10 +407,12 @@ function( g2d )
             Print( "  ", imk, "\n" );
         fi;
     fi; 
-    if ( HasIsXMod( g2d ) and IsXMod( g2d ) and HasCat1OfXMod( g2d ) ) then
-        Print( ": associated cat1-group is ", Cat1OfXMod( g2d ), "\n" );
-    elif ( HasIsCat1( g2d ) and IsCat1( g2d ) and HasXModOfCat1( g2d ) ) then
-        Print( ": associated crossed module is ", XModOfCat1( g2d ), "\n" );
+    if ( HasIsXMod( g2d ) and IsXMod( g2d ) and HasCat1GroupOfXMod( g2d ) ) then
+        Print( ": associated cat1-group is ", Cat1GroupOfXMod( g2d ), "\n" );
+    elif ( HasIsCat1Group( g2d ) and IsCat1Group( g2d ) 
+           and HasXModOfCat1Group( g2d ) ) then
+        Print( ": associated crossed module is ", 
+               XModOfCat1Group( g2d ), "\n" );
     fi;
     Print( "\n" );
 end ); 
@@ -514,9 +516,9 @@ end );
 
 #############################################################################
 ##
-#M  IsPreCat1    check that the first pre-cat1-group axiom holds
+#M  IsPreCat1Group            check that the first pre-cat1-group axiom holds
 ##
-InstallMethod( IsPreCat1, "generic method for 2d-group", true, 
+InstallMethod( IsPreCat1Group, "generic method for 2dim-group", true, 
     [ Is2DimensionalGroup ], 0,
 function( C1G )
 
@@ -549,7 +551,7 @@ end );
 #M  \=( <C1>, <C2> ) . . . . . . . . . . test if two pre-cat1-groups are equal
 ##
 InstallMethod( \=, "generic method for pre-cat1-groups",
-    IsIdenticalObj, [ IsPreCat1, IsPreCat1 ], 0,
+    IsIdenticalObj, [ IsPreCat1Group, IsPreCat1Group ], 0,
     function( C1, C2 ) 
     return ( ( TailMap(C1) = TailMap(C2) ) and ( HeadMap(C1) = HeadMap(C2) )
              and ( RangeEmbedding(C1) = RangeEmbedding(C2) ) );
@@ -582,12 +584,13 @@ InstallMethod( PreCat1Obj, "for tail, head, embedding", true,
       RangeEmbedding, e, 
       IsPreCat1Domain, true, 
       Is2DimensionalGroup, true );
-    ok := IsPreCat1( C1G );
+    ok := IsPreCat1Group( C1G );
     # name := Name( C1G );
     if not ok then
         Error( "not a pre-cat1-group" );
     fi;
-    ok := IsEndomorphismPreCat1( C1G ); 
+    ok := IsEndomorphismPreCat1Group( C1G ); 
+    ok := IsCat1Group( C1G );
     return C1G;
 end );
 
@@ -599,22 +602,23 @@ end );
 
 #############################################################################
 ##
-#M  ReverseCat1                                          for a pre-cat1-group
+#M  ReverseCat1Group                                     for a pre-cat1-group
 ##
-InstallMethod( ReverseCat1, "method for a cat1-group", true, [ IsPreCat1 ], 0,
+InstallMethod( ReverseCat1Group, "method for a cat1-group", true, 
+    [ IsPreCat1Group ], 0,
 function( C1G )
     local rev;
-    rev := PreCat1( HeadMap(C1G), TailMap(C1G), RangeEmbedding(C1G ) );
-    SetReverseCat1( rev, C1G );
+    rev := PreCat1Group( HeadMap(C1G), TailMap(C1G), RangeEmbedding(C1G ) );
+    SetReverseCat1Group( rev, C1G );
     return rev;
 end );
 
 #############################################################################
 ##
-#F  PreCat1( <t>, <h>, <e> )      pre-cat1-group from given tail, head, embed
-#F  PreCat1( <t>, <h> )           pre-cat1-group from tail, head endomorphisms
+#F  PreCat1Group( <t>, <h>, <e> ) pre-cat1-group from given tail, head, embed
+#F  PreCat1Group( <t>, <h> )     pre-cat1-group from tail, head endomorphisms
 ##
-InstallGlobalFunction( PreCat1, function( arg )
+InstallGlobalFunction( PreCat1Group, function( arg )
 
     local  nargs, C1G;
 
@@ -622,22 +626,22 @@ InstallGlobalFunction( PreCat1, function( arg )
     # two endomorphisms
     if ( ( nargs=2 ) and IsEndoMapping( arg[1] )
                      and IsEndoMapping( arg[2] ) ) then
-        return PreCat1ByEndomorphisms( arg[1], arg[2] );
+        return PreCat1GroupByEndomorphisms( arg[1], arg[2] );
 
     # two homomorphisms and an embedding
     elif ( ( nargs=3 ) and
            ForAll( arg, a -> IsGroupHomomorphism( a ) ) ) then
-        return PreCat1ByTailHeadEmbedding( arg[1], arg[2], arg[3] );
+        return PreCat1GroupByTailHeadEmbedding( arg[1], arg[2], arg[3] );
     fi;
     # alternatives not allowed
-    Error( "standard usage: PreCat1( tail, head [,embed] );" );
+    Error( "standard usage: PreCat1Group( tail, head [,embed] );" );
 end );
 
-#############################################################################
+##############################################################################
 ##
-#M  PreCat1ByPreXMod . . . . convert a pre-crossed module to a pre-cat1-group
+#M  PreCat1GroupByPreXMod . . convert a pre-crossed module to a pre-cat1-group
 ##
-InstallMethod( PreCat1ByPreXMod,
+InstallMethod( PreCat1GroupByPreXMod,
     "convert a pre-crossed module to a pre-cat1-group", true, [ IsPreXMod ], 0,
 function( XM )
 
@@ -696,7 +700,7 @@ function( XM )
         h := GroupHomomorphismByImages( G, Xrng, genG, imh );
     fi;
     SetSourceEmbedding( XM, eR );
-    C := PreCat1ByTailHeadEmbedding( t, h, eR );
+    C := PreCat1GroupByTailHeadEmbedding( t, h, eR );
     return C;
 end ); 
 
@@ -752,8 +756,8 @@ end );
 ##
 #M  XModByTrivialAction
 ##
-InstallMethod( XModByTrivialAction, "crossed module with trivial action", true,
-    [ IsGroupHomomorphism ], 0,
+InstallMethod( XModByTrivialAction, "crossed module with trivial action", 
+    true, [ IsGroupHomomorphism ], 0,
 function( f )
     local  R, ZR, S, XM, aut, act, name;
     S := Source( f );
@@ -977,43 +981,43 @@ end );
 
 ##############################################################################
 ##
-#M  XModByCat1
-#M  XModOfCat1
+#M  XModByCat1Group
+#M  XModOfCat1Group
 ##
-InstallMethod( XModByCat1, "generic method for cat1-groups",
-    true, [ IsCat1 ], 0,
+InstallMethod( XModByCat1Group, "generic method for cat1-groups",
+    true, [ IsCat1Group ], 0,
 function( C1 )
 
     local  X1;
-    X1 := PreXModByPreCat1( C1 );
+    X1 := PreXModByPreCat1Group( C1 );
     SetIsXMod( X1, true );
-    SetXModOfCat1( C1, X1 );
-    SetCat1OfXMod( X1, C1 );
+    SetXModOfCat1Group( C1, X1 );
+    SetCat1GroupOfXMod( X1, C1 );
     return X1;
 end );
 
-InstallMethod( XModOfCat1, "generic method for cat1-groups",
-    true, [ IsCat1 ], 0, XModByCat1 );
+InstallMethod( XModOfCat1Group, "generic method for cat1-groups",
+    true, [ IsCat1Group ], 0, XModByCat1Group );
 
 ##############################################################################
 ##
-#M  Cat1ByXMod
-#M  Cat1OfXMod
+#M  Cat1GroupByXMod
+#M  Cat1GroupOfXMod
 ##
-InstallMethod( Cat1ByXMod, "generic method for crossed modules",
+InstallMethod( Cat1GroupByXMod, "generic method for crossed modules",
     true, [ IsXMod ], 0,
 function( X1 )
 
     local  C1;
-    C1 := PreCat1ByPreXMod( X1 );
-    SetIsCat1( C1, true );
-    SetXModOfCat1( C1, X1 );
-    SetCat1OfXMod( X1, C1 );
+    C1 := PreCat1GroupByPreXMod( X1 );
+    SetIsCat1Group( C1, true );
+    SetXModOfCat1Group( C1, X1 );
+    SetCat1GroupOfXMod( X1, C1 );
     return C1;
 end );
 
-InstallMethod( Cat1OfXMod, "generic method for cat1-groups",
-    true, [ IsXMod ], 0, Cat1ByXMod );
+InstallMethod( Cat1GroupOfXMod, "generic method for cat1-groups",
+    true, [ IsXMod ], 0, Cat1GroupByXMod );
 
 ##############################################################################
 ##
@@ -1052,10 +1056,10 @@ end );
 
 ##############################################################################
 ##
-#M  PeifferSubgroupPreCat1 . . . . . .  commutator of kernels of tail and head
+#M  PeifferSubgroupPreCat1Group . . . . commutator of kernels of tail and head
 ##
-InstallMethod( PeifferSubgroupPreCat1, "generic method for pre-cat1-groups",
-               true, [ IsPreCat1 ], 0,
+InstallMethod( PeifferSubgroupPreCat1Group, "generic method for pre-cat1-groups",
+               true, [ IsPreCat1Group ], 0,
 function( PCG )
 
     local  src, kerh, kert, Pf;
@@ -1088,11 +1092,11 @@ function( obj )
             return P; 
         fi;
     elif IsPreCat1Obj( obj ) then
-        if IsCat1( obj ) then
+        if IsCat1Group( obj ) then
             return Subgroup( Source( obj ), [ One( Source( obj ) ) ] );
         else
-            P := PeifferSubgroupPreCat1( obj );
-            NP := SubPreCat1( obj, P, TrivialSubgroup( Range(obj) ) );
+            P := PeifferSubgroupPreCat1Group( obj );
+            NP := SubPreCat1Group( obj, P, TrivialSubgroup( Range(obj) ) );
             ok := IsNormal( obj, NP );            
             return P; 
         fi;
@@ -1164,8 +1168,8 @@ InstallGlobalFunction( XMod, function( arg )
         return XModByCentralExtension( arg[1] );
 
     # convert a cat1-group
-    elif ( ( nargs = 1 ) and HasIsCat1( arg[1] ) and IsCat1( arg[1] ) ) then
-        return PreXModByPreCat1( arg[1] );
+    elif ( ( nargs = 1 ) and HasIsCat1Group( arg[1] ) and IsCat1Group( arg[1] ) ) then
+        return PreXModByPreCat1Group( arg[1] );
 
     # group of automorphisms
     elif ( ( nargs = 1 ) and IsGroupOfAutomorphisms( arg[1] ) ) then
@@ -1257,15 +1261,15 @@ end );
 
 ##############################################################################
 ##
-#M  IsSubPreCat1
+#M  IsSubPreCat1Group
 ##
-InstallMethod( IsSubPreCat1, "generic method for pre-cat1-groups", true,
+InstallMethod( IsSubPreCat1Group, "generic method for pre-cat1-groups", true,
     [ Is2DimensionalGroup, Is2DimensionalGroup ], 0,
 function( C0, S0 )
 
     local  ok, Ssrc, Srng, gensrc, genrng, tc, hc, ec, ts, hs, es, s, r;
 
-    if not ( IsPreCat1( C0 ) and IsPreCat1( S0 ) ) then
+    if not ( IsPreCat1Group( C0 ) and IsPreCat1Group( S0 ) ) then
         return false;
     fi;
     if ( HasParent( S0 ) and ( Parent( S0 ) = C0 ) ) then
@@ -1275,7 +1279,7 @@ function( C0, S0 )
     Srng := Range( S0 );
     if not (     IsSubgroup( Source( C0 ), Ssrc )
              and IsSubgroup( Range( C0 ), Srng ) ) then
-        Info( InfoXMod, 3, "IsSubgroup failure in IsSubPreCat1" );
+        Info( InfoXMod, 3, "IsSubgroup failure in IsSubPreCat1Group" );
         return false;
     fi;
     ok := true;
@@ -1312,16 +1316,16 @@ end );
 
 ##############################################################################
 ##
-#M  IsSubCat1( <C1>, <S1> )
+#M  IsSubCat1Group( <C1>, <S1> )
 ##
-InstallMethod( IsSubCat1, "generic method for cat1-groups", true,
+InstallMethod( IsSubCat1Group, "generic method for cat1-groups", true,
     [ Is2DimensionalGroup, Is2DimensionalGroup ], 0,
 function( C1, S1 )
 
-    if not ( IsCat1( C1 ) and IsCat1( S1 ) ) then
+    if not ( IsCat1Group( C1 ) and IsCat1Group( S1 ) ) then
         return false;
     fi;
-    return IsSubPreCat1( C1, S1 );
+    return IsSubPreCat1Group( C1, S1 );
 end );
 
 ##############################################################################
@@ -1335,10 +1339,10 @@ function( obj, src, rng )
         return SubXMod( obj, src, rng );
     elif ( HasIsPreXMod(obj) and IsPreXMod(obj) ) then
         return SubPreXMod( obj, src, rng );
-    elif ( HasIsCat1(obj) and IsCat1(obj) ) then
-        return SubCat1( obj, src, rng );
-    elif ( HasIsPreCat1(obj) and IsPreCat1(obj) ) then
-        return SubPreCat1( obj, src, rng );
+    elif ( HasIsCat1Group(obj) and IsCat1Group(obj) ) then
+        return SubCat1Group( obj, src, rng );
+    elif ( HasIsPreCat1Group(obj) and IsPreCat1Group(obj) ) then
+        return SubPreCat1Group( obj, src, rng );
     else
         Error( "unknown type of 2d-object" );
     fi;
@@ -1446,10 +1450,10 @@ end );
 
 ###############################################################################
 ##
-#M  SubPreCat1 . . creates SubPreCat1 from PreCat1 and a subgroup of the source
+#M  SubPreCat1Group . .  created from PreCat1Group and a subgroup of the source
 ##
-InstallMethod( SubPreCat1, "generic method for (pre-)cat1-groups", true,
-    [ IsPreCat1, IsGroup, IsGroup ], 0,
+InstallMethod( SubPreCat1Group, "generic method for (pre-)cat1-groups", true,
+    [ IsPreCat1Group, IsGroup, IsGroup ], 0,
 function( C, G, R )
 
     local  Csrc, Crng, Ct, Ch, Ce, t, h, e, SC, ok;
@@ -1472,7 +1476,7 @@ function( C, G, R )
     t := GeneralRestrictedMapping( Ct, G, R );
     h := GeneralRestrictedMapping( Ch, G, R );
     e := GeneralRestrictedMapping( Ce, R, G );
-    SC := PreCat1ByTailHeadEmbedding( t, h, e );
+    SC := PreCat1GroupByTailHeadEmbedding( t, h, e );
     if not ( C = SC ) then
         SetParent( SC, C );
     fi;
@@ -1481,15 +1485,15 @@ end );
 
 ##############################################################################
 ##
-#M  SubCat1 . . . . . . creates SubCat1 from Cat1 and a subgroup of the source
+#M  SubCat1Group . . creates SubCat1Group from Cat1Group and subgroup of source
 ##
-InstallMethod( SubCat1, "generic method for cat1-groups", true,
-    [ IsCat1, IsGroup, IsGroup ], 0,
+InstallMethod( SubCat1Group, "generic method for cat1-groups", true,
+    [ IsCat1Group, IsGroup, IsGroup ], 0,
 function( C, G, R )
 
     local  S;
-    S := SubPreCat1( C, G, R );
-    if not IsCat1( S ) then
+    S := SubPreCat1Group( C, G, R );
+    if not IsCat1Group( S ) then
         Error( "result is only a pre-cat1-group" );
     fi;
     return S;
@@ -1497,10 +1501,10 @@ end );
 
 #############################################################################
 ##
-#M  IsCat1                       check that the second cat1-group axiom holds
+#M  IsCat1Group                  check that the second cat1-group axiom holds
 ##
-InstallMethod( IsCat1, "generic method for crossed modules", true, 
-    [ IsPreCat1 ], 0,
+InstallMethod( IsCat1Group, "generic method for crossed modules", true, 
+    [ IsPreCat1Group ], 0,
 function( C1G )
 
     local  Csrc, Crng, h, t, e, f, kerC, kert, kerh, kerth;
@@ -1528,15 +1532,15 @@ end );
 #############################################################################
 ##
 #M  IsIdentityCat1
-#M  IsEndomorphismPreCat1 
+#M  IsEndomorphismPreCat1Group 
 ##
-InstallMethod( IsEndomorphismPreCat1, "test a pre-cat1-group", true, 
-    [ IsPreCat1 ], 0,
+InstallMethod( IsEndomorphismPreCat1Group, "test a pre-cat1-group", true, 
+    [ IsPreCat1Group ], 0,
 function( obj )
     return IsSubgroup( Source(obj), Range(obj) ); 
 end );
 
-InstallMethod( IsIdentityCat1, "test a cat1-group", true, [ IsCat1 ], 0,
+InstallMethod( IsIdentityCat1Group, "test a cat1-group", true, [ IsCat1Group ], 0,
 function( C1G )
     return ( ( TailMap( C1G ) = IdentityMapping( Source( C1G ) ) ) and
              ( HeadMap( C1G ) = IdentityMapping( Source( C1G ) ) ) );
@@ -1544,26 +1548,26 @@ end );
 
 #############################################################################
 ##
-#F  Cat1( <size>, <gpnum>, <num> )   cat1-group from data in CAT1_LIST
-#F  Cat1( <t>, <h>, <e> )            cat1-group from given tail, head, embed
-#F  Cat1( <t>, <h> )                 cat1-group from tail, head endomorphisms
+#F  Cat1Group( <size>, <gpnum>, <num> )     cat1-group from data in CAT1_LIST
+#F  Cat1Group( <t>, <h>, <e> )              cat1-group from given t,h,e
+#F  Cat1Group( <t>, <h> )                   cat1-group from t,h endomorphisms 
 ##
-InstallGlobalFunction( Cat1, function( arg )
+InstallGlobalFunction( Cat1Group, function( arg )
 
     local  nargs, C1G, ok;
 
     nargs := Length( arg );
     if ( ( nargs < 1 ) or ( nargs > 3 ) ) then
-        Print( "standard usage: Cat1( tail, head [,embed] );\n" );
-        Print( "            or: Cat1( size, gpnum, num );\n" );
+        Print( "standard usage: Cat1Group( tail, head [,embed] );\n" );
+        Print( "            or: Cat1Group( size, gpnum, num );\n" );
         return fail;
     elif not IsInt( arg[1] ) then
         if ( nargs = 2 ) then
-            C1G := PreCat1( arg[1], arg[2] );
+            C1G := PreCat1Group( arg[1], arg[2] );
         elif ( nargs = 3 ) then
-            C1G := PreCat1( arg[1], arg[2], arg[3] );
+            C1G := PreCat1Group( arg[1], arg[2], arg[3] );
         fi;
-        ok := IsCat1( C1G );
+        ok := IsCat1Group( C1G );
         if ok then
             return C1G;
         else
@@ -1615,7 +1619,7 @@ function( size, gpnum, num )
         elif ( num = 1 ) then 
             G := SmallGroup( 1, 1 ); 
             t := IdentityMapping( G ); 
-            return PreCat1ByEndomorphisms( t, t ); 
+            return PreCat1GroupByEndomorphisms( t, t ); 
         else 
             return fail;
         fi; 
@@ -1717,10 +1721,10 @@ function( size, gpnum, num )
         SetIsEndoMapping( h, true );
         kert := Kernel( t );
     fi; 
-    C1G := PreCat1ByEndomorphisms( t, h ); 
-    ok := IsCat1( C1G ); 
+    C1G := PreCat1GroupByEndomorphisms( t, h ); 
+    ok := IsCat1Group( C1G ); 
     if ok then 
-        XC := XModOfCat1( C1G ); 
+        XC := XModOfCat1Group( C1G ); 
     fi; 
     return C1G; 
 end );
@@ -1787,19 +1791,19 @@ function( size, gpnum, num )
     SetIsEndoMapping( t, true );
     SetIsEndoMapping( h, true );
     kert := Kernel( t ); 
-    C1G := PreCat1ByEndomorphisms( t, h ); 
-    ok := IsCat1( C1G ); 
+    C1G := PreCat1GroupByEndomorphisms( t, h ); 
+    ok := IsCat1Group( C1G ); 
     if ok then 
-        XC := XModOfCat1( C1G ); 
+        XC := XModOfCat1Group( C1G ); 
     fi; 
     return C1G; 
 end );
 
 #############################################################################
 ##
-#M  PreCat1ByTailHeadEmbedding
+#M  PreCat1GroupByTailHeadEmbedding
 ##
-InstallMethod( PreCat1ByTailHeadEmbedding,
+InstallMethod( PreCat1GroupByTailHeadEmbedding,
     "cat1-group from tail, head and embedding", true, 
     [ IsGroupHomomorphism, IsGroupHomomorphism, IsGroupHomomorphism ], 0,
 function( t, h, e )
@@ -1846,9 +1850,10 @@ end );
 
 #############################################################################
 ##
-#M  PreCat1ByEndomorphisms( <et>, <eh> )
+#M  PreCat1GroupByEndomorphisms( <et>, <eh> ) 
+#M  EndomorphismPreCat1Group( <pcg> )
 ##
-InstallMethod( PreCat1ByEndomorphisms,
+InstallMethod( PreCat1GroupByEndomorphisms,
     "cat1-group from tail and head endomorphisms", true, 
     [ IsGroupHomomorphism, IsGroupHomomorphism ], 0,
 function( et, eh )
@@ -1873,22 +1878,37 @@ function( et, eh )
     t := GroupHomomorphismByImages( G, R, gG, List( gG, g->Image(et,g) ) );
     h := GroupHomomorphismByImages( G, R, gG, List( gG, g->Image(eh,g) ) );
     e := InclusionMappingGroups( G, R );
-    return PreCat1ByTailHeadEmbedding( t, h, e ); 
+    return PreCat1GroupByTailHeadEmbedding( t, h, e ); 
 end );
+
+InstallMethod( EndomorphismPreCat1Group,
+    "convert cat1-group to one with endomorphisms", true, [ IsPreCat1Group ], 0,
+function( C1G )
+
+    local  e, t, h;
+
+    if IsEndomorphismPreCat1Group( C1G ) then 
+        return C1G; 
+    fi; 
+    e := RangeEmbedding( C1G ); 
+    t := TailMap( C1G ) * e; 
+    h := HeadMap( C1G ) * e; 
+    return PreCat1GroupByEndomorphisms( t, h );
+end ); 
 
 #############################################################################
 ##
 #M  PreXModByPreCat1
 ##
-InstallMethod( PreXModByPreCat1, true, 
-    [ IsPreCat1 ], 0,
+InstallMethod( PreXModByPreCat1Group, true, 
+    [ IsPreCat1Group ], 0,
 function( C1G )
  
     local  Csrc, Crng, gensrc, genrng, genker, bdy, kert, innaut, autgen,
            imautgen, idkert, a, aut, act, phi, j, r, PM, Cek, Cer, name;
 
-    if not ( IsPermPreCat1( C1G ) or IsPcPreCat1( C1G ) ) then
-        Print( "#W: should be a perm-cat1 or a pc-cat1\n" );
+    if not ( IsPermPreCat1Group( C1G ) or IsPcPreCat1Group( C1G ) ) then
+        Print( "#W: should be a perm-Cat1Group or a pc-cat1\n" );
         return fail;
     fi;
     Csrc := Source( C1G );
@@ -1906,7 +1926,7 @@ function( C1G )
     gensrc := GeneratorsOfGroup( Csrc );
     genrng := GeneratorsOfGroup( Crng );
     genker := GeneratorsOfGroup( kert );
-    if IsIdentityCat1( C1G ) then
+    if IsIdentityCat1Group( C1G ) then
         # X has trivial source and action
         aut := Group( IdentityMapping( kert ) );
         SetName( aut, "triv_aut" );
@@ -1952,7 +1972,7 @@ end );
 InstallOtherMethod( Source,
     "method for a pre-cat1-group",
     true,
-    [ IsPreCat1 ], 0,
+    [ IsPreCat1Group ], 0,
     C1G -> Source( TailMap( C1G ) ) );
 
 ##############################################################################
@@ -1962,7 +1982,7 @@ InstallOtherMethod( Source,
 InstallOtherMethod( Range,
     "method for a pre-cat1-group",
     true,
-    [ IsPreCat1 ], 0,
+    [ IsPreCat1Group ], 0,
     C1G -> Range( TailMap( C1G ) ) );
 
 ##############################################################################
@@ -1970,7 +1990,7 @@ InstallOtherMethod( Range,
 #M  Kernel( C1G ) . . . . . . . . . . . . . . . . . . . for a pre-cat1-group
 ##
 InstallOtherMethod( Kernel,
-    "method for a pre-cat1-group", true, [ IsPreCat1 ], 0,
+    "method for a pre-cat1-group", true, [ IsPreCat1Group ], 0,
     C1G -> Kernel( TailMap( C1G ) ) );
 
 #############################################################################
@@ -1978,7 +1998,7 @@ InstallOtherMethod( Kernel,
 #M  Boundary( C1G ) . . . . . . . . . . . . . . . . . . .  for a cat1-group
 ##
 InstallOtherMethod( Boundary,
-    "method for a pre-cat1-group", true, [ IsPreCat1 ], 0,
+    "method for a pre-cat1-group", true, [ IsPreCat1Group ], 0,
     C1G -> GeneralRestrictedMapping( HeadMap(C1G), Kernel(C1G), Range(C1G) ) );
 
 #############################################################################
@@ -1986,16 +2006,16 @@ InstallOtherMethod( Boundary,
 #M  KernelEmbedding( C1G ) . . .  . . . . . . . . . . . . .  for a cat1-group
 ##
 InstallMethod( KernelEmbedding,
-    "method for a pre-cat1-group", true, [ IsPreCat1 ], 0,
+    "method for a pre-cat1-group", true, [ IsPreCat1Group ], 0,
     C1G -> InclusionMappingGroups( Source( C1G ), Kernel( C1G ) ) );
 
 ##############################################################################
 ##
-#M  Cat1ByPeifferQuotient . . . . . .  cat1 from pre-cat1 and Peiffer subgroup
+#M  Cat1GroupByPeifferQuotient . . . . cat1 from pre-cat1 and Peiffer subgroup
 ##
-InstallMethod( Cat1ByPeifferQuotient, 
+InstallMethod( Cat1GroupByPeifferQuotient, 
                "cat1-group from a pre-cat1-group and Peiffer subgroup",
-               true, [ IsPreCat1 ], 0,
+               true, [ IsPreCat1Group ], 0,
 function( PC )
 
     local  PCrng, PCsrc, PCt, PCh, PCe, genrng, gensrc, Pf, nat, quot,
@@ -2024,8 +2044,8 @@ function( PC )
     head := GroupHomomorphismByImages( quot, PCrng, qgen, hpqgen );
     ime := List( genrng, r -> Image( nat, Image( PCe, r ) ) );
     embed := GroupHomomorphismByImages( PCrng, quot, genrng, ime );
-    C1G := PreCat1ByTailHeadEmbedding( tail, head, embed );
-    if not IsCat1( C1G ) then
+    C1G := PreCat1GroupByTailHeadEmbedding( tail, head, embed );
+    if not IsCat1Group( C1G ) then
         Error( "fails to be a cat1-group" );
     fi;
     return C1G;
@@ -2033,9 +2053,9 @@ end );
 
 ##############################################################################
 ##
-#M  DiagonalCat1 . . . . . . . . . . . . cat1 of the form (GxG => G) with t<>h
+#M  DiagonalCat1Group . . . . . . cat1-group of the form (GxG => G) with t<>h
 ##
-InstallMethod( DiagonalCat1, "cat1-group from a list of generators",
+InstallMethod( DiagonalCat1Group, "cat1-group from a list of generators",
     true, [ IsList ], 0,
 function( gen1 )
 
@@ -2068,7 +2088,7 @@ function( gen1 )
     t := GroupHomomorphismByImages( G, R, genG, Concatenation( genR, ids ) ); 
     h := GroupHomomorphismByImages( G, R, genG, Concatenation( ids, genR ) );
     e := GroupHomomorphismByImages( R, G, genR, genR ); 
-    C := PreCat1ByTailHeadEmbedding( t, h, e ); 
+    C := PreCat1GroupByTailHeadEmbedding( t, h, e ); 
     return C;
 end );
 
@@ -2269,7 +2289,7 @@ function( D, i )
     obj := info!.objects[i]; 
     if IsPreXMod( D ) then
         mor := PreXModMorphism( obj, D, eS, eR );
-    elif IsPreCat1( D ) then
+    elif IsPreCat1Group( D ) then
         mor := PreCat1Morphism( obj, D, eS, eR );
     else
         mor := fail;
@@ -2298,7 +2318,7 @@ function( D, i )
     pR := Projection( Range( D ), i );
     if IsPreXMod( D ) then
         mor := PreXModMorphism( info!.objects[i], D, pS, pR );
-    elif IsPreCat1( D ) then
+    elif IsPreCat1Group( D ) then
         mor := PreCat1Morphism( info!.objects[i], D, pS, pR );
     else
         mor := fail;
@@ -2315,8 +2335,8 @@ end );
 #M  TrivialSub2DimensionalGroup . . . . . . . . . .  of a 2d-object
 #M  TrivialSubPreXMod  . . . . . . . . . . . . . . . of a pre-crossed module
 #M  TrivialSubXMod     . . . . . . . . . . . . . . . of a crossed module
-#M  TrivialSubPreCat1  . . . . . . . . . . . . . . . of a pre-cat1-group
-#M  TrivialSubCat1     . . . . . . . . . . . . . . . of a cat1-group
+#M  TrivialSubPreCat1Group . . . . . . . . . . . . . of a pre-cat1-group
+#M  TrivialSubCat1Group  . . . . . . . . . . . . . . of a cat1-group
 ##
 InstallMethod( TrivialSub2DimensionalGroup, "of a 2d-object", true, 
     [ Is2DimensionalGroup ], 0,
@@ -2328,8 +2348,8 @@ function( obj )
     idrng := TrivialSubgroup( Range( obj ) );
     if IsPreXMod( obj ) then
         return SubPreXMod( obj, idsrc, idrng );
-    elif IsPreCat1( obj ) then
-        return SubPreCat1( obj, idsrc );
+    elif IsPreCat1Group( obj ) then
+        return SubPreCat1Group( obj, idsrc );
     else
         Error( "<obj> must be a pre-crossed module or a pre-cat1-group" );
     fi;
@@ -2346,13 +2366,13 @@ function( obj )
     return TrivialSub2DimensionalGroup( obj );
 end );
 
-InstallMethod( TrivialSubPreCat1, "of a pre-cat1-group", true,
-[ IsPreCat1 ], 0,
+InstallMethod( TrivialSubPreCat1Group, "of a pre-cat1-group", true, 
+    [ IsPreCat1Group ], 0,
 function( obj )
     return TrivialSub2DimensionalGroup( obj );
 end );
 
-InstallMethod( TrivialSubCat1, "of a cat1-group", true, [ IsCat1 ], 0,
+InstallMethod( TrivialSubCat1Group, "of a cat1-group", true, [ IsCat1Group ], 0,
 function( obj )
     return TrivialSub2DimensionalGroup( obj );
 end );
@@ -2371,8 +2391,8 @@ function( obj )
     if IsXMod( obj ) then
         return ( IsNormal(rng,src) and
                  ( gensrc = List( gensrc, s -> Image( Boundary(obj), s ) ) ) );
-    elif IsCat1( obj ) then
-        return IsNormalSubgroup2DimensionalGroup( XModOfCat1( obj ) );
+    elif IsCat1Group( obj ) then
+        return IsNormalSubgroup2DimensionalGroup( XModOfCat1Group( obj ) );
     else
         Error( "method not yet implemented" );
     fi;

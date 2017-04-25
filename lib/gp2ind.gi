@@ -932,7 +932,7 @@ end );
 ##  ?? do we really want the trans ???
 ##
 InstallMethod( InclusionInducedCat1Data, "for cat1-group, homomorphism, list", 
-    true, [ IsCat1, IsGroupHomomorphism, IsList ], 0,
+    true, [ IsCat1Group, IsGroupHomomorphism, IsList ], 0,
 function( C, iota, trans )
 
 local  Q, R, G,                    # 3 permutation groups
@@ -1028,9 +1028,9 @@ end );
 
 ###############################################################################
 ##
-#M  InducedCat1ByFreeProduct( <list> ) . . 
+#M  InducedCat1GroupByFreeProduct( <list> ) . . 
 ##
-InstallMethod( InducedCat1ByFreeProduct, "for a list", true, [ IsList ], 0,
+InstallMethod( InducedCat1GroupByFreeProduct, "for a list", true, [ IsList ], 0,
 function( info )
 
     local  FQ,             # Fin. Pres. Group
@@ -1042,9 +1042,9 @@ function( info )
            genG,           # generating set perm group G
            ngG,            # number of generating set of perm G
            ngI,            # total length of ngPG+ngPQ
-           C,              # Cat1 
-           Csrc,           # Cat1 source 
-           Crng,           # Cat1 range 
+           C,              # Cat1Group 
+           Csrc,           # Cat1Group source 
+           Crng,           # Cat1Group range 
            t, h, e,        # tail, head, embedding 
            genCsrc,        # generating set of sourxe group
            genCrng,        # generating set of range group
@@ -1079,12 +1079,12 @@ function( info )
            oFI2, genPI,      # Size and generating set of new perm group
            iotastar,       # homomorphism from Csrc to nep perm group
            imh1, imh2, 
-           hstar,          # new head homomorphism for Induced Cat1 group
+           hstar,          # new head homomorphism for induced cat1-group
            imt1, imt2, 
-           tstar,          # new tail homomorphism for Induced Cat1-Group
+           tstar,          # new tail homomorphism for induced cat1-group
            imm, imag, images, 
            estar,          # new embed homomorphism for Ind.cat1
-           IC,              # Induced Cat1 variable
+           IC,             # Induced Cat1-group variable
            mor,            # Cat1Morphism from C to IC 
            u, v, j, x, i, g;# using variables
 
@@ -1202,8 +1202,8 @@ function( info )
     imag := List( imm, x -> MappedWord( x, genQfp, imQ ) );
     images := List( imag, x -> Image( newFIfp!.f2p, x ) );
     estar := GroupHomomorphismByImages( Q, PI, genQ, images );
-    IC := Cat1( PI, tstar, hstar, estar );
-    IC!.isCat1 := IsCat1( IC );
+    IC := Cat1Group( PI, tstar, hstar, estar );
+    IC!.isCat1 := IsCat1Group( IC );
     mor := Cat1Morphism( C, IC, [ iotastar, iota ] );
     if not ( IsCat1Morphism( mor ) ) then
         Print( " mor : C --> IC not a cat1-group morphism \n" );
@@ -1212,15 +1212,15 @@ function( info )
       morphism := mor,
       name := Concatenation( "<ICG(", Name( C ), ")>" ),
       cat1 := C,
-      isInducedCat1 := true );
+      isInducedCat1Group := true );
     return IC;
 end );
 
 ###############################################################################
 ##
-#F  InducedCat1( <arg> ) . . induced cat1-groups
+#F  InducedCat1Group( <arg> ) . . . . . . . . . . . . . . . induced cat1-groups
 ##
-InstallGlobalFunction( InducedCat1, function( arg )
+InstallGlobalFunction( InducedCat1Group, function( arg )
 
     local  nargs, info, Q, Qinfo, P, Pinfo, G, Ginfo, C, iota, IC;
 
@@ -1238,11 +1238,11 @@ InstallGlobalFunction( InducedCat1, function( arg )
         Qinfo := arg[1];
         Pinfo := arg[2];
         Ginfo := arg[3];
-        C := Cat1( Pinfo, Ginfo );
+        C := Cat1Group( Pinfo, Ginfo );
         G := Source( C );
         Ginfo := IsomorphismFpInfo( G );
         iota := InclusionMappingGroups( Pinfo, Qinfo );
-    elif IsCat1( arg[1] ) then
+    elif IsCat1Group( arg[1] ) then
         C := arg[1];
         G := Source( C );
         Ginfo := IsomorphismFpInfo( G );
@@ -1258,15 +1258,15 @@ InstallGlobalFunction( InducedCat1, function( arg )
     fi;
 
     info := InclusionInducedCat1Data( C, iota );
-    IC := InducedCat1ByFreeProduct( info );
+    IC := InducedCat1GroupByFreeProduct( info );
     return IC;
 end );
 
 ###############################################################################
 ##
-#M  AllInducedCat1s( <grp> ) . . induced cat1s
+#M  AllInducedCat1Groups( <grp> ) . . induced cat1-groups
 ##
-InstallGlobalFunction( AllInducedCat1s, function( args )
+InstallGlobalFunction( AllInducedCat1Groups, function( args )
 
     local  nargs, rrange, nrange, L, lenL, reps, nreps, r, i, j, k, a, b,
            norm, nnorm, n, sizes, keep, coll, Q, P, M, id, info, 
@@ -1326,9 +1326,9 @@ InstallGlobalFunction( AllInducedCat1s, function( args )
                 M := norm[n];
                 Print( "genM = ", GeneratorsOfGroup( M ), "\n" );
                 Print( "genP = ", GeneratorsOfGroup( P ), "\n" );
-                C := Cat1( P, M );
+                C := Cat1Group( P, M );
                 iota := InclusionMappingGroups( P, Q );
-                IC := InducedCat1( C, iota );
+                IC := InducedCat1Group( C, iota );
                 Display( IC );
                 num := num + 1;
                 Print( line, line, "\n\n" );

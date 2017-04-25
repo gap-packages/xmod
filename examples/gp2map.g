@@ -105,7 +105,7 @@ Display( T23 );
 Print("\n\n========================================================\n");
 Print("\ntesting constructions of cat1-group morphisms\n\n");
 
-CX4 := Cat1OfXMod( X4 );
+CX4 := Cat1GroupOfXMod( X4 );
 Print("cat1-group associated to X4 is CX4 = ", CX4, "\n" );
 Display( CX4 );
 
@@ -121,10 +121,10 @@ h18 :=  GroupHomomorphismByImages(sdp, s3b, gensdp,
   [ (), (24,25,26), (22,23)(25,26) ] );
 e18 := GroupHomomorphismByImages(s3b, sdp, gens3b,
   [ (14,15,16), (12,13)(15,16) ] );
-C18 := Cat1( t18, h18, e18 );
+C18 := Cat1Group( t18, h18, e18 );
 Print("cat1-group C18 = ", C18, "\n" );
 Display( C18 );
-XC18 := XModOfCat1( C18 );
+XC18 := XModOfCat1Group( C18 );
 Print("associated crossed module XC18 = ", XC18, "\n" );
 Display( XC18 );
 
@@ -135,11 +135,11 @@ Print("\nmor23 and Cmor23 have attributes:\n");
 Print(KnownAttributesOfObject(mor23),"\n");
 Print(KnownAttributesOfObject(Cmor23),"\n\n"); 
 
-## added 24/03/17 after defining DiagonalCat1
+## added 24/03/17 after defining DiagonalCat1Group
 
-C4 := DiagonalCat1( [ (1,2), (2,3), (3,4) ] ); 
+C4 := DiagonalCat1Group( [ (1,2), (2,3), (3,4) ] ); 
 SetName( C4, "C4" );
-C3 := DiagonalCat1( [ (1,2), (2,3) ] ); 
+C3 := DiagonalCat1Group( [ (1,2), (2,3) ] ); 
 SetName( C3, "C3" );
 genG := GeneratorsOfGroup( Source(C4) ); 
 gamma := GroupHomomorphismByImages( Source(C4), Source(C3), genG, 
@@ -148,7 +148,7 @@ genR := GeneratorsOfGroup( Range(C4) );
 rho := GroupHomomorphismByImages( Range(C4), Range(C3), genR, 
              [ (1,2)(4,5), (2,3)(5,6), (1,2)(4,5) ] ); 
 mor := PreCat1Morphism( C4, C3, gamma, rho ); 
-Print( "precat1 morphism, mor : C4 -> C3\n" ); 
+Print( "pre-cat1-morphism, mor : C4 -> C3\n" ); 
 Display( mor );
 
 SetInfoLevel( InfoXMod, level );

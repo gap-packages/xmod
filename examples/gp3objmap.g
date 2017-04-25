@@ -7,7 +7,7 @@
 ##
 #############################################################################
 
-Print("\nXMod example file gp3objmap.g (version 23/04/17) :-");
+Print("\nXMod example file gp3objmap.g (version 25/04/17) :-");
 Print("\ntesting functions for crossed squares\n\n");
 level := InfoLevel( InfoXMod ); 
 SetInfoLevel( InfoXMod, 0 );
@@ -31,7 +31,7 @@ Print( "Crossed square XSconj for normal subgroups of d12:\n" );
 Print( XSconj, "\n" );
 nconj := Name( XSconj );
 Print( "XSconj has transpose XStrans:\n" );
-XStrans := Transpose3dGroup( XSconj );
+XStrans := Transpose3DimensionalGroup( XSconj );
 Print( XStrans, "\n" );
 
 X12 := XModByNormalSubgroup( d12, s3a );
@@ -58,7 +58,7 @@ for p in WP12 do
     Print( p, " -> ", imxp, "\n" );
 od;
 Print( "\nRepeat this calculation on the transposed crossed square:\n" );
-XTact := Transpose3dGroup( XSact );
+XTact := Transpose3DimensionalGroup( XSact );
 xt12 := CrossedPairing( XTact );
 for p in WP12 do 
     genM := GeneratorsOfGroup( Range( X12 ) );
@@ -77,7 +77,7 @@ nsub := Name( XSub );
 id := IdentityMapping( XSconj );
 Print( "IdentityMapping on XSconj:\n" );
 Display( id );
-inc := InclusionMorphism3dDomains( XSconj, XSub );
+inc := InclusionMorphism3DimensionalDomains( XSconj, XSub );
 Print( "Inclusion of XSub in XSconj:\n" );
 Display( inc );
 Print("\n");
@@ -86,7 +86,7 @@ ad12 := GroupHomomorphismByImages( d12, d12, [c,d], [c,d^c] );
 as3a := GroupHomomorphismByImages( s3a, s3a, [c^2,d], [c^2,d^c] );
 as3b := GroupHomomorphismByImages( s3b, s3b, [c^2,cd], [c^2,cd^c] );
 idc3 := IdentityMapping( c3 );
-upconj := Up2DimensionalimensionalGroup( XSconj ); 
+upconj := Up2DimensionalGroup( XSconj ); 
 leftconj := Left2DimensionalGroup( XSconj ); 
 downconj := Down2DimensionalGroup( XSconj ); 
 rightconj := Right2DimensionalGroup( XSconj ); 

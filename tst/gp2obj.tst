@@ -91,6 +91,39 @@ gap> S16 := Image( iso16 );
 Group([ (1,2), (3,4) ])
 
 ## Section 2.4.2
+gap> G4 := Group( (1,2,3,4), (3,4), (5,6,7,8), (7,8) );; 
+gap> R4 := Group( (9,10,11,12), (11,12) );;
+gap> SetName( G4, "s4s4" );  SetName( R4, "s4d" ); 
+gap> G4gens := GeneratorsOfGroup( G4 );; 
+gap> R4gens := GeneratorsOfGroup( R4 );; 
+gap> t := GroupHomomorphismByImages( G4, R4, G4gens, 
+>            Concatenation( R4gens, [ (), () ] ) );; 
+gap> h := GroupHomomorphismByImages( G4, R4, G4gens,  
+>            Concatenation( [ (), () ], R4gens ) );; 
+gap> e := GroupHomomorphismByImages( R4, G4, R4gens, 
+>            [ (1,2,3,4)(5,6,7,8), (3,4)(7,8) ] );; 
+gap> C4 := PreCat1GroupByTailHeadEmbedding( t, h, e ); 
+[s4s4=>s4d]
+gap> Display( C4 ); 
+
+Cat1-group [s4s4=>s4d] :- 
+: Source group s4s4 has generators:
+  [ (1,2,3,4), (3,4), (5,6,7,8), (7,8) ]
+: Range group s4d has generators:
+  [ ( 9,10,11,12), (11,12) ]
+: tail homomorphism maps source generators to:
+  [ ( 9,10,11,12), (11,12), (), () ]
+: head homomorphism maps source generators to:
+  [ (), (), ( 9,10,11,12), (11,12) ]
+: range embedding maps range generators to:
+  [ (1,2,3,4)(5,6,7,8), (3,4)(7,8) ]
+: kernel has generators:
+  [ (5,6,7,8), (7,8) ]
+: boundary homomorphism maps generators of kernel to:
+  [ ( 9,10,11,12), (11,12) ]
+: kernel embedding maps generators of kernel to:
+  [ (5,6,7,8), (7,8) ]
+
 gap> G2 := SmallGroup( 288, 956 );  SetName( G2, "G2" );
 <pc group of size 288 with 7 generators>
 gap> d12 := DihedralGroup( 12 );  SetName( d12, "d12" );
@@ -104,9 +137,9 @@ gap> h2 := GroupHomomorphismByImages( G2, d12, gensG2,
 gap> e2 := GroupHomomorphismByImages( d12, G2, [a1,a2,a3],
 >        [ G2.1*G2.2*G2.4*G2.6^2, G2.3*G2.4*G2.6^2*G2.7, G2.6*G2.7^2 ] );
 [ f1, f2, f3 ] -> [ f1*f2*f4*f6^2, f3*f4*f6^2*f7, f6*f7^2 ]
-gap> C2 := PreCat1ByTailHeadEmbedding( t2, h2, e2 );
+gap> C2 := PreCat1GroupByTailHeadEmbedding( t2, h2, e2 );
 [G2=>d12]
-gap> IsCat1( C2 );
+gap> IsCat1Group( C2 );
 true
 gap> Display(C2);
 
@@ -131,11 +164,11 @@ Cat1-group [G2=>d12] :-
   [ f1, f4, f5, f7 ]
 
 ## Section 2.5.1
-gap> IsEndomorphismPreCat1( C2 ); 
+gap> IsEndomorphismPreCat1Group( C2 ); 
 false
 
 ## Section 2.5.2
-gap> X2 := XModOfCat1( C2 );;
+gap> X2 := XModOfCat1Group( C2 );;
 gap> Display( X2 );
 
 Crossed module X([G2=>d12]) :- 
@@ -178,7 +211,7 @@ gap> iso18 := IsomorphismPermObject( C18 );;
 gap> PC18 := Image( iso18 ); 
 [Group( [ (2,3)(5,6), (4,5,6), (1,2,3) ] )=>Group( [ (2,3)(5,6), (), (1,2,3) 
  ] )]
-gap> X18 := XModByCat1( PC18 ); 
+gap> X18 := XModByCat1Group( PC18 ); 
 [Group( [ (4,5,6) ] )->Group( [ (2,3)(5,6), (), (1,2,3) ] )]
 
 ## Section 2.6.2 
@@ -186,7 +219,7 @@ gap> gp := SmallGroup( 102, 2 );
 <pc group of size 102 with 3 generators>
 gap> StructureDescription( gp ); 
 "C3 x D34"
-gap> all := AllCat1sBasic( gp );
+gap> all := AllCat1GroupsBasic( gp );
 #I Edit last line of .../xmod/lib/nn.kk.out to end with ] ] ] ] ]
 [ [Group( [ f1, f2, f3 ] )=>Group( [ f1, <identity> of ..., <identity> of ... 
      ] )], [Group( [ f1, f2, f3 ] )=>Group( [ f1, f2, <identity> of ... ] )], 

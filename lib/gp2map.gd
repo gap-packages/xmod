@@ -21,7 +21,8 @@ DeclareOperation( "PreXModMorphismByHoms",
     [ IsPreXMod, IsPreXMod, IsGroupHomomorphism, IsGroupHomomorphism ] );
 DeclareGlobalFunction( "PreCat1Morphism" );
 DeclareOperation( "PreCat1MorphismByHoms",
-    [ IsPreCat1, IsPreCat1, IsGroupHomomorphism, IsGroupHomomorphism ] );
+    [ IsPreCat1Group, IsPreCat1Group, IsGroupHomomorphism, 
+      IsGroupHomomorphism ] );
 
 #############################################################################
 ##
@@ -47,19 +48,19 @@ DeclareOperation( "XModMorphismByHoms",
     [ IsXMod, IsXMod, IsGroupHomomorphism, IsGroupHomomorphism ] );
 DeclareGlobalFunction( "Cat1Morphism" );
 DeclareOperation( "Cat1MorphismByHoms",
-    [ IsCat1, IsCat1, IsGroupHomomorphism, IsGroupHomomorphism ] );
+    [ IsCat1Group, IsCat1Group, IsGroupHomomorphism, IsGroupHomomorphism ] );
 DeclareOperation( "InclusionMorphism2DimensionalDomains", 
     [ Is2DimensionalDomain, Is2DimensionalDomain ] );
 
 #############################################################################
 ##
 #O  InnerAutomorphismXMod( <XM>, <r> )
-#O  InnerAutomorphismCat1( <C1G>, <r> )
+#O  InnerAutomorphismCat1Group( <C1G>, <r> )
 ##
 DeclareOperation( "InnerAutomorphismXMod",
     [ IsPreXMod, IsMultiplicativeElementWithInverse ] );
-DeclareOperation( "InnerAutomorphismCat1",
-    [ IsPreCat1, IsMultiplicativeElementWithInverse ] );
+DeclareOperation( "InnerAutomorphismCat1Group",
+    [ IsPreCat1Group, IsMultiplicativeElementWithInverse ] );
 
 #############################################################################
 ##
@@ -82,7 +83,7 @@ DeclareProperty( "IsPermPreCat1Morphism", IsPreCat1Morphism );
 #A  ReverseIsomorphism( <PCG> )
 #O  CompositionMorphism( <mor2>, <mor1> )
 ##
-DeclareAttribute( "ReverseIsomorphism", IsPreCat1 );
+DeclareAttribute( "ReverseIsomorphism", IsPreCat1Group );
 DeclareOperation( "CompositionMorphism", [ Is2DimensionalMapping, Is2DimensionalMapping ] );
 
 #############################################################################
@@ -131,15 +132,16 @@ DeclareAttribute( "IsomorphismXModByNormalSubgroup", IsXMod );
 DeclareOperation( "PreXModIsomorphismByIsomorphisms", 
     [ IsPreXMod, IsBijective, IsBijective ] );
 DeclareOperation( "PreCat1IsomorphismByIsomorphisms", 
-    [ IsPreCat1, IsBijective, IsBijective ] );
+    [ IsPreCat1Group, IsBijective, IsBijective ] );
 DeclareGlobalFunction( "SmallerDegreePerm2DimensionalGroup" );
 DeclareAttribute( "SmallerDegreePermPreXMod", IsPreXMod );
 
 #############################################################################
 ##
-#O  IsomorphismPreCat1s( <precat1>, <precat1> )
+#O  IsomorphismPreCat1Groups( <precat1>, <precat1> )
 ##
-DeclareOperation( "IsomorphismPreCat1s", [ IsPreCat1, IsPreCat1 ] );
+DeclareOperation( "IsomorphismPreCat1Groups", 
+    [ IsPreCat1Group, IsPreCat1Group ] );
 
 #############################################################################
 ##

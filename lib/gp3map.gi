@@ -132,7 +132,7 @@ function( mor )
 
     PC := Source( mor );
     QC := Range( mor );
-    if not ( IsPreCat2( PC ) and IsPreCat2( QC ) ) then
+    if not ( IsPreCat2Group( PC ) and IsPreCat2Group( QC ) ) then
         return false;
     fi;
     
@@ -171,7 +171,7 @@ InstallMethod( IsCat2Morphism,
     "generic method for cat2 morphisms", true, 
     [ IsPreCrossedSquareMorphism ], 0,
 function( mor )
-    return ( IsCat2( Source( mor ) ) and IsCat2(  Range( mor ) ) );
+    return ( IsCat2Group( Source( mor ) ) and IsCat2Group(  Range( mor ) ) );
 end );
 
 InstallMethod( IsCat2Morphism, "generic method for 3d-mappings", true,
@@ -182,7 +182,7 @@ function( mor )
     if not ispre then
         return false;
     else
-        return ( IsCat2( Source( mor ) ) and IsCat2(  Range( mor ) ) );
+        return ( IsCat2Group( Source( mor ) ) and IsCat2Group(  Range( mor ) ) );
     fi;
 end );
 
@@ -323,7 +323,7 @@ function( obj )
         lt := IdentityMapping( Left2DimensionalGroup( obj ) );
         rt := IdentityMapping( Right2DimensionalGroup( obj ) );
         return PreCrossedSquareMorphismByMorphisms( obj, obj, up, lt, rt, dn );
-    elif ( HasIsPreCat2( obj ) and IsPreCat2( obj ) ) then
+    elif ( HasIsPreCat2Group( obj ) and IsPreCat2Group( obj ) ) then
         return PreCat2MorphismByMorphisms( obj, obj, up, dn );
     else
         return fail;
@@ -350,7 +350,7 @@ function( obj, sub )
         rt := InclusionMorphism2DimensionalDomains( Right2DimensionalGroup(obj), 
               Right2DimensionalGroup(sub) );
         return PreCrossedSquareMorphismByMorphisms( sub, obj, up, lt, rt, dn );
-    elif IsPreCat2( obj ) then
+    elif IsPreCat2Group( obj ) then
         return PreCat2MorphismByMorphisms( sub, obj, up, dn );
     else
         return fail;
@@ -391,8 +391,8 @@ InstallGlobalFunction( Cat2Morphism, function( arg )
     local  nargs;
     nargs := Length( arg );
 
-    # two Cat2 and two homomorphisms
-    if ( ( nargs = 4 ) and IsCat2( arg[1] ) and IsCat2( arg[2])
+    # two cat2-groups and two homomorphisms
+    if ( ( nargs = 4 ) and IsCat2Group( arg[1] ) and IsCat2Group( arg[2])
              and IsCat1Morphism( arg[3] ) and IsCat1Morphism( arg[4] ) ) then
         return  Cat2MorphismByMorphisms( arg[1], arg[2], arg[3], arg[4] );
     fi;
@@ -428,7 +428,7 @@ end );
 ##
 InstallMethod( PreCat2MorphismByMorphisms,
     "for two pre-cat2 and two pre-cat1 morphisms,", true,
-    [ IsPreCat2, IsPreCat2, IsPreCat1Morphism, IsPreCat1Morphism ], 0,
+    [ IsPreCat2Group, IsPreCat2Group, IsPreCat1Morphism, IsPreCat1Morphism ], 0,
 function( src, rng, up, dn )
 
     local  filter, fam, mor, ok, nsrc, nrng, name;
@@ -462,10 +462,10 @@ end );
 
 ##############################################################################
 ##
-#M  Cat2MorphismByMorphisms( <Cs>, <Cr>, <up>, <dn> )  make Cat2 map
+#M  Cat2MorphismByMorphisms( <Cs>, <Cr>, <up>, <dn> )  make cat2-group mapping
 ##
-InstallMethod( Cat2MorphismByMorphisms, "for 2 Cat2 and 2 morphisms", true,
-    [ IsCat2, IsCat2, IsCat1Morphism, IsCat1Morphism ], 0,
+InstallMethod( Cat2MorphismByMorphisms, "for two cat2-groups and 2 morphisms", 
+    true, [ IsCat2Group, IsCat2Group, IsCat1Morphism, IsCat1Morphism ], 0,
 function( src, rng, up, dn )
 
     local  mor, ok;
@@ -495,7 +495,7 @@ function( m2, m1 )
                               Up2DimensionalMorphism(m1) );
     dn := CompositionMapping( Down2DimensionalMorphism(m2), 
                               Down2DimensionalMorphism(m1) );
-    if IsPreCat2( Source( m1 ) ) then
+    if IsPreCat2Group( Source( m1 ) ) then
         comp := Make3DimensionalMapping( Source( m1 ), Range( m2 ), up, dn );
         if ( IsPreCat2Morphism( m1 ) and IsPreCat2Morphism( m2 ) ) then
             SetIsPreCat2Morphism( comp, true );
