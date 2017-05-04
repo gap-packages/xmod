@@ -23,6 +23,7 @@ gap> idem_f := Filtered(f, i -> CompositionMapping(i,i) = i);
   [ f1, f2 ] -> [ f1*f2^2, <identity> of ... ],
   [ f1, f2 ] -> [ f1*f2, <identity> of ... ], [ f1, f2 ] -> [ f1, f2 ] ]
 gap> pc1 := PreCat1GroupByEndomorphisms(idem_f[1],idem_f[1]);
+condition  [kert,kerh] = 1  is not satisfied
 [Group( [ f1, f2 ] )=>Group( [ <identity> of ..., <identity> of ... ] )]
 gap> pc2 := PreCat1GroupByEndomorphisms(idem_f[2],idem_f[2]);
 [Group( [ f1, f2 ] )=>Group( [ f1, <identity> of ... ] )]
@@ -45,10 +46,65 @@ true
 gap> IsCatnGroup(pC3);
 true
 gap> Display(pC3);
-(pre-)cat3-group with:
+(pre-)cat3-group (4 Dimensional Group) with:
      2DimensionalDomain-1 = [Group( [ f1, f2 ] )=>Group( [ f1, <identity> of ... ] )]
      2DimensionalDomain-2 = [Group( [ f1, f2 ] )=>Group( [ f1, f2 ] )]
      2DimensionalDomain-3 = [Group( [ f1, f2 ] )=>Group( [ f1, f2 ] )]
+gap> pC4 := CatnGroup([Cat1Group(8,2,1),Cat1Group(8,2,2),Cat1Group(8,2,4),Cat1Group(8,2,6),Cat1Group(8,2,6)]);
+
+    2DimensionalDomain-1 = [C4 x C2=>Group( [ <identity> of ..., <identity> of ..., <identity> of ... ] )]
+    2DimensionalDomain-2 = [C4 x C2=>Group( [ <identity> of ..., f2 ] )]
+    2DimensionalDomain-3 = [C4 x C2=>Group( [ f1, <identity> of ... ] )]
+    2DimensionalDomain-4 = [C4 x C2=>C4 x C2]
+    2DimensionalDomain-5 = [C4 x C2=>C4 x C2]
+
+gap> Display(pC4);
+(pre-)cat5-group (6 Dimensional Group) with:
+    2DimensionalDomain-1 = [C4 x C2=>Group( [ <identity> of ..., <identity> of ..., <identity> of ... ] )]
+    2DimensionalDomain-2 = [C4 x C2=>Group( [ <identity> of ..., f2 ] )]
+    2DimensionalDomain-3 = [C4 x C2=>Group( [ f1, <identity> of ... ] )]
+    2DimensionalDomain-4 = [C4 x C2=>C4 x C2]
+    2DimensionalDomain-5 = [C4 x C2=>C4 x C2]
+gap> f := IdentityMapping(pC4);
+<mapping:
+    2DimensionalDomain-1 = [C4 x C2=>Group( [ <identity> of ..., <identity> of ..., <identity> of ... ] )]
+    2DimensionalDomain-2 = [C4 x C2=>Group( [ <identity> of ..., f2 ] )]
+    2DimensionalDomain-3 = [C4 x C2=>Group( [ f1, <identity> of ... ] )]
+    2DimensionalDomain-4 = [C4 x C2=>C4 x C2]
+    2DimensionalDomain-5 = [C4 x C2=>C4 x C2]
+ ->
+    2DimensionalDomain-1 = [C4 x C2=>Group( [ <identity> of ..., <identity> of ..., <identity> of ... ] )]
+    2DimensionalDomain-2 = [C4 x C2=>Group( [ <identity> of ..., f2 ] )]
+    2DimensionalDomain-3 = [C4 x C2=>Group( [ f1, <identity> of ... ] )]
+    2DimensionalDomain-4 = [C4 x C2=>C4 x C2]
+    2DimensionalDomain-5 = [C4 x C2=>C4 x C2]
+ >
+gap> Display(f);
+Morphism of pre-cat5-groups :-
+:    Source =
+
+    2DimensionalDomain-1 = [C4 x C2=>Group( [ <identity> of ..., <identity> of ..., <identity> of ... ] )]
+    2DimensionalDomain-2 = [C4 x C2=>Group( [ <identity> of ..., f2 ] )]
+    2DimensionalDomain-3 = [C4 x C2=>Group( [ f1, <identity> of ... ] )]
+    2DimensionalDomain-4 = [C4 x C2=>C4 x C2]
+    2DimensionalDomain-5 = [C4 x C2=>C4 x C2]
+
+:     Range =
+
+    2DimensionalDomain-1 = [C4 x C2=>Group( [ <identity> of ..., <identity> of ..., <identity> of ... ] )]
+    2DimensionalDomain-2 = [C4 x C2=>Group( [ <identity> of ..., f2 ] )]
+    2DimensionalDomain-3 = [C4 x C2=>Group( [ f1, <identity> of ... ] )]
+    2DimensionalDomain-4 = [C4 x C2=>C4 x C2]
+    2DimensionalDomain-5 = [C4 x C2=>C4 x C2]
+
+[ [ f1, f2, f3 ], [ f1, f2, f3 ] ]
+[ [ f1, f2, f3 ], [ f1, f2, f3 ] ]
+[ [ f1, f2, f3 ], [ f1, f2, f3 ] ]
+[ [ f1, f2, f3 ], [ f1, f2, f3 ] ]
+[ [ f1, f2, f3 ], [ f1, f2, f3 ] ]
+gap> IsBijective(f);
+true
+
 
 #############################################################################
 ##

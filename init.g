@@ -23,5 +23,5 @@ ReadPackage( "xmod", "lib/gp3map.gd" );
 ReadPackage( "xmod", "lib/gpd2obj.gd" ); 
 ReadPackage( "xmod", "lib/cat1data.gd" );
 ReadPackage( "xmod", "lib/gpnobj.gd" );
-
+ReadPackage( "xmod", "lib/gpnmap.gd" );
 

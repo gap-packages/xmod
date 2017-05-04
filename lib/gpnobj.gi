@@ -251,7 +251,7 @@ function( gnd )
 
     n := PreCatnDimension(gnd);
     if IsPreCatnGroup(gnd) then 
-        Print( "(pre-)cat",n,"-group with:\n" ); 
+        Print( "(pre-)cat",n,"-group (",n+1," Dimensional Group) with:\n" ); 
     fi;     
     if HasName( gnd ) then
         Print( Name( gnd ), "\n" );
