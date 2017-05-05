@@ -153,7 +153,7 @@ function( L )
 
     local  filter, fam, PC, ok, name, n;
     
-    if ForAny(L, x -> not IsPreCat1Obj(x) ) then 
+    if ForAny(L, x -> not IsPreCat1Group(x) ) then 
         Print( "Each item in the list must be PreCat1-group \n" );
         return fail;
     fi;
@@ -211,6 +211,32 @@ InstallGlobalFunction( CatnGroup, function( arg )
     else   
         Print( usage1, usage2 );
     fi;
+end );
+
+##############################################################################
+##
+#M  \=( <dom1>, <dom2> ) . . .test if two higher dimensional object are equal
+##
+InstallMethod( \=,
+    "generic method for two higher dimensional domain",
+    IsIdenticalObj, [ IsHigherDimensionalGroup, IsHigherDimensionalGroup ], 0,
+    function ( dom1, dom2 )
+	
+	local n1, n2, L1, L2;
+	
+	L1 := 2DimensionalGroups( dom1 );
+    n1 := PreCatnDimension( dom1 );
+	L2 := 2DimensionalGroups( dom2 );
+    n2 := PreCatnDimension( dom2 );
+	
+	if ( n1  <>  n2 ) then
+		return false;
+	fi;
+	ok := ForAll( [1..n1], i -> L1[i] = L2[i] );
+	if not ok then
+        return false;
+    fi;    
+    return true;
 end );
 
 #############################################################################
