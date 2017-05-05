@@ -23,6 +23,7 @@ ReadPackage( "xmod", "lib/gp3map.gi" );
 ReadPackage( "xmod", "lib/gpd2obj.gi" ); 
 ReadPackage( "xmod", "lib/cat1data.gi" ); 
 ReadPackage( "xmod", "lib/gpnobj.gi" );
+ReadPackage( "xmod", "lib/gpnmap.gi" );
 
 ## define some directories: 
 ##  XMod_dir := Filename( DirectoriesPackageLibrary( "XMod", "" ), "" ); 

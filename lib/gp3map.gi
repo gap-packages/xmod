@@ -128,7 +128,7 @@ InstallMethod( IsPreCat2Morphism,
     [ Is3DimensionalGroupMorphism ], 0,
 function( mor )
 
-    local  PC, QC, upmor, dnmor, ok, d1, d2, u1, u2;
+    local  PC, QC, upmor, dnmor, ok, d1, d2, u1, u2,G1,G2,P1,P2,p1,q1,comp1,G11,G12,P11,P12,p2,q2,comp2;
 
     PC := Source( mor );
     QC := Range( mor );
@@ -153,11 +153,31 @@ function( mor )
             ( Range( RangeHom( dnmor ) ) = Range( d2 ) )) then
         return false;
     fi;
+	
+	# check that equality of SourceHoms
+	
+	G1 := Source(SourceHom( upmor ));
+	G2 := Range(SourceHom( upmor ));
+	P1 := Image(IsomorphismPermGroup(G1));
+	P2 := Image(IsomorphismPermGroup(G2));
+	p1 := IsomorphismGroups(P1,G1);
+	q1 := IsomorphismGroups(G2,P2);
+	comp1 := p1 * SourceHom( upmor ) * q1;
+	
+	G11 := Source(SourceHom( dnmor ));
+	G12 := Range(SourceHom( dnmor ));
+	P11 := Image(IsomorphismPermGroup(G11));
+	P12 := Image(IsomorphismPermGroup(G12));
+	p2 := IsomorphismGroups(P11,G11);
+	q2 := IsomorphismGroups(G12,P12);
+	comp2 := p2 * SourceHom( dnmor ) * q2;
+	
     
-    ok := ( SourceHom( upmor ) = SourceHom( dnmor ) );
+#  Issue => ok := ( SourceHom( upmor ) = SourceHom( dnmor ) );
+#  The cause of the wrong result : SmallGroup(n,m) <> SmallGroup(n,m) 
+	ok := ( comp1 = comp2 );
     if not ok then
-        # The cause of the wrong result : SmallGroup(n,m) <> SmallGroup(n,m) 
-        Print("Problem of equality of morphism \n");
+
         return false;
     fi;
     return true;
