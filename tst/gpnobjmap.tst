@@ -7,44 +7,37 @@
 ##
 #############################################################################
 
-gap> s3 := SmallGroup(6,1);
-<pc group of size 6 with 2 generators>
-gap> f := AllHomomorphisms(s3,s3);
-[ [ f1, f2 ] -> [ <identity> of ..., <identity> of ... ],
-  [ f1, f2 ] -> [ f1, <identity> of ... ],
-  [ f1, f2 ] -> [ f1*f2^2, <identity> of ... ],
-  [ f1, f2 ] -> [ f1*f2, <identity> of ... ], [ f1, f2 ] -> [ f1, f2 ],
-  [ f1, f2 ] -> [ f1*f2^2, f2 ], [ f1, f2 ] -> [ f1*f2, f2 ],
-  [ f1, f2 ] -> [ f1, f2^2 ], [ f1, f2 ] -> [ f1*f2, f2^2 ],
-  [ f1, f2 ] -> [ f1*f2^2, f2^2 ] ]
-gap> idem_f := Filtered(f, i -> CompositionMapping(i,i) = i);
+gap> s3 := SmallGroup(6,1);;
+gap> homs := AllHomomorphisms(s3,s3);;
+gap> idem := Filtered( homs, i -> CompositionMapping(i,i) = i );
 [ [ f1, f2 ] -> [ <identity> of ..., <identity> of ... ],
   [ f1, f2 ] -> [ f1, <identity> of ... ],
   [ f1, f2 ] -> [ f1*f2^2, <identity> of ... ],
   [ f1, f2 ] -> [ f1*f2, <identity> of ... ], [ f1, f2 ] -> [ f1, f2 ] ]
-gap> pc1 := PreCat1GroupByEndomorphisms(idem_f[1],idem_f[1]);
+gap> pc1 := PreCat1GroupByEndomorphisms( idem[1], idem[1] );
+condition  [kert,kerh] = 1  is not satisfied 
 [Group( [ f1, f2 ] )=>Group( [ <identity> of ..., <identity> of ... ] )]
-gap> pc2 := PreCat1GroupByEndomorphisms(idem_f[2],idem_f[2]);
+gap> pc2 := PreCat1GroupByEndomorphisms( idem[2], idem[2] );
 [Group( [ f1, f2 ] )=>Group( [ f1, <identity> of ... ] )]
-gap> pC2 := CatnGroup( [ pc1, pc2 ] );
+gap> C12 := CatnGroup( [ pc1, pc2 ] );
 condition  [kert,kerh] = 1  is not satisfied
     2DimensionalDomain-1 = [Group( [ f1, f2 ] )=>Group(
 [ <identity> of ..., <identity> of ... ] )]
     2DimensionalDomain-2 = [Group( [ f1, f2 ] )=>Group( [ f1, <identity> of ... ] )]
-gap> PreCatnDimension(pC2);
+gap> PreCatnDimension(C12);
 2
-gap> pc3 := PreCat1GroupByEndomorphisms(idem_f[5],idem_f[5]);
+gap> pc3 := PreCat1GroupByEndomorphisms(idem[5],idem[5]);
 [Group( [ f1, f2 ] )=>Group( [ f1, f2 ] )]
-gap> pC3 := CatnGroup([pc2,pc3,pc3]);
+gap> C233 := CatnGroup( [pc2, pc3, pc3] );
     2DimensionalDomain-1 = [Group( [ f1, f2 ] )=>Group( [ f1, <identity> of ... ] )]
     2DimensionalDomain-2 = [Group( [ f1, f2 ] )=>Group( [ f1, f2 ] )]
     2DimensionalDomain-3 = [Group( [ f1, f2 ] )=>Group( [ f1, f2 ] )]
 
-gap> IsPreCatnGroup(pC3);
+gap> IsPreCatnGroup( C233 );
 true
-gap> IsCatnGroup(pC3);
+gap> IsCatnGroup( C233 );
 true
-gap> Display(pC3);
+gap> Display( C233 );
 (pre-)cat3-group with:
      2DimensionalDomain-1 = [Group( [ f1, f2 ] )=>Group( [ f1, <identity> of ... ] )]
      2DimensionalDomain-2 = [Group( [ f1, f2 ] )=>Group( [ f1, f2 ] )]
