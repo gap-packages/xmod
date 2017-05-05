@@ -16,102 +16,46 @@ InstallMethod( IsPreCatnGroup, "generic method for a pre-catn-group",
     true, [ IsHigherDimensionalGroup ], 0,
 function( P )
 
-    local  G, gensrc, C, x, y, z, L, PL, n, i, j, tmaps, hmaps, end_tmaps, 
-           end_hmaps, h, t;
+    local  G, C, L, n, i, j, endt, endh, ti, tj, hi, hj;
 
     if not ( IsPreCatnObj ( P )  ) then
         return false;
     fi;
     
-    L := 2DimensionalGroups( P );
+    L := GeneratingCat1Groups( P );
     n := PreCatnDimension( P );
-    PL := [];
-        for i in [1..n] do 
-            if not ( IsPerm2DimensionalGroup( L[i] ) ) then
-                C := Image(IsomorphismPermObject( L[i] ) );
-            else
-                C := L[i];
-            fi;
-            Add(PL,C,i);
-        od;
-        
-    tmaps := [];
-    hmaps := [];
-        for i in [1..n] do 
-            Add(tmaps,TailMap(PL[i]),i);
-            Add(hmaps,HeadMap(PL[i]),i);
-        od;
-        
-    
-    # --- Actually not necessary
-    
-    for i in [1..n] do 
-            if ( Source( tmaps[i] ) <> Source( hmaps[i] ) ) then
-                    Info( InfoXMod, 2, "Incompatible source" );
-                    return false;    
-            fi;
-            if ( Range( tmaps[i] ) <> Range( hmaps[i] ) ) then
-                    Info( InfoXMod, 2, "Incompatible range" );
-                    return false;    
-            fi;
-     od;
-     
-    # -------------------------
+    G := Source( L[1] );
+        if not ForAll( L, C -> Source(C) = G ) then
+        Info( InfoXMod, 2, 
+            "generating cat1-groups should have the same source" );
+        return false;        
+    fi;
 
-    G := Source(hmaps[1]);
-    gensrc := GeneratorsOfGroup(G);
-    
-    if not ForAll(tmaps, x -> Source(x) = G ) then
-        Info( InfoXMod, 2, "Incompatible Tail maps source" );
-        return false;        
-    fi;
-    
-    if not ForAll(hmaps, x -> Source(x) = G ) then
-        Info( InfoXMod, 2, "Incompatible Head maps source" );
-        return false;        
-    fi;
-    
-    end_tmaps := [];
-    end_hmaps := [];
-    
-        for i in [1..n] do 
-        t := GroupHomomorphismByImagesNC(G, G, gensrc, 
-                  List(gensrc, x -> Image( tmaps[i], x ) )  ); 
-                  
-        h := GroupHomomorphismByImagesNC(G, G, gensrc, 
-                  List(gensrc, x -> Image( hmaps[i], x ) )  );         
-                  
-            Add(end_tmaps,t,i);
-            
-            Add(end_hmaps,h,i);
-        od;
-    
-    # check conditions 1 & 2
-            
+    endt := ListWithIdenticalEntries( n, 0 ); 
+    endh := ListWithIdenticalEntries( n, 0 ); 
+    for i in [1..n] do 
+        C := L[i]; 
+        endt[i] := TailMap( C ) * RangeEmbedding( C ); 
+        endh[i] := HeadMap( C ) * RangeEmbedding( C ); 
+    od;
+
+    # check conditions 1,2,3
     for i in [1..n-1] do 
-        for j in [i+1..n] do
-            if not (end_hmaps[i]*end_hmaps[j] = end_hmaps[j]*end_hmaps[i]) then
-                Info( InfoXMod, 2, "Condition 1 is not satisfied" );
-                #  Print("Condition 1 is not satisfied \n");
+        for j in [i+1..n] do 
+            ti := endt[i]; 
+            tj := endt[j];
+            hi := endh[i];
+            hj := endh[j];
+            if not ( hi*hj = hj*hi ) then
+                Info( InfoXMod, 2, "Condition 1 not satisfied at", [i,j] );
                 return false;
             fi;        
-
-            if not (end_tmaps[i]*end_tmaps[j] = end_tmaps[j]*end_tmaps[i]) then
-                Info( InfoXMod, 2, "Condition 2 is not satisfied" );
-                #  Print("Condition 2 is not satisfied \n");
+            if not ( ti*tj = tj*ti ) then
+                Info( InfoXMod, 2, "Condition 2 not satisfied at", [i,j] );
                 return false;
             fi;    
-        od;
-    od;
-    # check the condition 3
-    for i in [1..n] do 
-        for j in [1..n] do
-            if i = j then 
-                continue;
-            fi;
-            if not (end_hmaps[i]*end_tmaps[j] = end_tmaps[j]*end_hmaps[i]) then
-                Info( InfoXMod, 2, "Condition 3 is not satisfied" );
-                # Print("Condition 3 is not satisfied \n");
+            if not ( ( hi*tj = tj*hi ) and ( hj*ti = ti*hj ) ) then
+                Info( InfoXMod, 2, "Condition 3 not satisfied at", [i,j] );
                 return false;
             fi;        
         od;
@@ -133,14 +77,11 @@ function( P )
         Info( InfoXMod, 2, "P is not a pre-catn-group" );
         return false;
     fi;
-    
-    L := 2DimensionalGroups( P );
-    
+    L := GeneratingCat1Groups( P );
     if ForAny( L, x -> not IsCat1Group(x) ) then 
         Info( InfoXMod, 2, "each item in the list must be Cat1-Group" );
         return false;
     fi;
-    
     return true;
 end );
 
@@ -153,7 +94,7 @@ function( L )
 
     local  filter, fam, PC, ok, name, n;
     
-    if ForAny(L, x -> not IsPreCat1Obj(x) ) then 
+    if ForAny(L, x -> not IsPreCat1Group(x) ) then 
         Print( "Each item in the list must be PreCat1-group \n" );
         return fail;
     fi;
@@ -162,22 +103,44 @@ function( L )
     filter := IsPreCatnObj;
     PC := rec();
     ObjectifyWithAttributes( PC, NewType( fam, filter), 
-        2DimensionalGroups, L, 
+        GeneratingCat1Groups, L, 
         PreCatnDimension, n, 
         IsHigherDimensionalGroup, true );
     if not IsPreCatnGroup( PC ) then
         Info( InfoXMod, 1, "Warning: not a pre-catn-group" );
     fi;
-    # ok := IsCatnGroup( PC );
-    # name:= Name( PC );
     return PC;
 end );
 
 #############################################################################
 ##
-#F  CatnGroup( <size>, <gpnum>, <dim>, <num> )         from data in CATn_LIST
-#F  CatnGroup( C1G1, C1G2, ... )                  catn-group from cat1-groups
+#F  CatnGroup( <size>, <gpnum>, <dim>, <num> )        from data in CATn_LIST
+#F  CatnGroup( L )                       catn-group from list of cat1-groups
+#F  PreCatnGroup( L )            pre-catn-group from list of pre-cat1-groups
 ##
+InstallGlobalFunction( PreCatnGroup, function( arg )
+
+    local  nargs, PnG, ok, usage;
+
+    nargs := Length( arg );
+    
+    usage := 
+        "standard usage: PreCatnGroup( [pre-cat1-gp,pre-cat1-gp,...] );\n";
+    if not ( ( nargs = 1 ) and IsList( arg[1] ) ) then 
+        Print( usage );
+    fi; 
+    PnG := PreCatnObj( arg[1] ); 
+    if ( PnG = fail ) then 
+        Print( usage1, usage2 ); 
+    else 
+        ok := IsPreCatnGroup( PnG );
+        if ok then
+            return PnG;
+        fi;                
+    fi;        
+    return fail;
+end );
+
 InstallGlobalFunction( CatnGroup, function( arg )
 
     local  nargs, CnG, ok, usage1, usage2;
@@ -185,32 +148,32 @@ InstallGlobalFunction( CatnGroup, function( arg )
     nargs := Length( arg );
     
     usage1 := 
-        "standard usage: CatnGroup( [pre-cat1-group,pre-cat1-group,...] );\n";
+        "standard usage: CatnGroup( [cat1-group,cat1-group,...] );\n";
     usage2 := 
         "            or: CatnGroup( size, gpnum, dimension, num );\n";
+    if not ( ( nargs = 1 ) or ( nargs = 4 ) ) then 
+        Print( usage1, usage2 );
+    fi; 
 
-    if (  ( nargs = 1 ) and ( IsList(arg[1]) ) ) then
-        if ForAny(arg[1], x -> not IsPreCat1Obj(x) ) then 
-            Print("Each item in the list must be Pre-Cat1-group \n");
-            return fail;
-        elif ( not (Length(arg[1]) > 1) ) then
-            Print( usage1, usage2 );
-        else
-            CnG := PreCatnObj( arg[1] );
+    if ( nargs = 1 ) then
+        CnG := PreCatnObj( arg[1] ); 
+        if ( CnG = fail ) then 
+            Print( usage1, usage2 ); 
+        else 
             ok := IsPreCatnGroup( CnG );
             if ok then
                 return CnG;
-            else
-                return fail;
             fi;                
-        fi;        
-    elif ( (nargs = 4) and IsInt( arg[1] ) and IsInt( arg[2] ) 
+        fi;
+    fi;        
+    if ( (nargs = 4) and IsInt( arg[1] ) and IsInt( arg[2] ) 
            and  IsInt( arg[3] ) and IsInt( arg[4] )  ) then
-        Print( "CatnSelect is not yet implemented\n" );
+        Print( "CatnSelect is not yet implemented\n" ); 
         # return CatnSelect( arg[1], arg[2], arg[3], arg[4] );
     else   
-        Print( usage1, usage2 );
+        Print( usage1, usage2 ); 
     fi;
+    return fail;
 end );
 
 #############################################################################
@@ -222,16 +185,16 @@ InstallMethod( PrintObj, "method for a nd-group", true,
     [ IsHigherDimensionalGroup ], 0,
 function( gnd )
 
-    local  i, n;
+    local  i, n, L;
 
     if HasName( gnd ) then
         Print( Name( gnd ), "\n" );
     else 
-        n := PreCatnDimension(gnd);
-        Print( "\n" );
+        n := PreCatnDimension(gnd); 
+        L := GeneratingCat1Groups( gnd ); 
+        Print( "generating (pre-)cat1-groups:\n" );
         for i in [1..n] do 
-            Print( "    2DimensionalDomain-",i ," = ",  
-                   2DimensionalGroups( gnd )[i], "\n" );
+            Print( i, " : ", L[i], "\n" );
         od;   
     fi;
 end );
@@ -247,20 +210,17 @@ InstallMethod( Display, "method for a nd-group", true,
     [ IsHigherDimensionalGroup ], 0,
 function( gnd )
 
-    local  i, n;
+    local  i, n, L;
 
     n := PreCatnDimension(gnd);
     if IsPreCatnGroup(gnd) then 
-        Print( "(pre-)cat",n,"-group with:\n" ); 
+        L := GeneratingCat1Groups( gnd );
+        Print( "generating (pre-)cat1-groups:\n" );
     fi;     
-    if HasName( gnd ) then
-        Print( Name( gnd ), "\n" );
-    else 
-        for i in [1..n] do 
-            Print( "    2DimensionalDomain-",i ," = ", 
-                   2DimensionalGroups( gnd )[i], "\n" );
-        od;      
-    fi;
+    for i in [1..n] do 
+        Print( i, " : " ); 
+        Display( L[i] );
+    od;      
 end );
 
 #############################################################################

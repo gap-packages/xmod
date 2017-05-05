@@ -19,13 +19,9 @@ DeclareRepresentation( "IsPreCatnObj", IsHigherDimensionalGroup and IsAttributeS
 #############################################################################
 ##
 #P  IsPreCatnGroup( <PCG> ) 
-##
-DeclareProperty( "IsPreCatnGroup", IsHigherDimensionalGroup );
-
-#############################################################################
-##
 #P  IsCatnGroup( <C1G> ) 
 ##
+DeclareProperty( "IsPreCatnGroup", IsHigherDimensionalGroup );
 DeclareProperty( "IsCatnGroup", IsHigherDimensionalGroup );
 
 #############################################################################
@@ -35,21 +31,16 @@ DeclareProperty( "IsCatnGroup", IsHigherDimensionalGroup );
 #A  PreCatnDimension ( <P> ) 
 ##
 DeclareOperation( "PreCatnObj", [ IsList ] );
+DeclareAttribute( "GeneratingCat1Groups", IsHigherDimensionalGroup );
 DeclareAttribute( "2DimensionalGroups", IsHigherDimensionalGroup );
 DeclareAttribute( "PreCatnDimension", IsHigherDimensionalGroup );
 
 #############################################################################
 ##
 #F  PreCatnGroup( <arg> ) 
-#F  PreCatnGroupByPreCat1Groups( <first>, <second>, ... )
-##
-DeclareGlobalFunction( "PreCatnGroup" );
-DeclareGlobalFunction( "PreCatnGroupByPreCat1Groups" );
-
-#############################################################################
-##
 #F  CatnGroup( <arg> }
 ##
+DeclareGlobalFunction( "PreCatnGroup" );
 DeclareGlobalFunction( "CatnGroup" );
 
 #############################################################################
