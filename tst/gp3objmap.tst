@@ -89,7 +89,7 @@ gap> down := XModMorphismByHoms( downconj, downconj, ad10a, ad20 );
 [[d10a->d20] => [d10a->d20]]
 gap> right := XModMorphismByHoms( rightconj, rightconj, ad10b, ad20 );
 [[d10b->d20] => [d10b->d20]]
-gap> autoconj := CrossedSquareMorphism( XSconj, XSconj, up, left, right, down );; 
+gap> autoconj := CrossedSquareMorphism( XSconj, XSconj, [up,left,right,down] );; 
 gap> ord := Order( autoconj );;
 gap> Display( autoconj );
 Morphism of crossed squares :- 
@@ -107,14 +107,14 @@ Morphism of crossed squares :-
 : down-right: 
 [ [ ( 1, 2, 3, 4, 5, 6, 7, 8, 9,10), ( 2,10)( 3, 9)( 4, 8)( 5, 7) ], 
   [ ( 1, 2, 3, 4, 5, 6, 7, 8, 9,10), ( 1, 3)( 4,10)( 5, 9)( 6, 8) ] ]
-gap> IsAutomorphism3DimensionalDomain( autoconj );
+gap> IsAutomorphismHigherDimensionalDomain( autoconj );
 true
 gap> KnownPropertiesOfObject( autoconj );
 [ "CanEasilyCompareElements", "CanEasilySortElements", "IsTotal", 
   "IsSingleValued", "IsInjective", "IsSurjective", 
-  "IsPreCrossedSquareMorphism", "IsPreCat2Morphism", 
-  "IsCrossedSquareMorphism", "IsEndomorphism3DimensionalDomain", 
-  "IsAutomorphism3DimensionalDomain" ]
+  "IsPreCrossedSquareMorphism", "IsCrossedSquareMorphism", 
+  "IsEndomorphismHigherDimensionalDomain", 
+  "IsAutomorphismHigherDimensionalDomain" ]
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 
 #############################################################################

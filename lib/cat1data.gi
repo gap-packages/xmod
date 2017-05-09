@@ -25,26 +25,26 @@
 ##  gap> Cat1IdempotentsToFile( gp, ireps, jj+1, jjj );   ## etc. etc. 
 ##                                          ## then look at  nn.kk.ids 
 ##  gap> Read( "lib/nn.kk.ids" );           ## read in the list of idempotents 
-##  gap> AllCat1GroupsInParts( gp, ireps, idems, [1,jj], [ ] ); 
+##  gap> AllCat1DataGroupsInParts( gp, ireps, idems, [1,jj], [ ] ); 
 ##  gap> Cjj := ???  
-##  gap> AllCat1GroupsInParts( gp, ireps, idems, [jj+1,jjj], Cjj );  ## etc. 
+##  gap> AllCat1DataGroupsInParts( gp, ireps, idems, [jj+1,jjj], Cjj );  ## etc. 
 ##  
 ##  Finally, edit  nn.kk.out, deleting the final entry, 
 ##  and changing the last line of the file to finish with:  ] ] ] ] ],  
 
 ##############################################################################
 ##
-#M  AllCat1Groups . . . . . . . . . . . . . . . . . . . . . . . . for a group
+#M  AllCat1DataGroups . . . . . . . . . . . . . . . . . . . . . . . . for a group
 ##
-InstallGlobalFunction( AllCat1Groups, function( arg )
+InstallGlobalFunction( AllCat1DataGroups, function( arg )
 
     local  nargs; 
 
     nargs := Length( arg ); 
     if ( nargs = 1 ) then 
-        return AllCat1GroupsBasic( arg[1] ); 
+        return AllCat1DataGroupsBasic( arg[1] ); 
     elif ( nargs = 3 ) then 
-        return AllCat1GroupsInParts( arg[1], arg[2], arg[3] ); 
+        return AllCat1DataGroupsInParts( arg[1], arg[2], arg[3] ); 
     else 
         Error( "length of arg neither 1 nor 3" ); 
     fi;  
@@ -52,9 +52,9 @@ end );
 
 ##############################################################################
 ##
-#M  AllCat1GroupsBasic . . . . . . . . . . . . . . . . . . . . . . . . for a group
+#M  AllCat1DataGroupsBasic . . . . . . . . . . . . . . . . . . for a cyclic Pgroup
 ##
-InstallMethod( AllCat1GroupsBasic, "construct all cat1-groups on a given group", 
+InstallMethod( AllCat1DataGroupsBasic, "construct all cat1-groups on a given group", 
     true, [ IsCyclic and IsPGroup ], 0,
 function( gp ) 
 
@@ -70,7 +70,7 @@ function( gp )
     return C; 
 end ); 
 
-InstallMethod( AllCat1GroupsBasic, "construct all cat1-groups on a given group", 
+InstallMethod( AllCat1DataGroupsBasic, "construct all cat1-groups on a given group", 
     true, [ IsGroup ], 0,
 function( gp )
 
@@ -465,7 +465,7 @@ end );
 ##
 #M  CollectPartsAlreadyDone . . . . . . . . . . . . . . . . . . . for a group
 ##
-InstallMethod( CollectPartsAlreadyDone, "preparation for AllCat1GroupsInParts", 
+InstallMethod( CollectPartsAlreadyDone, "preparation for AllCat1DataGroupsInParts", 
     true, [ IsGroup, IsPosInt, IsPosInt, IsList ], 0,
 function( gp, nn, kk, range )
 
@@ -496,9 +496,9 @@ end );
 
 ##############################################################################
 ##
-#M  AllCat1GroupsInParts . . . . . . . . . . . . . . . . . . . . . . . for a group
+#M  AllCat1DataGroupsInParts . . . . . . . . . . . . . . . . . . . . . . . for a group
 ##
-InstallMethod( AllCat1GroupsInParts, "construct all cat1-groups on a given group", 
+InstallMethod( AllCat1DataGroupsInParts, "construct all cat1-groups on a given group", 
     true, [ IsGroup, IsList, IsList, IsList, IsList ], 0,
 function( gp, ireps, idems, range, C )
 
@@ -677,9 +677,9 @@ end );
 
 ##############################################################################
 ##
-#M  MakeAllCat1Groups . . . . . . . . . . . . . . . . . for three positive integers
+#M  MakeAllCat1DataGroups . . . . . . . . . . . . . . . . . for three positive integers
 ##
-InstallMethod( MakeAllCat1Groups, "construct all cat1-groups of a chosen order", 
+InstallMethod( MakeAllCat1DataGroups, "construct all cat1-groups of a chosen order", 
     true, [ IsPosInt, IsPosInt, IsPosInt ], 0,
 function( n, fst, lst )
 
@@ -711,7 +711,7 @@ function( n, fst, lst )
             else 
                 AppendTo(out, "[",n,",",j,",\"",struc,"\",",egensgp,",[\n" ); 
             fi; 
-            all := AllCat1GroupsBasic( sgp ); 
+            all := AllCat1DataGroupsBasic( sgp ); 
             len := Length( all ); 
             if ( (len = 1) or ( (len = 2) and IsCommutative( sgp ) ) ) then 
                 AppendTo( out, " ] ],\n" ); 

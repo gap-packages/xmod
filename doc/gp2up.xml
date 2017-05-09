@@ -31,7 +31,7 @@ The Whitehead monoid  <M>{\rm Der}(\mathcal{X})</M> of <M>\mathcal{X}</M>
 was defined in <Cite Key="W2" /> to be the monoid of all <E>derivations</E> 
 from <M>R</M> to <M>S</M>, that is the set of all maps  
 <M>\chi : R \to S</M>,  with <E>Whitehead multiplication</E>  
-<M>\star</M> (on the <E>right</E>) satisfying:
+<M>\star</M> (on the <E>right</E>) satisfying: 
 <Display>
 {\bf Der\ 1}:  \chi(qr) ~=~ (\chi q)^{r} \; (\chi r),
 \qquad

@@ -72,10 +72,9 @@ gap> sigma0 := GroupHomomorphismByImages(SX2,c2,genSX2,[(19,20),(),(),()]);
 gap> rho0 := GroupHomomorphismByImages(d12,c2,[a1,a2,a3],[(19,20),(),()]);
 [ f1, f2, f3 ] -> [ (19,20), (), () ]
 gap> mor0 := XModMorphism( X2, X0, sigma0, rho0 );;           
-gap> K0 := Kernel( mor0 );
-[Group( [ <identity> of ..., f4, f5, f7 ] )->Group( 
-[ <identity> of ..., f2, f3 ] )]
-
+gap> K0 := Kernel( mor0 );;
+gap> StructureDescription( K0 );
+[ "C12", "C6" ]
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 
 #############################################################################

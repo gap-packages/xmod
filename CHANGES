@@ -2,6 +2,7 @@
 
 Problems and ToDos: 
 
+ - (28/04/17) implement inclusion of the kernel of an xmod-morphism as xsq 
  - (25/04/17) examples/gpd2obj.g needs more material 
  - (19/08/16) error report from Tedar Tegstrom: he discovered that 
               InducedXMod(X0,iota) fails when Boundary(X0) not mono. 
@@ -23,8 +24,16 @@ Problems and ToDos:
               (construction worked OK with isomorphic perm groups). 
 
 #############################################################################
-2.59 -> 2.61 (25/04/2017) 
+2.59 -> 2.61 (09/05/2017) 
 
+ - (09/05/17) dom2d3d.gd{i} renamed dom2dnd.gd{i}
+              hdim-morphisms now expect [ src, rng, list of maps ] 
+              PreCatn(Mapping)Dimension now HigherDimension 
+              added attribute VertexGroups for HigherDimensionalGroups 
+ - (08/05/17) Removed lots of 3Dim stuff since HigherDim stuff is better
+ - (05/05/17) AllCat1Groups* -> AllCat1DataGroups* 
+ - (04/05/17) Alper add catn-morphism functions in gpnmor.gd{i} 
+ - (29/04/17) added lines to makedoc.g to allow for xymatrix commands 
  - (24/04/17) 2d<anything> becomes 2Dimensional<anything> (except Object2d) 
  - (22/04/17) Alper added lib/gpnobj.gd, lib/gpnobj.gi, tst/gpnobjmap.tst 
  - (10/04/17) Alper added a number of functions for cat2-groups and morphisms 

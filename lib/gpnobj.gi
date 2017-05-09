@@ -10,6 +10,25 @@
 
 #############################################################################
 ##
+#M  HigherDimension . . . . . . . . for a higher dimensional group or mapping
+##
+InstallMethod( HigherDimension, "generic method for an ndim-group", true, 
+    [ IsHigherDimensionalGroup ], 0,
+function( G )
+    if ( HasIsPreCrossedSquare(G) and IsPreCrossedSquare(G) ) then 
+        return 3; 
+    elif ( HasIsPreCat2Group(G) and IsPreCat2Group(G) ) then 
+        return 3; 
+    elif HasGeneratingCat1Groups( G ) then 
+        return Length( GeneratingCat1Groups(G) ) + 1; 
+    else 
+        Print( "HigherDimension not yet implemented\n" ); 
+        return fail; 
+    fi; 
+end ); 
+
+#############################################################################
+##
 #M  IsPreCatnGroup . . . . . . . .  check that the object is a pre-catn-group
 ##
 InstallMethod( IsPreCatnGroup, "generic method for a pre-catn-group",
@@ -23,7 +42,7 @@ function( P )
     fi;
     
     L := GeneratingCat1Groups( P );
-    n := PreCatnDimension( P );
+    n := HigherDimension( P );
     G := Source( L[1] );
         if not ForAll( L, C -> Source(C) = G ) then
         Info( InfoXMod, 2, 
@@ -47,15 +66,16 @@ function( P )
             hi := endh[i];
             hj := endh[j];
             if not ( hi*hj = hj*hi ) then
-                Info( InfoXMod, 2, "Condition 1 not satisfied at", [i,j] );
+                Info( InfoXMod, 2, "head maps do not commute at", [i,j] );
                 return false;
             fi;        
             if not ( ti*tj = tj*ti ) then
-                Info( InfoXMod, 2, "Condition 2 not satisfied at", [i,j] );
+                Info( InfoXMod, 2, "tail maps do not commute at", [i,j] );
                 return false;
             fi;    
             if not ( ( hi*tj = tj*hi ) and ( hj*ti = ti*hj ) ) then
-                Info( InfoXMod, 2, "Condition 3 not satisfied at", [i,j] );
+                Info( InfoXMod, 2, 
+                    "head maps do not commute with tail maps at", [i,j] );
                 return false;
             fi;        
         od;
@@ -104,7 +124,7 @@ function( L )
     PC := rec();
     ObjectifyWithAttributes( PC, NewType( fam, filter), 
         GeneratingCat1Groups, L, 
-        PreCatnDimension, n, 
+        HigherDimension, n, 
         IsHigherDimensionalGroup, true );
     if not IsPreCatnGroup( PC ) then
         Info( InfoXMod, 1, "Warning: not a pre-catn-group" );
@@ -131,7 +151,7 @@ InstallGlobalFunction( PreCatnGroup, function( arg )
     fi; 
     PnG := PreCatnObj( arg[1] ); 
     if ( PnG = fail ) then 
-        Print( usage1, usage2 ); 
+        Print( usage ); 
     else 
         ok := IsPreCatnGroup( PnG );
         if ok then
@@ -143,63 +163,89 @@ end );
 
 InstallGlobalFunction( CatnGroup, function( arg )
 
-    local  nargs, CnG, ok, usage1, usage2;
+    local  nargs, CnG, ok, usage1, usage2, dim;
 
-    nargs := Length( arg );
-    
+    nargs := Length( arg );    
     usage1 := 
-        "standard usage: CatnGroup( [cat1-group,cat1-group,...] );\n";
+        "standard usage: CatnGroup( [cat1-group,cat1-group,...] );\n"; 
+    ##  usage2 will become relevant if CatnSelect is implemented 
     usage2 := 
         "            or: CatnGroup( size, gpnum, dimension, num );\n";
     if not ( ( nargs = 1 ) or ( nargs = 4 ) ) then 
-        Print( usage1, usage2 );
+        Print( usage1 );
     fi; 
-
     if ( nargs = 1 ) then
         CnG := PreCatnObj( arg[1] ); 
         if ( CnG = fail ) then 
-            Print( usage1, usage2 ); 
+            Print( usage1 ); 
         else 
-            ok := IsPreCatnGroup( CnG );
-            if ok then
+            ok := IsPreCatnGroup( CnG ); 
+            if ok then 
+                dim := HigherDimension( CnG ); 
+                if ( dim = 3 ) then 
+                    SetIsPreCat2Group( CnG, true ); 
+                fi; 
                 return CnG;
             fi;                
         fi;
-    fi;        
-    if ( (nargs = 4) and IsInt( arg[1] ) and IsInt( arg[2] ) 
-           and  IsInt( arg[3] ) and IsInt( arg[4] )  ) then
+    elif ( (nargs = 4) and IsInt( arg[1] ) and IsInt( arg[2] ) 
+                   and  IsInt( arg[3] ) and IsInt( arg[4] )  ) then
         Print( "CatnSelect is not yet implemented\n" ); 
         # return CatnSelect( arg[1], arg[2], arg[3], arg[4] );
     else   
-        Print( usage1, usage2 ); 
+        Print( usage1 ); 
     fi;
     return fail;
 end );
 
 ##############################################################################
 ##
-#M  \=( <dom1>, <dom2> ) . . .test if two higher dimensional object are equal
+#M  VerticesOfHigherDimensionalGroup( obj ) . . . . . . . . . . . . for a higher-dimensional group 
+##
+InstallMethod( VerticesOfHigherDimensionalGroup, "method for dimension 2", true, 
+    [ IsHigherDimensionalGroup ], 0,
+function ( obj )
+
+    local  dim, L, gens; 
+    dim := HigherDimension( obj ); 
+    if ( dim = 2 ) then 
+        return [ Source( obj ), Range( obj ) ]; 
+    elif ( dim = 3 ) then 
+        if IsCatnGroup( obj ) then 
+            gens := GeneratingCat1Groups( obj ); 
+            return [ Source( gens[1] ), Range( gens[1] ), 
+                     Range( gens[2] ), Range( gens[3] ) ]; 
+        else  ## obj is a crossed square 
+            Print( "VerticesOfHigherDimensionalGroup ", 
+                   "not yet implemented for crossed squares\n" ); 
+            return fail; 
+        fi; 
+    else  ## dimension >= 4 
+        Print( "VerticesOfHigherDimensionalGroup ", 
+               "not yet implemented for dimension >= 4\n" ); 
+        return fail; 
+    fi; 
+end );
+
+##############################################################################
+##
+#M  \=( <dom1>, <dom2> ) . . . test if two higher dimensional object are equal
 ##
 InstallMethod( \=,
-    "generic method for two higher dimensional domain",
+    "generic method for two higher dimensional domains",
     IsIdenticalObj, [ IsHigherDimensionalGroup, IsHigherDimensionalGroup ], 0,
-    function ( dom1, dom2 )
-	
-	local n1, n2, L1, L2;
-	
-	L1 := 2DimensionalGroups( dom1 );
-    n1 := PreCatnDimension( dom1 );
-	L2 := 2DimensionalGroups( dom2 );
-    n2 := PreCatnDimension( dom2 );
-	
-	if ( n1  <>  n2 ) then
-		return false;
-	fi;
-	ok := ForAll( [1..n1], i -> L1[i] = L2[i] );
-	if not ok then
+function ( dom1, dom2 )
+    
+    local  n1, n2, L1, L2;
+    
+    n1 := HigherDimension( dom1 );
+    n2 := HigherDimension( dom2 );
+    if ( n1  <>  n2 ) then
         return false;
-    fi;    
-    return true;
+    fi;
+    L1 := GeneratingCat1Groups( dom1 );
+    L2 := GeneratingCat1Groups( dom2 );
+    return ForAll( [1..n1], i -> L1[i] = L2[i] );
 end );
 
 #############################################################################
@@ -216,7 +262,7 @@ function( gnd )
     if HasName( gnd ) then
         Print( Name( gnd ), "\n" );
     else 
-        n := PreCatnDimension(gnd); 
+        n := HigherDimension(gnd); 
         L := GeneratingCat1Groups( gnd ); 
         Print( "generating (pre-)cat1-groups:\n" );
         for i in [1..n] do 
@@ -238,7 +284,7 @@ function( gnd )
 
     local  i, n, L;
 
-    n := PreCatnDimension(gnd);
+    n := HigherDimension(gnd);
     if IsPreCatnGroup(gnd) then 
         L := GeneratingCat1Groups( gnd );
         Print( "generating (pre-)cat1-groups:\n" );
@@ -248,6 +294,20 @@ function( gnd )
         Display( L[i] );
     od;      
 end );
+
+#############################################################################
+##
+#M  IdGroup . . . . . . . . . . . . . . . . . for a higher-dimensional domain
+##
+InstallOtherMethod( IdGroup, "method for a nd-domain", true, 
+    [ IsHigherDimensionalDomain ], 0, 
+function( dom )
+    local  u, d;
+    u := Up2DimensionalGroup( dom ); 
+    d := Down2DimensionalGroup( dom ); 
+    return [ [ IdGroup( Source(u) ), IdGroup( Range(u) ) ], 
+             [ IdGroup( Source(d) ), IdGroup( Range(d) ) ] ]; 
+end ); 
 
 #############################################################################
 ##

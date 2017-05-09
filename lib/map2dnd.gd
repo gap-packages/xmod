@@ -1,7 +1,7 @@
 ##############################################################################
 ##
-#W  map2d3d.gd                 GAP4 package `XMod'               Chris Wensley
-##
+#W  map2dnd.gd                 GAP4 package `XMod'               Chris Wensley
+##                                                                Alper Odabas
 #Y  Copyright (C) 2001-2017, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 
@@ -117,7 +117,78 @@ DeclareGlobalFunction( "Make2DimensionalMagmaMorphism" );
 DeclareAttribute( "Kernel2DimensionalMapping", Is2DimensionalGroupMorphism );
 
 
-###############################  3d MAPPINGS  ################################ 
+########################  HIGHER DIMENSIONAL MAPPINGS  ###################### 
+
+#############################################################################
+##
+#C  IsGeneralHigherDimensionalMapping( <map> )
+#C  IsNonSPGeneralHigherDimensionalMapping( <map> )
+#C  IsSPGeneralHigherDimensionalMapping( <map> )
+##  
+DeclareCategory( "IsGeneralHigherDimensionalMapping", 
+    IsGeneral2DimensionalMapping );
+DeclareCategory( "IsSPGeneralHigherDimensionalMapping", 
+    IsGeneralHigherDimensionalMapping and IsSPGeneralMapping );
+DeclareCategory( "IsNonSPGeneralHigherDimensionalMapping", 
+    IsGeneralHigherDimensionalMapping and IsNonSPGeneralMapping );
+
+#############################################################################
+##
+#C  IsGeneralHigherDimensionalMapping 
+##               . . . . . category of colls of higher dimensional magma maps
+#C  IsGeneralHigherDimensionalMappingCollColl . .  category of colls of colls 
+##
+DeclareCategoryCollections( "IsGeneralHigherDimensionalMapping" );
+DeclareCategoryCollections( "IsGeneralHigherDimensionalMappingCollection" );
+DeclareCategoryCollections( "IsGeneralHigherDimensionalMappingCollColl" );
+
+############################################################################# 
+##  
+#V  GeneralHigherDimensionalMappingFamily 
+##          . . . . family for homs of higher dimensional magmas with objects 
+##  
+BindGlobal( "GeneralHigherDimensionalMappingFamily", 
+    NewFamily( "GeneralHigherDimensionalMappingFamily", IsGeneralHigherDimensionalMapping, 
+               CanEasilySortElements, CanEasilySortElements ) ); 
+
+#############################################################################
+##
+#P  IsHigherDimensionalMapping( <map> )
+#P  IsEndoGeneralHigherDimensionalMapping( <map> )
+#P  IsEndoHigherDimensionalMapping( <map> )
+#P  IsHigherDimensionalMagmaGeneralMapping( <map> ) 
+#P  IsHigherDimensionalMagmaMorphism( <map> ) 
+#P  IsHigherDimensionalSemigroupMorphism( <map> )
+#P  IsHigherDimensionalMonoidMorphism( <map> )
+DeclareSynonymAttr( "IsHigherDimensionalMapping", 
+    IsGeneralHigherDimensionalMapping and IsMapping );
+DeclareSynonymAttr( "IsEndoGeneralHigherDimensionalMapping",
+    IsGeneralHigherDimensionalMapping and IsEndoGeneralMapping );
+DeclareSynonymAttr( "IsEndoHigherDimensionalMapping", 
+    IsHigherDimensionalMapping and IsEndoMapping );
+DeclareSynonymAttr( "IsHigherDimensionalMagmaGeneralMapping", 
+    IsGeneralHigherDimensionalMapping and RespectsMultiplication );
+DeclareSynonymAttr( "IsHigherDimensionalMagmaMorphism", 
+    IsHigherDimensionalMagmaGeneralMapping and IsMapping );
+DeclareProperty( "IsHigherDimensionalSemigroupMorphism", 
+    IsHigherDimensionalMagmaMorphism  );
+DeclareProperty( "IsHigherDimensionalMonoidMorphism", 
+    IsHigherDimensionalMagmaMorphism );
+
+############################################################################## 
+## 
+#C  IsHigherDimensionalGroupMorphism( <map> )
+#C  IsHigherDimensionalGroupMorphismCollection . category of colls of higher dimensional groups
+#C  IsHigherDimensionalGroupMorphismCollColl . . . . . . category of colls of colls 
+#V  FamilyHigherDimensionalGroupMorphism . .  family for homomorphisms of higher dimensional groups 
+##
+DeclareCategory( "IsHigherDimensionalGroupMorphism", IsGeneralHigherDimensionalMapping ); 
+DeclareCategoryCollections( "IsHigherDimensionalGroupMorphism" );
+DeclareCategoryCollections( "IsHigherDimensionalGroupMorphismCollection" );
+DeclareCategoryCollections( "IsHigherDimensionalGroupMorphismCollColl" );
+BindGlobal( "FamilyHigherDimensionalGroupMorphism", 
+    NewFamily( "FamilyHigherDimensionalGroupMorphism", IsHigherDimensionalGroupMorphism, 
+               CanEasilySortElements, CanEasilySortElements ) ); 
 
 #############################################################################
 ##
@@ -133,79 +204,19 @@ DeclareCategory( "IsNonSPGeneral3DimensionalMapping",
 
 #############################################################################
 ##
-#C  IsGeneral3DimensionalMappingCollection . . . . . category of colls of 3d-magma maps
-#C  IsGeneral3DimensionalMappingCollColl . . . . . . category of colls of colls 
-#C  IsGeneral3DimensionalMappingCollCollColl . . . . category of colls, colls, colls
-##
-DeclareCategoryCollections( "IsGeneral3DimensionalMapping" );
-DeclareCategoryCollections( "IsGeneral3DimensionalMappingCollection" );
-DeclareCategoryCollections( "IsGeneral3DimensionalMappingCollColl" );
-
-############################################################################# 
-##  
-#V  General3DimensionalMappingFamily . . . . family for homs of 3d-magmas with objects 
-##  
-BindGlobal( "General3DimensionalMappingFamily", 
-    NewFamily( "General3DimensionalMappingFamily", IsGeneral3DimensionalMapping, 
-               CanEasilySortElements, CanEasilySortElements ) ); 
-
-#############################################################################
-##
-#P  Is3DimensionalMapping( <map> )
-#P  IsEndoGeneral3DimensionalMapping( <map> )
-#P  IsEndo3DimensionalMapping( <map> )
-#P  Is3DimensionalMagmaGeneralMapping( <map> ) 
-#P  Is3DimensionalMagmaMorphism( <map> ) 
-#P  Is3DimensionalSemigroupMorphism( <map> )
-#P  Is3DimensionalMonoidMorphism( <map> )
-DeclareSynonymAttr( "Is3DimensionalMapping", 
-    IsGeneral3DimensionalMapping and IsMapping );
-DeclareSynonymAttr( "IsEndoGeneral3DimensionalMapping",
-    IsGeneral3DimensionalMapping and IsEndoGeneralMapping );
-DeclareSynonymAttr( "IsEndo3DimensionalMapping", 
-    Is3DimensionalMapping and IsEndoMapping );
-DeclareSynonymAttr( "Is3DimensionalMagmaGeneralMapping", 
-    IsGeneral3DimensionalMapping and RespectsMultiplication );
-DeclareSynonymAttr( "Is3DimensionalMagmaMorphism", 
-    Is3DimensionalMagmaGeneralMapping and IsMapping );
-
-#?  modify these next three to SynonymAttr's ??
-DeclareProperty( "Is3DimensionalSemigroupMorphism", 
-    Is3DimensionalMagmaMorphism  );
-DeclareProperty( "Is3DimensionalMonoidMorphism", 
-    Is3DimensionalMagmaMorphism );
-
-############################################################################## 
-## 
-#C  Is3DimensionalGroupMorphism( <map> )
-#C  Is3DimensionalGroupMorphismCollection . category of colls of 3d-group homs
-#C  Is3DimensionalGroupMorphismCollColl . . . . . . category of colls of colls 
-#C  Is3DimensionalGroupMorphismCollCollColl .  category of colls, colls, colls
-#V  Family3DimensionalGroupMorphism . .  family for homomorphisms of 3d-groups 
-##
-DeclareCategory( "Is3DimensionalGroupMorphism", IsGeneral3DimensionalMapping ); 
-DeclareCategoryCollections( "Is3DimensionalGroupMorphism" );
-DeclareCategoryCollections( "Is3DimensionalGroupMorphismCollection" );
-DeclareCategoryCollections( "Is3DimensionalGroupMorphismCollColl" );
-BindGlobal( "Family3DimensionalGroupMorphism", 
-    NewFamily( "Family3DimensionalGroupMorphism", Is3DimensionalGroupMorphism, 
-               CanEasilySortElements, CanEasilySortElements ) ); 
-
-#############################################################################
-##
 #P  IsPreSqMorphism( <map> ) 
 #P  IsPreCat2Morphism( <map> ) 
 #P  IsCrossedSquareMorphism( <map> ) 
 #P  IsCat2Morphism( <map> ) 
 ##  
-DeclareProperty( "IsPreCrossedSquareMorphism", Is3DimensionalGroupMorphism );
-DeclareProperty( "IsPreCat2Morphism", Is3DimensionalGroupMorphism );
-DeclareProperty( "IsCrossedSquareMorphism", Is3DimensionalGroupMorphism );
-DeclareProperty( "IsCat2Morphism", Is3DimensionalGroupMorphism );
+DeclareProperty( "IsPreCrossedSquareMorphism", 
+    IsHigherDimensionalGroupMorphism );
+DeclareProperty( "IsPreCat2Morphism", IsHigherDimensionalGroupMorphism );
+DeclareProperty( "IsCrossedSquareMorphism", IsHigherDimensionalGroupMorphism );
+DeclareProperty( "IsCat2Morphism", IsHigherDimensionalGroupMorphism );
 
 #############################################################################
 ##
-#R  Is3DimensionalMappingRep( <mor> )
 #A  Up2DimensionalMorphism( <mor> )
 #A  Left2DimensionalMorphism( <mor> )
 #A  Down2DimensionalMorphism( <mor> )
@@ -214,32 +225,13 @@ DeclareProperty( "IsCat2Morphism", Is3DimensionalGroupMorphism );
 ##
 ##  A pre-crossed square or pre-cat2-group morphism contains 4 group homs
 ##
-DeclareRepresentation( "Is3DimensionalMappingRep", 
-    Is3DimensionalMapping and IsAttributeStoringRep,
-    [ "Source", "Range", "Up2DimensionalMorphism", "Left2DimensionalMorphism", 
-      "Right2DimensionalMorphism", "Down2DimensionalMorphism" ] );
-DeclareAttribute( "Up2DimensionalMorphism", Is3DimensionalMapping );
-DeclareAttribute( "Left2DimensionalMorphism", Is3DimensionalMapping );
-DeclareAttribute( "Down2DimensionalMorphism", Is3DimensionalMapping );
-DeclareAttribute( "Right2DimensionalMorphism", Is3DimensionalMapping );
-DeclareOperation( "Make3DimensionalMapping",
-    [ Is3DimensionalDomain, Is3DimensionalDomain, Is2DimensionalMapping, 
-      Is2DimensionalMapping, Is2DimensionalMapping, Is2DimensionalMapping ] );
-
-############################################################################# 
-##  
-##  3DimensionalMagmaMorphism( <args> )
-## 
-DeclareGlobalFunction( "3DimensionalMagmaMorphism" ); 
-
-#############################################################################
-##
-#A  Kernel3DimensionalMapping( <mor> )
-##
-DeclareAttribute( "Kernel3DimensionalMapping", Is3DimensionalGroupMorphism );
+DeclareAttribute( "Up2DimensionalMorphism", IsHigherDimensionalMapping );
+DeclareAttribute( "Left2DimensionalMorphism", IsHigherDimensionalMapping );
+DeclareAttribute( "Down2DimensionalMorphism", IsHigherDimensionalMapping );
+DeclareAttribute( "Right2DimensionalMorphism", IsHigherDimensionalMapping );
 
 
 ############################################################################## 
 ## 
-#E  map2d3d.gd . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here 
+#E  map2dnd.gd . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here 
 ## 

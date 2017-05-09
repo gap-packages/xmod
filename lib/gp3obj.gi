@@ -15,7 +15,7 @@
 #M  IsPc3DimensionalGroup . . . . . check whether the 4 sides are pc groups
 ##
 InstallMethod( IsPerm3DimensionalGroup, "generic method for 3d-group objects",
-    true, [ Is3DimensionalGroup ], 0,
+    true, [ IsHigherDimensionalGroup ], 0,
 function (obj)
     return ( IsPermGroup( Up2DimensionalGroup(obj) ) 
              and IsPermGroup( Range(obj) )
@@ -24,7 +24,7 @@ function (obj)
 end );
 
 InstallMethod( IsFp3DimensionalGroup, "generic method for 3d-group objects",
-    true, [ Is3DimensionalGroup ], 0,
+    true, [ IsHigherDimensionalGroup ], 0,
 function (obj)
     return ( IsFpGroup( Up2DimensionalGroup(obj) ) and IsFpGroup( Range(obj) )
              and IsFpGroup( Left2DimensionalGroup(obj) ) 
@@ -32,7 +32,7 @@ function (obj)
 end );
 
 InstallMethod( IsPc3DimensionalGroup, "generic method for 3d-group obj ects" ,
-    true, [ Is3DimensionalGroup ], 0,
+    true, [ IsHigherDimensionalGroup ], 0,
 function (obj)
     return ( IsPcGroup( Up2DimensionalGroup(obj) ) and IsPcGroup( Range(obj) )
              and IsPcGroup( Left2DimensionalGroup(obj) ) 
@@ -109,11 +109,11 @@ function( X0 )
     imlist := ImagesList( reg );
     map := Mapping2ArgumentsByFunction( [RX,WX], SX, 
                function(t) 
-               local  r, p, pos, chi;
-               r := t[1];  p := t[2];
-               pos := Position( Elements( WX ), p );
-               chi := DerivationByImages( X0, imlist[pos] ); 
-               return DerivationImage( chi, r ); 
+                   local  r, p, pos, chi;
+                   r := t[1];  p := t[2];
+                   pos := Position( Elements( WX ), p );
+                   chi := DerivationByImages( X0, imlist[pos] ); 
+                   return DerivationImage( chi, r ); 
                end );
     return CrossedPairingObj( [RX,WX], SX, map );
 end );
@@ -124,16 +124,16 @@ end );
 ##
 InstallMethod( ImageElmCrossedPairing, "for crossed pairing", true, 
     [ IsCrossedPairing, IsList ], 0,
-    function ( xp, elm ) 
-        return ImageElm( CrossedPairingMap( xp ), elm );
-    end );
+function ( xp, elm ) 
+    return ImageElm( CrossedPairingMap( xp ), elm );
+end );
 
 #############################################################################
 ##
 #M  IsPreCrossedSquare . . . . . . . . . . . . check that the square commutes
 ##
 InstallMethod( IsPreCrossedSquare, "generic method for a pre-crossed square",
-    true, [ Is3DimensionalGroup ], 0,
+    true, [ IsHigherDimensionalGroup ], 0,
 function( P )
 
     local  u, d, l, r, ul, dl, ur, dr, bu, bd, bl, br, blbd, bubr,
@@ -202,7 +202,7 @@ function( u, l, d, r, a, p )
 
     local  filter, fam, PS, ok, src, rng, aut, narne;
 
-    fam := Family3DimensionalGroup;
+    fam := FamilyHigherDimensionalGroup;
     filter := IsPreCrossedSquareObj;
     ## test commutativity here?
     PS := rec();
@@ -213,7 +213,7 @@ function( u, l, d, r, a, p )
       Right2DimensionalGroup, r,
       CrossedPairing, p,
       DiagonalAction, a,
-      Is3DimensionalGroup, true );
+      IsHigherDimensionalGroup, true );
     if not IsPreCrossedSquare( PS ) then
         Info( InfoXMod, 1, "Warning: not a pre-crossed square." );
     fi;
@@ -227,13 +227,13 @@ end );
 #M  IsPreCat2Group . . . . . . . . . . .  check that this is a pre-cat2-group
 ##
 InstallMethod( IsPreCat2Group, "generic method for a pre-cat2-group",
-    true, [ Is3DimensionalGroup ], 0,
+    true, [ IsHigherDimensionalGroup ], 0,
 function( P )
 
     local  u, d, h1, t1, h2, t2, h1h2, h2h1, t1t2, t2t1, h1t2, 
            t2h1, h2t1, t1h2, G, gensrc, x, y, z;
 
-    if not ( IsPreCat2Obj( P )  ) then
+    if not ( IsPreCatnObj( P )  ) then
         return false;
     fi;
     
@@ -320,7 +320,7 @@ end );
 #M  IsCat2Group . . . . . . . . . . . . check that the object is a cat2-group
 ##
 InstallMethod( IsCat2Group, "generic method for a cat2-group",
-    true, [ Is3DimensionalGroup ], 0,
+    true, [ IsHigherDimensionalGroup ], 0,
 function( P )
 
     local  u, d;
@@ -340,32 +340,6 @@ function( P )
     return true;
 end );
 
-##############################################################################
-##
-#M  PreCat2Obj( <up>, <down> ) . . . . . . . . . . . . . make a pre-cat2-group
-##
-InstallMethod( PreCat2Obj, "for precat2", true,
-    [ IsPreCat1Group, IsPreCat1Group ], 0,
-function( u, d )
-
-    local  filter, fam, PC, ok, name;
-
-    fam := Family3DimensionalGroup;
-    filter := IsPreCat2Obj;
-    PC := rec();
-    ObjectifyWithAttributes( PC, NewType( fam, filter), 
-        Up2DimensionalGroup, u, 
-        Down2DimensionalGroup, d,
-        Is3DimensionalGroup, true );
-    if not IsPreCat2Group( PC ) then
-        Info( InfoXMod, 1, "Warning: not a pre-cat2-group" );
-    fi;
-    # ok := IsCat2Group( PC );
-    # name:= Name( PC );
-    return PC;
-end );
-
-#############################################################################
 ##
 #F  Cat2Group( <size>, <gpnum>, <num> )     cat2-group from data in CAT2_LIST
 #F  Cat2Group( C1G1, C1G2 )                 cat2-group from two cat1-groups
@@ -381,7 +355,7 @@ InstallGlobalFunction( Cat2Group, function( arg )
         return fail;
     elif not IsInt( arg[1] ) then
         if ( nargs = 2 ) then
-            C2G := PreCat2Obj( arg[1], arg[2] );
+            C2G := PreCatnObj( arg[1], arg[2] );
         fi;
         ok := IsCat2Group( C2G );
         if ok then
@@ -419,8 +393,7 @@ end );
 
 ##############################################################################
 ##
-#M  CrossedSquareByNormalSubgroups 
-##                                create a crossed square from normal M,N in P
+#M  CrossedSquareByNormalSubgroups . . . . crossed square from normal M,N in P
 ##
 InstallMethod( CrossedSquareByNormalSubgroups, "conjugation crossed square",
     true, [ IsGroup, IsGroup, IsGroup, IsGroup ], 0,
@@ -445,7 +418,7 @@ function( P, N, M, L )
     diag := XModByNormalSubgroup( P, L );
     a := XModAction( diag );
     ##  define the pairing as a commutator
-    xp := CrossedPairingByNormalSubgroups( M, N, L );
+    xp := CrossedPairingByNormalSubgroups( M, N, L ); 
     XS := PreCrossedSquareObj( u, l, d, r, a, xp );
     SetIsCrossedSquare( XS, true );
     return XS;
@@ -543,30 +516,15 @@ function( PS )
     return name;
 end );
 
-#############################################################################
-##
-#M  IdGroup . . . . . . . . . . . . . . . . . . . . . . . . . for a 3d-domain
-##
-InstallOtherMethod( IdGroup, "method for a 3d-domain", true, 
-    [ Is3DimensionalDomain ], 0,    
-function( dom )
-    local  u, d;
-    u := Up2DimensionalGroup( dom ); 
-    d := Down2DimensionalGroup( dom ); 
-    return [ [ IdGroup( Source(u) ), IdGroup( Range(u) ) ], 
-             [ IdGroup( Source(d) ), IdGroup( Range(d) ) ] ]; 
-end ); 
-
 ##############################################################################
 ##
 #M  \=( <dom1>, <dom2> ) . . . . . . . . . . test if two 3d-objects are equal
 ##
 InstallMethod( \=,
     "generic method for two 3d-domain",
-    IsIdenticalObj, [ Is3DimensionalGroup, Is3DimensionalGroup ], 0,
-    function ( dom1, dom2 )
-    
-    if ( IsPreCat2Group( dom1 ) and IsPreCat2Group( dom2 ) ) then
+    IsIdenticalObj, [ IsHigherDimensionalGroup, IsHigherDimensionalGroup ], 0,
+function ( dom1, dom2 )
+        if ( IsPreCat2Group( dom1 ) and IsPreCat2Group( dom2 ) ) then
         return( 
             ( Up2DimensionalGroup( dom1 ) = Up2DimensionalGroup( dom2 ) )
         and ( Down2DimensionalGroup( dom1 ) = Down2DimensionalGroup( dom2 ) ) 
@@ -582,11 +540,11 @@ end );
 
 #############################################################################
 ##
-#M  PrintObj( <g3d> . . . . . . . . . . . . . . . print a 3Dimensional-group 
-#M  ViewObj( <g2d> ) . . . . . . . . . . . . . . . view a 3Dimensional-group 
+#M  PrintObj( <g3d> . . . . . . . . . . . . . . . print a 3dimensional group 
+#M  ViewObj( <g2d> ) . . . . . . . . . . . . . . . view a 3dimensional group 
 ##
 InstallMethod( PrintObj, "method for a 3d-group", true, 
-    [ Is3DimensionalGroup ], 0,
+    [ IsHigherDimensionalGroup ], 0,
 function( g3d )
 
     local  L, M, N, P, lenL, lenM, lenN, lenP, len1, len2, j, q1, q2, 
@@ -659,7 +617,7 @@ function( g3d )
 end );
 
 InstallMethod( ViewObj, "method for a 3d-group", true, 
-    [ Is3DimensionalGroup ], 0,
+    [ IsHigherDimensionalGroup ], 0,
     PrintObj ); 
 
 #############################################################################
@@ -667,7 +625,7 @@ InstallMethod( ViewObj, "method for a 3d-group", true,
 #M Display( <g3d> . . . . . . . . . . . . . . . . . . . . display a 3d-group 
 ##
 InstallMethod( Display, "method for a 3d-group", true, 
-    [ Is3DimensionalGroup ], 0,
+    [ IsHigherDimensionalGroup ], 0,
 function( g3d )
 
     local  L, M, N, P, lenL, lenM, lenN, lenP, len1, len2, j, q1, q2, 

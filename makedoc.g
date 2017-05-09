@@ -1,10 +1,13 @@
-##  makedoc.g for package XMod, version 16/03/16
+##  makedoc.g for package XMod, version 29/04/17
 ##  This builds the documentation of the XMod package. 
 ##  Needs: GAPDoc package, latex, pdflatex, mkindex
 ##  
 LoadPackage( "GAPDoc" );
 
 XModDoc := Filename( DirectoriesPackageLibrary( "XMod", "doc" ), "" );
+
+# use this command if including xymatrix code (added 29/04/17) 
+SetGapDocLaTeXOptions(rec(EarlyExtraPreamble := "\\usepackage[all]{xy}\n"));
 
 MakeGAPDocDoc( XModDoc,   # path to the directory containing the main file
                "manual",  # the name of the main file (without extension)
@@ -25,6 +28,8 @@ MakeGAPDocDoc( XModDoc,   # path to the directory containing the main file
 # Copy the *.css and *.js files from the styles directory of the GAPDoc 
 # package into the directory containing the package manual.
 CopyHTMLStyleFiles( XModDoc );
+
+SetGapDocLaTeXOptions(GAPDoc2LaTeXProcs.DefaultOptions);
 
 # Create the manual.lab file which is needed if the main manuals or another 
 # package is referring to your package

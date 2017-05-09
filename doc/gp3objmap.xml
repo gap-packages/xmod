@@ -11,13 +11,13 @@
 
 <Chapter Label="chap-obj3">
 
-<Heading>3d-groups and 3d-mappings : crossed squares and cat2-groups</Heading>
+<Heading>3d-groups and 3d-mappings : crossed squares and cat<M>^2</M>-groups</Heading>
 
 <Index>3d-group</Index>
 <Index>3d-domain</Index>
 The term <E>3d-group</E> refers to a set of equivalent categories 
 of which the most common are the categories of 
-<E>crossed squares</E> and <E>cat2-groups</E>. 
+<E>crossed squares</E> and <E>cat<M>^2</M>-groups</E>. 
 
 <Section Label="sect-xsq-definition">
 <Heading>Definition of a crossed square 
@@ -59,6 +59,20 @@ via <M>\dot{\partial}_2\;</M>;
 a function <M>\boxtimes : S_{\{1\}} \times S_{\{2\}} \to S_{[2]}</M>.
 </Item>
 </List>
+
+Here is a picture of the situation:
+<Display>
+<![CDATA[
+\vcenter{\xymatrix{
+       &   &  S_{[2]} \ar[rr]^{\ddot{\partial}_1} \ar[dd]_{\ddot{\partial}_2} 
+              && S_{\{2\}} \ar[dd]^{\dot{\partial}_2} &   \\
+\mathcal{S}  & = &  &&  \\
+       &   &  S_{\{1\}} \ar[rr]_{\dot{\partial}_1}  
+              && S_{\emptyset} 
+}} 
+}}
+]]></Display>
+
 The following axioms must be satisfied for all 
 <M>l \in S_{[2]},\; m,m_1,m_2 \in S_{\{1\}},\; 
 n,n_1,n_2 \in S_{\{2\}},\; p \in S_{\emptyset}</M>:
@@ -164,7 +178,7 @@ The following axioms must be satisfied (long list to be added).
 
 Analogously to the data structure used for crossed modules, 
 crossed squares are implemented as <C>3d-groups</C>. 
-When times allows, cat2-groups will also be implemented, 
+When times allows, cat<M>^2</M>-groups will also be implemented, 
 with conversion between the two types of structure.
 
 Some standard constructions of crossed squares are listed below. 
@@ -320,7 +334,7 @@ gap> IdGroup( CQXn7 );
 <ManSection>
    <Prop Name="IsCrossedSquare"
          Arg="obj" />
-<!--   <Prop Name="IsCat2"   -->
+<!--   <Prop Name="Iscat<M>^2</M>"   -->
 <!--         Arg="obj" />    -->
    <Prop Name="Is3dObject"
          Arg="obj" />
@@ -423,11 +437,11 @@ These functions return <C>fail</C> when invalid data is supplied.
 <ManSection>
    <Prop Name="IsCrossedSquareMorphism"
          Arg="map" />
-<!--   <Prop Name="IsCat2Morphism"    -->
+<!--   <Prop Name="Iscat<M>^2</M>Morphism"    -->
 <!--         Arg="map" />             -->
    <Prop Name="IsPreCrossedSquareMorphism"
          Arg="map" />
-<!--   <Prop Name="IsPreCat2Morphism" -->
+<!--   <Prop Name="IsPrecat<M>^2</M>Morphism" -->
 <!--         Arg="map" />             -->
    <Prop Name="IsBijective"
          Arg="mor" />
@@ -439,11 +453,11 @@ These functions return <C>fail</C> when invalid data is supplied.
 A morphism <C>mor</C> between two pre-crossed squares 
 <M>\mathcal{S}_{1}</M> and  <M>\mathcal{S}_{2}</M> 
 consists of four crossed module morphisms  
-<C>Up2DimensionalMorphism( mor )</C>, 
+<C>Up2DimensionalMorphism(mor)</C>, 
 mapping the <C>Up2DimensionalGroup</C> of <M>\mathcal{S}_1</M> 
 to that of <M>\mathcal{S}_2</M>, 
-<C>Left2DimensionalMorphism( mor )</C>, <C>Down2DimensionalMorphism( mor )</C> 
-and <C>Right2DimensionalMorphism( mor )</C>. 
+<C>Left2DimensionalMorphism(mor)</C>, <C>Down2DimensionalMorphism(mor)</C> 
+and <C>Right2DimensionalMorphism(mor)</C>. 
 These four morphisms are required to commute with the four boundary maps
 and to preserve the rest of the structure. 
 The current version of <C>IsCrossedSquareMorphism</C> does not perform all the 
@@ -490,7 +504,7 @@ Morphism of crossed squares :-
 gap> KnownPropertiesOfObject( autoconj );
 [ "CanEasilyCompareElements", "CanEasilySortElements", "IsTotal", 
   "IsSingleValued", "IsInjective", "IsSurjective", 
-  "IsPreCrossedSquareMorphism", "IsPreCat2Morphism", 
+  "IsPreCrossedSquareMorphism", "IsPrecat<M>^2</M>Morphism", 
   "IsCrossedSquareMorphism", "IsEndomorphism3dDomain", 
   "IsAutomorphism3dDomain" ]
 gap> IsAutomorphism3dDomain( autoconj );
@@ -500,40 +514,233 @@ true
 
 </Section>
 
-<Section Label="sect-catn-definition">
-<Heading>Definition and constructions for catn-groups and their morphisms 
+<Section Label="sect-cat2-definitions">
+<Heading>Definitions and constructions for cat<M>^2</M>-groups and their morphisms 
 </Heading>
 
 <Index>cat2-group</Index>
-<Index>catn-group</Index>
-We are interested here in cat2-groups, but it is convenient to give 
-the more general definition. 
+
+We shall give three definitions of cat<M>^2</M>-groups 
+and show that they are equivalent. 
+When we come to define cat<M>^n</M>-groups we shall give a similar set of 
+three definitions. 
 <P/>
-A <E>catn-group</E> is a group <M>G</M> together with <M>2n</M> 
-homomorphisms <M>t_i,\ h_i : G \to R,\; 1 \leqslant i \leqslant n</M>, 
-and an embedding <M>e : R \to G</M>, 
-such that for all <M>1 \leqslant i,j \leqslant n</M>, 
+Firstly, we take the definition of a cat<M>^2</M>-group from 
+Section 5 of Brown and Loday <Cite Key="brow:lod"/>, suitably modified.
+A cat<M>^2</M>-group  <M>\mathcal{C} = (C_{[2]},C_{\{2\}},C_{\{1\}},C_{\emptyset})</M>  
+comprises four groups (one for each of the subsets of <M>[2]</M>) 
+and <M>15</M> homomorphisms, as shown in the following diagram:
 <Display>
-{\bf Cat\ 1}  :  ~t_i \circ e ~=~ h_i \circ e = {\rm id}_R,
-\qquad 
-{\bf Cat\ 2}  :  ~[\ \ker t_i,\ \ker h_i\ ] ~=~ \{ 1_G \}, 
+<![CDATA[
+\vcenter{\xymatrix{
+ & C_{[2]} \ar[ddd] <-1.2ex>  \ar[ddd] <-2.0ex>_{\ddot{t}_2,\ddot{h}_2}
+     \ar[rrr] <+1.2ex>  \ar[rrr] <+2.0ex>^{\ddot{t}_1,\ddot{h}_1}
+     \ar[dddrrr] <-0.2ex>  \ar[dddrrr] <-1.0ex>_(0.55){t_{[2]},h_{[2]}}
+    &&&  C_{\{2\}}  \ar[lll]^{\ddot{e}_1}
+            \ar[ddd]<+1.2ex>  \ar[ddd] <+2.0ex>^{\dot{t}_2,\dot{h}_2}  \\
+\mathcal{C} \quad = \quad
+ &  &&&   \\
+ &  &&&   \\
+ & C_{\{1\}} \ar[uuu]_{\ddot{e}_2}
+     \ar[rrr] <-1.2ex>  \ar[rrr] <-2.0ex>_{\dot{t}_1,\dot{h}_1} 
+    &&&  C_{\emptyset} \ar[uuu]^{\dot{e}_2}   \ar[lll]_{\dot{e}_1} 
+           \ar[uuulll] <-1.0ex>_{e_{[2]}}
+ \\
+}}
+]]></Display>
+The following axioms are satisfied by these homomorphisms: 
+<List>
+<Item>
+the four sides of the square are cat<M>^1</M>-groups, denoted 
+<M>\ddot{\mathcal{C}}_1, \ddot{\mathcal{C}}_2, 
+\dot{\mathcal{C}}_1, \dot{\mathcal{C}}_2</M>,
+</Item>
+<Item>
+<M>
+ \dot{t}_1\circ\ddot{h}_2 = \dot{h}_2\circ\ddot{t}_1, ~
+ \dot{t}_2\circ\ddot{h}_1 = \dot{h}_1\circ\ddot{t}_2, ~
+ \dot{e}_1\circ\dot{t}_2 = \ddot{t}_2\circ\ddot{e}_1, ~
+ \dot{e}_2\circ\dot{t}_1 = \ddot{t}_1\circ\ddot{e}_2, ~
+ \dot{e}_1\circ\dot{h}_2 = \ddot{h}_2\circ\ddot{e}_1, ~
+ \dot{e}_2\circ\dot{h}_1 = \ddot{h}_1\circ\ddot{e}_2,
+ </M>
+</Item>
+<Item>
+<M>
+ \dot{t}_1\circ\ddot{t}_2 = \dot{t}_2\circ\ddot{t}_1 = t_{[2]}, ~ 
+ \dot{h}_1\circ\ddot{h}_2 = \dot{h}_2\circ\ddot{h}_1 = h_{[2]}, ~
+ \dot{e}_1\circ\ddot{e}_2 = \dot{e}_2\circ\ddot{e}_1 = e_{[2]},
+</M>
+making the diagonal a cat<M>^1</M>-group
+<M>(e_{[2]}; t_{[2]}, h_{[2]} : C_{[2]} \to C_{\emptyset})</M>.
+</Item>
+</List>
+It follows from these identities that 
+<M>(\ddot{t}_1,\dot{t}_1),\,(\ddot{h}_1,\dot{h}_1)</M> 
+and <M>(\ddot{e}_1,\dot{e}_1)</M> 
+are morphisms of cat<M>^1</M>-groups.
+<P/>
+Secondly, we give the simplest of the three definitions, 
+adapted from Ellis-Steiner <Cite Key="ell:st"/>. 
+A cat<M>^2</M>-group  <M>\mathcal{C}</M> consists of groups <M>G, R_1,R_2</M> 
+and six homomorphisms 
+<M>t_1,h_1 : G \to R_2,~ e_1 : R_2 \to G,~
+ t_2,h_2 : G \to R_1,~ e_2 : R_1 \to G</M>,  
+satisfying the following axioms for all <M>1 \leqslant i \leqslant 2</M>,
+<List>
+<Item>
+<M>
+(t_i \circ e_i)r = r,~ (h_i \circ e_i)r = r,~ 
+\forall r \in R_{[2] \setminus \{i\}}, \quad 
+[\ker t_i, \ker h_i] = 1, 
+</M>
+</Item>
+<Item>
+<M>
+(e_1 \circ t_1) \circ (e_2 \circ t_2) = (e_2 \circ t_2) \circ (e_1 \circ t_1), \quad
+(e_1 \circ h_1) \circ (e_2 \circ h_2) = (e_2 \circ h_2) \circ (e_1 \circ h_1), 
+</M>
+</Item>
+<Item>
+<M>
+(e_1 \circ t_1) \circ (e_2 \circ h_2) = (e_2 \circ h_2) \circ (e_1 \circ t_1), \quad 
+(e_2 \circ t_2) \circ (e_1 \circ h_1) = (e_1 \circ h_1) \circ (e_2 \circ t_2). 
+</M>
+</Item>
+</List>
+<P/>
+Our third definition defines a cat<M>^2</M>-groups as a 
+"cat<M>^1</M>-group of cat<M>^1</M>-groups". 
+A cat<M>^2</M>-group <M>\mathcal{C}</M> consists of two cat<M>^1</M>-groups 
+<M>\mathcal{C}_1 = (e_1;t_1,h_1 : G_1 \to R_1)</M> and 
+<M>\mathcal{C}_2 = (e_2;t_2,h_2 : G_2 \to R_2)</M> and cat<M>^1</M>-morphisms
+<M>t = (\ddot{t},\dot{t}),\; h = (\ddot{h},\dot{h}) : 
+\mathcal{C}_1 \to \mathcal{C}_2,\; 
+e = (\ddot{e},\dot{e}) : \mathcal{C}_2 \to \mathcal{C}_1</M>,  
+subject to the following conditions: 
+<Display>
+(t \circ e) ~\mbox{and}~ (h \circ e)
+~\mbox{are the identity mapping on}~ \mathcal{C}_2, 
+\qquad  
+[\ker t, \ker h] = \{ 1_{\mathcal{C}_1} \},
 </Display>
+where <M>\ker t = (\ker \ddot{t},\ \ker \dot{t})</M>, 
+and similarly for <M>\ker h</M>. 
+
+<ManSection Label="mansect-cat2">
+   <Func Name="Cat2Group"
+         Arg="args" />
+   <Func Name="PreCat2Group"
+         Arg="args" />
+   <Oper Name="PreCat2GroupByPreCat1Groups"
+         Arg="L" />
+<Description>
+The global functions <C>Cat1Group</C> and <C>PreCat1Group</C> 
+are normally called with a single argument, a list of cat1-groups. 
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+]]>
+</Example>
+
+</Section>
+
+<Section Label="sect-catn-definitions">
+<Heading>
+Definition and constructions for cat<M>^n</M>-groups and their morphisms 
+</Heading>
+
+<Index>catn-group</Index>
+In this chapter we are interested in cat<M>^2</M>-groups, 
+but it is convenient in this section to give the more general definition. 
+There are three equivalent description of a cat<M>^n</M>-group. 
+<P/>
+A <E>cat<M>^n</M>-group</E> consists of the following. 
+<List>
+<Item>
+<M>2^n</M> groups  <M>G_A</M>, one for each subset <M>A</M> of <M>[n]</M>, 
+the <E>vertices</E> of an <M>n</M>-cube. 
+</Item>
+<Item>
+Group homomorphisms forming <M>n2^{n-1}</M> commuting cat<M>^1</M>-groups, 
 <Display>
-{\bf Cat\ 3}  :  ~t_i \circ e \circ t_j = t_j \circ e \circ t_i, \quad
-                  h_i \circ e \circ h_j = h_j \circ e \circ h_i, \quad
-                  t_i \circ e \circ h_j = h_j \circ e \circ t_i, \quad 
-(i \neq j). 
+\mathcal{C}_{A,i} ~=~ (e_{A,i};\; t_{A,i},\; h_{A,i} \ :\  
+G_A \to G_{A \setminus \{i\}}), 
+\quad\mbox{for all} \quad A \subseteq [n],~ i \in A,  
 </Display>
-It follows that 
+the <E>edges</E> of the cube. 
+</Item>
+<Item> 
+These cat<M>^1</M>-groups combine (in sets of <M>4</M>) 
+to form <M>n(n-1)2^{n-3}</M> cat<M>^2</M>-groups <M>\mathcal{C}_{A,\{i,j\}}</M> 
+for all <M>\{i,j\} \subseteq A \subseteq [n],~ i \neq j</M>, 
+the <E>faces</E> of the cube. 
+</Item>
+</List>
+Note that, since the <M>t_{A,i}, h_{A,i}</M> and <M>e_{A,i}</M> commute, 
+composite homomorphisms
+<M>t_{A,B}, h_{A,B} : G_A \to G_{A \setminus B}</M> and 
+<M>e_{A,B} : G_{A \setminus B} \to G_A</M> 
+are well defined for all <M>B \subseteq A \subseteq [n]</M>.  
+<P/>
+Secondly, we give the simplest of the three descriptions, 
+again adapted from Ellis-Steiner \cite{ell:st}. 
+<P/>
+A cat<M>^n</M>-group  <M>\mathcal{C}</M> consists of <M>2^n</M> groups 
+<M>G_A</M>, one for each subset  <M>A</M>  of  <M>[n]</M>, 
+and <M>3n</M> homomorphisms 
 <Display>
-t_i \circ e \circ h_i = h_i,\quad h_i \circ e \circ t_i = t_i,\quad 
-t_i \circ e \circ t_i = t_i,\quad h_i \circ e \circ h_i = h_i \quad 
-(1 \leqslant i \leqslant n). 
-</Display> 
-
-
-
-
+t_{[n],i}, h_{[n],i} : G_{[n]} \to G_{n \setminus \{i\}},~ 
+ e_{[n],i} : G_{[n] \setminus \{i\}} \to G_{[n]}, 
+</Display>
+satisfying the following axioms for all <M>1 \leqslant i \leqslant n</M>,}  
+<List>
+<Item>
+the 
+<M>\mathcal{C}_{[n],i} ~=~ (e_{[n],i};\; t_{[n],i},\; h_{[n],i} \ :\  
+G_{[n]} \to G_{[n] \setminus \{i\}})~</M>
+are <E>commuting</E> cat<M>^1</M>-groups, so that: 
+</Item>
+<Item> 
+<M>
+(e_1 \circ t_1) \circ (e_2 \circ t_2) = (e_2 \circ t_2) \circ (e_1 \circ t_1), \quad
+(e_1 \circ h_1) \circ (e_2 \circ h_2) = (e_2 \circ h_2) \circ (e_1 \circ h_1), 
+</M>
+</Item>
+<Item> 
+<M>
+(e_1 \circ t_1) \circ (e_2 \circ h_2) = (e_2 \circ h_2) \circ (e_1 \circ t_1), \quad 
+(e_2 \circ t_2) \circ (e_1 \circ h_1) = (e_1 \circ h_1) \circ (e_2 \circ t_2). 
+</M>
+</Item>
+</List>
+Our third description defines a cat<M>^n</M>-group as a 
+"cat<M>^1</M>-group of cat<M>^{(n-1)}</M>-groups". 
+<P/>
+A <E>cat<M>^n</M>-group</E> <M>\mathcal{C}</M> 
+consists of two cat<M>^{(n-1)}</M>-groups: 
+<List>
+<Item>
+<M>\mathcal{A}</M> with groups <M>G_A,\; A \subseteq [n-1]</M>, 
+and homomorphisms <M>\ddot{t}_{A,i}, \ddot{h}_{A,i}, \ddot{e}_{A,i}</M>,  
+</Item>
+<Item> 
+<M>\mathcal{B}</M> with groups <M>H_B,\; B \subseteq [n-1]</M>,
+and homomorphisms <M>\dot{t}_{B,i}, \dot{h}_{B,i}, \dot{e}_{B,i}</M>, and 
+</Item>
+<Item> 
+cat<M>^{(n-1)}</M>-morphisms <M>t,h : \mathcal{A} \to \mathcal{B}</M> 
+and <M>e : \mathcal{B} \to \mathcal{A}</M>
+subject to the following conditions: 
+<Display>
+(t \circ e) ~\mbox{and}~ (h \circ e)  
+~\mbox{are the identity mapping on}~ \mathcal{B}, \qquad
+[\ker t, \ker h] = \{ 1_{\mathcal{A}} \}.
+</Display>
+</Item>
+</List> 
 
 </Section> 
 

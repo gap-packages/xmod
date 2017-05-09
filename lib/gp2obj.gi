@@ -242,8 +242,9 @@ end );
 ##
 #M  ViewObj( <g2d> ) . . . . . . . . . . . . . . . view a 2Dimensional-domain 
 ##
-InstallMethod( ViewObj, "method for a 2d domain", true, [ Is2DimensionalDomain ], 0,
-    function( g2d )
+InstallMethod( ViewObj, "method for 2d domain", true, [ Is2DimensionalDomain ], 
+    0,
+function( g2d )
     if HasName( g2d ) then
         Print( Name( g2d ), "\n" );
     elif ( HasIsPreXModDomain( g2d ) and IsPreXModDomain( g2d ) ) then 
@@ -259,9 +260,9 @@ end );
 ##
 #M  PrintObj( <g2d> )  . . . . . . . . . . . . . . view a 2Dimensional-domain 
 ##
-InstallMethod( PrintObj, "method for a 2d-domain", true, 
-    [ Is2DimensionalDomain ], 0,
-    function( g2d )
+InstallMethod( PrintObj, "method for 2d-domain", true, [ Is2DimensionalDomain ], 
+    0,
+function( g2d )
     if HasName( g2d ) then
         Print( Name( g2d ), "\n" );
     elif ( HasIsPreXModDomain( g2d ) and IsPreXModDomain( g2d ) ) then 
@@ -552,7 +553,7 @@ end );
 ##
 InstallMethod( \=, "generic method for pre-cat1-groups",
     IsIdenticalObj, [ IsPreCat1Group, IsPreCat1Group ], 0,
-    function( C1, C2 ) 
+function( C1, C2 ) 
     return ( ( TailMap(C1) = TailMap(C2) ) and ( HeadMap(C1) = HeadMap(C2) )
              and ( RangeEmbedding(C1) = RangeEmbedding(C2) ) );
 end );
@@ -563,7 +564,7 @@ end );
 ##
 InstallMethod( PreCat1Obj, "for tail, head, embedding", true,
     [ IsGroupHomomorphism, IsGroupHomomorphism, IsGroupHomomorphism ], 0,
-    function( t, h, e )
+function( t, h, e )
 
     local  filter, fam, C1G, ok, src, rng, name;
 
@@ -620,21 +621,29 @@ end );
 ##
 InstallGlobalFunction( PreCat1Group, function( arg )
 
-    local  nargs, C1G;
+    local  nargs, usage, C1G;
 
-    nargs := Length( arg );
+    nargs := Length( arg ); 
+    usage := "standard usage: PreCat1Group( tail, head [,embed] );"; 
+    if not ForAll( arg, a -> IsGroupHomomorphism(a) ) then 
+        Error( usage ); 
+    fi; 
+    # one endomorphism 
+    if ( ( nargs=1 ) and IsEndoMapping( arg[1] ) ) then 
+        return PreCat1GroupByEndomorphisms( arg[1], arg[1] );
     # two endomorphisms
-    if ( ( nargs=2 ) and IsEndoMapping( arg[1] )
-                     and IsEndoMapping( arg[2] ) ) then
-        return PreCat1GroupByEndomorphisms( arg[1], arg[2] );
-
+    elif ( nargs=2 ) then
+        if ( IsEndoMapping( arg[1] ) and IsEndoMapping( arg[2] ) ) then
+            return PreCat1GroupByEndomorphisms( arg[1], arg[2] ); 
+        elif ( ImagesSource( arg[1] ) = Source( arg[2] ) ) then 
+            return PreCat1GroupByTailHeadEmbedding( arg[1], arg[1], arg[2] );
+        fi;
     # two homomorphisms and an embedding
-    elif ( ( nargs=3 ) and
-           ForAll( arg, a -> IsGroupHomomorphism( a ) ) ) then
+    elif ( nargs=3 ) then
         return PreCat1GroupByTailHeadEmbedding( arg[1], arg[2], arg[3] );
     fi;
-    # alternatives not allowed
-    Error( "standard usage: PreCat1Group( tail, head [,embed] );" );
+    # other alternatives not allowed
+    Error( usage );
 end );
 
 ##############################################################################
@@ -1520,7 +1529,7 @@ function( C1G )
     kerh := Kernel( h );
     kerth := CommutatorSubgroup( kert, kerh );
     if not ( Size( kerth ) = 1 ) then
-        Print("condition  [kert,kerh] = 1  is not satisfied \n");
+        Info( InfoXMod, 1, "condition  [kert,kerh] = 1  is not satisfied");
         return false;
     fi;
     if not ( ( Source( f ) = kerC ) and ( Range( f ) = Csrc ) ) then
@@ -1561,17 +1570,19 @@ InstallGlobalFunction( Cat1Group, function( arg )
         Print( "standard usage: Cat1Group( tail, head [,embed] );\n" );
         Print( "            or: Cat1Group( size, gpnum, num );\n" );
         return fail;
-    elif not IsInt( arg[1] ) then
-        if ( nargs = 2 ) then
-            C1G := PreCat1Group( arg[1], arg[2] );
-        elif ( nargs = 3 ) then
-            C1G := PreCat1Group( arg[1], arg[2], arg[3] );
+    elif not IsInt( arg[1] ) then 
+        if ( nargs = 1 ) then 
+            C1G := PreCat1Group( arg[1] ); 
+        elif ( nargs = 2 ) then 
+            C1G := PreCat1Group( arg[1], arg[2] ); 
+        elif ( nargs = 3 ) then 
+            C1G := PreCat1Group( arg[1], arg[2], arg[3] ); 
         fi;
         ok := IsCat1Group( C1G );
         if ok then
             return C1G;
         else
-            Error( "quotient by Peiffer group not yet implemented" );
+            Error( "quotient by Peiffer group is not yet implemented" );
             return fail;
         fi;
     else   ## arg[1] is an integer, so use the data in cat1data.g
@@ -1865,13 +1876,13 @@ function( et, eh )
 		return fail;
     fi;
     if not ( Source( et ) = Source( eh ) ) then
-        Print( "et and eh must have same source \n" );
-		return fail;
+        Info( InfoXMod, 2, "et and eh must have same source" );
+	return fail;
     fi;
     G := Source( et );
     if not ( Image( et ) = Image( eh ) ) then
-        Print( "et and eh must have same image \n" );
-		return fail;
+        Info( InfoXMod, 2, "et and eh must have same image" );
+	return fail;
     fi;
     R := Image( et );
     gG := GeneratorsOfGroup( G );
@@ -2090,6 +2101,34 @@ function( gen1 )
     e := GroupHomomorphismByImages( R, G, genR, genR ); 
     C := PreCat1GroupByTailHeadEmbedding( t, h, e ); 
     return C;
+end );
+
+##############################################################################
+##
+#M  AllCat1Groups . . . . . . . list of cat1-group structures on a given group
+##
+InstallMethod( AllCat1Groups, "cat1-group structures on a given group",
+    true, [ IsGroup ], 0,
+function( gp )
+
+    local  L, homs, idem, num, i, j, C, ok; 
+
+    homs := AllHomomorphisms( gp, gp );
+    idem := Filtered( homs, i -> CompositionMapping(i,i) = i );
+    num := Length( idem ); 
+    L := [ ]; 
+    for i in [1..num] do 
+        for j in [1..num] do 
+            C := PreCat1GroupByEndomorphisms( idem[i], idem[j] );
+            if not ( C = fail ) then 
+                ok := IsCat1Group( C ); 
+                if ok then 
+                    Add( L, C );  
+                fi; 
+            fi; 
+        od; 
+    od;
+    return L;
 end );
 
 #############################################################################

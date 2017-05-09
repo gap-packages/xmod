@@ -1,6 +1,6 @@
 ##############################################################################
 ##
-#W  dom2d3d.gd                 GAP4 package `XMod'               Chris Wensley
+#W  dom2dnd.gd                 GAP4 package `XMod'               Chris Wensley
 ##                                                                Alper Odabas
 #Y  Copyright (C) 2001-2017, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -222,47 +222,7 @@ DeclareOperation( "IsSub2DimensionalDomain",
 DeclareOperation( "Sub2DimensionalDomain", 
     [ Is2DimensionalDomain, IsGroup, IsGroup ] );
 
-
-#########################  3 DIMENSIONAL DOMAINS  ########################### 
-
-############################################################################# 
-## 
-#C  Is3DimensionalDomain( <obj> ) . . test if object is a 3Dimensional-domain 
-#F  Make3DimensionalDomain( <src>, <rng> ) 
-#O  TypeOf3DimensionalDomain( <m3d> ) 
-## 
-DeclareCategory( "Is3DimensionalDomain", IsHigherDimensionalDomain ); 
-DeclareGlobalFunction( "Make3DimensionalDomain" ); 
-DeclareOperation( "TypeOf3DimensionalDomain", [ IsList ] );  
-
-
-#########################  3 DIMENSIONAL MAGMAS  ############################ 
-
-############################################################################# 
-## 
-#C  Is3DimensionalMagma( <m3d> ) . . . . . .  category of 3Dimensional magmas 
-#C  Is3DimensionalMagmaWithOne( <m3d> )  . . . . . . . . . . . . . . with one
-#C  Is3DimensionalMagmaWithInverses( <m3d> ) . . . . . . . . . . and inverses
-#C  Is3DimensionalGroup( <m3d> ) 
-##
-DeclareCategory( "Is3DimensionalMagma", Is3DimensionalDomain 
-    and CategoryCollections( IsMultiplicativeElement ) ); 
-DeclareCategoryCollections( "Is3DimensionalMagma" ); 
-DeclareCategory( "Is3DimensionalMagmaWithOne", Is3DimensionalMagma 
-    and CategoryCollections( IsMultiplicativeElementWithOne ) ); 
-DeclareCategory( "Is3DimensionalMagmaWithInverses", Is3DimensionalMagmaWithOne 
-    and CategoryCollections( IsMultiplicativeElementWithInverse ) ); 
-DeclareCategory( "Is3DimensionalGroup", Is3DimensionalMagmaWithInverses 
-    and CategoryCollections( IsAssociativeElement ) ); 
-
-############################################################################# 
-##  
-#V  Family3DimensionalGroup . . . . . . . . . .family for 3Dimensional-groups
-##  
-BindGlobal( "Family3DimensionalGroup", NewFamily( "Family3DimensionalGroup", Is3DimensionalGroup, 
-               CanEasilySortElements, CanEasilySortElements ) ); 
-
 #############################################################################
 ##
-#E  dom2d3d.gd  . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+#E  dom2dnd.gd  . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
 ##  

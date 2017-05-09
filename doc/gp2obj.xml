@@ -415,6 +415,79 @@ Group([ (1,2), (3,4) ])
 <Heading>Cat1-groups and pre-cat1-groups</Heading>
 <Index>cat1-group</Index>
 
+In <Cite Key="L1" />, Loday reformulated the notion of a 
+crossed module as a cat1-group, 
+namely a group <M>G</M> with a pair of endomorphisms <M>t,h : G \to G</M>
+having  a common image <M>R</M> and satisfying certain axioms.
+We find it computationally convenient to define a cat1-group 
+<M>\mathcal{C} = (e;t,h : G \to R )</M>  as having source group  <M>G</M>,
+range group <M>R</M>,  and three homomorphisms:  two surjections  
+<M>t,h : G \to R</M>  and an embedding  <M>e : R \to G</M>  satisfying:
+<Display>
+{\bf Cat\ 1}  :  ~t \circ e ~=~ h \circ e = {\rm id}_R,
+\qquad
+{\bf Cat\ 2}  :  ~[\ker t, \ker h] ~=~ \{ 1_G \}.
+</Display>
+It follows that  
+<M>\;t \circ e \circ h = h,~ h \circ e \circ t = t,~ 
+     t \circ e \circ t = t~</M> 
+and <M>~h \circ e \circ h = h</M>.
+
+<ManSection Label="mansect-cat1">
+   <Func Name="Cat1Group"
+         Arg="args" />
+   <Func Name="PreCat1Group"
+         Arg="args" />
+   <Oper Name="PreCat1GroupByTailHeadEmbedding"
+         Arg="t h e" />
+   <Oper Name="PreCat1GroupByEndomorphisms"
+         Arg="t h" />
+<Description>
+The global functions <C>Cat1Group</C> and <C>PreCat1Group</C> 
+can be called in various ways. 
+<List>
+<Item>
+as <C>Cat1Group(t,h,e);</C> when <M>t,h,e</M> are three homomorphisms, 
+which is equivalent to <C>PreCat1GroupByTailHeadEmbedding(t,h,e);</C> 
+</Item>
+<Item>
+as <C>Cat1Group(t,h);</C> when <M>t,h</M> are two endomorphisms, 
+which is equivalent to <C>PreCat1GroupByEndomorphisms(t,h);</C> 
+</Item>
+<Item>
+as <C>Cat1Group(t);</C> when <M>t=h</M> is an endomorphism, 
+which is equivalent to <C>PreCat1GroupByEndomorphisms(t,t);</C> 
+</Item>
+<Item>
+as <C>Cat1Group(t,e);</C> when <M>t=h</M> and <M>e</M> are homomorphisms, 
+which is equivalent to <C>PreCat1GroupByTailHeadEmbedding(t,t,e);</C> 
+</Item>
+<Item>
+as <C>Cat1Group(i,j,k);</C> when <M>i,j,k</M> are integers, 
+which is equivalent to <C>Cat1Select(i,j,k);</C> 
+as described in section <Ref Sect="sect-cat1select"/>. 
+</Item>
+</List>
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> g18gens := [ (1,2,3), (4,5,6), (2,3)(5,6) ];;     
+gap> s3agens := [ (7,8,9), (8,9) ];;                
+gap> g18 := Group( g18gens );  SetName( g18, "g18" ); 
+gap> s3a := Group( s3agens );  SetName( s3a, "s3a" );
+gap> t1 := GroupHomomorphismByImages(g18,s3a,g18gens,[(7,8,9),(),(8,9)]);     
+[ (1,2,3), (4,5,6), (2,3)(5,6) ] -> [ (7,8,9), (), (8,9) ]
+gap> h1 := GroupHomomorphismByImages(g18,s3a,g18gens,[(7,8,9),(7,8,9),(8,9)]);
+[ (1,2,3), (4,5,6), (2,3)(5,6) ] -> [ (7,8,9), (7,8,9), (8,9) ]
+gap> e1 := GroupHomomorphismByImages(s3a,g18,s3agens,[(1,2,3),(2,3)(5,6)]);   
+[ (7,8,9), (8,9) ] -> [ (1,2,3), (2,3)(5,6) ]
+gap> C1 := Cat1Group( t1, h1, e1 );
+[g18=>s3a]
+]]>
+</Example>
+
 <ManSection>
    <Attr Name="Source"
          Arg="C" />
@@ -438,23 +511,6 @@ Group([ (1,2), (3,4) ])
 These are the attributes of a cat1-group <M>\mathcal{C}</M> 
 in this implementation.
 <P/>
-In <Cite Key="L1" />, Loday reformulated the notion of a 
-crossed module as a cat1-group, 
-namely a group <M>G</M> with a pair of endomorphisms <M>t,h : G \to G</M>
-having  a common image <M>R</M> and satisfying certain axioms.
-We find it convenient to define a cat1-group 
-<M>\mathcal{C} = (e;t,h : G \to R )</M>  as having source group  <M>G</M>,
-range group <M>R</M>,  and three homomorphisms:  two surjections  
-<M>t,h : G \to R</M>  and an embedding  <M>e : R \to G</M>  satisfying:
-<Display>
-{\bf Cat\ 1}  :  ~t \circ e ~=~ h \circ e = {\rm id}_R,
-\qquad
-{\bf Cat\ 2}  :  ~[\ker t, \ker h] ~=~ \{ 1_G \}.
-</Display>
-It follows that  
-<M>\;t \circ e \circ h = h,~ h \circ e \circ t = t,~ 
-     t \circ e \circ t = t,~ h \circ e \circ h = h</M>.
-<P/>
 The maps  <M>t,h</M>  are often referred to as the 
 <E>source</E> and <E>target</E>,
 but we choose to call them the
@@ -465,34 +521,51 @@ the <C>KernelEmbedding</C> is the inclusion of
 the kernel of <C>t</C> in <C>G</C>,
 and the <C>Boundary</C> is the restriction of <C>h</C> 
 to the kernel of <C>t</C>. 
-It is frequently the case that <M>t=h</M>. 
+It is frequently the case that <M>t=h</M>, 
+but not in the example <C>C18</C> above. 
 </Description>
 </ManSection>
+<Example>
+<![CDATA[
+gap> Source( C18 );
+g18
+gap> Range( C18 );
+s3a
+gap> TailMap( C18 );
+[ (1,2,3), (4,5,6), (2,3)(5,6) ] -> [ (7,8,9), (), (8,9) ]
+gap> HeadMap( C18 );
+[ (1,2,3), (4,5,6), (2,3)(5,6) ] -> [ (7,8,9), (7,8,9), (8,9) ]
+gap> RangeEmbedding( C18 );
+[ (7,8,9), (8,9) ] -> [ (1,2,3), (2,3)(5,6) ]
+gap> Kernel( C18 );
+Group([ (4,5,6) ])
+gap> KernelEmbedding( C18 );
+[ (4,5,6) ] -> [ (4,5,6) ]
+gap> Name( C18 );
+"[g18=>s3a]"
+gap> Size( C18 );
+[ 18, 6 ]
+gap> StructureDescription( C18 );
+[ "(C3 x C3) : C2", "S3" ]
+]]>
+</Example>
 
 <ManSection>
-   <Func Name="Cat1Group"
-         Arg="args" />
-   <Oper Name="PreCat1GroupByTailHeadEmbedding"
-         Arg="t h e" />
-   <Oper Name="PreCat1GroupByEndomorphisms"
-         Arg="t h" />
+   <Oper Name="DiagonalCat1Group" 
+         Arg="gen1" />
    <Oper Name="PreCat1GroupByNormalSubgroup"
          Arg="G N" />
    <Oper Name="Cat1GroupByPeifferQuotient"
          Arg="P" />
    <Attr Name="ReverseCat1Group"
          Arg="C0" />
-   <Oper Name="DiagonalCat1Group" 
-         Arg="gen1" />
 <Description>
-These are some of the constructors for pre-cat1-groups and cat1-groups. 
-<P/>
+These are some more constructors for cat1-groups. 
 The following listing shows an example of a permutation cat1-group 
 of size <M>[576,24]</M> with source group <M>S_4 \times S_4</M>, 
 range group a third <M>S_4</M>, and <M>t \neq h</M>. 
 A similar example may be reproduced using the command 
-<Code>C := DiagonalCat1Group([(1,2,3,4),(3,4)]);</Code> 
-(see section <Ref Sect="sect-mor-pre-cat1"/>). 
+<Code>C := DiagonalCat1Group([(1,2,3,4),(3,4)]);</Code>. 
 </Description>
 </ManSection>
 <P/>
@@ -509,10 +582,8 @@ gap> h := GroupHomomorphismByImages( G4, R4, G4gens,
 >            Concatenation( [ (), () ], R4gens ) );; 
 gap> e := GroupHomomorphismByImages( R4, G4, R4gens, 
 >            [ (1,2,3,4)(5,6,7,8), (3,4)(7,8) ] );; 
-gap> C4 := PreCat1GroupByTailHeadEmbedding( t, h, e ); 
-[s4s4=>s4d]
-gap> Display( C4 ); 
-
+gap> C4 := PreCat1GroupByTailHeadEmbedding( t, h, e );; 
+gap> Display(C4);
 Cat1-group [s4s4=>s4d] :- 
 : Source group s4s4 has generators:
   [ (1,2,3,4), (3,4), (5,6,7,8), (7,8) ]
@@ -530,7 +601,6 @@ Cat1-group [s4s4=>s4d] :-
   [ ( 9,10,11,12), (11,12) ]
 : kernel embedding maps generators of kernel to:
   [ (5,6,7,8), (7,8) ]
-
 ]]>
 </Example>
 
@@ -641,7 +711,8 @@ gap> StructureDescription(X2);
 </Section>
 
 
-<Section><Heading>Selection of a small cat1-group</Heading>
+<Section Label="sect-cat1select">
+<Heading>Selection of a small cat1-group</Heading>
 <Index>selection of a small cat1-group</Index>
 
 The <C>Cat1Group</C> function may also be used to select a cat1-group 
@@ -734,7 +805,7 @@ Crossed module:-
 </Example>
 
 <ManSection>
-   <Oper Name="AllCat1GroupsBasic" 
+   <Oper Name="AllCat1DataGroupsBasic" 
          Arg="gp" /> 
 <Description>
 For a group <M>G</M> of size greater than <M>70</M> which is reasonably 
@@ -758,7 +829,7 @@ gap> gp := SmallGroup( 102, 2 );
 <pc group of size 102 with 3 generators>
 gap> StructureDescription( gp ); 
 "C3 x D34"
-gap> all := AllCat1GroupsBasic( gp );
+gap> all := AllCat1DataGroupsBasic( gp );
 #I Edit last line of .../xmod/lib/nn.kk.out to end with ] ] ] ] ]
 [ [Group( [ f1, f2, f3 ] )=>Group( [ f1, <identity> of ..., <identity> of ... 
      ] )], [Group( [ f1, f2, f3 ] )=>Group( [ f1, f2, <identity> of ... ] )], 

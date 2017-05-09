@@ -11,10 +11,10 @@
 #############################################################################
 ##
 #R  IsPreCatnObj( <obj> ) 
-##  A pre-cat2-group is a square of pre-cat1 groups
+##  A pre-catn-group is an n-cube of pre-cat1 groups
 ##
 DeclareRepresentation( "IsPreCatnObj", IsHigherDimensionalGroup and IsAttributeStoringRep, 
-    [ "2DimensionalGroups", "PreCatnDimension" ] );
+    [ "GeneratingCat1Groups", "HigherDimension" ] );
 
 #############################################################################
 ##
@@ -27,13 +27,21 @@ DeclareProperty( "IsCatnGroup", IsHigherDimensionalGroup );
 #############################################################################
 ##
 #O  PreCatnObj ( <arg> ) 
-#A  2DimensionalGroups( <P> ) 
-#A  PreCatnDimension ( <P> ) 
+#A  GeneratingCat1Groups( <P> ) 
+#A  HigherDimension ( <P> ) 
+#A  VerticesOfHigherDimensonalGroup( <obj> ) 
+#A  EdgesesOfHigherDimensonalGroup( <obj> ) 
+#A  FacesOfHigherDimensonalGroup( <obj> ) 
 ##
 DeclareOperation( "PreCatnObj", [ IsList ] );
 DeclareAttribute( "GeneratingCat1Groups", IsHigherDimensionalGroup );
-DeclareAttribute( "2DimensionalGroups", IsHigherDimensionalGroup );
-DeclareAttribute( "PreCatnDimension", IsHigherDimensionalGroup );
+DeclareAttribute( "HigherDimension", IsHigherDimensionalGroup );
+DeclareAttribute( "VerticesOfHigherDimensionalGroup", 
+    IsHigherDimensionalGroup ); 
+DeclareAttribute( "EdgesOfHigherDimensionalGroup", 
+    IsHigherDimensionalGroup ); 
+DeclareAttribute( "FacesOfHigherDimensionalGroup", 
+    IsHigherDimensionalGroup ); 
 
 #############################################################################
 ##

@@ -62,7 +62,7 @@ end );
 ##
 InstallMethod( IsXMod, "generic method for pre-crossed modules",
     true, [ IsPreXModWithObjects ], 0,
-    function( XM )
+function( XM )
 
     local  gensrc, genrng, x2, y2, a2, w2, z2, bdy, act;
 
@@ -160,7 +160,7 @@ end );
 ##
 InstallMethod( \=, "generic method for two xmods over a groupoid",
     IsIdenticalObj, [ IsPreXModWithObjects, IsPreXModWithObjects ], 0,
-    function ( P, Q ) 
+function ( P, Q ) 
     return ( ( ObjectList(P) = ObjectList(Q) ) 
              and ( Boundary(P) = Boundary(Q) )
              and ( XModAction(P) = XModAction(Q) ) );

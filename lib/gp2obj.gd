@@ -273,12 +273,14 @@ DeclareAttribute( "SourceEmbedding", IsPreXMod );
 #O  PermCat1Select( <size>, <gpnum>, <num> )
 #O  Cat1GroupByPeifferQuotient( <PM> )
 #O  DiagonalCat1Group( <list> )
+#O  AllCat1Groups( <gp> )
 ##
 DeclareGlobalFunction( "Cat1Group" );
 DeclareOperation( "Cat1Select", [ IsInt, IsInt, IsInt ] );
 DeclareOperation( "PermCat1Select", [ IsInt, IsInt, IsInt ] );
 DeclareOperation( "Cat1GroupByPeifferQuotient", [ IsPreCat1Group ] );
 DeclareOperation( "DiagonalCat1Group", [ IsList ] ); 
+DeclareOperation( "AllCat1Groups", [ IsGroup ] ); 
 
 #############################################################################
 ##

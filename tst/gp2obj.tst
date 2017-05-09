@@ -219,7 +219,7 @@ gap> gp := SmallGroup( 102, 2 );
 <pc group of size 102 with 3 generators>
 gap> StructureDescription( gp ); 
 "C3 x D34"
-gap> all := AllCat1GroupsBasic( gp );
+gap> all := AllCat1DataGroupsBasic( gp );
 #I Edit last line of .../xmod/lib/nn.kk.out to end with ] ] ] ] ]
 [ [Group( [ f1, f2, f3 ] )=>Group( [ f1, <identity> of ..., <identity> of ... 
      ] )], [Group( [ f1, f2, f3 ] )=>Group( [ f1, f2, <identity> of ... ] )], 

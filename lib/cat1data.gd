@@ -10,24 +10,24 @@
 
 #############################################################################
 ##
-#F  AllCat1Groups( <arg> ) 
-#O  AllCat1GroupsBasic( <gp> ) 
+#F  AllCat1DataGroups( <arg> ) 
+#O  AllCat1DataGroupsBasic( <gp> ) 
 #O  CollectPartsAlreadyDone( <gp>, <deg>, <num>, <ranger> ) 
-#O  AllCat1GroupsInParts( <gp>, <reps>, <ids>, <range>, <cat1s> ) 
+#O  AllCat1DataGroupsInParts( <gp>, <reps>, <ids>, <range>, <cat1s> ) 
 #O  Cat1RepresentativesToFile( <gp> )
 #O  Cat1IdempotentsToFile( <gp>, <ireps>, <fst>, <lst> )
-#O  MakeAllCat1Groups( <gp> )
+#O  MakeAllCat1DataGroups( <gp> )
 ##
-DeclareGlobalFunction( "AllCat1Groups" );
-DeclareOperation( "AllCat1GroupsBasic", [ IsGroup ] ); 
+DeclareGlobalFunction( "AllCat1DataGroups" );
+DeclareOperation( "AllCat1DataGroupsBasic", [ IsGroup ] ); 
 DeclareOperation( "CollectPartsAlreadyDone", 
     [ IsGroup, IsPosInt, IsPosInt, IsList ] ); 
-DeclareOperation( "AllCat1GroupsInParts", 
+DeclareOperation( "AllCat1DataGroupsInParts", 
     [ IsGroup, IsList, IsList, IsList, IsList ] ); 
 DeclareOperation( "Cat1RepresentativesToFile", [ IsGroup ] );
 DeclareOperation( "Cat1IdempotentsToFile", 
     [ IsGroup, IsList, IsPosInt, IsPosInt ] );
-DeclareOperation( "MakeAllCat1Groups", [ IsPosInt, IsPosInt, IsPosInt ] );
+DeclareOperation( "MakeAllCat1DataGroups", [ IsPosInt, IsPosInt, IsPosInt ] );
 
 #############################################################################
 ##

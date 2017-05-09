@@ -86,7 +86,7 @@ end );
 InstallMethod( \=,
     "generic method for two upmappings",
     IsIdenticalObj, [ IsUp2DimensionalMapping, IsUp2DimensionalMapping ], 0,
-    function ( u1, u2 )
+function ( u1, u2 )
     return ( ( Object2d(u1) = Object2d(u2) )
          and ( UpGeneratorImages(u1) = UpGeneratorImages(u2) ) );
 end );
@@ -311,7 +311,7 @@ end );
 #M  ViewObj( <chi> ) . . . . . . . . . . . . . . . . . . .  view a derivation
 ##
 InstallMethod( PrintObj, "method for a derivation", true, [ IsDerivation ], 0,
-    function( chi )
+function( chi )
     local  obj, iso, R, stgR;
     obj := Object2d( chi );
     R := Range( obj );
@@ -631,7 +631,7 @@ end );
 #M  ViewObj( <xi> ) . . . . . . . . . . . . . . . . . . . . . . view a section
 ##
 InstallMethod( PrintObj, "method for a section", true, [ IsSection ], 0,
-    function( xi )
+function( xi )
     local  obj;
     obj := Object2d( xi );
     Print( "SectionByImages( ", Range( obj ), ", ", Source( obj ), ", ",

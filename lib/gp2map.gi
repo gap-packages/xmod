@@ -200,7 +200,7 @@ end );
 ##
 InstallMethod( Display, "display a morphism of pre-crossed modules", true,
     [ IsPreXModMorphism ], 0,
-    function( mor )
+function( mor )
 
     local  morsrc, morrng, gensrc, genrng, P, Q, name, ok;
 

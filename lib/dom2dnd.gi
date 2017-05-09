@@ -1,6 +1,6 @@
 ##############################################################################
 ##
-#W  dom2d3d.gi                 GAP4 package `XMod'               Chris Wensley
+#W  dom2dnd.gi                 GAP4 package `XMod'               Chris Wensley
 ##
 #Y  Copyright (C) 2001-2017, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -15,7 +15,7 @@
 InstallMethod( TypeOf2DimensionalDomain, "for list of 2Dimensional-domains", 
     true, [ IsList ], 0, 
 
-    function( pieces ) 
+function( pieces ) 
     local  type; 
     ## type:  1=gpd, 2=mon, 3=sgp, 4=mgm, 5=dom 
     type := 0; 
@@ -94,5 +94,5 @@ end );
 
 #############################################################################
 ##
-#E  dom2d3d.gi  . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+#E  dom2dnd.gi  . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
 ##  

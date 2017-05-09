@@ -9,7 +9,8 @@
 ##
 #F  Mapping2ArgumentsByFunction( <D>, <E>, <fun> ) . create map from function
 ##
-InstallGlobalFunction( Mapping2ArgumentsByFunction, function ( arg )
+InstallGlobalFunction( Mapping2ArgumentsByFunction, 
+function ( arg )
     local  map; 
 
     if not ( Length( arg ) = 3 ) then
@@ -29,7 +30,6 @@ InstallGlobalFunction( Mapping2ArgumentsByFunction, function ( arg )
                        rec( fun := arg[3] ) );
     SetIsMapping2ArgumentsByFunction( map, true );
     # deleted code re inverses
-
     return map;
 end );
 
@@ -39,9 +39,9 @@ end );
 ##
 InstallMethod( ImageElm, "for mapping by function", true, 
     [ IsMapping2ArgumentsByFunction, IsList ], 0,
-    function ( map, elm )
+function ( map, elm )
     return map!.fun( elm );
-    end );
+end );
 
 #############################################################################
 ##

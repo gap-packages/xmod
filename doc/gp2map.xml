@@ -61,8 +61,18 @@ and are morphisms for the two actions:
 \partial_2 \circ \sigma ~=~ \rho \circ \partial_1, \qquad
 \sigma(s^r) ~=~ (\sigma s)^{\rho r}.
 </Display>
-Thus  <M>\sigma</M> is the <C>SourceHom</C>  
-and  <M>\rho</M>  is the <C>RangeHom</C>.
+Here is a diagram of the situation. 
+<Display><![CDATA[
+\vcenter{\xymatrix{
+  S_1 \ar[rr]^{\sigma} \ar[dd]_{\partial_1}
+     && S_2 \ar[dd]^{\partial_2} \\
+     &&  \\
+  R_1 \ar[rr]_{\rho}
+     && R_2 
+}}
+]]></Display>
+Here  <M>\sigma</M> is the <C>SourceHom</C>  
+and  <M>\rho</M>  is the <C>RangeHom</C>  of the morphism. 
 When <M>\mathcal{X}_{1} = \mathcal{X}_{2}</M>
 and <M>\sigma, \rho</M> are automorphisms then 
 <M>(\sigma, \rho)</M>  is an automorphism of <M>\mathcal{X}_1</M>. 
@@ -231,27 +241,33 @@ e_2 \circ \rho ~=~ \gamma \circ e_1.
    <Attr Name="IdentityMapping"
          Arg="C1" />
 <Description>
-For an example we use the operation <C>DiagonalCat1</C> 
-to construct a pair of cat1-groups, then construct a suitable 
-pair of homomorphisms <M>(\gamma,\rho)</M>. 
+For an example we form a second cat1-group <Code>C2=[g18=>s3a]</Code>, 
+similar to <C>C1</C> in <Ref Sect="mansect-cat1"/>, 
+then construct an isomorphism <M>(\gamma,\rho)</M> between them. 
 </Description>
 </ManSection> 
 <P/>
 <Example>
 <![CDATA[
-gap> C4 := DiagonalCat1( [ (1,2), (2,3), (3,4) ] );; 
-gap> SetName( C4, "C4" );;
-gap> C3 := DiagonalCat1( [ (1,2), (2,3) ] );; 
-gap> SetName( C3, "C3" );;
-gap> genG := GeneratorsOfGroup( Source(C4) );; 
-gap> gamma := GroupHomomorphismByImages( Source(C4), Source(C3), genG, 
->             [ (1,2), (2,3), (1,2), (4,5), (5,6), (4,5) ] );; 
-gap> genR := GeneratorsOfGroup( Range(C4) );; 
-gap> rho := GroupHomomorphismByImages( Range(C4), Range(C3), genR, 
->             [ (1,2)(4,5), (2,3)(5,6), (1,2)(4,5) ] );; 
-gap> mor := PreCat1Morphism( C4, C3, gamma, rho );; 
-gap> Display( mor );
-
+gap> t2 := GroupHomomorphismByImages(g18,s3a,g18gens,[(),(7,8,9),(8,9)]);;     
+gap> e2 := GroupHomomorphismByImages(s3a,g18,s3agens,[(4,5,6),(2,3)(5,6)]);;   
+gap> C2 := Cat1Group( t2, h1, e2 );; 
+gap> imgamma := [ (4,5,6), (1,2,3), (2,3)(5,6) ];; 
+gap> gamma := GroupHomomorphismByImages( g18, g18, g18gens, imgamma );;
+gap> rho := IdentityMapping( s3a );; 
+gap> mor := Cat1Morphism( C1, C2, gamma, rho );;
+gap> Display( mor );;
+Morphism of cat1-groups :- 
+: Source = [g18=>s3a] with generating sets:
+  [ (1,2,3), (4,5,6), (2,3)(5,6) ]
+  [ (7,8,9), (8,9) ]
+:  Range = [g18=>s3a] with generating sets:
+  [ (1,2,3), (4,5,6), (2,3)(5,6) ]
+  [ (7,8,9), (8,9) ]
+: Source Homomorphism maps source generators to:
+  [ (4,5,6), (1,2,3), (2,3)(5,6) ]
+: Range Homomorphism maps range generators to:
+  [ (7,8,9), (8,9) ]
 ]]>
 </Example>
 
@@ -373,10 +389,9 @@ gap> sigma0 := GroupHomomorphismByImages(SX2,c2,genSX2,[(19,20),(),(),()]);
 gap> rho0 := GroupHomomorphismByImages(d12,c2,[a1,a2,a3],[(19,20),(),()]);
 [ f1, f2, f3 ] -> [ (19,20), (), () ]
 gap> mor0 := XModMorphism( X2, X0, sigma0, rho0 );;           
-gap> K0 := Kernel( mor0 );
-[Group( [ <identity> of ..., f4, f5, f7 ] )->Group( 
-[ <identity> of ..., f2, f3 ] )]
- ] )]
+gap> K0 := Kernel( mor0 );;
+gap> StructureDescription( K0 );
+[ "C12", "C6" ]
 ]]></Example>
 
 </Section>
