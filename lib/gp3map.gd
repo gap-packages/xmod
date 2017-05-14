@@ -67,7 +67,7 @@ DeclareOperation( "Cat2MorphismByCrossedSquareMorphism",
 ##
 #O  Display3dMorphism( <mor )
 ##
-DeclareOperation( "Display3dMorphism", [ IsHigherDimensionalGroupMorphism ] );
+DeclareOperation( "Display3dMorphism", [ IsHigherDimensionalMapping ] );
 
 #############################################################################
 ##

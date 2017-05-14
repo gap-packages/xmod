@@ -79,57 +79,11 @@ function( mor )
 
     local  PC, QC, upmor, dnmor, ok, d1, d2, u1, u2,G1,G2,P1,P2,p1,q1,comp1,G11,G12,P11,P12,p2,q2,comp2;
 
-    PC := Source( mor );
-    QC := Range( mor );
-    if not ( IsPreCat2Group( PC ) and IsPreCat2Group( QC ) ) then
-        return false;
+    if not ( IsPreCatnMorphism( mor ) and ( HigherDimension = 2 ) ) then
+        return true;
+	else
+		return false;
     fi;
-    
-    upmor := Up2DimensionalMorphism( mor );
-    dnmor := Down2DimensionalMorphism( mor );
-    if not ( IsPreCat1Morphism( upmor ) and IsPreCat1Morphism( dnmor ) ) then
-        return false;
-    fi;
-    
-    u1 := Up2DimensionalGroup( PC );
-    d1 := Down2DimensionalGroup( PC );
-    u2 := Up2DimensionalGroup( QC );
-    d2 := Down2DimensionalGroup( QC );
-    
-    if not (( Source( RangeHom( upmor ) ) = Range( u1 ) ) and 
-            ( Source( RangeHom( dnmor ) ) = Range( d1 ) ) and 
-            ( Range( RangeHom( upmor ) ) = Range( u2 ) ) and 
-            ( Range( RangeHom( dnmor ) ) = Range( d2 ) )) then
-        return false;
-    fi;
-	
-	# check that equality of SourceHoms
-	
-	G1 := Source(SourceHom( upmor ));
-	G2 := Range(SourceHom( upmor ));
-	P1 := Image(IsomorphismPermGroup(G1));
-	P2 := Image(IsomorphismPermGroup(G2));
-	p1 := IsomorphismGroups(P1,G1);
-	q1 := IsomorphismGroups(G2,P2);
-	comp1 := p1 * SourceHom( upmor ) * q1;
-	
-	G11 := Source(SourceHom( dnmor ));
-	G12 := Range(SourceHom( dnmor ));
-	P11 := Image(IsomorphismPermGroup(G11));
-	P12 := Image(IsomorphismPermGroup(G12));
-	p2 := IsomorphismGroups(P11,G11);
-	q2 := IsomorphismGroups(G12,P12);
-	comp2 := p2 * SourceHom( dnmor ) * q2;
-	
-    
-#  Issue => ok := ( SourceHom( upmor ) = SourceHom( dnmor ) );
-#  The cause of the wrong result : SmallGroup(n,m) <> SmallGroup(n,m) 
-	ok := ( comp1 = comp2 );
-    if not ok then
-
-        return false;
-    fi;
-    return true;
 end );
 
 #############################################################################
@@ -137,7 +91,7 @@ end );
 #M  IsCat2Morphism
 ##
 InstallMethod( IsCat2Morphism, "generic method for cat2 morphisms", true, 
-    [ IsPreCrossedSquareMorphism ], 0,
+    [ IsPreCat2Morphism ], 0,
 function( mor )
     return ( IsCat2Group( Source( mor ) ) and IsCat2Group(  Range( mor ) ) );
 end );
@@ -160,16 +114,8 @@ end );
 ##
 InstallMethod( \=,
     "generic method for two 3d-morphisms", IsIdenticalObj, 
-    [ IsHigherDimensionalMapping, IsHigherDimensionalMapping ], 0,
+    [ IsPreCrossedSquareMorphism, IsPreCrossedSquareMorphism ], 0,
 function ( mor, phi )
-        if ( IsPreCat2Morphism( mor ) and IsPreCat2Morphism( phi ) ) then
-        return ( ( Source( mor ) = Source( phi ) )
-             and ( Range( mor ) = Range( phi ) )
-             and ( Up2DimensionalMorphism( mor ) 
-                   = Up2DimensionalMorphism( phi ) )
-             and ( Down2DimensionalMorphism( mor ) 
-                   = Down2DimensionalMorphism( phi ) ) );
-    else
         return ( ( Source( mor ) = Source( phi ) )
              and ( Range( mor ) = Range( phi ) )
              and ( Up2DimensionalMorphism( mor ) 
@@ -180,7 +126,6 @@ function ( mor, phi )
                    = Right2DimensionalMorphism( phi ) )
              and ( Down2DimensionalMorphism( mor ) 
                    = Down2DimensionalMorphism( phi ) ) );
-    fi;
 end );
 
 #############################################################################
@@ -188,17 +133,12 @@ end );
 #F  MappingGeneratorsImages( <map> ) . . . . . for a HigherDimensionalMapping
 ##
 InstallOtherMethod( MappingGeneratorsImages, "for a HigherDimensionalMapping", 
-    true, [ IsHigherDimensionalMapping ], 0,
+    true, [ IsPreCrossedSquareMorphism ], 0,
 function( map )
-    if ( IsPreCat2Morphism( map ) ) then
-        return [ MappingGeneratorsImages( Up2DimensionalMorphism( map ) ), 
-                 MappingGeneratorsImages( Down2DimensionalMorphism( map ) ) ];
-    else
         return [ MappingGeneratorsImages( Up2DimensionalMorphism( map ) ), 
                  MappingGeneratorsImages( Left2DimensionalMorphism( map ) ), 
                  MappingGeneratorsImages( Right2DimensionalMorphism( map ) ), 
                  MappingGeneratorsImages( Down2DimensionalMorphism( map ) ) ];
-    fi;
 end );
 
 #############################################################################
@@ -231,7 +171,7 @@ end );
 #F  Display3dMorphism( <mor> ) . . . . . print details of a 3d-group morphism 
 ##
 InstallMethod( Display3dMorphism, "display a morphism of 3d-groups", true,
-    [ IsHigherDimensionalGroupMorphism ], 0,
+    [ IsHigherDimensionalMapping ], 0,
 function( mor )
 
     local  dim, upmor, downmor, P, Q;

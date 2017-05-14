@@ -35,14 +35,27 @@ InstallMethod( IsPreCatnGroup, "generic method for a pre-catn-group",
     true, [ IsHigherDimensionalGroup ], 0,
 function( P )
 
-    local  G, C, L, n, i, j, endt, endh, ti, tj, hi, hj;
+    local  G, C, L, n, i, j, endt, endh, ti, tj, hi, hj, PL;
 
     if not ( IsPreCatnObj ( P )  ) then
         return false;
     fi;
+	
     
     L := GeneratingCat1Groups( P );
     n := HigherDimension( P );
+	
+	PL := [];
+        for i in [1..n] do 
+            if not ( IsPerm2DimensionalGroup( L[i] ) ) then
+                C := Image(IsomorphismPermObject( L[i] ) );
+            else
+                C := L[i];
+            fi;
+            Add(PL,C,i);
+        od;
+	L := PL;
+	
     G := Source( L[1] );
         if not ForAll( L, C -> Source(C) = G ) then
         Info( InfoXMod, 2, 
@@ -126,9 +139,9 @@ function( L )
         GeneratingCat1Groups, L, 
         HigherDimension, n, 
         IsHigherDimensionalGroup, true );
-    if not IsPreCatnGroup( PC ) then
-        Info( InfoXMod, 1, "Warning: not a pre-catn-group" );
-    fi;
+#    if not IsPreCatnGroup( PC ) then
+#        Info( InfoXMod, 1, "Warning: not a pre-catn-group" );
+#    fi;
     return PC;
 end );
 

@@ -18,7 +18,7 @@ InstallMethod( MakeHigherDimensionalGroupMorphism,
 function( src, rng, mors )
 
     local  filter, fam, mor, dim, n, i;
-    
+	
     dim := HigherDimension( src );
     if ( dim <> HigherDimension( rng ) ) then 
         Print( "Source and Range must have the same dimension\n" );
@@ -30,7 +30,7 @@ function( src, rng, mors )
             Print( "third argument should have length ", dim, "\n" );
             return fail;
         fi; 
-    else  ## morphism of (pre)crossed squares 
+    elif ( HasIsPreCrossedSquare(src) and IsPreCrossedSquare(src) ) then  ## morphism of (pre)crossed squares 
         if ( dim  <> n-1 ) then
             Print( "third argument should have length ", dim+1, "\n" );
             return fail; 
@@ -91,7 +91,7 @@ function( mor )
             Print( x, "a : ", Source(rnghoms[x]), " <> ", rangePC[x], "\n" );  
             return false;
         fi;    
-Print("here\n");
+#Print("here\n");
         if ( Range( rnghoms[x] ) <> rangeQC[x] ) then 
             Print( x, "b : ", Source(rnghoms[x]), " <> ", rangePC[x], "\n" );  
             return false;
@@ -215,14 +215,14 @@ function( mor )
     P := Source( mor );
     Q := Range( mor );
     n := HigherDimension( mor ); 
-    if ( n = 3 ) then 
+    if (( n = 3 ) and HasIsPreCrossedSquareMorphism( mor ) ) then 
         Display3dMorphism( mor ); 
     else 
         mors := ListOfHomomorphisms( mor );
         if ( HasIsCatnMorphism( mor ) and IsCatnMorphism( mor ) ) then
-            Print( "Morphism of cat",n,"-groups :- \n" );
+            Print( "Morphism of cat",n-1,"-groups :- \n" );
         else
-            Print( "Morphism of pre-cat",n,"-groups :- \n" );
+            Print( "Morphism of pre-cat",n-1,"-groups :- \n" );
         fi; 
         if HasName( P ) then
             Print( ":    Source = ", Name( P ), "\n" );
@@ -488,7 +488,7 @@ end );
 InstallMethod( IsAutomorphismHigherDimensionalDomain, 
     "method for a higher dimensional mapping", true, [ IsHigherDimensionalMapping ], 0,
     map -> IsEndomorphismHigherDimensionalDomain( map ) and IsBijective( map ) );
-
+	
 ##############################################################################
 ##
 #E  gpnmap.gi . . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here

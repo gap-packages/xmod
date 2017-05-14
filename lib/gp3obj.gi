@@ -236,83 +236,12 @@ function( P )
     if not ( IsPreCatnObj( P )  ) then
         return false;
     fi;
-    
-    u := Up2DimensionalGroup( P );
-    d := Down2DimensionalGroup( P );
-    if not ( IsPerm2DimensionalGroup( u ) ) then
-        u := Image(IsomorphismPermObject( u ) );
-    fi;
-    if not ( IsPerm2DimensionalGroup( d ) ) then
-        d := Image(IsomorphismPermObject( d ) );
-    fi;    
-    
-    h1 := HeadMap( u );
-    t1 := TailMap( u );
-    h2 := HeadMap( d );
-    t2 := TailMap( d );
-
-    if not ( ( Source(h1) = Source(t1) ) and ( Range(h1) = Range(t1) ) and
-             ( Source(h2) = Source(t2) ) and ( Range(h2) = Range(t2) ) ) then
-        Info( InfoXMod, 2, "Incompatible source/range" );
-        return false;
-    fi;
-    
-    if not ( ( Source(h1) = Source(h2) ) and ( Source(t1) = Source(t2) ) ) then
-        Info( InfoXMod, 2, "Incompatible source" );
-        return false;
-    fi;
-    
-    G := Source(h1);
-    gensrc := GeneratorsOfGroup(G);
-    
-    h1 := GroupHomomorphismByImagesNC(G, G, gensrc, 
-                  List(gensrc, x -> Image( h1, x ) )  );
-    t1 := GroupHomomorphismByImagesNC(G, G, gensrc, 
-                  List(gensrc, x -> Image( t1, x ) )  );
-    h2 := GroupHomomorphismByImagesNC(G, G, gensrc, 
-                  List(gensrc, x -> Image( h2, x ) )  );
-    t2 := GroupHomomorphismByImagesNC(G, G, gensrc, 
-                  List(gensrc, x -> Image( t2, x ) )  );
-    
-     h1h2 := h1 * h2;
-     h2h1 := h2 * h1;
-     t1t2 := t1 * t2;
-     t2t1 := t2 * t1;
-     h1t2 := h1 * t2;
-     t2h1 := t2 * h1;
-     h2t1 := h2 * t1;
-     t1h2 := t1 * h2;
-        
-    # check the condition 1 
-    if not ( h1h2 = h2h1 ) then
-        Info( InfoXMod, 2, "Condition 1 is not provided" );
-    #    Print("Condition 1 is not provided \n");
-        return false;
-    fi;
-    
-    
-    # check the condition 2
-    if not ( t1t2 = t2t1 ) then
-        Info( InfoXMod, 2, "Condition 2 is not provided" );
-    #    Print("Condition 2 is not provided \n");
-        return false;
-    fi;
-    
-    # check the condition 3
-    if not ( h1t2 = t2h1 ) then
-        Info( InfoXMod, 2, "Condition 3 is not provided" );
-    #    Print("Condition 3 is not provided \n");
-        return false;
-    fi;
-    
-    # check the condition 4
-    if not ( h2t1 = t1h2 ) then
-        Info( InfoXMod, 2, "Condition 4 is not provided" );
-    #    Print("Condition 4 is not provided \n");
-        return false;
-    fi;     
-    
+	
+	if ( IsPreCatnGroup( P ) and ( HigherDimension( P ) = 2 )  ) then
         return true;
+	else 
+		return false;
+    fi;
 end );
 
 #############################################################################
@@ -329,17 +258,14 @@ function( P )
         Info( InfoXMod, 2, "pre-cat2-group is not provided" );
         return false;
     fi;
-    u := Up2DimensionalGroup( P );
-    d := Down2DimensionalGroup( P );
-    
-    if not ( ( IsCat1Group( u ) ) and ( IsCat1Group( d ) ) )  then
-        Info( InfoXMod, 2, 
-            "Up2DimensionalGroup, Down2DimensionalGroup must be Cat1Groups" );
-        return false;
+	if ( IsCatnGroup( P ) ) then
+        return true;
+	else 
+		return false;
     fi;
-    return true;
 end );
 
+#############################################################################
 ##
 #F  Cat2Group( <size>, <gpnum>, <num> )     cat2-group from data in CAT2_LIST
 #F  Cat2Group( C1G1, C1G2 )                 cat2-group from two cat1-groups
@@ -355,7 +281,7 @@ InstallGlobalFunction( Cat2Group, function( arg )
         return fail;
     elif not IsInt( arg[1] ) then
         if ( nargs = 2 ) then
-            C2G := PreCatnObj( arg[1], arg[2] );
+            C2G := PreCatnObj( [ arg[1], arg[2] ] );
         fi;
         ok := IsCat2Group( C2G );
         if ok then
@@ -365,7 +291,6 @@ InstallGlobalFunction( Cat2Group, function( arg )
         fi;
     else   
         Print( "Cat2Select is not yet implemented\n" );
-        # return Cat2Select( arg[1], arg[2], arg[3] );
     fi;
 end );
 
@@ -522,20 +447,13 @@ end );
 ##
 InstallMethod( \=,
     "generic method for two 3d-domain",
-    IsIdenticalObj, [ IsHigherDimensionalGroup, IsHigherDimensionalGroup ], 0,
+    IsIdenticalObj, [ IsPreCrossedSquare, IsPreCrossedSquare ], 0,
 function ( dom1, dom2 )
-        if ( IsPreCat2Group( dom1 ) and IsPreCat2Group( dom2 ) ) then
-        return( 
-            ( Up2DimensionalGroup( dom1 ) = Up2DimensionalGroup( dom2 ) )
-        and ( Down2DimensionalGroup( dom1 ) = Down2DimensionalGroup( dom2 ) ) 
-        );
-    else
         return( 
             ( Up2DimensionalGroup( dom1 ) = Up2DimensionalGroup( dom2 ) )
         and ( Down2DimensionalGroup( dom1 ) = Down2DimensionalGroup( dom2 ) ) 
         and ( Right2DimensionalGroup( dom1 ) = Right2DimensionalGroup( dom2 ) ) 
         and ( Left2DimensionalGroup( dom1 ) = Left2DimensionalGroup( dom2 ) ) );
-    fi;
 end );
 
 #############################################################################
@@ -544,15 +462,15 @@ end );
 #M  ViewObj( <g2d> ) . . . . . . . . . . . . . . . view a 3dimensional group 
 ##
 InstallMethod( PrintObj, "method for a 3d-group", true, 
-    [ IsHigherDimensionalGroup ], 0,
+    [ IsPreCrossedSquare ], 0,
 function( g3d )
 
     local  L, M, N, P, lenL, lenM, lenN, lenP, len1, len2, j, q1, q2, 
-           ispsq, arrow, ok;
+           ispsq, arrow, ok, n, i;
 
     if HasName( g3d ) then
         Print( Name( g3d ), "\n" );
-    else 
+	else
         if ( HasIsPreCrossedSquare( g3d ) and IsPreCrossedSquare( g3d ) ) then 
             ispsq := true; 
             arrow := " -> "; 
@@ -599,25 +517,17 @@ function( g3d )
                 else 
                     Print( "pre-crossed square with:\n" ); 
                 fi; 
+			fi;
             Print( "      up = ",    Up2DimensionalGroup( g3d ), "\n" );
             Print( "    left = ",  Left2DimensionalGroup( g3d ), "\n" );
             Print( "    down = ",  Down2DimensionalGroup( g3d ), "\n" );
             Print( "   right = ", Right2DimensionalGroup( g3d ), "\n" );
-            else 
-               if ( HasIsCat2Group( g3d ) and IsCat2Group( g3d ) ) then  
-                   Print( "cat2-group with:\n" ); 
-               else 
-                   Print( "(pre-)cat2-group with:\n" ); 
-               fi; 
-            Print( "      up = ",    Up2DimensionalGroup( g3d ), "\n" );
-            Print( "    down = ",  Down2DimensionalGroup( g3d ), "\n" );
-            fi; 
         fi;
     fi;
 end );
 
 InstallMethod( ViewObj, "method for a 3d-group", true, 
-    [ IsHigherDimensionalGroup ], 0,
+    [ IsPreCrossedSquare ], 0,
     PrintObj ); 
 
 #############################################################################
@@ -625,11 +535,11 @@ InstallMethod( ViewObj, "method for a 3d-group", true,
 #M Display( <g3d> . . . . . . . . . . . . . . . . . . . . display a 3d-group 
 ##
 InstallMethod( Display, "method for a 3d-group", true, 
-    [ IsHigherDimensionalGroup ], 0,
+    [ IsPreCrossedSquare ], 0,
 function( g3d )
 
     local  L, M, N, P, lenL, lenM, lenN, lenP, len1, len2, j, q1, q2, 
-           ispsq, arrow, ok;
+           ispsq, arrow, ok, n, i;
 
     if ( HasIsPreCrossedSquare( g3d ) and IsPreCrossedSquare( g3d ) ) then 
         ispsq := true; 
@@ -677,12 +587,7 @@ function( g3d )
         Print( "    left = ",  Left2DimensionalGroup( g3d ), "\n" );
         Print( "    down = ",  Down2DimensionalGroup( g3d ), "\n" );
         Print( "   right = ", Right2DimensionalGroup( g3d ), "\n" );
-        else 
-        Print( "(pre-)cat2-group with:\n" ); 
-        Print( "      up = ",    Up2DimensionalGroup( g3d ), "\n" );
-        Print( "    down = ",  Down2DimensionalGroup( g3d ), "\n" );
         fi; 
-
     fi; 
 end ); 
 
