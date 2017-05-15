@@ -91,7 +91,6 @@ function( mor )
             Print( x, "a : ", Source(rnghoms[x]), " <> ", rangePC[x], "\n" );  
             return false;
         fi;    
-#Print("here\n");
         if ( Range( rnghoms[x] ) <> rangeQC[x] ) then 
             Print( x, "b : ", Source(rnghoms[x]), " <> ", rangePC[x], "\n" );  
             return false;
@@ -225,20 +224,21 @@ function( mor )
             Print( "Morphism of pre-cat",n-1,"-groups :- \n" );
         fi; 
         if HasName( P ) then
-            Print( ":    Source = ", Name( P ), "\n" );
+            Print( ": Source = ", Name( P ), "\n" );
         else
-            Print( ":    Source = \n", P, "\n" );
+            Print( ": Source has ", P, "\n" );
         fi;
         if HasName( Q ) then
-            Print( ":     Range = ", Name( Q ), "\n" );
+            Print( ": Range = ", Name( Q ), "\n" );
         else
-            Print( ":     Range = \n", Q, "\n" );
+            Print( ": Range has ", Q, "\n" );
         fi;
         if HasOrder( mor ) then
-            Print( ":     order = ", Order( mor ), "\n" );
-        fi;
+            Print( ": order = ", Order( mor ), "\n" );
+        fi; 
+        Print( ": MappingGeneratorsImages for the source homomorphisms:\n" );
         for i in [1..Length(mors)] do
-            Print( MappingGeneratorsImages(SourceHom(mors[i])),"\n");
+            Print( i, " : ", MappingGeneratorsImages(SourceHom(mors[i])),"\n");
         od;
     fi;
 end ); 

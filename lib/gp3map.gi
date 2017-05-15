@@ -180,7 +180,7 @@ function( mor )
     Q := Range( mor );
     dim := HigherDimension( P ); 
     if not ( dim = 3 ) then 
-        Error( "expecting a 3-din=mensional group morphism\n" ); 
+        Error( "expecting a 3-dimensional group morphism\n" ); 
     fi;
     upmor := Up2DimensionalMorphism( mor );
     downmor := Down2DimensionalMorphism( mor );
@@ -200,14 +200,14 @@ function( mor )
         fi; 
     fi; 
     if HasName( P ) then
-        Print( ":    Source = ", Name( P ), "\n" );
+        Print( ": Source = ", Name( P ), "\n" );
     else
-        Print( ":    Source = \n", P, "\n" );
+        Print( ": Source has ", P, "\n" );
     fi;
     if HasName( Q ) then
-        Print( ":     Range = ", Name( Q ), "\n" );
+        Print( ": Range = ", Name( Q ), "\n" );
     else
-        Print( ":     Range = \n", Q, "\n" );
+        Print( ": Range has ", Q, "\n" );
     fi;
     if HasOrder( mor ) then
         Print( ":     order = ", Order( mor ), "\n" );

@@ -154,22 +154,21 @@ gap> idC233 := IdentityMapping( C233 );
  >
  
 gap> Display( idC233 );
-Morphism of pre-cat2-groups :-
-:    Source =
-generating (pre-)cat1-groups:
+Morphism of pre-cat2-groups :- 
+: Source has generating (pre-)cat1-groups:
 1 : [Group( [ f1, f2 ] )=>Group( [ f1, <identity> of ... ] )]
 2 : [Group( [ f1, f2 ] )=>Group( [ f1, f2 ] )]
 3 : [Group( [ f1, f2 ] )=>Group( [ f1, f2 ] )]
 
-:     Range =
-generating (pre-)cat1-groups:
+: Range has generating (pre-)cat1-groups:
 1 : [Group( [ f1, f2 ] )=>Group( [ f1, <identity> of ... ] )]
 2 : [Group( [ f1, f2 ] )=>Group( [ f1, f2 ] )]
 3 : [Group( [ f1, f2 ] )=>Group( [ f1, f2 ] )]
 
-[ [ f1, f2 ], [ f1, f2 ] ]
-[ [ f1, f2 ], [ f1, f2 ] ]
-[ [ f1, f2 ], [ f1, f2 ] ]
+: MappingGeneratorsImages for the source homomorphisms:
+1 : [ [ f1, f2 ], [ f1, f2 ] ]
+2 : [ [ f1, f2 ], [ f1, f2 ] ]
+3 : [ [ f1, f2 ], [ f1, f2 ] ]
 
 gap> IsBijective( idC233 );
 true

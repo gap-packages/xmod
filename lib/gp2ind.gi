@@ -90,8 +90,7 @@ function( X1, X2 )
     caut := Group( imcact );
     cact := GroupHomomorphismByImages( R, caut, genR, imcact ); 
     prexmod := PreXModByBoundaryAndAction( cbdy, cact ); 
-    Info( InfoXMod, 1, "prexmod is ", 
-        StructureDescription( prexmod:nice ), ", ", IdGroup( prexmod ) ); 
+    Info( InfoXMod, 1, "prexmod is ", IdGroup( prexmod ) ); 
     emor1 := Make2DimensionalGroupMorphism( [ X1, prexmod, emb1, idR ] ); 
     ok := IsPreXModMorphism( emor1 ); 
     emor2 := Make2DimensionalGroupMorphism( [ X2, prexmod, emb2, idR ] ); 
