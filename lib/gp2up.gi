@@ -307,9 +307,22 @@ end );
 
 #############################################################################
 ##
-#M  PrintObj( <chi> ) . . . . . . . . . . . . . . . . . .  print a derivation
-#M  ViewObj( <chi> ) . . . . . . . . . . . . . . . . . . .  view a derivation
+#M  String, ViewString, PrintString, ViewObj, PrintObj . . . for a derivation  
 ##
+InstallMethod( String, "for a derivation", true, [ IsDerivation ], 0, 
+function( chi ) 
+    local  obj;
+    obj := Object2d( chi );
+    return( STRINGIFY( "derivation by images: ", String( Range(obj) ), 
+                       " -> ", String( Source(obj) ) ) ); 
+end );
+
+InstallMethod( ViewString, "for a derivation", true, [ IsDerivation ], 
+    0, String ); 
+
+InstallMethod( PrintString, "for a derivation", true, [ IsDerivation ], 
+    0, String ); 
+
 InstallMethod( PrintObj, "method for a derivation", true, [ IsDerivation ], 0,
 function( chi )
     local  obj, iso, R, stgR;
@@ -625,11 +638,20 @@ function( C, hom )
     return xi;
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  PrintObj( <xi> ) . . . . . . . . . . . . . . . . . . . . . print a section
-#M  ViewObj( <xi> ) . . . . . . . . . . . . . . . . . . . . . . view a section
+#M  String, ViewString, PrintString, ViewObj, PrintObj . . . . for a section 
 ##
+InstallMethod( String, "for a section", true, [ IsSection ], 0, 
+function( g2d ) 
+    return( STRINGIFY( "[", String( Source(g2d) ), " -> ", 
+                            String( Range(g2d) ), "]" ) ); 
+end );
+
+InstallMethod( ViewString, "for a section", true, [ IsSection ], 0, String ); 
+
+InstallMethod( PrintString, "for a section", true, [ IsSection ], 0, String ); 
+
 InstallMethod( PrintObj, "method for a section", true, [ IsSection ], 0,
 function( xi )
     local  obj;

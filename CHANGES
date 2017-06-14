@@ -2,6 +2,7 @@
 
 Problems and ToDos: 
 
+ - (14/06/17) Need String, View, Print for 3d- and nd-groups 
  - (28/04/17) implement inclusion of the kernel of an xmod-morphism as xsq 
  - (25/04/17) examples/gpd2obj.g needs more material 
  - (19/08/16) error report from Tedar Tegstrom: he discovered that 
@@ -24,8 +25,9 @@ Problems and ToDos:
               (construction worked OK with isomorphic perm groups). 
 
 #############################################################################
-2.59 -> 2.61 (09/05/2017) 
+2.59 -> 2.61 (14/06/2017) 
 
+ - (14/06/17) added methods for String, ViewString, PrintString 
  - (09/05/17) dom2d3d.gd{i} renamed dom2dnd.gd{i}
               hdim-morphisms now expect [ src, rng, list of maps ] 
               PreCatn(Mapping)Dimension now HigherDimension 

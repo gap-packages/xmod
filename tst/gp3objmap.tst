@@ -12,7 +12,7 @@ gap> SetInfoLevel( InfoXMod, 0 );;
 
 ## Chapter 8
 
-## Section 8.1.1
+## Section 8.2.1
 gap> d20 := DihedralGroup( IsPermGroup, 20 );;
 gap> gend20 := GeneratorsOfGroup( d20 ); 
 [ (1,2,3,4,5,6,7,8,9,10), (2,10)(3,9)(4,8)(5,7) ]
@@ -60,7 +60,7 @@ crossed square with:
 gap> IdGroup( CQXn7 );
 [ [ [ 12, 2 ], [ 3, 1 ] ], [ [ 24, 5 ], [ 6, 1 ] ] ]
 
-## Section 8.1.3
+## Section 8.2.4
 gap> Up2DimensionalGroup( XSconj );
 [c5d->d10b]
 gap> Right2DimensionalGroup( XSact );
@@ -72,7 +72,7 @@ gap> diag := DiagonalAction( XSact );
 [ (1,3,5,2,4)(6,10,14,8,12)(7,11,15,9,13), (1,2,5,4)(6,8,14,12)(7,11,13,9) 
  ] -> [ ^(1,3,5,7,9)(2,4,6,8,10), ^(1,2,5,4)(3,8)(6,7,10,9) ]
 
-## Section 8.2.2
+## Section 8.3.2
 gap> ad20 := GroupHomomorphismByImages( d20, d20, [p1,p2], [p1,p2^p1] );;
 gap> ad10a := GroupHomomorphismByImages( d10a, d10a, [p1^2,p2], [p1^2,p2^p1] );;
 gap> ad10b := GroupHomomorphismByImages( d10b, d10b, [p1^2,p12], [p1^2,p12^p1] );;

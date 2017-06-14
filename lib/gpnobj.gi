@@ -10,8 +10,14 @@
 
 #############################################################################
 ##
-#M  HigherDimension . . . . . . . . for a higher dimensional group or mapping
+#M  HigherDimension . . . . . . .  for a higher dimensional domain or mapping
 ##
+## InstallMethod( HigherDimension, "generic method for a 2dim-group", true, 
+##     [ Is2DimensionalDomain ], 0,
+## function( G )
+##     return 2;  
+## end ); 
+
 InstallMethod( HigherDimension, "generic method for an ndim-group", true, 
     [ IsHigherDimensionalGroup ], 0,
 function( G )
@@ -263,11 +269,23 @@ end );
 
 #############################################################################
 ##
-#M  PrintObj( <gnd> . . . . . . . . . . . . . . . . . .  print an n-dim group 
-#M  ViewObj( <gnd> ) . . . . . . . . . . . . . . . . . .  view an n-dim group 
+#M  String, ViewString, PrintString, ViewObj, PrintObj 
+##  . . . . . . . . . . . . . . . . . . . . . . . . . for n-dimensional groups 
 ##
-InstallMethod( PrintObj, "method for a nd-group", true, 
-    [ IsHigherDimensionalGroup ], 0,
+InstallMethod( String, "for an nd-group", true, [ IsHigherDimensionalGroup ], 0, 
+function( gnd ) 
+    return( STRINGIFY( "higher dimensional group with dimension ", 
+                       String( HigherDimension(gnd) ) ) ); 
+end );
+
+InstallMethod( ViewString, "for an nd-group", true, 
+    [ IsHigherDimensionalGroup ], 0, String ); 
+
+InstallMethod( PrintString, "for an nd-group", true, 
+    [ IsHigherDimensionalGroup ], 0, String ); 
+
+InstallMethod( PrintObj, "for an nd-group", true, [ IsHigherDimensionalGroup ], 
+    0,
 function( gnd )
 
     local  i, n, L;
@@ -284,8 +302,8 @@ function( gnd )
     fi;
 end );
 
-InstallMethod( ViewObj, "method for a nd-group", true, [ IsHigherDimensionalGroup ], 0,
-    PrintObj ); 
+InstallMethod( ViewObj, "method for a nd-group", true, 
+    [ IsHigherDimensionalGroup ], 0, PrintObj ); 
 
 #############################################################################
 ##

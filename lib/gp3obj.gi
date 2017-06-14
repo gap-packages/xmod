@@ -7,7 +7,7 @@
 ##
 #Y  Copyright (C) 2001-2017, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
-
+    
 #############################################################################
 ##
 #M  IsPerm3DimensionalGroup . . . . check whether the 4 sides are perm groups
@@ -236,11 +236,11 @@ function( P )
     if not ( IsPreCatnObj( P )  ) then
         return false;
     fi;
-	
-	if ( IsPreCatnGroup( P ) and ( HigherDimension( P ) = 2 )  ) then
+    
+    if ( IsPreCatnGroup( P ) and ( HigherDimension( P ) = 2 )  ) then
         return true;
-	else 
-		return false;
+    else 
+        return false;
     fi;
 end );
 
@@ -254,14 +254,15 @@ function( P )
 
     local  u, d;
 
-    if not ( IsPreCat2Group(P) ) then
-        Info( InfoXMod, 2, "pre-cat2-group is not provided" );
-        return false;
+    if not ( HigherDimension( P ) = 3 ) then 
+        return false; 
     fi;
-	if ( IsCatnGroup( P ) ) then
-        return true;
-	else 
-		return false;
+    if not ( HasIsPreCat2Group(P) and IsPreCat2Group(P) ) then 
+        return false; 
+    elif ( HasIsPreCrossedSquare(P) and IsPreCrossedSquare(P) ) then 
+        return false; 
+    else 
+        Print( "no method for checking IsCat2Group is available so far\n" );  
     fi;
 end );
 
@@ -458,9 +459,19 @@ end );
 
 #############################################################################
 ##
-#M  PrintObj( <g3d> . . . . . . . . . . . . . . . print a 3dimensional group 
-#M  ViewObj( <g2d> ) . . . . . . . . . . . . . . . view a 3dimensional group 
+#M  String, ViewString, PrintString, ViewObj, PrintObj . . . . for a 3d-group 
 ##
+InstallMethod( String, "for a 3d-group", true, [ IsPreCrossedSquare ], 0, 
+function( g3d ) 
+    return( STRINGIFY( "pre-crossed square" ) ); 
+end );
+
+InstallMethod( ViewString, "for a 3d-group", true, [ IsPreCrossedSquare ], 
+    0, String ); 
+
+InstallMethod( PrintString, "for a 3d-group", true, [ IsPreCrossedSquare ], 
+    0, String ); 
+
 InstallMethod( PrintObj, "method for a 3d-group", true, 
     [ IsPreCrossedSquare ], 0,
 function( g3d )
@@ -470,7 +481,7 @@ function( g3d )
 
     if HasName( g3d ) then
         Print( Name( g3d ), "\n" );
-	else
+    else
         if ( HasIsPreCrossedSquare( g3d ) and IsPreCrossedSquare( g3d ) ) then 
             ispsq := true; 
             arrow := " -> "; 
@@ -517,7 +528,7 @@ function( g3d )
                 else 
                     Print( "pre-crossed square with:\n" ); 
                 fi; 
-			fi;
+            fi;
             Print( "      up = ",    Up2DimensionalGroup( g3d ), "\n" );
             Print( "    left = ",  Left2DimensionalGroup( g3d ), "\n" );
             Print( "    down = ",  Down2DimensionalGroup( g3d ), "\n" );
@@ -526,9 +537,8 @@ function( g3d )
     fi;
 end );
 
-InstallMethod( ViewObj, "method for a 3d-group", true, 
-    [ IsPreCrossedSquare ], 0,
-    PrintObj ); 
+InstallMethod( ViewObj, "method for a 3d-group", true, [ IsPreCrossedSquare ], 
+    0, PrintObj ); 
 
 #############################################################################
 ##

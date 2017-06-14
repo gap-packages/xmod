@@ -604,10 +604,24 @@ function( C1G, r )
     return Cat1MorphismByHoms( C1G, C1G, shom, rhom );
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  ViewObj( <mor> ) . . . . . . . . . .  view a (pre-)crossed module morphism
+#M  String, ViewString, PrintString, ViewObj, PrintObj 
+##  . . . . . . . . . . . . . . . . .  for a morphism of pre-crossed modules 
 ##
+InstallMethod( String, "method for a morphism of pre-crossed modules", true, 
+    [ IsPreXModMorphism ], 0, 
+function( mor ) 
+    return( STRINGIFY( "[", String( Source(mor) ), " => ", 
+                            String( Range(mor) ), "]" ) ); 
+end );
+
+InstallMethod( ViewString, "method for a morphism of pre-crossed modules", 
+    true, [ IsPreXModMorphism ], 0, String ); 
+
+InstallMethod( PrintString, "method for a morphism of pre-crossed modules", 
+    true, [ IsPreXModMorphism ], 0, String ); 
+
 InstallMethod( ViewObj, "method for a morphism of pre-crossed modules", true,
     [ IsPreXModMorphism ], 0,
 function( mor )
@@ -618,10 +632,6 @@ function( mor )
     fi;
 end );
 
-##############################################################################
-##
-#M  PrintObj( <mor> ) . . . . . . . . .  print a (pre-)crossed module morphism
-##
 InstallMethod( PrintObj, "method for a morphism of pre-crossed modules", true,
     [ IsPreXModMorphism ], 0,
 function( mor )
@@ -1072,8 +1082,22 @@ end );
 
 #############################################################################
 ##
-#M  ViewObj( <PCG> ) . . . . . . . . . . . . . . . . view a (pre-)cat1-group
+#M  String, ViewString, PrintString, ViewObj, PrintObj 
+##  . . . . . . . . . . . . . . . . . . . . for a morphism of pre-cat1 groups 
 ##
+InstallMethod( String, "method for a morphism of pre-cat1 groups", true, 
+    [ IsPreCat1Morphism ], 0, 
+function( mor ) 
+    return( STRINGIFY( "[", String( Source(mor) ), " => ", 
+                            String( Range(mor) ), "]" ) ); 
+end );
+
+InstallMethod( ViewString, "method for a morphism of pre-cat1 groups", true, 
+    [ IsPreCat1Morphism ], 0, String ); 
+
+InstallMethod( PrintString, "fmethod for a morphism of pre-cat1 groups", true, 
+    [ IsPreCat1Morphism ], 0, String ); 
+
 InstallMethod( ViewObj, "method for a morphism of pre-cat1 groups", true,
     [ IsPreCat1Morphism ], 0,
 function( mor )
@@ -1084,10 +1108,6 @@ function( mor )
     fi;
 end );
 
-##############################################################################
-##
-#M  PrintObj( <PCG> ) . . . . . . . . . . . . . . . . print a (pre-)cat1-group
-##
 InstallMethod( PrintObj, "method for a morphism of pre-cat1 groups", true,
     [ IsPreCat1Morphism ], 0,
 function( mor )

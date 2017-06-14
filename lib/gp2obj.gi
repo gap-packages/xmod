@@ -240,9 +240,22 @@ end );
 
 #############################################################################
 ##
-#M  ViewObj( <g2d> ) . . . . . . . . . . . . . . . view a 2Dimensional-domain 
+#M  String, ViewString, PrintString, ViewObj, PrintObj 
+##  . . . . . . . . . . . . . . . . . . . . . . . for two-dimensional domains 
 ##
-InstallMethod( ViewObj, "method for 2d domain", true, [ Is2DimensionalDomain ], 
+InstallMethod( String, "for a 2d-domain", true, [ Is2DimensionalDomain ], 0, 
+function( g2d ) 
+    return( STRINGIFY( "[", String( Source(g2d) ), " -> ", 
+                            String( Range(g2d) ), "]" ) ); 
+end );
+
+InstallMethod( ViewString, "for a 2d-domain", true, [ Is2DimensionalDomain ], 
+    0, String ); 
+
+InstallMethod( PrintString, "for a 2d-domain", true, [ Is2DimensionalDomain ], 
+    0, String ); 
+
+InstallMethod( ViewObj, "for a 2d-domain", true, [ Is2DimensionalDomain ], 
     0,
 function( g2d )
     if HasName( g2d ) then
@@ -256,12 +269,7 @@ function( g2d )
     fi;
 end );
 
-#############################################################################
-##
-#M  PrintObj( <g2d> )  . . . . . . . . . . . . . . view a 2Dimensional-domain 
-##
-InstallMethod( PrintObj, "method for 2d-domain", true, [ Is2DimensionalDomain ], 
-    0,
+InstallMethod( PrintObj, "for a 2d-domain", true, [ Is2DimensionalDomain ], 0,
 function( g2d )
     if HasName( g2d ) then
         Print( Name( g2d ), "\n" );
