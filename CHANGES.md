@@ -62,7 +62,7 @@
 
 ## 2.51 -> 2.56 (08/03/2016) 
 
- * (23/02/16) remove functions from `util.g(d/i)` now in Utils; require Utils 
+ * (23/02/16) remove functions from `util.g{d/i}` now in Utils; require Utils 
  * (18/02/16) removed date/version info from file headers 
  * (16/02/16) require Gpd >= 1.42;  
 
@@ -170,8 +170,7 @@
               in Gpd, renamed IdentitySubXMod by TrivialSubXMod, etc. 
               All calls of GroupHomomorphismByImagesTriv returned to 
               GroupHomomorphismByImages (see item dated 30/04/08) 
- * (07/06/12) Renamed special Display for lists as PrintListOneItemPerLine  
-              following email from Max Horn 
+ * (07/06/12) Renamed special Display for lists as PrintListOneItemPerLine following email from Max Horn 
 
 ## 2.17 -> 2.18 (23/04/2012) 
 
