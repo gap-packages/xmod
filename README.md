@@ -1,4 +1,4 @@
-# The GAP 4 package XMod 
+# The GAP 4 package 'XMod' 
 
 ## Introduction 
 
@@ -16,9 +16,9 @@ In October 2015 a new section on isoclinism of crossed modules was added.
 
 ## Copyright
 
-The XMod package is Copyright {\copyright} Chris Wensley et al, 1997--2017. 
+The 'XMod' package is Copyright {\copyright} Chris Wensley et al, 1997--2017. 
 
-XMod is free software; you can redistribute it and/or modify
+'XMod' is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 2 of the License, or
 (at your option) any later version. 
@@ -27,10 +27,10 @@ For details, see <http://www.gnu.org/licenses/gpl.html>
 
 ## Installation
 
- * unpack `xmod-<version_number>.tar.gz' in the `pkg' subdirectory of the GAP root directory.
+ * unpack `xmod-<version_number>.tar.gz` in the `pkg` subdirectory of the GAP root directory.
  * From within GAP load the package with:
 
-    gap> LoadPackage("XMod");
+    gap> LoadPackage( "xmod" );
 
     true
 
