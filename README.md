@@ -4,8 +4,9 @@
 
 This package allows for computation with crossed modules; cat1-groups; morphisms of these structures; derivations of crossed modules and the corresponding sections of cat1-groups.
 
-Experimental functions for crossed squares are now included. 
 In October 2015 a new section on isoclinism of crossed modules was added. 
+
+Experimental functions for crossed squares and cat2-groups are now included. 
 
 ## Distribution
 
@@ -27,7 +28,7 @@ For details, see <http://www.gnu.org/licenses/gpl.html>
 
 ## Installation
 
- * unpack `xmod-<version_number>.tar.gz` in the `pkg` subdirectory of the GAP root directory.
+ * Unpack `xmod-<version_number>.tar.gz` in the `pkg` subdirectory of the GAP root directory.
  * From within GAP load the package with:
 
     gap> LoadPackage( "xmod" );
