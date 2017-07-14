@@ -49,7 +49,7 @@ function( P )
 	
     
     L := GeneratingCat1Groups( P );
-    n := HigherDimension( P );
+    n := HigherDimension( P )-1;
 	
 	PL := [];
         for i in [1..n] do 
@@ -143,7 +143,7 @@ function( L )
     PC := rec();
     ObjectifyWithAttributes( PC, NewType( fam, filter), 
         GeneratingCat1Groups, L, 
-        HigherDimension, n, 
+        HigherDimension, n+1, 
         IsHigherDimensionalGroup, true );
 #    if not IsPreCatnGroup( PC ) then
 #        Info( InfoXMod, 1, "Warning: not a pre-catn-group" );
@@ -182,7 +182,7 @@ end );
 
 InstallGlobalFunction( CatnGroup, function( arg )
 
-    local  nargs, CnG, ok, usage1, usage2, dim;
+    local  nargs, CnG, ok, ok2, usage1, usage2, dim;
 
     nargs := Length( arg );    
     usage1 := 
@@ -203,6 +203,10 @@ InstallGlobalFunction( CatnGroup, function( arg )
                 dim := HigherDimension( CnG ); 
                 if ( dim = 3 ) then 
                     SetIsPreCat2Group( CnG, true ); 
+					ok2 := IsCatnGroup( CnG );
+					if ok2 then
+						SetIsCat2Group( CnG, true ); 
+					fi;
                 fi; 
                 return CnG;
             fi;                
@@ -257,8 +261,8 @@ function ( dom1, dom2 )
     
     local  n1, n2, L1, L2;
     
-    n1 := HigherDimension( dom1 );
-    n2 := HigherDimension( dom2 );
+    n1 := HigherDimension( dom1 )-1;
+    n2 := HigherDimension( dom2 )-1;
     if ( n1  <>  n2 ) then
         return false;
     fi;
@@ -275,7 +279,7 @@ end );
 InstallMethod( String, "for an nd-group", true, [ IsHigherDimensionalGroup ], 0, 
 function( gnd ) 
     return( STRINGIFY( "higher dimensional group with dimension ", 
-                       String( HigherDimension(gnd) ) ) ); 
+                       String( HigherDimension(gnd)-1 ) ) ); 
 end );
 
 InstallMethod( ViewString, "for an nd-group", true, 
@@ -293,7 +297,7 @@ function( gnd )
     if HasName( gnd ) then
         Print( Name( gnd ), "\n" );
     else 
-        n := HigherDimension(gnd); 
+        n := HigherDimension(gnd)-1; 
         L := GeneratingCat1Groups( gnd ); 
         Print( "generating (pre-)cat1-groups:\n" );
         for i in [1..n] do 
@@ -315,7 +319,7 @@ function( gnd )
 
     local  i, n, L;
 
-    n := HigherDimension(gnd);
+    n := HigherDimension(gnd)-1;
     if IsPreCatnGroup(gnd) then 
         L := GeneratingCat1Groups( gnd );
         Print( "generating (pre-)cat1-groups:\n" );

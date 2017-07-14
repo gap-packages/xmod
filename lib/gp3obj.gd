@@ -104,6 +104,7 @@ DeclareSynonym( "IsPcPreCat2Group", IsPreCat2Group and IsPc3DimensionalGroup );
 #P  IsPcCat2Group( <CG> )
 ##
 DeclareProperty( "IsCat2Group", IsHigherDimensionalGroup );
+InstallTrueMethod( IsPreCat2Group, IsCat2Group );
 DeclareSynonym( "IsPermCat2Group", IsCat2Group and IsPerm3DimensionalGroup );
 DeclareSynonym( "IsFpCat2Group", IsCat2Group and IsFp3DimensionalGroup );
 DeclareSynonym( "IsPcCat2Group", IsCat2Group and IsPc3DimensionalGroup );
@@ -212,12 +213,19 @@ DeclareProperty( "IsIdentityCat2Group", IsCat2Group );
 #F  PreCat2Group( <arg> ) 
 #0  PreCat2GroupByPreCat1Groups( <first>, <second> )
 ##
-DeclareGlobalFunction( "PreCat2GroupGroup" );
-DeclareOperation( "PreCat2GroupGroupByPreCat1Groups", 
+DeclareGlobalFunction( "PreCat2Group" );
+DeclareOperation( "PreCat2GroupByPreCat1Groups", 
     [ IsPreCat1Group, IsPreCat1Group ] );
 
 #############################################################################
 ##
+#F  Cat2Group( <arg> }
+##
+DeclareGlobalFunction( "Cat2Group" );
+
+#############################################################################
+##
+#0  ConjugationActionForCrossedSquare( <G>, <N> )
 #0  PreCrossedSquareByPreCat2Group( <PCG> ) 
 #0  PreCat2GroupByPreCrossedSquare( <PS> } 
 #A  CrossedSquareOfCat2Group( <C1G> } 
@@ -225,18 +233,14 @@ DeclareOperation( "PreCat2GroupGroupByPreCat1Groups",
 #A  Cat2GroupOfCrossedSquare( <XS> ) 
 #0  Cat2GroupByCrossedSquare( <XS> )
 ##
+DeclareOperation( "ConjugationActionForCrossedSquare", [ IsGroup, IsGroup ] );
+DeclareOperation( "ElementsRelationsForSemidirectProduct", [ IsGroup, IsGroup, IsGroup ] );
 DeclareOperation( "PreCrossedSquareByPreCat2Group", [ IsPreCat2Group ] );
 DeclareOperation( "PreCat2GroupByPreCrossedSquare", [ IsPreCrossedSquare ] );
 DeclareAttribute( "CrossedSquareOfCat2Group", IsCat2Group );
 DeclareOperation( "CrossedSquareByCat2Group", [ IsCat2Group ] );
 DeclareAttribute( "Cat2GroupOfCrossedSquare", IsCrossedSquare );
 DeclareOperation( "Cat2GroupByCrossedSquare", [ IsCrossedSquare ] );
-
-#############################################################################
-##
-#F  Cat2Group( <arg> }
-##
-DeclareGlobalFunction( "Cat2Group" );
 
 #############################################################################
 ##

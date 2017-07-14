@@ -237,7 +237,7 @@ function( P )
         return false;
     fi;
     
-    if ( IsPreCatnGroup( P ) and ( HigherDimension( P ) = 2 )  ) then
+    if ( IsPreCatnGroup( P ) and ( HigherDimension( P ) = 3 )  ) then
         return true;
     else 
         return false;
@@ -257,6 +257,10 @@ function( P )
     if not ( HigherDimension( P ) = 3 ) then 
         return false; 
     fi;
+	if (  IsCatnGroup( P ) ) then
+		return true;
+	fi;		
+	
     if not ( HasIsPreCat2Group(P) and IsPreCat2Group(P) ) then 
         return false; 
     elif ( HasIsPreCrossedSquare(P) and IsPreCrossedSquare(P) ) then 
@@ -268,20 +272,62 @@ end );
 
 #############################################################################
 ##
+#F  CrossedSquare( <up>, <left>, <down>, <right>, <action>, <pairing> )     crossed square from xmods
+#F  CrossedSquare( <P>, <N>, <M>, <L> )                 					crossed square normal subgroups
+#F  CrossedSquare( <xmod> )                 								actor crossed square
+#F  CrossedSquare( <cat2-group> )											crossed square from cat2-group
+##
+InstallGlobalFunction( CrossedSquare, function( arg )
+
+    local  nargs, XS, ok;
+
+    nargs := Length( arg );
+    if ( nargs = 1 ) then
+		if ( IsHigherDimensionalGroup( arg[1] ) ) then
+            XS := CrossedSquareOfCat2Group( arg[1] );
+        elif  IsXMod( arg[1] )   then
+            XS := ActorCrossedSquare( arg[1] );
+        fi;
+	elif ( nargs = 4 ) then
+			XS := CrossedSquareByNormalSubgroups( arg[1], arg[2], arg[3], arg[4] );
+	elif ( nargs = 6  ) then
+			XS := CrossedSquareByXMods( arg[1], arg[2], arg[3], arg[4], arg[5], arg[6] );
+
+    else   
+        Print( "standard usage: CrossedSquare( <up>, <left>, <down>, <right>, <action>, <pairing> );\n" );
+        Print( "            or: CrossedSquare( <P>, <N>, <M>, <L> );\n" );
+        Print( "            or: CrossedSquare( <xmod> );\n" );
+        Print( "            or: CrossedSquare( <cat2-group> );\n" );
+        return fail;
+    fi;
+	ok := IsCrossedSquare( XS );
+       if ok then
+          return XS;
+       else
+          return fail;
+       fi;
+end );
+
+#############################################################################
+##
 #F  Cat2Group( <size>, <gpnum>, <num> )     cat2-group from data in CAT2_LIST
 #F  Cat2Group( C1G1, C1G2 )                 cat2-group from two cat1-groups
+#F  Cat2Group( XS )                 		cat2-group from crossed square
 ##
 InstallGlobalFunction( Cat2Group, function( arg )
 
     local  nargs, C1G1, C1G2, C2G, ok;
 
     nargs := Length( arg );
-    if ( ( nargs < 2 ) or ( nargs > 3 ) ) then
+    if ( ( nargs < 1 ) or ( nargs > 3 ) ) then
         Print( "standard usage: Cat2Group( cat1, cat1 );\n" );
         Print( "            or: Cat2Group( size, gpnum, num );\n" );
+        Print( "            or: Cat2Group( XS );\n" );
         return fail;
     elif not IsInt( arg[1] ) then
-        if ( nargs = 2 ) then
+        if ( nargs = 1 ) then
+            C2G := Cat2GroupOfCrossedSquare( arg[1] );
+		elif ( nargs = 2 ) then
             C2G := PreCatnObj( [ arg[1], arg[2] ] );
         fi;
         ok := IsCat2Group( C2G );
@@ -599,7 +645,399 @@ function( g3d )
         Print( "   right = ", Right2DimensionalGroup( g3d ), "\n" );
         fi; 
     fi; 
+end );
+
+##############################################################################
+##
+#M  ConjugationActionForCrossedSquare . . . . conjugation action for crossed square from cat2-group
+##
+InstallMethod( ConjugationActionForCrossedSquare, "conjugation action for crossed square",
+    true, [ IsGroup, IsGroup ], 0,
+function( G, N )
+
+local  genrng, gensrc, autgen, g, imautgen, a, idsrc, aut, act;
+
+    genrng := GeneratorsOfGroup( G );
+    gensrc := GeneratorsOfGroup( N );
+    autgen := [ ];
+    for g in genrng do
+        imautgen := List( gensrc, n -> n^g );
+        a := GroupHomomorphismByImages( N, N, gensrc, imautgen );
+        Add( autgen, a );
+    od;
+    if ( Length( genrng ) = 0 ) then
+        idsrc := IdentityMapping( N );
+        aut := Group( idsrc );
+    else
+        aut := Group( autgen );
+    fi;
+    SetIsGroupOfAutomorphisms( aut, true );
+    act := GroupHomomorphismByImages( G, aut, genrng, autgen );
+    return act;
 end ); 
+
+##############################################################################
+##
+#M  ElementsRelationsForSemidirectProduct . . . . Elements Relations For Semidirect Product 
+##
+InstallMethod( ElementsRelationsForSemidirectProduct, "elements relation",
+    true, [ IsGroup, IsGroup, IsGroup ], 0,
+function( G, H, GxH  )
+
+local elG, elH,g,h,im, list1, list2, genGxH;
+
+elG := Elements(G);
+elH := Elements(H);
+list1 := [];
+list2 := [];
+for g in elG do
+	for h in elH do
+		im :=Image(Embedding(GxH,1),g)*Image(Embedding(GxH,2),h);
+		Add(list1,[g,h]);
+		Add(list2,im);
+	od;
+od;
+return [list1,list2];
+end ); 
+
+##############################################################################
+##
+#M  CrossedSquareByCat2Group
+#M  CrossedSquareOfCat2Group
+##
+InstallMethod( CrossedSquareByCat2Group, "generic method for cat2-groups",
+    true, [ IsCat2Group ], 0,
+function( C2 )
+
+    local  XS;
+	XS := PreCrossedSquareByPreCat2Group( C2 );
+    SetCrossedSquareOfCat2Group( C2, XS );
+    SetCat2GroupOfCrossedSquare( XS, C2 );
+    return XS;
+end );
+
+InstallMethod( CrossedSquareOfCat2Group, "generic method for cat2-groups",
+    true, [ IsCat2Group ], 0, CrossedSquareByCat2Group );
+
+##############################################################################
+##
+#M  Cat2GroupByCrossedSquare
+#M  Cat2GroupOfCrossedSquare
+##
+InstallMethod( Cat2GroupByCrossedSquare, "generic method for crossed squares",
+    true, [ IsCrossedSquare ], 0,
+function( XS )
+
+    local  C2;
+	C2 := PreCat2GroupByPreCrossedSquare(XS);
+    SetCrossedSquareOfCat2Group( C2, XS );
+    SetCat2GroupOfCrossedSquare( XS, C2 );
+    return C2;
+end );
+
+InstallMethod( Cat2GroupOfCrossedSquare, "generic method for crossed squares",
+    true, [ IsCrossedSquare ], 0, Cat2GroupByCrossedSquare );
+	
+#############################################################################
+##
+#M  PreCrossedSquareByPreCat2Group
+##
+InstallMethod( PreCrossedSquareByPreCat2Group, true, 
+    [ IsPreCat2Group ], 0,
+function( C2G )
+ 
+local 	n,l,i,j,k,up,down,left,right,isolar,liste1,liste2,G,gensrc,x,u,d,h1,t1,h2,t2,
+		L,M,N,P,XS,diag,liste,partial,action,aut,act,XM,bdy1,CM1,CM2,bdy2,
+		act2,CM3,bdy3,act3,CM4,bdy4,act4,xp,a;
+
+	u :=  GeneratingCat1Groups( C2G )[1];
+	d :=  GeneratingCat1Groups( C2G )[2];
+	
+	if not ( IsPerm2DimensionalGroup( u ) ) then
+		u := Image(IsomorphismPermObject( u ) );
+	fi;
+	if not ( IsPerm2DimensionalGroup( d ) ) then
+		d := Image(IsomorphismPermObject( d ) );
+	fi;	
+	
+	h1 := HeadMap( u );
+    t1 := TailMap( u );
+	h2 := HeadMap( d );
+    t2 := TailMap( d );
+	
+	G := Image(IsomorphismPermObject (Source(t1)));
+	gensrc := GeneratorsOfGroup(G);
+	t1 := GroupHomomorphismByImagesNC(G, G, gensrc, List(gensrc, x -> Image( t1, x ) )  ); 
+    h1 := GroupHomomorphismByImagesNC(G, G, gensrc, List(gensrc, x -> Image( h1, x ) )  ); 
+	t2 := GroupHomomorphismByImagesNC(G, G, gensrc, List(gensrc, x -> Image( t2, x ) )  ); 
+    h2 := GroupHomomorphismByImagesNC(G, G, gensrc, List(gensrc, x -> Image( h2, x ) )  ); 	
+	
+	L := Intersection( Kernel( t1 ), Kernel( t2 ) ) ;
+	M := Intersection( Image ( t1 ), Kernel( t2 ) );
+	N := Intersection( Kernel ( t1 ), Image( t2 ) );
+	P := Intersection( Image( t1 ), Image( t2 ) )  ;
+	
+	################################## test ####
+	#Print("\nG = ",G,"\n");
+	#Print("L = ",L,"\n");
+	#Print("M = ",M,"\n");
+	#Print("N = ",N,"\n");
+	#Print("P = ",P,"\n");
+	############################################
+	
+    bdy1 := GroupHomomorphismByFunction( L, M, x -> Image(h1,x) );
+	act := ConjugationActionForCrossedSquare(M,L);
+	up := XModByBoundaryAndAction(bdy1,act);
+	
+    bdy2 := GroupHomomorphismByFunction( L, N, x -> Image(h2,x) );
+	act2 := ConjugationActionForCrossedSquare(N,L);
+	left := XModByBoundaryAndAction(bdy2,act2);
+	
+    bdy3 := GroupHomomorphismByFunction( N, P, x -> Image(h1,x) );
+	act3 := ConjugationActionForCrossedSquare(P,N);
+	down := XModByBoundaryAndAction(bdy3,act3);
+	
+    bdy4 := GroupHomomorphismByFunction( M, P, x -> Image(h2,x) );
+	act4 := ConjugationActionForCrossedSquare(P,M);
+	right := XModByBoundaryAndAction(bdy4,act4);
+	
+    ################################## test ####
+	#Print("CM1 = ",up,"\n");
+	#Print("CM2 = ",left,"\n");
+	#Print("CM3 = ",down,"\n");
+	#Print("CM4 = ",right,"\n");
+	############################################
+
+	a := ConjugationActionForCrossedSquare(P,L);
+    xp := CrossedPairingByNormalSubgroups( M, N, L );
+    XS := PreCrossedSquareObj( up, left, down, right, a, xp );
+    SetIsCrossedSquare( XS, true );
+    return XS;
+end );
+
+#############################################################################
+##
+#M  PreCat2GroupByPreCrossedSquare
+##
+InstallMethod( PreCat2GroupByPreCrossedSquare, true, 
+    [ IsPreCrossedSquare ], 0,
+function( XS )
+ 
+local L,M,N,P,up,left,down,right,act_up,act_left,act_down,act_right, act_diag, bdy_up, bdy_left, bdy_right, bdy_down,
+	h, g, n, l, m, p, a, aut, act, G, aut2, act2, G2, i,
+	PxM,NxL,genPxM,genNxL, relationNxL, relationPxM, genNxLform2, genPxMform2, autgen, imautgen, imautgenform2,  
+	relationG, genGform2, genG, genGform3, genGform4, imt1, imt1form2, t1, h1,C1, 
+	relationG2, genG2form2, genG2, genG2form3, genG2form4, imt2, imt2form2, t2, h2,C2, Cat2, 
+	MxL,PxN,genMxL,genPxN,relationMxL,relationPxN,genMxLform2,genPxNform2, autgen2, imautgen2, imautgen2form2;
+
+     up := Up2DimensionalGroup(XS);
+     left := Left2DimensionalGroup(XS);
+     down := Down2DimensionalGroup(XS);
+     right := Right2DimensionalGroup(XS);
+	 
+	 L := Source(up);
+	 M := Source(right);
+	 N := Range(left);
+	 P := Range(down);
+	
+    ################################## test ####	
+	#Print("L = ",L,"\n");	
+	#Print("M = ",M,"\n");
+	#Print("N = ",N,"\n");
+	#Print("P = ",P,"\n");
+	#Print("###########################\n");
+	################################## test ####
+
+	 bdy_up := Boundary(up);
+	 bdy_left := Boundary(left);
+	 bdy_down := Boundary(down);
+	 bdy_right := Boundary(right);
+	 
+	 act_up := XModAction(up);
+	 act_left := XModAction(left);
+	 act_down := XModAction(down);
+	 act_right := XModAction(right);
+	 act_diag := DiagonalAction(XS);
+	 h := CrossedPairing( XS );
+
+	NxL := SemidirectProduct(N,act_left,L);	 
+	PxM := SemidirectProduct(P,act_right,M);
+	 
+    genNxL := GeneratorsOfGroup( NxL );	
+	genPxM := GeneratorsOfGroup( PxM );
+	
+	if ( Length( genNxL ) = 0 ) then
+		genNxL := [ Identity( NxL ) ];
+    fi;
+	
+	if ( Length( genPxM ) = 0 ) then
+		genPxM := [ Identity(PxM) ];
+    fi;
+
+	relationNxL := ElementsRelationsForSemidirectProduct(N,L,NxL);
+	relationPxM := ElementsRelationsForSemidirectProduct(P,M,PxM);
+	
+	genNxLform2 := List( genNxL, x -> relationNxL[1][ Position( relationNxL[2] , x )] );
+	genPxMform2 := List( genPxM, x -> relationPxM[1][ Position( relationPxM[2] , x )] );
+	
+	################################## test ####
+	#Print("PxM = ",PxM,"\n");	
+	#Print("genPxM = ",genPxM,"\n");
+	#Print("genPxM2 = ",genPxMform2,"\n");
+	#Print("relationPxM = ",relationPxM,"\n");
+	#Print("NxL = ",NxL,"\n");
+	#Print("genNxL = ",genNxL,"\n");
+	#Print("genNxL2 = ",genNxLform2,"\n");
+	#Print("relationNxL = ",relationNxL,"\n");
+	################################## test ####
+
+    autgen := [ ];
+    for g in genPxMform2 do
+		p := g[1];
+		m := g[2];
+		
+		# l := nl[2] and n := nl[1];
+		imautgenform2 := List( genNxLform2, nl -> [ Image( Image( act_down, p ), nl[1]),
+		Image ( Image(act_up, m ) , Image( Image( act_diag, p) , nl[2] )  )
+		 * ImageElmCrossedPairing( h, [ m , Image( Image( act_down, p ) , nl[1] ) ] )
+		] );
+		
+		imautgen := List( imautgenform2, x -> relationNxL[2][ Position( relationNxL[1] , x )] );
+		a := GroupHomomorphismByImages( NxL, NxL, genNxL, imautgen );
+		Add( autgen, a );
+    od;
+   aut := Group( autgen );
+   SetIsGroupOfAutomorphisms( aut, true );
+   act := GroupHomomorphismByImages( PxM, aut, genPxM, autgen );
+   G := SemidirectProduct(PxM,act,NxL);	
+   relationG := ElementsRelationsForSemidirectProduct(PxM,NxL,G);
+   genG := GeneratorsOfGroup( G );
+   genGform2 := List( genG, x -> relationG[1][ Position( relationG[2] , x )] );
+   genGform3 := List( genGform2, x -> [ relationPxM[1][ Position( relationPxM[2] , x[1] )] , relationNxL[1][ Position( relationNxL[2] , x[2] )]  ] );
+   genGform4 := [];
+   
+   for i in [1..Length(genGform3)] do
+		Add(genGform4, Flat(genGform3[i]));
+   od;
+   
+ 	################################## test ####  
+   	#Print("G = ",G,"\n");
+	#Print("genG = ",genG,"\n");
+	#Print("relationG = ",relationG,"\n");
+	#Print("genGform2 = ",genGform2,"\n");
+	#Print("genGform3 = ",genGform3,"\n");
+	#Print("genGform4 = ",genGform4,"\n");
+	################################## test ####
+	
+	imt1 := [];	
+    for i in [1..Length(genGform4)] do
+		p := genGform4[i][1];
+		m := genGform4[i][2];
+		n := genGform4[i][3];
+		l := genGform4[i][4];
+		a := [ Image(bdy_down,n)*p , Image(bdy_up,l) * Image( Image( act_right, Image(bdy_down,n) ), m) ];
+		Add( imt1, a );
+	od;
+	imt1form2 := List( imt1, x -> relationPxM[2][ Position( relationPxM[1] , x )] );
+	t1 := GroupHomomorphismByImages(G, PxM, genG,  imt1form2 );
+	h1 := Projection(G);
+	
+	t1 := GroupHomomorphismByImagesNC(G, G, genG, List(genG, x -> Image( t1, x ) )  );
+	h1 := GroupHomomorphismByImagesNC(G, G, genG, List(genG, x -> Image( h1, x ) )  );
+	C1 := PreCat1GroupByEndomorphisms(t1,h1);
+	
+	MxL := SemidirectProduct(M,act_up,L);	 
+	PxN := SemidirectProduct(P,act_down,N);	
+	
+    genMxL := GeneratorsOfGroup( MxL );	
+	genPxN := GeneratorsOfGroup( PxN );
+	
+	if ( Length( genMxL ) = 0 ) then
+		genMxL := [ Identity( MxL ) ];
+    fi;
+	
+	if ( Length( genPxN ) = 0 ) then
+		genPxN := [ Identity(PxN) ];
+    fi;
+
+	relationMxL := ElementsRelationsForSemidirectProduct(M,L,MxL);
+	relationPxN := ElementsRelationsForSemidirectProduct(P,N,PxN);
+	
+	genMxLform2 := List( genMxL, x -> relationMxL[1][ Position( relationMxL[2] , x )] );
+	genPxNform2 := List( genPxN, x -> relationPxN[1][ Position( relationPxN[2] , x )] );
+
+ 	################################## test #### 	
+	#Print("PxN = ",PxN,"\n");	
+	#Print("genPxN = ",genPxN,"\n");
+	#Print("genPxN2 = ",genPxNform2,"\n");
+	#Print("relationPxN = ",relationPxN,"\n");
+	#Print("MxL = ",MxL,"\n");
+	#Print("genMxL = ",genMxL,"\n");
+	#Print("genMxL2 = ",genMxLform2,"\n");
+	#Print("relationMxL = ",relationMxL,"\n");
+	################################## test #### 
+	
+    autgen2 := [ ];
+    for g in genPxNform2 do
+		p := g[1];
+		n := g[2];
+		
+		# l := ml[2] and m := ml[1];
+		imautgen2form2 := List( genMxLform2, ml -> [ Image( Image( act_right, p ), ml[1]),
+		Image ( Image(act_left, n ) , Image( Image( act_diag, p) , ml[2] )  )
+		 * ImageElmCrossedPairing( h, [ Image( Image( act_right, p ) , ml[1] )  , n  ] )
+		] );
+		
+		imautgen2 := List( imautgen2form2, x -> relationMxL[2][ Position( relationMxL[1] , x )] );
+		a := GroupHomomorphismByImages( MxL, MxL, genMxL, imautgen2 );
+		Add( autgen2, a );
+    od;
+	
+   aut2 := Group( autgen2 );
+   SetIsGroupOfAutomorphisms( aut2, true );
+   act2 := GroupHomomorphismByImages( PxN, aut2, genPxN, autgen2 );
+   G2 := SemidirectProduct(PxN,act2,MxL);	
+   relationG2 := ElementsRelationsForSemidirectProduct(PxN,MxL,G2);
+   genG2 := GeneratorsOfGroup( G2 );
+   genG2form2 := List( genG2, x -> relationG2[1][ Position( relationG2[2] , x )] );
+   genG2form3 := List( genG2form2, x -> [ relationPxN[1][ Position( relationPxN[2] , x[1] )] , relationMxL[1][ Position( relationMxL[2] , x[2] )]  ] );
+   genG2form4 := [];
+   
+   for i in [1..Length(genG2form3)] do
+		Add(genG2form4, Flat(genG2form3[i]));
+   od;
+ 
+ 	################################## test ####  
+   	#Print("G2 = ",G2,"\n");
+	#Print("genG2 = ",genG2,"\n");
+	#Print("relationG2 = ",relationG2,"\n");
+	#Print("genG2form2 = ",genG2form2,"\n");
+	#Print("genG2form3 = ",genG2form3,"\n");
+	#Print("genG2form4 = ",genG2form4,"\n");
+ 	################################## test #### 
+	
+	imt2 := [];	
+   for i in [1..Length(genG2form4)] do
+		p := genG2form4[i][1];
+		n := genG2form4[i][2];
+		m := genG2form4[i][3];
+		l := genG2form4[i][4];
+		a := [ Image(bdy_right,m)*p , Image(bdy_left,l) * Image( Image( act_down, Image(bdy_right,m) ), n) ];
+		Add( imt2, a );		
+   od;
+   
+	imt2form2 := List( imt2, x -> relationPxN[2][ Position( relationPxN[1] , x )] );
+	t2 := GroupHomomorphismByImages(G2, PxN, genG2,  imt2form2 );
+	h2 := Projection(G2);
+	
+	t2 := GroupHomomorphismByImagesNC(G2, G2, genG2, List(genG2, x -> Image( t2, x ) )  );
+	h2 := GroupHomomorphismByImagesNC(G2, G2, genG2, List(genG2, x -> Image( h2, x ) )  );
+	C2 := PreCat1GroupByEndomorphisms(t2,h2);
+	
+	Cat2 := CatnGroup([C1,C2]);
+
+return Cat2;
+end );
 
 #############################################################################
 ##

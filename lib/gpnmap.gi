@@ -26,8 +26,8 @@ function( src, rng, mors )
     fi;
     n := Length( mors ); 
     if ( HasIsPreCat2Group(src) and IsPreCat2Group(src) ) then 
-        if ( dim  <> n ) then
-            Print( "third argument should have length ", dim, "\n" );
+        if ( dim-1  <> n ) then
+            Print( "third argument should have length ", dim-1, "\n" );
             return fail;
         fi; 
     elif ( HasIsPreCrossedSquare(src) and IsPreCrossedSquare(src) ) then  ## morphism of (pre)crossed squares 
@@ -287,8 +287,8 @@ function( src, rng, L )
 
     local  dim, filter, fam, mor, ok, nsrc, nrng, name, n;
     
-    dim := HigherDimension( src ); 
-    if not ( dim = HigherDimension(rng) ) then 
+    dim := HigherDimension( src )-1; 
+    if not ( dim = HigherDimension(rng)-1 ) then 
         Error( "src and rng have different dimensions" ); 
     fi; 
     if ( Length(L) <> dim ) then 
