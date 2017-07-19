@@ -304,11 +304,11 @@ InstallGlobalFunction( CrossedSquare, function( arg )
         return fail;
     fi;
     ok := IsCrossedSquare( XS );
-       if ok then
-          return XS;
-       else
-          return fail;
-       fi;
+    if ok then
+        return XS;
+    else
+        return fail;
+    fi;
 end );
 
 #############################################################################
@@ -687,18 +687,26 @@ end );
 #M  ElementsRelationsForSemidirectProduct 
 ##
 InstallMethod( ElementsRelationsForSemidirectProduct, "elements relation",
-    true, [ IsGroup, IsGroup, IsGroup ], 0,
-function( G, H, GxH  )
+    true, [ IsGroup ], 0,
+function( GxH  )
 
-    local elG, elH, g, h, im, list1, list2, genGxH;
+    local info, G, H, elG, embG, embH, elH, g, h, im, list1, list2, genGxH;
 
+    if not HasSemidirectProductInfo( GxH ) then 
+        Error( "group is not a semidirect product" ); 
+    fi; 
+    info := SemidirectProductInfo( GxH ); 
+    G := info!.groups[1]; 
+    H := info!.groups[2];
     elG := Elements( G );
     elH := Elements( H );
-    list1 := [];
-    list2 := [];
+    list1 := [ ];
+    list2 := [ ];
+    embG := info!.embeddings[1]; 
+    embH := info!.embeddings[2];
     for g in elG do
         for h in elH do
-            im := Image( Embedding(GxH,1),g) * Image(Embedding(GxH,2), h );
+            im := Image( embG, g) * Image( embH, h );
             Add( list1, [g,h] );
             Add( list2, im );
         od;
@@ -886,8 +894,8 @@ function( XS )
         genPxM := [ Identity(PxM) ];
     fi;
 
-    relsNxL := ElementsRelationsForSemidirectProduct(N,L,NxL);
-    relsPxM := ElementsRelationsForSemidirectProduct(P,M,PxM);
+    relsNxL := ElementsRelationsForSemidirectProduct( NxL );
+    relsPxM := ElementsRelationsForSemidirectProduct( PxM );
     genNxLform2 := List( genNxL, x -> relsNxL[1][ Position( relsNxL[2], x )] );
     genPxMform2 := List( genPxM, x -> relsPxM[1][ Position( relsPxM[2], x )] );
     
@@ -919,9 +927,9 @@ function( XS )
     aut := Group( autgen );
     SetIsGroupOfAutomorphisms( aut, true );
     act := GroupHomomorphismByImages( PxM, aut, genPxM, autgen );
-    G := SemidirectProduct(PxM,act,NxL);    
-    relsG := ElementsRelationsForSemidirectProduct(PxM,NxL,G);
-    genG := GeneratorsOfGroup( G );
+    G := SemidirectProduct( PxM, act, NxL );    
+    relsG := ElementsRelationsForSemidirectProduct( G );
+    genG := GeneratorsOfGroup( G ); 
     genGform2 := List( genG, x -> relsG[1][ Position( relsG[2], x )] );
     genGform3 := List( genGform2, x -> [relsPxM[1][Position(relsPxM[2],x[1])], 
                                         relsNxL[1][Position(relsNxL[2],x[2])]]);
@@ -970,8 +978,8 @@ function( XS )
         genPxN := [ Identity(PxN) ];
     fi;
 
-    relsMxL := ElementsRelationsForSemidirectProduct(M,L,MxL);
-    relsPxN := ElementsRelationsForSemidirectProduct(P,N,PxN);
+    relsMxL := ElementsRelationsForSemidirectProduct( MxL );
+    relsPxN := ElementsRelationsForSemidirectProduct( PxN );
     genMxLform2 := List( genMxL, x -> relsMxL[1][ Position( relsMxL[2], x )] );
     genPxNform2 := List( genPxN, x -> relsPxN[1][ Position( relsPxN[2], x )] );
 
@@ -1004,8 +1012,8 @@ function( XS )
     aut2 := Group( autgen2 );
     SetIsGroupOfAutomorphisms( aut2, true );
     act2 := GroupHomomorphismByImages( PxN, aut2, genPxN, autgen2 );
-    G2 := SemidirectProduct(PxN,act2,MxL);    
-    relsG2 := ElementsRelationsForSemidirectProduct(PxN,MxL,G2);
+    G2 := SemidirectProduct( PxN, act2, MxL );    
+    relsG2 := ElementsRelationsForSemidirectProduct( G2 );
     genG2 := GeneratorsOfGroup( G2 );
     genG2form2 := List( genG2, x -> relsG2[1][ Position( relsG2[2], x )] );
     genG2form3 := List( genG2form2, 
@@ -1013,7 +1021,7 @@ function( XS )
                                relsMxL[1][ Position( relsMxL[2], x[2] )] ] );
     genG2form4 := []; 
     for i in [1..Length(genG2form3)] do
-        Add(genG2form4, Flat(genG2form3[i]));
+        Add( genG2form4, Flat(genG2form3[i]) );
     od;
  
     ################################## test ####  

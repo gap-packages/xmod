@@ -234,7 +234,7 @@ DeclareGlobalFunction( "Cat2Group" );
 #0  Cat2GroupByCrossedSquare( <XS> )
 ##
 DeclareOperation( "ConjugationActionForCrossedSquare", [ IsGroup, IsGroup ] );
-DeclareOperation( "ElementsRelationsForSemidirectProduct", [ IsGroup, IsGroup, IsGroup ] );
+DeclareAttribute( "ElementsRelationsForSemidirectProduct", IsGroup );
 DeclareOperation( "PreCrossedSquareByPreCat2Group", [ IsPreCat2Group ] );
 DeclareOperation( "PreCat2GroupByPreCrossedSquare", [ IsPreCrossedSquare ] );
 DeclareAttribute( "CrossedSquareOfCat2Group", IsCat2Group );
