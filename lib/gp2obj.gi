@@ -718,6 +718,9 @@ function( XM )
     fi;
     SetSourceEmbedding( XM, eR );
     C := PreCat1GroupByTailHeadEmbedding( t, h, eR );
+    if HasName( XM ) then 
+        SetName( C, Concatenation( "cat1(", Name( XM ), ")" ) ); 
+    fi; 
     return C;
 end ); 
 
@@ -1917,7 +1920,7 @@ end );
 
 #############################################################################
 ##
-#M  PreXModByPreCat1
+#M  PreXModByPreCat1Group
 ##
 InstallMethod( PreXModByPreCat1Group, true, 
     [ IsPreCat1Group ], 0,
@@ -1979,7 +1982,7 @@ function( C1G )
         SetIsNormalSubgroup2DimensionalGroup( PM, true ); 
     fi; 
     if HasName( C1G ) then 
-        SetName( PM, Concatenation( "X(", Name( C1G ), ")" ) ); 
+        SetName( PM, Concatenation( "xmod(", Name( C1G ), ")" ) ); 
     fi; 
     return PM;
 end );

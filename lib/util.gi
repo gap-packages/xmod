@@ -638,10 +638,11 @@ end );
 InstallGlobalFunction( IsomorphismPermObject, function( obj )
     if IsGroup( obj ) then
         return IsomorphismPermGroup( obj );
-    elif IsPreXMod( obj ) then
+    elif ( HasIsPreXMod( obj ) and IsPreXMod( obj ) ) or 
+         ( HasIsPreCat1Group( obj ) and IsPreCat1Group( obj ) ) then
         return IsomorphismPerm2DimensionalGroup( obj );
-    elif IsPreCat1Group( obj ) then
-        return IsomorphismPerm2DimensionalGroup( obj );
+    elif HasHigherDimension( obj ) then 
+        Error( "IsomorphismPerm3DimensionObject etc not yet written" ); 
     else
         return fail;
     fi;
@@ -650,10 +651,11 @@ end );
 InstallGlobalFunction( IsomorphismFpObject, function( obj )
     if IsGroup( obj ) then
         return IsomorphismFpGroup( obj );
-    elif IsPreXMod( obj ) then
+    elif ( HasIsPreXMod( obj ) and IsPreXMod( obj ) ) or 
+         ( HasIsPreCat1Group( obj ) and IsPreCat1Group( obj ) ) then
         return IsomorphismFp2DimensionalGroup( obj );
-    elif IsPreCat1Group( obj ) then
-        return IsomorphismFp2DimensionalGroup( obj );
+    elif HasHigherDimension( obj ) then 
+        Error( "IsomorphismFp3DimensionObject etc not yet written" ); 
     else
         return fail;
     fi;
@@ -662,10 +664,11 @@ end );
 InstallGlobalFunction( IsomorphismPcObject, function( obj )
     if IsGroup( obj ) then
         return IsomorphismPcGroup( obj );
-    elif IsPreXMod( obj ) then
+    elif ( HasIsPreXMod( obj ) and IsPreXMod( obj ) ) or 
+         ( HasIsPreCat1Group( obj ) and IsPreCat1Group( obj ) ) then
         return IsomorphismPc2DimensionalGroup( obj );
-    elif IsPreCat1Group( obj ) then
-        return IsomorphismPc2DimensionalGroup( obj );
+    elif HasHigherDimension( obj ) then 
+        Error( "IsomorphismPc3DimensionObject etc not yet written" ); 
     else
         return fail;
     fi;

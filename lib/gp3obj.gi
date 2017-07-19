@@ -328,12 +328,21 @@ InstallGlobalFunction( Cat2Group, function( arg )
         Print( "            or: Cat2Group( XS );\n" );
         return fail;
     elif not IsInt( arg[1] ) then
-        if ( nargs = 1 ) then
+        if ( nargs = 1 ) then 
+            if not IsCrossedSquare( arg[1] ) then 
+                Error( "argument is not a crossed square" ); 
+            fi; 
             C2G := Cat2GroupOfCrossedSquare( arg[1] );
-        elif ( nargs = 2 ) then
-            C2G := PreCatnObj( [ arg[1], arg[2] ] );
+        elif ( nargs = 2 ) then 
+            if not IsCat1Group( arg[1] ) and IsCat1Group( arg[2] ) then 
+                Error( "the two argumewnts are not cat1-groups" ); 
+            fi; 
+            C2G := PreCatnObj( [ arg[1], arg[2] ] ); 
+            if ( C2G = fail ) then 
+                Error( "C2G fails to be a PreCatnObj" ); 
+            fi;
         fi;
-        ok := IsCat2Group( C2G );
+        ok := IsCatnGroup( C2G );
         if ok then
             return C2G;
         else
@@ -781,7 +790,11 @@ function( C2G )
     t2 := TailMap( d );
     
     G := Image( IsomorphismPermObject( Source( t1 ) ) );
-    gensrc := GeneratorsOfGroup( G );
+    gensrc := GeneratorsOfGroup( G ); 
+
+
+
+
     t1 := GroupHomomorphismByImagesNC( G, G, gensrc, 
               List(gensrc, x -> Image( t1, x ) ) ); 
     h1 := GroupHomomorphismByImagesNC( G, G, gensrc, 
@@ -831,6 +844,9 @@ function( C2G )
     xp := CrossedPairingByNormalSubgroups( M, N, L );
     XS := PreCrossedSquareObj( up, left, down, right, a, xp );
     SetIsCrossedSquare( XS, true );
+    if HasName( C2G ) then 
+        SetName( XS, Concatenation( "xsq(", Name( C2G ), ")" ) ); 
+    fi; 
     return XS;
 end );
 
@@ -1053,6 +1069,9 @@ function( XS )
               List(genG2, x -> Image( h2, x ) )  );
     C2 := PreCat1GroupByEndomorphisms( t2, h2 );
     Cat2 := CatnGroup( [ C1, C2 ] );
+    if HasName( XS ) then 
+        SetName( Cat2, Concatenation( "cat2(", Name(XS), ")" ) ); 
+    fi;
     return Cat2;
 end );
 

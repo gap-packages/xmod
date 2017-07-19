@@ -18,32 +18,28 @@ gap> pc1 := PreCat1GroupByEndomorphisms( idem[1], idem[1] );
 [Group( [ f1, f2 ] )=>Group( [ <identity> of ..., <identity> of ... ] )]
 gap> pc2 := PreCat1GroupByEndomorphisms( idem[2], idem[2] );
 [Group( [ f1, f2 ] )=>Group( [ f1, <identity> of ... ] )]
-gap> C12 := CatnGroup( [ pc1, pc2 ] );
+gap> CC12 := CatnGroup( [ pc1, pc2 ] );
 generating (pre-)cat1-groups:
 1 : [Group( [ f1, f2 ] )=>Group( [ <identity> of ..., <identity> of ... ] )]
 2 : [Group( [ f1, f2 ] )=>Group( [ f1, <identity> of ... ] )]
 
-gap> HigherDimension(C12);
+gap> HigherDimension( CC12 );
 3
-
-gap> 
-
-
 
 gap> pc3 := PreCat1GroupByEndomorphisms( idem[5], idem[5] );
 [Group( [ f1, f2 ] )=>Group( [ f1, f2 ] )]
-gap> C233 := CatnGroup( [pc2, pc3, pc3] );
+gap> CC233 := CatnGroup( [pc2, pc3, pc3] );
 generating (pre-)cat1-groups:
 1 : [Group( [ f1, f2 ] )=>Group( [ f1, <identity> of ... ] )]
 2 : [Group( [ f1, f2 ] )=>Group( [ f1, f2 ] )]
 3 : [Group( [ f1, f2 ] )=>Group( [ f1, f2 ] )]
 
-gap> IsPreCatnGroup( C233 );
+gap> IsPreCatnGroup( CC233 );
 true
-gap> IsCatnGroup( C233 );
+gap> IsCatnGroup( CC233 );
 true
 
-gap> C5 := CatnGroup( [ Cat1Group(8,2,1), Cat1Group(8,2,2),
+gap> CC5 := CatnGroup( [ Cat1Group(8,2,1), Cat1Group(8,2,2),
 >          Cat1Group(8,2,4), Cat1Group(8,2,6), Cat1Group(8,2,6) ] );
 generating (pre-)cat1-groups:
 1 : [C4 x C2=>Group( [ <identity> of ..., <identity> of ..., <identity> of ... ] )]
@@ -52,7 +48,7 @@ generating (pre-)cat1-groups:
 4 : [C4 x C2=>C4 x C2]
 5 : [C4 x C2=>C4 x C2]
 
-gap> Display(C5);
+gap> Display( CC5 );
 generating (pre-)cat1-groups:
 1 :
 Cat1-group :-
@@ -147,33 +143,31 @@ Cat1-group [C4 x C2=>C4 x C2] :-
 : the kernel is trivial.
 : associated crossed module is [Group( <identity> of ... )->C4 x C2]
 
-gap> C6 := Cat2Group(Cat1Group(6,2,1),Cat1Group(6,2,4));
+gap> CC6 := Cat2Group( Cat1Group(6,2,2), Cat1Group(6,2,3) );
 generating (pre-)cat1-groups:
-1 : [C6=>Group( [ <identity> of ..., <identity> of ... ] )]
-2 : [C6=>C6]
+1 : [C6=>Group( [ f1 ] )]
+2 : [C6=>Group( [ f2 ] )]
 
-gap> IsCat2Group(C6);
+gap> IsCat2Group( CC6 );
 true
 
-gap> XS6 := CrossedSquareByCat2Group(C6);
+gap> xsCC6 := CrossedSquareByCat2Group( CC6 );
 crossed square with:
       up = [Group( () )->Group( () )]
     left = [Group( () )->Group( [ (1,2), (3,4,5) ] )]
     down = [Group( [ (1,2), (3,4,5) ] )->Group( () )]
    right = [Group( () )->Group( () )]
    
-gap> IsCrossedSquare(XS6);
+gap> IsCrossedSquare( xsCC6 );
 true
 
-gap> C7 := Cat2GroupByCrossedSquare(XS6);
-generating (pre-)cat1-groups:
-1 : [Group( [ (1,2), (3,4,5) ] )=>Group( [ (), () ] )]
-2 : [Group( [ (1,2), (3,4,5) ] )=>Group( [ (1,2), (3,4,5) ] )]
+gap> CCconj := Cat2GroupByCrossedSquare( XSconj );
+this command produces an error! 
 
-gap> IsCat2Group(C7);
+gap> IsCat2Group( CCconj );
 true
 
-gap> idC233 := IdentityMapping( C233 );
+gap> idCC233 := IdentityMapping( CC233 );
 <mapping: generating (pre-)cat1-groups:
 1 : [Group( [ f1, f2 ] )=>Group( [ f1, <identity> of ... ] )]
 2 : [Group( [ f1, f2 ] )=>Group( [ f1, f2 ] )]
@@ -184,7 +178,7 @@ gap> idC233 := IdentityMapping( C233 );
 3 : [Group( [ f1, f2 ] )=>Group( [ f1, f2 ] )]
  >
  
-gap> Display( idC233 );
+gap> Display( idCC233 );
 Morphism of pre-cat3-groups :- 
 : Source has generating (pre-)cat1-groups:
 1 : [Group( [ f1, f2 ] )=>Group( [ f1, <identity> of ... ] )]
@@ -201,7 +195,7 @@ Morphism of pre-cat3-groups :-
 2 : [ [ f1, f2 ], [ f1, f2 ] ]
 3 : [ [ f1, f2 ], [ f1, f2 ] ]
 
-gap> IsBijective( idC233 );
+gap> IsBijective( idCC233 );
 true
 
 #############################################################################

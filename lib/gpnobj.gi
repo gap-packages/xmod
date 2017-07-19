@@ -41,34 +41,29 @@ InstallMethod( IsPreCatnGroup, "generic method for a pre-catn-group",
     true, [ IsHigherDimensionalGroup ], 0,
 function( P )
 
-    local  G, C, L, n, i, j, endt, endh, ti, tj, hi, hj, PL;
+    local G, C, L, n, i, j, endt, endh, ti, tj, hi, hj, PL;
 
-    if not ( IsPreCatnObj ( P )  ) then
+    if not ( IsPreCatnObj( P )  ) then
         return false;
     fi;
-	
-    
     L := GeneratingCat1Groups( P );
     n := HigherDimension( P )-1;
-	
-	PL := [];
-        for i in [1..n] do 
-            if not ( IsPerm2DimensionalGroup( L[i] ) ) then
-                C := Image(IsomorphismPermObject( L[i] ) );
-            else
-                C := L[i];
-            fi;
-            Add(PL,C,i);
-        od;
-	L := PL;
-	
+    PL := [ ];
+    for i in [1..n] do 
+        if not ( IsPerm2DimensionalGroup( L[i] ) ) then
+            C := Image( IsomorphismPermObject( L[i] ) );
+        else
+            C := L[i];
+        fi;
+        Add( PL, C, i );
+    od;
+    L := PL;
     G := Source( L[1] );
         if not ForAll( L, C -> Source(C) = G ) then
         Info( InfoXMod, 2, 
             "generating cat1-groups should have the same source" );
         return false;        
     fi;
-
     endt := ListWithIdenticalEntries( n, 0 ); 
     endh := ListWithIdenticalEntries( n, 0 ); 
     for i in [1..n] do 
@@ -76,7 +71,6 @@ function( P )
         endt[i] := TailMap( C ) * RangeEmbedding( C ); 
         endh[i] := HeadMap( C ) * RangeEmbedding( C ); 
     od;
-
     # check conditions 1,2,3
     for i in [1..n-1] do 
         for j in [i+1..n] do 
@@ -110,9 +104,9 @@ InstallMethod( IsCatnGroup, "generic method for a catn-group",
     true, [ IsHigherDimensionalGroup ], 0,
 function( P )
 
-    local  L;
+    local L;
 
-    if not ( IsPreCatnGroup(P) ) then
+    if not ( IsPreCatnGroup( P ) ) then
         Info( InfoXMod, 2, "P is not a pre-catn-group" );
         return false;
     fi;
@@ -131,13 +125,17 @@ end );
 InstallMethod( PreCatnObj, "for precatn", true, [ IsList ], 0,
 function( L )
 
-    local  filter, fam, PC, ok, name, n;
+    local G1, filter, fam, PC, ok, name, n;
     
-    if ForAny(L, x -> not IsPreCat1Group(x) ) then 
+    if ForAny( L, x -> not IsPreCat1Group(x) ) then 
         Print( "Each item in the list must be PreCat1-group \n" );
         return fail;
     fi;
-    n := Length(L);
+    G1 := Source( L[1] ); 
+    if ForAny( L, x -> ( IsomorphismGroups(Source(x),G1) = fail ) ) then 
+        Error( "the cat1-groups fail to have isomorphic sources" ); 
+    fi;
+    n := Length( L );
     fam := FamilyHigherDimensionalGroup;
     filter := IsPreCatnObj;
     PC := rec();
@@ -145,9 +143,10 @@ function( L )
         GeneratingCat1Groups, L, 
         HigherDimension, n+1, 
         IsHigherDimensionalGroup, true );
-#    if not IsPreCatnGroup( PC ) then
-#        Info( InfoXMod, 1, "Warning: not a pre-catn-group" );
-#    fi;
+    if not IsPreCatnGroup( PC ) then
+        Info( InfoXMod, 1, "Warning: not a pre-catn-group" ); 
+        PC := fail; 
+    fi;
     return PC;
 end );
 
@@ -159,10 +158,9 @@ end );
 ##
 InstallGlobalFunction( PreCatnGroup, function( arg )
 
-    local  nargs, PnG, ok, usage;
+    local nargs, PnG, ok, usage;
 
     nargs := Length( arg );
-    
     usage := 
         "standard usage: PreCatnGroup( [pre-cat1-gp,pre-cat1-gp,...] );\n";
     if not ( ( nargs = 1 ) and IsList( arg[1] ) ) then 
@@ -182,7 +180,7 @@ end );
 
 InstallGlobalFunction( CatnGroup, function( arg )
 
-    local  nargs, CnG, ok, ok2, usage1, usage2, dim;
+    local nargs, CnG, ok, ok2, usage1, usage2, dim;
 
     nargs := Length( arg );    
     usage1 := 
@@ -203,10 +201,10 @@ InstallGlobalFunction( CatnGroup, function( arg )
                 dim := HigherDimension( CnG ); 
                 if ( dim = 3 ) then 
                     SetIsPreCat2Group( CnG, true ); 
-					ok2 := IsCatnGroup( CnG );
-					if ok2 then
-						SetIsCat2Group( CnG, true ); 
-					fi;
+                    ok2 := IsCatnGroup( CnG );
+                    if ok2 then
+                        SetIsCat2Group( CnG, true ); 
+                    fi;
                 fi; 
                 return CnG;
             fi;                
@@ -223,13 +221,14 @@ end );
 
 ##############################################################################
 ##
-#M  VerticesOfHigherDimensionalGroup( obj ) . . . . . . . . . . . . for a higher-dimensional group 
+#M  VerticesOfHigherDimensionalGroup( obj ) . . for a higher-dimensional group 
 ##
-InstallMethod( VerticesOfHigherDimensionalGroup, "method for dimension 2", true, 
-    [ IsHigherDimensionalGroup ], 0,
+InstallMethod( VerticesOfHigherDimensionalGroup, "method for dimension 2", 
+    true, [ IsHigherDimensionalGroup ], 0,
 function ( obj )
 
-    local  dim, L, gens; 
+    local dim, L, gens; 
+
     dim := HigherDimension( obj ); 
     if ( dim = 2 ) then 
         return [ Source( obj ), Range( obj ) ]; 
@@ -259,7 +258,7 @@ InstallMethod( \=,
     IsIdenticalObj, [ IsHigherDimensionalGroup, IsHigherDimensionalGroup ], 0,
 function ( dom1, dom2 )
     
-    local  n1, n2, L1, L2;
+    local n1, n2, L1, L2;
     
     n1 := HigherDimension( dom1 )-1;
     n2 := HigherDimension( dom2 )-1;
@@ -292,7 +291,7 @@ InstallMethod( PrintObj, "for an nd-group", true, [ IsHigherDimensionalGroup ],
     0,
 function( gnd )
 
-    local  i, n, L;
+    local i, n, L;
 
     if HasName( gnd ) then
         Print( Name( gnd ), "\n" );
@@ -317,10 +316,10 @@ InstallMethod( Display, "method for a nd-group", true,
     [ IsHigherDimensionalGroup ], 0,
 function( gnd )
 
-    local  i, n, L;
+    local i, n, L;
 
-    n := HigherDimension(gnd)-1;
-    if IsPreCatnGroup(gnd) then 
+    n := HigherDimension( gnd ) - 1;
+    if IsPreCatnGroup( gnd ) then 
         L := GeneratingCat1Groups( gnd );
         Print( "generating (pre-)cat1-groups:\n" );
     fi;     
@@ -337,7 +336,9 @@ end );
 InstallOtherMethod( IdGroup, "method for a nd-domain", true, 
     [ IsHigherDimensionalDomain ], 0, 
 function( dom )
-    local  u, d;
+
+    local u, d;
+
     u := Up2DimensionalGroup( dom ); 
     d := Down2DimensionalGroup( dom ); 
     return [ [ IdGroup( Source(u) ), IdGroup( Range(u) ) ], 

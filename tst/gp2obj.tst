@@ -171,7 +171,7 @@ false
 gap> X2 := XModOfCat1Group( C2 );;
 gap> Display( X2 );
 
-Crossed module X([G2=>d12]) :- 
+Crossed module xmod([G2=>d12]) :- 
 : Source group has generators:
   [ f1, f4, f5, f7 ]
 : Range group d12 has generators:
