@@ -24,8 +24,11 @@
               and the inclusion SL25.C2 -> GL25 using the matrix groups 
               (construction worked OK with isomorphic perm groups). 
 
-## 2.59 -> 2.61 (14/06/2017) 
+## 2.59 -> 2.61 (19/06/2017) 
 
+ * (17/07/17) new functions added by Alper for crossed square <-> cat2-group: 
+              ConjugationActionForCrossedSquare; 
+              ElementsRelationsForSemidirectProduct
  * (14/06/17) added methods for String, ViewString, PrintString 
  * (09/05/17) `dom2d3d.g{d,i}` renamed `dom2dnd.g{d,i}`
               hdim-morphisms now expect [ src, rng, list of maps ] 

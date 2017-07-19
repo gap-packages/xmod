@@ -17,8 +17,8 @@ InstallMethod( MakeHigherDimensionalGroupMorphism,
     [ IsHigherDimensionalGroup, IsHigherDimensionalGroup, IsList ], 0,
 function( src, rng, mors )
 
-    local  filter, fam, mor, dim, n, i;
-	
+    local filter, fam, mor, dim, n, i;
+    
     dim := HigherDimension( src );
     if ( dim <> HigherDimension( rng ) ) then 
         Print( "Source and Range must have the same dimension\n" );
@@ -30,7 +30,8 @@ function( src, rng, mors )
             Print( "third argument should have length ", dim-1, "\n" );
             return fail;
         fi; 
-    elif ( HasIsPreCrossedSquare(src) and IsPreCrossedSquare(src) ) then  ## morphism of (pre)crossed squares 
+    elif ( HasIsPreCrossedSquare(src) and IsPreCrossedSquare(src) ) then  
+        ## morphism of (pre)crossed squares 
         if ( dim  <> n-1 ) then
             Print( "third argument should have length ", dim+1, "\n" );
             return fail; 
@@ -67,7 +68,7 @@ InstallMethod( IsPreCatnMorphism,
     [ IsHigherDimensionalGroupMorphism ], 0,
 function( mor )
 
-    local  PC, QC, upmor, dnmor, ok, 2dmor, genPC, genQC, rangePC, rangeQC, x,
+    local PC, QC, upmor, dnmor, ok, 2dmor, genPC, genQC, rangePC, rangeQC, x,
            rnghoms, srchoms, G1, G2, P1, P2, p, q, comp, perm2dmor, i;
 
     PC := Source( mor );
@@ -128,7 +129,7 @@ end );
 InstallMethod( IsCatnMorphism, "generic method for higher dimensional mappings", true,
    [ IsHigherDimensionalGroupMorphism ], 0,
 function( mor )
-    local  ispre;
+    local ispre;
     ispre := IsPreCatnMorphism( mor );
     if not ispre then
         return false;
@@ -146,7 +147,7 @@ InstallMethod( \=,
     [ IsHigherDimensionalMapping, IsHigherDimensionalMapping ], 0,
 function ( mor, phi )
     
-    local  n1, n2, mors1, mors2;
+    local n1, n2, mors1, mors2;
     
     n1 := HigherDimension( mor );
     n2 := HigherDimension( phi );
@@ -169,7 +170,7 @@ InstallOtherMethod( MappingGeneratorsImages, "method for a higher dim mapping",
     true, [ IsHigherDimensionalMapping ], 0,
 function( map )
     
-    local  mors, imors;
+    local mors, imors;
     
     mors := ListOfHomomorphisms( map );
     imors := List( mors, f -> MappingGeneratorsImages(f) );
@@ -184,7 +185,7 @@ InstallMethod( Name, "method for a higher dimensional mapping", true,
     [ IsHigherDimensionalMapping ], 0,
 function( mor )
 
-    local  nsrc, nrng, name;
+    local nsrc, nrng, name;
 
     if HasName( Source( mor ) ) then
         nsrc := Name( Source( mor ) );
@@ -209,7 +210,7 @@ InstallMethod( Display, "display a higher dimensional mapping", true,
     [ IsHigherDimensionalMapping ], 0,
 function( mor )
 
-    local  P, Q, n, mors, i;
+    local P, Q, n, mors, i;
 
     P := Source( mor );
     Q := Range( mor );
@@ -251,7 +252,7 @@ InstallOtherMethod( IdentityMapping, "for higher dimensional object", true,
     [ IsHigherDimensionalGroup ], 0,
 function( obj )
 
-    local  idmaps;
+    local idmaps;
     
     ## this works for catn-groups but should be extended to n-cubes 
     idmaps := List( GeneratingCat1Groups( obj ), C -> IdentityMapping( C ) ); 
@@ -264,7 +265,7 @@ end );
 ##
 InstallGlobalFunction( CatnMorphism, function( arg )
 
-    local  nargs;
+    local nargs;
     nargs := Length( arg );
 
     if ( ( nargs = 3 ) and IsCatnGroup( arg[1]) 
@@ -285,7 +286,7 @@ InstallMethod( PreCatnMorphismByMorphisms,
     [ IsPreCatnGroup, IsPreCatnGroup, IsList ], 0,
 function( src, rng, L )
 
-    local  dim, filter, fam, mor, ok, nsrc, nrng, name, n;
+    local dim, filter, fam, mor, ok, nsrc, nrng, name, n;
     
     dim := HigherDimension( src )-1; 
     if not ( dim = HigherDimension(rng)-1 ) then 
@@ -311,7 +312,7 @@ InstallMethod( CatnMorphismByMorphisms, "method for a nd-mapping", true,
     [ IsCatnGroup, IsCatnGroup, IsList], 0,
 function( src, rng, L )
 
-    local  mor, ok;
+    local mor, ok;
     mor := PreCatnMorphismByMorphisms( src, rng, L );
     ok := IsCatnMorphism( mor );
     if not ok then
@@ -329,7 +330,7 @@ InstallOtherMethod( CompositionMorphism, "generic method for nd-mappings",
     0,
 function( m2, m1 )
 
-    local  up, lt, rt, dn, comp, ok, list, comps, n1, n2, mors1, mors2, i;
+    local up, lt, rt, dn, comp, ok, list, comps, n1, n2, mors1, mors2, i;
     
     n1 := HigherDimension( m1 );
     n2 := HigherDimension( m2 );
@@ -345,9 +346,10 @@ function( m2, m1 )
         return fail;
     fi;
     
-    comps := List( [1..Length(mors1)], i -> CompositionMapping( mors2[i], mors1[i] ) );
-    list := [Source( m1 ), Range( m2 )];
-    Append(list, comps);
+    comps := List( [1..Length(mors1)], 
+                   i -> CompositionMapping( mors2[i], mors1[i] ) );
+    list := [ Source( m1 ), Range( m2 ) ];
+    Append( list, comps );
     comp := MakeHigherDimensionalMapping( list );
     if ( IsPreCatnMorphism( m1 ) and IsPreCatnMorphism( m2 ) ) then
         SetIsPreCatnMorphism( comp, true );
@@ -378,10 +380,10 @@ end );
 
 ##############################################################################
 ##
-#M  IsInjective( map ) . . . . . . . . . . . . . . for a higher dimensional mapping
+#M  IsInjective( map ) . . . . . . . . . . . for a higher dimensional mapping
 ##
-InstallOtherMethod( IsInjective,
-    "method for a higher dimensional mapping", true, [ IsHigherDimensionalMapping ], 0,
+InstallOtherMethod( IsInjective, "method for a higher dimensional mapping", 
+    true, [ IsHigherDimensionalMapping ], 0,
 function( map )
 
     local ok, 2d_maps;
@@ -398,8 +400,8 @@ end );
 ##
 #M  IsSurjective( map ) . . . . . . . . . . . . . . for a higher dimensional mapping
 ##
-InstallOtherMethod( IsSurjective,
-    "method for a higher dimensional mapping", true, [ IsHigherDimensionalMapping ], 0,
+InstallOtherMethod( IsSurjective, "method for a higher dimensional mapping", 
+    true, [ IsHigherDimensionalMapping ], 0,
 function( map )
 
     local ok, 2d_maps;
@@ -414,10 +416,10 @@ end );
 
 ##############################################################################
 ##
-#M  IsSingleValued( map ) . . . . . . . . . . . .  . for a higher dimensional mapping
+#M  IsSingleValued( map ) . . . . . . . . . . for a higher dimensional mapping
 ##
-InstallOtherMethod( IsSingleValued,
-    "method for a higher dimensional mapping", true, [ IsHigherDimensionalMapping ], 0,
+InstallOtherMethod( IsSingleValued, "method for a higher dimensional mapping", 
+    true, [ IsHigherDimensionalMapping ], 0,
 function( map )
 
     local ok, 2d_maps;
@@ -432,10 +434,10 @@ end );
 
 ##############################################################################
 ##
-#M  IsTotal( map ) . . . . . . . . . . . . . . . . . for a higher dimensional mapping
+#M  IsTotal( map ) . . . . . . . . . . . . . for a higher dimensional mapping
 ##
-InstallOtherMethod( IsTotal,
-    "method for a higher dimensional mapping", true, [ IsHigherDimensionalMapping ], 0,
+InstallOtherMethod( IsTotal, "method for a higher dimensional mapping", true, 
+    [ IsHigherDimensionalMapping ], 0,
 function( map )
 
     local ok, 2d_maps;
@@ -450,10 +452,10 @@ end );
 
 ##############################################################################
 ##
-#M  IsBijective( map ) . . . . . . . . . . . . . . . . . for a higher dimensional mapping
+#M  IsBijective( map ) . . . . . . . . . . . for a higher dimensional mapping
 ##
-InstallOtherMethod( IsBijective,
-    "method for a higher dimensional mapping", true, [ IsHigherDimensionalMapping ], 0,
+InstallOtherMethod( IsBijective, "method for a higher dimensional mapping", 
+    true, [ IsHigherDimensionalMapping ], 0,
 function( map )
 
     local ok, 2d_maps;
@@ -468,11 +470,12 @@ end );
 
 ##############################################################################
 ##
-#M  IsEndomorphismHigherDimensionalDomain( map ) . . . . for a higher dimensional mapping
-#M  IsAutomorphismHigherDimensionalDomain( map ) . . . . for a higher dimensional mapping
+#M  IsEndomorphismHigherDimensionalDomain( map ) . . for a higher dim mapping
+#M  IsAutomorphismHigherDimensionalDomain( map ) . . for a higher dim mapping
 ##
 InstallMethod( IsEndomorphismHigherDimensionalDomain, 
-    "method for a higher dimensional mapping", true, [ IsHigherDimensionalMapping ], 0,
+    "method for a higher dimensional mapping", true, 
+    [ IsHigherDimensionalMapping ], 0,
 function( map )
 
     local ok, 2d_maps;
@@ -486,9 +489,11 @@ function( map )
 end );
 
 InstallMethod( IsAutomorphismHigherDimensionalDomain, 
-    "method for a higher dimensional mapping", true, [ IsHigherDimensionalMapping ], 0,
-    map -> IsEndomorphismHigherDimensionalDomain( map ) and IsBijective( map ) );
-	
+    "method for a higher dimensional mapping", true, 
+    [ IsHigherDimensionalMapping ], 0,
+    map -> IsEndomorphismHigherDimensionalDomain( map ) 
+           and IsBijective( map ) );
+
 ##############################################################################
 ##
 #E  gpnmap.gi . . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here

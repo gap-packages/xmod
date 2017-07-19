@@ -44,7 +44,7 @@ crossed square with:
     down = Norrie[d10a->d20]
    right = Actor[d10a->d20]
 
-## Section 8.1.2
+## Section 8.2.2
 gap> pos7 := Position( ids, [ [12,2], [24,5] ] );;
 gap> Xn7 := nsx[pos7]; 
 [Group( [ f2, f3, f4 ] )->Group( [ f1, f2, f4, f5 ] )]
