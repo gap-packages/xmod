@@ -2,9 +2,12 @@
 
 ## Problems and ToDos: 
 
+ * (20/07/17) more work needed on IsomorphismByIsomorphisms, e.g. for xmods; 
+              maybe functions such as IsomorphismPerm2DimensionalGroup 
+              could be rewritten to use IsomorphismByIsomorphisms? 
  * (14/06/17) Need String, View, Print for 3d- and nd-groups 
  * (28/04/17) implement inclusion of the kernel of an xmod-morphism as xsq 
- * (25/04/17) `examples/gpd2obj.g` needs more material 
+ * (25/04/17) file examples/gpd2obj.g needs more material 
  * (19/08/16) error report from Tedar Tegstrom: he discovered that 
               InducedXMod(X0,iota) fails when Boundary(X0) not mono. 
  * (16/06/16) document more utility functions or move them to Utils
@@ -24,9 +27,10 @@
               and the inclusion SL25.C2 -> GL25 using the matrix groups 
               (construction worked OK with isomorphic perm groups). 
 
-## 2.59 -> 2.61 (19/06/2017) 
+## 2.59 -> 2.61 (20/06/2017) 
 
- * (19/07/17) Removed duplication in 'Of' and 'By' operations  
+ * (20/07/17) added IsomorphismByIsomorphisms for pre1-cat-groups 
+ * (20/07/17) Removed duplication in 'Of' and 'By' operations  
  * (17/07/17) new functions added by Alper for crossed square <-> cat2-group: 
               ConjugationActionForCrossedSquare; 
               ElementsRelationsForSemidirectProduct

@@ -59,9 +59,9 @@ function( P )
     od;
     L := PL;
     G := Source( L[1] );
-        if not ForAll( L, C -> Source(C) = G ) then
+        if ForAny( L, C -> IsomorphismGroups(Source(C),G)=fail ) then
         Info( InfoXMod, 2, 
-            "generating cat1-groups should have the same source" );
+            "generating cat1-groups should have isomorphic sources" );
         return false;        
     fi;
     endt := ListWithIdenticalEntries( n, 0 ); 

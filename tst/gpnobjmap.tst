@@ -153,10 +153,10 @@ true
 
 gap> xsCC6 := CrossedSquareOfCat2Group( CC6 );
 crossed square with:
-      up = [Group( () )->Group( () )]
-    left = [Group( () )->Group( [ (1,2), (3,4,5) ] )]
-    down = [Group( [ (1,2), (3,4,5) ] )->Group( () )]
-   right = [Group( () )->Group( () )]
+      up = [Group( () )->Group( [ (1,2) ] )]
+    left = [Group( () )->Group( [ (), (3,4,5) ] )]
+    down = [Group( [ (), (3,4,5) ] )->Group( () )]
+   right = [Group( [ (1,2) ] )->Group( () )]
    
 gap> IsCrossedSquare( xsCC6 );
 true
