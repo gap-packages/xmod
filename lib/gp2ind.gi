@@ -15,15 +15,15 @@ InstallMethod( CoproductXMod, "for two crossed modules", true,
     [ IsXMod, IsXMod ], 0,
 function( X1, X2 )
 
-    local  f, S1, S2, R, act1, act2, aut2, gen1, gen2, bdy1, bdy2, idR, ok, 
-           orb12, act12, hom12, imu, mu, sdp, proj, mgi1, mgi2, emb1, emb2, 
-           emor1, emor2, gens, lens, fgens, gens1, gens2, imbdy, i, j, g, r, 
-           genR, lenR, cbdy, a1, a2, alpha, imalpha, cact, imcact, caut, 
-           prexmod, peiffer, pmor, pmor1, pmor2, info, coprod; 
+    local f, S1, S2, R, act1, act2, aut2, gen1, gen2, bdy1, bdy2, idR, ok, 
+          orb12, act12, hom12, imu, mu, sdp, proj, mgi1, mgi2, emb1, emb2, 
+          emor1, emor2, gens, lens, fgens, gens1, gens2, imbdy, i, j, g, r, 
+          genR, lenR, cbdy, a1, a2, alpha, imalpha, cact, imcact, caut, 
+          prexmod, peiffer, pmor, pmor1, pmor2, info, coprod; 
 
     ##  function to split a semedirectproduct element into two parts 
     f := function( g ) 
-        local  x, x1, y1, y; 
+        local x, x1, y1, y; 
         x := Image( proj, g );
         x1 := Image( emb1, x ); 
         y1 := x1^-1 * g;
@@ -122,8 +122,8 @@ end );
 ##
 InstallGlobalFunction( InducedXMod, function( arg )
 
-    local  usage, nargs, X0, bdy0, M, P, Q, iota, ires, T, mono, surj, iP,
-           mor01, X1, I1, genI1, bdy1, im1, P1, inc, mor12, IX;
+    local usage, nargs, X0, bdy0, M, P, Q, iota, ires, T, mono, surj, iP,
+          mor01, X1, I1, genI1, bdy1, im1, P1, inc, mor12, IX;
 
     usage := function( u )
         Print("\nUsage: InducedXMod( Q, P, M [, T] );");
@@ -236,27 +236,27 @@ InstallMethod( InclusionInducedXModByCopower,
     [ IsXMod, IsGroupHomomorphism, IsList ], 0,
 function( X0, iota, trans )
 
-    local  imgeniota, T, t, kept, diff, ok, l1, l2, m1, m2, 
-           qP, qT, pos, posn, posm, words, total, tietze,
-           Q, oQ, q, elQ, genQ, ngQ, Qinfo, actQ, p2fQ, FQ, degQ, indQP,
-           P, oP, p, elP, genP, Pinfo, FP, iP, eliP,
-           M, oM, m, elM, genM, ngM, Minfo, g2fpM, fp2gM, mgiM, imM, xgM, 
-           FM, genFM, ngFM, presFM, relFM, nrFM, 
-           freeM, genfreeM, free1, genfree1, free2, genfree2, 
-           N, n1, n2, genN, ngN, 
-           iN, geniN, FN, genFN, relFN, nrFN, fN, genfN, subfN, defN,  
-           I, info, ngI, xgI, nxI, genI, relI, degI, imI, idI, 
-           FI1, presFI1, genFI1, f2p, gensFI1, 
-           ofpi, oFI2, FI2, genFI2, ngFI2, gensFI2, imact, 
-           imIQ, homFIQ, FK, genFK, genK, oK, K, big,
-           fpi, Idi, ck, cl, cm, qk, fl, gk, gl, gm, hk, hl, hm,
-           i, ik, il, im, j, jk, jl, jm, k, nk, nl, pm, rm,
-           tk, tl, tm, zk, zl, zm, u, v, x, y, z, ix, iy, 
-           imD, gimD, elimD, genD, ind, gpos, vpos, imrem, genpos, genim,
-           IX, bdy, act, aut, mor, morsrc, Iname, Xname, IdGp,
-           degi, imold, prenew, iso12, pres2, 
-           comp, mgicomp, series, idseries, 
-           imFIQ, mgiFIQ, relFI, genFI, ishom, ispc, ispcI;
+    local imgeniota, T, t, kept, diff, ok, l1, l2, m1, m2, 
+          qP, qT, pos, posn, posm, words, total, tietze,
+          Q, oQ, q, elQ, genQ, ngQ, Qinfo, actQ, p2fQ, FQ, degQ, indQP,
+          P, oP, p, elP, genP, Pinfo, FP, iP, eliP,
+          M, oM, m, elM, genM, ngM, Minfo, g2fpM, fp2gM, mgiM, imM, xgM, 
+          FM, genFM, ngFM, presFM, relFM, nrFM, 
+          freeM, genfreeM, free1, genfree1, free2, genfree2, 
+          N, n1, n2, genN, ngN, 
+          iN, geniN, FN, genFN, relFN, nrFN, fN, genfN, subfN, defN,  
+          I, info, ngI, xgI, nxI, genI, relI, degI, imI, idI, 
+          FI1, presFI1, genFI1, f2p, gensFI1, 
+          ofpi, oFI2, FI2, genFI2, ngFI2, gensFI2, imact, 
+          imIQ, homFIQ, FK, genFK, genK, oK, K, big,
+          fpi, Idi, ck, cl, cm, qk, fl, gk, gl, gm, hk, hl, hm,
+          i, ik, il, im, j, jk, jl, jm, k, nk, nl, pm, rm,
+          tk, tl, tm, zk, zl, zm, u, v, x, y, z, ix, iy, 
+          imD, gimD, elimD, genD, ind, gpos, vpos, imrem, genpos, genim,
+          IX, bdy, act, aut, mor, morsrc, Iname, Xname, IdGp,
+          degi, imold, prenew, iso12, pres2, 
+          comp, mgicomp, series, idseries, 
+          imFIQ, mgiFIQ, relFI, genFI, ishom, ispc, ispcI;
 
     Info( InfoXMod,2,"calling InclusionInducedXModByCopower" ); 
     Q := Range( iota );
@@ -744,10 +744,10 @@ InstallMethod( SurjectiveInducedXMod, "for xmod and homomorphism",
     true, [ IsXMod, IsGroupHomomorphism ], 0,
 function( X0, iota )
 
-    local  ispc, S, genS, R, bdy, act, K, genK, s, r, a, x, 
-           H, genH, rcos, reps, Q, lenQ, genQ, preQ, PI, actPI, 
-           isoI, I, genI, imi, istar, acthom, imb, bdystar, i, 
-           autgen, imI, imS, actstar, autstar, idI, IX, mor;
+    local ispc, S, genS, R, bdy, act, K, genK, s, r, a, x, 
+          H, genH, rcos, reps, Q, lenQ, genQ, preQ, PI, actPI, 
+          isoI, I, genI, imi, istar, acthom, imb, bdystar, i, 
+          autgen, imI, imS, actstar, autstar, idI, IX, mor;
 
     R := Range( X0 );
     S := Source( X0 );
@@ -830,9 +830,9 @@ end );
 ##
 InstallGlobalFunction( AllInducedXMods, function( args )
 
-    local  nargs, rrange,nrange, usage, L, lenL, reps, nreps, r, i, j, k, a, b,  
-           norm, nnorm, n, sizes, keep, coll, Q, P, M, id, XQ, SQ, num, line, 
-           descrip, Msd, Psd, Qsd, SQsd, Ksd; 
+    local nargs, rrange,nrange, usage, L, lenL, reps, nreps, r, i, j, k, a, b,  
+          norm, nnorm, n, sizes, keep, coll, Q, P, M, id, XQ, SQ, num, line, 
+          descrip, Msd, Psd, Qsd, SQsd, Ksd; 
 
     descrip := [ ]; 
     nargs := Length( args ); 
@@ -934,31 +934,31 @@ InstallMethod( InclusionInducedCat1Data, "for cat1-group, homomorphism, list",
     true, [ IsCat1Group, IsGroupHomomorphism, IsList ], 0,
 function( C, iota, trans )
 
-local  Q, R, G,                    # 3 permutation groups
-       Qinfo, Rinfo, Ginfo,        # IsomorphismFpInfos
-       # C, iota,                  # C = [G ==iota==> R]
-       ICGinfo,                    # InducedCat1Info
-       nargs,                      # number of arg
-       FQ, FR, FG,                 # Fin. Pres. Group
-       elQ, elR, elG,              # elements of groups
-       genQ, genR, genG,           # generating sets of groups
-       oQ, oR, oG,                 # size of groups
-       ngG,                        # number of generating set for G
-       indQ,                       # oQ/oR
-       degQ,                       # NrMovedPoints( Q )
-       genFG,                      # generating set for Fin.Pres. Group FG
-       ngFG,                       # number of generating set for FG
-       relFG,                      # relators for FG
-       nrFG,                       # number of all relators of FG
-       elFG,                       # elements of FG
-       presFG,                     # PresentationViaCosetTable for FG
-       fp2gG,                      # record field for G
-       qR, qT,                     # record field for Q
-       posg2f, posf2g,             # positions of isomorphic images G <-> FG
-       pos,                        # position variable
-       T,                          # Tinfo
-       ok,                         # checking variable
-       t, i, q, p, m, rm;          # variables
+local Q, R, G,                    # 3 permutation groups
+      Qinfo, Rinfo, Ginfo,        # IsomorphismFpInfos
+      # C, iota,                  # C = [G ==iota==> R]
+      ICGinfo,                    # InducedCat1Info
+      nargs,                      # number of arg
+      FQ, FR, FG,                 # Fin. Pres. Group
+      elQ, elR, elG,              # elements of groups
+      genQ, genR, genG,           # generating sets of groups
+      oQ, oR, oG,                 # size of groups
+      ngG,                        # number of generating set for G
+      indQ,                       # oQ/oR
+      degQ,                       # NrMovedPoints( Q )
+      genFG,                      # generating set for Fin.Pres. Group FG
+      ngFG,                       # number of generating set for FG
+      relFG,                      # relators for FG
+      nrFG,                       # number of all relators of FG
+      elFG,                       # elements of FG
+      presFG,                     # PresentationViaCosetTable for FG
+      fp2gG,                      # record field for G
+      qR, qT,                     # record field for Q
+      posg2f, posf2g,             # positions of isomorphic images G <-> FG
+      pos,                        # position variable
+      T,                          # Tinfo
+      ok,                         # checking variable
+      t, i, q, p, m, rm;          # variables
 
     G := Source( C );
     Ginfo := IsomorphismFpInfo( G );
@@ -1032,60 +1032,60 @@ end );
 InstallMethod( InducedCat1GroupByFreeProduct, "for a list", true, [ IsList ], 0,
 function( info )
 
-    local  FQ,             # Fin. Pres. Group
-           Q,              # Perm Group 
-           Qinfo,           # Record field 
-           oQ,             # Size of Q
-           genQ,           # generating set for Perm group Q 
-           ngQ,            # number of generating set of Perm Group Q
-           genG,           # generating set perm group G
-           ngG,            # number of generating set of perm G
-           ngI,            # total length of ngPG+ngPQ
-           C,              # Cat1Group 
-           Csrc,           # Cat1Group source 
-           Crng,           # Cat1Group range 
-           t, h, e,        # tail, head, embedding 
-           genCsrc,        # generating set of sourxe group
-           genCrng,        # generating set of range group
-           fI,             # Free group 
-           genfI,          # generating set of free group 
-           imG, imQ, 
-           relI,           # all relators
-           Gfp,            # IsomorphismFpInfo 
-           genGfp,         # generating set  
-           FGrel,           # relators
-           len,            # Length of relators
-           Qfp,            # IsomorphismFpInfo for Q
-           genQfp,         # generating set 
-           FQrel,           # relators
-           iota,            # inclusion map from Crng to PQ
-           imembed,        # relations produced by embedding
-           imiota,         # relations produced by iota
-           uuQ,            # List variable
-           wQ, uQ, wG, uG, uQG,
-           kert, kerh,     # kernel of tail and head
-           genkert,        # generating set of kert
-           genkerh,        # generating set of kerh
-           imt, imh, 
-           tG, hG, 
-           com,            # Commutator subgroup
-           Yh, Yt,         # conjugations for tail and head
-           YYt, YYh,       # List of conjugations
-           I, genI,        # new free group and its generating set
-           presFI,          # Presentation
-           newFIfp,         # IsomorphismFpInfo
-           PI,             # new permutational group
-           oFI2, genPI,      # Size and generating set of new perm group
-           iotastar,       # homomorphism from Csrc to nep perm group
-           imh1, imh2, 
-           hstar,          # new head homomorphism for induced cat1-group
-           imt1, imt2, 
-           tstar,          # new tail homomorphism for induced cat1-group
-           imm, imag, images, 
-           estar,          # new embed homomorphism for Ind.cat1
-           IC,             # Induced Cat1-group variable
-           mor,            # Cat1Morphism from C to IC 
-           u, v, j, x, i, g;# using variables
+    local FQ,               # Fin. Pres. Group
+          Q,                # Perm Group 
+          Qinfo,            # Record field 
+          oQ,               # Size of Q
+          genQ,             # generating set for Perm group Q 
+          ngQ,              # number of generating set of Perm Group Q
+          genG,             # generating set perm group G
+          ngG,              # number of generating set of perm G
+          ngI,              # total length of ngPG+ngPQ
+          C,                # Cat1Group 
+          Csrc,             # Cat1Group source 
+          Crng,             # Cat1Group range 
+          t, h, e,          # tail, head, embedding 
+          genCsrc,          # generating set of sourxe group
+          genCrng,          # generating set of range group
+          fI,               # free group 
+          genfI,            # generating set of free group 
+          imG, imQ, 
+          relI,             # all relators
+          Gfp,              # IsomorphismFpInfo 
+          genGfp,           # generating set  
+          FGrel,            # relators
+          len,              # Length of relators
+          Qfp,              # IsomorphismFpInfo for Q
+          genQfp,           # generating set 
+          FQrel,            # relators
+          iota,             # inclusion map from Crng to PQ
+          imembed,          # relations produced by embedding
+          imiota,           # relations produced by iota
+          uuQ,              # List variable
+          wQ, uQ, wG, uG, uQG,
+          kert, kerh,       # kernel of tail and head
+          genkert,          # generating set of kert
+          genkerh,          # generating set of kerh
+          imt, imh, 
+          tG, hG, 
+          com,              # Commutator subgroup
+          Yh, Yt,           # conjugations for tail and head
+          YYt, YYh,         # List of conjugations
+          I, genI,          # new free group and its generating set
+          presFI,           # Presentation
+          newFIfp,          # IsomorphismFpInfo
+          PI,               # new permutational group
+          oFI2, genPI,      # Size and generating set of new perm group
+          iotastar,         # homomorphism from Csrc to nep perm group
+          imh1, imh2, 
+          hstar,            # new head homomorphism for induced cat1-group
+          imt1, imt2, 
+          tstar,            # new tail homomorphism for induced cat1-group
+          imm, imag, images, 
+          estar,            # new embed homomorphism for Ind.cat1
+          IC,               # Induced Cat1-group variable
+          mor,              # Cat1Morphism from C to IC 
+          u, v, j, x, i, g; # using variables
 
     Q := info!.Qinfo!.perm;
     C := info!.cat1;
@@ -1221,7 +1221,7 @@ end );
 ##
 InstallGlobalFunction( InducedCat1Group, function( arg )
 
-    local  nargs, info, Q, Qinfo, P, Pinfo, G, Ginfo, C, iota, IC;
+    local nargs, info, Q, Qinfo, P, Pinfo, G, Ginfo, C, iota, IC;
 
     nargs := Length( arg );
     if ( nargs > 2 ) then
@@ -1267,9 +1267,9 @@ end );
 ##
 InstallGlobalFunction( AllInducedCat1Groups, function( args )
 
-    local  nargs, rrange, nrange, L, lenL, reps, nreps, r, i, j, k, a, b,
-           norm, nnorm, n, sizes, keep, coll, Q, P, M, id, info, 
-           IC, num, line, C, iota;
+    local nargs, rrange, nrange, L, lenL, reps, nreps, r, i, j, k, a, b,
+          norm, nnorm, n, sizes, keep, coll, Q, P, M, id, info, 
+          IC, num, line, C, iota;
 
     nargs := Length( args ); 
     Q := args[1]; 

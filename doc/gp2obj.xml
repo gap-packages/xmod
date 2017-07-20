@@ -786,7 +786,7 @@ Cat1-group :-
 : kernel embedding maps generators of kernel to:
   [ (4,5,6) ]
 gap> convert the result to the associated permutation crossed module 
-gap> X18 := XModByCat1Group( PC18 );; 
+gap> X18 := XModOfCat1Group( PC18 );; 
 gap> Display( X18 ); 
 Crossed module:- 
 : Source group has generators:

@@ -151,7 +151,7 @@ generating (pre-)cat1-groups:
 gap> IsCat2Group( CC6 );
 true
 
-gap> xsCC6 := CrossedSquareByCat2Group( CC6 );
+gap> xsCC6 := CrossedSquareOfCat2Group( CC6 );
 crossed square with:
       up = [Group( () )->Group( () )]
     left = [Group( () )->Group( [ (1,2), (3,4,5) ] )]
@@ -161,7 +161,7 @@ crossed square with:
 gap> IsCrossedSquare( xsCC6 );
 true
 
-gap> CCconj := Cat2GroupByCrossedSquare( XSconj );
+gap> CCconj := Cat2GroupOfCrossedSquare( XSconj );
 this command produces an error! 
 
 gap> IsCat2Group( CCconj );

@@ -2,8 +2,6 @@
 
 ## Problems and ToDos: 
 
- * (19/07/17) Tidy up 'Of's and 'By's : Of <=> attribute; By <=> operation 
-              surely no need for both Cat1GroupOfXMod & Cat1GroupByXMod etc?
  * (14/06/17) Need String, View, Print for 3d- and nd-groups 
  * (28/04/17) implement inclusion of the kernel of an xmod-morphism as xsq 
  * (25/04/17) `examples/gpd2obj.g` needs more material 
@@ -28,6 +26,7 @@
 
 ## 2.59 -> 2.61 (19/06/2017) 
 
+ * (19/07/17) Removed duplication in 'Of' and 'By' operations  
  * (17/07/17) new functions added by Alper for crossed square <-> cat2-group: 
               ConjugationActionForCrossedSquare; 
               ElementsRelationsForSemidirectProduct

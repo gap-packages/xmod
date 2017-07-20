@@ -16,7 +16,7 @@ InstallMethod( FixedPointSubgroupXMod, "generic method for precrossed modules",
     true, [ IsPreXMod, IsGroup, IsGroup ], 0,
 function( XM, T, Q )
 
-    local  genQ, act, ext, orb, elts, fix, gens;
+    local genQ, act, ext, orb, elts, fix, gens;
 
     if not ( IsSubgroup( Source(XM), T ) and IsSubgroup( Range(XM), Q ) ) then 
         Error( "T,Q not subgroups of S,R" ); 
@@ -70,7 +70,7 @@ InstallMethod( CentreXMod, "generic method for crossed modules", true,
     [ IsXMod ], 0,
 function( XM )
 
-    local  T, G, K, fix;
+    local T, G, K, fix;
 
     T := Source( XM );
     G := Range( XM );
@@ -87,7 +87,7 @@ InstallOtherMethod( Centralizer, "generic method for crossed modules", true,
     [ IsXMod, IsXMod ], 0,
 function( XM, YM )
 
-    local  srcX, rngY, genR, actY, ext, orb, elts, fix, gens, srcC, rngC; 
+    local srcX, rngY, genR, actY, ext, orb, elts, fix, gens, srcC, rngC; 
 
     if not IsSubXMod( XM, YM ) then 
         Error( "YM is not a subcrossed module of XM" ); 
@@ -121,7 +121,7 @@ InstallMethod( Displacement, "generic method for hom, element, element",
     true, [ IsGroupHomomorphism, IsObject, IsObject ], 0,
 function( alpha, r, s )
 
-    local  a; 
+    local a; 
 
     if not ( r in Source(alpha) ) then 
         Error( "r not in Source(alpha)" ); 
@@ -141,7 +141,7 @@ InstallMethod( DisplacementSubgroup, "generic method for crossed modules",
     true, [ IsXMod ], 0,
 function( XM )
 
-    local  alpha, alp, sonuc, T, G, t, t0, g, list, one;
+    local alpha, alp, sonuc, T, G, t, t0, g, list, one;
 
     T := Source( XM );
     G := Range( XM );
@@ -172,7 +172,7 @@ InstallOtherMethod( Normalizer, "generic method for crossed modules", true,
     [ IsXMod, IsXMod ], 0,
 function( XM, YM )
 
-    local  act, T, G, S, H, t, h, d, pos, elts, gens, srcN, rngN; 
+    local act, T, G, S, H, t, h, d, pos, elts, gens, srcN, rngN; 
 
     if not IsSubXMod( XM, YM ) then 
         Error( "YM is not a subcrossed module of XM" ); 
@@ -212,7 +212,7 @@ InstallMethod( CrossActionSubgroup, "generic method for two normal subxmods",
     true, [ IsXMod, IsXMod, IsXMod ], 0,
 function( TG, SH, RK )
 
-    local  alpha, alp, T, s, s0, k, r, r0, h, list, one, cas;
+    local alpha, alp, T, s, s0, k, r, r0, h, list, one, cas;
 
     ## if not ( IsSub2DimensionalDomain(TG,SH) 
     ##          and IsSub2DimensionalDomain(TG,RK) ) then 
@@ -279,8 +279,8 @@ InstallMethod( NaturalMorphismByNormalSubPreXMod,
     "generic method for crossed modules", true, [ IsPreXMod, IsPreXMod ], 0,
 function( XM, SM )
 
-    local  actX, bdyX, nhomQ, nhomF, T, G, S, H, Q, F, sgQ, sgF, imbdy, bdy, 
-           lenF, psgQ, psgF, asgF, i, autF, aut, act, FM;
+    local actX, bdyX, nhomQ, nhomF, T, G, S, H, Q, F, sgQ, sgF, imbdy, bdy, 
+          lenF, psgQ, psgF, asgF, i, autF, aut, act, FM;
 
     if not IsNormal( XM, SM ) then 
         Error( "not a normal subcrossed module" ); 
@@ -339,7 +339,9 @@ end );
 InstallMethod( FactorPreXMod, "generic method for precrossed modules", true, 
     [ IsPreXMod, IsPreXMod ], 0,
 function( XM, SM )
-    local  nat, FM; 
+
+    local nat, FM; 
+
     nat := NaturalMorphismByNormalSubPreXMod( XM, SM ); 
     FM := Range( nat ); 
     SetProjectionOfFactorPreXMod( FM, nat ); 
@@ -354,7 +356,7 @@ InstallMethod( DerivedSubXMod, "generic method for crossed modules", true,
     [ IsXMod ], 0,
 function( XM )
 
-    local  D, dgt; 
+    local D, dgt; 
 
     D := DerivedSubgroup( Range( XM ) );
     dgt := DisplacementSubgroup( XM ); 
@@ -369,7 +371,7 @@ InstallMethod( CommutatorSubXMod, "generic method for crossed modules", true,
     [ IsXMod, IsXMod, IsXMod ], 0,
 function( TG, SH, RK )
 
-    local  cas, com;
+    local cas, com;
 
     cas := CrossActionSubgroup( TG, SH, RK ); 
     com := CommutatorSubgroup( Range(SH), Range(RK) );
@@ -384,7 +386,7 @@ InstallOtherMethod( LowerCentralSeries, "generic method for crossed modules",
     true, [ IsXMod ], 0,
 function( XM )
 
-    local  list, C;
+    local list, C;
 
     list := [ XM ];
     C := DerivedSubXMod( XM );
@@ -443,7 +445,7 @@ InstallMethod( IsNilpotent2DimensionalGroup,
     "generic method for crossed modules", true, [ IsXMod ], 0,
 function( XM )
 
-    local  S, n, sonuc;
+    local S, n, sonuc;
 
     S := LowerCentralSeries( XM );
     n := Length(S);
@@ -478,7 +480,7 @@ InstallMethod( IsomorphismXMods, "generic method for crossed modules", true,
     [ Is2DimensionalGroup, Is2DimensionalGroup ], 0,
 function(XM1,XM2)
 
-    local  T1, G1, T2, G2, isoT, isoG, iterT, iterG, alp, ph, mor;
+    local T1, G1, T2, G2, isoT, isoG, iterT, iterG, alp, ph, mor;
 
     T1 := Source(XM1);
     G1 := Range(XM1);
@@ -513,7 +515,7 @@ InstallMethod( AllXModsWithGroups, "generic method for a pair of groups",
     true, [ IsGroup, IsGroup ], 0,
 function( T, G )
 
-    local  list, A, itTG, itGA, b1, a1, obj;
+    local list, A, itTG, itGA, b1, a1, obj;
 
     list := [ ];
     A := AutomorphismGroup(T); 
@@ -536,7 +538,7 @@ InstallMethod( AllXModsWithGroups0, "generic method for a pair of groups",
     true, [ IsGroup, IsGroup ], 0,
 function( T, G )
 
-    local  list, A, allTG, allGA, b1, a1, obj;
+    local list, A, allTG, allGA, b1, a1, obj;
 
     list := [ ];
     A := AutomorphismGroup(T); 
@@ -557,7 +559,7 @@ InstallMethod( AllXModsWithGroups1, "generic method for a pair of groups",
     true, [ IsGroup, IsGroup ], 0,
 function( T, G )
 
-    local  list, A, itTG, itGA, b1, a1, obj;
+    local list, A, itTG, itGA, b1, a1, obj;
 
     list := [ ];
     A := AutomorphismGroup(T); 
@@ -580,7 +582,7 @@ InstallMethod( AllXModsWithGroups2, "generic method for a pair of groups",
     true, [ IsGroup, IsGroup ], 0,
 function( T, G )
 
-    local  list, A, itTG, itGA, b1, a1, obj;
+    local list, A, itTG, itGA, b1, a1, obj;
 
     list := [ ];
     A := AutomorphismGroup(T); 
@@ -603,7 +605,7 @@ InstallMethod( AllXModsWithGroups3, "generic method for a pair of groups",
     true, [ IsGroup, IsGroup ], 0,
 function( T, G )
 
-    local  list, A, itTG, itGA, b1, a1, obj;
+    local list, A, itTG, itGA, b1, a1, obj;
 
     list := [ ];
     A := AutomorphismGroup(T); 
@@ -630,7 +632,7 @@ end );
 ## 
 InstallGlobalFunction( AllXMods, function( arg )
 
-    local  nargs, a, list, s1, j1, s2, j2, T, G, sizes; 
+    local nargs, a, list, s1, j1, s2, j2, T, G, sizes; 
 
     nargs := Length( arg ); 
     if ( nargs = 2 ) then 
@@ -688,7 +690,7 @@ InstallMethod( AllStemGroupIds, "generic method for posint", true,
     [ IsPosInt ], 0,
 function(a) 
 
-    local  g, i, j, sonuc, sayi;
+    local g, i, j, sonuc, sayi;
 
     sonuc := [ ]; 
     for g in AllSmallGroups( a ) do 
@@ -707,7 +709,7 @@ InstallMethod( AllStemGroupFamilies, "generic method for posint", true,
     [ IsPosInt ], 0,
 function(a) 
 
-    local  ids, len, found, id, gi, g, i, j, sonuc, new, sayi;
+    local ids, len, found, id, gi, g, i, j, sonuc, new, sayi;
 
     ids := AllStemGroupIds( a );
     len := Length( ids ); 
@@ -741,7 +743,7 @@ InstallMethod( CentralQuotient, "generic method for groups", true,
     [ IsGroup ], 0,
 function( G ) 
 
-    local  ZG, Q, nat, XQ; 
+    local ZG, Q, nat, XQ; 
 
     ZG := Centre( G ); 
     Q := FactorGroup( G, ZG ); 
@@ -760,8 +762,8 @@ InstallOtherMethod( CentralQuotient, "generic method for crossed modules",
     true, [ IsXMod ], 0,
 function( XM ) 
 
-    local  act, ZM, QM, ul, ur, dl, dr, nat, up, dn, gdl, gdr, iul, adg, 
-           prod, proj1, proj2, map, xp, CrossedSquare; 
+    local act, ZM, QM, ul, ur, dl, dr, nat, up, dn, gdl, gdr, iul, adg, 
+          prod, proj1, proj2, map, xp, CrossedSquare; 
 
     act := XModAction( XM ); 
     ZM := CentreXMod( XM ); 
@@ -785,7 +787,7 @@ function( XM )
     proj2 := Projection( prod, 2 );
     map := MappingByFunction( prod, ul, 
                function(c) 
-               local  a,s;
+               local a,s;
                a := Image( act, Image(proj1,c) ); 
                s := PreImagesRepresentative( Boundary(up), Image(proj2,c) );  
                return Image(a,s^-1)*s; 
@@ -806,7 +808,9 @@ end );
 InstallMethod( AreIsoclinicDomains, "generic method for two groups or xmods", 
     true, [ IsDomain, IsDomain ], 0,
 function( D1, D2 ) 
-    local  iso;
+
+    local iso;
+
     if not ( ( IsGroup(D1) and IsGroup(D2) ) or 
              ( Is2DimensionalGroup(D1) and Is2DimensionalGroup(D2) ) ) then 
         Error( "D1 and D2 should be groups or 2DimensionalGroups" ); 
@@ -827,9 +831,9 @@ InstallMethod( Isoclinism, "generic method for two groups", true,
     [ IsGroup, IsGroup ], 0,
 function( G1, G2 )
 
-    local  CQ1, CQ2, Q1, Q2, D1, D2, nhom1, nhom2, sgQ1, lsgQ1, itAQ2, itAD2, 
-           isoQ, isoD, p1, q1, p2, q2, i, iq1, iq2, j, g1, h1, 
-           g2, h2, gor1, gor2, ok;
+    local CQ1, CQ2, Q1, Q2, D1, D2, nhom1, nhom2, sgQ1, lsgQ1, itAQ2, itAD2, 
+          isoQ, isoD, p1, q1, p2, q2, i, iq1, iq2, j, g1, h1, 
+          g2, h2, gor1, gor2, ok;
 
     if ( IsomorphismGroups(G1,G2) <> fail ) then 
         Error( "not yet implemented" ); 
@@ -900,7 +904,7 @@ InstallMethod( IsoclinicStemDomain, "generic method for a group", true,
     [ IsGroup ], 0,
 function(G)
 
-    local  i, len, divs, id, gi;
+    local i, len, divs, id, gi;
 
     if ( HasIsAbelian(G) and IsAbelian(G) ) then 
         return [ [ 1, 1 ] ]; 
@@ -941,11 +945,11 @@ InstallOtherMethod( Isoclinism, "generic method for crossed modules", true,
     [ IsXMod, IsXMod ], 0,
 function( X1, X2 )
 
-    local  SX1, RX1, SX2, RX2, D1, D2, isoD, autD2, CX1, Q1, CX2, Q2, isoQ, 
-           SQ1, RQ1, SQ2, RQ2, actX1, actX2, autQ2, nhom1, shom1, rhom1, 
-           nhom2, shom2, rhom2, sgRQ1, lsgRQ1, sgSQ1, lsgSQ1, a, i, si, ri, 
-           ok, b, j, sj, rj, p1, r1, x1, ir1, d1, p2, r2, x2, ir2, d2, 
-           gor1, gor2, p3, s1, y1, is1, e1; 
+    local SX1, RX1, SX2, RX2, D1, D2, isoD, autD2, CX1, Q1, CX2, Q2, isoQ, 
+          SQ1, RQ1, SQ2, RQ2, actX1, actX2, autQ2, nhom1, shom1, rhom1, 
+          nhom2, shom2, rhom2, sgRQ1, lsgRQ1, sgSQ1, lsgSQ1, a, i, si, ri, 
+          ok, b, j, sj, rj, p1, r1, x1, ir1, d1, p2, r2, x2, ir2, d2, 
+          gor1, gor2, p3, s1, y1, is1, e1; 
 
     SX1 := Source(X1);
     RX1 := Range(X1);
@@ -1048,7 +1052,7 @@ InstallMethod( IsoclinicXModFamily, "generic method for crossed modules",
     true, [ Is2DimensionalGroup, IsList ], 0,
 function( XM, XM1_ler )
 
-    local  sonuc, XM1;
+    local sonuc, XM1;
 
     sonuc := [ ];
     for XM1 in XM1_ler do
@@ -1070,7 +1074,7 @@ InstallMethod( IsomorphicXModFamily, "generic method for crossed modules",
     true, [ Is2DimensionalGroup, IsList ], 0,
 function( XM, XM1_ler )
 
-    local  sonuc, iso, XM1;
+    local sonuc, iso, XM1;
 
     sonuc := [ ];
     for XM1 in XM1_ler do
@@ -1090,7 +1094,7 @@ InstallMethod( AllXModsUpToIsomorphism, "generic method for list of xmods",
     true, [ IsList ], 0,
 function( allxmods )
 
-    local  n, found, all, i, j, k, isolar, list;
+    local n, found, all, i, j, k, isolar, list;
 
     n := Length( allxmods ); 
     found := ListWithIdenticalEntries( n, 0 );
@@ -1118,7 +1122,7 @@ InstallMethod( IsoclinicRank, "generic method for groups", true,
     [ IsGroup ], 0,
 function(G)
 
-    local  ZG, DG, QG, KG; 
+    local ZG, DG, QG, KG; 
 
     if not IsPrimePowerInt( Size(G) ) then 
         return fail; 
@@ -1134,7 +1138,7 @@ InstallOtherMethod( IsoclinicRank, "generic method for crossed modules", true,
     [ Is2DimensionalGroup ], 0,
 function( XM )
 
-    local  size, ZXMod, DXMod, QXMod, KXMod, m1, m2, l1, l2;
+    local size, ZXMod, DXMod, QXMod, KXMod, m1, m2, l1, l2;
 
     size := Size( XM );
     if not ( IsPrimePowerInt(size[1]) and IsPrimePowerInt(size[2]) ) then 
@@ -1155,7 +1159,7 @@ InstallMethod( IsoclinicMiddleLength, "generic method for groups", true,
     [ IsGroup ], 0,
 function(G)
 
-    local  ZG, DG, QG, KG; 
+    local ZG, DG, QG, KG; 
 
     if not IsPrimePowerInt( Size(G) ) then 
         return fail; 
@@ -1171,7 +1175,7 @@ InstallOtherMethod( IsoclinicMiddleLength,
     "generic method for crossed modules", true, [ Is2DimensionalGroup ], 0,
 function( XM )
 
-    local  size, ZXMod, DXMod, QXMod, KXMod;
+    local size, ZXMod, DXMod, QXMod, KXMod;
 
     size := Size( XM );
     if not ( IsPrimePowerInt(size[1]) and IsPrimePowerInt(size[2]) ) then 
@@ -1194,7 +1198,7 @@ InstallMethod( TableRowXMod, "generic method for crossed modules", true,
     [ Is2DimensionalGroup, IsList ], 0,
 function(XM,XM_ler)
 
-    local  Eler, Iler, i, j, sinif, B;
+    local Eler, Iler, i, j, sinif, B;
 
     sinif := IsoclinicXModFamily( XM, XM_ler );
     B := LowerCentralSeries( XM );

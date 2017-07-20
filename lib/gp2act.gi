@@ -16,13 +16,13 @@ InstallMethod( AutomorphismPermGroup, "automorphism perm group of xmod",
     true, [ IsXMod ], 0, 
 function( XM )
 
-    local  S, genS, ngS, R, genR, ngR, bdy, act, ker, imbdy, 
-           AS, genAS, a2pS, PAS, genPAS, p2aS,
-           AR, genAR, a2pR, PAR, genPAR, p2aR, 
-           D, genD, emS, emR, emgenPAS, emgenPAR, emAS, emAR, infoD, 
-           P, num, autogens, as, eas, ar, ear, mor, ispre, ismor, 
-           genP, p2, p2i, newS, oldS, newR, oldR, imsrc, imrng, 
-           projS, projR, ePAS, egenR, ePAR;
+    local S, genS, ngS, R, genR, ngR, bdy, act, ker, imbdy, 
+          AS, genAS, a2pS, PAS, genPAS, p2aS,
+          AR, genAR, a2pR, PAR, genPAR, p2aR, 
+          D, genD, emS, emR, emgenPAS, emgenPAR, emAS, emAR, infoD, 
+          P, num, autogens, as, eas, ar, ear, mor, ispre, ismor, 
+          genP, p2, p2i, newS, oldS, newR, oldR, imsrc, imrng, 
+          projS, projR, ePAS, egenR, ePAR;
 
     S := Source( XM );
     genS := GeneratorsOfGroup( S );
@@ -119,11 +119,11 @@ InstallMethod( AutomorphismPermGroup, "automorphism perm group of xmod",
     true, [ IsXMod and IsNormalSubgroup2DimensionalGroup ], 0, 
 function( XM )
 
-    local  S, genS, R, genR, autR, autS, AR, genAR, ngAR, AS, genAS, 
-           ar, as, a2pR, PAR, genPAR, p2aR, a2pS, PAS, genPAS, p2aS, 
-           restrict, D, genD, emS, emR, emgenPAS, emgenPAR, emAS, emAR, 
-           infoD, P, genP, autogens, j, p2, p2i, newS, newR, oldS, oldR, 
-           imsrc, imrng, projS, projR, filtS, ePAS, egenR, ePAR;
+    local S, genS, R, genR, autR, autS, AR, genAR, ngAR, AS, genAS, 
+          ar, as, a2pR, PAR, genPAR, p2aR, a2pS, PAS, genPAS, p2aS, 
+          restrict, D, genD, emS, emR, emgenPAS, emgenPAR, emAS, emAR, 
+          infoD, P, genP, autogens, j, p2, p2i, newS, newR, oldS, oldR, 
+          imsrc, imrng, projS, projR, filtS, ePAS, egenR, ePAR;
 
     Info( InfoXMod, 1, "using special AutomorphismPermGroup method" );
 
@@ -246,8 +246,7 @@ InstallMethod( ImageAutomorphismDerivation, "image of derivation under action",
     true, [ IsXModMorphism, IsDerivation ], 0, 
 function( mor, chi )
 
-    local  XM, R, stgR, imj, rho, imrho, sigma, invrho,
-           rngR, k, r, rr, crr, chj;
+    local XM, R, stgR, imj, rho, imrho, sigma, invrho, rngR, k, r, rr, crr, chj;
 
     XM := Source( mor );
     sigma := SourceHom( mor );
@@ -275,9 +274,9 @@ end );
 InstallMethod( WhiteheadXMod, "Whitehead crossed module", true, 
     [ IsXMod ], 0, 
 function( XM )
-    local  S, genS, reg, imreg, W, WT, posW, nposW, genW, imiota,
-           s, chi, poschi, iota, autS, genchi, j, sigma, ima, a, 
-           imact, act, WX, name;
+    local S, genS, reg, imreg, W, WT, posW, nposW, genW, imiota,
+          s, chi, poschi, iota, autS, genchi, j, sigma, ima, a, 
+          imact, act, WX, name;
 
     S := Source( XM );
     genS := GeneratorsOfGroup( S );
@@ -332,12 +331,12 @@ InstallMethod( NorrieXMod, "Norrie crossed module", true,
     [ IsXMod ], 0, 
 function( XM )
 
-    local  S, R, genR, P, DX, genP, Prng, 
-           AS, AR, a2pS, PAS, p2aS, a2pR, PAR, p2aR, 
-           im, r, autr, psrc, emsrc, conjr, prng, emrng, bdy, ok,
-           imact, p, projp, proja, ima, a, act, i, f, NX, name;
+    local S, R, genR, P, DX, genP, Prng, 
+          AS, AR, a2pS, PAS, p2aS, a2pR, PAR, p2aR, 
+          im, r, autr, psrc, emsrc, conjr, prng, emrng, bdy, ok,
+          imact, p, projp, proja, ima, a, act, i, f, NX, name;
 
-Info( InfoXMod, 2, "now in NorrieXMod" ); 
+    Info( InfoXMod, 2, "now in NorrieXMod" ); 
     S := Source( XM );
     R := Range( XM );
     genR := GeneratorsOfGroup( R );
@@ -410,8 +409,8 @@ InstallMethod( LueXMod, "Lue crossed module", true,
     [ IsXMod ], 0, 
 function( XM )
 
-    local  NX, Nbdy, Xbdy, Lbdy, P, genP, Prng, S, genS, AS, a2pS, PAS, 
-           p2aS, imact, i, p, projp, proja, ima, a, act, f, LX, name;
+    local NX, Nbdy, Xbdy, Lbdy, P, genP, Prng, S, genS, AS, a2pS, PAS, 
+          p2aS, imact, i, p, projp, proja, ima, a, act, f, LX, name;
 
     NX := NorrieXMod( XM );
     Nbdy := Boundary( NX );
@@ -463,10 +462,10 @@ end );
 InstallMethod( ActorXMod, "actor crossed module", true, [ IsXMod ], 0, 
 function( XM )
 
-    local  D, L, W, eW, P, genP, genpos, ngW, genW, invW, imdelta, 
-           S, R, AS, AR, PAS, p2aS, a2pS, PAR, p2aR, a2pR, emsrc, emrng, 
-           i, j, k, mor, imsrc, imrng, delta, GA, nGA, imact, rho, invrho, 
-           impos, chi, chj, imgen, phi, id, aut, act, ActX, name;
+    local D, L, W, eW, P, genP, genpos, ngW, genW, invW, imdelta, 
+          S, R, AS, AR, PAS, p2aS, a2pS, PAR, p2aR, a2pR, emsrc, emrng, 
+          i, j, k, mor, imsrc, imrng, delta, GA, nGA, imact, rho, invrho, 
+          impos, chi, chj, imgen, phi, id, aut, act, ActX, name;
 
     if not IsPermXMod( XM ) then 
         Error( "ActorXMod only implemented for permutation xmods" ); 
@@ -566,7 +565,7 @@ InstallMethod( InnerMorphism, "inner morphism of xmod", true,
     [ IsPermXMod ], 0, 
 function( XM )
 
-    local  WX, NX, ActX, mor;
+    local WX, NX, ActX, mor;
 
     WX := WhiteheadXMod( XM );
     NX := NorrieXMod( XM );
@@ -594,7 +593,7 @@ InstallOtherMethod( ImagesSource, "xmod image for an xmod morphism", true,
     [ IsPreXModMorphism ], 0, 
 function( mor )
     
-    local  S, R, Shom, Rhom, imS, imR, SX;
+    local S, R, Shom, Rhom, imS, imR, SX;
 
     Shom := SourceHom( mor );
     Rhom := RangeHom( mor );
@@ -612,7 +611,7 @@ InstallMethod( InnerActorXMod, "inner actor crossed module", true,
     [ IsPermXMod ], 0, 
 function( XM )
 
-    local  InnX, mor, name, ActX;
+    local InnX, mor, name, ActX;
     
     ActX := ActorXMod( XM );
     mor := InnerMorphism( XM );

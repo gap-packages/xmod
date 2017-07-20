@@ -17,7 +17,7 @@ InstallMethod( IsPreCrossedSquareMorphism,
     [ IsHigherDimensionalGroupMorphism ], 0,
 function( mor )
 
-    local  PS, QS, homs, upmor, ltmor, dnmor, rtmor, ok;
+    local PS, QS, homs, upmor, ltmor, dnmor, rtmor, ok;
 
     PS := Source( mor );
     QS := Range( mor );
@@ -58,7 +58,9 @@ end );
 InstallMethod( IsCrossedSquareMorphism, "generic method for 3d-mappings", true,
     [ IsHigherDimensionalGroupMorphism ], 0,
 function( mor )
-    local  ispre;
+
+    local ispre;
+
     ispre := IsPreCrossedSquareMorphism( mor );
     if not ispre then
         return false;
@@ -77,12 +79,13 @@ InstallMethod( IsPreCat2Morphism,
     [ IsHigherDimensionalGroupMorphism ], 0,
 function( mor )
 
-    local  PC, QC, upmor, dnmor, ok, d1, d2, u1, u2,G1,G2,P1,P2,p1,q1,comp1,G11,G12,P11,P12,p2,q2,comp2;
+    local PC, QC, upmor, dnmor, ok, d1, d2, u1, u2, G1, G2, P1, P2, p1, q1, 
+          comp1, G11, G12, P11, P12, p2, q2, comp2;
 
     if not ( IsPreCatnMorphism( mor ) and ( HigherDimension = 2 ) ) then
         return true;
-	else
-		return false;
+    else
+        return false;
     fi;
 end );
 
@@ -99,7 +102,9 @@ end );
 InstallMethod( IsCat2Morphism, "generic method for 3d-mappings", true,
     [ IsHigherDimensionalGroupMorphism ], 0,
 function( mor )
-    local  ispre;
+
+    local ispre;
+
     ispre := IsPreCat2Morphism( mor );
     if not ispre then
         return false;
@@ -116,16 +121,16 @@ InstallMethod( \=,
     "generic method for two 3d-morphisms", IsIdenticalObj, 
     [ IsPreCrossedSquareMorphism, IsPreCrossedSquareMorphism ], 0,
 function ( mor, phi )
-        return ( ( Source( mor ) = Source( phi ) )
-             and ( Range( mor ) = Range( phi ) )
-             and ( Up2DimensionalMorphism( mor ) 
-                   = Up2DimensionalMorphism( phi ) )
-             and ( Left2DimensionalMorphism( mor ) 
-                   = Left2DimensionalMorphism( phi ) )
-             and ( Right2DimensionalMorphism( mor ) 
-                   = Right2DimensionalMorphism( phi ) )
-             and ( Down2DimensionalMorphism( mor ) 
-                   = Down2DimensionalMorphism( phi ) ) );
+    return ( ( Source( mor ) = Source( phi ) )
+         and ( Range( mor ) = Range( phi ) )
+         and ( Up2DimensionalMorphism( mor ) 
+               = Up2DimensionalMorphism( phi ) )
+         and ( Left2DimensionalMorphism( mor ) 
+               = Left2DimensionalMorphism( phi ) )
+         and ( Right2DimensionalMorphism( mor ) 
+               = Right2DimensionalMorphism( phi ) )
+         and ( Down2DimensionalMorphism( mor ) 
+               = Down2DimensionalMorphism( phi ) ) );
 end );
 
 #############################################################################
@@ -135,10 +140,10 @@ end );
 InstallOtherMethod( MappingGeneratorsImages, "for a HigherDimensionalMapping", 
     true, [ IsPreCrossedSquareMorphism ], 0,
 function( map )
-        return [ MappingGeneratorsImages( Up2DimensionalMorphism( map ) ), 
-                 MappingGeneratorsImages( Left2DimensionalMorphism( map ) ), 
-                 MappingGeneratorsImages( Right2DimensionalMorphism( map ) ), 
-                 MappingGeneratorsImages( Down2DimensionalMorphism( map ) ) ];
+    return [ MappingGeneratorsImages( Up2DimensionalMorphism( map ) ), 
+             MappingGeneratorsImages( Left2DimensionalMorphism( map ) ), 
+             MappingGeneratorsImages( Right2DimensionalMorphism( map ) ), 
+             MappingGeneratorsImages( Down2DimensionalMorphism( map ) ) ];
 end );
 
 #############################################################################
@@ -149,7 +154,7 @@ InstallMethod( Name, "method for a 3d-mapping", true,
     [ IsHigherDimensionalMapping ], 0,
 function( mor )
 
-    local  nsrc, nrng, name;
+    local nsrc, nrng, name;
 
     if HasName( Source( mor ) ) then
         nsrc := Name( Source( mor ) );
@@ -174,7 +179,7 @@ InstallMethod( Display3dMorphism, "display a morphism of 3d-groups", true,
     [ IsHigherDimensionalMapping ], 0,
 function( mor )
 
-    local  dim, upmor, downmor, P, Q;
+    local dim, upmor, downmor, P, Q;
 
     P := Source( mor );
     Q := Range( mor );
@@ -227,7 +232,7 @@ InstallMethod( InclusionMorphismHigherDimensionalDomains,
     [ IsHigherDimensionalDomain, IsHigherDimensionalDomain ], 0,
 function( obj, sub )
 
-    local  up, lt, rt, dn;
+    local up, lt, rt, dn;
 
     up := InclusionMorphism2DimensionalDomains( Up2DimensionalGroup(obj), 
               Up2DimensionalGroup(sub) );
@@ -254,7 +259,7 @@ end );
 ##
 InstallGlobalFunction( CrossedSquareMorphism, function( arg )
 
-    local  nargs;
+    local nargs;
     nargs := Length( arg );
 
     # two CrossedSquares and four homomorphisms
@@ -277,9 +282,9 @@ end );
 ##
 InstallGlobalFunction( Cat2Morphism, function( arg )
 
-    local  nargs;
-    nargs := Length( arg );
+    local nargs;
 
+    nargs := Length( arg );
     # two cat2-groups and two homomorphisms
     if ( ( nargs = 3 ) and IsCat2Group( arg[1] ) and IsCat2Group( arg[2])
         and IsCat1Morphism( arg[3][1] ) and IsCat1Morphism( arg[3][2] ) ) then
@@ -299,7 +304,7 @@ InstallMethod( PreCrossedSquareMorphismByMorphisms,
     [ IsPreCrossedSquare, IsPreCrossedSquare, IsList ], 0,
 function( src, rng, list )
 
-    local  filter, fam, mor, ok, nsrc, nrng, name;
+    local filter, fam, mor, ok, nsrc, nrng, name;
 
     if not ForAll( list, m -> IsPreXModMorphism(m) ) then 
         Error( "third argument should be a list of pre-xmod-morphisms" ); 
@@ -322,7 +327,7 @@ InstallMethod( PreCat2MorphismByMorphisms,
     [ IsPreCat2Group, IsPreCat2Group, IsList ], 0,
 function( src, rng, list )
 
-    local  filter, fam, mor, ok, nsrc, nrng, name;
+    local filter, fam, mor, ok, nsrc, nrng, name;
 
     if not ForAll( list, m-> IsPreCat2Morphism(m) ) then 
         Error( "third argument should be a list of pre-cat2-morphisms" );
@@ -345,7 +350,7 @@ InstallMethod( CrossedSquareMorphismByMorphisms,
     [ IsCrossedSquare, IsCrossedSquare, IsList ], 0,
 function( src, rng, list )
 
-    local  mor, ok;
+    local mor, ok;
 
     if not ForAll( list, m -> IsXModMorphism(m) ) then 
         Error( "third argument should be a list of xmod morphisms" ); 
@@ -366,7 +371,8 @@ InstallMethod( Cat2MorphismByMorphisms, "for two cat2-groups and 2 morphisms",
     true, [ IsCat2Group, IsCat2Group, IsList ], 0,
 function( src, rng, list )
 
-    local  mor, ok;
+    local mor, ok;
+
     if not ForAll( list, m -> IsCat1Morphism(m) ) then 
         Error( "third argument should be a list of cat1-morphisms" ); 
     fi; 

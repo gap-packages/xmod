@@ -53,7 +53,7 @@ InstallMethod( IsPreXMod, "generic method for 2d-group",
     true, [ Is2DimensionalGroup ], 0,
 function( P )
 
-    local  Xsrc, Xrng, hom, a, aut, act, gensrc, ngsrc, genrng, ngrng, 
+    local Xsrc, Xrng, hom, a, aut, act, gensrc, ngsrc, genrng, ngrng, 
            ssrc, x1, y1, z1, x2, y2, z2, w2;
 
     if not IsPreXModObj( P ) then
@@ -162,7 +162,7 @@ InstallMethod( IsTrivialAction2DimensionalGroup,
     "generic method for pre-crossed modules", true, [ IsPreXMod ], 0,
 function( PM )
 
-    local  act, genrng, onesrc;
+    local act, genrng, onesrc;
 
     act := XModAction( PM );
     genrng := GeneratorsOfGroup( Range( PM ) );
@@ -178,7 +178,7 @@ InstallMethod( PreXModObj, "for homomorphism and action", true,
     [ IsGroupHomomorphism, IsGroupHomomorphism ], 0,
 function( bdy, act )
 
-    local  filter, fam, PM, ok, src, rng, aut, name;
+    local filter, fam, PM, ok, src, rng, aut, name;
 
     fam := Family2DimensionalGroup;
     filter := IsPreXModObj;
@@ -229,7 +229,7 @@ InstallMethod( ExternalSetXMod, "method for a precrossed module", true,
     [ IsPreXMod ], 0,
 function( PM ) 
 
-    local  rng, genR, act;
+    local rng, genR, act;
 
     rng := Range( PM  ); 
     genR := GeneratorsOfGroup( rng ); 
@@ -301,7 +301,7 @@ end );
 InstallMethod( Display, "method for a 2d-group", true, [ Is2DimensionalGroup ], 20,
 function( g2d )
 
-    local  name, bdy, act, aut, len, i, ispar, src, rng, 
+    local name, bdy, act, aut, len, i, ispar, src, rng, 
            gensrc, genrng, ker, genker, mor, triv, imact, a, 
            t, h, e, b, k, imt, imh, ime, imb, imk;
 
@@ -452,7 +452,7 @@ InstallMethod( Name, "method for a 2d-domain", true,
     [ Is2DimensionalDomain ], 0,
 function( dom )
 
-    local  nsrc, nrng, name, arrow;
+    local nsrc, nrng, name, arrow;
 
     if HasName( Source( dom ) ) then
         nsrc := Name( Source( dom ) );
@@ -485,7 +485,7 @@ InstallMethod( PreXModByBoundaryAndAction,
     true, [ IsGroupHomomorphism, IsGroupHomomorphism ], 0,
 function( bdy, act )
 
-    local  rng, src, genrng, gensrc, aut, genaut, imact, i, a0, ima, a;
+    local rng, src, genrng, gensrc, aut, genaut, imact, i, a0, ima, a;
 
     src := Source( bdy );
     gensrc := GeneratorsOfGroup( src );
@@ -531,7 +531,7 @@ InstallMethod( IsPreCat1Group, "generic method for 2dim-group", true,
     [ Is2DimensionalGroup ], 0,
 function( C1G )
 
-    local  Csrc, Crng, x, e, t, h, idrng, he, te, kert, kerh, kerth;
+    local Csrc, Crng, x, e, t, h, idrng, he, te, kert, kerh, kerth;
 
     if not IsPreCat1Obj( C1G ) then
         return false;
@@ -574,7 +574,7 @@ InstallMethod( PreCat1Obj, "for tail, head, embedding", true,
     [ IsGroupHomomorphism, IsGroupHomomorphism, IsGroupHomomorphism ], 0,
 function( t, h, e )
 
-    local  filter, fam, C1G, ok, src, rng, name;
+    local filter, fam, C1G, ok, src, rng, name;
 
     fam := Family2DimensionalGroup;
     filter := IsPreCat1Obj;
@@ -629,7 +629,7 @@ end );
 ##
 InstallGlobalFunction( PreCat1Group, function( arg )
 
-    local  nargs, usage, C1G;
+    local nargs, usage, C1G;
 
     nargs := Length( arg ); 
     usage := "standard usage: PreCat1Group( tail, head [,embed] );"; 
@@ -656,13 +656,13 @@ end );
 
 ##############################################################################
 ##
-#M  PreCat1GroupByPreXMod . . convert a pre-crossed module to a pre-cat1-group
+#M  PreCat1GroupOfPreXMod . . convert a pre-crossed module to a pre-cat1-group
 ##
-InstallMethod( PreCat1GroupByPreXMod,
+InstallMethod( PreCat1GroupOfPreXMod,
     "convert a pre-crossed module to a pre-cat1-group", true, [ IsPreXMod ], 0,
 function( XM )
 
-    local  Xsrc, Xrng, Xact, Xbdy, gensrc, genrng, one, imbdy, info, G, genG,
+    local Xsrc, Xrng, Xact, Xbdy, gensrc, genrng, one, imbdy, info, G, genG,
            t, h, f, eR, eS, imeR, imeS, projS, imt, imh, ime, imf, C;
 
     if not ( IsPermPreXMod( XM ) or IsPcPreXMod( XM ) ) then
@@ -732,7 +732,7 @@ InstallMethod( IsXMod, "generic method for pre-crossed modules",
     true, [ IsPreXMod ], 0,
 function( XM )
 
-    local  gensrc, genrng, x2, y2, w2, z2, hom, act;
+    local gensrc, genrng, x2, y2, w2, z2, hom, act;
 
     hom := Boundary( XM );
     act := XModAction( XM );
@@ -763,7 +763,7 @@ InstallMethod( XModByBoundaryAndAction,
     [ IsGroupHomomorphism, IsGroupHomomorphism ], 0,
 function( bdy, act )
 
-    local  PM;
+    local PM;
 
     PM := PreXModByBoundaryAndAction( bdy, act );
     if not IsXMod( PM ) then
@@ -779,7 +779,7 @@ end );
 InstallMethod( XModByTrivialAction, "crossed module with trivial action", 
     true, [ IsGroupHomomorphism ], 0,
 function( f )
-    local  R, ZR, S, XM, aut, act, name;
+    local R, ZR, S, XM, aut, act, name;
     S := Source( f );
     if not IsAbelian( S ) then
         Error( "the source of  f  must be abelian" );
@@ -804,7 +804,7 @@ InstallMethod( XModByNormalSubgroup, "conjugation crossed module",
     true, [ IsGroup, IsGroup ], 0,
 function( G, N )
 
-    local  XM, bdy, act, aut, genrng, gensrc, name, a, triv, idsrc,
+    local XM, bdy, act, aut, genrng, gensrc, name, a, triv, idsrc,
            autgen, imautgen, phi, j, g, n, genN, f2pN, imgenN;
 
     if not IsNormal( G, N ) then
@@ -845,7 +845,7 @@ InstallMethod( XModByCentralExtension, "central extension crossed module",
     true, [ IsGroupHomomorphism ], 0,
 function( hom )
 
-    local  rng, src, Zsrc, ker, gensrc, ngsrc, imhom, genrng, autgen, 
+    local rng, src, Zsrc, ker, gensrc, ngsrc, imhom, genrng, autgen, 
            j, imsrc, aut, act, XM, ok, idsrc; 
 
     if not IsSurjective( hom ) then
@@ -892,7 +892,7 @@ InstallMethod( XModByAbelianModule, "abelian module crossed module", true,
     [ IsAbelianModule ], 0,
 function( abmod )
 
-    local  aut, act, z;
+    local aut, act, z;
     act := AbelianModuleAction( abmod );
     z := MappingToOne( AbelianModuleGroup( abmod ), Source( act ) );
     return XModByBoundaryAndAction( z, act );
@@ -906,7 +906,7 @@ InstallMethod( XModByGroupOfAutomorphisms, "automorphism crossed module",
     true, [ IsGroup, IsGroupOfAutomorphisms ], 0,
 function( G, A )
 
-    local  genA, ispc, a2p, p2a, a, ima, genG, oneP, P, genP, bdy, img, imbdy,
+    local genA, ispc, a2p, p2a, a, ima, genG, oneP, P, genP, bdy, img, imbdy,
            g, idG, abelian, XM;
 
     ispc := IsPcGroup( G ); 
@@ -953,7 +953,7 @@ end );
 ##
 InstallGlobalFunction( XModByAutomorphismGroup, function( arg )
 
-    local  nargs, G, A, innG, a;
+    local nargs, G, A, innG, a;
 
     nargs := Length( arg );
     # A not specified
@@ -989,7 +989,7 @@ end );
 InstallMethod( XModByInnerAutomorphismGroup, "inner automorphism xmod",
     true, [ IsGroup ], 0,
 function( G )
-    local  A, innG, a;
+    local A, innG, a;
 
     A := InnerAutomorphismsByNormalSubgroup( G, G );
     if ( not HasName( A ) and HasName( G ) ) then
@@ -1001,53 +1001,45 @@ end );
 
 ##############################################################################
 ##
-#M  XModByCat1Group
 #M  XModOfCat1Group
 ##
-InstallMethod( XModByCat1Group, "generic method for cat1-groups",
+InstallMethod( XModOfCat1Group, "generic method for cat1-groups",
     true, [ IsCat1Group ], 0,
 function( C1 )
 
-    local  X1;
-    X1 := PreXModByPreCat1Group( C1 );
+    local X1;
+    X1 := PreXModOfPreCat1Group( C1 );
     SetIsXMod( X1, true );
     SetXModOfCat1Group( C1, X1 );
     SetCat1GroupOfXMod( X1, C1 );
     return X1;
 end );
 
-InstallMethod( XModOfCat1Group, "generic method for cat1-groups",
-    true, [ IsCat1Group ], 0, XModByCat1Group );
-
 ##############################################################################
 ##
-#M  Cat1GroupByXMod
 #M  Cat1GroupOfXMod
 ##
-InstallMethod( Cat1GroupByXMod, "generic method for crossed modules",
+InstallMethod( Cat1GroupOfXMod, "generic method for crossed modules",
     true, [ IsXMod ], 0,
 function( X1 )
 
-    local  C1;
-    C1 := PreCat1GroupByPreXMod( X1 );
+    local C1;
+    C1 := PreCat1GroupOfPreXMod( X1 );
     SetIsCat1Group( C1, true );
     SetXModOfCat1Group( C1, X1 );
     SetCat1GroupOfXMod( X1, C1 );
     return C1;
 end );
 
-InstallMethod( Cat1GroupOfXMod, "generic method for cat1-groups",
-    true, [ IsXMod ], 0, Cat1GroupByXMod );
-
 ##############################################################################
 ##
 #M  PeifferSubgroupPreXMod . . . . . normally generated by Peiffer commutators
 ##
 InstallMethod( PeifferSubgroupPreXMod, "generic method for pre-crossed xmods",
-               true, [ IsPreXMod ], 0,
+    true, [ IsPreXMod ], 0,
 function( PM )
 
-    local  Pf, s1, s2, a1, src, gensrc, comm, bdy, act, ok, XPf;
+    local Pf, s1, s2, a1, src, gensrc, comm, bdy, act, ok, XPf;
 
     # this code mimics that of DerivedSubgroup
     src := Source( PM );
@@ -1082,7 +1074,7 @@ InstallMethod( PeifferSubgroupPreCat1Group, "generic method for pre-cat1-groups"
                true, [ IsPreCat1Group ], 0,
 function( PCG )
 
-    local  src, kerh, kert, Pf;
+    local src, kerh, kert, Pf;
 
     src := Source( PCG );
     kert := Kernel( TailMap( PCG ) );
@@ -1101,7 +1093,7 @@ end );
 InstallMethod( PeifferSubgroup, "generic method for 2d-groups",
                true, [ Is2DimensionalGroup ], 0,
 function( obj ) 
-    local  P, ok, NP;
+    local P, ok, NP;
     if IsPreXModObj( obj ) then
         if IsXMod( obj ) then
             return Subgroup( Source( obj ), [ One( Source( obj ) ) ] );
@@ -1134,7 +1126,7 @@ InstallMethod( XModByPeifferQuotient,
     [ IsPreXMod ], 0,
 function( PM )
 
-    local  pfsub, pfxmod, name, nat, ok, FM;
+    local pfsub, pfxmod, name, nat, ok, FM;
     
     if IsXMod( PM ) then
         Info( InfoXMod, 1, "this object is already a crossed module!" );
@@ -1169,7 +1161,7 @@ end );
 ##
 InstallGlobalFunction( XMod, function( arg )
 
-    local  nargs;
+    local nargs;
     nargs := Length( arg );
 
     # two homomorphisms
@@ -1188,8 +1180,9 @@ InstallGlobalFunction( XMod, function( arg )
         return XModByCentralExtension( arg[1] );
 
     # convert a cat1-group
-    elif ( ( nargs = 1 ) and HasIsCat1Group( arg[1] ) and IsCat1Group( arg[1] ) ) then
-        return PreXModByPreCat1Group( arg[1] );
+    elif ( ( nargs = 1 ) and HasIsCat1Group( arg[1] ) 
+           and IsCat1Group( arg[1] ) ) then
+        return PreXModOfPreCat1Group( arg[1] );
 
     # group of automorphisms
     elif ( ( nargs = 1 ) and IsGroupOfAutomorphisms( arg[1] ) ) then
@@ -1216,7 +1209,7 @@ InstallMethod( IsSubPreXMod, "generic method for pre-crossed modules", true,
     [ Is2DimensionalGroup, Is2DimensionalGroup ], 0,
 function( PM, SM )
 
-    local  ok, Ssrc, Srng, gensrc, genrng, s, r, r1, r2, im1, im2;
+    local ok, Ssrc, Srng, gensrc, genrng, s, r, r1, r2, im1, im2;
 
     if not ( IsPreXMod( PM ) and IsPreXMod( SM ) ) then
         return false;
@@ -1287,7 +1280,7 @@ InstallMethod( IsSubPreCat1Group, "generic method for pre-cat1-groups", true,
     [ Is2DimensionalGroup, Is2DimensionalGroup ], 0,
 function( C0, S0 )
 
-    local  ok, Ssrc, Srng, gensrc, genrng, tc, hc, ec, ts, hs, es, s, r;
+    local ok, Ssrc, Srng, gensrc, genrng, tc, hc, ec, ts, hs, es, s, r;
 
     if not ( IsPreCat1Group( C0 ) and IsPreCat1Group( S0 ) ) then
         return false;
@@ -1376,7 +1369,7 @@ InstallMethod( SubPreXMod, "generic method for pre-crossed modules", true,
     [ IsPreXMod, IsGroup, IsGroup ], 0,
 function( PM, Ssrc, Srng )
 
-    local  Psrc, Prng, Pbdy, Pact, Paut, genSsrc, genSrng, Pname, Sname,
+    local Psrc, Prng, Pbdy, Pact, Paut, genSsrc, genSrng, Pname, Sname,
            SM, Sbdy, Saut, Sact, r, innaut, genPrng, genPsrc, ssrc,
            trivsrc, trivrng, incSsrc, idSsrc, imact, imgen, imbdy, imSsrc,
            imalpha, alpha;
@@ -1457,7 +1450,7 @@ InstallMethod( SubXMod, "generic method for crossed modules", true,
     [ IsXMod, IsGroup, IsGroup ], 0,
 function( XM, Ssrc, Srng )
 
-    local  SM;
+    local SM;
     SM := SubPreXMod( XM, Ssrc, Srng );
     if ( SM = fail ) then
         return fail;
@@ -1476,7 +1469,7 @@ InstallMethod( SubPreCat1Group, "generic method for (pre-)cat1-groups", true,
     [ IsPreCat1Group, IsGroup, IsGroup ], 0,
 function( C, G, R )
 
-    local  Csrc, Crng, Ct, Ch, Ce, t, h, e, SC, ok;
+    local Csrc, Crng, Ct, Ch, Ce, t, h, e, SC, ok;
 
     Csrc := Source( C );
     Crng := Range( C );
@@ -1511,7 +1504,7 @@ InstallMethod( SubCat1Group, "generic method for cat1-groups", true,
     [ IsCat1Group, IsGroup, IsGroup ], 0,
 function( C, G, R )
 
-    local  S;
+    local S;
     S := SubPreCat1Group( C, G, R );
     if not IsCat1Group( S ) then
         Error( "result is only a pre-cat1-group" );
@@ -1527,7 +1520,7 @@ InstallMethod( IsCat1Group, "generic method for crossed modules", true,
     [ IsPreCat1Group ], 0,
 function( C1G )
 
-    local  Csrc, Crng, h, t, e, f, kerC, kert, kerh, kerth;
+    local Csrc, Crng, h, t, e, f, kerC, kert, kerh, kerth;
 
     Csrc := Source( C1G );
     Crng := Range( C1G );
@@ -1574,7 +1567,7 @@ end );
 ##
 InstallGlobalFunction( Cat1Group, function( arg )
 
-    local  nargs, C1G, ok;
+    local nargs, C1G, ok;
 
     nargs := Length( arg );
     if ( ( nargs < 1 ) or ( nargs > 3 ) ) then
@@ -1621,7 +1614,7 @@ InstallMethod( Cat1Select, "construct a cat1-group using data in file", true,
     [ IsInt, IsInt, IsInt ], 0,
 function( size, gpnum, num )
 
-    local  ok, type, norm, usage, usage2, maxsize, start, iso, count, comm, 
+    local ok, type, norm, usage, usage2, maxsize, start, iso, count, comm, 
            pos, pos2, names, i, j, k, ncat1, G, genG, fam, M, L, genR, R, 
            imt, t, kert, imh, h, C1G, XC, i0;
 
@@ -1755,7 +1748,7 @@ InstallMethod( PermCat1Select, "construct a cat1-group using data in file",
     true, [ IsInt, IsInt, IsInt ], 0,
 function( size, gpnum, num )
 
-    local  ok, type, norm, maxsize, start, iso, count, pos, pos2, names,
+    local ok, type, norm, maxsize, start, iso, count, pos, pos2, names,
            i, j, ncat1, G, genG, fam, M, L, genR, R, t, kert, h, C1G, XC;
 
     # find starting positions of iso classes of groups of size <= maxsize
@@ -1830,7 +1823,7 @@ InstallMethod( PreCat1GroupByTailHeadEmbedding,
     [ IsGroupHomomorphism, IsGroupHomomorphism, IsGroupHomomorphism ], 0,
 function( t, h, e )
 
-    local  genG, R, genR, imh, imt, ime, eR, hres, tres, eres,
+    local genG, R, genR, imh, imt, ime, eR, hres, tres, eres,
            kert, kergen, bdy, imbdy, f, C1G, ok, G, PC;
 
     G := Source( t );
@@ -1880,7 +1873,7 @@ InstallMethod( PreCat1GroupByEndomorphisms,
     [ IsGroupHomomorphism, IsGroupHomomorphism ], 0,
 function( et, eh )
 
-    local  G, gG, R, t, h, e;
+    local G, gG, R, t, h, e;
 
     if not ( IsEndoMapping( et ) and IsEndoMapping( eh ) ) then
         Print( "et, eh must both be group endomorphisms \n" );
@@ -1907,7 +1900,7 @@ InstallMethod( EndomorphismPreCat1Group,
     "convert cat1-group to one with endomorphisms", true, [ IsPreCat1Group ], 0,
 function( C1G )
 
-    local  e, t, h;
+    local e, t, h;
 
     if IsEndomorphismPreCat1Group( C1G ) then 
         return C1G; 
@@ -1920,13 +1913,12 @@ end );
 
 #############################################################################
 ##
-#M  PreXModByPreCat1Group
+#M  PreXModOfPreCat1Group
 ##
-InstallMethod( PreXModByPreCat1Group, true, 
-    [ IsPreCat1Group ], 0,
+InstallMethod( PreXModOfPreCat1Group, true, [ IsPreCat1Group ], 0,
 function( C1G )
  
-    local  Csrc, Crng, gensrc, genrng, genker, bdy, kert, innaut, autgen,
+    local Csrc, Crng, gensrc, genrng, genker, bdy, kert, innaut, autgen,
            imautgen, idkert, a, aut, act, phi, j, r, PM, Cek, Cer, name;
 
     if not ( IsPermPreCat1Group( C1G ) or IsPcPreCat1Group( C1G ) ) then
@@ -2040,7 +2032,7 @@ InstallMethod( Cat1GroupByPeifferQuotient,
                true, [ IsPreCat1Group ], 0,
 function( PC )
 
-    local  PCrng, PCsrc, PCt, PCh, PCe, genrng, gensrc, Pf, nat, quot,
+    local PCrng, PCsrc, PCt, PCh, PCe, genrng, gensrc, Pf, nat, quot,
            qgen, pqgen, tpqgen, hpqgen, tail, head, ime, embed, C1G;
 
     PCrng := Range( PC ) ;
@@ -2081,7 +2073,7 @@ InstallMethod( DiagonalCat1Group, "cat1-group from a list of generators",
     true, [ IsList ], 0,
 function( gen1 )
 
-    local  m, lgen, gen2, genR, i, p, L1, len1, L2, j, 
+    local m, lgen, gen2, genR, i, p, L1, len1, L2, j, 
            G, R, genG, one, ids, t, h, e, C;
 
     m := Maximum( List( gen1, g -> LargestMovedPoint(g) ) ); 
@@ -2122,7 +2114,7 @@ InstallMethod( AllCat1Groups, "cat1-group structures on a given group",
     true, [ IsGroup ], 0,
 function( gp )
 
-    local  L, homs, idem, num, i, j, C, ok; 
+    local L, homs, idem, num, i, j, C, ok; 
 
     homs := AllHomomorphisms( gp, gp );
     idem := Filtered( homs, i -> CompositionMapping(i,i) = i );
@@ -2171,7 +2163,7 @@ InstallOtherMethod( DirectProductOp,
     "method for pre-crossed modules", true, [ IsList, IsPreXMod ], 0,
 function( list, X1 )
 
-    local  Xsrc, Xrng, Y1, Ysrc, Yrng, genXrng, genYrng, genXsrc, genYsrc,
+    local Xsrc, Xrng, Y1, Ysrc, Yrng, genXrng, genYrng, genXsrc, genYsrc,
            XSpos, YSpos, XRpos, YRpos, Spos, imaut, autgen, aut, act,
            XY, S, R, genS, lenS, genR, lenR, imbdy, bdy, a, i, j, k,
            Xbdy, Ybdy, Xact, Yact, imXbdy, imYbdy, alpha, info,
@@ -2326,7 +2318,7 @@ end );
 InstallOtherMethod( Embedding, "generic method for (pre-)xmods & (pre-)cat1s",
     true, [ Is2DimensionalGroup, IsPosInt ], 0,
 function( D, i )
-    local  info, eS, eR, obj, mor;
+    local info, eS, eR, obj, mor;
 
     info := DirectProductInfo( D );
     if IsBound( info!.embeddings[i] ) then
@@ -2358,7 +2350,7 @@ end );
 InstallOtherMethod( Projection, "generic method for (pre-)xmods & (pre-)cat1s",
     true, [ Is2DimensionalGroup and HasDirectProductInfo, IsPosInt ], 0,
 function( D, i )
-    local  info, pS, pR, mor;
+    local info, pS, pR, mor;
 
     info := DirectProductInfo( D );
     if IsBound( info!.projections[i] ) then
@@ -2392,7 +2384,7 @@ InstallMethod( TrivialSub2DimensionalGroup, "of a 2d-object", true,
     [ Is2DimensionalGroup ], 0,
 function( obj )
 
-    local  idsrc, idrng;
+    local idsrc, idrng;
 
     idsrc := TrivialSubgroup( Source( obj ) );
     idrng := TrivialSubgroup( Range( obj ) );
@@ -2434,7 +2426,7 @@ end );
 InstallMethod( IsNormalSubgroup2DimensionalGroup, 
     "for crossed modules and cat1-groups", [ Is2DimensionalGroup ], 0,
 function( obj )
-    local  src, rng, gensrc, genrng;
+    local src, rng, gensrc, genrng;
     src := Source( obj );
     rng := Range( obj );
     gensrc := GeneratorsOfGroup( src );
@@ -2456,7 +2448,7 @@ InstallOtherMethod( IsNormal, "for precrossed modules", IsIdenticalObj,
     [ IsPreXMod, IsPreXMod ], 0,
 function( XM, SM )
 
-    local  xr, a, ss, im, xs, sr, Ssrc, Xact, snat, rnat;
+    local xr, a, ss, im, xs, sr, Ssrc, Xact, snat, rnat;
 
     if not IsSubPreXMod( XM, SM ) then
         return false;
@@ -2493,7 +2485,7 @@ end );
 InstallMethod( NormalSubXMods, "for a crossed module", true, [ IsXMod ], 0,
 function( XM )
 
-    local  Xsrc, Xrng, YM, i, j, slen, rlen, norm, normsrc, normrng, ok;
+    local Xsrc, Xrng, YM, i, j, slen, rlen, norm, normsrc, normrng, ok;
 
     Xsrc := Source( XM );
     Xrng := Range( XM );

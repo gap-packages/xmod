@@ -725,47 +725,36 @@ end );
 
 ##############################################################################
 ##
-#M  CrossedSquareByCat2Group
 #M  CrossedSquareOfCat2Group
+#M  Cat2GroupByCrossedSquare
 ##
-InstallMethod( CrossedSquareByCat2Group, "generic method for cat2-groups",
+InstallMethod( CrossedSquareOfCat2Group, "generic method for cat2-groups",
     true, [ IsCat2Group ], 0,
 function( C2 )
 
     local XS;
-    XS := PreCrossedSquareByPreCat2Group( C2 );
+    XS := PreCrossedSquareOfPreCat2Group( C2 );
     SetCrossedSquareOfCat2Group( C2, XS );
     SetCat2GroupOfCrossedSquare( XS, C2 );
     return XS;
 end );
 
-InstallMethod( CrossedSquareOfCat2Group, "generic method for cat2-groups",
-    true, [ IsCat2Group ], 0, CrossedSquareByCat2Group );
-
-##############################################################################
-##
-#M  Cat2GroupByCrossedSquare
-#M  Cat2GroupOfCrossedSquare
-##
-InstallMethod( Cat2GroupByCrossedSquare, "generic method for crossed squares",
+InstallMethod( Cat2GroupOfCrossedSquare, "generic method for crossed squares",
     true, [ IsCrossedSquare ], 0,
 function( XS )
 
     local C2;
-    C2 := PreCat2GroupByPreCrossedSquare(XS);
+    C2 := PreCat2GroupOfPreCrossedSquare(XS);
     SetCrossedSquareOfCat2Group( C2, XS );
     SetCat2GroupOfCrossedSquare( XS, C2 );
     return C2;
 end );
-
-InstallMethod( Cat2GroupOfCrossedSquare, "generic method for crossed squares",
-    true, [ IsCrossedSquare ], 0, Cat2GroupByCrossedSquare );
     
 #############################################################################
 ##
-#M  PreCrossedSquareByPreCat2Group
+#M  PreCrossedSquareOfPreCat2Group
 ##
-InstallMethod( PreCrossedSquareByPreCat2Group, true, 
+InstallMethod( PreCrossedSquareOfPreCat2Group, true, 
     [ IsPreCat2Group ], 0,
 function( C2G )
  
@@ -791,9 +780,6 @@ function( C2G )
     
     G := Image( IsomorphismPermObject( Source( t1 ) ) );
     gensrc := GeneratorsOfGroup( G ); 
-
-
-
 
     t1 := GroupHomomorphismByImagesNC( G, G, gensrc, 
               List(gensrc, x -> Image( t1, x ) ) ); 
@@ -852,9 +838,9 @@ end );
 
 #############################################################################
 ##
-#M  PreCat2GroupByPreCrossedSquare
+#M  PreCat2GroupOfPreCrossedSquare
 ##
-InstallMethod( PreCat2GroupByPreCrossedSquare, true, 
+InstallMethod( PreCat2GroupOfPreCrossedSquare, true, 
     [ IsPreCrossedSquare ], 0,
 function( XS )
  

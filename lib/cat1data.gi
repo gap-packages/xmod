@@ -38,7 +38,7 @@
 ##
 InstallGlobalFunction( AllCat1DataGroups, function( arg )
 
-    local  nargs; 
+    local nargs; 
 
     nargs := Length( arg ); 
     if ( nargs = 1 ) then 
@@ -58,7 +58,7 @@ InstallMethod( AllCat1DataGroupsBasic, "construct all cat1-groups on a given gro
     true, [ IsCyclic and IsPGroup ], 0,
 function( gp ) 
 
-    local  C, zero, one; 
+    local C, zero, one; 
 
     C := [ 0, 0 ]; 
     zero := MappingToOne( gp, gp ); 
@@ -74,13 +74,13 @@ InstallMethod( AllCat1DataGroupsBasic, "construct all cat1-groups on a given gro
     true, [ IsGroup ], 0,
 function( gp )
 
-    local  gpid, size, num, gens, ngens, path, name, out, gensgp, egensgp, 
-           idem, ranges, idems, inum, i, im, R, j, numrng, aut, 
-           reps, nreps, ireps, nireps, quot, autR, a, q, b, mgi, 
-           keep, iranges, iidems, genR, igenR, aR, pos, C, Cnum, numirng, 
-           idemi, inumi, h, kerh, k, t, kert, kerth, CC, g, AICG, isocg, 
-           bdy, kerbdy, z, gens1, list1, len1, gens2, list2, len2, 
-           struc, fst, genr, egenr, imt, eimt, imh, eimh; 
+    local gpid, size, num, gens, ngens, path, name, out, gensgp, egensgp, 
+          idem, ranges, idems, inum, i, im, R, j, numrng, aut, 
+          reps, nreps, ireps, nireps, quot, autR, a, q, b, mgi, 
+          keep, iranges, iidems, genR, igenR, aR, pos, C, Cnum, numirng, 
+          idemi, inumi, h, kerh, k, t, kert, kerth, CC, g, AICG, isocg, 
+          bdy, kerbdy, z, gens1, list1, len1, gens2, list2, len2, 
+          struc, fst, genr, egenr, imt, eimt, imh, eimh; 
 
     gpid := IdGroup( gp ); 
     size := gpid[1]; 
@@ -308,9 +308,9 @@ InstallMethod( Cat1RepresentativesToFile, "construct potential idempotents",
     true, [ IsGroup ], 0,
 function( gp )
 
-    local  gpid, size, num, name, path, rname, rout, iname, iout, gens, ngens, 
-           aut, reps, nreps, keep, ireps, i, R, genR, a, igenR, aR, pos, 
-           nireps, idems, quot, autR, q, b, idem, j, k, id, mgi, nidems, GHBI;  
+    local gpid, size, num, name, path, rname, rout, iname, iout, gens, ngens, 
+          aut, reps, nreps, keep, ireps, i, R, genR, a, igenR, aR, pos, 
+          nireps, idems, quot, autR, q, b, idem, j, k, id, mgi, nidems, GHBI;  
 
     gpid := IdGroup( gp ); 
     size := gpid[1]; 
@@ -374,9 +374,9 @@ InstallMethod( Cat1IdempotentsToFile, "construct potential idempotents", true,
     [ IsGroup, IsList, IsPosInt, IsPosInt ], 0,
 function( gp, ireps, fst, lst )
 
-    local  gpid, size, num, path, iname, iout, gens, ngens, aut, 
-           reps, ist, nreps, keep, i, R, genR, a, igenR, aR, pos, nireps, 
-           quot, autR, q, b, idem, j, k, id, mgi, nidems, GHBI;  
+    local gpid, size, num, path, iname, iout, gens, ngens, aut, 
+          reps, ist, nreps, keep, i, R, genR, a, igenR, aR, pos, nireps, 
+          quot, autR, q, b, idem, j, k, id, mgi, nidems, GHBI;  
 
     gpid := IdGroup( gp ); 
     size := gpid[1]; 
@@ -469,7 +469,7 @@ InstallMethod( CollectPartsAlreadyDone, "preparation for AllCat1DataGroupsInPart
     true, [ IsGroup, IsPosInt, IsPosInt, IsList ], 0,
 function( gp, nn, kk, range )
 
-    local  C0, j, C1, Clen, Cj, gpj, iso, Rj, res, ok, mor; 
+    local C0, j, C1, Clen, Cj, gpj, iso, Rj, res, ok, mor; 
 
     C0 := List( range, j -> Cat1Select(nn,kk,j) ); 
     for j in C0 do 
@@ -502,11 +502,11 @@ InstallMethod( AllCat1DataGroupsInParts, "construct all cat1-groups on a given g
     true, [ IsGroup, IsList, IsList, IsList, IsList ], 0,
 function( gp, ireps, idems, range, C )
 
-    local  gpid, size, num, gens, ngens, path, name, out, id, Cnum, Cnum0, 
-           i, R, j, nireps, fst, lst, ist, single, sj, sk, 
-           numirng, idemi, inumi, h, kerh, k, t, kert, kerth, CC, g, AICG, 
-           isocg, bdy, kerbdy, z, gens1, list1, len1, gens2, list2, len2, 
-           struc, gensgp, egensgp, a, genr, egenr, imt, eimt, imh, eimh; 
+    local gpid, size, num, gens, ngens, path, name, out, id, Cnum, Cnum0, 
+          i, R, j, nireps, fst, lst, ist, single, sj, sk, 
+          numirng, idemi, inumi, h, kerh, k, t, kert, kerth, CC, g, AICG, 
+          isocg, bdy, kerbdy, z, gens1, list1, len1, gens2, list2, len2, 
+          struc, gensgp, egensgp, a, genr, egenr, imt, eimt, imh, eimh; 
 
     gpid := IdGroup( gp ); 
     size := gpid[1]; 
@@ -679,12 +679,13 @@ end );
 ##
 #M  MakeAllCat1DataGroups . . . . . . . . . . . . . . . . . for three positive integers
 ##
-InstallMethod( MakeAllCat1DataGroups, "construct all cat1-groups of a chosen order", 
+InstallMethod( MakeAllCat1DataGroups, "all cat1-groups of a chosen order", 
     true, [ IsPosInt, IsPosInt, IsPosInt ], 0,
 function( n, fst, lst )
 
-    local  sgp, gensgp, egensgp, all, len, i, a, t, h, gens, fam, genr, egenr, 
-           num, j, k, imt, eimt, imh, eimh, path, name, out, struc; 
+    local sgp, gensgp, egensgp, all, len, i, a, t, h, gens, fam, genr, egenr, 
+          num, j, k, imt, eimt, imh, eimh, path, name, out, struc; 
+
     path := DirectoriesPackageLibrary("xmod","lib")[1]; 
     name := Concatenation( String(n), ".out" ); 
     out := Filename( path, name ); 
@@ -757,7 +758,7 @@ InstallMethod( EndomorphismClassObj,
   0,
 function( nat, iso, aut, conj )
 
-    local  filter, fam, class;
+    local filter, fam, class;
 
     fam := FamilyObj( [ nat, iso, aut, conj ] );
     filter := IsEndomorphismClassObj;
@@ -797,7 +798,7 @@ InstallMethod( ZeroEndomorphismClass, "generic method for a group",
     true, [ IsGroup ], 0, 
 function( G )
 
-    local  Q, nat, iso, aut, conj, idgp;
+    local Q, nat, iso, aut, conj, idgp;
 
     Q := Group( One( G ) );
     nat := MappingToOne( G, Q );
@@ -816,7 +817,7 @@ InstallMethod( AutomorphismClass, "generic method for a group", true,
     [ IsGroup ], 0, 
 function( G )
 
-    local  iso, aut, conj;
+    local iso, aut, conj;
 
     aut := AutomorphismGroup( G );
     iso := InclusionMappingGroups( G, G );
@@ -832,10 +833,10 @@ InstallMethod( NontrivialEndomorphismClasses, "generic method for a group",
     true, [ IsGroup ], 0, 
 function( G )
 
-    local  nargs, valid, case, switch, oldcase, normG, rcosG, N, nnum,
-           natG, quotG, genG, oneG, Qnum, ccs, reps, cnum, Q, R, iso, L, im,
-           phi, nat, proj, comp, normal, cosets, conj, Cnum, g, gim, zero,
-           i, j, k, l, Lnum, aut, idgp, Ecl, Enum, classes, class, name, ok;
+    local nargs, valid, case, switch, oldcase, normG, rcosG, N, nnum,
+          natG, quotG, genG, oneG, Qnum, ccs, reps, cnum, Q, R, iso, L, im,
+          phi, nat, proj, comp, normal, cosets, conj, Cnum, g, gim, zero,
+          i, j, k, l, Lnum, aut, idgp, Ecl, Enum, classes, class, name, ok;
 
     genG := GeneratorsOfGroup( G );
     oneG := One( G );
@@ -890,10 +891,10 @@ InstallMethod( NonIntersectingEndomorphismClasses,
     "generic method for a group", true, [ IsGroup ], 0, 
 function( G )
 
-    local  nargs, valid, case, switch, oldcase, normG, rcosG, N, nnum,
-           natG, quotG, genG, oneG, Qnum, ccs, reps, cnum, Q, R, iso, L, im,
-           phi, nat, proj, comp, normal, cosets, conj, Cnum, g, gim, zero,
-           i, j, k, l, Lnum, aut, idgp, Ecl, Enum, classes, class, name, ok;
+    local nargs, valid, case, switch, oldcase, normG, rcosG, N, nnum,
+          natG, quotG, genG, oneG, Qnum, ccs, reps, cnum, Q, R, iso, L, im,
+          phi, nat, proj, comp, normal, cosets, conj, Cnum, g, gim, zero,
+          i, j, k, l, Lnum, aut, idgp, Ecl, Enum, classes, class, name, ok;
 
     genG := GeneratorsOfGroup( G );
     oneG := One( G );
@@ -950,7 +951,7 @@ end );
 InstallGlobalFunction( EndomorphismClasses, 
 function( arg )
     
-    local  nargs, valid, G, case, classes, auts, ends, zero, disj;
+    local nargs, valid, G, case, classes, auts, ends, zero, disj;
 
     nargs := Length( arg );
     G := arg[1];
@@ -991,8 +992,8 @@ InstallMethod( EndomorphismImages,
     "generic method for a list of endomorphism classes", true, [ IsList ], 0,
 function( classes )
 
-    local  clnum, G, genG, Q, autos, rho, psi, phi, L, Lnum, LR, k, l,
-           im, g, gim, i, c, nat, iso, aut, conj, cjnum, comp, R;
+    local clnum, G, genG, Q, autos, rho, psi, phi, L, Lnum, LR, k, l,
+          im, g, gim, i, c, nat, iso, aut, conj, cjnum, comp, R;
 
     if ( ( classes = [] ) or not IsEndomorphismClass( classes[1] ) ) then
         Error( "usage: EndomorphismImages( <list of endo classes> );" );
@@ -1046,8 +1047,8 @@ InstallMethod( IdempotentImages,
     "generic method for a list of endomorphism classes", true, [ IsList ], 0,
 function( classes )
 
-    local  R, genR, Q0, Q, alpha0, psi, phi, L, L1, L2, k, im, im2, 
-           psi2, c, cim, i, cl, nu, theta, autQ, conj, cjnum;
+    local R, genR, Q0, Q, alpha0, psi, phi, L, L1, L2, k, im, im2, 
+          psi2, c, cim, i, cl, nu, theta, autQ, conj, cjnum;
 
     if ( classes = [] ) then 
         return [ ]; 

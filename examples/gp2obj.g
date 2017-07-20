@@ -201,7 +201,7 @@ Display( C18 );
 iso18 := IsomorphismPermObject( C18 ); 
 PC18 := Image( iso18 ); 
 Display( PC18 ); 
-X18 := XModByCat1Group( PC18 );
+X18 := XModOfCat1Group( PC18 );
 Display( X18 ); 
 
 SetInfoLevel( InfoXMod, level );

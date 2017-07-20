@@ -16,7 +16,9 @@ InstallMethod( TypeOf2DimensionalDomain, "for list of 2Dimensional-domains",
     true, [ IsList ], 0, 
 
 function( pieces ) 
-    local  type; 
+
+    local type; 
+
     ## type:  1=gpd, 2=mon, 3=sgp, 4=mgm, 5=dom 
     type := 0; 
     return type; 
@@ -31,7 +33,8 @@ end );
 ##
 InstallGlobalFunction( Make2DimensionalMagma, function( arg ) 
 
-    local  obs, mag;
+    local obs, mag;
+
     Print( "Usage: Make2DimensionalMagma( <src>, <rng> )" ); 
     Print( " (but not yet installed\n" ); 
     return fail; 
@@ -44,7 +47,8 @@ end );
 InstallMethod( \=, "for 2Dimensional-magmas", IsIdenticalObj,
     [ Is2DimensionalMagma, Is2DimensionalMagma ], 0, 
 function ( m1, m2 ) 
-    local  i, p1, p2;
+    local i, p1, p2;
+    Print( " (not yet installed)\n" ); 
     return fail; 
 end );
 
@@ -58,7 +62,8 @@ end );
 InstallMethod( IsSub2DimensionalDomain, "for two 2Dimensional-domains", true, 
     [ Is2DimensionalDomain, Is2DimensionalDomain ], 0, 
 function( D, U )
-    local  compU, obj, p, ok; 
+    local compU, obj, p, ok; 
+    Print( " (not yet installed)\n" ); 
     return fail; 
 end );
 
@@ -71,7 +76,7 @@ end );
 ##
 InstallGlobalFunction( Make2DimensionalSemigroup, function( arg ) 
 
-    local  obs, sgp; 
+    local obs, sgp; 
     Print( "Usage: Make2DimensionalSemegroup( <src>, <rng> )" ); 
     Print( " (but not yet installed)\n" ); 
     return fail; 
@@ -86,7 +91,7 @@ end );
 ##
 InstallGlobalFunction( Make2DimensionalMonoid, function( arg ) 
 
-    local  obs, mon;
+    local obs, mon;
     Print( "Usage: Make2DimensionalMonoid( <src>, <rng> )" ); 
     Print( " (but not yet installed)\n" ); 
     return fail; 

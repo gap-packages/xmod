@@ -26,7 +26,7 @@ InstallMethod( Up2DimensionalMappingObj, "for 2d-object and images", true,
     [ Is2DimensionalDomain, IsHomogeneousList ], 0,
 function( obj, ims )
 
-    local  filter, fam, map, genR, stgR, invR, ok, src, rng, aut, name, hom;
+    local filter, fam, map, genR, stgR, invR, ok, src, rng, aut, name, hom;
 
     fam := FamilyObj( [ obj, ims ] );
     filter := IsUp2DimensionalMappingRep;
@@ -99,9 +99,9 @@ InstallMethod( IsDerivation, "generic method for derivation of pre-xmod",
     true, [ IsUp2DimensionalMapping ], 0,
 function( chi )
 
-    local  im, inv, XM, bdy, R, stgR, invR, oneR, ord, S, oneS,
-           genrng, rho, imrho, ok, g, i, j, r, s, t, u, v, w, aut, act, pair,
-           iso, fp, pres, T, numrels, lenrels, rels, rel, len, triv;
+    local im, inv, XM, bdy, R, stgR, invR, oneR, ord, S, oneS,
+          genrng, rho, imrho, ok, g, i, j, r, s, t, u, v, w, aut, act, pair,
+          iso, fp, pres, T, numrels, lenrels, rels, rel, len, triv;
 
     XM := Object2d( chi );
     im := UpGeneratorImages( chi );
@@ -173,7 +173,7 @@ InstallMethod( IsSection, "generic method for section of cat1-group",
     true, [ IsUp2DimensionalMapping ], 0,
 function( xi )
 
-    local  hom, C, Crng, idrng, ok, reg;
+    local hom, C, Crng, idrng, ok, reg;
 
     hom := UpHomomorphism( xi ); 
     if not IsGroupHomomorphism( hom ) then
@@ -201,7 +201,7 @@ InstallMethod( SourceEndomorphism, "method for an upmapping", true,
     [ IsUp2DimensionalMapping ], 0,
 function( u )
 
-    local  XM, S, bdy, genS, ngenS, imsigma, i, s, r, s2, sigma;
+    local XM, S, bdy, genS, ngenS, imsigma, i, s, r, s2, sigma;
 
     if IsDerivation( u ) then
         XM := Object2d( u );
@@ -231,7 +231,7 @@ InstallMethod( RangeEndomorphism, "method for an upmapping", true,
     [ IsUp2DimensionalMapping ], 0,
 function( u )
 
-    local  XM, R, bdy, genR, ngenR, imrho, i, s, r, r2, rho;
+    local XM, R, bdy, genR, ngenR, imrho, i, s, r, r2, rho;
 
     if IsDerivation( u ) then
         XM := Object2d( u );
@@ -261,7 +261,7 @@ InstallMethod( Object2dEndomorphism, "method for an upmapping", true,
     [ IsUp2DimensionalMapping ], 0,
 function( u )
 
-    local  obj, sigma, rho, mor;
+    local obj, sigma, rho, mor;
 
     if IsDerivation( u ) then
         obj := Object2d( u );
@@ -286,7 +286,7 @@ InstallMethod( DerivationByImages, "method for an xmod", true,
     [ IsXMod, IsHomogeneousList ], 0,
 function( XM, im )
 
-    local  nargs, usage, isder, chi, R, S, stgR, ngR, ok;
+    local nargs, usage, isder, chi, R, S, stgR, ngR, ok;
 
     S := Source( XM );
     R := Range( XM );
@@ -311,7 +311,9 @@ end );
 ##
 InstallMethod( String, "for a derivation", true, [ IsDerivation ], 0, 
 function( chi ) 
-    local  obj;
+
+    local obj;
+
     obj := Object2d( chi );
     return( STRINGIFY( "derivation by images: ", String( Range(obj) ), 
                        " -> ", String( Source(obj) ) ) ); 
@@ -325,7 +327,9 @@ InstallMethod( PrintString, "for a derivation", true, [ IsDerivation ],
 
 InstallMethod( PrintObj, "method for a derivation", true, [ IsDerivation ], 0,
 function( chi )
-    local  obj, iso, R, stgR;
+
+    local obj, iso, R, stgR;
+
     obj := Object2d( chi );
     R := Range( obj );
     stgR := StrongGeneratorsStabChain( StabChain( R ) );
@@ -345,8 +349,8 @@ InstallMethod( DerivationImage, "method for a derivation and a group element",
     true, [ IsDerivation, IsObject ], 0,
 function( chi, r )
 
-    local  XM, S, R, stgR, imchi, elR, elS, ngR, genrng, j, g, s, u, v,
-           rpos, spos, ord, P, a, act;
+    local XM, S, R, stgR, imchi, elR, elS, ngR, genrng, j, g, s, u, v,
+          rpos, spos, ord, P, a, act;
 
     XM := Object2d( chi );
     S := Source( XM );
@@ -395,8 +399,8 @@ InstallMethod( UpImagePositions, "method for a derivation", true,
     [ IsDerivation ], 0,
 function( chi )
 
-    local  XM, R, S, elR, stgR, ngR, ord, P, oR, elS, oneS,
-           i, j, k, x, y, L, ok, imchi, act, agen, a;
+    local XM, R, S, elR, stgR, ngR, ord, P, oR, elS, oneS,
+          i, j, k, x, y, L, ok, imchi, act, agen, a;
 
     XM := Object2d( chi );
     R := Range( XM );
@@ -437,7 +441,7 @@ InstallMethod( PrincipalDerivation, "method for xmod and source element",
     true, [ IsXMod, IsObject ], 0,
 function( XM, s )
 
-    local  act, S, R, stgR, q, r, iota, imiota, ngen, a, j;
+    local act, S, R, stgR, q, r, iota, imiota, ngen, a, j;
 
     S := Source( XM );
     R := Range( XM );
@@ -467,7 +471,7 @@ end );
 InstallMethod( PrincipalDerivations, "method for xmod",  true, [ IsXMod ], 0,
 function( XM )
 
-    local  S, s, elS, size, i, L, iota, pos;
+    local S, s, elS, size, i, L, iota, pos;
 
     S := Source( XM );
     elS := Elements( S );
@@ -491,8 +495,8 @@ InstallMethod( CompositeDerivation, "method for two derivations", true,
     [ IsDerivation, IsDerivation ], 0,
 function( chi, chj )
 
-    local  XM, imi, imj, R, stgR, numrng, rng, r, k,
-           s, si, sj, bdy, bsj, imcomp, comp;
+    local XM, imi, imj, R, stgR, numrng, rng, r, k,
+          s, si, sj, bdy, bsj, imcomp, comp;
 
     XM := Object2d( chi );
     R := Range( XM );
@@ -535,7 +539,8 @@ end );
 InstallMethod( IsRegularDerivation, "method for derivations", true,
     [ IsDerivation ], 0,
 function( chi )
-    local  XM, S, bdy, R, stgR, genrng, im, imrho, rho, ok;
+
+    local XM, S, bdy, R, stgR, genrng, im, imrho, rho, ok;
 
     XM := Object2d( chi );
     S := Source( XM );
@@ -558,7 +563,7 @@ InstallMethod( InverseDerivations, "method for a derivation", true,
     [ IsDerivation ], 0,
 function( chi )
 
-    local  XM, x, D, L, size, j, chj, chk, chl, chh, chg, inv;
+    local XM, x, D, L, size, j, chj, chk, chl, chh, chg, inv;
 
     XM := Object2d( chi );
     D := AllDerivations( XM );
@@ -587,7 +592,7 @@ InstallMethod( ListInverseDerivations, "method for a crossed module", true,
     [ IsXMod ], 0,
 function( XM )
 
-    local  L, i, M, size, D, chi, inv;
+    local L, i, M, size, D, chi, inv;
 
     D := AllDerivations( XM );
     L := ImagesList( D );
@@ -616,7 +621,7 @@ InstallMethod( SectionByImages, "method for a cat1-group", true,
     [ IsCat1Group, IsGroupHomomorphism ], 0,
 function( C, hom )
 
-    local  fam, filter, R, G, stgR, ngR, nargs, usage, isect, im, xi;
+    local fam, filter, R, G, stgR, ngR, nargs, usage, isect, im, xi;
 
     fam := Up2DimensionalMappingFamily; 
     filter := IsUp2DimensionalMappingRep; 
@@ -654,10 +659,13 @@ InstallMethod( PrintString, "for a section", true, [ IsSection ], 0, String );
 
 InstallMethod( PrintObj, "method for a section", true, [ IsSection ], 0,
 function( xi )
-    local  obj;
+
+    local obj;
+
     obj := Object2d( xi );
     Print( "SectionByImages( ", Range( obj ), ", ", Source( obj ), ", ",
-        GeneratorsOfGroup( Range( obj ) ), ", ", UpGeneratorImages( xi ), " )" );
+        GeneratorsOfGroup( Range( obj ) ), ", ", UpGeneratorImages( xi ), 
+        " )" );
 end ); 
 
 InstallMethod( ViewObj, "method for a section", true, [ IsSection ], 
@@ -671,8 +679,8 @@ InstallMethod( SectionByDerivation, "method for a derivation", true,
     [ IsDerivation ], 0,
 function( chi )
 
-    local  XM, R, stgR, ngR, hom, xi, imchi, imhom, i, r, 
-           er, eR, eK, eKchi, g, C;
+    local XM, R, stgR, ngR, hom, xi, imchi, imhom, i, r, 
+          er, eR, eK, eKchi, g, C;
 
     XM := Object2d( chi );
     R := Range( XM );
@@ -704,7 +712,7 @@ InstallMethod( DerivationBySection, "method for a section", true,
     [ IsSection ], 0,
 function( xi )
 
-    local  C, imxi, eR, eK, R, stgR, ngR, S, XM, imchi, r, er, s, i, chi;
+    local C, imxi, eR, eK, R, stgR, ngR, S, XM, imchi, r, er, s, i, chi;
 
     if not IsSection( xi ) then
         Error( "Parameter must be a section of a cat1-group" );
@@ -739,8 +747,8 @@ InstallMethod( CompositeSection, "method for two sections", true,
     [ IsSection, IsSection ], 0,
 function( xi, xj )
 
-    local  C, R, stgR, h, e, hxj, ehxj, xihxj, r, im1, im2, im3,
-           numrng, k, imcomp, comp;
+    local C, R, stgR, h, e, hxj, ehxj, xihxj, r, im1, im2, im3,
+          numrng, k, imcomp, comp;
 
     C := Object2d( xi );
     if not ( C = Object2d( xj ) ) then
@@ -780,7 +788,7 @@ InstallMethod( MonoidOfUp2DimensionalMappingsObj, "for a 2DimensionalDomain", tr
     [ Is2DimensionalDomain, IsHomogeneousList, IsString ], 0,
 function( obj, images, str )
 
-    local  filter, fam, mon;
+    local filter, fam, mon;
 
     fam := FamilyObj( [ obj, images, str ] );
     filter := IsMonoidOfUp2DimensionalMappingsObj;
@@ -832,7 +840,7 @@ InstallMethod( ImagesTable, "method for crossed module derivations", true,
     [ IsMonoidOfDerivations ], 0,
 function( D )
 
-    local  str, T, i, chi, L, XM, size;
+    local str, T, i, chi, L, XM, size;
 
     XM := Object2d( D );
     L := ImagesList( D );
@@ -854,8 +862,8 @@ InstallMethod( BacktrackDerivationsJ, "method for a crossed module", true,
       IsInt, IsString ], 0,
 function( XM, subs, imrho, imchi, j, str )
     
-    local  Xsrc, onesrc, Xrng, isorng, stgrng, derivgen, s, ok, rho, bdy,
-           k, J, genJ, ord, r, aut, w, t, i, chi;
+    local Xsrc, onesrc, Xrng, isorng, stgrng, derivgen, s, ok, rho, bdy,
+          k, J, genJ, ord, r, aut, w, t, i, chi;
 
     Xsrc := Source( XM );
     Xrng := Range( XM );
@@ -920,7 +928,7 @@ InstallMethod( BacktrackDerivations, "method for a crossed module", true,
     [ IsXMod, IsString ], 0,
 function( XM, str )
 
-    local  R, len, stgR, subs, images, sorted, derivrec;
+    local R, len, stgR, subs, images, sorted, derivrec;
 
     if not ( str in [ "reg", "all" ] ) then
         Error( "Invalid reg|all string" );
@@ -942,7 +950,7 @@ InstallMethod( RegularDerivations, "method for a crossed module", true,
     [ IsXMod ], 0,
 function( XM )
 
-    local  how, ok;
+    local how, ok;
 
     ok := true;
     return BacktrackDerivations( XM, "reg" );
@@ -956,7 +964,7 @@ InstallMethod( AllDerivations, "method for a crossed module", true,
     [ IsXMod ], 0,
 function( XM )
 
-    local  how, ok;
+    local how, ok;
 
     ok := true;
     return BacktrackDerivations( XM, "all" );
@@ -970,7 +978,7 @@ InstallMethod( WhiteheadMonoidTable, "method for a crossed module", true,
     [ IsXMod ], 0,
 function( XM )
 
-    local  C, D, L, i, j, chi, images, J, M, size;
+    local C, D, L, i, j, chi, images, J, M, size;
 
     D := AllDerivations( XM );
     L := ImagesList( D );
@@ -999,7 +1007,7 @@ InstallMethod( WhiteheadGroupTable, "method for a crossed module", true,
     [ IsXMod ], 0,
 function( XM )
 
-    local  C, D, L, i, j, chi, images, J, M, reg, len;
+    local C, D, L, i, j, chi, images, J, M, reg, len;
 
     D := RegularDerivations( XM );
     reg := AllOrRegular( D );
@@ -1031,8 +1039,8 @@ InstallMethod( WhiteheadPermGroup, "method for a crossed module", true,
     [ IsXMod ], 0,
 function( XM )
 
-    local  tab, reg, im, grp, gens, strgens, pos, genchi, grp1;
-           ##  grp2, iso;
+    local tab, reg, im, grp, gens, strgens, pos, genchi, grp1;
+
     reg := RegularDerivations( XM );
     tab := WhiteheadGroupTable( XM );
     im := ImagesList( reg );
@@ -1043,15 +1051,11 @@ function( XM )
     SetWhiteheadGroupGeneratorPositions( XM, pos ); 
     genchi := List( pos, p -> DerivationByImages( XM, im[p] ) );
     SetWhiteheadGroupGeneratingDerivations( XM, genchi );
-    ## (05/03/07) allow for case that group is trivial
     if ( pos = [ ] ) then
         grp1 := Group( () );
     else
         grp1 := Group( strgens );
     fi;
-    ## iso := SmallerDegreePermutationRepresentation( grp1 );
-    ## grp2 := Image( iso );
-    ## SetName( grp, Concatenation( "WP", Name(XM) ) );
     return grp1;
 end );
 
@@ -1064,7 +1068,9 @@ end );
 InstallMethod( WhiteheadTransMonoid, "method for a crossed module", true,
     [ IsXMod ], 0,
 function( XM )
-    local  tab, j, t, mon, gens, it;
+
+    local tab, j, t, mon, gens, it;
+
     tab := WhiteheadMonoidTable( XM );
     it := Transformation( [ ] ); 
     gens := [ ];

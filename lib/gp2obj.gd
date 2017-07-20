@@ -244,19 +244,15 @@ DeclareAttribute( "ReverseCat1Group", IsPreCat1Group );
 
 #############################################################################
 ##
-#O  PreXModByPreCat1Group( <PCG> )
-#O  PreCat1GroupByPreXMod( <PM> )
+#A  PreXModOfPreCat1Group( <PCG> )
+#A  PreCat1GroupOfPreXMod( <PM> )
 #A  XModOfCat1Group( <C1G> )
-#O  XModByCat1Group( <C1G> )
 #A  Cat1GroupOfXMod( <XM> )
-#O  Cat1GroupByXMod( <XM> )
 ##
-DeclareOperation( "PreXModByPreCat1Group", [ IsPreCat1Group ] );
-DeclareOperation( "PreCat1GroupByPreXMod", [ IsPreXMod ] );
+DeclareAttribute( "PreXModOfPreCat1Group", IsPreCat1Group );
+DeclareAttribute( "PreCat1GroupOfPreXMod", IsPreXMod );
 DeclareAttribute( "XModOfCat1Group", IsCat1Group );
-DeclareOperation( "XModByCat1Group", [ IsCat1Group ] );
 DeclareAttribute( "Cat1GroupOfXMod", IsXMod );
-DeclareOperation( "Cat1GroupByXMod", [ IsXMod ] );
 
 #############################################################################
 ##

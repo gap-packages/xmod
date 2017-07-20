@@ -225,22 +225,18 @@ DeclareGlobalFunction( "Cat2Group" );
 
 #############################################################################
 ##
-#0  ConjugationActionForCrossedSquare( <G>, <N> )
-#0  PreCrossedSquareByPreCat2Group( <PCG> ) 
-#0  PreCat2GroupByPreCrossedSquare( <PS> } 
+#O  ConjugationActionForCrossedSquare( <G>, <N> )
+#A  PreCrossedSquareOfPreCat2Group( <PCG> ) 
+#A  PreCat2GroupOfPreCrossedSquare( <PS> } 
 #A  CrossedSquareOfCat2Group( <C1G> } 
-#0  CrossedSquareByCat2Group( <C1G> } 
 #A  Cat2GroupOfCrossedSquare( <XS> ) 
-#0  Cat2GroupByCrossedSquare( <XS> )
 ##
 DeclareOperation( "ConjugationActionForCrossedSquare", [ IsGroup, IsGroup ] );
 DeclareAttribute( "ElementsRelationsForSemidirectProduct", IsGroup );
-DeclareOperation( "PreCrossedSquareByPreCat2Group", [ IsPreCat2Group ] );
-DeclareOperation( "PreCat2GroupByPreCrossedSquare", [ IsPreCrossedSquare ] );
+DeclareAttribute( "PreCrossedSquareOfPreCat2Group", IsPreCat2Group );
+DeclareAttribute( "PreCat2GroupOfPreCrossedSquare", IsPreCrossedSquare );
 DeclareAttribute( "CrossedSquareOfCat2Group", IsCat2Group );
-DeclareOperation( "CrossedSquareByCat2Group", [ IsCat2Group ] );
 DeclareAttribute( "Cat2GroupOfCrossedSquare", IsCrossedSquare );
-DeclareOperation( "Cat2GroupByCrossedSquare", [ IsCrossedSquare ] );
 
 #############################################################################
 ##

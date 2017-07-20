@@ -52,16 +52,11 @@ DeclareOperation( "InnerAutomorphismCat2Group",
 #############################################################################
 ##
 #A  CrossedSquareMorphismOfCat2Morphism( <mor> )
-#O  CrossedSquareMorphismByCat2Morphism( <mor> )
 #A  Cat2MorphismOfCrossedSquareMorphism( <mor> )
-#O  Cat2MorphismByCrossedSquareMorphism( <mor> )
 ##
 DeclareAttribute( "CrossedSquareMorphismOfCat2Morphism", IsCat2Morphism );
-DeclareOperation( "CrossedSquareMorphismByCat2Morphism", [ IsCat2Morphism ] );
 DeclareAttribute( "Cat2MorphismOfCrossedSquareMorphism", 
     IsCrossedSquareMorphism );
-DeclareOperation( "Cat2MorphismByCrossedSquareMorphism", 
-    [ IsCrossedSquareMorphism ] );
 
 #############################################################################
 ##

@@ -15,7 +15,7 @@ InstallMethod( AbelianModuleObject, "for abelian group and group action",
     true, [ IsGroup, IsGroupHomomorphism ], 0,
 function( ab, act )
 
-    local  rng, filter, fam, obj;
+    local rng, filter, fam, obj;
 
     if not IsCommutative( ab ) then 
         Error( "group is not commutative" );
@@ -38,7 +38,7 @@ end );
 InstallMethod( TrivialAction, "for groups", true, [ IsGroup, IsGroup ], 0,
 function( G, H )
 
-    local  triv;
+    local triv;
 
     triv := Group( IdentityMapping( G ) );
     return MappingToOne( H, triv );
@@ -58,7 +58,7 @@ InstallMethod( InnerAutomorphismsByNormalSubgroup,
     "for a group and a normal subgroup", true, [ IsGroup, IsGroup ], 0,
 function( G, N )
 
-    local  nargs, id, genG, genN, autG, genA, A, g, conj, name;
+    local nargs, id, genG, genN, autG, genA, A, g, conj, name;
 
     if not IsNormal( G, N ) then
         Error( "Second parameter must be normal subgroup of the first\n" );
@@ -93,7 +93,7 @@ InstallMethod( IsomorphismSmallPermGroup, "for a group", true,
     [ IsGroup ], 0,
 function( G )
 
-    local  G2P, P, nP, P2S, nS, S, genG, numG, j, p, imiso, iso;
+    local G2P, P, nP, P2S, nS, S, genG, numG, j, p, imiso, iso;
 
     if HasNicerMonomorphism( G ) then 
         G2P := NicerMonomorphism( G );
@@ -154,7 +154,7 @@ end );
 InstallMethod( GenerationOrder, "method for a group", true, [ IsGroup ], 0,
 function( G )
 
-    local  oG, eG, ord, ngG, stgG, g, i, j, k, P, pos, n, x, y;
+    local oG, eG, ord, ngG, stgG, g, i, j, k, P, pos, n, x, y;
 
     stgG := StrongGeneratorsStabChain( StabChain( G ) );
     ngG := Length( stgG );
@@ -198,7 +198,7 @@ end );
 InstallMethod( CheckGenerationPairs, "method for a ", true, [ IsGroup ], 0,
 function( G )
 
-    local  eG, oG, stgG, P, i, g, x;
+    local eG, oG, stgG, P, i, g, x;
 
     stgG := StrongGeneratorsStabChain( StabChain( G ) );
     oG := Size( G );
@@ -224,8 +224,8 @@ end );
 ##
 InstallGlobalFunction( TzCommutatorPair, function( T, rel )
 
-    local  tietze, numgens, invs, numinvs, 
-           x, ax, ix, px, y, ay, iy, py, pair;
+    local tietze, numgens, invs, numinvs, 
+          x, ax, ix, px, y, ay, iy, py, pair;
 
     TzCheckRecord( T );
     tietze := T!.tietze;
@@ -258,11 +258,11 @@ end );
 ##
 InstallGlobalFunction( TzPartition, function( T )
 
-    local  tietze, numgens, gens, partition, count, bipartite,
-           invs, allgens, others, rels, numrels, lengths, numpart, numold,
-           numinvs, i, j, k, x, ax, y, ay, z, r, lr, s, ok,
-           commpairs, c, d, pair, commutators, comm1, comm2,
-           left, right, rest, powerof, powers, freq, fnum, L, S;
+    local tietze, numgens, gens, partition, count, bipartite,
+          invs, allgens, others, rels, numrels, lengths, numpart, numold,
+          numinvs, i, j, k, x, ax, y, ay, z, r, lr, s, ok,
+          commpairs, c, d, pair, commutators, comm1, comm2,
+          left, right, rest, powerof, powers, freq, fnum, L, S;
 
     TzCheckRecord( T );
     tietze := T!.tietze;
@@ -420,10 +420,10 @@ end );
 ##
 InstallGlobalFunction( FactorsPresentation, function( arg )
 
-    local  T, printlevel, tietze, gens, rels, numrels, numgens, invs, numinvs,
-           lengths, flags, partition, part, numpart, i, j, k, rel, diff, F,
-           commutator, fx, fy, pair, factor, fac, len, chosen, posn,
-           subrels, subnumi, subtot, sublen, subflags, subtriv, subT;
+    local T, printlevel, tietze, gens, rels, numrels, numgens, invs, numinvs,
+          lengths, flags, partition, part, numpart, i, j, k, rel, diff, F,
+          commutator, fx, fy, pair, factor, fac, len, chosen, posn,
+          subrels, subnumi, subtot, sublen, subflags, subtriv, subT;
 
     T := arg[1];
     TzCheckRecord( T );
@@ -528,7 +528,8 @@ end );
 InstallOtherMethod( IsomorphismFpInfo, "for a group", true, [ IsGroup ], 0,
 function( grp )
 
-    local  iso, inv, fp, mgi;
+    local iso, inv, fp, mgi;
+
     iso := IsomorphismFpGroup( grp );
     fp := ImagesSource( iso );
     mgi := MappingGeneratorsImages( iso );
@@ -549,7 +550,8 @@ end );
 InstallOtherMethod( IsomorphismPermInfo, "for a group", true, [ IsGroup ], 0,
 function( grp )
 
-    local  iso, inv, perm, mgi;
+    local iso, inv, perm, mgi;
+
     iso := IsomorphismPermGroup( grp );
     perm := ImagesSource( iso );
     mgi := MappingGeneratorsImages( iso );
@@ -570,7 +572,8 @@ end );
 InstallOtherMethod( IsomorphismPcInfo, "for a group", true, [ IsGroup ], 0,
 function( grp )
 
-    local  iso, inv, pc, mgi;
+    local iso, inv, pc, mgi;
+
     iso := IsomorphismPcGroup( grp );
     if ( iso = fail ) then 
         return fail; 
@@ -598,8 +601,8 @@ InstallOtherMethod( IsomorphismPermOrPcInfo, "for a group", true,
     [ IsGroup ], 0,
 function( grp )
 
-    local  id, info1, info2, iso1, iso2, iso, inv1, inv2, inv, perm, 
-           pc, ispc; 
+    local id, info1, info2, iso1, iso2, iso, inv1, inv2, inv, perm, pc, ispc; 
+
     if IsPermGroup( grp ) then 
         return IsomorphismPcInfo( grp );
     elif IsPcGroup( grp ) then 
@@ -682,7 +685,8 @@ InstallMethod( MetacyclicGroup, "for three positive integers", true,
     [ IsPosInt, IsPosInt, IsPosInt ], 0,
 function( m, n, l )
 
-    local  f, x, y, rels, fp, iso;
+    local f, x, y, rels, fp, iso;
+
     if not ( RemInt( l^m, n ) = 1 ) then
         return fail;
     fi;
@@ -705,8 +709,8 @@ InstallMethod( AutomorphismsFixingSubgroups, "for a group and subgroup list",
     true, [ IsGroup, IsList ], 0,
 function( G, H )
 
-    local  autG, id, genautG, numautG, L, a, i, F, gensub, subG, 
-           stop, reps, numrep, r, found, ok; 
+    local autG, id, genautG, numautG, L, a, i, F, gensub, subG, 
+          stop, reps, numrep, r, found, ok; 
 
     if not ForAll( H, J -> IsSubgroup( G, J ) ) then 
         Error( "H is not a list of subgroups of G" );

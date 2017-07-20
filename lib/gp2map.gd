@@ -97,14 +97,10 @@ DeclareOperation( "PreXModBySourceHom", [ IsPreXModMorphism ] );
 #############################################################################
 ##
 #A  XModMorphismOfCat1Morphism( <mor> )
-#O  XModMorphismByCat1Morphism( <mor> )
 #A  Cat1MorphismOfXModMorphism( <mor> )
-#O  Cat1MorphismByXModMorphism( <mor> )
 ##
 DeclareAttribute( "XModMorphismOfCat1Morphism", IsCat1Morphism );
-DeclareOperation( "XModMorphismByCat1Morphism", [ IsCat1Morphism ] );
 DeclareAttribute( "Cat1MorphismOfXModMorphism", IsXModMorphism );
-DeclareOperation( "Cat1MorphismByXModMorphism", [ IsXModMorphism ] );
 
 #############################################################################
 ##

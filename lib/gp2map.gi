@@ -19,7 +19,7 @@ InstallMethod( Is2DimensionalGroupMorphismData,
     [ IsList ], 0,
 function( L )
 
-    local  src, rng, shom, rhom, mor, ok, sbdy, rbdy, st, sh, se, rt, rh, re, 
+    local src, rng, shom, rhom, mor, ok, sbdy, rbdy, st, sh, se, rt, rh, re, 
            sgen, rgen, im1, im2;
 
     ok := ( Length(L) = 4 ); 
@@ -93,7 +93,7 @@ InstallMethod( Make2DimensionalGroupMorphism,
     [ IsList ], 0,
 function( L )
 
-    local  filter, fam, mor, ok;
+    local filter, fam, mor, ok;
 
     fam := Family2DimensionalGroupMorphism; 
     filter := Is2DimensionalMappingRep;
@@ -121,7 +121,7 @@ InstallMethod( IsPreXModMorphism, "generic method for morphisms of 2d-groups",
     true, [ Is2DimensionalGroupMorphism ], 0,
 function( mor )
 
-    local  PM, Pact, Pbdy, Prng, Psrc, QM, Qact, Qbdy, Qrng, Qsrc,
+    local PM, Pact, Pbdy, Prng, Psrc, QM, Qact, Qbdy, Qrng, Qsrc,
            morsrc, morrng, x2, x1, y2, z2, y1, z1, gensrc, genrng;
 
     PM := Source( mor );
@@ -202,7 +202,7 @@ InstallMethod( Display, "display a morphism of pre-crossed modules", true,
     [ IsPreXModMorphism ], 0,
 function( mor )
 
-    local  morsrc, morrng, gensrc, genrng, P, Q, name, ok;
+    local morsrc, morrng, gensrc, genrng, P, Q, name, ok;
 
     name := Name( mor );
     P := Source( mor );
@@ -239,7 +239,7 @@ InstallMethod( IsPreCat1Morphism, "generic method for morphisms of 2d-groups",
     true, [ Is2DimensionalGroupMorphism ], 0,
 function( mor )
 
-    local  PCG, Prng, Psrc, Pt, Ph, Pe, QCG, Qrng, Qsrc, Qt, Qh, Qe,
+    local PCG, Prng, Psrc, Pt, Ph, Pe, QCG, Qrng, Qsrc, Qt, Qh, Qe,
            morsrc, morrng, x2, x1, y2, z2, y1, z1, gensrc, genrng;
 
     PCG := Source( mor );
@@ -310,7 +310,7 @@ InstallMethod( Display, "display a morphism of pre-cat1 groups", true,
     [ IsPreCat1Morphism ], 0,
 function( mor )
 
-    local  morsrc, morrng, gensrc, genrng, P, Q, name, ok;
+    local morsrc, morrng, gensrc, genrng, P, Q, name, ok;
 
     if not HasName( mor ) then
         # name := PreCat1MorphismName( mor );
@@ -351,7 +351,7 @@ InstallOtherMethod( CompositionMorphism, "generic method for 2d-mappings",
     IsIdenticalObj, [ Is2DimensionalMapping, Is2DimensionalMapping ], 0,
 function( mor2, mor1 )
 
-    local  srchom, rnghom, comp, ok;
+    local srchom, rnghom, comp, ok;
 
     if not ( Range( mor1 ) = Source( mor2 ) ) then
         Info( InfoXMod, 2, "Range(mor1) <> Source(mor2)" );
@@ -417,7 +417,7 @@ InstallOtherMethod( IdentityMapping, "for 2d-group object", true,
     [ Is2DimensionalDomain ], 0,
 function( obj )
 
-    local  shom, rhom;
+    local shom, rhom;
 
     shom := IdentityMapping( Source( obj ) );
     rhom := IdentityMapping( Range( obj ) );
@@ -438,7 +438,7 @@ InstallMethod( InclusionMorphism2DimensionalDomains, "one 2d-object in another",
     true, [ Is2DimensionalDomain, Is2DimensionalDomain ], 0,
 function( obj, sub )
 
-    local  shom, rhom;
+    local shom, rhom;
     shom := InclusionMappingGroups( Source( obj ), Source( sub ) );
     rhom := InclusionMappingGroups( Range( obj ), Range( sub ) );
     if IsPreXModObj( obj ) then
@@ -458,7 +458,7 @@ end );
 ##
 InstallGlobalFunction( PreXModMorphism, function( arg )
 
-    local  ok, mor, nargs;
+    local ok, mor, nargs;
     nargs := Length( arg );
 
     # two pre-xmods and two homomorphisms
@@ -481,7 +481,7 @@ end );
 ##
 InstallGlobalFunction( XModMorphism, function( arg )
 
-    local  nargs;
+    local nargs;
     nargs := Length( arg );
 
     # two xmods and two homomorphisms
@@ -503,7 +503,7 @@ end );
 ##
 InstallGlobalFunction( PreCat1Morphism, function( arg )
 
-    local  nargs;
+    local nargs;
     nargs := Length( arg );
 
     # two pre-cat1s and two homomorphisms
@@ -525,7 +525,7 @@ end );
 ##
 InstallGlobalFunction( Cat1Morphism, function( arg )
 
-    local  nargs;
+    local nargs;
     nargs := Length( arg );
 
     # two cat1s and two homomorphisms
@@ -547,7 +547,7 @@ InstallMethod( XModMorphismByHoms, "for 2 xmods and 2 homomorphisms", true,
     [ IsXMod, IsXMod, IsGroupHomomorphism, IsGroupHomomorphism ], 0,
 function( src, rng, srchom, rnghom )
 
-    local  mor, ok;
+    local mor, ok;
     mor := PreXModMorphismByHoms( src, rng, srchom, rnghom );
     ok := IsXModMorphism( mor );
     if not ok then
@@ -563,7 +563,7 @@ end );
 InstallMethod( InnerAutomorphismXMod, "method for crossed modules", true,
     [ IsPreXMod, IsMultiplicativeElementWithInverse ], 0,
 function( XM, r )
-    local  Xrng, Xsrc, genrng, gensrc, rhom, shom, s;
+    local Xrng, Xsrc, genrng, gensrc, rhom, shom, s;
     Xrng := Range( XM );
     if not ( r in Xrng ) then
         Info( InfoXMod, 2, "conjugating element must be in the range group" );
@@ -587,7 +587,7 @@ end );
 InstallMethod( InnerAutomorphismCat1Group, "method for cat1-groups", true,
     [ IsPreCat1Group, IsMultiplicativeElementWithInverse ], 0,
 function( C1G, r )
-    local  Crng, Csrc, genrng, gensrc, rhom, shom, s;
+    local Crng, Csrc, genrng, gensrc, rhom, shom, s;
     Crng := Range( C1G );
     if not ( r in Crng ) then
         Info( InfoXMod, 2, "conjugating element must be in the range group" );
@@ -649,7 +649,7 @@ end );
 InstallOtherMethod( \*, "for two morphisms of pre-crossed modules",
     IsIdenticalObj, [ IsPreXModMorphism, IsPreXModMorphism ], 0,
 function( mor1, mor2 )
-    local  comp;
+    local comp;
     comp := CompositionMorphism( mor2, mor1 );
     ## need to do some checks here !? ##
     return comp;
@@ -662,7 +662,7 @@ end );
 InstallOtherMethod( POW, "for a 2d mapping", true, 
     [ Is2DimensionalMapping, IsInt ], 0,
 function( map, n )
-    local  pow, i, ok;
+    local pow, i, ok;
     if not ( Source( map ) = Range( map ) ) then
         return fail;
     elif ( n = 1 ) then
@@ -688,7 +688,7 @@ InstallMethod( IsomorphismPerm2DimensionalGroup,
      "generic method for pre-crossed modules", true, [ IsPreXMod ], 0,
 function( PM )
 
-    local  shom, sinv, rhom, rinv, Psrc, Psgen, Qsrc, Qsgen, 
+    local shom, sinv, rhom, rinv, Psrc, Psgen, Qsrc, Qsgen, 
            Prng, Prgen, Qrng, Qrgen, Qbdy,
            Paut, Pautgen, Qaut, Qautgen, ahom, Qact, QM, iso;
 
@@ -745,7 +745,7 @@ InstallMethod( IsomorphismPerm2DimensionalGroup,
      "generic method for pre-cat1-groups", true, [ IsPreCat1Group ], 0,
 function( PCG )
 
-    local  shom, sinv, rhom, rinv, Psrc, Psgen, Qsrc, Qsgen, 
+    local shom, sinv, rhom, rinv, Psrc, Psgen, Qsrc, Qsgen, 
            Prng, Prgen, Qrng, Qrgen, Qt, Qh, Qe, QCG, iso;
 
     if IsPermPreCat1Group( PCG ) then
@@ -801,7 +801,7 @@ InstallMethod( IsomorphismPc2DimensionalGroup,
      "generic method for pre-crossed modules", true, [ IsPreXMod ], 0,
 function( PM )
 
-    local  shom, sinv, rhom, rinv, Psrc, Psgen, Qsrc, Qsgen, 
+    local shom, sinv, rhom, rinv, Psrc, Psgen, Qsrc, Qsgen, 
            Prng, Prgen, Qrng, Qrgen, Qbdy,
            Paut, Pautgen, Qaut, Qautgen, ahom, Qact, QM, iso;
 
@@ -869,7 +869,7 @@ InstallMethod( IsomorphismPc2DimensionalGroup,
      "generic method for pre-cat1-groups", true, [ IsPreCat1Group ], 0,
 function( PCG )
 
-    local  shom, sinv, rhom, rinv, Psrc, Psgen, Qsrc, Qsgen, 
+    local shom, sinv, rhom, rinv, Psrc, Psgen, Qsrc, Qsgen, 
            Prng, Prgen, Qrng, Qrgen, Qt, Qh, Qe, QCG, iso;
 
     if IsPcPreCat1Group( PCG ) then
@@ -927,7 +927,7 @@ InstallMethod( IsomorphismPreCat1Groups, "generic method for 2 pre-cat1-groups",
     true, [ IsPreCat1Group, IsPreCat1Group ], 0,
 function( C1, C2 )
 
-    local  t1, h1, e1, t2, h2, e2, G1, G2, R1, R2, A, phi, psi, 
+    local t1, h1, e1, t2, h2, e2, G1, G2, R1, R2, A, phi, psi, 
            alpha, gamma, rho;
 
     G1 := Source( C1 ); 
@@ -977,7 +977,7 @@ InstallMethod( Name, "method for a 2d-mapping", true,
     [ Is2DimensionalMapping ], 0,
 function( mor )
 
-    local  nsrc, nrng, name;
+    local nsrc, nrng, name;
 
     if HasName( Source( mor ) ) then
         nsrc := Name( Source( mor ) );
@@ -1003,7 +1003,7 @@ InstallMethod( PreXModMorphismByHoms,
     [ IsPreXMod, IsPreXMod, IsGroupHomomorphism, IsGroupHomomorphism ], 0,
 function( src, rng, srchom, rnghom )
 
-    local  filter, fam, mor, ok, nsrc, nrng, name;
+    local filter, fam, mor, ok, nsrc, nrng, name;
 
     if not ( IsGroupHomomorphism(srchom) and IsGroupHomomorphism(rnghom) ) then
         Info( InfoXMod, 2, "source and range mappings must be group homs" );
@@ -1040,7 +1040,7 @@ InstallMethod( PreCat1MorphismByHoms,
     [ IsPreCat1Group, IsPreCat1Group, IsGroupHomomorphism, IsGroupHomomorphism ], 0,
 function( src, rng, srchom, rnghom )
 
-    local  filter, fam, mor, ok, nsrc, nrng, name;
+    local filter, fam, mor, ok, nsrc, nrng, name;
 
     mor := Make2DimensionalGroupMorphism( [ src, rng, srchom, rnghom ] ); 
     if not IsPreCat1Morphism( mor ) then
@@ -1071,7 +1071,7 @@ InstallMethod( Cat1MorphismByHoms, "for 2 cat1s and 2 homomorphisms", true,
     [ IsCat1Group, IsCat1Group, IsGroupHomomorphism, IsGroupHomomorphism ], 0,
 function( src, rng, srchom, rnghom )
 
-    local  mor, ok;
+    local mor, ok;
     mor := PreCat1MorphismByHoms( src, rng, srchom, rnghom );
     ok := IsCat1Morphism( mor );
     if not ok then
@@ -1208,7 +1208,7 @@ InstallMethod( IsSourceMorphism,
     [ IsXModMorphism ], 0,
 function( mor )
 
-    local  Srng, Rrng;
+    local Srng, Rrng;
 
     Srng := Range( Source( mor ) );
     Rrng := Range( Range( mor ) );
@@ -1224,7 +1224,7 @@ InstallOtherMethod( Kernel, "generic method for 2d-mappings",
      true, [ Is2DimensionalMapping ], 0,
 function( map )
 
-    local  kerS, kerR, K;
+    local kerS, kerR, K;
     if HasKernel2DimensionalMapping( map ) then
         return Kernel2DimensionalMapping( map );
     fi;
@@ -1243,7 +1243,7 @@ InstallMethod( PreXModBySourceHom, "for a pre-crossed module morphism",
     true, [ IsPreXModMorphism ], 0,
 function( mor )
         
-    local  X1, X2, src1, rng1, src2, rng2, bdy2, y, z, S, Sbdy, Saut, 
+    local X1, X2, src1, rng1, src2, rng2, bdy2, y, z, S, Sbdy, Saut, 
            gensrc1, genrng1, gensrc2, ngrng1, ngsrc2, inn, innaut,
            act, images, idsrc1, idrng1, isconj;
 
@@ -1284,13 +1284,14 @@ end );
 
 ############################################################################
 ##
-#M  XModMorphismByCat1Morphism
+#M  XModMorphismOfCat1Morphism
+#M  Cat1MorphismOfXModMorphism
 ##
-InstallMethod( XModMorphismByCat1Morphism, "for a cat1-group morphism",
+InstallMethod( XModMorphismOfCat1Morphism, "for a cat1-group morphism",
     true, [ IsCat1Morphism ], 0,
 function( phi )
 
-    local  C1, C2, C1src, genC1src, e2, t2, proj2,
+    local C1, C2, C1src, genC1src, e2, t2, proj2,
            X1, X2, X1src, X1rng, X2src, X2rng,
            genX1src, genX1rng, ek1, eksrc1, sphi, rphi, x,
            imrphi, imsphi, im, images, smor, mor, info1, info2;
@@ -1298,8 +1299,8 @@ function( phi )
     C1 := Source( phi );
     C2 := Range( phi );
     C1src := Source( C1 );
-    X1 := XModByCat1Group( C1 );
-    X2 := XModByCat1Group( C2 );
+    X1 := XModOfCat1Group( C1 );
+    X2 := XModOfCat1Group( C2 );
     X1src := Source( X1 );
     X1rng := Range( X1 );
     X2src := Source( X2 );
@@ -1326,32 +1327,18 @@ function( phi )
     return mor;
 end );
 
-##############################################################################
-##
-#M  XModMorphismOfCat1Morphism
-##
-InstallMethod( XModMorphismOfCat1Morphism, "for cat1-group morphisms",
-    true, [ IsCat1Morphism ], 0,
-function( mor )
-    return XModMorphismByCat1Morphism( mor );
-end );
-
-###########################################################################
-##
-#M Cat1MorphismByXModMorphism
-##
-InstallMethod( Cat1MorphismByXModMorphism, "for a pre-crossed module morphism",
+InstallMethod( Cat1MorphismOfXModMorphism, "for a pre-crossed module morphism",
     true, [ IsXModMorphism ], 0,
 function( mor )
 
-    local  X1, X2, C1, C2, act2, C1src, C1rng, C2src, C2rng, C2s2p, 
+    local X1, X2, C1, C2, act2, C1src, C1rng, C2src, C2rng, C2s2p, 
            genC1src, genC1rng, genX1src, genX1rng, imrmor, imgen, m, images,
            sphi, rphi, phi, smor, rmor, e2, ek2, g, ig, eg, pg, esrc, erng;
 
     X1 := Source( mor );
     X2 := Range( mor );
-    C1 := Cat1GroupByXMod( X1 );
-    C2 := Cat1GroupByXMod( X2 );
+    C1 := Cat1GroupOfXMod( X1 );
+    C2 := Cat1GroupOfXMod( X2 );
     smor := SourceHom( mor );
     rmor := RangeHom( mor );
     e2 := RangeEmbedding( C2 );
@@ -1402,23 +1389,13 @@ end );
 
 ##############################################################################
 ##
-#M  Cat1MorphismOfXModMorphism
-##
-InstallMethod( Cat1MorphismOfXModMorphism, "for xmod morphisms",
-    true, [ IsXModMorphism ], 0,
-function( mor )
-    return Cat1MorphismByXModMorphism( mor );
-end );
-
-##############################################################################
-##
 #M  PreXModIsomorphismByIsomorphisms
 ##
 InstallMethod( PreXModIsomorphismByIsomorphisms, "for two isomorphisms",
     true, [ IsPreXMod, IsBijective, IsBijective ], 0,
 function( P0, sigma, rho )
 
-    local  S0, R0, bdy0, aut0, act0, S1, R1, bdy1, aut1, act1,
+    local S0, R0, bdy0, aut0, act0, S1, R1, bdy1, aut1, act1,
            ok, isigma, gen0, im0, gen1, im1, id1, alpha, P1, mor;
     S0 := Source( P0 );
     R0 := Range( P0 );
@@ -1468,7 +1445,7 @@ InstallMethod( PreCat1IsomorphismByIsomorphisms, "for two isomorphisms",
     true, [ IsPreCat1Group, IsBijective, IsBijective ], 0,
 function( P0, sigma, rho )
 
-    local  S0, R0, isigma, irho, t0, h0, e0, S1, R1, t1, h1, e1, P1, mor; 
+    local S0, R0, isigma, irho, t0, h0, e0, S1, R1, t1, h1, e1, P1, mor; 
 
     S0 := Source( P0 );
     R0 := Range( P0 );
@@ -1503,7 +1480,7 @@ end );
 ##
 InstallGlobalFunction( SmallerDegreePerm2DimensionalGroup, function( obj )
 
-    local  src, rng, sigma, rho, mor; 
+    local src, rng, sigma, rho, mor; 
     # for a PreXMod
     if ( IsPreXMod( obj ) and IsPermPreXMod( obj ) ) then
         src := Source( obj );
@@ -1526,7 +1503,7 @@ InstallMethod( IsomorphismXModByNormalSubgroup,
     "for xmod with injective boundary", true, [ IsXMod ], 0,
 function( X0 )
 
-    local  S0, R, S1, bdy0, sigma, rho, ok;
+    local S0, R, S1, bdy0, sigma, rho, ok;
     S0 := Source( X0 );
     R := Range( X0 );
     bdy0 := Boundary( X0 );
@@ -1552,7 +1529,8 @@ end );
 InstallOtherMethod( Order, "generic method for 2d-mapping",
     true, [ Is2DimensionalMapping ], 0,
 function( mor )
-    if not ( IsEndomorphism2DimensionalDomain( mor ) and IsBijective( mor ) ) then
+    if not ( IsEndomorphism2DimensionalDomain( mor ) 
+             and IsBijective( mor ) ) then
        Info( InfoXMod, 2, "mor is not an automorphism" );
        return fail;
     fi;

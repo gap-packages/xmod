@@ -211,7 +211,7 @@ gap> iso18 := IsomorphismPermObject( C18 );;
 gap> PC18 := Image( iso18 ); 
 [Group( [ (2,3)(5,6), (4,5,6), (1,2,3) ] )=>Group( [ (2,3)(5,6), (), (1,2,3) 
  ] )]
-gap> X18 := XModByCat1Group( PC18 ); 
+gap> X18 := XModOfCat1Group( PC18 ); 
 [Group( [ (4,5,6) ] )->Group( [ (2,3)(5,6), (), (1,2,3) ] )]
 
 ## Section 2.6.2 
