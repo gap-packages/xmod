@@ -122,15 +122,9 @@ DeclareAttribute( "IsomorphismXModByNormalSubgroup", IsXMod );
 
 #############################################################################
 ##
-#O  PreXModIsomorphismByIsomorphisms( <pre-xmod>, <sigma>, <rho> )
-#O  PreCat1IsomorphismByIsomorphisms( <pre-cat1>, <sigma>, <rho> )
 #F  SmallerDegreePerm2DimensionalGroup( <args> )
 #A  SmallerDegreePermPreXMod( <XM> )
 ##
-DeclareOperation( "PreXModIsomorphismByIsomorphisms", 
-    [ IsPreXMod, IsBijective, IsBijective ] );
-DeclareOperation( "PreCat1IsomorphismByIsomorphisms", 
-    [ IsPreCat1Group, IsBijective, IsBijective ] );
 DeclareGlobalFunction( "SmallerDegreePerm2DimensionalGroup" );
 DeclareAttribute( "SmallerDegreePermPreXMod", IsPreXMod );
 

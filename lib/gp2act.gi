@@ -587,24 +587,6 @@ end );
 
 #############################################################################
 ##
-#M  ImagesSource( <mor> )
-##
-InstallOtherMethod( ImagesSource, "xmod image for an xmod morphism", true, 
-    [ IsPreXModMorphism ], 0, 
-function( mor )
-    
-    local S, R, Shom, Rhom, imS, imR, SX;
-
-    Shom := SourceHom( mor );
-    Rhom := RangeHom( mor );
-    imS := ImagesSource( Shom );
-    imR := ImagesSource( Rhom );
-    SX := SubPreXMod( Range(mor), imS, imR );
-    return SX;
-end );
-
-#############################################################################
-##
 #M  InnerActorXMod( <XM> )
 ##
 InstallMethod( InnerActorXMod, "inner actor crossed module", true,

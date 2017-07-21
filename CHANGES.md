@@ -2,9 +2,9 @@
 
 ## Problems and ToDos: 
 
- * (20/07/17) more work needed on IsomorphismByIsomorphisms, e.g. for xmods; 
-              maybe functions such as IsomorphismPerm2DimensionalGroup 
-              could be rewritten to use IsomorphismByIsomorphisms? 
+ * (21/07/17) replaced PreXModIsomorphismByIsomorphisms by the more general 
+              IsomorphismByIsomorphisms; then functions such as 
+              IsomorphismPerm2DimensionalGroup rewritten to use it. 
  * (14/06/17) Need String, View, Print for 3d- and nd-groups 
  * (28/04/17) implement inclusion of the kernel of an xmod-morphism as xsq 
  * (25/04/17) file examples/gpd2obj.g needs more material 
@@ -27,7 +27,7 @@
               and the inclusion SL25.C2 -> GL25 using the matrix groups 
               (construction worked OK with isomorphic perm groups). 
 
-## 2.59 -> 2.61 (20/06/2017) 
+## 2.59 -> 2.61 (21/06/2017) 
 
  * (20/07/17) added IsomorphismByIsomorphisms for pre1-cat-groups 
  * (20/07/17) Removed duplication in 'Of' and 'By' operations  
@@ -315,7 +315,7 @@ etc. to be called when the object is a 2d-object.
 Added IsomorphismXModByNormalSubgroup which applies when the boundary
 of the xmod is injective.
 
-Added PreXModIsomorphismByIsomorphisms
+Added PreXModIsomorphismByIsomorphisms (but renamed 21/07/17) 
 (we also need a similar function PreCat1IsomorphismByIsomorphisms)
 where the data consists of a crossed module, an isomorphism of the source,
 and an isomorphism of the range.

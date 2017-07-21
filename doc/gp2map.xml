@@ -162,25 +162,26 @@ gap> KnownAttributesOfObject( mor1 );
 </Example>
 
 <ManSection>
-   <Oper Name="PreXModIsomorphismByIsomorphisms"
-         Arg="X1 sigma rho" />
    <Attr Name="IsomorphismPerm2DimensionalGroup"
          Arg="obj" />
    <Attr Name="IsomorphismPc2DimensionalGroup"
          Arg="obj" />
+   <Oper Name="IsomorphismByIsomorphisms"
+         Arg="D sigma rho" />
 <Description>
-When <M>{\mathcal X} = (\partial : S \to R)</M> and 
-<M>\sigma : S \to S',~ \rho : R \to R'</M> are isomorphisms, 
-then <M>(\sigma,\rho) : {\mathcal X} \to {\mathcal X}'</M> 
-is an isomorphism where <M>{\mathcal X}' = (\partial' : S' \to R')</M> 
-has boundary <M>\partial' = \rho \circ \partial \circ \sigma^{-1}</M>. 
+When <M>{\mathcal D}</M> is a <M>2</M>-dimensional domain 
+with source <M>S</M> and range <M>R</M> 
+and <M>\sigma : S \to S',~ \rho : R \to R'</M> are isomorphisms, 
+then <C>IsomorphismByIsomorphisms</C> returns an isomorphism 
+<M>(\sigma,\rho) : {\mathcal D} \to {\mathcal D}'</M> 
+where <M>{\mathcal D}'</M> has source <M>S'</M> and range <M>R'</M>.  
 Be sure to test <C>IsBijective</C> for the two functions 
-before applying this operation.  
+<M>\sigma,\rho</M> before applying this operation.  
 <P/> 
-In the same way, taking pairs of maps obtained using 
-<C>IsomorphismPermGroup</C> or <C>IsomorphismPcGroup</C>, 
-we may construct a crossed module of permutation groups 
-or a crossed module of pc-groups isomorphic to a given crossed module. 
+Using <C>IsomorphismByIsomorphisms</C> with a pair of isomorphisms 
+obtained using <C>IsomorphismPermGroup</C> or <C>IsomorphismPcGroup</C>, 
+we may construct a crossed module or a cat1-group 
+of permutation groups or pc-groups.  
 </Description>
 </ManSection>
 <P/>
@@ -197,7 +198,7 @@ gap> s4 := SymmetricGroup(4);;
 gap> isos4 := IsomorphismGroups( Range(Yq8), s4 );;
 gap> id := IdentityMapping( Source( Yq8 ) );; 
 gap> IsBijective( id );;  IsBijective( isos4 );;
-gap> mor := PreXModIsomorphismByIsomorphisms( Yq8, id, isos4 );;
+gap> mor := IsomorphismByIsomorphisms( Yq8, id, isos4 );;
 gap> Zq8 := Image( mor );
 [Group( [ (1,2,4,6)(3,8,7,5), (1,3,4,7)(2,5,6,8), (1,4)(2,6)(3,7)(5,8) 
  ] )->SymmetricGroup( [ 1 .. 4 ] )]
@@ -282,8 +283,6 @@ Morphism of cat1-groups :-
          Arg="2DimensionalGroup" />
    <Func Name="SmallerDegreePerm2DimensionalDomain"
          Arg="2DimensionalDomain" />
-   <Oper Name="PreCat1IsomorphismByIsomorphisms"
-         Arg="C1 gamma rho" />
 <Description>
 The global function <C>IsomorphismPermObject</C> 
 calls <C>IsomorphismPerm2DimensionalGroup</C>, 
@@ -353,7 +352,7 @@ gap> c6 := Subgroup( d12, [b,c] );  SetName( c6, "c6" );
 Group([ f2, f3 ])
 gap> SC2 := Sub2DimensionalGroup( C2, H2, c6 );
 [H2=>c6]
-gap> IsCat1( SC2 );
+gap> IsCat1Group( SC2 );
 true
 gap> inc2 := InclusionMorphism2DimensionalDomains( C2, SC2 );
 [[H2=>c6] => [G2=>d12]]

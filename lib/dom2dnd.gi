@@ -77,7 +77,7 @@ end );
 InstallGlobalFunction( Make2DimensionalSemigroup, function( arg ) 
 
     local obs, sgp; 
-    Print( "Usage: Make2DimensionalSemegroup( <src>, <rng> )" ); 
+    Print( "Usage: Make2DimensionalSemigroup( <src>, <rng> )" ); 
     Print( " (but not yet installed)\n" ); 
     return fail; 
 end ); 

@@ -642,7 +642,7 @@ InstallGlobalFunction( IsomorphismPermObject, function( obj )
     if IsGroup( obj ) then
         return IsomorphismPermGroup( obj );
     elif ( HasIsPreXMod( obj ) and IsPreXMod( obj ) ) or 
-         ( HasIsPreCat1Group( obj ) and IsPreCat1Group( obj ) ) then
+         ( HasIsPreCat1Group( obj ) and IsPreCat1Group( obj ) ) then 
         return IsomorphismPerm2DimensionalGroup( obj );
     elif HasHigherDimension( obj ) then 
         Error( "IsomorphismPerm3DimensionObject etc not yet written" ); 

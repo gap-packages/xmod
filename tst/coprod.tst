@@ -28,14 +28,13 @@ gap> sl := SL(2,3);;
 gap> U8 := XModByAutomorphismGroup( sl );;
 gap> iso8 := IsomorphismPermObject( U8 );;
 gap> V8 := Image( iso8 );;
-gap> RX8 := Range( X8 );;
 gap> RV8 := Range( V8 );;
 gap> SV8 := Source( V8 );;
-gap> isoR := IsomorphismGroups( RV8,RX8);; 
+gap> isoR := IsomorphismGroups( RV8, s4 );; 
 gap> ok := IsBijective( isoR );;
 gap> isoS := IdentityMapping( SV8 );;
 gap> ok := IsBijective( isoS );;
-gap> mor := PreXModIsomorphismByIsomorphisms( V8, isoS, isoR );;
+gap> mor := IsomorphismByIsomorphisms( V8, [ isoS, isoR ] );;
 gap> W8 := Image( mor );; 
 
 gap> ## coproducts  W8 o W8,  X8 o X8,  Y8 o Y8  &  Z8 o Z8 

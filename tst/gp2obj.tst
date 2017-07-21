@@ -90,7 +90,43 @@ gap> iso16 := IsomorphismPermGroup( Source( X16 ) );;
 gap> S16 := Image( iso16 );
 Group([ (1,2), (3,4) ])
 
+## Section 2.4.1
+gap> g18gens := [ (1,2,3), (4,5,6), (2,3)(5,6) ];;     
+gap> s3agens := [ (7,8,9), (8,9) ];;                
+gap> g18 := Group( g18gens );;  SetName( g18, "g18" ); 
+gap> s3a := Group( s3agens );;  SetName( s3a, "s3a" );
+gap> t1 := GroupHomomorphismByImages(g18,s3a,g18gens,[(7,8,9),(),(8,9)]);     
+[ (1,2,3), (4,5,6), (2,3)(5,6) ] -> [ (7,8,9), (), (8,9) ]
+gap> h1 := GroupHomomorphismByImages(g18,s3a,g18gens,[(7,8,9),(7,8,9),(8,9)]);
+[ (1,2,3), (4,5,6), (2,3)(5,6) ] -> [ (7,8,9), (7,8,9), (8,9) ]
+gap> e1 := GroupHomomorphismByImages(s3a,g18,s3agens,[(1,2,3),(2,3)(5,6)]);   
+[ (7,8,9), (8,9) ] -> [ (1,2,3), (2,3)(5,6) ]
+gap> C18 := Cat1Group( t1, h1, e1 );
+[g18=>s3a]
+
 ## Section 2.4.2
+gap> Source( C18 );
+g18
+gap> Range( C18 );
+s3a
+gap> TailMap( C18 );
+[ (1,2,3), (4,5,6), (2,3)(5,6) ] -> [ (7,8,9), (), (8,9) ]
+gap> HeadMap( C18 );
+[ (1,2,3), (4,5,6), (2,3)(5,6) ] -> [ (7,8,9), (7,8,9), (8,9) ]
+gap> RangeEmbedding( C18 );
+[ (7,8,9), (8,9) ] -> [ (1,2,3), (2,3)(5,6) ]
+gap> Kernel( C18 );
+Group([ (4,5,6) ])
+gap> KernelEmbedding( C18 );
+[ (4,5,6) ] -> [ (4,5,6) ]
+gap> Name( C18 );
+"[g18=>s3a]"
+gap> Size( C18 );
+[ 18, 6 ]
+gap> StructureDescription( C18 );
+[ "(C3 x C3) : C2", "S3" ]
+
+## Section 2.4.3
 gap> G4 := Group( (1,2,3,4), (3,4), (5,6,7,8), (7,8) );; 
 gap> R4 := Group( (9,10,11,12), (11,12) );;
 gap> SetName( G4, "s4s4" );  SetName( R4, "s4d" ); 
@@ -124,6 +160,7 @@ Cat1-group [s4s4=>s4d] :-
 : kernel embedding maps generators of kernel to:
   [ (5,6,7,8), (7,8) ]
 
+## Section 2.5.1
 gap> G2 := SmallGroup( 288, 956 );  SetName( G2, "G2" );
 <pc group of size 288 with 7 generators>
 gap> d12 := DihedralGroup( 12 );  SetName( d12, "d12" );

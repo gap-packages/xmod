@@ -46,7 +46,7 @@ gap> iso2 := IsomorphismPerm2DimensionalGroup( C2 );
 [[G2=>d12] => [..]]
 
 ## Section 3.4.1
-gap> H2 := Subgroup(G2,[G2.3,G2.4,G2.6,G2.7]);  SetName( H2, "H2" );
+gap> H2 := Subgroup(G2, [G2.3,G2.4,G2.6,G2.7] );  SetName( H2, "H2" );
 Group([ f3, f4, f6, f7 ])
 gap> c6 := Subgroup( d12, [a2,a3] );  SetName( c6, "c6" );
 Group([ f2, f3 ])
@@ -57,7 +57,7 @@ true
 gap> inc2 := InclusionMorphism2DimensionalDomains( C2, SC2 );
 [[H2=>c6] => [G2=>d12]]
 gap> CompositionMorphism( iso2, inc2 );                  
-[[H2=>c6] => P[G2=>d12]]
+[[H2=>c6] => Pc[G2=>d12]]
 
 ## Section 3.4.2
 gap> c2 := Group( (19,20) );                                    
