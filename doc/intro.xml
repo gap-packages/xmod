@@ -1,7 +1,7 @@
 <!-- ------------------------------------------------------------------- -->
 <!--                                                                     -->
 <!--  intro.xml             XMod documentation            Chris Wensley  -->
-<!--                                                        & Murat Alp  -->
+<!--                                                                     -->
 <!--  Copyright (C) 2001-2017, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
@@ -208,5 +208,11 @@ gap> ReadPackage( "xmod", "tst/testall.g" );
 Additional information can be found on the
 <E>Computational Higher-dimensional Discrete Algebra</E> website at: 
 <URL>http://pages.bangor.ac.uk/~mas023/chda/intro.html</URL>. 
+<P/> 
+This version 2.61 had to be released in a hurry when required package 
+<Package>Gpd</Package> was renamed as <Package>groupoids</Package>. 
+As a result some functions for crossed squares and cat2-groups, 
+still under development, had to be temporarily removed, 
+and two test files had to be removed from the list of files to be tested. 
 
 </Chapter>

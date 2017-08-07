@@ -10,15 +10,15 @@ Packagename := "xmod",
 Subtitle := "Crossed Modules and Cat1-Groups",
 
 Version := "2.61",
-Date := "21/07/2017",
+Date := "07/08/2017",
 
 ##  duplicate these values for inclusion in the manual: 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
 ##  <!ENTITY XMODVERSION "2.61">
 ##  <!ENTITY XMODTARFILENAME "xmod-2.61.tar.gz">
 ##  <!ENTITY XMODHTMLFILENAME "xmod.html">
-##  <!ENTITY XMODRELEASEDATE "21/07/2017">
-##  <!ENTITY XMODLONGRELEASEDATE "21st July 2017">
+##  <!ENTITY XMODRELEASEDATE "07/08/2017">
+##  <!ENTITY XMODLONGRELEASEDATE "7th August 2017">
 ##  <!ENTITY XMODCOPYRIGHTYEARS "1997-2017">
 ##  <#/GAPDoc>
 
@@ -101,7 +101,7 @@ SourceRepository := rec(
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
 PackageWWWHome  := "https://gap-packages.github.io/xmod/",
-README_URL      := Concatenation( ~.PackageWWWHome, "README" ),
+README_URL      := Concatenation( ~.PackageWWWHome, "README.md" ),
 PackageInfoURL  := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 ArchiveURL      := Concatenation( ~.SourceRepository.URL, 
                                   "/releases/download/v", ~.Version, 
@@ -128,7 +128,7 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">=4.8.7",
   NeededOtherPackages := [ ["Utils", ">= 0.46"], 
-                           ["Gpd", ">= 1.46"], 
+                           ["groupoids", ">= 1.51"], 
                            ["Hap", ">= 1.11.13"],
                            ["AutPGrp", ">= 1.6"] ], 
   SuggestedOtherPackages := [ ["GAPDoc", ">= 1.5.1"] ],

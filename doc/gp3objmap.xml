@@ -658,6 +658,8 @@ true
    <Attr Name="CrossedSquareOfCat2Group"
          Arg="CC" />
 <Description>
+<E>These functions are temporarily disabled.</E>
+<P/>
 These functions provide the conversion from crossed square to cat2-group, 
 and conversely.  (They are the 3-dimensional equivalents of 
 <C>Cat1GroupOfXMod</C> and <C>XModOfCat1Group</C>.) 

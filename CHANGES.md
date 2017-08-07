@@ -2,9 +2,9 @@
 
 ## Problems and ToDos: 
 
- * (21/07/17) replaced PreXModIsomorphismByIsomorphisms by the more general 
-              IsomorphismByIsomorphisms; then functions such as 
-              IsomorphismPerm2DimensionalGroup rewritten to use it. 
+ * (07/08/17) coprod.tst and gpnobjmap.tst need to work with new groupoids 
+ * (22/07/17) X4 (etc) is a HigherDimensionalDomain but not a 
+              HigherDimensionalGroup - discrepancy to be sorted out! 
  * (14/06/17) Need String, View, Print for 3d- and nd-groups 
  * (28/04/17) implement inclusion of the kernel of an xmod-morphism as xsq 
  * (25/04/17) file examples/gpd2obj.g needs more material 
@@ -27,8 +27,15 @@
               and the inclusion SL25.C2 -> GL25 using the matrix groups 
               (construction worked OK with isomorphic perm groups). 
 
-## 2.59 -> 2.61 (21/06/2017) 
+## 2.59 -> 2.61 (07/08/2017) 
 
+ * (07/08/17) Gpd changed to groupoids in list of required packages 
+ * (07/08/17) testall.g now calls TestDirectory; test files renamed 
+ * (07/08/17) temporarily renamed 08-gpd2obj.tst and 11-gpnobjmap.tst 
+              so that they do not get tested by TestDirectory("tst")
+ * (21/07/17) replaced PreXModIsomorphismByIsomorphisms by the more general 
+              IsomorphismByIsomorphisms; then functions such as 
+              IsomorphismPerm2DimensionalGroup rewritten to use it. 
  * (20/07/17) added IsomorphismByIsomorphisms for pre1-cat-groups 
  * (20/07/17) Removed duplication in 'Of' and 'By' operations  
  * (17/07/17) new functions added by Alper for crossed square <-> cat2-group: 

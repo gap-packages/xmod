@@ -9,8 +9,8 @@
 
 gap> saved_infolevel_xmod := InfoLevel( InfoXMod );; 
 gap> SetInfoLevel( InfoXMod, 1 );;
-gap> saved_infolevel_gpd := InfoLevel( InfoGpd );; 
-gap> SetInfoLevel( InfoGpd, 0 );;
+gap> saved_infolevel_groupoids := InfoLevel( InfoGroupoids );; 
+gap> SetInfoLevel( InfoGroupoids, 0 );;
 
 gap> q8 := Group( (1,2,3,4)(5,8,7,6), (1,5,3,7)(2,6,4,8) );;
 gap> SetName( q8, "q8" );; 
@@ -112,7 +112,7 @@ gap> copZY := CoproductXMod( Z8, Y8 );;
 #I  the coproduct is [ "A4", "S4" ], [ [ 12, 3 ], [ 24, 12 ] ]
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
-gap> SetInfoLevel( InfoGpd, saved_infolevel_gpd );; 
+gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 
 
 #############################################################################
 ##

@@ -9,8 +9,8 @@
 
 gap> saved_infolevel_xmod := InfoLevel( InfoXMod );; 
 gap> SetInfoLevel( InfoXMod, 0 );;
-gap> saved_infolevel_gpd := InfoLevel( InfoGpd );; 
-gap> SetInfoLevel( InfoGpd, 0 );;
+gap> saved_infolevel_groupoids := InfoLevel( InfoGroupoids );; 
+gap> SetInfoLevel( InfoGroupoids, 0 );;
 
 ## Chapter 9
 
@@ -34,7 +34,7 @@ gap> Name( PXO );
 "[Dk4->Ga4]"
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
-gap> SetInfoLevel( InfoGpd, saved_infolevel_gpd );; 
+gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 
 
 #############################################################################
 ##
