@@ -130,6 +130,8 @@ DeclareCategory( "Is2DimensionalDomain", IsHigherDimensionalDomain );
 DeclareGlobalFunction( "Make2DimensionalDomain" ); 
 DeclareOperation( "TypeOf2DimensionalDomain", [ IsList ] );  
 
+##  temporary measure to keep XModAlg working:
+DeclareSynonym( "Is2dDomain", Is2DimensionalDomain ); 
 
 #########################  2 DIMENSIONAL MAGMAS  ############################ 
 

@@ -224,6 +224,9 @@ DeclareAttribute( "TailMap", IsPreCat1Group );
 DeclareAttribute( "RangeEmbedding", IsPreCat1Group );
 DeclareAttribute( "KernelEmbedding", IsPreCat1Group );
 
+##  temporary measure to keep XModAlg working:
+DeclareSynonym( "PreCat1ByTailHeadEmbedding", PreCat1Obj ); 
+
 #############################################################################
 ##
 #F  PreCat1Group( <arg> )
@@ -242,6 +245,9 @@ DeclareAttribute( "EndomorphismPreCat1Group", IsPreCat1Group );
 DeclareOperation( "PreCat1GroupByNormalSubgroup", [ IsGroup, IsGroup ] );
 DeclareAttribute( "ReverseCat1Group", IsPreCat1Group );
 
+##  temporary measure to keep XModAlg working:
+DeclareSynonym( "PreCat1ByEndomorphisms", PreCat1GroupByEndomorphisms ); 
+
 #############################################################################
 ##
 #A  PreXModOfPreCat1Group( <PCG> )
@@ -253,6 +259,9 @@ DeclareAttribute( "PreXModOfPreCat1Group", IsPreCat1Group );
 DeclareAttribute( "PreCat1GroupOfPreXMod", IsPreXMod );
 DeclareAttribute( "XModOfCat1Group", IsCat1Group );
 DeclareAttribute( "Cat1GroupOfXMod", IsXMod );
+
+##  temporary measure to keep XModAlg working:
+DeclareSynonym( "PreCat1ByPreXMod", PreCat1GroupOfPreXMod ); 
 
 #############################################################################
 ##

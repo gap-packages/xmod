@@ -27,6 +27,16 @@
               and the inclusion SL25.C2 -> GL25 using the matrix groups 
               (construction worked OK with isomorphic perm groups). 
 
+## 2.61 -> 2.62 (09/08/2017) 
+
+ * (09/08/17) in order to keep XModAlg-1.12 working, added synonyms 
+              Is2dDomain for Is2DimensionalDomain, 
+              PreCat1ByTailHeadEmbedding for PreCat1Obj, 
+              PreCat1ByEndomorphisms for PreCat1GroupByEndomorphisms 
+              PreCat1ByPreXMod for PreCat1GroupOfPreXMod 
+              IsGeneral2dMapping for IsGeneral2DimensionalMapping
+          and Kernel2dMapping for Kernel2DimensionalMapping
+
 ## 2.59 -> 2.61 (07/08/2017) 
 
  * (07/08/17) Gpd changed to groupoids in list of required packages 
