@@ -10,15 +10,15 @@ Packagename := "xmod",
 Subtitle := "Crossed Modules and Cat1-Groups",
 
 Version := "2.62",
-Date := "09/08/2017",
+Date := "29/08/2017",
 
 ##  duplicate these values for inclusion in the manual: 
 ##  <#GAPDoc Label="PKGVERSIONDATA">
 ##  <!ENTITY XMODVERSION "2.62">
 ##  <!ENTITY XMODTARFILENAME "xmod-2.62.tar.gz">
 ##  <!ENTITY XMODHTMLFILENAME "xmod.html">
-##  <!ENTITY XMODRELEASEDATE "09/08/2017">
-##  <!ENTITY XMODLONGRELEASEDATE "9th August 2017">
+##  <!ENTITY XMODRELEASEDATE "29/08/2017">
+##  <!ENTITY XMODLONGRELEASEDATE "29th August 2017">
 ##  <!ENTITY XMODCOPYRIGHTYEARS "1997-2017">
 ##  <#/GAPDoc>
 
@@ -49,13 +49,13 @@ Persons := [
     Email         := "muratalp@nigde.edu.tr",
     PostalAddress := Concatenation( [ 
                        "Prof. Dr. M. Alp\n",
-                       "Nigde Universitesi\n",
-                       "Fen-Edebiyat Fakultesi\n",
-                       "Matematik Bolumu\n",
+                       "Ömer Halisdemir University\n",
+                       "Art and Science Faculty\n",
+                       "Mathematics Department\n",
                        "Nigde\n",
                        "Turkey"] ),
     Place         := "Nigde",
-    Institution   := "Nigde University"
+    Institution   := "Ömer Halisdemir University"
   ),
     rec(
     LastName      := "Odabas",
@@ -128,7 +128,7 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">=4.8.7",
   NeededOtherPackages := [ ["Utils", ">= 0.46"], 
-                           ["groupoids", ">= 1.51"], 
+                           ["groupoids", ">= 1.52"], 
                            ["Hap", ">= 1.11.13"],
                            ["AutPGrp", ">= 1.6"] ], 
   SuggestedOtherPackages := [ ["GAPDoc", ">= 1.5.1"] ],
@@ -141,7 +141,7 @@ BannerString := Concatenation(
   "Loading XMod ", String( ~.Version ), 
   " (methods for crossed modules and cat1-groups)\n",
   "by Chris Wensley (http://pages.bangor.ac.uk/~mas023/),", 
-  " with contributions by:\n", 
+  " with contributions from:\n", 
   "    Murat Alp (muratalp@nigde.edu.tr),\n", 
   "    Alper Odabas (aodabas@ogu.edu.tr),\n", 
   "and Enver Uslu (enveruslu@ogu.edu.tr).\n", 

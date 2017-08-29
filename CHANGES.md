@@ -27,8 +27,9 @@
               and the inclusion SL25.C2 -> GL25 using the matrix groups 
               (construction worked OK with isomorphic perm groups). 
 
-## 2.61 -> 2.62 (09/08/2017) 
+## 2.61 -> 2.62 (29/08/2017) 
 
+ * (24/08/17) changed the name of Murat's university
  * (09/08/17) in order to keep XModAlg-1.12 working, added synonyms 
               Is2dDomain for Is2DimensionalDomain, 
               PreCat1ByTailHeadEmbedding for PreCat1Obj, 
