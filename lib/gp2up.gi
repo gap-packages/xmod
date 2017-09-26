@@ -20,50 +20,6 @@
 
 ##############################################################################
 ##
-#M  Up2DimensionalMappingObj( <obj>, <ims> ) . . . . . . . . . make up-mapping
-##
-InstallMethod( Up2DimensionalMappingObj, "for 2d-object and images", true,
-    [ Is2DimensionalDomain, IsHomogeneousList ], 0,
-function( obj, ims )
-
-    local filter, fam, map, genR, stgR, invR, ok, src, rng, aut, name, hom;
-
-    fam := FamilyObj( [ obj, ims ] );
-    filter := IsUp2DimensionalMappingRep;
-    src := Source( obj );
-    rng := Range( obj );
-    map := rec();
-    ObjectifyWithAttributes( map, NewType( fam, filter ),
-      Object2d, obj,
-      UpGeneratorImages, ims,
-      IsUp2DimensionalMapping, true );
-    if IsPreXMod( obj ) then
-        ok := IsDerivation( map );
-        if ( ok and IsXMod( obj ) ) then
-            SetIsDerivation( map, true );
-        fi;
-        stgR := StrongGeneratorsStabChain( StabChain( rng ) );
-        invR := List( stgR, r -> r^(-1) );
-    elif IsPreCat1Group( obj ) then
-        genR := GeneratorsOfGroup( rng );
-        hom := GroupHomomorphismByImages( rng, src, genR, ims );
-        if RespectsMultiplication( hom ) then
-            ####  SetIsGroupHomomorphism( map, true );
-        else
-            Error( "proposed section not a group homomorphism" );
-        fi;
-        ok := IsSection( map );
-        if ( ok and IsCat1Group( obj ) ) then
-            SetIsSection( map, true );
-        fi;
-    else
-        Error( "2dobject neither an xmod nor a cat1-group" );
-    fi;
-    return map;
-end );
-
-##############################################################################
-##
 #M  Source( <map> )  . . . . . . . . . . . . . . . . . . source for up-mapping
 #M  Range( <map> )  . . . . . . . . . . . . . . . . . . . range for up-mapping
 ##
@@ -282,9 +238,9 @@ end );
 ##
 #M  DerivationByImages                                     sets up the mapping
 ##
-InstallMethod( DerivationByImages, "method for an xmod", true,
+InstallMethod( DerivationByImages, "method for a crossed module", true,
     [ IsXMod, IsHomogeneousList ], 0,
-function( XM, im )
+function( XM, ims )
 
     local nargs, usage, isder, chi, R, S, stgR, ngR, ok;
 
@@ -292,11 +248,15 @@ function( XM, im )
     R := Range( XM );
     stgR := StrongGeneratorsStabChain( StabChain( R ) );
     ngR := Length( stgR );
-    if not ( IsList( im ) and ( Length( im ) = ngR )
-                   and ForAll( im, x -> ( x in S ) ) ) then
-        Error( "<im> must be a list of |stgR| elements in S" );
+    if not ( IsList( ims ) and ( Length( ims ) = ngR )
+                   and ForAll( ims, x -> ( x in S ) ) ) then
+        Error( "<ims> must be a list of |stgR| elements in S" );
     fi;
-    chi := Up2DimensionalMappingObj( XM, im );
+    chi := rec(); 
+    ObjectifyWithAttributes( chi, Up2DimensionalMappingType, 
+        Object2d, XM,
+        UpGeneratorImages, ims,
+        IsUp2DimensionalMapping, true );
     ok := IsDerivation( chi );
     if not ok then 
         return fail;
@@ -621,10 +581,8 @@ InstallMethod( SectionByImages, "method for a cat1-group", true,
     [ IsCat1Group, IsGroupHomomorphism ], 0,
 function( C, hom )
 
-    local fam, filter, R, G, stgR, ngR, nargs, usage, isect, im, xi;
+    local R, G, stgR, ngR, ok, xi;
 
-    fam := Up2DimensionalMappingFamily; 
-    filter := IsUp2DimensionalMappingRep; 
     G := Source( C );
     R := Range( C );
     stgR := StrongGeneratorsStabChain( StabChain( R ) );
@@ -632,15 +590,18 @@ function( C, hom )
     if not ( ( Source( hom ) = R ) and ( Range( hom ) = G ) ) then
         Error( "require  hom : Range(C) -> Source(C)" );
     fi;
-    im := List( stgR, r -> Image( hom, r ) ); 
     xi := rec(); 
-    ObjectifyWithAttributes( xi, 
-        NewType( fam, filter ), 
+    ObjectifyWithAttributes( xi, Up2DimensionalMappingType, 
         Object2d, C, 
         UpHomomorphism, hom, 
-        UpGeneratorImages, im ); 
-    isect := IsSection( xi );
-    return xi;
+        IsUp2DimensionalMapping, true, 
+        UpGeneratorImages, List( stgR, r -> Image( hom, r ) ) ); 
+    ok := IsSection( xi );
+    if not ok then 
+        return fail;
+    else
+        return xi;
+    fi;
 end );
 
 #############################################################################
@@ -782,18 +743,16 @@ end );
 
 ###############################################################################
 ##
-#M  MonoidOfUp2DimensionalMappingsObj( <obj>, <ims>, <str> )  construct upmappings record
+#M  MonoidOfUp2DimensionalMappingsObj( <obj>, <ims>, <str> ) 
 ##
-InstallMethod( MonoidOfUp2DimensionalMappingsObj, "for a 2DimensionalDomain", true,
-    [ Is2DimensionalDomain, IsHomogeneousList, IsString ], 0,
+InstallMethod( MonoidOfUp2DimensionalMappingsObj, "for a 2DimensionalDomain", 
+    true, [ Is2DimensionalDomain, IsHomogeneousList, IsString ], 0,
 function( obj, images, str )
 
-    local filter, fam, mon;
+    local mon;
 
-    fam := FamilyObj( [ obj, images, str ] );
-    filter := IsMonoidOfUp2DimensionalMappingsObj;
     mon := rec(); 
-    ObjectifyWithAttributes( mon, NewType( fam, filter ), 
+    ObjectifyWithAttributes( mon, MonoidOfUp2DimensionalMappingsType, 
       IsMonoidOfUp2DimensionalMappings, true,
       Object2d, obj,
       ImagesList, images,
@@ -1063,7 +1022,7 @@ end );
 ##
 #M  WhiteheadTransMonoid( XM )               trans rep for the Whitehead monoid
 ##
-##  this needs some more work
+#?  this needs some more work
 ##
 InstallMethod( WhiteheadTransMonoid, "method for a crossed module", true,
     [ IsXMod ], 0,

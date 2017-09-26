@@ -2,6 +2,10 @@
 
 ## Problems and ToDos: 
 
+ * (26/09/17) split 06-isoclinic.tst into a .tst and .xtst files 
+ * (30/08/17) the problem with DiscreteNormalPreXModWithObjects is that 
+              it is not possible to crfeate arrows in AS0 because 
+              \in( AS0, an automorphism of S) fails - that \in problem again! 
  * (07/08/17) coprod.tst and gpnobjmap.tst need to work with new groupoids 
  * (22/07/17) X4 (etc) is a HigherDimensionalDomain but not a 
               HigherDimensionalGroup - discrepancy to be sorted out! 
@@ -27,8 +31,10 @@
               and the inclusion SL25.C2 -> GL25 using the matrix groups 
               (construction worked OK with isomorphic perm groups). 
 
-## 2.61 -> 2.62 (29/08/2017) 
+## 2.61 -> 2.62 (26/09/2017) 
 
+ * (26/09/17) added a number of Types and modified Objectify statements 
+              removed Up2DimensionalMappingObj
  * (24/08/17) changed the name of Murat's university
  * (09/08/17) in order to keep XModAlg-1.12 working, added synonyms 
               Is2dDomain for Is2DimensionalDomain, 

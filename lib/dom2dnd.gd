@@ -18,11 +18,9 @@ DeclareInfoClass( "InfoXMod" );
 ## 
 #C  IsHigherDimensionalDomain( <obj> ) . . . . test if object is n-dim domain 
 #F  MakeHigherDimensionalDomain( <src>, <rng> ) 
-#O  TypeOfHigherDimensionalDomain( <m3d> ) 
 ## 
 DeclareCategory( "IsHigherDimensionalDomain", IsDomain ); 
 DeclareGlobalFunction( "MakeHigherDimensionalDomain" ); 
-DeclareOperation( "TypeOfHigherDimensionalDomain", [ IsList ] );  
 
 ######################  HIGHER DIMENSIONAL MAGMAS  ########################## 
 
@@ -124,11 +122,11 @@ DeclareOperation( "SubHigherDimensionalDomain",
 ## 
 #C  Is2DimensionalDomain( <obj> ) . . test if object is a 2Dimensional-domain 
 #F  Make2DimensionalDomain( <src>, <rng> ) 
-#O  TypeOf2DimensionalDomain( <m2d> ) 
+#O  KindOf2DimensionalDomain( <m2d> ) 
 ## 
 DeclareCategory( "Is2DimensionalDomain", IsHigherDimensionalDomain ); 
 DeclareGlobalFunction( "Make2DimensionalDomain" ); 
-DeclareOperation( "TypeOf2DimensionalDomain", [ IsList ] );  
+DeclareOperation( "KindOf2DimensionalDomain", [ IsList ] );  
 
 ##  temporary measure to keep XModAlg working:
 DeclareSynonym( "Is2dDomain", Is2DimensionalDomain ); 
@@ -194,7 +192,7 @@ DeclareGlobalFunction( "Make2DimensionalMonoid" );
 ##########################  2 DIMENSIONAL GROUPS  ###########################
 
 ##  A *2Dimensional-group* is a 2Dimensional-magma where source and range are 
-##  both groups, and so is a pre-crossed module or pre-cat1-group - 
+##  both groups, and so is a pre-crossed module or pre-cat1-group: 
 ##  see file gp2obj.gd.
 
 #############################################################################
@@ -206,11 +204,11 @@ DeclareSynonymAttr( "Is2DimensionalGroup", Is2DimensionalMagmaWithInverses and
 
 ############################################################################# 
 ##  
-#V  Family2DimensionalGroup . . . . . . . . .  family for 2Dimensional-groups
+#V  Family2DimensionalGroup . . . . . . . . .  family for 2Dimensional-groups 
+#T  Type2DimensionalGroup . . . . . . . . . . .  type for 2Dimensional-groups 
 ##  
 BindGlobal( "Family2DimensionalGroup", NewFamily( "Family2DimensionalGroup", 
     Is2DimensionalGroup, CanEasilySortElements, CanEasilySortElements ) ); 
-
 
 #########################  2 DIMENSIONAL SUBDOMAINS  ######################## 
 

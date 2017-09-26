@@ -58,12 +58,10 @@ InstallMethod( CrossedPairingObj, "for a general mapping", true,
     [ IsList, IsGroup, IsGeneralMapping ], 0,
 function( src, rng, map )
 
-    local filter, fam, obj;
+    local obj;
 
-    fam := FamilyObj( [ src, rng, map ] );
-    filter := IsCrossedPairingObj;
     obj := rec();
-    ObjectifyWithAttributes( obj, NewType( fam, filter ),
+    ObjectifyWithAttributes( obj, CrossedPairingType,
         Source, src,
         Range, rng, 
         CrossedPairingMap, map,
@@ -200,13 +198,11 @@ InstallMethod( PreCrossedSquareObj, "for prexmods, action and pairing", true,
     [ IsPreXMod, IsPreXMod, IsPreXMod, IsPreXMod, IsObject, IsObject ], 0,
 function( u, l, d, r, a, p )
 
-    local filter, fam, PS, ok, src, rng, aut, narne;
+    local PS, ok, src, rng, aut, narne;
 
-    fam := FamilyHigherDimensionalGroup;
-    filter := IsPreCrossedSquareObj;
     ## test commutativity here?
     PS := rec();
-    ObjectifyWithAttributes( PS, NewType( fam, filter), 
+    ObjectifyWithAttributes( PS, PreCrossedSquareObjType, 
       Up2DimensionalGroup, u, 
       Left2DimensionalGroup, l,
       Down2DimensionalGroup, d,

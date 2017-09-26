@@ -33,14 +33,6 @@ DeclareCategoryCollections( "IsGeneral2DimensionalMapping" );
 DeclareCategoryCollections( "IsGeneral2DimensionalMappingCollection" );
 DeclareCategoryCollections( "IsGeneral2DimensionalMappingCollColl" );
 
-############################################################################# 
-##  
-#V  General2DimensionalMappingFamily . . . . . . family for homs of magmas with objects 
-##  
-BindGlobal( "General2DimensionalMappingFamily", 
-    NewFamily( "General2DimensionalMappingFamily", IsGeneral2DimensionalMapping, 
-               CanEasilySortElements, CanEasilySortElements ) ); 
-
 #############################################################################
 ##
 #P  Is2DimensionalMapping( <map> )
@@ -67,6 +59,18 @@ DeclareProperty( "Is2DimensionalSemigroupMorphism",
 DeclareProperty( "Is2DimensionalMonoidMorphism", 
     Is2DimensionalMagmaMorphism );
 
+############################################################################# 
+##  
+#V  General2DimensionalMappingFamily . family for homs of magmas with objects 
+#R  Is2DimensionalMappingRep( <map> )
+##  
+BindGlobal( "General2DimensionalMappingFamily", 
+    NewFamily( "General2DimensionalMappingFamily", IsGeneral2DimensionalMapping, 
+               CanEasilySortElements, CanEasilySortElements ) ); 
+DeclareRepresentation( "Is2DimensionalMappingRep", 
+    Is2DimensionalMagmaMorphism and IsAttributeStoringRep and IsGeneralMapping, 
+    [ "Source", "Range", "SourceHom", "RangeHom" ] );
+
 ############################################################################## 
 ## 
 #C  Is2DimensionalGroupMorphism( <map> )
@@ -74,6 +78,7 @@ DeclareProperty( "Is2DimensionalMonoidMorphism",
 #C  Is2DimensionalGroupMorphismCollColl . . . . . . category of colls of colls 
 #C  Is2DimensionalGroupMorphismCollCollColl .  category of colls, colls, colls
 #V  Family2DimensionalGroupMorphism . .  family for homomorphisms of pre-xmods 
+#T  Type2DimensionalGroupMorphism . . . .  type for homomorphisms of pre-xmods 
 ##
 DeclareCategory( "Is2DimensionalGroupMorphism", IsGeneral2DimensionalMapping ); 
 DeclareCategoryCollections( "Is2DimensionalGroupMorphism" );
@@ -82,6 +87,9 @@ DeclareCategoryCollections( "Is2DimensionalGroupMorphismCollColl" );
 BindGlobal( "Family2DimensionalGroupMorphism", 
     NewFamily( "Family2DimensionalGroupMorphism", Is2DimensionalGroupMorphism, 
                CanEasilySortElements, CanEasilySortElements ) ); 
+BindGlobal( "Type2DimensionalGroupMorphism", 
+            NewType( Family2DimensionalGroupMorphism, 
+                     Is2DimensionalMappingRep ) ); 
 
 #############################################################################
 ##
@@ -97,13 +105,9 @@ DeclareProperty( "IsCat1Morphism", IsPreCat1Morphism );
 
 ############################################################################## 
 ## 
-#R  Is2DimensionalMappingRep( <map> )
 #A  SourceHom( <mor> )
 #A  RangeHom( <mor> )
 ## 
-DeclareRepresentation( "Is2DimensionalMappingRep", 
-    Is2DimensionalMagmaMorphism and IsAttributeStoringRep and IsGeneralMapping, 
-    [ "Source", "Range", "SourceHom", "RangeHom" ] );
 DeclareAttribute( "SourceHom", Is2DimensionalGroupMorphism );
 DeclareAttribute( "RangeHom", Is2DimensionalGroupMorphism );
 
@@ -147,15 +151,6 @@ DeclareCategoryCollections( "IsGeneralHigherDimensionalMapping" );
 DeclareCategoryCollections( "IsGeneralHigherDimensionalMappingCollection" );
 DeclareCategoryCollections( "IsGeneralHigherDimensionalMappingCollColl" );
 
-############################################################################# 
-##  
-#V  GeneralHigherDimensionalMappingFamily 
-##          . . . . family for homs of higher dimensional magmas with objects 
-##  
-BindGlobal( "GeneralHigherDimensionalMappingFamily", 
-    NewFamily( "GeneralHigherDimensionalMappingFamily", IsGeneralHigherDimensionalMapping, 
-               CanEasilySortElements, CanEasilySortElements ) ); 
-
 #############################################################################
 ##
 #P  IsHigherDimensionalMapping( <map> )
@@ -180,20 +175,39 @@ DeclareProperty( "IsHigherDimensionalSemigroupMorphism",
 DeclareProperty( "IsHigherDimensionalMonoidMorphism", 
     IsHigherDimensionalMagmaMorphism );
 
+############################################################################# 
+##  
+#V  GeneralHigherDimensionalMappingFamily 
+##          . . . . family for homs of higher dimensional magmas with objects 
+#R  IsHigherDimensionalMappingRep( <mor> )
+##  
+BindGlobal( "GeneralHigherDimensionalMappingFamily", 
+    NewFamily( "GeneralHigherDimensionalMappingFamily", IsGeneralHigherDimensionalMapping, 
+               CanEasilySortElements, CanEasilySortElements ) ); 
+DeclareRepresentation( "IsHigherDimensionalMappingRep", 
+    IsHigherDimensionalMapping and IsAttributeStoringRep,
+    [ "Source", "Range", "ListOfHomomorphisms", "HigherDimension" ] );
+
 ############################################################################## 
 ## 
 #C  IsHigherDimensionalGroupMorphism( <map> )
-#C  IsHigherDimensionalGroupMorphismCollection . category of colls of higher dimensional groups
-#C  IsHigherDimensionalGroupMorphismCollColl . . . . . . category of colls of colls 
-#V  FamilyHigherDimensionalGroupMorphism . .  family for homomorphisms of higher dimensional groups 
+#C  IsHigherDimensionalGroupMorphismCollection 
+#C  IsHigherDimensionalGroupMorphismCollColl . 
+#V  FamilyHigherDimensionalGroupMorphism  
+#T  Type2DimensionalGroupMorphism 
 ##
-DeclareCategory( "IsHigherDimensionalGroupMorphism", IsGeneralHigherDimensionalMapping ); 
+DeclareCategory( "IsHigherDimensionalGroupMorphism", 
+    IsGeneralHigherDimensionalMapping ); 
 DeclareCategoryCollections( "IsHigherDimensionalGroupMorphism" );
 DeclareCategoryCollections( "IsHigherDimensionalGroupMorphismCollection" );
 DeclareCategoryCollections( "IsHigherDimensionalGroupMorphismCollColl" );
 BindGlobal( "FamilyHigherDimensionalGroupMorphism", 
-    NewFamily( "FamilyHigherDimensionalGroupMorphism", IsHigherDimensionalGroupMorphism, 
+    NewFamily( "FamilyHigherDimensionalGroupMorphism", 
+               IsHigherDimensionalGroupMorphism, 
                CanEasilySortElements, CanEasilySortElements ) ); 
+BindGlobal( "TypeHigherDimensionalGroupMorphism", 
+            NewType( FamilyHigherDimensionalGroupMorphism, 
+                     IsHigherDimensionalMappingRep ) ); 
 
 #############################################################################
 ##

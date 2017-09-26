@@ -178,10 +178,8 @@ InstallMethod( PreXModObj, "for homomorphism and action", true,
     [ IsGroupHomomorphism, IsGroupHomomorphism ], 0,
 function( bdy, act )
 
-    local filter, fam, PM, ok, src, rng, aut, name;
+    local type, PM, ok, src, rng, aut, name;
 
-    fam := Family2DimensionalGroup;
-    filter := IsPreXModObj;
     src := Source( bdy );
     rng := Range( bdy );
     if not ( rng = Source( act ) ) then
@@ -192,13 +190,14 @@ function( bdy, act )
         Error( "Range( act ) must be a group of automorphisms" );
     fi;
     if ( IsPermGroup( src ) and IsPermGroup( rng ) ) then
-        filter := filter and IsPerm2DimensionalGroup; 
+        type := PermPreXModObjType;  
     elif ( IsPcGroup( src ) and IsPcGroup( rng ) ) then 
-        filter := filter and IsPc2DimensionalGroup; 
+        type := PcPreXModObjType; 
+    else 
+        type := PreXModObjType; 
     fi;
     PM := rec();
-    ObjectifyWithAttributes( PM, 
-      NewType( fam, filter ),
+    ObjectifyWithAttributes( PM, type,
       Source, src,
       Range, rng,
       Boundary, bdy,
@@ -574,18 +573,25 @@ InstallMethod( PreCat1Obj, "for tail, head, embedding", true,
     [ IsGroupHomomorphism, IsGroupHomomorphism, IsGroupHomomorphism ], 0,
 function( t, h, e )
 
-    local filter, fam, C1G, ok, src, rng, name;
+    local src, rng, type, C1G, ok, name;
 
-    fam := Family2DimensionalGroup;
-    filter := IsPreCat1Obj;
-    if not ( ( Source(h) = Source(t) ) and ( Range(h) = Range(t) ) ) then
+    src := Source( h ); 
+    rng := Range( h );
+    if not ( ( src = Source( t ) ) and ( rng = Range( t ) ) ) then
         Error( "tail & head must have same source and range" );
     fi;
-    if not ( ( Source(e) = Range(t) ) and ( Range(e) = Source(t) ) ) then
+    if not ( ( Source( e ) = rng ) and ( Range( e ) = src ) ) then
         Error( "tail, embedding must have opposite source and range" );
     fi;
+    if ( IsPermGroup( src ) and IsPermGroup( rng ) ) then
+        type := PermPreCat1ObjType;  
+    elif ( IsPcGroup( src ) and IsPcGroup( rng ) ) then 
+        type := PcPreCat1ObjType; 
+    else 
+        type := PreCat1ObjType; 
+    fi;
     C1G := rec();
-    ObjectifyWithAttributes( C1G, NewType( fam, filter ),
+    ObjectifyWithAttributes( C1G, type,
       Source, Source( t ),
       Range, Range( t ),
       TailMap, t,

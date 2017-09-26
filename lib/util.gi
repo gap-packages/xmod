@@ -15,7 +15,7 @@ InstallMethod( AbelianModuleObject, "for abelian group and group action",
     true, [ IsGroup, IsGroupHomomorphism ], 0,
 function( ab, act )
 
-    local rng, filter, fam, obj;
+    local rng, obj;
 
     if not IsCommutative( ab ) then 
         Error( "group is not commutative" );
@@ -25,10 +25,8 @@ function( ab, act )
              ( AutomorphismDomain( rng ) = ab ) ) then 
         Error( "Range(act) is not a group of autios of ab" ); 
     fi; 
-    fam := FamilyObj( [ ab, act ] );
-    filter := IsAbelianModuleObj;
     obj := rec();
-    ObjectifyWithAttributes( obj, NewType( fam, filter ), 
+    ObjectifyWithAttributes( obj, IsAbelianModuleType, 
       AbelianModuleGroup, ab,
       AbelianModuleAction, act,
       IsAbelianModule, true );

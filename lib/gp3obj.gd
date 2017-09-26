@@ -29,6 +29,22 @@ DeclareProperty( "IsPc3DimensionalGroup", IsHigherDimensionalGroup );
 
 #############################################################################
 ##
+#T  PreCrossedSquareObjType . . . . . . . . . . . .  type for crossed squares
+#T  PermPreCrossedSquareObjType . . . . . .  .  type for perm crossed squares
+#T  PcPreCrossedSquareObjType . . . . . . . . . . type for pc crossed squares
+## 
+BindGlobal( "PreCrossedSquareObjType", 
+            NewType( FamilyHigherDimensionalGroup, 
+                     IsPreCrossedSquareObj ) ); 
+BindGlobal( "PermPreCrossedSquareObjType", 
+            NewType( FamilyHigherDimensionalGroup, 
+                     IsPreCrossedSquareObj and IsPerm3DimensionalGroup ) ); 
+BindGlobal( "PcPreCrossedSquareObjType", 
+            NewType( FamilyHigherDimensionalGroup, 
+                     IsPreCrossedSquareObj and IsPc3DimensionalGroup ) ); 
+
+#############################################################################
+##
 #P  IsPreCrossedSquare( <PM> } 
 #P  IsPermPreCrossedSquare( <PM> ) 
 #P  IsFpPreCrossedSquare( <PM> ) 
@@ -63,13 +79,19 @@ DeclareSynonym( "IsPcCrossedSquare",
 #P  IsCrossedPairing( <map> )
 #R  IsCrossedPairingObj( <obj> )
 #O  CrossedPairingObj( <src>, <rng>, <map> )
+#V  CrossedPairingFamily
+#T  CrossedPairingObjType
 #A  CrossedPairingMap( <xp> )
 #O  ImageElmCrossedPairing( <xp>, <elm> ) 
 ##
 DeclareProperty( "IsCrossedPairing", IsGeneralMapping );
 DeclareRepresentation( "IsCrossedPairingObj", 
     IsCrossedPairing and IsAttributeStoringRep,
-    [ "Source", "Range", "CrossedPairingMap" ] );
+    [ "Source", "Range", "CrossedPairingMap" ] ); 
+BindGlobal( "CrossedPairingFamily", 
+    NewFamily( "CrossedPairingFamily", IsList, IsGroup, IsGeneralMapping ) ); 
+BindGlobal( "CrossedPairingType", 
+    NewType( CrossedPairingFamily, IsCrossedPairingObj ) ); 
 DeclareOperation( "CrossedPairingObj", [ IsList, IsGroup, IsGeneralMapping ] );
 DeclareAttribute( "CrossedPairingMap", IsCrossedPairing );
 DeclareOperation( "ImageElmCrossedPairing", [ IsCrossedPairing, IsObject ] );

@@ -15,8 +15,9 @@ TestXMod := function( pkgname )
     testfiles := 
         [ "01-gp2obj.tst", "02-gp2map.tst", "03-gp2up.tst", "04-gp2act.tst", 
           "05-gp2ind.tst", "06-isoclinic.tst", "07-gp3objmap.tst", 
-          "08-gpd2obj.tst", "09-util.tst", "10-coprod.tst", 
-          "11-gpnobjmap.tst" ];
+          "08-gpd2obj.tst", "09-util.tst"        ##, 
+          ## "10-coprod.tst", "11-gpnobjmap.tst" 
+        ];
     testresult := true;
     for ff in testfiles do
         fn := Filename( pkgdir, ff );
@@ -29,7 +30,8 @@ TestXMod := function( pkgname )
         Print("#I  No errors detected while testing package ", pkgname, "\n");
     else
         Print("#I  Errors detected while testing package ", pkgname, "\n");
-    fi;
+    fi; 
+    Print( "#I  tests 9, 10 and 11 currently disabled\n" ); 
 end;
 
 ##  Set the name of the package here

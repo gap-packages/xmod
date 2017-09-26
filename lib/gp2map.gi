@@ -93,23 +93,17 @@ InstallMethod( Make2DimensionalGroupMorphism,
     [ IsList ], 0,
 function( L )
 
-    local filter, fam, mor, ok;
+    local mor;
 
-    fam := Family2DimensionalGroupMorphism; 
-    filter := Is2DimensionalMappingRep;
-    ok := Is2DimensionalGroupMorphismData( L ); 
-## Print( "\n***** ", ok, " *****\n\n" ); 
-    if not ok then
+    if not Is2DimensionalGroupMorphismData( L ) then
         return fail; 
     fi;
     mor := rec();
-    ObjectifyWithAttributes( mor, 
-        NewType( fam, filter ),
+    ObjectifyWithAttributes( mor, Type2DimensionalGroupMorphism, 
         Source, L[1],
         Range, L[2],
         SourceHom, L[3],
         RangeHom, L[4] );
-## Print( mor, "\n" );
     return mor;
 end );
 

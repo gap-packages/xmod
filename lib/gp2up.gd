@@ -11,8 +11,7 @@
 ##############################################################################
 ##
 #C  IsUp2DimensionalMapping( <map> )
-#R  IsUp2DimensionalMappingRep( <map> )
-#O  Up2DimensionalMappingObj( <obj>, <ims> )
+#R  IsUp2DimensionalMappingRep( <map> ) 
 ##
 ##  A section|derivation is determined by a cat1-group|xmod + generator images
 ##
@@ -20,8 +19,6 @@ DeclareCategory( "IsUp2DimensionalMapping", IsGeneralMapping );
 DeclareRepresentation( "IsUp2DimensionalMappingRep", 
     IsUp2DimensionalMapping and IsAttributeStoringRep, 
     [ "Object2d", "UpGeneratorImages", "UpHomomorphism", "UpImagePositions" ] );
-DeclareOperation( "Up2DimensionalMappingObj", 
-    [ Is2DimensionalDomain, IsHomogeneousList ] );
 
 #############################################################################
 ##
@@ -29,6 +26,7 @@ DeclareOperation( "Up2DimensionalMappingObj",
 #C  IsUp2DimensionalMappingCollColl . . . . . . .  category of colls of colls 
 #C  IsUp2DimensionalMappingCollCollColl . . . category of colls, colls, colls
 #V  Up2DimensionalMappingFamily . . . . . family for derivations and sections
+#T  Up2DimensionalMappingType( <map> ) 
 ##
 DeclareCategoryCollections( "IsUp2DimensionalMapping" );
 DeclareCategoryCollections( "IsUp2DimensionalMappingCollection" );
@@ -36,6 +34,9 @@ DeclareCategoryCollections( "IsUp2DimensionalMappingCollColl" );
 BindGlobal( "Up2DimensionalMappingFamily", 
     NewFamily( "Up2DimensionalMappingFamily", IsUp2DimensionalMapping, 
                CanEasilySortElements, CanEasilySortElements ) ); 
+BindGlobal( "Up2DimensionalMappingType", 
+            NewType( Up2DimensionalMappingFamily, 
+                     IsUp2DimensionalMappingRep ) ); 
 
 ##############################################################################
 ##
@@ -185,11 +186,18 @@ DeclareAttribute( "ImagesTable", IsMonoidOfUp2DimensionalMappings );
 #############################################################################
 ##
 #O  MonoidOfUp2DimensionalMappingsObj( <obj>, <images>, <str> )
+#F  MonoidOfUp2DimensionalMappingsFamily . . .  family for up-mappings monoid 
+#T  MonoidOfUp2DimensionalMappingsType . . . . .  type for up-mappings monoid 
 #P  IsMonoidOfDerivations                               
 #P  IsMonoidOfSections
 ##
 DeclareOperation( "MonoidOfUp2DimensionalMappingsObj",
     [ Is2DimensionalDomain, IsHomogeneousList, IsString ] );
+MonoidOfUp2DimensionalMappingsFamily := 
+    CollectionsFamily( Up2DimensionalMappingFamily ); 
+BindGlobal( "MonoidOfUp2DimensionalMappingsType", 
+            NewType( MonoidOfUp2DimensionalMappingsFamily, 
+                     IsMonoidOfUp2DimensionalMappingsObj ) ); 
 DeclareProperty( "IsMonoidOfDerivations", IsMonoidOfUp2DimensionalMappings );
 DeclareProperty( "IsMonoidOfSections", IsMonoidOfUp2DimensionalMappings );
 

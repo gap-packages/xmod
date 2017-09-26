@@ -26,6 +26,32 @@ DeclareProperty( "IsCatnGroup", IsHigherDimensionalGroup );
 
 #############################################################################
 ##
+#P  IsPermHigherDimensionalGroup( <obj> ) 
+#P  IsFpHigherDimensionalGroup( <obj> ) 
+#P  IsPcHigherDimensionalGroup( <obj> )
+##
+DeclareProperty( "IsPermHigherDimensionalGroup", IsHigherDimensionalGroup );
+DeclareProperty( "IsFpHigherDimensionalGroup", IsHigherDimensionalGroup );
+DeclareProperty( "IsPcHigherDimensionalGroup", IsHigherDimensionalGroup );
+
+#############################################################################
+##
+#T  PreCatnObjType . . . . . . . . . . . . . . . . . . . type for catn-groups
+#T  PermPreCatnObjType . . . . . .  . . . . . . . . type for perm catn-groups
+#T  PcPreCatnObjType . . . . . . . . . . . . . . . .  type for pc catn-groups
+## 
+BindGlobal( "PreCatnObjType", 
+            NewType( FamilyHigherDimensionalGroup, 
+                     IsPreCatnObj ) ); 
+BindGlobal( "PermPreCatnObjType", 
+            NewType( FamilyHigherDimensionalGroup, 
+                     IsPreCatnObj and IsPermHigherDimensionalGroup ) ); 
+BindGlobal( "PcPreCatnObjType", 
+            NewType( FamilyHigherDimensionalGroup, 
+                     IsPreCatnObj and IsPcHigherDimensionalGroup ) ); 
+
+#############################################################################
+##
 #O  PreCatnObj ( <arg> ) 
 #A  GeneratingCat1Groups( <P> ) 
 #A  HigherDimension ( <P> ) 

@@ -39,6 +39,34 @@ DeclareProperty( "IsPc2DimensionalGroup", Is2DimensionalGroup );
 
 #############################################################################
 ##
+#T  PreXModObjType . . . . . . . . . . . . . . . . . type for crossed modules
+#T  PermPreXModObjType . . . . . . . . . . . .  type for perm crossed modules 
+#T  PcPreXModObjType . . . . . . . . . . . . . .  type for pc crossed modules 
+#T  PreCat1ObjType . . . . . . . . . . . . . . . . . . . type for cat1-groups
+#T  PermPreCat1ObjType . . . . . . . . . . . . . .  type for perm cat1-groups 
+#T  PcPreCat1ObjType . . . . . . . . . . . . . . . .  type for pc cat1-groups 
+## 
+BindGlobal( "PreXModObjType", 
+            NewType( Family2DimensionalGroup, 
+                     IsPreXModObj ) ); 
+BindGlobal( "PermPreXModObjType", 
+            NewType( Family2DimensionalGroup, 
+                     IsPreXModObj and IsPerm2DimensionalGroup ) ); 
+BindGlobal( "PcPreXModObjType", 
+            NewType( Family2DimensionalGroup, 
+                     IsPreXModObj and IsPc2DimensionalGroup ) ); 
+BindGlobal( "PreCat1ObjType", 
+            NewType( Family2DimensionalGroup, 
+                     IsPreCat1Obj ) ); 
+BindGlobal( "PermPreCat1ObjType", 
+            NewType( Family2DimensionalGroup, 
+                     IsPreCat1Obj and IsPerm2DimensionalGroup ) ); 
+BindGlobal( "PcPreCat1ObjType", 
+            NewType( Family2DimensionalGroup, 
+                     IsPreCat1Obj and IsPc2DimensionalGroup ) ); 
+
+#############################################################################
+##
 #P  IsPreXMod( <PM> )
 #P  IsPermPreXMod( <PM> )
 #P  IsFpPreXMod( <PM> )

@@ -21,17 +21,12 @@ single piece groupoid:
     group: a4 = <[ (1,2,3), (2,3,4) ]>
 gap> GeneratorsOfGroup( k4 );
 [ (1,2)(3,4), (1,3)(2,4) ]
-gap> PXO := DiscreteNormalPreXModWithObjects( Ga4, k4 );;
-gap> Print( PXO, "\n" );
-[perm homogeneous, discrete groupoid: < k4, [ -9, -8, -7 ] >
-->  perm single piece groupoid: < a4, [ -9, -8, -7 ] >]
-
-gap> IsXMod( PXO );
-true
+gap> ## PXO := DiscreteNormalPreXModWithObjects( Ga4, k4 );;
+gap> ## Print( PXO, "\n" );
+gap> ## IsXMod( PXO ); 
 gap> SetName( Ga4, "Ga4" );; 
-gap> SetName( Source(PXO), "Dk4" );; 
-gap> Name( PXO );
-"[Dk4->Ga4]"
+gap> ## SetName( Source(PXO), "Dk4" );; 
+gap> ## Name( PXO );
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 

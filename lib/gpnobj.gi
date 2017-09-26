@@ -125,7 +125,7 @@ end );
 InstallMethod( PreCatnObj, "for precatn", true, [ IsList ], 0,
 function( L )
 
-    local G1, filter, fam, PC, ok, name, n;
+    local G1, PC, ok, name, n;
     
     if ForAny( L, x -> not IsPreCat1Group(x) ) then 
         Print( "Each item in the list must be PreCat1-group \n" );
@@ -136,10 +136,8 @@ function( L )
         Error( "the cat1-groups fail to have isomorphic sources" ); 
     fi;
     n := Length( L );
-    fam := FamilyHigherDimensionalGroup;
-    filter := IsPreCatnObj;
     PC := rec();
-    ObjectifyWithAttributes( PC, NewType( fam, filter), 
+    ObjectifyWithAttributes( PC, PreCatnObjType, 
         GeneratingCat1Groups, L, 
         HigherDimension, n+1, 
         IsHigherDimensionalGroup, true );

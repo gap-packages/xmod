@@ -17,7 +17,7 @@ InstallMethod( MakeHigherDimensionalGroupMorphism,
     [ IsHigherDimensionalGroup, IsHigherDimensionalGroup, IsList ], 0,
 function( src, rng, mors )
 
-    local filter, fam, mor, dim, n, i;
+    local mor, dim, n, i;
     
     dim := HigherDimension( src );
     if ( dim <> HigherDimension( rng ) ) then 
@@ -41,14 +41,12 @@ function( src, rng, mors )
         Print( "Entries in list mors must be pre-cat1-group morphisms\n" );
         return fail;
     fi;
-    fam := FamilyHigherDimensionalGroupMorphism;
-    filter := IsHigherDimensionalMappingRep;
     mor := rec();
-    ObjectifyWithAttributes( mor, NewType( fam, filter ),
+    ObjectifyWithAttributes( mor, TypeHigherDimensionalGroupMorphism,
         Source, src,
         Range, rng,
         ListOfHomomorphisms, mors,
-        HigherDimension, dim  );
+        HigherDimension, dim );
     if ( HasIsPreCrossedSquare( src ) and IsPreCrossedSquare( src ) ) then 
         SetUp2DimensionalMorphism( mor, mors[1] );
         SetLeft2DimensionalMorphism( mor, mors[2] );

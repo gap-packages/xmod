@@ -76,7 +76,7 @@ function( XM )
             Info( InfoXMod, 3, "x2,y2 = ", x2, ",  ", y2 ); 
             a2 := ImageElm( act, ImageElm( bdy, y2 ) ); 
             z2 := ImageElm( a2![1], x2 ); 
-            w2 := ConjugateArrow( x2, y2 );
+            w2 := x2^y2;
             Info( InfoXMod, 3, "w2,z2 = ", w2, ",  ", z2 ); 
             if ( z2 <> w2 ) then
                 Info( InfoXMod, 2,
@@ -123,17 +123,15 @@ function( R, gpS )
     lenR := Length( genR ); 
     igpR := One( gpR ); 
     imact := ListWithIdenticalEntries( lenR, 0 ); 
-    c := gengpR[1]; 
     for i in [1..lenR] do 
         g := genR[i]; 
-        if ( g![2] = g![3] ) then 
+        if ( g![2] = g![3] ) then  ## loop generator 
             c := g![1]; 
-            x := 0;
             imgengpS := List( gengpS, x -> x^c ); 
             h := GroupHomomorphismByImages( gpS, gpS, gengpS, imgengpS ); 
             imact[i] := GroupoidAutomorphismByGroupAutos( S,  
                             ListWithIdenticalEntries( nobs, h ) ); 
-        elif ( g![1] = igpR ) then 
+        elif ( g![1] = igpR ) then  ## ray generator
             head := g![3]; 
             pos := Position( obs, head ); 
             imobs := ShallowCopy( obs ); 
@@ -144,12 +142,15 @@ function( R, gpS )
             Error( "unexpected generating element in source of xmod" ); 
         fi; 
     od; 
+##?? change to generators + images 
     imobs := List( obs, o -> 0 ); 
     rays := List( obs, o -> idS ); 
     imhom := List( [1..ngengpR], j -> imact[j] ); 
     hom := GroupGeneralMappingByImagesNC( gpR, AS, gengpR, imhom); 
     SetIsMapping( hom, true ); 
-    action := GroupoidHomomorphismFromSinglePiece( R, AS0, hom, imobs, rays ); 
+    action := GroupoidHomomorphism( R, AS0, genR, imact ); 
+Error("here");
+##    action := GroupoidHomomorphism( R, AS0, hom, imobs, rays ); 
     P0 := PreXModWithObjectsObj( R!.objects, inc, action); 
     return P0; 
 end ); 

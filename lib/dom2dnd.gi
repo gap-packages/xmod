@@ -10,15 +10,15 @@
 
 ############################################################################# 
 ## 
-#M  TypeOf2DimensionalDomain( <m2d> ) 
+#M  KindOf2DimensionalDomain( <m2d> ) 
 ##
-InstallMethod( TypeOf2DimensionalDomain, "for list of 2Dimensional-domains", 
+InstallMethod( KindOf2DimensionalDomain, "for list of 2Dimensional-domains", 
     true, [ IsList ], 0, 
-
 function( pieces ) 
 
     local type; 
 
+    #? this does not do anything yet! 
     ## type:  1=gpd, 2=mon, 3=sgp, 4=mgm, 5=dom 
     type := 0; 
     return type; 

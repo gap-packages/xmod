@@ -20,15 +20,9 @@ DeclareProperty( "IsCatnMorphism", IsHigherDimensionalGroupMorphism );
 
 #############################################################################
 ##
-#R  IsHigherDimensionalMappingRep( <mor> )
 #A  2DimensionalGroupMorphisms( <mor> )
 #O  MakeHigherDimensionalMapping( <src>, <rng>, <list of maps> )
 ##
-##  A pre-catn-group morphism 
-##
-DeclareRepresentation( "IsHigherDimensionalMappingRep", 
-    IsHigherDimensionalMapping and IsAttributeStoringRep,
-    [ "Source", "Range", "ListOfHomomorphisms", "HigherDimension" ] );
 DeclareAttribute( "ListOfHomomorphisms", IsHigherDimensionalMapping );
 DeclareOperation( "MakeHigherDimensionalMapping",
     [ IsHigherDimensionalGroup, IsHigherDimensionalGroup, IsList ] );

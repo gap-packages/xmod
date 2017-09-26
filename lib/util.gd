@@ -21,6 +21,8 @@ DeclareOperation( "TrivialAction", [ IsGroup, IsGroup ] );
 ##############################################################################
 ##
 #R  IsAbelianModuleObj( <obj> )
+#V  IsAbelianModuleFamily 
+#T  IsAbelianModuleType 
 #P  IsAbelianModule( <obj> )
 #A  AbelianModuleGroup( <obj> )
 #A  AbelianModuleAction( <obj> )
@@ -30,7 +32,12 @@ DeclareOperation( "TrivialAction", [ IsGroup, IsGroup ] );
 DeclareRepresentation( "IsAbelianModuleObj", 
   IsObject and IsAttributeStoringRep,
     [ "AbelianModuleGroup", "AbelianModuleAction" ] );
-DeclareProperty( "IsAbelianModule", IsObject );
+DeclareProperty( "IsAbelianModule", IsObject ); 
+BindGlobal( "IsAbelianModuleFamily", 
+            NewFamily( "IsAbelianModuleFamily", 
+            IsGroup, IsGroupHomomorphism ) ); 
+BindGlobal( "IsAbelianModuleType", 
+            NewType( IsAbelianModuleFamily, IsAbelianModuleObj ) ); 
 DeclareAttribute( "AbelianModuleGroup", IsAbelianModule );
 DeclareAttribute( "AbelianModuleAction", IsAbelianModule );
 DeclareOperation( "AbelianModuleObject", [ IsGroup, IsGroupHomomorphism ] ); 
