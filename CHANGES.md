@@ -31,7 +31,7 @@
               and the inclusion SL25.C2 -> GL25 using the matrix groups 
               (construction worked OK with isomorphic perm groups). 
 
-## 2.61 -> 2.62 (26/09/2017) 
+## 2.61 -> 2.63 (26/09/2017) 
 
  * (26/09/17) added a number of Types and modified Objectify statements 
               removed Up2DimensionalMappingObj
