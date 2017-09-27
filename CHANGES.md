@@ -2,7 +2,6 @@
 
 ## Problems and ToDos: 
 
- * (26/09/17) split 06-isoclinic.tst into a .tst and .xtst files 
  * (30/08/17) the problem with DiscreteNormalPreXModWithObjects is that 
               it is not possible to crfeate arrows in AS0 because 
               \in( AS0, an automorphism of S) fails - that \in problem again! 
@@ -30,6 +29,10 @@
  * (15/02/12) failed to construct induced xmod from X = (SL25 -> SL25.C2) 
               and the inclusion SL25.C2 -> GL25 using the matrix groups 
               (construction worked OK with isomorphic perm groups). 
+
+## 2.63 -> 2.64 (27/09/2017) 
+
+ * (27/09/17) added tst/testextra.g, tst/allxmods.xtst, tst/cat1mor.xtst 
 
 ## 2.61 -> 2.63 (26/09/2017) 
 
