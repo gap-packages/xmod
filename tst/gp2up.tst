@@ -5,10 +5,11 @@
 #Y  Copyright (C) 2001-2016, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
-#############################################################################
-
+gap> START_TEST( "XMod package: gp2up.tst" );
 gap> saved_infolevel_xmod := InfoLevel( InfoXMod );; 
 gap> SetInfoLevel( InfoXMod, 0 );;
+gap> saved_infolevel_groupoids := InfoLevel( InfoGroupoids );; 
+gap> SetInfoLevel( InfoGroupoids, 0 );;
 
 ## Chapter 5
 
@@ -126,7 +127,10 @@ gap> GeneratorsOfMonoid( wtm3 );
 [ Transformation( [ 2, 3, 1, 5, 6, 4, 8, 9, 7 ] ), 
   Transformation( [ 4, 6, 5, 1, 3, 2, 7, 9, 8 ] ), 
   Transformation( [ 7, 7, 7, 7, 7, 7, 7, 7, 7 ] ) ]
+
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
+gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 
+gap> STOP_TEST( "gp2up.tst", 10000 );
 
 #############################################################################
 ##

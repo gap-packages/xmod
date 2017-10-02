@@ -5,10 +5,23 @@
 #Y  Copyright (C) 2001-2016, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
-#############################################################################
-
+gap> START_TEST( "XMod package: util.tst" );
 gap> saved_infolevel_xmod := InfoLevel( InfoXMod );; 
 gap> SetInfoLevel( InfoXMod, 0 );;
+
+## make independent if gp2ind.tst 
+gap> b1 := (11,12,13,14,15,16,17,18);; 
+gap> b2 := (12,18)(13,17)(14,16);;
+gap> d16 := Group( b1, b2 );;
+gap> SetName( d16, "d16" ); 
+gap> d8 := Subgroup( d16, [ b1^2, b2 ] );; 
+gap> SetName( d8, "d8" ); 
+gap> c4 := Subgroup( d8, [ b1^2 ] );; 
+gap> SetName( c4, "c4" ); 
+gap> Y16 := XModByNormalSubgroup( d16, d8 );;                   
+gap> Y8 := SubXMod( Y16, c4, d8 );; 
+gap> inc8 := InclusionMorphism2DimensionalDomains( Y16, Y8 );; 
+gap> incd8 := RangeHom( inc8 );;
 
 ## Chapter 10
 
@@ -62,6 +75,9 @@ Crossed module [k4a->s3a] :-
   (1,2) --> { source gens --> [ (6,8)(7,9), (6,7)(8,9) ] }
   (2,3) --> { source gens --> [ (6,7)(8,9), (6,9)(7,8) ] }
   These 2 automorphisms generate the group of automorphisms.
+
+gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
+gap> STOP_TEST( "util.tst", 10000 );
 
 #############################################################################
 ##

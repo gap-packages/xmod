@@ -5,14 +5,15 @@
 #Y  Copyright (C) 2001-2017, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
-#############################################################################
-
+gap> START_TEST( "XMod package: gp2obj.tst" );
 gap> saved_infolevel_xmod := InfoLevel( InfoXMod );; 
 gap> SetInfoLevel( InfoXMod, 0 );
+gap> saved_infolevel_groupoids := InfoLevel( InfoGroupoids );; 
+gap> SetInfoLevel( InfoGroupoids, 0 );;
 
 ## Chapter 2,  Section 2.1.3
 gap> c5 := Group( (5,6,7,8,9) );;
-gap> SetName( c5, "c5" );;
+gap> SetName( c5, "c5" );
 gap> X1 := XModByAutomorphismGroup( c5 );
 [c5->PAut(c5)]
 gap> Display(X1);
@@ -172,8 +173,7 @@ gap> t2 := GroupHomomorphismByImages( G2, d12, gensG2,
 gap> h2 := GroupHomomorphismByImages( G2, d12, gensG2,
 >           [ a1*a2*a3, a0, a0, a2*a3, a0, a0, a3^2 ] );;                   
 gap> e2 := GroupHomomorphismByImages( d12, G2, [a1,a2,a3],
->        [ G2.1*G2.2*G2.4*G2.6^2, G2.3*G2.4*G2.6^2*G2.7, G2.6*G2.7^2 ] );
-[ f1, f2, f3 ] -> [ f1*f2*f4*f6^2, f3*f4*f6^2*f7, f6*f7^2 ]
+>        [ G2.1*G2.2*G2.4*G2.6^2, G2.3*G2.4*G2.6^2*G2.7, G2.6*G2.7^2 ] );;
 gap> C2 := PreCat1GroupByTailHeadEmbedding( t2, h2, e2 );
 [G2=>d12]
 gap> IsCat1Group( C2 );
@@ -269,8 +269,9 @@ gap> IdGroup( X2 );
 gap> StructureDescription( C2 );
 [ "(S3 x D24) : C2", "D12" ]
 
-
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
+gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 
+gap> STOP_TEST( "gp2obj.tst", 10000 );
 
 #############################################################################
 ##

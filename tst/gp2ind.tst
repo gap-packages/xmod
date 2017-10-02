@@ -5,10 +5,21 @@
 #Y  Copyright (C) 2001-2017, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
-#############################################################################
-
+##
+gap> START_TEST( "XMod package: gp2ind.tst" );
 gap> saved_infolevel_xmod := InfoLevel( InfoXMod );; 
 gap> SetInfoLevel( InfoXMod, 0 );;
+gap> saved_infolevel_groupoids := InfoLevel( InfoGroupoids );; 
+gap> SetInfoLevel( InfoGroupoids, 0 );;
+
+##  make independent of gp2obj.tst  
+gap> s4 := Group( (1,2), (2,3), (3,4) );; 
+gap> a4 := Subgroup( s4, [ (1,2,3), (2,3,4) ] );; 
+gap> SetName(s4,"s4");  SetName(a4,"a4"); 
+gap> b1 := (11,12,13,14,15,16,17,18);; 
+gap> b2 := (12,18)(13,17)(14,16);;
+gap> d16 := Group( b1, b2 );;
+gap> SetName( d16, "d16" ); 
 
 ## Chapter 7
 
@@ -66,6 +77,8 @@ gap> StructureDescription( indXs3c );
 [ "GL(2,3)", "S4" ]
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
+gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 
+gap> STOP_TEST( "gp2ind.tst", 10000 );
 
 #############################################################################
 ##

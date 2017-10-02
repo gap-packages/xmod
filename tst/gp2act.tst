@@ -5,10 +5,26 @@
 #Y  Copyright (C) 2001-2016, Chris Wensley, et al
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
-#############################################################################
-
+gap> START_TEST( "XMod package: gp2act.tst" );
 gap> saved_infolevel_xmod := InfoLevel( InfoXMod );; 
 gap> SetInfoLevel( InfoXMod, 0 );;
+gap> saved_infolevel_groupoids := InfoLevel( InfoGroupoids );; 
+gap> SetInfoLevel( InfoGroupoids, 0 );;
+
+## make independent of gp2up.tst 
+gap> g18 := Group( (1,2,3), (4,5,6), (2,3)(5,6) );;
+gap> SetName( g18, "g18" );
+gap> gen18 := GeneratorsOfGroup( g18 );;
+gap> g1 := gen18[1];;  g2 := gen18[2];;  g3 := gen18[3];;
+gap> s3 := Subgroup( g18, gen18{[2..3]} );;
+gap> SetName( s3, "s3" );
+gap> t := GroupHomomorphismByImages( g18, s3, gen18, [g2,g2,g3] );;
+gap> h := GroupHomomorphismByImages( g18, s3, gen18, [(),g2,g3] );;
+gap> e := GroupHomomorphismByImages( s3, g18, [g2,g3], [g2,g3] );;
+gap> C3 := Cat1Group( t, h, e );;
+gap> SetName( Kernel(t), "c3" );;
+gap> X3 := XModOfCat1Group( C3 );;
+
 
 ## Chapter 6
 
@@ -136,7 +152,10 @@ gap> IsInjective( IMX3 );
 true
 gap> ZX3 := XModCentre( X3 ); 
 [Group( () )->Group( () )]
+
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
+gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 
+gap> STOP_TEST( "gp2act.tst", 10000 );
 
 #############################################################################
 ##

@@ -5,8 +5,7 @@
 #Y  Copyright (C) 2017, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
-#############################################################################
-
+gap> START_TEST( "XMod package: coprod.tst" );
 gap> saved_infolevel_xmod := InfoLevel( InfoXMod );; 
 gap> SetInfoLevel( InfoXMod, 1 );;
 gap> saved_infolevel_groupoids := InfoLevel( InfoGroupoids );; 
@@ -113,6 +112,7 @@ gap> copZY := CoproductXMod( Z8, Y8 );;
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 
+gap> STOP_TEST( "coprod.tst", 10000 );
 
 #############################################################################
 ##

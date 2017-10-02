@@ -13,9 +13,9 @@ TestXMod := function( pkgname )
     pkgdir := DirectoriesPackageLibrary( pkgname, "tst" );
     # Arrange chapters as required
     testfiles := 
-        [ "01-gp2obj.tst", "02-gp2map.tst", "03-gp2up.tst", "04-gp2act.tst", 
-          "05-gp2ind.tst", "06-isoclinic.tst", "07-gp3objmap.tst", 
-          "08-gpd2obj.tst", "09-util.tst"        ##, 
+        [ "gp2obj.tst", "gp2map.tst",    "gp2up.tst",     "gp2act.tst", 
+          "gp2ind.tst", "isoclinic.tst", "gp3objmap.tst", "gpd2obj.tst", 
+          "util.tst"    ##, 
           ## "10-coprod.tst", "11-gpnobjmap.tst" 
         ];
     testresult := true;

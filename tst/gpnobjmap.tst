@@ -5,10 +5,14 @@
 #Y  Copyright (C) 2001-2017, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
-#############################################################################
+gap> START_TEST( "XMod package: gpnobjmap.tst" );
+gap> saved_infolevel_xmod := InfoLevel( InfoXMod );; 
+gap> SetInfoLevel( InfoXMod, 0 );;
+gap> saved_infolevel_groupoids := InfoLevel( InfoGroupoids );; 
+gap> SetInfoLevel( InfoGroupoids, 0 );;
 
-gap> s3 := SmallGroup(6,1);;
-gap> homs := AllHomomorphisms(s3,s3);;
+gap> s3 := SmallGroup( 6, 1 );;
+gap> homs := AllHomomorphisms( s3, s3 );;
 gap> idem := Filtered( homs, i -> CompositionMapping(i,i) = i );
 [ [ f1, f2 ] -> [ <identity> of ..., <identity> of ... ],
   [ f1, f2 ] -> [ f1, <identity> of ... ],
@@ -22,7 +26,6 @@ gap> CC12 := CatnGroup( [ pc1, pc2 ] );
 generating (pre-)cat1-groups:
 1 : [Group( [ f1, f2 ] )=>Group( [ <identity> of ..., <identity> of ... ] )]
 2 : [Group( [ f1, f2 ] )=>Group( [ f1, <identity> of ... ] )]
-
 gap> HigherDimension( CC12 );
 3
 
@@ -197,6 +200,10 @@ Morphism of pre-cat3-groups :-
 
 gap> IsBijective( idCC233 );
 true
+
+gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
+gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 
+gap> STOP_TEST( "gpnobjmap.tst", 10000 );
 
 #############################################################################
 ##

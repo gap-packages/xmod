@@ -30,8 +30,9 @@
               and the inclusion SL25.C2 -> GL25 using the matrix groups 
               (construction worked OK with isomorphic perm groups). 
 
-## 2.63 -> 2.64 (27/09/2017) 
+## 2.63 -> 2.64 (02/10/2017) 
 
+ * (01/10/17) renamed test files and made them independent 
  * (27/09/17) added tst/testextra.g, tst/allxmods.xtst, tst/cat1mor.xtst 
 
 ## 2.61 -> 2.63 (26/09/2017) 
