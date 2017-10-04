@@ -143,6 +143,14 @@ and range <M>R</M> of <M>\partial</M>, the boundary <C>Boundary(X0)</C>;
 </ManSection>
 
 <ManSection>
+   <Oper Name="ImageElmXModAction"
+         Arg="X0, s, r" />
+<Description>
+This function returns the element <M>s^r</M> given by <C>XModAction(X0)</C>. 
+</Description>
+</ManSection>
+
+<ManSection>
    <Attr Name="Size"
          Arg="X0" />
    <Attr Name="Name"
@@ -193,6 +201,8 @@ gap> ext := ExternalSetXMod( X1 );
 <xset:[ (), (5,6,7,8,9), (5,7,9,6,8), (5,8,6,9,7), (5,9,8,7,6) ]>
 gap> Orbits( ext );
 [ [ () ], [ (5,6,7,8,9), (5,7,9,6,8), (5,9,8,7,6), (5,8,6,9,7) ] ]
+gap> ImageElmXModAction( X1, (5,6,7,8,9), (1,2,3,4) );
+(5,7,9,6,8)
 gap> RepresentationsOfObject( X1 );
 [ "IsComponentObjectRep", "IsAttributeStoringRep", "IsPreXModObj" ]
 gap> KnownAttributesOfObject( X1);

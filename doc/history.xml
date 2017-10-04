@@ -204,7 +204,7 @@ Speed up the calculation of Whitehead groups.
 Add more functions for <C>3dObjects</C> and implement <C>cat2-groups</C>.
 </Item>
 <Item> 
-Improve interaction with the package <Package>Gpd</Package> 
+Improve interaction with the package <Package>groupoids</Package> 
 implementing the group groupoid version of a crossed module, 
 and adding more functions for crossed modules of groupoids. 
 </Item>

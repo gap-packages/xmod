@@ -1,3 +1,4 @@
+*.log
 /doc/chap*.html
 /doc/chap*.txt
 /doc/*.css
@@ -19,7 +20,10 @@
 /doc/*.toc
 /doc/manual.pdf
 /doc/bib.xml.bib
-/tst/test* 
+/tst/error*
+/tst/gp*.g
+/tst/iso*.g
+/tst/util.g
 
 /tmp/
 /gh-pages/

@@ -222,6 +222,20 @@ end );
 
 #############################################################################
 ##
+#M  ImageElmXModAction( <pxmod>, <r>, <s> )  pre-xmod module action of s on r
+##
+InstallMethod( ImageElmXModAction, "method for a precrossed module", true, 
+    [ Is2DimensionalDomain, IsObject, IsObject ], 0,
+function( PM, s, r ) 
+    if ( HasIsPreXModWithObjects(PM) and IsPreXModWithObjects(PM) ) then 
+        return ImageElm( ImageElm( XModAction(PM), r )![1], s ); 
+    else 
+        return ImageElm( ImageElm( XModAction(PM), r ), s ); 
+    fi; 
+end ); 
+
+#############################################################################
+##
 #M  ExternalSetXMod( <pxm> ) . . . . . . . source group as a range group set
 ##
 InstallMethod( ExternalSetXMod, "method for a precrossed module", true, 

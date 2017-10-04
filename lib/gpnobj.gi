@@ -298,7 +298,10 @@ function( gnd )
         L := GeneratingCat1Groups( gnd ); 
         Print( "generating (pre-)cat1-groups:\n" );
         for i in [1..n] do 
-            Print( i, " : ", L[i], "\n" );
+            Print( i, " : ", L[i] ); 
+            if ( i < n ) then 
+                Print( "\n" );
+            fi;
         od;   
     fi;
 end );

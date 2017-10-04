@@ -69,8 +69,9 @@ function( XM )
     Info( InfoXMod, 2, "using IsXMod from gpd2obj.gi" ); 
     bdy := Boundary( XM );
     act := XModAction( XM );
-    gensrc := Flat( GeneratorsOfGroupoid( Source( XM ) ) );
-    genrng := GeneratorsOfGroupoid( Range( XM ) );
+    gensrc := GeneratorsOfGroupoid( Source( XM ) );
+    genrng := GeneratorsOfGroupoid( Range( XM ) ); 
+##Error("here");
     for x2 in gensrc do
         for y2 in gensrc do
             Info( InfoXMod, 3, "x2,y2 = ", x2, ",  ", y2 ); 
@@ -142,15 +143,8 @@ function( R, gpS )
             Error( "unexpected generating element in source of xmod" ); 
         fi; 
     od; 
-##?? change to generators + images 
-    imobs := List( obs, o -> 0 ); 
-    rays := List( obs, o -> idS ); 
-    imhom := List( [1..ngengpR], j -> imact[j] ); 
-    hom := GroupGeneralMappingByImagesNC( gpR, AS, gengpR, imhom); 
-    SetIsMapping( hom, true ); 
-    action := GroupoidHomomorphism( R, AS0, genR, imact ); 
-Error("here");
-##    action := GroupoidHomomorphism( R, AS0, hom, imobs, rays ); 
+    imact := List( imact, a -> ArrowNC( true, a, 0, 0 ) ); 
+    action := GroupoidHomomorphismFromSinglePieceNC( R, AS0, genR, imact ); 
     P0 := PreXModWithObjectsObj( R!.objects, inc, action); 
     return P0; 
 end ); 

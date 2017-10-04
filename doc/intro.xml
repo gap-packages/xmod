@@ -150,7 +150,7 @@ Examples of these are inclusions of normal sub-crossed modules,
 and the inner morphism from a crossed module to its actor.
 <P/>
 The eighth part has some experimental functions for crossed modules 
-of groupoids, interacting with the package <Package>Gpd</Package>. 
+of groupoids, interacting with the package <Package>groupoids</Package>. 
 Much more work on this is needed. 
 <P/>
 Future plans include the implementation of <E>group-graphs</E>
@@ -164,7 +164,7 @@ The equivalent categories  <C>XMod</C>  (crossed modules) and
 <C>Cat1</C>  (cat1-groups) are also equivalent to  <C>GpGpd</C>, 
 the subcategory of group objects in the category <C>Gpd</C> of groupoids.
 Finite groupoids have been implemented in Emma Moore's package 
-<Package>Gpd</Package> <Cite Key="M1"/> 
+<Package>groupoids</Package> <Cite Key="M1"/> 
 for groupoids and crossed resolutions. 
 <P/>
 <Index Key="InfoXMod"><C>InfoXMod</C></Index>
@@ -210,7 +210,7 @@ Additional information can be found on the
 <URL>http://pages.bangor.ac.uk/~mas023/chda/intro.html</URL>. 
 <P/> 
 This version 2.61 had to be released in a hurry when required package 
-<Package>Gpd</Package> was renamed as <Package>groupoids</Package>. 
+<Package>groupoids</Package> was renamed as <Package>groupoids</Package>. 
 As a result some functions for crossed squares and cat2-groups, 
 still under development, had to be temporarily removed, 
 and two test files had to be removed from the list of files to be tested. 

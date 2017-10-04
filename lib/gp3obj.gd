@@ -232,6 +232,12 @@ DeclareProperty( "IsIdentityCat2Group", IsCat2Group );
 
 #############################################################################
 ##
+#A  ElementsRelationsForSemidirectProduct( <G> ) 
+##
+DeclareAttribute( "ElementsRelationsForSemidirectProduct", IsGroup );
+
+#############################################################################
+##
 #F  PreCat2Group( <arg> ) 
 #0  PreCat2GroupByPreCat1Groups( <first>, <second> )
 ##
@@ -268,7 +274,8 @@ DeclareAttribute( "DirectProductHigherDimensionalInfo",
 
 #############################################################################
 ##
-#A  NormalSubCrossedSquares( <XS> } #A NormalSubXCat2Groups( <C1G> }
+#A  NormalSubCrossedSquares( <XS> } 
+#A  NormalSubXCat2Groups( <C1G> }
 ##
 DeclareAttribute( "NormalSubCrossedSquares", IsCrossedSquare ); 
 DeclareAttribute( "NormalSubCat2Groups", IsCat2Group );

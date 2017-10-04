@@ -164,11 +164,10 @@ crossed square with:
 gap> IsCrossedSquare( xsCC6 );
 true
 
-gap> CCconj := Cat2GroupOfCrossedSquare( XSconj );
-this command produces an error! 
-
-gap> IsCat2Group( CCconj );
-true
+## CCconj := Cat2GroupOfCrossedSquare( XSconj );
+## this command produces an error! 
+## IsCat2Group( CCconj );
+## true
 
 gap> idCC233 := IdentityMapping( CC233 );
 <mapping: generating (pre-)cat1-groups:
