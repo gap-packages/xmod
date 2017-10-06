@@ -7,9 +7,9 @@
     <name><first>Frank</first><last>Lübeck</last></name>
     <name><first>Max</first><last>Neunhöffer</last></name>
   </author>
-  <title><C>GAPDoc (Version 1.5.1)</C></title>
+  <title><C>GAPDoc (version 1.6)</C></title>
   <organization>RWTH Aachen</organization>
-  <year>2012</year>
+  <year>2017</year>
   <other type="note">
     GAP package, 
     <URL>http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/index.html</URL>
@@ -20,10 +20,13 @@
   <author>
     <name><first>Max</first><last>Horn</last></name>
   </author>
-  <title><C>GitHubPagesForGAP - Template for easily using GitHub Pages within GAP packages (Version 0.1)</C></title>
-  <year>2014</year>
+  <title>
+    <C>GitHubPagesForGAP - a GitHub Pages generator for GAP packages</C> 
+  </title>
+  <year>2017</year>
+  <volume>0.2</volume> 
   <other type="note">
-    GAP package, <URL>https://github.com/fingolfin/GitHubPagesForGAP/</URL>
+    GAP package, <URL>https://gap-system.github.io/GitHubPagesForGAP/</URL>
   </other>
 </manual></entry>
 
@@ -135,9 +138,8 @@
     <name><first>R.</first><last>Brown</last></name>
     <name><first>C. D.</first><last>Wensley</last></name>
   </author>  
-  <title>Computing crossed modules induced by an 
-                      inclusion of a normal subgroup, 
-                      with applications to homotopy <M>2</M>-types</title>
+  <title>Computing crossed modules induced by an inclusion of a normal subgroup,  
+with applications to homotopy <M>2</M>-types</title>
   <journal>Theory and Applications of Categories</journal>
   <year>1996</year>
   <volume>2</volume>

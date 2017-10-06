@@ -11,9 +11,9 @@ Experimental functions for crossed squares and cat2-groups are now included.
 ## Distribution
 
  * The 'XMod' package is distributed with the accepted GAP packages, see: 
-     <http://www.gap-system.org/Packages/xmod.html>
+     <https://www.gap-system.org/Packages/xmod.html>
  * It may also be obtained from the GitHub repository at:
-     <http://gap-packages.github.io/xmod/> 
+     <https://gap-packages.github.io/xmod/> 
 
 ## Copyright
 
