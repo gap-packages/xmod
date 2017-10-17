@@ -71,7 +71,6 @@ function( XM )
     act := XModAction( XM );
     gensrc := GeneratorsOfGroupoid( Source( XM ) );
     genrng := GeneratorsOfGroupoid( Range( XM ) ); 
-##Error("here");
     for x2 in gensrc do
         for y2 in gensrc do
             Info( InfoXMod, 3, "x2,y2 = ", x2, ",  ", y2 ); 
@@ -99,17 +98,18 @@ InstallMethod( DiscreteNormalPreXModWithObjects,
     [ IsSinglePiece, IsGroup ], 0,
 function( R, gpS )
 
-    local  gpR, obs, ro, nobs, S, ok, inc, AR, AS, idS, AS0, gengpR, gengpS, 
-           ngengpR, genR, lenR, igpR, imact, c, i, g, x, imgengpS, h, head, 
-           pos, imobs, rays, imhom, hom, action, P0; 
+    local  gpR, obs, ro, nobs, imobs, idgpS, S, ok, inc, AR, AS, idS, 
+           AS0, conj, action, P0; 
 
     gpR := R!.magma; 
     obs := R!.objects; 
     ro := obs[1]; 
     nobs := Length( obs ); 
+    imobs := List( obs, o -> 0 ); 
     if not IsSubgroup( gpR, gpS ) then 
         Error( "gpS not a subgroup of the root group gpR of gpd" ); 
     fi; 
+    idgpS := IdentityMapping( gpS ); 
     S := DiscreteSubgroupoid( R, List( obs, o -> gpS ), obs ); 
     ok := IsHomogeneousDiscreteGroupoid( S );
     inc := InclusionMappingGroupoids( R, S ); 
@@ -117,35 +117,12 @@ function( R, gpS )
     AS := AutomorphismGroupOfGroupoid( S ); 
     idS := One( AS ); 
     AS0 := DomainWithSingleObject( AS, 0 ); 
-    gengpR := GeneratorsOfGroup( gpR ); 
-    gengpS := GeneratorsOfGroup( gpS ); 
-    ngengpR := Length( gengpR );
-    genR := GeneratorsOfGroupoid( R ); 
-    lenR := Length( genR ); 
-    igpR := One( gpR ); 
-    imact := ListWithIdenticalEntries( lenR, 0 ); 
-    for i in [1..lenR] do 
-        g := genR[i]; 
-        if ( g![2] = g![3] ) then  ## loop generator 
-            c := g![1]; 
-            imgengpS := List( gengpS, x -> x^c ); 
-            h := GroupHomomorphismByImages( gpS, gpS, gengpS, imgengpS ); 
-            imact[i] := GroupoidAutomorphismByGroupAutos( S,  
-                            ListWithIdenticalEntries( nobs, h ) ); 
-        elif ( g![1] = igpR ) then  ## ray generator
-            head := g![3]; 
-            pos := Position( obs, head ); 
-            imobs := ShallowCopy( obs ); 
-            imobs[1] := head; 
-            imobs[pos] := ro; 
-            imact[i] := GroupoidAutomorphismByObjectPerm( S, imobs ); 
-        else 
-            Error( "unexpected generating element in source of xmod" ); 
-        fi; 
-    od; 
-    imact := List( imact, a -> ArrowNC( true, a, 0, 0 ) ); 
-    action := GroupoidHomomorphismFromSinglePieceNC( R, AS0, genR, imact ); 
-    P0 := PreXModWithObjectsObj( R!.objects, inc, action); 
+    conj := function(a)
+                return ArrowNC( true, GroupoidInnerAutomorphism(R,S,a), 0, 0 ); 
+            end;
+    action := MappingWithObjectsByFunction( R, AS0, conj, imobs ); 
+    SetName( Range(action), "Aut(SX0)" ); 
+    P0 := PreXModWithObjectsObj( obs, inc, action); 
     return P0; 
 end ); 
 

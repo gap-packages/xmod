@@ -63,8 +63,8 @@ gap> r := Arrow( Ga4, (1,3,4), -7, -8 );
 [(1,3,4) : -7 -> -8]
 gap> s := Arrow( SX0, (1,3)(2,4), -8, -8 ); 
 [(1,3)(2,4) : -8 -> -8]
-gap> ImageElmXModAction( PX0, s, r );
-[(1,2)(3,4) : -9 -> -9]
+gap> ims := ImageElmXModAction( PX0, s, r );
+[(1,4)(2,3) : -7 -> -7]
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 

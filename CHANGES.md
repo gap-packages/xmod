@@ -2,8 +2,9 @@
 
 ## Problems and ToDos: 
 
+ * (13/10/17) need more examples in 2.1, e.g. DirectProductOp (+Proj,Embed) 
  * (30/08/17) the problem with DiscreteNormalPreXModWithObjects is that 
-              it is not possible to crfeate arrows in AS0 because 
+              it is not possible to create arrows in AS0 because 
               \in( AS0, an automorphism of S) fails - that \in problem again! 
  * (07/08/17) coprod.tst and gpnobjmap.tst need to work with new groupoids 
  * (22/07/17) X4 (etc) is a HigherDimensionalDomain but not a 
@@ -30,10 +31,11 @@
               and the inclusion SL25.C2 -> GL25 using the matrix groups 
               (construction worked OK with isomorphic perm groups). 
 
-## 2.63 -> 2.64 (04/10/2017) 
+## 2.63 -> 2.64 (17/10/2017) 
 
+ * (17/10/17) ImageElmXModAction now working for xmods of groupoids 
  * (04/10/17) added operation ImageElmXModAction 
- * (04/10/17) DiscreteNormalPreXModWithObjects now working again 
+ * (04/10/17) DiscreteNormalPreXModWithObjects now working again  
  * (01/10/17) renamed test files and made them independent 
  * (27/09/17) added tst/testextra.g, tst/allxmods.xtst, tst/cat1mor.xtst 
 

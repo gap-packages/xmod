@@ -488,7 +488,7 @@ function( gp, nn, kk, range )
         if not ok then 
             Error( "iso/res not bijective in CooectPartsAlreadyDone" ); 
         fi;
-        mor := IsomorphismByIsomorphisms( Cj, iso, res ); 
+        mor := IsomorphismByIsomorphisms( Cj, [ iso, res ] ); 
         C1[j] := Range( mor ); 
     od; 
     return C1; 

@@ -64,8 +64,8 @@ DeclareRepresentation( "IsPreXModWithObjectsObj",
 ## 
 #O  PreXModWithObjectsObj( <obs>, <bdy>, <act> )  . . for obs, bdy and action 
 ## 
-##  ?? should require IsGroupoidHomomorphism, but at present 
-##  ?? HomomorphismByUnion(NC) does not return such! 
+#?  should require IsGroupoidHomomorphism, but at present 
+#?  HomomorphismByUnion(NC) does not return such! 
 ##  
 DeclareOperation( "PreXModWithObjectsObj",
     [ IsHomogeneousList, IsGeneralMappingWithObjects, 

@@ -1535,7 +1535,7 @@ InstallGlobalFunction( SmallerDegreePerm2DimensionalGroup, function( obj )
         rng := Range( obj );
         sigma := SmallerDegreePermutationRepresentation( src );
         rho := SmallerDegreePermutationRepresentation( rng );
-        mor := IsomorphismByIsomorphisms( obj, sigma, rho );
+        mor := IsomorphismByIsomorphisms( obj, [ sigma, rho ] );
         return mor;
     fi;
     # alternatives not allowed
@@ -1567,7 +1567,7 @@ function( X0 )
         sigma := GeneralRestrictedMapping( bdy0, S0, S1 );
         rho := IdentityMapping( R );
         ok := IsBijective( sigma ) and IsBijective( rho );
-        return IsomorphismByIsomorphisms( X0, sigma, rho );
+        return IsomorphismByIsomorphisms( X0, [ sigma, rho ] );
     fi;
 end );
 

@@ -227,8 +227,12 @@ end );
 InstallMethod( ImageElmXModAction, "method for a precrossed module", true, 
     [ Is2DimensionalDomain, IsObject, IsObject ], 0,
 function( PM, s, r ) 
+
+    local actr; 
+
     if ( HasIsPreXModWithObjects(PM) and IsPreXModWithObjects(PM) ) then 
-        return ImageElm( ImageElm( XModAction(PM), r )![1], s ); 
+        actr := ImageElm( XModAction( PM ), r )![1]; 
+        return ImageElm( actr, s ); 
     else 
         return ImageElm( ImageElm( XModAction(PM), r ), s ); 
     fi; 
@@ -2156,7 +2160,7 @@ end );
 
 #############################################################################
 ##
-#M  DirectProductInfo( <obj> ) . . . . . . . . . . . . . . . . for 2d-objects
+#M  DirectProductInfo( <obj> ) . . . . . . . . . . . . . . . . . for 2d-objects
 #M  Coproduct2dInfo( <obj> ) . . . . . . . . . . . . . . . . . . for 2d-objects
 #M  DirectProductOp(  ) . . . . . . .  (bdy1 x bdy2) : (S1 x S2) --> (R1 x R2)
 ##
@@ -2196,7 +2200,7 @@ function( list, X1 )
         Error( "second argument should be first in first argument" );
     fi;
     Y1 := list[2]; 
-    #'#  first the source group 
+    ##  first the source group 
     Xsrc := Source( X1 );
     Ysrc := Source( Y1 );
     genXsrc := GeneratorsOfGroup( Xsrc );

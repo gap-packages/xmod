@@ -35,7 +35,7 @@ isoR := IsomorphismGroups( RV8,RX8);
 ok := IsBijective( isoR );
 isoS := IdentityMapping( SV8 );
 ok := IsBijective( isoS );
-mor := IsomorphismByIsomorphisms( V8, isoS, isoR );
+mor := IsomorphismByIsomorphisms( V8, [ isoS, isoR ] );
 W8 := Image( mor ); 
 
 level := InfoLevel( InfoXMod ); 

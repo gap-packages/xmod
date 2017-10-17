@@ -70,8 +70,8 @@ There are a variety of constructors for crossed modules:
          Arg="G A" />
    <Oper Name="XModByAbelianModule"
          Arg="abmod" />
-   <Oper Name="DirectProduct"
-         Arg="X1 X2" />
+   <Oper Name="DirectProductOp"
+         Arg="L X1" />
 <Description>
 The global function <C>XMod</C> implements one of the following
 standard constructions:
@@ -108,6 +108,12 @@ of two crossed modules has source  <M>S_1 \times S_2</M>,
 range  <M>R_1 \times R_2</M>  and boundary
 <M>\partial_1 \times \partial_2</M>,  with  <M>R_1,\ R_2</M>  acting
 trivially on  <M>S_2,\ S_1</M>  respectively.
+<P/> 
+Since <C>DirectProduct</C> is a global function which only accepts groups, 
+it is necessary to provide an "other method" for operation 
+<C>DirectProductOp</C> which, as usual, takes as parameters a list of 
+crossed modules, followed by the first of these: 
+<C>DirectProductOp([X1,X2],X1);</C>  
 </Item>
 </List>
 </Description>

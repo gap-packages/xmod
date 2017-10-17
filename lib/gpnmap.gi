@@ -253,8 +253,16 @@ function( obj )
     local idmaps;
     
     ## this works for catn-groups but should be extended to n-cubes 
-    idmaps := List( GeneratingCat1Groups( obj ), C -> IdentityMapping( C ) ); 
-    return PreCatnMorphismByMorphisms( obj, obj, idmaps );
+    if ( HasIsCrossedSquare( obj ) and IsCrossedSquare( obj ) ) then 
+        idmaps := [ IdentityMapping( Up2DimensionalGroup( obj ) ), 
+                    IdentityMapping( Left2DimensionalGroup( obj ) ), 
+                    IdentityMapping( Right2DimensionalGroup( obj ) ), 
+                    IdentityMapping( Down2DimensionalGroup( obj ) ) ]; 
+        return CrossedSquareMorphismByMorphisms( obj, obj, idmaps ); 
+    else 
+        idmaps := List( GeneratingCat1Groups( obj ), C -> IdentityMapping(C) ); 
+        return PreCatnMorphismByMorphisms( obj, obj, idmaps ); 
+    fi;
 end );
 
 ##############################################################################

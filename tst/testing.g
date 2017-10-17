@@ -29,7 +29,6 @@ TestXMod := function( pkgname )
     else
         Print("#I  Errors detected while testing package ", pkgname, "\n");
     fi; 
-    Print( "#I  tests 9, 10 and 11 currently disabled\n" ); 
 end;
 
 ##  Set the name of the package here
