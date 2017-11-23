@@ -40,8 +40,8 @@ gap> Orbits( ext );
 gap> Print( RepresentationsOfObject(X1), "\n" );
 [ "IsComponentObjectRep", "IsAttributeStoringRep", "IsPreXModObj" ]
 gap> Print( KnownAttributesOfObject(X1), "\n" );
-[ "Name", "Size", "Range", "Source", "IdGroup", "Boundary", "AutoGroup", 
-  "XModAction", "ExternalSetXMod" ]
+[ "Name", "Size", "Range", "Source", "IdGroup", "Boundary", "XModAction", 
+  "ExternalSetXMod" ]
 
 ## Section 2.2.2
 gap> s4 := Group( (1,2), (2,3), (3,4) );; 

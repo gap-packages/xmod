@@ -5,7 +5,7 @@
 #Y  Copyright (C) 2001-2017, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
-gap> START_TEST( "XMod package: coprod.tst" );
+gap> START_TEST( "XMod package: gp3objmap.tst" );
 gap> saved_infolevel_xmod := InfoLevel( InfoXMod );; 
 gap> SetInfoLevel( InfoXMod, 0 );;
 gap> saved_infolevel_groupoids := InfoLevel( InfoGroupoids );; 

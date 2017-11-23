@@ -34,6 +34,7 @@ DeclareOperation( "MakeAllCat1DataGroups", [ IsPosInt, IsPosInt, IsPosInt ] );
 #R  IsEndomorphismClassObj( <obj> )
 #P  IsEndomorphismClass( <cl> )
 #O  EndomorphismClassObj( <nat>, <iso>, <aut>, <conj> )
+#A  EndoClassAutoGroup( <class> )
 #A  EndoClassNaturalHom( <class> )
 #A  EndoClassIsomorphism( <class> )
 #A  EndoClassConjugators( <class> )
@@ -43,10 +44,11 @@ DeclareOperation( "MakeAllCat1DataGroups", [ IsPosInt, IsPosInt, IsPosInt ] );
 ##
 DeclareRepresentation( "IsEndomorphismClassObj",
     IsObject and IsAttributeStoringRep, [ "EndoClassNaturalHom", 
-    "EndoClassIsomorphism", "AutoGroup",  "EndoClassConjugators" ] );
+    "EndoClassIsomorphism", "EndoClassAutoGroup",  "EndoClassConjugators" ] );
 DeclareProperty( "IsEndomorphismClass", IsObject );
 DeclareOperation( "EndomorphismClassObj",
  [IsGroupHomomorphism, IsGroupHomomorphism, IsGroupOfAutomorphisms, IsList] );
+DeclareAttribute( "EndoClassAutoGroup", IsEndomorphismClassObj );
 DeclareAttribute( "EndoClassNaturalHom", IsEndomorphismClassObj );
 DeclareAttribute( "EndoClassIsomorphism", IsEndomorphismClassObj );
 DeclareAttribute( "EndoClassConjugators", IsEndomorphismClassObj );

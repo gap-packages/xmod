@@ -82,7 +82,6 @@ function( obs, bdy, act )
       Source, src,
       Range, rng,
       Boundary, bdy,
-      AutoGroup, aut,
       XModAction, act,
       Is2DimensionalDomain, true, 
       IsPreXModDomain, true );

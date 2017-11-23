@@ -54,7 +54,7 @@ function( X1, X2 )
     bdy2 := Boundary( X2 );
     act1 := XModAction( X1 ); 
     act2 := XModAction( X2 ); 
-    aut2 := AutoGroup( X2 );
+    aut2 := Range( act2 );
     imu := List( gen1, g -> Image( act2, Image( bdy1, g ) ) ); 
     mu := GroupHomomorphismByImages( S1, aut2, gen1, imu ); 
     sdp := SemidirectProduct( S1, mu, S2 ); 

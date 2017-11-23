@@ -725,8 +725,8 @@ InstallMethod( IsomorphismByIsomorphisms, "generic method for pre-xmods",
     true, [ IsPreXMod, IsList ], 0,
 function( PM, isos )
 
-    local Psrc, Prng, Pbdy, Paut, Pautgen, siso, smgi, sinv, riso, rmgi, rinv, 
-          Qsrc, Qrng, Qbdy, Qaut, Qautgen, ahom, Qact, QM, iso; 
+    local Psrc, Prng, Pbdy, Pact, Paut, Pautgen, siso, smgi, sinv, riso, 
+          rmgi, rinv, Qsrc, Qrng, Qbdy, Qaut, Qautgen, ahom, Qact, QM, iso; 
 
     Psrc := Source( PM ); 
     Prng := Range( PM );
@@ -744,12 +744,13 @@ function( PM, isos )
         return fail; 
     fi; 
     Qbdy := CompositionMapping( riso, Pbdy, sinv ); 
-    Paut := AutoGroup( PM );
+    Pact := XModAction( PM );
+    Paut := Range( Pact );
     Pautgen := GeneratorsOfGroup( Paut );
     Qautgen := List( Pautgen, a -> CompositionMapping( siso, a, sinv ) );
     Qaut := Group( Qautgen );
     ahom := GroupHomomorphismByImages( Paut, Qaut, Pautgen, Qautgen );
-    Qact := CompositionMapping( ahom, XModAction( PM ), rinv );
+    Qact := CompositionMapping( ahom, Pact, rinv );
     QM := PreXModByBoundaryAndAction( Qbdy, Qact );
     iso := PreXModMorphismByHoms( PM, QM, siso, riso ); 
     SetIsInjective( iso, true );

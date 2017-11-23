@@ -767,7 +767,7 @@ function( nat, iso, aut, conj )
       IsEndomorphismClass, true,
       EndoClassNaturalHom, nat,
       EndoClassIsomorphism, iso,
-      AutoGroup, aut,
+      EndoClassAutoGroup, aut,
       EndoClassConjugators, conj );
     return class;
 end );
@@ -786,7 +786,8 @@ function( class )
     Print( "isomorphism: " );
     ViewObj( EndoClassIsomorphism( class ) );
     Print( "\n" );
-    Print( "autogp gens: ", GeneratorsOfGroup( AutoGroup( class ) ), "\n" );
+    Print( "autogp gens: ", 
+           GeneratorsOfGroup( EndoClassAutoGroup( class ) ), "\n" );
     Print( "conjugators: ", EndoClassConjugators( class ), "\n" );
 end );
 
@@ -1008,7 +1009,7 @@ function( classes )
         c := classes[i];
         nat := EndoClassNaturalHom( c );
         iso := EndoClassIsomorphism( c );
-        aut := AutoGroup( c );
+        aut := EndoClassAutoGroup( c );
         conj := EndoClassConjugators( c );
         comp := CompositionMapping( iso, nat );
         R := Image( comp );
@@ -1064,7 +1065,7 @@ function( classes )
     for cl in classes do 
         nu := EndoClassNaturalHom( cl );
         theta := EndoClassIsomorphism( cl );
-        autQ := AutoGroup( cl );
+        autQ := EndoClassAutoGroup( cl );
         conj := EndoClassConjugators( cl ); 
         psi := CompositionMapping( theta, nu );
         Q := Image( psi ); 

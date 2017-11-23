@@ -33,9 +33,11 @@
               and the inclusion SL25.C2 -> GL25 using the matrix groups 
               (construction worked OK with isomorphic perm groups). 
 
-## 2.63 -> 2.64 (22/11/2017) 
+## 2.63 -> 2.64 (23/11/2017) 
 
- * (16/11/17) added Root2dGroup for prexmods with objects : not working!  
+ * (23/11/17) removed attribute AutoGroup (=Range(XModAction)) for xmods 
+ * (22/11/17) added SinglePieceXModWithObjects 
+ * (16/11/17) added Root2dGroup for prexmods with objects   
  * (17/10/17) ImageElmXModAction now working for xmods of groupoids 
  * (04/10/17) added operation ImageElmXModAction 
  * (04/10/17) DiscreteNormalPreXModWithObjects now working again  

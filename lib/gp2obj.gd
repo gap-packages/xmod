@@ -118,14 +118,12 @@ DeclareSynonym( "IsPcCat1Group", IsCat1Group and IsPc2DimensionalGroup );
 ##
 #O  PreXModObj( <bdy>, <act> )
 #A  Boundary( <PM> )
-#A  AutoGroup( <PM> )
 #A  XModAction( <PM> )
 #A  ExternalSetXMod( <PM> )
 #O  ImageElmXModAction( <PM>, <srcobj>, <rngobj> ) 
 ##
 DeclareOperation( "PreXModObj", [ IsGroupHomomorphism, IsGroupHomomorphism ] );
 DeclareAttribute( "Boundary", IsPreXMod );
-DeclareAttribute( "AutoGroup", IsPreXMod );
 DeclareAttribute( "XModAction", IsPreXMod );
 DeclareAttribute( "ExternalSetXMod", IsPreXMod ); 
 DeclareOperation( "ImageElmXModAction", 

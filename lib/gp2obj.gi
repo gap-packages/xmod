@@ -81,7 +81,8 @@ function( P )
             return false;
         fi;
     fi;
-    aut := AutoGroup( P );
+    act := XModAction( P );
+    aut := Range( act );
     # Check  X.aut  is a group of automorphisms  X.source -> X.source
     if not ( IsGroup( aut ) ) then
         Info( InfoXMod, 2,
@@ -99,7 +100,6 @@ function( P )
             return false;
         fi;
     fi;
-    act := XModAction( P );
     # Check  X.action: X.range -> X.aut
     if not ( ( Source( act ) = Xrng ) and ( Range( act ) = aut ) ) then
         Info( InfoXMod, 2,
@@ -201,7 +201,6 @@ function( bdy, act )
       Source, src,
       Range, rng,
       Boundary, bdy,
-      AutoGroup, aut,
       XModAction, act,
       IsPreXModDomain, true, 
       Is2DimensionalGroup, true );
@@ -378,7 +377,7 @@ function( g2d )
         Print( "  ",  List( gensrc, s -> Image( bdy, s ) ), "\n" );
         act := XModAction( g2d );
         imact := List( genrng, r -> Image( act, r ) );
-        aut := AutoGroup( g2d );
+        aut := Range( act );
         triv := ( aut = Group( InclusionMappingGroups( src, src ) ) );
         len := Length( genrng );
         if ( len = 0 ) then
@@ -1449,8 +1448,8 @@ function( PM, Ssrc, Srng )
     Psrc := Source( PM );
     Prng := Range( PM );
     Pbdy := Boundary( PM );
-    Paut := AutoGroup( PM );
     Pact := XModAction( PM );
+    Paut := Range( Pact );
     if not IsSubgroup( Psrc, Ssrc ) then
         Print( "Ssrc is not a subgroup of Psrc\n" );
         return fail;

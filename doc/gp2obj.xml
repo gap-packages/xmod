@@ -126,8 +126,6 @@ crossed modules, followed by the first of these:
          Arg="X0" />
    <Attr Name="Boundary"
          Arg="X0" />
-   <Attr Name="AutoGroup"
-         Arg="X0" />
    <Attr Name="XModAction"
          Arg="X0" />
 <Description>
@@ -139,12 +137,13 @@ a crossed module <C>X0</C>.
 and range <M>R</M> of <M>\partial</M>, the boundary <C>Boundary(X0)</C>;
 </Item>
 <Item>
-<C>AutoGroup(X0)</C> is a group of automorphisms of <M>S</M>;
-</Item>
-<Item>
-<C>XModAction(X0)</C> is a homomorphism from <M>R</M> to <C>AutoGroup(X0)</C>.
+<C>XModAction(X0)</C> is a homomorphism from <M>R</M> 
+to a group of automorphisms of <C>X0</C>.
 </Item>
 </List>
+<Index>AutoGroup</Index> 
+(Up until version 2.63 there was an additional attribute <C>AutoGroup</C>, 
+the range of <C>XModAction(X0)</C>.) 
 </Description>
 </ManSection>
 
@@ -212,8 +211,8 @@ gap> ImageElmXModAction( X1, (5,6,7,8,9), (1,2,3,4) );
 gap> RepresentationsOfObject( X1 );
 [ "IsComponentObjectRep", "IsAttributeStoringRep", "IsPreXModObj" ]
 gap> KnownAttributesOfObject( X1);
-[ "Name", "Size", "Range", "Source", "IdGroup", "Boundary", "AutoGroup", 
-  "XModAction", "ExternalSetXMod" ]
+[ "Name", "Size", "Range", "Source", "IdGroup", "Boundary", "XModAction", 
+  "ExternalSetXMod" ]
 ]]>
 </Example>
 

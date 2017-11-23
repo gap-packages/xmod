@@ -172,8 +172,8 @@ function( P )
         return false;
     fi;
     ## check the action of the diagonal
-    autu := AutoGroup( u );
-    autl := AutoGroup( l );
+    autu := Range( XModAction( u ) );
+    autl := Range( XModAction( l ) );
     if not ( autu = autl ) then
         Info( InfoXMod, 1, "Allow the case autu <> autl ?" );
         return false;

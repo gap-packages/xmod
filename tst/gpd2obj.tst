@@ -53,8 +53,7 @@ gap> KnownPropertiesOfObject( PX0 );
   "IsGeneratorsOfSemigroup", "IsPreXModDomain", "IsPerm2DimensionalGroup", 
   "IsPreXMod", "IsXMod", "IsPreXModWithObjects" ]
 gap> KnownAttributesOfObject( PX0 ); 
-[ "Name", "Range", "Source", "Boundary", "ObjectList", "AutoGroup", 
-  "XModAction" ]
+[ "Name", "Range", "Source", "Boundary", "ObjectList", "XModAction" ]
 gap> Size(PX0);
 [ 12, 108 ]
 gap> IsPermXMod(PX0);
