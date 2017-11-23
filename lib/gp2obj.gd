@@ -246,6 +246,7 @@ DeclareProperty( "IsEndomorphismPreCat1Group", IsPreCat1Group );
 #A  HeadMap( <PCG> )
 #A  TailMap( <PCG> )
 #A  RangeEmbedding( <PCG> )
+#A  SourceEmbedding( <PCG> )
 #A  KernelEmbedding( <C> )
 ##
 DeclareOperation( "PreCat1Obj",
@@ -253,6 +254,7 @@ DeclareOperation( "PreCat1Obj",
 DeclareAttribute( "HeadMap", IsPreCat1Group );
 DeclareAttribute( "TailMap", IsPreCat1Group );
 DeclareAttribute( "RangeEmbedding", IsPreCat1Group );
+DeclareAttribute( "SourceEmbedding", IsPreCat1Group );
 DeclareAttribute( "KernelEmbedding", IsPreCat1Group );
 
 ##  temporary measure to keep XModAlg working:

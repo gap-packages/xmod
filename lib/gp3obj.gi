@@ -42,6 +42,7 @@ end );
 ##############################################################################
 ##
 #M  IsCrossedPairing
+#M  CrossedPairingObj( [<src1>,<src2>],<rng>,<map> ) .. make a crossed pairing
 ##
 InstallMethod( IsCrossedPairing, "generic method for mappings", true, 
     [ IsGeneralMapping ], 0,
@@ -50,10 +51,6 @@ function( map )
              and HasCrossedPairingMap( map ) );
 end );
 
-##############################################################################
-##
-#M  CrossedPairingObj( [<src1>,<src2>],<rng>,<map> ) .. make a crossed pairing
-##
 InstallMethod( CrossedPairingObj, "for a general mapping", true,
     [ IsList, IsGroup, IsGeneralMapping ], 0,
 function( src, rng, map )
@@ -68,6 +65,14 @@ function( src, rng, map )
         IsCrossedPairing, true );
     return obj;
 end );
+
+InstallMethod( PrintObj, "method for a crossed pairing", true, 
+    [ IsCrossedPairing ], 0,
+function( h )
+    local map; 
+    map := CrossedPairingMap( h );
+    Print( "crossed pairing: ", Source(map), " -> ", Range(map), "\n" ); 
+end ); 
 
 ##############################################################################
 ##
@@ -179,7 +184,7 @@ function( P )
         Info( InfoXMod, 2, "diagonal not a pre-crossed module" );
         return false;
     fi;
-    ## compatible actions to be checked?
+    #? compatible actions to be checked?
     morud := PreXModMorphism( u, d, bl, br );
     morlr := PreXModMorphism( l, r, bu, bd );
     if not ( IsPreXModMorphism( morud ) and IsPreXModMorphism( morlr ) ) then
@@ -860,8 +865,8 @@ function( XS )
     right := Right2DimensionalGroup(XS);
      
     L := Source(up);
-    M := Source(right);
-    N := Range(left);
+    N := Range(up);
+    M := Source(down);
     P := Range(down);
     
     Info( InfoXMod, 4, "L = ", L );    
@@ -886,7 +891,7 @@ function( XS )
     e2NxL := Embedding( NxL, 2 ); 
     p1NxL := Projection( NxL, 1 );
     p2NxL := Projection( NxL, 2 );
-    PxM := SemidirectProduct(P,act_down,N);
+    PxM := SemidirectProduct(P,act_down,M);
     e1PxM := Embedding( PxM, 1 ); 
     e2PxM := Embedding( PxM, 2 ); 
     p1PxM := Projection( PxM, 1 ); 
@@ -900,7 +905,6 @@ function( XS )
         genPxN := [ Identity(PxM) ];
     fi;
     
-    Info( InfoXMod, 3, "PxM = ", PxM );    
     Info( InfoXMod, 3, "genPxM = ", genPxM );
     Info( InfoXMod, 3, "NxL = ", NxL );
     Info( InfoXMod, 3, "genNxL = ", genNxL );

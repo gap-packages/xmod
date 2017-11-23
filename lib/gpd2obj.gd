@@ -61,6 +61,30 @@ DeclareRepresentation( "IsPreXModWithObjectsObj",
     [ "objects", "boundary", "action" ] );
 
 #############################################################################
+##
+#T  PreXModWithObjectsType . . . . . . . . . . type for prexmods with objects
+#T  PreXModWithPiecesType  . . . . . type for unions of prexmods with objects
+##
+BindGlobal( "PreXModWithObjectsType", 
+            NewType( Family2DimensionalGroupWithObjects, 
+                     IsPreXModWithObjectsObj ) ); 
+BindGlobal( "PreXModWithPiecesType", 
+            NewType( Family2DimensionalGroupWithObjects, 
+                     IsPreXModWithObjectsObj and IsPiecesRep ) ); 
+
+############################################################################# 
+## 
+#A  Root2dGroup( <dwo> ) 
+## 
+DeclareAttribute( "Root2dGroup", Is2DimensionalDomainWithObjects ); 
+
+############################################################################# 
+## 
+#F  XModWithObjects( <args> )              
+## 
+DeclareGlobalFunction( "XModWithObjects" );
+
+#############################################################################
 ## 
 #O  PreXModWithObjectsObj( <obs>, <bdy>, <act> )  . . for obs, bdy and action 
 ## 
@@ -77,6 +101,14 @@ DeclareOperation( "PreXModWithObjectsObj",
 ##  
 DeclareOperation( "DiscreteNormalPreXModWithObjects",
     [ IsSinglePiece, IsGroup ] );
+
+#############################################################################
+##
+#O  SinglePiecePreXModWithObjects( <xmod>, <obs> ) .. for prexmod and objects
+#O  SinglePiecePreXModWithObjectsNC( <xmod>, <obs> )  for prexmod and objects
+##  
+DeclareOperation( "SinglePiecePreXModWithObjects", [ IsPreXMod, IsList ] );
+DeclareOperation( "SinglePiecePreXModWithObjectsNC", [ IsPreXMod, IsList ] );
 
 ############################################################################## 
 ## 

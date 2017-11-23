@@ -782,7 +782,7 @@ gap> ## check the number of groups of size 18
 gap> L18 := Cat1Select( 18 ); 
 Usage:  Cat1Select( size, gpnum, num );
 [ "D18", "C18", "C3 x S3", "(C3 x C3) : C2", "C6 x C3" ]
-gap> ## check the number of cat1-structrues on the fourth of these
+gap> ## check the number of cat1-structures on the fourth of these
 gap> Cat1Select( 18, 4 );
 Usage:  Cat1Select( size, gpnum, num );
 There are 4 cat1-structures for the group (C3 x C3) : C2.

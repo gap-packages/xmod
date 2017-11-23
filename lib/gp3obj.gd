@@ -89,7 +89,8 @@ DeclareRepresentation( "IsCrossedPairingObj",
     IsCrossedPairing and IsAttributeStoringRep,
     [ "Source", "Range", "CrossedPairingMap" ] ); 
 BindGlobal( "CrossedPairingFamily", 
-    NewFamily( "CrossedPairingFamily", IsList, IsGroup, IsGeneralMapping ) ); 
+    NewFamily( "CrossedPairingFamily", IsCrossedPairing, 
+               CanEasilySortElements, CanEasilySortElements ) ); 
 BindGlobal( "CrossedPairingType", 
     NewType( CrossedPairingFamily, IsCrossedPairingObj ) ); 
 DeclareOperation( "CrossedPairingObj", [ IsList, IsGroup, IsGeneralMapping ] );

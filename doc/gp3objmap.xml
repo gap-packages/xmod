@@ -609,7 +609,7 @@ satisfying the following axioms for all <M>1 \leqslant i \leqslant 2</M>,
 </Item>
 </List>
 <P/>
-Our third definition defines a cat<M>^2</M>-groups as a 
+Our third definition defines a cat<M>^2</M>-group as a 
 "cat<M>^1</M>-group of cat<M>^1</M>-groups". 
 A cat<M>^2</M>-group <M>\mathcal{C}</M> consists of two cat<M>^1</M>-groups 
 <M>\mathcal{C}_1 = (e_1;t_1,h_1 : G_1 \to R_1)</M> and 
@@ -658,8 +658,6 @@ true
    <Attr Name="CrossedSquareOfCat2Group"
          Arg="CC" />
 <Description>
-<E>These functions are temporarily disabled.</E>
-<P/>
 These functions provide the conversion from crossed square to cat2-group, 
 and conversely.  (They are the 3-dimensional equivalents of 
 <C>Cat1GroupOfXMod</C> and <C>XModOfCat1Group</C>.) 
@@ -672,8 +670,8 @@ gap> xsCC6 := CrossedSquareOfCat2Group( CC6 );
 crossed square with:
       up = [Group( () )->Group( [ (1,2) ] )]
     left = [Group( () )->Group( [ (), (3,4,5) ] )]
-    down = [Group( [ (), (3,4,5) ] )->Group( () )]
-   right = [Group( [ (1,2) ] )->Group( () )]
+    down = [Group( [ (), (3,4,5) ] ) -> Group( () )]
+   right = [Group( [ (1,2) ] ) -> Group( () )]
 
 ]]>
 </Example>
@@ -725,7 +723,7 @@ A cat<M>^n</M>-group  <M>\mathcal{C}</M> consists of <M>2^n</M> groups
 <M>G_A</M>, one for each subset  <M>A</M>  of  <M>[n]</M>, 
 and <M>3n</M> homomorphisms 
 <Display>
-t_{[n],i}, h_{[n],i} : G_{[n]} \to G_{n \setminus \{i\}},~ 
+t_{[n],i}, h_{[n],i} : G_{[n]} \to G_{[n] \setminus \{i\}},~ 
  e_{[n],i} : G_{[n] \setminus \{i\}} \to G_{[n]}, 
 </Display>
 satisfying the following axioms for all <M>1 \leqslant i \leqslant n</M>,}  

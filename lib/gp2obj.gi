@@ -47,14 +47,14 @@ end );
 
 #############################################################################
 ##
-#M  IsPreXMod    check that the first crossed module axiom holds
+#M  IsPreXMod . . . . . . . . check that the first crossed module axiom holds 
 ##
 InstallMethod( IsPreXMod, "generic method for 2d-group",
     true, [ Is2DimensionalGroup ], 0,
 function( P )
 
-    local Xsrc, Xrng, hom, a, aut, act, gensrc, ngsrc, genrng, ngrng, 
-           ssrc, x1, y1, z1, x2, y2, z2, w2;
+    local Xsrc, Xrng, bdy, a, aut, act, gensrc, ngsrc, genrng, ngrng, 
+          ssrc, x1, y1, z1, x2, y2, z2, w2;
 
     if not IsPreXModObj( P ) then
         return false;
@@ -66,16 +66,16 @@ function( P )
     gensrc := GeneratorsOfGroup( Xsrc );
     ngsrc := Length( gensrc );
     ssrc := Size( Xsrc );
-    hom := Boundary( P );
+    bdy := Boundary( P );
     # Check  P.boundary: P.source -> P.range
-    if not ( ( Source( hom ) = Xsrc ) and ( Range( hom ) = Xrng ) ) then
+    if not ( ( Source( bdy ) = Xsrc ) and ( Range( bdy ) = Xrng ) ) then
         Info( InfoXMod, 2,
               "Error: require  X.boundary : X.source -> X.range" );
         return false;
     fi;
-    # checking  IsHomomorphism(hom) gives cokernel error when Xsrc = [ ]
+    # checking  IsHomomorphism(bdy) gives cokernel error when Xsrc = [ ]
     if ( ssrc > 1 ) then
-        if not IsGroupHomomorphism( hom ) then
+        if not IsGroupHomomorphism( bdy ) then
             Info( InfoXMod, 2,
                   "Error:  the boundary map is NOT a homomorphism!" );
             return false;
@@ -116,16 +116,16 @@ function( P )
         fi;
     fi;
     Info( InfoXMod, 3,
-          "Checking  CM1) hom(x2^x1) = (hom(x2))^x1 " );
+          "Checking  CM1) bdy(x2^x1) = (bdy(x2))^x1 " );
     for x1 in genrng do
         for x2 in gensrc do
             # Print( "x1,x2 = ", x1, ",  ", x2, "\n" );
-            y1 := ( x2 ^ ( x1^act ) ) ^ hom;
-            z1 := ( x2 ^ hom ) ^ x1;
+            y1 := ( x2 ^ ( x1^act ) ) ^ bdy;
+            z1 := ( x2 ^ bdy ) ^ x1;
             if ( y1 <> z1 ) then
                 Info( InfoXMod, 3,
                     "CM1) fails at  x1 = ", x1, ",  x2 = ", x2, "\n",
-                    "  hom(x2^x1) = ", y1, "\n", "(hom(x2))^x1 = ", z1 );
+                    "  bdy(x2^x1) = ", y1, "\n", "(bdy(x2))^x1 = ", z1 );
                 return false;
             fi;
         od;
@@ -295,7 +295,7 @@ function( g2d )
         if IsGroupoid( Source( g2d ) ) then 
             Print( "\n->  " ); 
         else 
-            Print( "->" ); 
+            Print( " -> " ); 
         fi; 
         Print( Range( g2d ), "]" ); 
     elif ( HasIsPreCat1Domain( g2d ) and IsPreCat1Domain( g2d ) ) then 
@@ -303,7 +303,7 @@ function( g2d )
         if IsGroupoid( Source( g2d ) ) then 
             Print( "\n=>  " ); 
         else 
-            Print( "=>" ); 
+            Print( " => " ); 
         fi; 
         Print( Range( g2d ), "]" ); 
     else 
@@ -315,7 +315,8 @@ end );
 ##
 #F  Display( <g2d> ) . . . . . . . . . . . . . . print details of a 2d-group 
 ##
-InstallMethod( Display, "method for a 2d-group", true, [ Is2DimensionalGroup ], 20,
+InstallMethod( Display, "method for prexmods and precat2groups", true, 
+    [ Is2DimensionalGroup ], 20,
 function( g2d )
 
     local name, bdy, act, aut, len, i, ispar, src, rng, 
@@ -337,12 +338,14 @@ function( g2d )
         else
             Print( "\nPre-crossed module " );
         fi; 
-    else 
+    elif ( HasIsPreCat1Group( g2d ) and IsPreCat1Group( g2d ) ) then 
         if ( HasIsCat1Group( g2d ) and IsCat1Group( g2d ) ) then 
             Print( "\nCat1-group " );
         else
             Print( "\nPre-cat1-group " ); 
         fi; 
+    else 
+        Print( "WARNING: neither a PreXMod nor a PreCat1Group" ); 
     fi; 
     if HasName( g2d ) then 
         Print( Name(g2d), " :- \n" ); 
@@ -581,6 +584,44 @@ InstallMethod( \=, "generic method for pre-cat1-groups",
 function( C1, C2 ) 
     return ( ( TailMap(C1) = TailMap(C2) ) and ( HeadMap(C1) = HeadMap(C2) )
              and ( RangeEmbedding(C1) = RangeEmbedding(C2) ) );
+end );
+
+##############################################################################
+##
+#M  SourceEmbedding . . . . . . . . . . . . . . . . . . . for a pre-cat1-group
+##
+InstallMethod( SourceEmbedding, "for a pre-cat1-group", true,
+    [ IsPreCat1Group ], 0,
+function( C1G )
+
+    local G, spi, dpi, info, emb, pxm, mgi, sc, sx, src, rng; 
+
+    G := Source( C1G ); 
+    spi := HasSemidirectProductInfo( G ); 
+    dpi := HasDirectProductInfo( G );
+    if spi then 
+        info := SemidirectProductInfo( G ); 
+        emb := info!.embeddings[2]; 
+Print("case1: ", MappingGeneratorsImages(emb), "\n" );
+    elif dpi then 
+        info := DirectProductInfo( G ); 
+        emb := info!.embeddings[2];
+Print("case2: ", MappingGeneratorsImages(emb), "\n" );
+    else 
+        pxm := PreXModOfPreCat1Group( C1G ); 
+        sc := Source( C1G );
+        sx := Source( pxm );
+        if IsSubgroup( sc, sx ) then 
+            emb := InclusionMappingGroups( sc, sx ); 
+Print("case3: ", MappingGeneratorsImages(emb), "\n" );
+        else 
+            Error( "case still to be implemented" ); 
+        fi;
+    fi; 
+    src := Source( emb ); 
+    rng := ImagesSource( emb ); 
+    mgi := MappingGeneratorsImages( emb );
+    return GroupHomomorphismByImages( src, rng, mgi[1], mgi[2] ); 
 end );
 
 ##############################################################################
@@ -1197,6 +1238,13 @@ InstallGlobalFunction( XMod, function( arg )
     elif ( ( nargs = 2 ) and IsGroup( arg[1] ) and IsGroup( arg[2] )
       and IsSubgroup( arg[1], arg[2] ) and IsNormal( arg[1], arg[2] ) ) then
         return XModByNormalSubgroup( arg[1], arg[2] );
+
+    # groupoid and normal subgroup
+    elif ( ( nargs = 2 ) and IsGroupoid( arg[1] ) and IsGroup( arg[2] ) 
+      and IsDirectProductWithCompleteDigraphDomain( arg[1] ) 
+      and IsSubgroup( arg[1]!.magma, arg[2] ) 
+      and IsNormal( arg[1]!.magma, arg[2] ) ) then
+        return DiscreteNormalPreXModWithObjects( arg[1], arg[2] );
 
     # surjective homomorphism
     elif ( ( nargs = 1 ) and IsGroupHomomorphism( arg[1] )
@@ -1946,7 +1994,7 @@ function( C1G )
            imautgen, idkert, a, aut, act, phi, j, r, PM, Cek, Cer, name;
 
     if not ( IsPermPreCat1Group( C1G ) or IsPcPreCat1Group( C1G ) ) then
-        Print( "#W: should be a perm-Cat1Group or a pc-cat1\n" );
+        Print( "#W: should be a perm-cat1- or a pc-cat1-group\n" );
         return fail;
     fi;
     Csrc := Source( C1G );
@@ -2180,8 +2228,8 @@ function( obj )
                 projections := [ ] );
 end );
 
-##  (19/07/07) : allowed for case when one of Xsrc,Xrng,Ysrc,Yrng trivial ##
-##               using parameter list: spec(=[0,0,0,0] by default)        ##
+#?  (19/07/07) : allowed for case when one of Xsrc,Xrng,Ysrc,Yrng trivial ##
+#?               using parameter list: spec(=[0,0,0,0] by default)        ##
 
 InstallOtherMethod( DirectProductOp,
     "method for pre-crossed modules", true, [ IsList, IsPreXMod ], 0,
@@ -2372,15 +2420,26 @@ end );
 #M  Projection . . .  for direct products of (pre-)xmods and (pre-)cat1-groups
 ##
 InstallOtherMethod( Projection, "generic method for (pre-)xmods & (pre-)cat1s",
-    true, [ Is2DimensionalGroup and HasDirectProductInfo, IsPosInt ], 0,
+    true, [ Is2DimensionalGroup, IsPosInt ], 0,
 function( D, i )
-    local info, pS, pR, mor;
+    local G, info, pS, pR, mor;
 
-    info := DirectProductInfo( D );
+    G := Source( D ); 
+    if HasDirectProductInfo( G ) then 
+        info := DirectProductInfo( D ); 
+        if not ( i in [1,2] ) then 
+            Error( "only two projections available" ); 
+        fi; 
+    else 
+        info := SemidirectProductInfo( G ); 
+        if not ( i = 1 ) then 
+            Error( "only the first projection is available" ); 
+        fi; 
+    fi; 
     if IsBound( info!.projections[i] ) then
         return info!.projections[i];
     fi;
-    pS := Projection( Source( D ), i );
+    pS := Projection( G, i );
     pR := Projection( Range( D ), i );
     if IsPreXMod( D ) then
         mor := PreXModMorphism( info!.objects[i], D, pS, pR );

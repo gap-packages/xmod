@@ -2,6 +2,8 @@
 
 ## Problems and ToDos: 
 
+ * (30/10/17) there is no IsCrossedSquare method - and IsPreCrossedSquare 
+              makes no checks on tghe crossed pairing map
  * (13/10/17) need more examples in 2.1, e.g. DirectProductOp (+Proj,Embed) 
  * (30/08/17) the problem with DiscreteNormalPreXModWithObjects is that 
               it is not possible to create arrows in AS0 because 
@@ -31,8 +33,9 @@
               and the inclusion SL25.C2 -> GL25 using the matrix groups 
               (construction worked OK with isomorphic perm groups). 
 
-## 2.63 -> 2.64 (17/10/2017) 
+## 2.63 -> 2.64 (22/11/2017) 
 
+ * (16/11/17) added Root2dGroup for prexmods with objects : not working!  
  * (17/10/17) ImageElmXModAction now working for xmods of groupoids 
  * (04/10/17) added operation ImageElmXModAction 
  * (04/10/17) DiscreteNormalPreXModWithObjects now working again  
