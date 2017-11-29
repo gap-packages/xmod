@@ -859,6 +859,9 @@ function( XS )
           MxL, genMxL, relsMxL, genMxLform2, 
           autgen2, imautgen2, imautgen2form2, emb;
 
+    Print( "Warning: these conversion functions are still under development\n" ); 
+    return fail; 
+
     up := Up2DimensionalGroup(XS);
     left := Left2DimensionalGroup(XS);
     down := Down2DimensionalGroup(XS);

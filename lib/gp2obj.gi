@@ -1238,12 +1238,10 @@ InstallGlobalFunction( XMod, function( arg )
       and IsSubgroup( arg[1], arg[2] ) and IsNormal( arg[1], arg[2] ) ) then
         return XModByNormalSubgroup( arg[1], arg[2] );
 
-    # groupoid and normal subgroup
-    elif ( ( nargs = 2 ) and IsGroupoid( arg[1] ) and IsGroup( arg[2] ) 
-      and IsDirectProductWithCompleteDigraphDomain( arg[1] ) 
-      and IsSubgroup( arg[1]!.magma, arg[2] ) 
-      and IsNormal( arg[1]!.magma, arg[2] ) ) then
-        return DiscreteNormalPreXModWithObjects( arg[1], arg[2] );
+    # xmod plus list of objects plus boolean
+    elif ( ( nargs = 3 ) and IsXMod( arg[1] ) 
+           and IsList( arg[2] ) and IsBool( arg[3] ) ) then
+        return SinglePiecePreXModWithObjects( arg[1], arg[2], arg[3] );
 
     # surjective homomorphism
     elif ( ( nargs = 1 ) and IsGroupHomomorphism( arg[1] )

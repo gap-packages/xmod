@@ -3,11 +3,8 @@
 ## Problems and ToDos: 
 
  * (30/10/17) there is no IsCrossedSquare method - and IsPreCrossedSquare 
-              makes no checks on tghe crossed pairing map
+              makes no checks on the crossed pairing map
  * (13/10/17) need more examples in 2.1, e.g. DirectProductOp (+Proj,Embed) 
- * (30/08/17) the problem with DiscreteNormalPreXModWithObjects is that 
-              it is not possible to create arrows in AS0 because 
-              \in( AS0, an automorphism of S) fails - that \in problem again! 
  * (07/08/17) coprod.tst and gpnobjmap.tst need to work with new groupoids 
  * (22/07/17) X4 (etc) is a HigherDimensionalDomain but not a 
               HigherDimensionalGroup - discrepancy to be sorted out! 
@@ -24,23 +21,20 @@
  * (15/10/15) need a function CrossedSquareByCentralExtension 
  * (24/09/15) keep or dispose of the `dom2d3d` functions? 
  * (03/09/15) XModCentre etc. fail with pc-groups 
- * (09/01/13) GroupGeneralMappingByImages in ghom.gi has changed, 
-              so DiscreteNormalPreXModWithObjects no longer works. 
-              Also need Print/Display methods for these constructions. 
  * (22/06/12) need to fix construction of endomorphism classes 
               so that they can be printed/displayed. 
  * (15/02/12) failed to construct induced xmod from X = (SL25 -> SL25.C2) 
               and the inclusion SL25.C2 -> GL25 using the matrix groups 
               (construction worked OK with isomorphic perm groups). 
 
-## 2.63 -> 2.64 (23/11/2017) 
+## 2.63 -> 2.64 (29/11/2017) 
 
+ * (29/11/17) revised manual chapter 9 on crossed modules over groupoids 
  * (23/11/17) removed attribute AutoGroup (=Range(XModAction)) for xmods 
- * (22/11/17) added SinglePieceXModWithObjects 
+ * (22/11/17) added operations SinglePiecePreXModWithObjects(NC)  
  * (16/11/17) added Root2dGroup for prexmods with objects   
  * (17/10/17) ImageElmXModAction now working for xmods of groupoids 
  * (04/10/17) added operation ImageElmXModAction 
- * (04/10/17) DiscreteNormalPreXModWithObjects now working again  
  * (01/10/17) renamed test files and made them independent 
  * (27/09/17) added tst/testextra.g, tst/allxmods.xtst, tst/cat1mor.xtst 
 
@@ -220,7 +214,6 @@
 ## 2.17 -> 2.18 (23/04/2012) 
 
  * (23/04/12) added autpgrp as a needed package 
- * (20/04/12) added DiscreteNormalPreXModWithObjects 
  * (26/01/12) replaced XModActedUpon by AutomorphismDomain in `gp2act.g{d,i}` 
  * (25/01/12) fixed error in XModByGroupOfAutomorphisms (oneG now oneP) 
  * (10/01/12) updated to 2012; corrected URLs in `intro.xml` 

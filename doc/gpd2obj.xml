@@ -15,6 +15,9 @@
 
 <Index>crossed module of groupoids</Index>
 
+The material documented in this chapter is experimental, 
+and is likely to be changed very soon. 
+
 <Section> 
 
 <Heading>Constructions for crossed modules of groupoids</Heading>
@@ -27,65 +30,140 @@ over a groupoid has for its range a connected groupoid.
 This is a direct product of a group with a complete graph,
 and we call the vertices of the graph the <E>objects</E> 
 of the crossed module. 
-The source of <M>\mathcal{X}</M> is a totally disconnected groupoid, 
-with the same objects. 
+The source of <M>\mathcal{X}</M> is a groupoid, with the same objects, 
+which is either discrete or connected.  
 The boundary morphism is constant on objects. 
 For details and other references see <Cite Key="AW2" />. 
 
 <ManSection>
-   <Oper Name="DiscreteNormalPreXModWithObjects" 
-         Arg="gpd N" /> 
-   <Oper Name="PreXModWithObjectsObj" 
-         Arg="obs bdy act" /> 
+   <Oper Name="SinglePiecePreXModWithObjects" 
+         Arg="pxmod obs isdisc" /> 
 <Description> 
-At present the experimental operation <C>DiscreteNormalPreXModWithObjects</C> 
-accepts a groupoid <C>gpd</C>, which is the direct product of a group <M>G</M> 
-with a connected groupoid, and a normal subgroup <M>N \unlhd G</M>. 
-As such, it is the groupoid equivalent of <C>XModByNormalSubgroup</C>. 
-Other constructions will be added as time permits. 
+At present the experimental operation <C>SinglePiecePreXModWithObjects</C> 
+accepts a precrossed module <C>pxmod</C>, a set of objects <C>obs</C>, 
+and a boolean <C>isdisc</C> which is <C>true</C> when the source groupoid 
+is homogeneous and discrete and <C>false</C> when the source groupoid 
+is connected.  
+Other operations will be added as time permits. 
+<P/> 
+In the example the crossed module <C>DX4</C> has discrete source,
+and is a groupoid equivalent of <C>XModByNormalSubgroup</C>. 
 </Description>
 </ManSection>
 <P/>
 <Example>
 <![CDATA[
-gap> Ga4 := SinglePieceGroupoid( a4, [-9,-8,-7] );;
-gap> Display( Ga4 );
-single piece groupoid: 
-  objects: [ -9, -8, -7 ]
-    group: a4 = <[ (1,2,3), (2,3,4) ]>
-gap> SetName( Ga4, "Ga4" );; 
-gap> k4 := Subgroup( a4, [ (1,2)(3,4), (1,3)(2,4) ] );; 
-gap> SetName( k4, "k4" );
-gap> PX0 := DiscreteNormalPreXModWithObjects( Ga4, k4 );;
-gap> Print( PX0, "\n" );
-[perm homogeneous, discrete groupoid: < k4, [ -9, -8, -7 ] >
-->  Ga4]
-gap> IsXMod( PX0 ); 
-true
-gap> SX0 := Source( PX0 );;
-gap> SetName( SX0, "3(k4)" );; 
-gap> Name( PX0 );
-"[3(k4)->Ga4]"
-gap> KnownPropertiesOfObject( PX0 );
-[ "IsEmpty", "IsTrivial", "IsNonTrivial", "IsFinite", 
-  "CanEasilyCompareElements", "CanEasilySortElements", "IsDuplicateFree", 
-  "IsGeneratorsOfSemigroup", "IsPreXModDomain", "IsPerm2DimensionalGroup", 
-  "IsPreXMod", "IsXMod", "IsPreXModWithObjects" ]
-gap> KnownAttributesOfObject( PX0 ); 
-[ "Name", "Range", "Source", "Boundary", "ObjectList", "XModAction" ]
-gap> Size(PX0);
-[ 12, 108 ]
-gap> IsPermXMod(PX0);
-true
-gap> r := Arrow( Ga4, (1,3,4), -7, -8 ); 
-[(1,3,4) : -7 -> -8]
-gap> s := Arrow( SX0, (1,3)(2,4), -8, -8 ); 
-[(1,3)(2,4) : -8 -> -8]
-gap> ims := ImageElmXModAction( PX0, s, r );
-[(1,4)(2,3) : -7 -> -7]
+gap> s4 := Group( (1,2,3,4), (3,4) );; 
+gap> SetName( s4, "s4" );
+gap> a4 := Subgroup( s4, [ (1,2,3), (2,3,4) ] );;
+gap> SetName( a4, "a4" );
+gap> X4 := XModByNormalSubgroup( s4, a4 );; 
+gap> DX4 := SinglePiecePreXModWithObjects( X4, [-9,-8,-7], false );
+precrossed module with source groupoid:
+single piece groupoid: < a4, [ -9, -8, -7 ] >
+and range groupoid:
+single piece groupoid: < s4, [ -9, -8, -7 ] >
+gap> Ga4 := Source( DX4 );; 
+gap> Gs4 := Range( DX4 );;
 ]]>
 </Example>
 
+<ManSection>
+   <Prop Name="IsXModWithObjects" 
+         Arg="pxmod" /> 
+   <Prop Name="IsPreXModWithObjects" 
+         Arg="pxmod" /> 
+   <Prop Name="IsDirectProductWithCompleteDigraphDomain" 
+         Arg="pxmod" /> 
+<Description> 
+<Index>Is2DimensionalGroupWithObjects</Index> 
+The precrossed module <C>DX4</C> belongs to the category 
+<C>Is2DimensionalGroupWithObjects</C> and is, of course, a crossed module. 
+<P/> 
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> IsXModWithObjects( DX4 ); 
+true
+gap> KnownPropertiesOfObject( DX4 ); 
+[ "CanEasilyCompareElements", "CanEasilySortElements", "IsDuplicateFree", 
+  "IsGeneratorsOfSemigroup", "IsSinglePieceDomain", 
+  "IsDirectProductWithCompleteDigraphDomain", "IsPreXModWithObjects", 
+  "IsXModWithObjects" ]
+]]>
+</Example>
+
+<ManSection>
+   <Prop Name="IsPermPreXModWithObjects" 
+         Arg="pxmod" /> 
+   <Prop Name="IsPcPreXModWithObjects" 
+         Arg="pxmod" /> 
+   <Prop Name="IsFpPreXModWithObjects" 
+         Arg="pxmod" /> 
+<Description> 
+To test these properties we test the precrossed modules from which 
+they were constructed. 
+<P/> 
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> IsPermPreXModWithObjects( DX4 );
+true
+gap> IsPcPreXModWithObjects( DX4 );  
+false
+gap> IsFpPreXModWithObjects( DX4 );
+false
+]]>
+</Example>
+
+<ManSection>
+   <Attr Name="Root2dGroup" 
+         Arg="pxmod" /> 
+   <Attr Name="XModAction" 
+         Arg="pxmod" /> 
+<Description> 
+<Index>ObjectList</Index> 
+The attributes of a precrossed module with objects include the standard 
+<C>Source</C>; <C>Range</C>; <C>Boundary</C>; and <C>XModAction</C>
+as with precrossed modules of groups. 
+There is also <C>ObjectList</C>, 
+as in the <Package>groupoids</Package> package. 
+Additionally there is <C>Root2dGroup</C> which is the underlying 
+precrossed module used in the construction. 
+<P/> 
+Note that <C>XModAction</C> is now a groupoid homomorphism 
+from the source groupoid to a one-object groupoid (with object <C>0</C>) 
+where the group is the automorphism group of the range groupoid. 
+<P/>
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> KnownAttributesOfObject(DX4);
+[ "Range", "Source", "Boundary", "ObjectList", "XModAction", "Root2dGroup" ]
+gap> Root2dGroup( DX4 ); 
+[a4->s4]
+gap> act := XModAction( DX4 );; 
+gap> r := Arrow( Gs4, (1,2,3,4), -7, -8 );; 
+gap> ImageElm( act, r );            
+[groupoid homomorphism : 
+[ [ [(1,2,3) : -9 -> -9], [(2,3,4) : -9 -> -9], [() : -9 -> -8], 
+      [() : -9 -> -7] ], 
+  [ [(2,3,4) : -9 -> -9], [(1,3,4) : -9 -> -9], [() : -9 -> -7], 
+      [() : -9 -> -8] ] ] : 0 -> 0]
+gap> s := Arrow( Ga4, (1,2,4), -8, -8 );;
+gap> ##  calculate s^r 
+gap> ims := ImageElmXModAction( DX4, s, r );
+[(1,2,3) : -7 -> -7]
+]]>
+</Example>
+
+There is much more to be done with these constructions. 
 
 </Section>
 

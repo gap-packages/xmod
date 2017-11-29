@@ -124,6 +124,27 @@ gap> KnownPropertiesOfObject( autoconj );
   "IsEndomorphismHigherDimensionalDomain", 
   "IsAutomorphismHigherDimensionalDomain" ]
 
+# Section 8.4.2 
+gap> CC6 := Cat2Group( Cat1Group(6,2,2), Cat1Group(6,2,3) );
+generating (pre-)cat1-groups:
+1 : [C6=>Group( [ f1 ] )]
+2 : [C6=>Group( [ f2 ] )]
+
+gap> IsCat2Group( CC6 );
+true
+
+# Section 8.4.2 
+gap> xsCC6 := CrossedSquareOfCat2Group( CC6 );
+crossed square with:
+      up = [Group( () )->Group( [ (1,2) ] )]
+    left = [Group( () )->Group( [ (), (3,4,5) ] )]
+    down = [Group( [ (), (3,4,5) ] ) -> Group( () )]
+   right = [Group( [ (1,2) ] ) -> Group( () )]
+
+gap> Cat2GroupOfCrossedSquare( XSact );
+Warning: these conversion functions are still under development
+fail
+
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 
 gap> STOP_TEST( "gp3objmap.tst", 10000 );

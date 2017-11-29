@@ -9,91 +9,41 @@
 ##  Standard error messages
 
 XMODOBJ_CONSTRUCTORS := Concatenation( 
-    "The standard operations which construct an xmod with objects are:\n",
-    "1.  SinglePieceXMod( object xmod, list of objects );\n",
-    "2.  DomainWithSingleObject( xmod, single object );\n",
-    "3.  UnionOfPieces( list of xmods with objects );\n",
-    "4.  XModWithObjects( one of the previous parameter options );" );
+    "The standard operations which construct a (pre)xmod with objects are:\n",
+    "1.  SinglePiecePreXModWithObjects( (pre)xmod, objects, isdiscrete );\n",
+    "2.  DomainWithSingleObject( (pre)xmod, single object );\n",
+    "3.  UnionOfPieces( list of (pre)xmods with objects );\n",
+    "4.  PreXModWithObjects( one of the previous parameter options );" );
 
 #############################################################################
 ##
-#F  XModWithObjects( <pieces> )         xmod of groupoids as list of pieces 
-#F  XModWithObjects( <xmod>, <obj> )    xmod with a single object
-#F  XModWithObjects( <xmod>, <obs> )    single piece xmod with objects 
+#F  PreXModWithObjects( <pieces> )            list of (pre)xmods of groupoids  
+#F  PreXModWithObjects( <px>, <obj> )         (pre)xmod with a single object
+#F  PreXModWithObjects( <px>, <obs>, <disc> ) disc=true when source is discrete 
 ##
-InstallGlobalFunction( XModWithObjects, function( arg )
+InstallGlobalFunction( PreXModWithObjects, function( arg )
 
     local nargs, id, rays;
 
     nargs := Length( arg ); 
     # list of pieces
     if ( ( nargs = 1 ) and IsList( arg[1] ) 
-         and  ForAll( arg[1], G -> IsXModWithObjects(G) ) ) then
+         and  ForAll( arg[1], G -> IsPreXModWithObjects(G) ) ) then
         Info( InfoXMod, 2, "ByUnion" );
         return UnionOfPieces( arg[1] );
-    # group * tree groupoid
-    elif ( ( nargs = 2 ) and IsList( arg[2] ) and IsXMod( arg[1] ) ) then
-        Info( InfoXMod, 2, "group plus objects" ); 
-        return SinglePieceGroupoid( arg[1], arg[2] );
-    # one-object groupoid
-    elif ( ( nargs = 2 ) and IsObject( arg[2] ) and IsXMod( arg[1] ) ) then
-        Info( InfoXMod, 2, "SingleObjectXMod" );
+    # prexmod plus singler object 
+    elif ( ( nargs = 2 ) and IsPreXMod( arg[1] ) and IsObject( arg[2] ) ) then
+        Info( InfoXMod, 2, "prexmod plus single object" ); 
         return DomainWithSingleObject( arg[1], arg[2] );
+    # prexmod + list of objects + boolean (true => discrete source) 
+    elif ( ( nargs = 3 ) and IsPreXMod( arg[1] ) 
+           and IsList( arg[2] ) and IsBool( arg[3] ) ) then
+        Info( InfoXMod, 2, "SinglePieceXPreModWithObjects" );
+        return SinglePiecePreXModWithObjects( arg[1], arg[2], arg[3] );
     else
         Info( InfoXMod, 1, XMODOBJ_CONSTRUCTORS );
         return fail;
     fi;
-end );
-
-##############################################################################
-##
-#M  PreXModWithObjectsObj( <obs>, <bdy>, <act> ) . . . make pre-crossed module
-##
-InstallMethod( PreXModWithObjectsObj, "for objects, morphism and action", true,
-    [ IsHomogeneousList, IsGeneralMappingWithObjects, 
-      IsGeneralMappingWithObjects ], 0,
-function( obs, bdy, act )
-
-    local  filter, fam, PM, ok, src, rng, aut, name;
-
-    fam := Family2DimensionalGroupWithObjects;
-    filter := IsPreXModWithObjects; 
-    if not IsConstantOnObjects( bdy ) then 
-        Error( "objects not fixed by the boundary" ); 
-    fi;
-    src := Source( bdy );
-    rng := Range( bdy ); 
-    if not ( IsGroupoid( src ) and IsGroupoid( rng ) ) then 
-        Error( "source/range of boundary should be groupoids" ); 
-    fi; 
-    if not ( rng = Source( act ) ) then
-        Error( "require Range( bdy ) = Source( act )" );
-    fi;
-    aut := Range( act ); 
-    if not IsGroupOfAutomorphisms( aut!.magma ) then
-        Error( "Range( act ) must be a group of automorphisms" );
-    fi;
-    if ( IsPermGroupoid( src ) and IsPermGroupoid( rng ) ) then
-        filter := filter and IsPermPreXMod;
-    fi;
-    PM := rec();
-    ObjectifyWithAttributes( PM, PreXModWithObjectsType,
-      ObjectList, obs, 
-      Source, src,
-      Range, rng,
-      Boundary, bdy,
-      XModAction, act,
-      Is2DimensionalDomain, true, 
-      IsPreXModDomain, true );
-    if not IsPreXModWithObjects( PM ) then
-        Info( InfoXMod, 1, "Warning: not a pre-crossed module." );
-    fi; 
-    SetIsSinglePieceDomain( PM, 
-        ( HasIsSinglePieceDomain(rng) and IsSinglePieceDomain(rng) ) ); 
-    SetIsPreXModWithObjects( PM, true ); 
-##    ok := IsXModWithObjects( PM ); 
-    # name := Name( PM );
-    return PM;
 end );
 
 #############################################################################
@@ -131,72 +81,42 @@ end );
 
 ##############################################################################
 ##
-#M  DiscreteNormalPreXModWithObjects( <gpd>, <gp> ) .. make pre-crossed module
-##
-InstallMethod( DiscreteNormalPreXModWithObjects, 
-    "for a single piece groupoid and a subgroup of the root group", true,
-    [ IsSinglePiece, IsGroup ], 0,
-function( R, gpS )
-
-    local  gpR, obs, ro, nobs, imobs, idgpS, S, ok, inc, AR, AS, idS, 
-           AS0, conj, action, P0; 
-
-    gpR := R!.magma; 
-    obs := R!.objects; 
-    ro := obs[1]; 
-    nobs := Length( obs ); 
-    imobs := List( obs, o -> 0 ); 
-    if not IsSubgroup( gpR, gpS ) then 
-        Error( "gpS not a subgroup of the root group gpR of gpd" ); 
-    fi; 
-    idgpS := IdentityMapping( gpS ); 
-    S := DiscreteSubgroupoid( R, List( obs, o -> gpS ), obs ); 
-    ok := IsHomogeneousDiscreteGroupoid( S );
-    inc := InclusionMappingGroupoids( R, S ); 
-    AR := AutomorphismGroupOfGroupoid( R ); 
-    AS := AutomorphismGroupOfGroupoid( S ); 
-    idS := One( AS ); 
-    AS0 := DomainWithSingleObject( AS, 0 ); 
-    conj := function(a)
-                return ArrowNC( true, GroupoidInnerAutomorphism(R,S,a), 0, 0 ); 
-            end;
-    action := MappingWithObjectsByFunction( R, AS0, conj, imobs ); 
-    SetName( Range(action), "Aut(SX0)" ); 
-    P0 := PreXModWithObjectsObj( obs, inc, action); 
-    return P0; 
-end ); 
-
-##############################################################################
-##
 #M  SinglePiecePreXModWithObjects( <xmod>, <obs> ) .. make prexmod with obs 
 #M  SinglePiecePreXModWithObjectsNC( <xmod>, <obs> ) .. make prexmod with obs 
 ##
-InstallMethod( SinglePiecePreXModWithObjects, "for prexmod + list of objects", 
-    true, [ IsPreXMod, IsList ], 0,
-function( px, obs )
+InstallMethod( SinglePiecePreXModWithObjects, "for prexmod, objects, isdisc?", 
+    true, [ IsPreXMod, IsList, IsBool ], 0,
+function( px, obs, isdisc )
     if not IsSet( obs ) then 
         Sort( obs ); 
     fi; 
     if not IsDuplicateFree( obs ) then 
         Error( "objects must be distinct" );
     fi; 
-    return SinglePiecePreXModWithObjectsNC( px, obs ); 
+    return SinglePiecePreXModWithObjectsNC( px, obs, isdisc ); 
 end ); 
 
-InstallMethod( SinglePiecePreXModWithObjectsNC, "for prexmod + list of objects", 
-    true, [ IsPreXMod, IsList ], 0,
-function( px, obs )
+InstallMethod( SinglePiecePreXModWithObjectsNC, "for prexmod, obs, isdisc?", 
+    true, [ IsPreXMod, IsList, IsBool ], 0,
+function( px, obs, isdisc )
 
-    local rpx, src, rng, gens, bpx, imbdy, i, a, im, bdy, pxwo; 
+    local spx, rpx, src, rng, gens, bpx, imbdy, i, a, im, bdy, 
+          apx, AS, AR, AS0, obs0, imobs, fact, act, pxwo; 
 
+    spx := Source( px ); 
     rpx := Range( px ); 
     pxwo := rec( 
         objects := obs, 
         prexmod := px, 
         rays := List( obs, function( o ) return One(rpx); end ) 
         ); 
-    src := SinglePieceGroupoid( Source( px ), obs ); 
     rng := SinglePieceGroupoid( rpx, obs ); 
+    if isdisc then 
+        src := HomogeneousDiscreteGroupoid( spx, obs );
+    else 
+        src := SinglePieceGroupoid( spx, obs ); 
+    fi;
+    ## construct the boundary 
     gens := GeneratorsOfGroupoid( src ); 
     bpx := Boundary( px ); 
     imbdy := ShallowCopy( gens ); 
@@ -209,14 +129,44 @@ function( px, obs )
             imbdy[i] := ArrowNC( true, One(rpx), a![2], a![3] ); 
         fi; 
     od; 
-    bdy := GroupoidHomomorphismFromSinglePiece( src, rng, gens, imbdy ); 
+    if isdisc then 
+        bdy := GroupoidHomomorphismFromHomogeneousDiscrete(src,rng,gens,imbdy);
+    else 
+        bdy := GroupoidHomomorphismFromSinglePiece(src,rng,gens,imbdy); 
+    fi; 
+    ## construct the action 
+    apx := XModAction( px ); 
+    AS := AutomorphismGroupOfGroupoid( src ); 
+    AR := AutomorphismGroupOfGroupoid( rng ); 
+    AS0 := DomainWithSingleObject( AS, 0 ); 
+    obs0 := List( obs, o -> 0 ); 
+    fact := function(a) local i,j,g,imobs,aut1,autg,aut2,aut; 
+                g := a![1]; 
+                i := Position( obs, a![2] ); 
+                j := Position( obs, a![3] ); 
+                imobs := ShallowCopy( obs ); 
+                imobs[i] := obs[j]; 
+                imobs[j] := obs[i];
+                aut1 := GroupoidAutomorphismByObjectPerm( src, imobs ); 
+                autg := ImageElm( apx, g ); 
+                aut2 := GroupoidAutomorphismByGroupAuto( src, autg ); 
+                aut := aut1 * aut2; 
+                return ArrowNC( true, aut, 0, 0 ); 
+            end; 
+    act := MappingWithObjectsByFunction( rng, AS0, fact, obs0 ); 
     ObjectifyWithAttributes( pxwo, PreXModWithObjectsType, 
+        Is2DimensionalDomain, true, 
         IsSinglePieceDomain, true, 
+        IsPreXModWithObjects, true, 
+        ObjectList, obs, 
         Root2dGroup, px, 
         Source, src, 
         Range, rng, 
         Boundary, bdy, 
+        XModAction, act, 
         IsDirectProductWithCompleteDigraphDomain, true ); 
+    SetIsXModWithObjects( pxwo, IsXMod( px ) ); 
+    #?  name := Name( pxwo ); 
     return pxwo; 
 end ); 
 
@@ -381,6 +331,30 @@ function( dwo )
     acto := RestrictedMappingGroupoids( act, rgo ); 
 Error("here");
     return fail; 
+end ); 
+
+############################################################################# 
+## 
+#M  IsPermPreXModWithObjects  
+#M  IsPcPreXModWithObjects  
+#M  IsFpPreXModWithObjects  
+## 
+InstallMethod( IsPermPreXModWithObjects, "for domain with objects", true, 
+    [ Is2DimensionalDomainWithObjects ], 0,
+function( dwo )
+    return IsPerm2DimensionalGroup( Root2dGroup( dwo ) ); 
+end ); 
+
+InstallMethod( IsPcPreXModWithObjects, "for domain with objects", true, 
+    [ Is2DimensionalDomainWithObjects ], 0,
+function( dwo )
+    return IsPc2DimensionalGroup( Root2dGroup( dwo ) ); 
+end ); 
+
+InstallMethod( IsFpPreXModWithObjects, "for domain with objects", true, 
+    [ Is2DimensionalDomainWithObjects ], 0,
+function( dwo )
+    return IsFp2DimensionalGroup( Root2dGroup( dwo ) ); 
 end ); 
 
 #############################################################################

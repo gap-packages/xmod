@@ -80,35 +80,30 @@ DeclareAttribute( "Root2dGroup", Is2DimensionalDomainWithObjects );
 
 ############################################################################# 
 ## 
-#F  XModWithObjects( <args> )              
+#F  PreXModWithObjects( <args> )              
 ## 
-DeclareGlobalFunction( "XModWithObjects" );
-
-#############################################################################
-## 
-#O  PreXModWithObjectsObj( <obs>, <bdy>, <act> )  . . for obs, bdy and action 
-## 
-#?  should require IsGroupoidHomomorphism, but at present 
-#?  HomomorphismByUnion(NC) does not return such! 
-##  
-DeclareOperation( "PreXModWithObjectsObj",
-    [ IsHomogeneousList, IsGeneralMappingWithObjects, 
-      IsGeneralMappingWithObjects ] );
+DeclareGlobalFunction( "PreXModWithObjects" );
 
 #############################################################################
 ##
-#O  DiscreteNormalPreXModWithObjects( <gpd>, <gp> ) .. for groupoid and group
+#O  SinglePiecePreXModWithObjects( <xmod>, <obs>, <isdiscrete> )
+#O  SinglePiecePreXModWithObjectsNC( <xmod>, <obs>, <isdiscrete>  
+##  . . for precrossed modules, a set of objects, discrete or connected source
 ##  
-DeclareOperation( "DiscreteNormalPreXModWithObjects",
-    [ IsSinglePiece, IsGroup ] );
+DeclareOperation( "SinglePiecePreXModWithObjects", 
+    [ IsPreXMod, IsList, IsBool ] );
+DeclareOperation( "SinglePiecePreXModWithObjectsNC", 
+    [ IsPreXMod, IsList, IsBool ] );
 
 #############################################################################
 ##
-#O  SinglePiecePreXModWithObjects( <xmod>, <obs> ) .. for prexmod and objects
-#O  SinglePiecePreXModWithObjectsNC( <xmod>, <obs> )  for prexmod and objects
-##  
-DeclareOperation( "SinglePiecePreXModWithObjects", [ IsPreXMod, IsList ] );
-DeclareOperation( "SinglePiecePreXModWithObjectsNC", [ IsPreXMod, IsList ] );
+#P  IsPermPreXModWithObjects 
+#P  IsPcPreXModWithObjects 
+#P  IsFpPreXModWithObjects 
+## 
+DeclareProperty( "IsPermPreXModWithObjects", Is2DimensionalDomainWithObjects ); 
+DeclareProperty( "IsPcPreXModWithObjects", Is2DimensionalDomainWithObjects ); 
+DeclareProperty( "IsFpPreXModWithObjects", Is2DimensionalDomainWithObjects ); 
 
 ############################################################################## 
 ## 

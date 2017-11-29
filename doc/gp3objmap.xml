@@ -658,6 +658,8 @@ true
    <Attr Name="CrossedSquareOfCat2Group"
          Arg="CC" />
 <Description>
+<E>These functions are very experimental, and should not be relied on!</E> 
+<P/>
 These functions provide the conversion from crossed square to cat2-group, 
 and conversely.  (They are the 3-dimensional equivalents of 
 <C>Cat1GroupOfXMod</C> and <C>XModOfCat1Group</C>.) 
@@ -672,7 +674,9 @@ crossed square with:
     left = [Group( () )->Group( [ (), (3,4,5) ] )]
     down = [Group( [ (), (3,4,5) ] ) -> Group( () )]
    right = [Group( [ (1,2) ] ) -> Group( () )]
-
+gap> Cat2GroupOfCrossedSquare( XSact );
+Warning: these conversion functions are still under development
+fail
 ]]>
 </Example>
 
