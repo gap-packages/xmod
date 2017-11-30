@@ -45,8 +45,8 @@ gap> IsFpPreXModWithObjects( DX4 );
 false
 
 ## Subsection 9.1.4 
-gap> KnownAttributesOfObject(DX4);
-[ "Range", "Source", "Boundary", "ObjectList", "XModAction", "Root2dGroup" ]
+gap> Set( KnownAttributesOfObject( DX4 ) );
+[ "Boundary", "ObjectList", "Range", "Root2dGroup", "Source", "XModAction" ]
 gap> Root2dGroup( DX4 ); 
 [a4->s4]
 gap> act := XModAction( DX4 );; 

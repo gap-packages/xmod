@@ -16,10 +16,13 @@ gap> SetName( q8, "q8" );;
 gap> X8 := XModByAutomorphismGroup( q8 );; 
 gap> s4 := Range( X8 );;
 gap> SetName( s4, "s4" );;
-gap> a4 := NormalSubgroups( s4 )[2];; 
+gap> nss4 := NormalSubgroups( s4 );;
+gap> posa4 := Position( List( nss4, n -> IdGroup(n) ), [12,3] );;
+gap> a4 := nss4[posa4];; 
 gap> SetName( a4, "a4" );;
 gap> Y8 := XModByNormalSubgroup( s4, a4 );; 
-gap> k4 := NormalSubgroups( s4 )[3];; 
+gap> posk4 := Position( List( nss4, n -> IdGroup(n) ), [4,2] );;
+gap> k4 := nss4[posk4];; 
 gap> SetName( k4, "k4" );;
 gap> Z8 := XModByNormalSubgroup( s4, k4 );; 
 

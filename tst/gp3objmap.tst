@@ -54,17 +54,12 @@ crossed square with:
 
 ## Section 8.2.2
 gap> pos7 := Position( ids, [ [12,2], [24,5] ] );;
-gap> Xn7 := nsx[pos7]; 
-[Group( [ f2, f3, f4 ] )->Group( [ f1, f2, f4, f5 ] )]
+gap> Xn7 := nsx[pos7];; 
+gap> IdGroup( Xn7 );
+[ [ 12, 2 ], [ 24, 5 ] ]
 gap> IdGroup( CentreXMod(Xn7) );  
 [ [ 4, 1 ], [ 4, 1 ] ]
-gap> CQXn7 := CentralQuotient( Xn7 );
-crossed square with:
-      up = [Group( [ f2, f3, f4 ] )->Group( [ f1 ] )]
-    left = [Group( [ f2, f3, f4 ] )->Group( [ f1, f2, f4, f5 ] )]
-    down = [Group( [ f1, f2, f4, f5 ] )->Group( [ f1, f2 ] )]
-   right = [Group( [ f1 ] )->Group( [ f1, f2 ] )]
-
+gap> CQXn7 := CentralQuotient( Xn7 );;
 gap> IdGroup( CQXn7 );
 [ [ [ 12, 2 ], [ 3, 1 ] ], [ [ 24, 5 ], [ 6, 1 ] ] ]
 
@@ -76,9 +71,11 @@ Actor[d10a->d20]
 gap> xpconj := CrossedPairing( XSconj );;
 gap> ImageElmCrossedPairing( xpconj, [ p2, p12 ] );
 (1,9,7,5,3)(2,10,8,6,4)
-gap> diag := DiagonalAction( XSact );
-[ (1,3,5,2,4)(6,10,14,8,12)(7,11,15,9,13), (1,2,5,4)(6,8,14,12)(7,11,13,9) 
- ] -> [ ^(1,3,5,7,9)(2,4,6,8,10), ^(1,2,5,4)(3,8)(6,7,10,9) ]
+gap> diag := DiagonalAction( XSact );;
+
+## comment out the output as dev gives different results to 4r8 
+## [ (1,3,5,2,4)(6,10,14,8,12)(7,11,15,9,13), (1,2,5,4)(6,8,14,12)(7,11,13,9) 
+##  ] -> [ ^(1,3,5,7,9)(2,4,6,8,10), ^(1,2,5,4)(3,8)(6,7,10,9) ]
 
 ## Section 8.3.2
 gap> ad20 := GroupHomomorphismByImages( d20, d20, [p1,p2], [p1,p2^p1] );;

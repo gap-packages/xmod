@@ -20,10 +20,9 @@ gap> Size(X24);
 gap> nsx := NormalSubXMods( X24 );; 
 gap> ids := List( nsx, n -> IdGroup(n) );; 
 gap> pos1 := Position( ids, [ [4,1], [8,3] ] );;
-gap> Xn1 := nsx[pos1]; 
-[Group( [ f2*f4^2, f3*f4 ] )->Group( [ f3, f4, f5 ] )]
-gap> Size( Xn1 );
-[ 4, 8 ]
+gap> Xn1 := nsx[pos1];; 
+gap> IdGroup( Xn1 );
+[ [ 4, 1 ], [ 8, 3 ] ]
 gap> nat1 := NaturalMorphismByNormalSubPreXMod( X24, Xn1 ); 
 [[d24->PAut(d24)] => [..]]
 gap> Qn1 := FactorPreXMod( X24, Xn1 ); 
@@ -33,13 +32,12 @@ gap> Size( Qn1 );
 
 #### 4.1.2
 gap> pos2 := Position( ids, [ [24,6], [12,4] ] );;
-gap> Xn2 := nsx[pos2]; 
-[d24->Group( [ f1*f3, f2, f5 ] )]
+gap> Xn2 := nsx[pos2];; 
+gap> IdGroup( Xn2 );         
+[ [ 24, 6 ], [ 12, 4 ] ]
 gap> pos3 := Position( ids, [ [12,2], [24,5] ] );;
-gap> Xn3 := nsx[pos3]; 
-[Group( [ f2, f3, f4 ] )->Group( [ f1, f2, f4, f5 ] )]
-gap> Xn23 := IntersectionSubXMods( X24, Xn2, Xn3 );
-[Group( [ f2, f3, f4 ] )->Group( [ f2, f5, f2^2, f2*f5, f2^2*f5 ] )]
+gap> Xn3 := nsx[pos3];; 
+gap> Xn23 := IntersectionSubXMods( X24, Xn2, Xn3 );;
 gap> [ Size(Xn2), Size(Xn3), Size(Xn23) ];
 [ [ 24, 12 ], [ 12, 24 ], [ 12, 6 ] ]
 
@@ -60,8 +58,7 @@ Group([ f4 ])
 #### 4.1.4
 gap> CrossActionSubgroup( X24, Xn2, Xn3 );
 Group([ f2 ])
-gap> Cn23 := CommutatorSubXMod( X24, Xn2, Xn3 );
-[Group( [ f2 ] )->Group( [ f2, f5 ] )]
+gap> Cn23 := CommutatorSubXMod( X24, Xn2, Xn3 );;
 gap> Size(Cn23);
 [ 12, 6 ]
 gap> Xn23 = Cn23;
@@ -74,20 +71,18 @@ gap> DXn4 := DerivedSubXMod( Xn4 );
 #### 4.1.6
 gap> fix := FixedPointSubgroupXMod( Xn4, Sn4, Rn4 );
 Group([ f3*f4 ])
-gap> stab := StabilizerSubgroupXMod( Xn4, Sn4, Rn4 );
-Group([ f5, f2*f3 ])
+gap> stab := StabilizerSubgroupXMod( Xn4, Sn4, Rn4 );;
+gap> IdGroup( stab );
+[ 12, 5 ]
 
 #### 4.1.7
-gap> ZXn4 := CentreXMod( Xn4 );      
-[Group( [ f3*f4 ] )->Group( [ f3, f5 ] )]
+gap> ZXn4 := CentreXMod( Xn4 );; 
 gap> IdGroup( ZXn4 );
 [ [ 2, 1 ], [ 4, 2 ] ]
-gap> CDXn4 := Centralizer( Xn4, DXn4 );
-[Group( [ f3*f4 ] )->Group( [ f2 ] )]
+gap> CDXn4 := Centralizer( Xn4, DXn4 );;
 gap> IdGroup( CDXn4 );    
 [ [ 2, 1 ], [ 3, 1 ] ]
-gap> NDXn4 := Normalizer( Xn4, DXn4 ); 
-[Group( <identity> of ... )->Group( [ f5, f2*f3 ] )]
+gap> NDXn4 := Normalizer( Xn4, DXn4 );; 
 gap> IdGroup( NDXn4 );
 [ [ 1, 1 ], [ 12, 5 ] ]
 
@@ -114,10 +109,10 @@ gap> IsFaithful2DimensionalGroup( X24 );
 true
 
 #### 4.1.10
-gap> LowerCentralSeries( X24 );      
-[ [d24->PAut(d24)], [Group( [ f2 ] )->Group( [ f2, f5 ] )], 
-  [Group( [ f3*f4^2 ] )->Group( [ f2 ] )], [Group( [ f4 ] )->Group( [ f2 ] )] 
- ]
+gap> lcs := LowerCentralSeries( X24 );;      
+gap> List( lcs, g -> IdGroup(g) );
+[ [ [ 24, 6 ], [ 48, 38 ] ], [ [ 12, 2 ], [ 6, 2 ] ], [ [ 6, 2 ], [ 3, 1 ] ], 
+  [ [ 3, 1 ], [ 3, 1 ] ] ]
 gap> IsNilpotent2DimensionalGroup( X24 );      
 false
 gap> NilpotencyClassOf2DimensionalGroup( X24 );
@@ -141,18 +136,15 @@ gap> iso66 := AllXModsUpToIsomorphism( x66 );;  Length( iso66 );
 #### testing isoclinism of groups #### 
 
 #### 4.2.1
-gap> G := SmallGroup( 64, 6 );;  StructureDescription( G ); 
-"(C8 x C4) : C2"
+gap> G := SmallGroup( 64, 6 );; 
 gap> QG := CentralQuotient( G );;  IdGroup( QG );
 [ [ 64, 6 ], [ 8, 3 ] ]
-gap> H := SmallGroup( 32, 41 );;  StructureDescription( H );
-"C2 x Q16"
+gap> H := SmallGroup( 32, 41 );;  
 gap> QH := CentralQuotient( H );;  IdGroup( QH );
 [ [ 32, 41 ], [ 8, 3 ] ]
 gap> Isoclinism( G, H );
 [ [ f1, f2, f3 ] -> [ f1, f2*f3, f3 ], [ f3, f5 ] -> [ f4*f5, f5 ] ]
-gap> K := SmallGroup( 32, 43 );;  StructureDescription( K );
-"(C2 x D8) : C2"
+gap> K := SmallGroup( 32, 43 );;  
 gap> QK := CentralQuotient( K );;  IdGroup( QK );                       
 [ [ 32, 43 ], [ 16, 11 ] ]
 gap> AreIsoclinicDomains( G, K );

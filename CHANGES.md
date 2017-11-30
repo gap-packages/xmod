@@ -27,9 +27,9 @@
               and the inclusion SL25.C2 -> GL25 using the matrix groups 
               (construction worked OK with isomorphic perm groups). 
 
-## 2.63 -> 2.64 (29/11/2017) 
+## 2.63 -> 2.64 (30/11/2017) 
 
- * (29/11/17) revised manual chapter 9 on crossed modules over groupoids 
+ * (29/11/17) fixed tests to work with both 4r8 and dev in 3 options  
  * (23/11/17) removed attribute AutoGroup (=Range(XModAction)) for xmods 
  * (22/11/17) added operations SinglePiecePreXModWithObjects(NC)  
  * (16/11/17) added Root2dGroup for prexmods with objects   

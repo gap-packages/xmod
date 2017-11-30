@@ -222,7 +222,7 @@ Crossed module xmod([G2=>d12]) :-
   These 3 automorphisms generate the group of automorphisms.
 : associated cat1-group is [G2=>d12]
 
-gap> StructureDescription(X2);
+gap> StructureDescription( X2 );
 [ "D24", "D12" ]
 
 ## Section 2.6.1
@@ -266,8 +266,8 @@ gap> all := AllCat1DataGroupsBasic( gp );
 ## Section 2.7.1
 gap> IdGroup( X2 );
 [ [ 24, 6 ], [ 12, 4 ] ]
-gap> StructureDescription( C2 );
-[ "(S3 x D24) : C2", "D12" ]
+gap> IdGroup( C2 );
+[ [ 288, 956 ], [ 12, 4 ] ]
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 
