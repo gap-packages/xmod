@@ -1,4 +1,16 @@
-## may07.tst 
+#############################################################################
+##
+#W  cat1mor.tst                   XMOD test file                Chris Wensley
+#W                                                                & Murat Alp
+#Y  Copyright (C) 2001-2017, Chris Wensley et al, 
+#Y  School of Computer Science, Bangor University, U.K. 
+##
+gap> START_TEST( "XMod package: allxmods.tst" );
+gap> saved_infolevel_xmod := InfoLevel( InfoXMod );; 
+gap> SetInfoLevel( InfoXMod, 0 );;
+
+gap> saved_infolevel_xmod := InfoLevel( InfoXMod );; 
+gap> SetInfoLevel( InfoXMod, 0 );
 
 gap> g18gens := [ (1,2,3), (4,5,6), (2,3)(5,6) ];;     
 gap> s3agens := [ (7,8,9), (8,9) ];;                
@@ -28,3 +40,10 @@ Morphism of cat1-groups :-
   [ (4,5,6), (1,2,3), (2,3)(5,6) ]
 : Range Homomorphism maps range generators to:
   [ (7,8,9), (8,9) ]
+
+gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
+gap> STOP_TEST( "cat1mor.tst", 10000 );
+
+#############################################################################
+##
+#E  cat1mor.tst . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

@@ -58,7 +58,7 @@ DeclareProperty( "IsXModWithObjects", IsPreXModWithObjects );
 ##
 DeclareRepresentation( "IsPreXModWithObjectsObj", 
     Is2DimensionalDomainWithObjects and IsAttributeStoringRep, 
-    [ "objects", "boundary", "action" ] );
+    [ "source", "range", "boundary", "action" ] );
 
 #############################################################################
 ##
@@ -80,9 +80,12 @@ DeclareAttribute( "Root2dGroup", Is2DimensionalDomainWithObjects );
 
 ############################################################################# 
 ## 
-#F  PreXModWithObjects( <args> )              
+#F  PreXModWithObjects( <args> ) 
+#O  MakePreXModWithObjects( <src>, <rng>, <bdy>, <act> )         
 ## 
 DeclareGlobalFunction( "PreXModWithObjects" );
+DeclareOperation( "MakePreXModWithObjects", [ IsGroupoid, IsGroupoid, 
+    IsGroupWithObjectsHomomorphism, IsGeneralMappingWithObjects ] ); 
 
 #############################################################################
 ##

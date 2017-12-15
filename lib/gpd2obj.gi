@@ -81,6 +81,29 @@ end );
 
 ##############################################################################
 ##
+#M  MakePreXModWithObjects( <src>, <rng>, <bdy>, <act> ) 
+##
+InstallMethod( MakePreXModWithObjects, "for gpd, gpd, gpdhom, gpdhom", 
+    true, [ IsGroupoid, IsGroupoid, IsGroupWithObjectsHomomorphism, 
+    IsGeneralMappingWithObjects ], 0,
+function( src, rng, bdy, act )
+
+    local pxwo; 
+
+    pxwo := rec( source := src, range := rng, boundary := bdy, action := act ); 
+    ObjectifyWithAttributes( pxwo, PreXModWithObjectsType, 
+        Is2DimensionalDomain, true, 
+        IsSinglePieceDomain, true, 
+        IsPreXModWithObjects, true, 
+        Source, src, 
+        Range, rng, 
+        Boundary, bdy, 
+        XModAction, act ); 
+    return pxwo; 
+end ); 
+
+##############################################################################
+##
 #M  SinglePiecePreXModWithObjects( <xmod>, <obs> ) .. make prexmod with obs 
 #M  SinglePiecePreXModWithObjectsNC( <xmod>, <obs> ) .. make prexmod with obs 
 ##
@@ -105,11 +128,11 @@ function( px, obs, isdisc )
 
     spx := Source( px ); 
     rpx := Range( px ); 
-    pxwo := rec( 
-        objects := obs, 
-        prexmod := px, 
-        rays := List( obs, function( o ) return One(rpx); end ) 
-        ); 
+    ## pxwo := rec( 
+    ##     objects := obs, 
+    ##     prexmod := px, 
+    ##     rays := List( obs, function( o ) return One(rpx); end ) 
+    ##     ); 
     rng := SinglePieceGroupoid( rpx, obs ); 
     if isdisc then 
         src := HomogeneousDiscreteGroupoid( spx, obs );
@@ -154,17 +177,10 @@ function( px, obs, isdisc )
                 return ArrowNC( true, aut, 0, 0 ); 
             end; 
     act := MappingWithObjectsByFunction( rng, AS0, fact, obs0 ); 
-    ObjectifyWithAttributes( pxwo, PreXModWithObjectsType, 
-        Is2DimensionalDomain, true, 
-        IsSinglePieceDomain, true, 
-        IsPreXModWithObjects, true, 
-        ObjectList, obs, 
-        Root2dGroup, px, 
-        Source, src, 
-        Range, rng, 
-        Boundary, bdy, 
-        XModAction, act, 
-        IsDirectProductWithCompleteDigraphDomain, true ); 
+    pxwo := MakePreXModWithObjects( src, rng, bdy, act );
+    SetObjectList( pxwo, obs );
+    SetRoot2dGroup( pxwo, px );
+    SetIsDirectProductWithCompleteDigraphDomain( pxwo, true );
     SetIsXModWithObjects( pxwo, IsXMod( px ) ); 
     #?  name := Name( pxwo ); 
     return pxwo; 

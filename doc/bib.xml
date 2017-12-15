@@ -20,11 +20,8 @@
   <author>
     <name><first>Max</first><last>Horn</last></name>
   </author>
-  <title>
-    <C>GitHubPagesForGAP - a GitHub Pages generator for GAP packages</C> 
-  </title>
+  <title><C>GitHubPagesForGAP - Template for easily using GitHub Pages within GAP packages (Version 0.2)</C></title>
   <year>2017</year>
-  <volume>0.2</volume> 
   <other type="note">
     GAP package, <URL>https://gap-system.github.io/GitHubPagesForGAP/</URL>
   </other>
