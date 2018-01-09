@@ -1,26 +1,15 @@
 #############################################################################
 ##
 ##  PackageInfo.g  file for the package XMod 
-##  Chris Wensley and Murat Alp 
+##  Chris Wensley et al  
 ##
 
-SetPackageInfo( rec(
+SetPackageInfo( rec( 
+
 PackageName := "XMod",
-Packagename := "xmod",
 Subtitle := "Crossed Modules and Cat1-Groups",
-
 Version := "2.64dev",
-Date := "15/12/2017",
-
-##  duplicate these values for inclusion in the manual: 
-##  <#GAPDoc Label="PKGVERSIONDATA">
-##  <!ENTITY XMODVERSION "2.64dev">
-##  <!ENTITY XMODTARFILENAME "xmod-2.64dev.tar.gz">
-##  <!ENTITY XMODHTMLFILENAME "xmod.html">
-##  <!ENTITY XMODRELEASEDATE "15/12/2017">
-##  <!ENTITY XMODLONGRELEASEDATE "15th December 2017">
-##  <!ENTITY XMODCOPYRIGHTYEARS "1997-2017">
-##  <#/GAPDoc>
+Date := "09/01/2018",
 
 Persons := [
   rec(
@@ -96,16 +85,16 @@ CommunicatedBy := "Derek Holt (Warwick)",
 AcceptDate := "12/1996",
 
 SourceRepository := rec( 
-  Type := "git", 
-  URL := "https://github.com/gap-packages/xmod"
-),
-IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-PackageWWWHome  := "https://gap-packages.github.io/xmod/",
-README_URL      := Concatenation( ~.PackageWWWHome, "README.md" ),
-PackageInfoURL  := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
-ArchiveURL      := Concatenation( ~.SourceRepository.URL, 
-                                  "/releases/download/v", ~.Version, 
-                                  "/", ~.PackageName, "-", ~.Version ), 
+    Type             := "git", 
+    URL              := "https://github.com/gap-packages/xmod" ),
+    IssueTrackerURL  := Concatenation( ~.SourceRepository.URL, "/issues" ),
+    PackageWWWHome   := "https://gap-packages.github.io/xmod/",
+    README_URL       := Concatenation( ~.PackageWWWHome, "README.md" ),
+    PackageInfoURL   := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
+    ArchiveURL       := Concatenation( ~.SourceRepository.URL, 
+                                       "/releases/download/v", ~.Version, 
+                                       "/", ~.PackageName, "-", ~.Version ), 
+
 SupportEmail := "c.d.wensley@bangor.ac.uk",
 ArchiveFormats  := ".tar.gz",
 
@@ -137,6 +126,13 @@ Dependencies := rec(
 
 AvailabilityTest := ReturnTrue,
 
+Autoload := false, 
+
+TestFile := "tst/testall.g",
+
+Keywords := ["crossed module", "cat1-group", "derivation", "section", 
+             "actor", "crossed square" ], 
+
 BannerString := Concatenation( 
   "Loading XMod ", String( ~.Version ), 
   " (methods for crossed modules and cat1-groups)\n",
@@ -148,9 +144,74 @@ BannerString := Concatenation(
   "----------",
   "-------------------------------------------------------------------\n" ), 
 
-TestFile := "tst/testall.g",
-
-Keywords := ["crossed module", "cat1-group", "derivation", "section", 
-             "actor", "crossed square" ]
+AutoDoc := rec(
+    TitlePage := rec(
+        Copyright := Concatenation(
+            "&copyright; 1996-2018, Chris Wensley et al. <P/>\n", 
+            "The &XMod; package is free software; you can redistribute it ", 
+            "and/or modify it under the terms of the GNU General ", 
+            "Public License as published by the Free Software Foundation; ", 
+            "either version 2 of the License, or (at your option) ", 
+            "any later version.\n"
+            ),
+        Abstract := Concatenation( 
+            "The &XMod; package provides functions for computation with\n",
+            "<List>\n", 
+            "  <Item>\n", 
+            "  finite crossed modules of groups and cat1-groups, \n", 
+            "  and morphisms of these structures; \n", 
+            "  </Item>\n", 
+            "  <Item>\n", 
+            "  finite pre-crossed modules, pre-cat1-groups, ", 
+            "  and their Peiffer quotients;\n", 
+            "  </Item>\n", 
+            "  <Item>\n", 
+            "  isoclinism classes of groups and crossed modules; \n", 
+            "  </Item>\n", 
+            "  <Item>\n", 
+            "  derivations of crossed modules and sections of cat1-groups; \n", 
+            "  </Item>\n", 
+            "  <Item>\n", 
+            "  crossed squares and their morphisms, ", 
+            "  including the actor crossed square of a crossed module; \n", 
+            "  </Item>\n", 
+            "  <Item>\n", 
+            "  crossed modules of finite groupoids (experimental version). \n", 
+            "  </Item>\n", 
+            "</List>\n", 
+            "<P/>\n", 
+            "&XMod; was originally implemented in 1996 using the &GAP;3 ", 
+            "language, when the second author was studying for a Ph.D. ", 
+            "<Cite Key='A1'/> in Bangor.\n", 
+            "<P/>\n", 
+            "In April 2002 the first and third parts were converted ", 
+            "to &GAP;4, the pre-structures were added, ", 
+            "and version 2.001 was released. \n", 
+            "The final two parts, covering derivations, sections and actors, ", 
+            "were included in the January 2004 release 2.002 for &GAP; 4.4.\n", 
+            "<P/>\n", 
+            "In October 2015 functions for computing isoclinism classes of ", 
+            "crossed modules, written by Alper Odaba&#x15f; and Enver Uslu, ", 
+            "were added.\n",  
+            "These are contained in Chapter <Ref Chap='chap-isclnc' />, ", 
+            "and are described in detail in the paper <Cite Key='IOU1' />.\n", 
+            "<P/>\n", 
+            "Bug reports, suggestions and comments are, of course, welcome. ", 
+            "Please submit an issue at ", 
+            "<URL>http://github.com/gap-packages/xmod/issues/</URL> ", 
+            "or send an email to the first author at ", 
+            "<Email>c.d.wensley@bangor.ac.uk</Email>. \n", 
+            "<P/>\n"
+            ), 
+        Acknowledgements := Concatenation( 
+            "This documentation was prepared with the ", 
+            "&GAPDoc; <Cite Key='GAPDoc'/> and &AutoDoc; packages.<P/>\n", 
+            "The procedure used to produce new releases uses the package ", 
+            "<Package>GitHubPagesForGAP</Package> ", 
+            "<Cite Key='GitHubPagesForGAP' /> ", 
+            "and the package <Package>ReleaseTools</Package>.<P/>" 
+            ),
+    ) 
+),
 
 ));

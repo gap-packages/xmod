@@ -1,36 +1,39 @@
-##  makedoc.g for package XMod, version 29/04/17
+##  makedoc.g for the package XMod,
 ##  This builds the documentation of the XMod package. 
-##  Needs: GAPDoc package, latex, pdflatex, mkindex
+##  Needs: GAPDoc & AutoDoc packages, latex, pdflatex, mkindex
+##  call this with GAP from within the package root directory 
 ##  
+##  latex_header_file := "mylatexhead.tex", 
+
 LoadPackage( "GAPDoc" );
 
-XModDoc := Filename( DirectoriesPackageLibrary( "XMod", "doc" ), "" );
+if fail = LoadPackage("AutoDoc", ">= 2017.09.08") then
+    Error("AutoDoc is required: version at least 2017.09.08");
+fi;
 
-# use this command if including xymatrix code (added 29/04/17) 
-SetGapDocLaTeXOptions(rec(EarlyExtraPreamble := "\\usepackage[all]{xy}\n"));
+AutoDoc( rec( 
+    scaffold := rec(
+        ## MainPage := false, 
+        includes := [ "intro.xml",     "gp2obj.xml",    "gp2map.xml", 
+                      "isoclinic.xml", "gp2up.xml",     "gp2act.xml",
+                      "gp2ind.xml",    "gp3objmap.xml", "gpd2obj.xml",
+                      "util.xml",      "history.xml"
+                    ],
+        gapdoc_latex_options := rec( 
+            EarlyExtraPreamble := "\\usepackage[all]{xy}" 
+        ),  
+        entities := rec( 
+            AutoDoc := "<Package>AutoDoc</Package>",
+            Act     := "\mathop{\textrm{Act}\rm}",
+            Aut     := "\mathop{\textrm{Aut}\rm}", 
+            Disp    := "\mathop{\textrm{Disp}\rm}", 
+            Fix     := "\mathop{\textrm{Fix}\rm}", 
+            Stab    := "\mathop{\textrm{Stab}\rm}" 
+        )
+    )
+));
 
-MakeGAPDocDoc( XModDoc,   # path to the directory containing the main file
-               "manual",  # the name of the main file (without extension)
-                          # list of (probably source code) files relative 
-                          # to path which contain pieces of documentation 
-                          # which must be included in the document
-               [ "../PackageInfo.g" ], 
-               "XMod",    # the name of the book used by GAP's online help
-               "../../..",# optional: relative path to the main GAP root 
-                          # directory to produce HTML files with relative 
-                          # paths to external books.
-                          # optional: use "MathJax", "Tth" and/or "MathML"
-                          # to produce additional variants of HTML files
-               "MathJax"  # optional: use "MathJax", "Tth" and/or "MathML"
-                          # to produce additional variants of HTML files
-               );; 
+# Create VERSION file for "make towww"
+PrintTo( "VERSION", GAPInfo.PackageInfoCurrent.Version );
 
-# Copy the *.css and *.js files from the styles directory of the GAPDoc 
-# package into the directory containing the package manual.
-CopyHTMLStyleFiles( XModDoc );
-
-SetGapDocLaTeXOptions(GAPDoc2LaTeXProcs.DefaultOptions);
-
-# Create the manual.lab file which is needed if the main manuals or another 
-# package is referring to your package
-GAPDocManualLab( "XMod" );; 
+QUIT;

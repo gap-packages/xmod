@@ -27,8 +27,9 @@
               and the inclusion SL25.C2 -> GL25 using the matrix groups 
               (construction worked OK with isomorphic perm groups). 
 
-## 2.64 -> 2.64dev (15/12/2017) 
+## 2.64 -> 2.64dev (09/01/2018) 
 
+ * (09/01/18) now using AutoDoc to build the manual 
  * (15/12/17) removed examples/; added expt/; *.xtst now in xtst/ 
 
 ## 2.63 -> 2.64 (30/11/2017) 

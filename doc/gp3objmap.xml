@@ -69,7 +69,6 @@ Here is a picture of the situation:
 \mathcal{S}  & = &  &&  \\
        &   &  S_{\{1\}} \ar[rr]_{\dot{\partial}_1}  
               && S_{\emptyset} 
-}} 
 }}
 ]]></Display>
 
@@ -443,7 +442,7 @@ These functions return <C>fail</C> when invalid data is supplied.
          Arg="map" />
 <!--   <Prop Name="IsPrecat<M>^2</M>Morphism" -->
 <!--         Arg="map" />             -->
-   <Prop Name="IsBijective"
+   <Meth Name="IsBijective"
          Arg="mor" />
    <Prop Name="IsEndomorphism3dObject"
          Arg="mor" />

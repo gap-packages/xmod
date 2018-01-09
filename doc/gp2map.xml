@@ -61,16 +61,7 @@ and are morphisms for the two actions:
 \partial_2 \circ \sigma ~=~ \rho \circ \partial_1, \qquad
 \sigma(s^r) ~=~ (\sigma s)^{\rho r}.
 </Display>
-Here is a diagram of the situation. 
-<Display><![CDATA[
-\vcenter{\xymatrix{
-  S_1 \ar[rr]^{\sigma} \ar[dd]_{\partial_1}
-     && S_2 \ar[dd]^{\partial_2} \\
-     &&  \\
-  R_1 \ar[rr]_{\rho}
-     && R_2 
-}}
-]]></Display>
+
 Here  <M>\sigma</M> is the <C>SourceHom</C>  
 and  <M>\rho</M>  is the <C>RangeHom</C>  of the morphism. 
 When <M>\mathcal{X}_{1} = \mathcal{X}_{2}</M>
@@ -83,15 +74,15 @@ by <M>{\rm Aut}(\mathcal{X}_1 )</M>.
 
 
 <ManSection>
-   <Prop Name="IsInjective"
+   <Meth Name="IsInjective"
          Arg="map" />
-   <Prop Name="IsSurjective"
+   <Meth Name="IsSurjective"
          Arg="map" />
-   <Prop Name="IsSingleValued"
+   <Meth Name="IsSingleValued"
          Arg="map" />
-   <Prop Name="IsTotal"
+   <Meth Name="IsTotal"
          Arg="map" />
-   <Prop Name="IsBijective"
+   <Meth Name="IsBijective"
          Arg="map" />
    <Prop Name="IsEndo2DimensionalMapping"
          Arg="map" />

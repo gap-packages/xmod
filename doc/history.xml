@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  history.xml           XMod documentation            Chris Wensley  -->
 <!--                                                                     -->
-<!--  Copyright (C) 2001-2017, Murat Alp and Chris Wensley,              --> 
+<!--  Copyright (C) 2001-2018, Murat Alp and Chris Wensley,              --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -188,7 +188,7 @@ At the same time, functions for cat2-groups were introduced by Alper Odabas.
 
 
 <Subsection><Heading>Latest Version</Heading>
-The latest version, &XMODVERSION;, was released on &XMODLONGRELEASEDATE;. 
+The latest version conmtains additional material on crossed modules of groupoids. 
 </Subsection>
 </Section> 
 
