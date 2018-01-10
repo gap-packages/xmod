@@ -27,8 +27,9 @@
               and the inclusion SL25.C2 -> GL25 using the matrix groups 
               (construction worked OK with isomorphic perm groups). 
 
-## 2.64 -> 2.64dev (09/01/2018) 
+## 2.64 -> 2.64dev (10/01/2018) 
 
+ * (10/01/12) converted LaTeX entities back in to newcommands 
  * (09/01/18) now using AutoDoc to build the manual 
  * (15/12/17) removed examples/; added expt/; *.xtst now in xtst/ 
 

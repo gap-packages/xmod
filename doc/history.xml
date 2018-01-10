@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  history.xml           XMod documentation            Chris Wensley  -->
 <!--                                                                     -->
-<!--  Copyright (C) 2001-2018, Murat Alp and Chris Wensley,              --> 
+<!--  Copyright (C) 1996-2018, Murat Alp and Chris Wensley,              --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -243,16 +243,16 @@ then there is a crossed square with sides
 </Item>
 <Item>
 For a group <M>L</M>, the automorphism crossed module 
-<M>{\rm Act}\ L = (\iota : L \to {\rm Aut}\ L)</M> 
+<M>\Act\ L = (\iota : L \to \Aut\ L)</M> 
 splits to form the square 
-with <M>(\iota_1 : L \to {\rm Inn}\ L)</M> on two sides, 
-and <M>(\iota_2 : {\rm Inn}\ L \to {\rm Aut}\ L)</M> on the other two sides, 
+with <M>(\iota_1 : L \to \Inn\ L)</M> on two sides, 
+and <M>(\iota_2 : \Inn\ L \to \Aut\ L)</M> on the other two sides, 
 where <M>\iota_1</M> maps <M>l \in L</M> to the inner automorphism  
 <M>\beta_l : L \to L,\; l^{\prime} \mapsto l^{-1}l^{\prime}l</M>,  
-and <M>\iota_2</M> is the inclusion of <M>{\rm Inn}\ L</M> in  <M>{\rm Aut}\ L</M>. 
+and <M>\iota_2</M> is the inclusion of <M>\Inn\ L</M> in  <M>\Aut\ L</M>. 
 The actions are standard, and the crossed pairing is 
 <Display>
-\boxtimes \;:\; {\rm Inn}\ L \times {\rm Inn}\ L \to L, \quad
+\boxtimes \;:\; \Inn\ L \times \Inn\ L \to L, \quad
 (\beta_l, \beta_{l^{\prime}}) \;\mapsto\; [l, l^{\prime}]~.
 </Display>
 </Item>

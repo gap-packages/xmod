@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2act.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  Copyright (C) 2001-2016, Chris Wensley et al,                      --> 
+<!--  Copyright (C) 1996-2018, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -16,14 +16,15 @@
 <Index>actor</Index>
 
 The <E>actor</E> of <M>\mathcal{X}</M>  is a crossed module
-<M>(\Delta : \mathcal{W}(\mathcal{X}) \to &Aut;(\mathcal{X}))</M>
+<M>\Act(\mathcal{X}) = 
+(\Delta : \mathcal{W}(\mathcal{X}) \to \Aut(\mathcal{X}))</M>
 which was shown by Lue and Norrie, in <Cite Key="N2" /> 
 and <Cite Key="N1" /> to give the automorphism object 
 of a crossed module <M>\mathcal{X}</M>.
 In this implementation, the source of the actor is a permutation 
 representation <M>W</M> of the Whitehead group of regular derivations, 
 and the range of the actor is a permutation representation <M>A</M> 
-of the automorphism group <M>&Aut;(\mathcal{X})</M> of <M>\mathcal{X}</M>.
+of the automorphism group <M>\Aut(\mathcal{X})</M> of <M>\mathcal{X}</M>.
 
 <ManSection>
    <Attr Name="AutomorphismPermGroup"
@@ -34,9 +35,9 @@ of the automorphism group <M>&Aut;(\mathcal{X})</M> of <M>\mathcal{X}</M>.
          Arg="xmod perm" />
 <Description>
 The automorphisms <M>( \sigma, \rho )</M> of <M>\mathcal{X}</M> form a group 
-<M>&Aut;(\mathcal{X})</M> of crossed module isomorphisms. 
+<M>\Aut(\mathcal{X})</M> of crossed module isomorphisms. 
 The function <C>AutomorphismPermGroup</C> finds a set of 
-<C>GeneratingAutomorphisms</C> for <M>&Aut;(\mathcal{X})</M>, 
+<C>GeneratingAutomorphisms</C> for <M>\Aut(\mathcal{X})</M>, 
 and then constructs a permutation representation of this group, 
 which is used as the range of the actor crossed module of <M>\mathcal{X}</M>. 
 The individual automorphisms can be constructed from the permutation group 
@@ -105,7 +106,7 @@ the Whitehead crossed module of <M>\mathcal{X}</M>, at the top,
 the Norrie crossed module of <M>\mathcal{X}</M>, at the bottom, 
 </Item>
 <Item>
-<M>&Act;(\mathcal{X}) = ( \Delta : W \to A),~</M> 
+<M>\Act(\mathcal{X}) = ( \Delta : W \to A),~</M> 
 the actor crossed module of <M>\mathcal{X}</M>, on the right, and 
 </Item>
 <Item>

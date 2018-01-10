@@ -2,8 +2,6 @@
 ##  This builds the documentation of the XMod package. 
 ##  Needs: GAPDoc & AutoDoc packages, latex, pdflatex, mkindex
 ##  call this with GAP from within the package root directory 
-##  
-##  latex_header_file := "mylatexhead.tex", 
 
 LoadPackage( "GAPDoc" );
 
@@ -19,16 +17,17 @@ AutoDoc( rec(
                       "gp2ind.xml",    "gp3objmap.xml", "gpd2obj.xml",
                       "util.xml",      "history.xml"
                     ],
-        gapdoc_latex_options := rec( 
-            EarlyExtraPreamble := "\\usepackage[all]{xy}" 
-        ),  
+        gapdoc_latex_options := rec( EarlyExtraPreamble := """
+            \usepackage[all]{xy} 
+            \newcommand{\Act} {\mathrm{Act}}
+            \newcommand{\Aut} {\mathrm{Aut}}
+            \newcommand{\Disp}{\mathrm{Disp}}
+            \newcommand{\Fix} {\mathrm{Fix}}
+            \newcommand{\Inn} {\mathrm{Inn}}
+            \newcommand{\Stab}{\mathrm{Stab}}
+        """ ),  
         entities := rec( 
-            AutoDoc := "<Package>AutoDoc</Package>",
-            Act     := "\mathop{\textrm{Act}\rm}",
-            Aut     := "\mathop{\textrm{Aut}\rm}", 
-            Disp    := "\mathop{\textrm{Disp}\rm}", 
-            Fix     := "\mathop{\textrm{Fix}\rm}", 
-            Stab    := "\mathop{\textrm{Stab}\rm}" 
+            AutoDoc := "<Package>AutoDoc</Package>"
         )
     )
 ));
