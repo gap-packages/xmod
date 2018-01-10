@@ -224,7 +224,7 @@ Group([ f5, f2*f3 ])
 ]]>
 </Example>
 
-<ManSection Label="CentreXMod">
+<ManSection>
    <Attr Name="CentreXMod"
          Arg="X0" />
    <Oper Name="Centralizer"
@@ -469,9 +469,9 @@ gap> iso66 := AllXModsUpToIsomorphism( x66 );;  Length( iso66 );
 
 <ManSection>
    <Oper Name="Isoclinism"
-         Arg="G H" />
+         Arg="G H" Label="for groups" />
    <Oper Name="AreIsoclinicDomains"
-         Arg="G H" />
+         Arg="G H" Label="for groups" />
 <Description>
 Let <M>G,H</M> be groups with central quotients <M>Q(G)</M> and <M>Q(H)</M> 
 and derived subgroups <M>[G,G]</M> and <M>[H,H]</M> respectively. 
@@ -511,9 +511,9 @@ false
 
 <ManSection>
    <Prop Name="IsStemDomain"
-         Arg="G" />
+         Arg="G" Label="for groups" />
    <Attr Name="IsoclinicStemDomain"
-         Arg="G" />
+         Arg="G" Label="for groups" />
    <Oper Name="AllStemGroupIds"
          Arg="n" />
    <Oper Name="AllStemGroupFamilies"
@@ -556,9 +556,9 @@ gap> AllStemGroupFamilies( 32 );
 
 <ManSection Label="group-rank">
    <Attr Name="IsoclinicRank"
-         Arg="G" />
+         Arg="G" Label="for groups" />
    <Attr Name="IsoclinicMiddleLength"
-         Arg="G" />
+         Arg="G" Label="for groups" />
 <Description>
 Let <M>G</M> be a finite <M>p</M>-group. 
 Then <M>\log_p |[G,G] / (Z(G) \cap [G,G])|</M> is called the 
@@ -588,9 +588,9 @@ gap> IsoclinicRank(G);
 
 <ManSection>
    <Oper Name="Isoclinism"
-         Arg="X0 Y0" />
+         Arg="X0 Y0" Label="for crossed modules" />
    <Oper Name="AreIsoclinicDomains"
-         Arg="X0 Y0" />
+         Arg="X0 Y0" Label="for crossed modules of groups" />
 <Description>
 Let <M>\mathcal{X},\mathcal{Y}</M> be crossed modules with central quotients 
 <M>Q(\mathcal{X})</M> and <M> Q(\mathcal{Y})</M>,  
@@ -636,9 +636,9 @@ gap> Display( ism89 );
 
 <ManSection>
    <Prop Name="IsStemDomain"
-         Arg="X0" />
-   <Prop Name="IsoclinicStemDomain"
-         Arg="X0" />
+         Arg="X0" Label="for crossed modules of groups" />
+   <Attr Name="IsoclinicStemDomain"
+         Arg="X0" Label="for crossed modules of groups" />
 <Description>
 A crossed module <M>\mathcal{X}</M> is a <E>stem crossed module</E> 
 if <M>Z(\mathcal{X}) \leq [\mathcal{X},\mathcal{X}]</M>. 
@@ -660,9 +660,9 @@ false
 
 <ManSection>
    <Attr Name="IsoclinicRank"
-         Arg="X0" />
+         Arg="X0" Label="for crossed modules of groups" />
    <Attr Name="IsoclinicMiddleLength"
-         Arg="X0" />
+         Arg="X0" Label="for crossed modules of groups" />
 <Description>
 The formulae in subsection <Ref Subsect="group-rank" /> 
 are applied to the crossed module.

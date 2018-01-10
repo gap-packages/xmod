@@ -278,9 +278,9 @@ crossed square with:
 </Example>
 
 
-<ManSection Label="CentralQuotientXMod">
+<ManSection>
     <Attr Name="CentralQuotient"
-          Arg="X0" />
+          Arg="X0" Label="for crossed modules" />
 <Description>
 The central quotient of a crossed module 
 <M>\mathcal{X} = (\partial : S \to R)</M> is the crossed square where: 

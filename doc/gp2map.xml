@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2map.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  Copyright (C) 2001-2017, Chris Wensley et al,                      --> 
+<!--  Copyright (C) 1996-2018, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -22,9 +22,9 @@ and (pre-)cat1-groups.
 
 <ManSection>
    <Attr Name="Source"
-         Arg="map" />
+         Arg="map" Label="for 2d-group mappings" />
    <Attr Name="Range"
-         Arg="map" />
+         Arg="map" Label="for 2d-group mappings" />
    <Attr Name="SourceHom"
          Arg="map" />
    <Attr Name="RangeHom"
@@ -75,15 +75,15 @@ by <M>{\rm Aut}(\mathcal{X}_1 )</M>.
 
 <ManSection>
    <Meth Name="IsInjective"
-         Arg="map" />
+         Arg="map" Label="for pre-xmod morphisms" />
    <Meth Name="IsSurjective"
-         Arg="map" />
+         Arg="map" Label="for pre-xmod morphisms" />
    <Meth Name="IsSingleValued"
-         Arg="map" />
+         Arg="map" Label="for pre-xmod morphisms" />
    <Meth Name="IsTotal"
-         Arg="map" />
+         Arg="map" Label="for pre-xmod morphisms" />
    <Meth Name="IsBijective"
-         Arg="map" />
+         Arg="map" Label="for pre-xmod morphisms" />
    <Prop Name="IsEndo2DimensionalMapping"
          Arg="map" />
 <Description>
@@ -103,11 +103,11 @@ It is usually sufficient to verify that both the <C>SourceHom</C> and the
    <Oper Name="PreXModMorphismByHoms"
          Arg="P1 P2 sigma rho" />
    <Oper Name="InclusionMorphism2DimensionalDomains"
-         Arg="X1 S1" />
+         Arg="X1 S1" Label="for crossed modules" />
    <Oper Name="InnerAutomorphismXMod"
          Arg="X1 r" />
    <Attr Name="IdentityMapping"
-         Arg="X1" />
+         Arg="X1" Label="for pre-xmods" />
 <Description>
 These are the constructors for morphisms of pre-crossed and crossed modules.
 <P/>
@@ -154,9 +154,9 @@ gap> KnownAttributesOfObject( mor1 );
 
 <ManSection>
    <Attr Name="IsomorphismPerm2DimensionalGroup"
-         Arg="obj" />
+         Arg="obj" Label="for pre-xmod morphisms" />
    <Attr Name="IsomorphismPc2DimensionalGroup"
-         Arg="obj" />
+         Arg="obj" Label="for pre-xmod morphisms" />
    <Oper Name="IsomorphismByIsomorphisms"
          Arg="D list" />
 <Description>
@@ -227,11 +227,11 @@ e_2 \circ \rho ~=~ \gamma \circ e_1.
    <Oper Name="PreCat1MorphismByHoms"
          Arg="P1 P2 gamma rho" />
    <Oper Name="InclusionMorphism2DimensionalDomains"
-         Arg="C1 S1" />
+         Arg="C1 S1" Label="for cat1-groups" />
    <Oper Name="InnerAutomorphismCat1"
          Arg="C1 r" />
    <Attr Name="IdentityMapping"
-         Arg="C1" />
+         Arg="C1" Label="for precat1-morphisms" />
 <Description>
 For an example we form a second cat1-group <Code>C2=[g18=>s3a]</Code>, 
 similar to <C>C1</C> in <Ref Sect="mansect-cat1"/>, 
@@ -267,13 +267,13 @@ Morphism of cat1-groups :-
    <Func Name="IsomorphismPermObject" 
          Arg="obj" />
    <Attr Name="IsomorphismPerm2DimensionalGroup" 
-         Arg="2DimensionalGroup" />
+         Arg="2DimensionalGroup" Label="for pre-cat1 morphisms" />
    <Attr Name="IsomorphismFp2DimensionalGroup"
-         Arg="2DimensionalGroup" />
+         Arg="2DimensionalGroup" Label="for pre-cat1 morphisms" />
    <Attr Name="IsomorphismPc2DimensionalGroup"
-         Arg="2DimensionalGroup" />
+         Arg="2DimensionalGroup" Label="for pre-cat1 morphisms" />
    <Func Name="SmallerDegreePerm2DimensionalDomain"
-         Arg="2DimensionalDomain" />
+         Arg="2DimensionalDomain" Label="for pre-cat1 morphisms" />
 <Description>
 The global function <C>IsomorphismPermObject</C> 
 calls <C>IsomorphismPerm2DimensionalGroup</C>, 
@@ -354,7 +354,7 @@ gap> CompositionMorphism( iso2, inc );
 
 <ManSection>
    <Oper Name="Kernel"
-         Arg="map" />
+         Arg="map" Label="for 2d-mappings" />
    <Attr Name="Kernel2DimensionalMapping"
          Arg="map" />
 <Description>

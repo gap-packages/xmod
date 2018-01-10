@@ -81,8 +81,6 @@ Morphism of crossed modules :-
          Arg="xmod" />
    <Attr Name="ActorXMod"
          Arg="xmod" />
-   <Attr Name="AutomorphismPermGroup"
-         Arg="xmod" />
 <Description>
 An automorphism <M>( \sigma, \rho )</M> of <C>X</C> 
 acts on the Whitehead monoid by
