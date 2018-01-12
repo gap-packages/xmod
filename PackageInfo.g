@@ -6,10 +6,11 @@
 
 SetPackageInfo( rec( 
 
+Packagename := "XMod",
 PackageName := "XMod",
 Subtitle := "Crossed Modules and Cat1-Groups",
 Version := "2.64dev",
-Date := "10/01/2018",
+Date := "12/01/2018",
 
 Persons := [
   rec(
@@ -120,7 +121,8 @@ Dependencies := rec(
                            ["groupoids", ">= 1.54"], 
                            ["Hap", ">= 1.11.13"],
                            ["AutPGrp", ">= 1.6"] ], 
-  SuggestedOtherPackages := [ ["GAPDoc", ">= 1.5.1"] ],
+  SuggestedOtherPackages := [ ["GAPDoc", ">= 1.5.1"],
+                              ["AutoDoc", ">= 2017.09.15"] ],
   ExternalConditions := [ ]
 ),
 
@@ -205,7 +207,8 @@ AutoDoc := rec(
             ), 
         Acknowledgements := Concatenation( 
             "This documentation was prepared with the ", 
-            "&GAPDoc; <Cite Key='GAPDoc'/> and &AutoDoc; packages.<P/>\n", 
+            "&GAPDoc; <Cite Key='GAPDoc'/> and ", 
+            "&AutoDoc; <Cite Key='AutoDoc'/> packages.<P/>\n", 
             "The procedure used to produce new releases uses the package ", 
             "<Package>GitHubPagesForGAP</Package> ", 
             "<Cite Key='GitHubPagesForGAP' /> ", 

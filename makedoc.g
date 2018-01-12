@@ -5,10 +5,6 @@
 
 LoadPackage( "GAPDoc" );
 
-if fail = LoadPackage("AutoDoc", ">= 2017.09.08") then
-    Error("AutoDoc is required: version at least 2017.09.08");
-fi;
-
 AutoDoc( rec( 
     scaffold := rec(
         ## MainPage := false, 
@@ -17,6 +13,7 @@ AutoDoc( rec(
                       "gp2ind.xml",    "gp3objmap.xml", "gpd2obj.xml",
                       "util.xml",      "history.xml"
                     ],
+        bib := "bib.xml", 
         gapdoc_latex_options := rec( EarlyExtraPreamble := """
             \usepackage[all]{xy} 
             \newcommand{\Act} {\mathrm{Act}}

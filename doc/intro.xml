@@ -93,7 +93,7 @@ any &GAP; archive, e.g.
 </Item>
 </List>
 The package also has a GitHub repository at: 
-<URL>https://github.com/gap-packages/xmod.</URL>
+<URL>https://github.com/gap-packages/xmod/</URL>.
 <P/>
 Crossed modules and cat1-groups are special types of 
 <E>2-dimensional groups</E> <Cite Key="B82"/>, <Cite Key="brow:hig:siv"/>, 
