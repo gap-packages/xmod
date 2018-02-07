@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2up.xml             XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  Copyright (C) 2001-2017, Chris Wensley et al,                      --> 
+<!--  Copyright (C) 2001-2018, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -70,7 +70,7 @@ A section is  <E>regular</E>  when  <M>h \xi</M>  is an automorphism, and
 the group of regular sections is isomorphic to the Whitehead group.
 <P/>
 If  <M>\epsilon</M> denotes the inclusion of  
-<M>S = {\rm ker} t</M>  in  <M>G</M>
+<M>S = \ker\ t</M>  in  <M>G</M>
 then  <M>\partial = h \epsilon : S \to R</M> and 
 <Display>
 \xi r ~=~ (e r)(e \chi r), 

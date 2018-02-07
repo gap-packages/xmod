@@ -2,6 +2,7 @@
 
 ## Problems and ToDos: 
 
+ * (06/02/18) implement the kernel->cokernel crossed module, Lemma 1.1(iii)?
  * (30/10/17) there is no IsCrossedSquare method - and IsPreCrossedSquare 
               makes no checks on the crossed pairing map
  * (13/10/17) need more examples in 2.1, e.g. DirectProductOp (+Proj,Embed) 
@@ -27,7 +28,7 @@
               and the inclusion SL25.C2 -> GL25 using the matrix groups 
               (construction worked OK with isomorphic perm groups). 
 
-## 2.64 -> 2.64dev (10/01/2018) 
+## 2.64 -> 2.64dev (06/02/2018) 
 
  * (10/01/12) converted LaTeX entities back in to newcommands 
  * (09/01/18) now using AutoDoc to build the manual 

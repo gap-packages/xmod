@@ -4,6 +4,7 @@
 ##  call this with GAP from within the package root directory 
 
 LoadPackage( "GAPDoc" );
+LoadPackage( "AutoDoc" );
 
 AutoDoc( rec( 
     scaffold := rec(
@@ -28,8 +29,5 @@ AutoDoc( rec(
         )
     )
 ));
-
-# Create VERSION file for "make towww"
-PrintTo( "VERSION", GAPInfo.PackageInfoCurrent.Version );
 
 QUIT;

@@ -6,11 +6,10 @@
 
 SetPackageInfo( rec( 
 
-Packagename := "XMod",
 PackageName := "XMod",
 Subtitle := "Crossed Modules and Cat1-Groups",
-Version := "2.64dev",
-Date := "12/01/2018",
+Version := "2.64.dev",
+Date := "05/02/2018",
 
 Persons := [
   rec(
@@ -116,13 +115,12 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">=4.8.8",
-  NeededOtherPackages := [ ["Utils", ">= 0.48"], 
-                           ["groupoids", ">= 1.54"], 
-                           ["Hap", ">= 1.11.13"],
-                           ["AutPGrp", ">= 1.6"] ], 
-  SuggestedOtherPackages := [ ["GAPDoc", ">= 1.5.1"],
-                              ["AutoDoc", ">= 2017.09.15"] ],
+  GAP := ">=4.9.0",
+  NeededOtherPackages := [ ["Utils", ">= 0.53"], 
+                           ["groupoids", ">= 1.55"], 
+                           ["Hap", ">= 1.12.5"],
+                           ["AutPGrp", ">= 1.8"] ], 
+  SuggestedOtherPackages := [ ["GAPDoc", ">= 1.6.1"] ],
   ExternalConditions := [ ]
 ),
 
