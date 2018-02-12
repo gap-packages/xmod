@@ -2,7 +2,7 @@
 ##
 #W  gp2up.tst                     XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2016, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2018, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 gap> START_TEST( "XMod package: gp2up.tst" );
@@ -13,7 +13,7 @@ gap> SetInfoLevel( InfoGroupoids, 0 );;
 
 ## Chapter 5
 
-## Section 5.1.2
+## Section 5.1.1
 gap> g18 := Group( (1,2,3), (4,5,6), (2,3)(5,6) );;
 gap> SetName( g18, "g18" );
 gap> gen18 := GeneratorsOfGroup( g18 );;
@@ -42,19 +42,34 @@ Crossed module [c3->s3] :-
   These 2 automorphisms generate the group of automorphisms.
 : associated cat1-group is [g18=>s3]
 
-gap> imchi := [ (1,2,3)(4,6,5), (1,2,3)(4,6,5) ];;
-gap> chi := DerivationByImages( X3, imchi );
+gap> imchi1 := [ (1,2,3)(4,6,5), (1,2,3)(4,6,5) ];;
+gap> chi1 := DerivationByImages( X3, imchi1 );
 DerivationByImages( s3, c3, [ (4,5,6), (2,3)(5,6) ], 
 [ (1,2,3)(4,6,5), (1,2,3)(4,6,5) ] )
+gap> [ IsUp2DimensionalMapping( chi1 ), IsDerivation( chi1 ) ];
+[ true, true ]
 
-## Section 5.1.3
-gap> xi := SectionByDerivation( chi );
+## Section 5.1.2
+gap> hom2 := GroupHomomorphismByImages( s3, g18, [ (4,5,6), (2,3)(5,6) ], 
+> [ (1,3,2)(4,6,5), (1,2)(4,6) ] );;
+gap> xi2 := SectionByImages( C3, hom2 );                                 
+SectionByImages( s3, g18, [ (4,5,6), (2,3)(5,6) ], 
+[ (1,3,2)(4,6,5), (1,2)(4,6) ] )
+gap> [ IsUp2DimensionalMapping( xi2 ), IsSection( xi2 ) ];
+[ true, true ]
+gap> chi2 := DerivationBySection( xi2 );
+DerivationByImages( s3, c3, [ (4,5,6), (2,3)(5,6) ], 
+[ (1,3,2)(4,5,6), (1,2,3)(4,6,5) ] )
+gap> xi1 := SectionByDerivation( chi1 );
 SectionByImages( s3, g18, [ (4,5,6), (2,3)(5,6) ], [ (1,2,3), (1,2)(4,6) ] )
 
+## Section 5.1.3
+gap> chi12 := chi1 * chi2;
+DerivationByImages( s3, c3, [ (4,5,6), (2,3)(5,6) ], [ (1,2,3)(4,6,5), () ] )
+gap> xi12 := xi1 * xi2;
 ## Section 5.2.1
-gap> all3 := AllDerivations( X3 );;
-gap> imall3 := ImagesList( all3 );; 
-gap> PrintListOneItemPerLine( imall3 );
+gap> all3 := AllDerivations( X3 );
+monoid of derivations with images list:
 [ [ (), () ],
   [ (), (1,3,2)(4,5,6) ],
   [ (), (1,2,3)(4,6,5) ],
@@ -65,7 +80,7 @@ gap> PrintListOneItemPerLine( imall3 );
   [ (1,2,3)(4,6,5), (1,3,2)(4,5,6) ],
   [ (1,2,3)(4,6,5), (1,2,3)(4,6,5) ]
   ]
-gap> PrintListOneItemPerLine( ImagesTable( all3 ) );
+gap> PrintOneItemPerLine( ImagesTable( all3 ) );
 [ [ 1, 1, 1, 1, 1, 1 ],
   [ 1, 1, 1, 3, 3, 3 ],
   [ 1, 1, 1, 2, 2, 2 ],
@@ -96,10 +111,19 @@ gap> im45 := UpImagePositions( chi45 );
 [ 1, 1, 1, 3, 3, 3 ]
 gap> Position( imder3, UpGeneratorImages( chi45 ) );
 2
+gap> chi45 = PrincipalDerivation( X3, (1,2,3)(4,6,5) );
+true
+gap> pder3 := PrincipalDerivations( X3 );
+monoid of derivations with images list:
+[ [ (), () ],
+  [ (), (1,3,2)(4,5,6) ],
+  [ (), (1,2,3)(4,6,5) ]
+  ]
+
 
 ## Section 5.2.3
 gap> wgt3 := WhiteheadGroupTable( X3 );; 
-gap> PrintListOneItemPerLine( wgt3 );
+gap> PrintOneItemPerLine( wgt3 );
 [ [ 1, 2, 3, 4, 5, 6 ],
   [ 2, 3, 1, 5, 6, 4 ],
   [ 3, 1, 2, 6, 4, 5 ],
@@ -110,7 +134,7 @@ gap> PrintListOneItemPerLine( wgt3 );
 gap> wpg3 := WhiteheadPermGroup( X3 );
 Group([ (1,2,3)(4,5,6), (1,4)(2,6)(3,5) ])
 gap> wmt3 := WhiteheadMonoidTable( X3 );; 
-gap> PrintListOneItemPerLine( wmt3 );
+gap> PrintOneItemPerLine( wmt3 );
 [ [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ],
   [ 2, 3, 1, 5, 6, 4, 8, 9, 7 ],
   [ 3, 1, 2, 6, 4, 5, 9, 7, 8 ],

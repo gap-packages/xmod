@@ -60,6 +60,9 @@ function( chi )
           iso, fp, pres, T, numrels, lenrels, rels, rel, len, triv;
 
     XM := Object2d( chi );
+    if not ( HasIsPreXModDomain( XM ) and IsPreXModDomain( XM ) ) then 
+        Error( "Object2d(chi) is not a precrossed module" ); 
+    fi;
     im := UpGeneratorImages( chi );
     S := Source( XM );
     oneS := One( S );
@@ -131,11 +134,17 @@ function( xi )
 
     local hom, C, Crng, idrng, ok, reg;
 
+    if not HasUpHomomorphism( xi ) then 
+        Error( "xi has no UpHomomorphism" ); 
+    fi; 
     hom := UpHomomorphism( xi ); 
     if not IsGroupHomomorphism( hom ) then
         return false;
     fi;
     C := Object2d( xi );
+    if not ( HasIsPreCat1Domain( C ) and IsPreCat1Domain( C ) ) then 
+        Error( "Object2d(xi) is not a pre-cat1-group" ); 
+    fi;
     Crng := Range( C );
     if not ( ( Source(hom) = Crng ) and ( Range(hom) = Source(C) ) ) then
         Print( "<hom> not a homomorphism: Range( C ) -> Source( C )\n" );
@@ -396,6 +405,7 @@ end );
 ##############################################################################
 ##
 #M  PrincipalDerivation            derivation determined by a choice of s in S
+#M  PrincipalDerivations      list of principal derivations without duplicates
 ##
 InstallMethod( PrincipalDerivation, "method for xmod and source element", 
     true, [ IsXMod, IsObject ], 0,
@@ -424,27 +434,24 @@ function( XM, s )
     return iota;
 end );
 
-##############################################################################
-##
-#M  PrincipalDerivations      list of principal derivations without duplicates
-##
 InstallMethod( PrincipalDerivations, "method for xmod",  true, [ IsXMod ], 0,
 function( XM )
 
-    local S, s, elS, size, i, L, iota, pos;
+    local S, s, elS, size, i, L, iota, im, pos;
 
     S := Source( XM );
     elS := Elements( S );
     size := Length( elS );
     L := [ ];
     for i in [1..size] do
-        iota := PrincipalDerivation( XM, elS[i] );
-        pos := Position( L, iota );
+        iota := PrincipalDerivation( XM, elS[i] ); 
+        im := UpGeneratorImages( iota );
+        pos := Position( L, im );
         if ( pos = fail ) then
-            Add( L, iota );
+            Add( L, im );
         fi;
     od;
-    return L;
+    return MonoidOfUp2DimensionalMappingsObj( XM, L, "princ" );
 end );
 
 ##############################################################################
@@ -667,7 +674,7 @@ end );
 
 ##############################################################################
 ##
-#M  DerivationBySection      construct XMod derivation from cat1-group section
+#M  DerivationBySection      construct xmod derivation from cat1-group section
 ##
 InstallMethod( DerivationBySection, "method for a section", true,
     [ IsSection ], 0,
@@ -678,15 +685,15 @@ function( xi )
     if not IsSection( xi ) then
         Error( "Parameter must be a section of a cat1-group" );
     fi;
-    C := xi.cat1;
+    C := Object2d( xi );
     imxi := UpGeneratorImages( xi );
     XM := XModOfCat1Group( C );
-    S := C.kernel;
+    S := Source( XM );
     R := Range( C );
     stgR := StrongGeneratorsStabChain( StabChain( R ) );
     ngR := Length( stgR );
-    eR := C.embedRange;
-    eK := C.embedKernel;
+    eR := RangeEmbedding( C );
+    eK := KernelEmbedding( C );
     imchi := 0 * [ 1..ngR ];
     for i in [ 1..Length( stgR ) ] do
         r := stgR[i];
@@ -696,7 +703,6 @@ function( xi )
         Info( InfoXMod, 2, "In xi->chi :- ", [ i, r, er, s] );
     od;
     chi := DerivationByImages( XM, imchi );
-    chi.isDerivation := IsDerivation( chi );
     return chi;
 end );
 
@@ -756,13 +762,13 @@ function( obj, images, str )
       IsMonoidOfUp2DimensionalMappings, true,
       Object2d, obj,
       ImagesList, images,
-      AllOrRegular, str );
+      DerivationClass, str );
     if IsXMod( obj ) then
         SetIsMonoidOfDerivations( mon, true );
     elif IsCat1Group( obj ) then
         SetIsMonoidOfSections( mon, true );
     else
-        Error( "<obj> not an xmod nor a cat1" );
+        Error( "<obj> not a crossed module nor a cat1-group" );
     fi;
     return mon;
 end );
@@ -969,7 +975,7 @@ function( XM )
     local C, D, L, i, j, chi, images, J, M, reg, len;
 
     D := RegularDerivations( XM );
-    reg := AllOrRegular( D );
+    reg := DerivationClass( D );
     L := ImagesList( D );
     len := Length( L );
     M := 0 * [1..len];
