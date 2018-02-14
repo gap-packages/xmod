@@ -5,7 +5,7 @@
 ##
 ##  This file contains implementations of UpMappings, Derivations and Sections
 ##
-#Y  Copyright (C) 2001-2017, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2018, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 ##############################################################################
@@ -404,6 +404,29 @@ end );
 
 ##############################################################################
 ##
+#M  IdentityDerivation                 derivation which maps R to the identity
+#M  IdentitySection                        this section is the range embedding
+##
+InstallMethod( IdentityDerivation, "method for a crossed module", true, 
+    [ IsXMod ], 0,
+function( XM )
+
+    local R, genR, id; 
+
+    R := Range( XM ); 
+    genR := GeneratorsOfGroup( R ); 
+    id := One( Source( XM ) ); 
+    return DerivationByImages( XM, List( genR, r -> id ) ); 
+end ); 
+
+InstallMethod( IdentitySection, "method for a cat1-group", true, 
+    [ IsCat1Group ], 0,
+function( C )
+    return SectionByHomomorphism( C, RangeEmbedding( C ) ); 
+end ); 
+
+##############################################################################
+##
 #M  PrincipalDerivation            derivation determined by a choice of s in S
 #M  PrincipalDerivations      list of principal derivations without duplicates
 ##
@@ -451,7 +474,7 @@ function( XM )
             Add( L, im );
         fi;
     od;
-    return MonoidOfUp2DimensionalMappingsObj( XM, L, "princ" );
+    return MonoidOfUp2DimensionalMappingsObj( XM, L, "principal" );
 end );
 
 ##############################################################################
@@ -461,16 +484,26 @@ end );
 InstallMethod( CompositeDerivation, "method for two derivations", true,
     [ IsDerivation, IsDerivation ], 0,
 function( chi, chj )
+    return WhiteheadProduct( chj, chi );
+end );
+
+##############################################################################
+##
+#M  WhiteheadProduct                    Whitehead composite of two derivations
+##
+InstallMethod( WhiteheadProduct, "method for two derivations", true,
+    [ IsDerivation, IsDerivation ], 0,
+function( chi, chj )
 
     local XM, imi, imj, R, stgR, numrng, rng, r, k,
-          s, si, sj, bdy, bsj, imcomp, comp;
+          s, si, sj, bdy, bsi, imcomp, comp;
 
     XM := Object2d( chi );
-    R := Range( XM );
-    stgR := StrongGeneratorsStabChain( StabChain( R ) );
     if not ( Object2d( chj ) = XM ) then
         Error( "<chi>,<chj> must be derivations of the SAME crossed module" );
     fi;
+    R := Range( XM );
+    stgR := StrongGeneratorsStabChain( StabChain( R ) );
     numrng := Length( stgR );
     rng := [ 1..numrng ];
     imi := UpGeneratorImages( chi );
@@ -481,12 +514,45 @@ function( chi, chj )
         r := stgR[k];
         sj := imj[k];
         si := imi[k];
-        bsj := Image( bdy, sj );
-        s := DerivationImage( chi, bsj );
-        imcomp[k] := si * sj * s;
+        bsi := Image( bdy, si );
+        s := DerivationImage( chj, bsi );
+        imcomp[k] := sj * si * s;
     od;
     comp := DerivationByImages( XM, imcomp );
     return comp;
+end );
+
+InstallMethod( WhiteheadProduct, "method for two sections", true,
+    [ IsSection, IsSection ], 0,
+function( xi, xj )
+
+    local C, R, stgR, ui, uj, h, e, hui, ehui, ujhui, r, im1, im2, im3,
+          numrng, k, imcomp, comp;
+
+    C := Object2d( xi );
+    if not ( C = Object2d( xj ) ) then
+        Error( "<xi>,<xj> must be sections of the SAME cat1-group" );
+    fi;
+    R := Range( C );
+    stgR := StrongGeneratorsStabChain( StabChain( R ) ); 
+    ui := UpHomomorphism( xi );
+    uj := UpHomomorphism( xj );
+    h := HeadMap( C );
+    e := RangeEmbedding( C );
+    hui := ui * h;
+    ehui := hui * e;
+    ujhui := hui * uj;
+    numrng := Length( stgR );
+    imcomp := 0 * [1..numrng];
+    for k in [1..numrng] do
+        r := stgR[k];
+        im1 := ImageElm( ui, r );
+        im2 := ImageElm( ehui, r )^(-1);
+        im3 := ImageElm( ujhui, r );
+        imcomp[k] := im1 * im2 * im3;
+    od;
+    comp := GroupHomomorphismByImages( R, Source( C ), stgR, imcomp );
+    return SectionByHomomorphism( C, comp );
 end );
 
 ##############################################################################
@@ -496,8 +562,37 @@ end );
 InstallOtherMethod( \*, "for two derivations of crossed modules",
     IsIdenticalObj, [ IsDerivation, IsDerivation ], 0,
 function( chi1, chi2 )
-    return CompositeDerivation( chi2, chi1 );
+Print( "***** best to replace * with WhiteheadProduct ??? *****\n" ); 
+    return WhiteheadProduct( chi1, chi2 );
 end );
+
+##############################################################################
+##
+#M  WhiteheadOrder           order of a derivation using the Whitehead product
+##
+InstallMethod( WhiteheadOrder, "method for a derivation or section", true, 
+    [ IsUp2DimensionalMapping ], 0,
+function( up )
+
+    local obj, id, upn, n; 
+
+    n := 1; 
+    obj := Object2d( up ); 
+    if ( HasIsDerivation( up ) and IsDerivation( up ) ) then 
+        if not IsRegularDerivation( up ) then 
+            return fail; 
+        fi;
+        id := IdentityDerivation( obj ); 
+    else 
+        id := IdentitySection( obj );
+    fi; 
+    upn := up; 
+    while not (upn = id ) do
+        n := n+1; 
+        upn := WhiteheadProduct( up, upn ); 
+    od; 
+    return n; 
+end ); 
 
 ##############################################################################
 ##
@@ -524,7 +619,7 @@ end );
 
 #############################################################################
 ##
-#M  InverseDerivations      Finds all semigroup inverses XJ for derivation Xi
+#M  InverseDerivations      Finds all semigroup inverses Xj for derivation Xi
 ##                                                i.e.  XiXjXi=Xi & XjXiXj=Xj
 InstallMethod( InverseDerivations, "method for a derivation", true,
     [ IsDerivation ], 0,
@@ -539,10 +634,10 @@ function( chi )
     inv := [ ];
     for j in [1..size] do
         chj := DerivationByImages( XM, L[j] );
-        chk := CompositeDerivation( chi, chj );
-        chl := CompositeDerivation( chk, chi );
-        chh := CompositeDerivation( chj, chi );
-        chg := CompositeDerivation( chh, chj );
+        chk := WhiteheadProduct( chj, chi );
+        chl := WhiteheadProduct( chi, chk );
+        chh := WhiteheadProduct( chi, chj );
+        chg := WhiteheadProduct( chj, chh );
         if ( ( UpGeneratorImages( chi ) = UpGeneratorImages( chl ) )
             and ( UpGeneratorImages( chg ) = UpGeneratorImages( chj ) ) ) then
             Add( inv, Position( L, UpGeneratorImages( chj ) ) );
@@ -559,22 +654,18 @@ InstallMethod( ListInverseDerivations, "method for a crossed module", true,
     [ IsXMod ], 0,
 function( XM )
 
-    local L, i, M, size, D, chi, inv;
+    local L, i, M, size, D, chi;
 
     D := AllDerivations( XM );
     L := ImagesList( D );
     size := Length( L );
     M := 0 * [1..size];
-    if IsBound( D.inverses ) then
-        return D.inverses;
-    fi;
     for i in [1..size] do
         chi := DerivationByImages( XM, L[i] );
-        inv := InverseDerivations( chi );
-        M[i] := inv;
+        M[i] := InverseDerivations( chi );
     od;
     return M;
-    end );
+end );
 
 ##############################################################################
 ##                                 Sections                                 ##
@@ -582,10 +673,10 @@ function( XM )
 
 ##############################################################################
 ##
-#M  SectionByImages                                   sets up GroupHomByImages
+#M  SectionByHomomorphism                 converts a homomorphism to a section
 ##
-InstallMethod( SectionByImages, "method for a cat1-group", true,
-    [ IsCat1Group, IsGroupHomomorphism ], 0,
+InstallMethod( SectionByHomomorphism, "method for a cat1-group", true,
+    [ IsPreCat1Group, IsGroupHomomorphism ], 0,
 function( C, hom )
 
     local R, G, stgR, ngR, ok, xi;
@@ -631,7 +722,7 @@ function( xi )
     local obj;
 
     obj := Object2d( xi );
-    Print( "SectionByImages( ", Range( obj ), ", ", Source( obj ), ", ",
+    Print( "SectionByHomomorphism( ", Range( obj ), ", ", Source( obj ), ", ",
         GeneratorsOfGroup( Range( obj ) ), ", ", UpGeneratorImages( xi ), 
         " )" );
 end ); 
@@ -666,9 +757,9 @@ function( chi )
         g := er * eKchi[i];
         imhom[i] := g;
     od;
-    ## xi := SectionByImages( C, imhom );   use  NC
+    #? use SectionByHomomorphismNC
     hom := GroupHomomorphismByImages( R, Source(C), stgR, imhom );
-    xi := SectionByImages( C, hom );
+    xi := SectionByHomomorphism( C, hom );
     return xi;
 end ); 
 
@@ -713,37 +804,12 @@ end );
 InstallMethod( CompositeSection, "method for two sections", true,
     [ IsSection, IsSection ], 0,
 function( xi, xj )
-
-    local C, R, stgR, h, e, hxj, ehxj, xihxj, r, im1, im2, im3,
-          numrng, k, imcomp, comp;
-
-    C := Object2d( xi );
-    if not ( C = Object2d( xj ) ) then
-        Error( "<xi>,<xj> must be sections of the SAME cat1-group" );
-    fi;
-    R := Range( C );
-    stgR := StrongGeneratorsStabChain( StabChain( R ) );
-    h := HeadMap( C );
-    e := RangeEmbedding( C );
-    hxj := xj * h;
-    ehxj := hxj * e;
-    xihxj := hxj * xi;
-    numrng := Length( stgR );
-    imcomp := 0 * [1..numrng];
-    for k in [1..numrng] do
-        r := stgR[k];
-        im1 := Image( xj, r );
-        im2 := Image( ehxj, r )^(-1);
-        im3 := Image( xihxj, r );
-        imcomp[k] := im1 * im2 * im3;
-    od;
-    comp := SectionByImages( C, imcomp );
-    return comp;
+    return WhiteheadProduct( xj, xi );
 end );
 
 
 ###############################################################################
-##                        Monoids of Derivations and Sections                ##
+##                    Monoids of Derivations and Sections                    ##
 ###############################################################################
 
 
@@ -775,8 +841,6 @@ end );
 
 ##############################################################################
 ##
-#?  added 28/04/08, but does not seem to be 'applicable' ??
-##
 #M  PrintObj( <mon> )                  prints regular/all derivations/sections 
 #M  ViewObj( <mon> )                    views regular/all derivations/sections 
 ##
@@ -796,6 +860,16 @@ end );
 
 InstallMethod( ViewObj, "for IsMonoidOfUp2DimensionalMappings", true,
     [ IsMonoidOfUp2DimensionalMappings ], 0, PrintObj ); 
+
+##############################################################################
+##
+#M  Size( <mon> )                         for regular/all derivations/sections 
+##
+InstallOtherMethod( Size, "for IsMonoidOfUp2DimensionalMappings", true,
+    [ IsMonoidOfUp2DimensionalMappings ], 0,
+function( mon ) 
+    return Length( ImagesList( mon ) ); 
+end ); 
 
 ##############################################################################
 ##
@@ -844,7 +918,7 @@ function( XM, subs, imrho, imchi, j, str )
         ok := ( ( chi <> fail ) and IsDerivation( chi ) );
         if ( ok and IsXMod( XM ) ) then
             SetIsDerivation( chi, true );
-            if ( ok and ( str = "reg" ) ) then
+            if ( ok and ( str = "regular" ) ) then
                 ok := IsRegularDerivation( chi );
             fi;
         fi;
@@ -895,8 +969,8 @@ function( XM, str )
 
     local R, len, stgR, subs, images, sorted, derivrec;
 
-    if not ( str in [ "reg", "all" ] ) then
-        Error( "Invalid reg|all string" );
+    if not ( str in [ "all", "regular", "principal" ] ) then
+        Error( "Invalid derivation class" );
     fi;
     R := Range( XM );
     stgR := StrongGeneratorsStabChain( StabChain( R ) );
@@ -918,7 +992,7 @@ function( XM )
     local how, ok;
 
     ok := true;
-    return BacktrackDerivations( XM, "reg" );
+    return BacktrackDerivations( XM, "regular" );
 end );
 
 ##############################################################################
@@ -956,7 +1030,7 @@ function( XM )
     for i in [1..size] do
         J := 0 * [1..size];
         for j in [1..size] do
-            chi := CompositeDerivation( C[i], C[j] );
+            chi := WhiteheadProduct( C[j], C[i] );
             J[j] := Position( L, UpGeneratorImages( chi ) );
         od;
         M[i] := J;
@@ -986,7 +1060,7 @@ function( XM )
     for i in [1..len] do
         J := 0 * [1..len];
         for j in [1..len] do
-            chi := CompositeDerivation( C[i], C[j] );
+            chi := WhiteheadProduct( C[j], C[i] );
             J[j] := Position( L, UpGeneratorImages( chi ) );
         od;
         M[i] := J;
@@ -1026,11 +1100,11 @@ end );
 
 ###############################################################################
 ##
-#M  WhiteheadTransMonoid( XM )               trans rep for the Whitehead monoid
+#M  WhiteheadTransformationMonoid( XM )               trans rep for the Whitehead monoid
 ##
 #?  this needs some more work
 ##
-InstallMethod( WhiteheadTransMonoid, "method for a crossed module", true,
+InstallMethod( WhiteheadTransformationMonoid, "method for a crossed module", true,
     [ IsXMod ], 0,
 function( XM )
 

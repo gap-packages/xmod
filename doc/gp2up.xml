@@ -79,6 +79,10 @@ in terms of the corresponding derivation  <M>\chi</M>  of
          Arg="map" />
    <Prop Name="IsUp2DimensionalMapping"
          Arg="map" />
+   <Attr Name="UpImagePositions"
+         Arg="chi" />
+   <Attr Name="UpGeneratorImages"
+         Arg="chi" />
 <Description>
 Derivations are stored like group homomorphisms by specifying the images
 of a generating set.  
@@ -105,38 +109,45 @@ gap> SetName( s3, "s3" );;
 gap> t := GroupHomomorphismByImages( g18, s3, gen18, [g2,g2,g3] );;
 gap> h := GroupHomomorphismByImages( g18, s3, gen18, [(),g2,g3] );;
 gap> e := GroupHomomorphismByImages( s3, g18, [g2,g3], [g2,g3] );;
-gap> C3 := Cat1( t, h, e );
+gap> C3 := Cat1Group( t, h, e );
 [g18=>s3]
 gap> SetName( Kernel(t), "c3" );;
-gap> X3 := XModOfCat1( C3 );;
-gap> Display( X3 );
-Crossed module [c3->s3] :- 
-: Source group has generators:
-  [ (1,2,3)(4,6,5) ]
-: Range group has generators:
-  [ (4,5,6), (2,3)(5,6) ]
-: Boundary homomorphism maps source generators to:
-  [ (4,6,5) ]
-: Action homomorphism maps range generators to automorphisms:
-  (4,5,6) --> { source gens --> [ (1,2,3)(4,6,5) ] }
-  (2,3)(5,6) --> { source gens --> [ (1,3,2)(4,5,6) ] }
-  These 2 automorphisms generate the group of automorphisms.
-: associated cat1-group is [g18=>s3]
-
-gap> imchi := [ (1,2,3)(4,6,5), (1,2,3)(4,6,5) ];;
-gap> chi := DerivationByImages( X3, imchi );
-DerivationByImages( s3, c3, [ (4,5,6), (2,3)(5,6) ],
-[ (1,2,3)(4,6,5), (1,2,3)(4,6,5) ] )
-gap> [ IsUp2DimensionalMapping( chi ), IsDerivation( chi ) ];
+gap> X3 := XModOfCat1Group( C3 );
+[c3->s3]
+gap> imchi1 := [ (), (1,2,3)(4,6,5) ];;
+gap> chi1 := DerivationByImages( X3, imchi1 );
+DerivationByImages( s3, c3, [ (4,5,6), (2,3)(5,6) ], 
+[ (), (1,2,3)(4,6,5) ] )
+gap> [ IsUp2DimensionalMapping( chi1 ), IsDerivation( chi1 ) ];
 [ true, true ]
+gap> UpImagePositions( chi1 );
+[ 1, 1, 1, 2, 2, 2 ]
+gap> UpGeneratorImages( chi1 ); 
+[ (), (1,2,3)(4,6,5) ]
 ]]>
 </Example>
 
 <ManSection>
-   <Oper Name="SectionByImages"
-         Arg="C ims" />
+   <Oper Name="PrincipalDerivation" 
+         Arg="X0 s" />
+<Description>
+The <E>principal derivation</E> determined by <M>s \in S</M> 
+is the derivation <M>\eta_s : R \to S,\; r \mapsto (s^{-1})^rs</M>.  
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> eta := PrincipalDerivation( X3, (1,2,3)(4,6,5) );
+DerivationByImages( s3, c3, [ (4,5,6), (2,3)(5,6) ], [ (), (1,3,2)(4,5,6) ] )
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="SectionByHomomorphism"
+         Arg="C hom" />
    <Prop Name="IsSection"
-         Arg="map" />
+         Arg="hom" />
    <Oper Name="SectionByDerivation"
          Arg="chi" />
    <Oper Name="DerivationBySection"
@@ -166,65 +177,72 @@ using <C>SectionByDerivation</C>.
 <P/>
 <Example>
 <![CDATA[
-gap> hom := GroupHomomorphismByImages( s3, g18, [ (4,5,6), (2,3)(5,6) ], 
+gap> hom2 := GroupHomomorphismByImages( s3, g18, [ (4,5,6), (2,3)(5,6) ], 
 > [ (1,3,2)(4,6,5), (1,2)(4,6) ] );;
-gap> xi := SectionByImages( C3, hom );                                 
-SectionByImages( s3, g18, [ (4,5,6), (2,3)(5,6) ], 
+gap> xi2 := SectionByHomomorphism( C3, hom2 );                                 
+SectionByHomomorphism( s3, g18, [ (4,5,6), (2,3)(5,6) ], 
 [ (1,3,2)(4,6,5), (1,2)(4,6) ] )
-gap> [ IsUp2DimensionalMapping( xi ), IsSection( xi ) ];
+gap> [ IsUp2DimensionalMapping( xi2 ), IsSection( xi2 ) ];
 [ true, true ]
-gap> DerivationBySection( xi );
+gap> chi2 := DerivationBySection( xi2 );
 DerivationByImages( s3, c3, [ (4,5,6), (2,3)(5,6) ], 
 [ (1,3,2)(4,5,6), (1,2,3)(4,6,5) ] )
-gap> SectionByDerivation( chi );
-SectionByImages( s3, g18, [ (4,5,6), (2,3)(5,6) ], [ (1,2,3), (1,2)(4,6) ] )
+gap> xi1 := SectionByDerivation( chi1 );
+SectionByHomomorphism( s3, g18, [ (4,5,6), (2,3)(5,6) ], 
+[ (1,2,3), (1,2)(4,6) ] )
 ]]>
 </Example>
 
 <ManSection>
-   <Oper Name="CompositeDerivation"
-         Arg="chi1 chi2" />
-   <Attr Name="UpImagePositions"
-         Arg="chi" />
-   <Attr Name="UpGeneratorImages"
-         Arg="chi" />
-   <Oper Name="CompositeSection"
-         Arg="xi1 xi2" />
+   <Attr Name="IdentityDerivation"
+         Arg="X0" />
+   <Attr Name="IdentitySection"
+         Arg="C0" />
 <Description>
-The Whitehead product <M>\chi_1 \star \chi_2</M> is implemented as 
-<C>CompositeDerivation(&lt;chi1&gt;,&lt;chi2&gt;)</C>.
-The composite of two sections is just the composite of homomorphisms.
+The identity derivation maps the range group to the identity subgroup 
+of the source, while the identity section is just the range embedding 
+considered as a section. 
 </Description>
 </ManSection>
 <P/>
+
 <Example>
 <![CDATA[
-gap> reg3 := RegularDerivations( X3 );;
-gap> imder3 := ImagesList( reg3 );;  Length( imder3 );
-6
-gap> chi4 := DerivationByImages( X3, imder3[4] );
-DerivationByImages( s3, c3, [ (4,5,6), (2,3)(5,6) ], [ (1,3,2)(4,5,6), () ] )
-gap> chi5 := DerivationByImages( X3, imder3[5] );
-DerivationByImages( s3, c3, [ (4,5,6), (2,3)(5,6) ], 
-[ (1,3,2)(4,5,6), (1,3,2)(4,5,6) ] )
-gap> im4 := UpImagePositions( chi4 );
-[ 1, 3, 2, 1, 3, 2 ]
-gap> im5 := UpImagePositions( chi5 );
-[ 1, 3, 2, 3, 2, 1 ]
-gap> chi45 := chi4 * chi5;
-DerivationByImages( s3, c3, [ (4,5,6), (2,3)(5,6) ], [ (), (1,3,2)(4,5,6) ] )
-gap> im45 := UpImagePositions( chi45 );
-[ 1, 1, 1, 3, 3, 3 ]
-gap> Position( imder3, UpGeneratorImages( chi45 ) );
-2
-gap> chi45 = PrincipalDerivation( X3, (1,2,3)(4,6,5) );
-true
-gap> pder3 := PrincipalDerivations( X3 );
-monoid of derivations with images list:
-[ [ (), () ],
-  [ (), (1,3,2)(4,5,6) ],
-  [ (), (1,2,3)(4,6,5) ]
-  ]
+gap> IdentityDerivation( X3 ); 
+DerivationByImages( s3, c3, [ (4,5,6), (2,3)(5,6) ], [ (), () ] )
+gap> IdentitySection(C3);     
+SectionByHomomorphism( s3, g18, [ (4,5,6), (2,3)(5,6) ], 
+[ (4,5,6), (2,3)(5,6) ] )
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="WhiteheadProduct"
+         Arg="chi1 chi2" />
+   <Oper Name="WhiteheadOrder"
+         Arg="chi" />
+<Description>
+The <C>WhiteheadProduct</C> may be applied 
+to two derivations to form <M>\chi_1 \star \chi_2</M>,  
+or to two sections to form <M>\xi_1 \star \xi_2</M>. 
+The <C>WhiteheadOrder</C> of a regular derivation <M>\chi</M> 
+is the smallest power of <M>\chi</M>, using this product, 
+equal to the <C>IdentityDerivation</C>. 
+</Description>
+</ManSection>
+<P/>
+
+<Example>
+<![CDATA[
+gap> chi12 := WhiteheadProduct( chi1, chi2 );
+DerivationByImages( s3, c3, [ (4,5,6), (2,3)(5,6) ], [ (1,2,3)(4,6,5), () ] )
+gap> xi12 := WhiteheadProduct( xi1, xi2 );
+SectionByHomomorphism( s3, g18, [ (4,5,6), (2,3)(5,6) ], 
+[ (1,2,3), (2,3)(5,6) ] )
+gap> xi12 = SectionByDerivation( chi12 ); 
+true 
+gap> [ WhiteheadOrder( chi2 ), WhiteheadOrder( xi2 ) ];
+[ 2, 2 ]
 ]]>
 </Example>
 
@@ -235,30 +253,29 @@ monoid of derivations with images list:
 <Section Label="sect-whitehead-mult">
 <Heading>Whitehead Groups and Monoids</Heading>
 
+As mentioned at the beginning of this chapter, 
+the Whitehead monoid  <M>{\rm Der}(\mathcal{X})</M> of <M>\mathcal{X}</M> 
+is the monoid of all derivations from <M>R</M> to <M>S</M>. 
+Monoids of derivations have representation 
+<C>IsMonoidOfUp2DimensionalMappingsObj</C>. 
+<Index>IsMonoidOfUp2DimensionalMappingsObj</Index> 
+Multiplication tables for Whitehead monoids
+enable the construction of transformation representations.
+
 <ManSection>
-   <Attr Name="RegularDerivations"
-         Arg="X0" />
    <Attr Name="AllDerivations"
          Arg="X0" />
-   <Attr Name="RegularSections"
-         Arg="C0" />
-   <Attr Name="AllSections"
-         Arg="C0" />
-   <Attr Name="ImagesList"
-         Arg="obj" />
    <Attr Name="ImagesTable"
          Arg="obj" />
+   <Attr Name="DerivationClass"
+         Arg="mon" />
+   <Attr Name="WhiteheadMonoidTable"
+         Arg="X0" />
+   <Attr Name="WhiteheadTransformationMonoid"
+         Arg="X0" />
 <Description>
-There are two functions to determine the elements of the Whitehead group 
-and the Whitehead monoid of a crossed module,
-namely <C>RegularDerivations</C> and <C>AllDerivations</C>.  
-(The functions <C>RegularSections</C> and <C>AllSections</C> 
-perform corresponding tasks for a cat1-group.)
-<P/>
 Using our example  <C>X3</C> 
 we find that there are just nine derivations. 
-(In fact, six of them regular, as we shall see in the next section. 
-The associated group is isomorphic to the symmetric group <C>s3</C>.)
 </Description>
 </ManSection>
 <P/>
@@ -276,8 +293,8 @@ monoid of derivations with images list:
   [ (1,2,3)(4,6,5), (1,3,2)(4,5,6) ],
   [ (1,2,3)(4,6,5), (1,2,3)(4,6,5) ]
   ]
-gap> KnownAttributesOfObject( all3 );
-[ "Object2d", "ImagesList", "AllOrRegular", "ImagesTable" ]
+gap> DerivationClass( all3 );
+"all"
 gap> PrintOneItemPerLine( ImagesTable( all3 ) );
 [ [ 1, 1, 1, 1, 1, 1 ],
   [ 1, 1, 1, 3, 3, 3 ],
@@ -289,38 +306,6 @@ gap> PrintOneItemPerLine( ImagesTable( all3 ) );
   [ 1, 2, 3, 3, 1, 2 ],
   [ 1, 2, 3, 2, 3, 1 ]
   ]
-]]>
-</Example>
-
-
-<ManSection>
-   <Attr Name="WhiteheadGroupTable"
-         Arg="X0" />
-   <Attr Name="WhiteheadMonoidTable"
-         Arg="X0" />
-   <Attr Name="WhiteheadPermGroup"
-         Arg="X0" />
-   <Attr Name="WhiteheadTransMonoid"
-         Arg="X0" />
-<Description>
-Multiplication tables for the Whitehead group or monoid
-enable the construction of permutation or transformation representations.
-</Description>
-</ManSection>
-<P/>
-<Example>
-<![CDATA[
-gap> wgt3 := WhiteheadGroupTable( X3 );; 
-gap> PrintOneItemPerLine( wgt3 );
-[ [ 1, 2, 3, 4, 5, 6 ],
-  [ 2, 3, 1, 5, 6, 4 ],
-  [ 3, 1, 2, 6, 4, 5 ],
-  [ 4, 6, 5, 1, 3, 2 ],
-  [ 5, 4, 6, 2, 1, 3 ],
-  [ 6, 5, 4, 3, 2, 1 ]
-  ]
-gap> wpg3 := WhiteheadPermGroup( X3 );
-Group([ (1,2,3)(4,5,6), (1,4)(2,6)(3,5) ])
 gap> wmt3 := WhiteheadMonoidTable( X3 );; 
 gap> PrintOneItemPerLine( wmt3 );
 [ [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ],
@@ -331,16 +316,88 @@ gap> PrintOneItemPerLine( wmt3 );
   [ 6, 5, 4, 3, 2, 1, 9, 8, 7 ],
   [ 7, 7, 7, 7, 7, 7, 7, 7, 7 ],
   [ 8, 8, 8, 8, 8, 8, 8, 8, 8 ],
-  [ 9, 9, 9, 9, 9, 9, 9, 9, 9 ]
-  ]
-gap> wtm3 := WhiteheadTransMonoid( X3 );
-<transformation monoid on 9 pts with 3 generators>
+  [ 9, 9, 9, 9, 9, 9, 9, 9, 9 ] ]
+gap> wtm3 := WhiteheadTransformationMonoid( X3 );
+<transformation monoid of degree 9 with 3 generators>
 gap> GeneratorsOfMonoid( wtm3 ); 
 [ Transformation( [ 2, 3, 1, 5, 6, 4, 8, 9, 7 ] ), 
   Transformation( [ 4, 6, 5, 1, 3, 2, 7, 9, 8 ] ), 
   Transformation( [ 7, 7, 7, 7, 7, 7, 7, 7, 7 ] ) ]
 ]]>
 </Example>
+
+<ManSection>
+   <Attr Name="RegularDerivations"
+         Arg="X0" />
+   <Attr Name="ImagesList"
+         Arg="obj" />
+   <Attr Name="WhiteheadGroupTable"
+         Arg="X0" />
+   <Attr Name="WhiteheadPermGroup"
+         Arg="X0" />
+<Description>
+<C>RegularDerivations</C> are those derivations which are invertible 
+in the monoid. 
+Multiplication tables for the Whitehead group 
+enable the construction of permutation representations.
+<P/>
+Of the nine derivations of <C>X3</C> just six are regular.  
+The associated group is isomorphic to the symmetric group <C>s3</C>. 
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> reg3 := RegularDerivations( X3 );
+monoid of derivations with images list:
+[ [ (), () ],
+  [ (), (1,3,2)(4,5,6) ],
+  [ (), (1,2,3)(4,6,5) ],
+  [ (1,3,2)(4,5,6), () ],
+  [ (1,3,2)(4,5,6), (1,3,2)(4,5,6) ],
+  [ (1,3,2)(4,5,6), (1,2,3)(4,6,5) ] ]
+gap> wgt3 := WhiteheadGroupTable( X3 );; 
+gap> PrintOneItemPerLine( wgt3 );
+[ [ 1, 2, 3, 4, 5, 6 ],
+  [ 2, 3, 1, 5, 6, 4 ],
+  [ 3, 1, 2, 6, 4, 5 ],
+  [ 4, 6, 5, 1, 3, 2 ],
+  [ 5, 4, 6, 2, 1, 3 ],
+  [ 6, 5, 4, 3, 2, 1 ] ]
+gap> wpg3 := WhiteheadPermGroup( X3 );
+Group([ (1,2,3)(4,5,6), (1,4)(2,6)(3,5) ])
+]]>
+</Example>
+
+<ManSection>
+   <Attr Name="PrincipalDerivations" 
+         Arg="X0" /> 
+<Description>
+The principal derivations form a subgroup of the Whitehead group. 
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> PDX3 := PrincipalDerivations( X3 );
+monoid of derivations with images list:
+[ [ (), () ],
+  [ (), (1,3,2)(4,5,6) ],
+  [ (), (1,2,3)(4,6,5) ]
+  ]
+]]>
+</Example>
+
+<ManSection>
+   <Attr Name="AllSections"
+         Arg="C0" />
+   <Attr Name="RegularSections"
+         Arg="C0" />
+<Description> 
+These operations have been declared but are not yet implemented. 
+The interested user should, instead, work with the corresponding derivations. 
+</Description>
+</ManSection>
 
 </Section>
 

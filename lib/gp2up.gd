@@ -88,6 +88,14 @@ DeclareOperation( "DerivationBySection", [ IsSection ] );
 
 ##############################################################################
 ##
+#O  IdentityDerivation          construct the identity derivation for an  XMod 
+#O  IdentitySection            construct the identity section for a cat1-group 
+##
+DeclareAttribute( "IdentityDerivation", IsXMod );
+DeclareAttribute( "IdentitySection", IsCat1Group );
+
+##############################################################################
+##
 #O  PrincipalDerivation              derivation determined by choice of s in S
 #A  PrincipalDerivations                         list of principal derivations
 ##
@@ -97,8 +105,13 @@ DeclareAttribute( "PrincipalDerivations", IsXMod );
 ##############################################################################
 ##
 #O  CompositeDerivation                 Whitehead composite of two derivations
+#O  WhiteheadProduct                    Whitehead composite of two derivations
+#O  WhiteheadOrder            order of a derivation using the WhitefeadProduct
 ##
 DeclareOperation( "CompositeDerivation", [ IsDerivation, IsDerivation ] );
+DeclareOperation( "WhiteheadProduct", 
+    [ IsUp2DimensionalMapping, IsUp2DimensionalMapping ] ); 
+DeclareOperation( "WhiteheadOrder", [ IsUp2DimensionalMapping ] ); 
 
 ##############################################################################
 ##
@@ -126,7 +139,7 @@ DeclareOperation( "InverseDerivations", [ IsDerivation ] );
 ##
 #O  ListInverseDerivations               List all inverses for each derivation
 ##
-DeclareOperation( "ListInverseDerivations", [ IsXMod ] );
+DeclareAttribute( "ListInverseDerivations", IsXMod );
 
 
 ##############################################################################
@@ -135,14 +148,13 @@ DeclareOperation( "ListInverseDerivations", [ IsXMod ] );
 
 ##############################################################################
 ##
-#O  SectionByImages                                   sets up GroupHomByImages
-#O  SectionByImagesNC                                 sets up GroupHomByImages
+#O  SectionByHomomorphism                 converts a homomorphism to a section
+#O  SectionByHomomorphismNC               converts a homomorphism to a section
 ##
-DeclareOperation( "SectionByImages", 
-    [ Is2DimensionalDomain, IsGroupHomomorphism ] );
-DeclareOperation( "SectionByImagesNC", 
-    [ Is2DimensionalDomain, IsGroupHomomorphism ] );
-##  usage: SectionByImages( C, im, [, true|false ] )
+DeclareOperation( "SectionByHomomorphism", 
+    [ IsPreCat1Group, IsGroupHomomorphism ] );
+DeclareOperation( "SectionByHomomorphismNC", 
+    [ IsPreCat1Group, IsGroupHomomorphism ] );
 
 ##############################################################################
 ##
@@ -176,7 +188,7 @@ DeclareRepresentation( "IsMonoidOfUp2DimensionalMappingsObj",
 ##############################################################################
 ##
 #A  ImagesList                                returns list of DerivationImages
-#A  DerivationClass                                    type of derivations record
+#A  DerivationClass                                 type of derivations record
 #A  ImagesTable                                   returns lists of image lists
 ##
 DeclareAttribute( "ImagesList", IsMonoidOfUp2DimensionalMappings );
@@ -239,12 +251,12 @@ DeclareAttribute( "WhiteheadGroupTable", IsXMod );
 #A  WhiteheadPermGroup( XM )                     a permutation representation
 #A  WhiteheadGroupGeneratingDerivations                   generators for W(X)
 #A  WhiteheadGroupGeneratorPositions         positions of generators for W(X)
-#A  WhiteheadTransMonoid( XM )                a transformation representation
+#A  WhiteheadTransformationMonoid( XM )                a transformation representation
 ##
 DeclareAttribute( "WhiteheadPermGroup", IsXMod );
 DeclareAttribute( "WhiteheadGroupGeneratingDerivations", IsXMod );
 DeclareAttribute( "WhiteheadGroupGeneratorPositions", IsXMod );
-DeclareAttribute( "WhiteheadTransMonoid", IsXMod );
+DeclareAttribute( "WhiteheadTransformationMonoid", IsXMod );
 
 ###############################################################################
 ##
