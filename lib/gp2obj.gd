@@ -2,7 +2,7 @@
 ##
 #W  gp2obj.gd                  GAP4 package `XMod'               Chris Wensley
 #W                                                                 & Murat Alp
-#Y  Copyright (C) 2001-2017, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2018, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 #############################################################################
@@ -276,9 +276,6 @@ DeclareAttribute( "EndomorphismPreCat1Group", IsPreCat1Group );
 DeclareOperation( "PreCat1GroupByNormalSubgroup", [ IsGroup, IsGroup ] );
 DeclareAttribute( "ReverseCat1Group", IsPreCat1Group );
 
-##  temporary measure to keep XModAlg working:
-DeclareSynonym( "PreCat1ByEndomorphisms", PreCat1GroupByEndomorphisms ); 
-
 #############################################################################
 ##
 #A  PreXModOfPreCat1Group( <PCG> )
@@ -290,9 +287,6 @@ DeclareAttribute( "PreXModOfPreCat1Group", IsPreCat1Group );
 DeclareAttribute( "PreCat1GroupOfPreXMod", IsPreXMod );
 DeclareAttribute( "XModOfCat1Group", IsCat1Group );
 DeclareAttribute( "Cat1GroupOfXMod", IsXMod );
-
-##  temporary measure to keep XModAlg working:
-DeclareSynonym( "PreCat1ByPreXMod", PreCat1GroupOfPreXMod ); 
 
 #############################################################################
 ##

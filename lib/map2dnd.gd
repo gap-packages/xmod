@@ -2,7 +2,7 @@
 ##
 #W  map2dnd.gd                 GAP4 package `XMod'               Chris Wensley
 ##                                                                Alper Odabas
-#Y  Copyright (C) 2001-2017, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2018, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 
 ############################################################################## 
@@ -122,9 +122,6 @@ DeclareGlobalFunction( "Make2DimensionalMagmaMorphism" );
 #A  Kernel2DimensionalMapping( <mor> )
 ##
 DeclareAttribute( "Kernel2DimensionalMapping", Is2DimensionalGroupMorphism );
-
-##  temporary measure to keep XModAlg working:
-DeclareSynonymAttr( "Kernel2dMapping", Kernel2DimensionalMapping ); 
 
 ########################  HIGHER DIMENSIONAL MAPPINGS  ###################### 
 

@@ -9,7 +9,7 @@ SetPackageInfo( rec(
 PackageName := "XMod",
 Subtitle := "Crossed Modules and Cat1-Groups",
 Version := "2.64.dev",
-Date := "14/02/2018",
+Date := "20/03/2018",
 
 Persons := [
   rec(
@@ -126,13 +126,6 @@ Dependencies := rec(
 
 AvailabilityTest := ReturnTrue,
 
-Autoload := false, 
-
-TestFile := "tst/testall.g",
-
-Keywords := ["crossed module", "cat1-group", "derivation", "section", 
-             "actor", "crossed square" ], 
-
 BannerString := Concatenation( 
   "Loading XMod ", String( ~.Version ), 
   " (methods for crossed modules and cat1-groups)\n",
@@ -143,6 +136,13 @@ BannerString := Concatenation(
   "and Enver Uslu (enveruslu@ogu.edu.tr).\n", 
   "----------",
   "-------------------------------------------------------------------\n" ), 
+
+Autoload := false, 
+
+TestFile := "tst/testall.g",
+
+Keywords := ["crossed module", "cat1-group", "derivation", "section", 
+             "actor", "crossed square" ], 
 
 AutoDoc := rec(
     TitlePage := rec(

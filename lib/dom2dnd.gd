@@ -2,7 +2,7 @@
 ##
 #W  dom2dnd.gd                 GAP4 package `XMod'               Chris Wensley
 ##                                                                Alper Odabas
-#Y  Copyright (C) 2001-2017, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2018, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 #############################################################################
@@ -127,9 +127,6 @@ DeclareOperation( "SubHigherDimensionalDomain",
 DeclareCategory( "Is2DimensionalDomain", IsHigherDimensionalDomain ); 
 DeclareGlobalFunction( "Make2DimensionalDomain" ); 
 DeclareOperation( "KindOf2DimensionalDomain", [ IsList ] );  
-
-##  temporary measure to keep XModAlg working:
-DeclareSynonym( "Is2dDomain", Is2DimensionalDomain ); 
 
 #########################  2 DIMENSIONAL MAGMAS  ############################ 
 

@@ -14,7 +14,6 @@
  * (25/04/17) file examples/gpd2obj.g needs more material 
  * (19/08/16) error report from Tedar Tegstrom: he discovered that 
               InducedXMod(X0,iota) fails when Boundary(X0) not mono. 
- * (16/06/16) document more utility functions or move them to Utils
  * (11/11/15) resolve the problem of the best 'sgQ1' to use in Isoclinism, and 
               more generally, check whether using SmallGeneratingSet elsewhere 
               allows for spurious results in the isoclinism functions
@@ -28,7 +27,7 @@
               and the inclusion SL25.C2 -> GL25 using the matrix groups 
               (construction worked OK with isomorphic perm groups). 
 
-## 2.64 -> 2.64dev (14/02/2018) 
+## 2.64 -> 2.64dev (20/02/2018) 
 
  * (13/02/18) CompositeDerivation/Section now WhiteheadProduct 
               SectionByImages now SectionByHomomorphism 
@@ -36,7 +35,7 @@
  * (12/02/18) AllOrRegular now DerivationClass; revised PrincipalDerivations
  * (10/01/12) converted LaTeX entities back in to newcommands 
  * (09/01/18) now using AutoDoc to build the manual 
- * (15/12/17) removed examples/; added expt/; *.xtst now in xtst/ 
+ * (15/12/17) removed examples/; added expt/; *.tst files in xtst/ 
 
 ## 2.63 -> 2.64 (30/11/2017) 
 
