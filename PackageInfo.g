@@ -8,8 +8,8 @@ SetPackageInfo( rec(
 
 PackageName := "XMod",
 Subtitle := "Crossed Modules and Cat1-Groups",
-Version := "2.64.dev",
-Date := "20/03/2018",
+Version := "2.65",
+Date := "21/03/2018",
 
 Persons := [
   rec(

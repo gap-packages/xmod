@@ -10,16 +10,6 @@
 
 ##############################################################################
 ##
-#M  IsUp2DimensionalMapping  (19/07/11) : no longer needed now a category
-##
-##  InstallMethod( IsUp2DimensionalMapping, 
-##  "generic method for derivations and sections", true, [IsGeneralMapping], 0,
-##function( map )
-##    return ( HasObject2d( map ) and HasUpGeneratorImages( map ) );
-##end );
-
-##############################################################################
-##
 #M  Source( <map> )  . . . . . . . . . . . . . . . . . . source for up-mapping
 #M  Range( <map> )  . . . . . . . . . . . . . . . . . . . range for up-mapping
 ##

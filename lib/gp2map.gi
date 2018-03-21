@@ -179,7 +179,7 @@ end );
 
 #############################################################################
 ##
-#F  MappingGeneratorsImages( <map> ) . . . . . . . . . . . .  for a 2DimensionalMapping
+#F  MappingGeneratorsImages( <map> ) . . . . . . . for a 2DimensionalMapping
 ##
 InstallOtherMethod( MappingGeneratorsImages, "for a 2DimensionalMapping", 
     true, [ Is2DimensionalMapping ], 0,

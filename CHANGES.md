@@ -6,12 +6,11 @@
  * (30/10/17) there is no IsCrossedSquare method - and IsPreCrossedSquare 
               makes no checks on the crossed pairing map
  * (13/10/17) need more examples in 2.1, e.g. DirectProductOp (+Proj,Embed) 
- * (07/08/17) coprod.tst and gpnobjmap.tst need to work with new groupoids 
  * (22/07/17) X4 (etc) is a HigherDimensionalDomain but not a 
               HigherDimensionalGroup - discrepancy to be sorted out! 
  * (14/06/17) Need String, View, Print for 3d- and nd-groups 
  * (28/04/17) implement inclusion of the kernel of an xmod-morphism as xsq 
- * (25/04/17) file examples/gpd2obj.g needs more material 
+ * (25/04/17) tst/gpd2obj.tst needs more material 
  * (19/08/16) error report from Tedar Tegstrom: he discovered that 
               InducedXMod(X0,iota) fails when Boundary(X0) not mono. 
  * (11/11/15) resolve the problem of the best 'sgQ1' to use in Isoclinism, and 
@@ -19,7 +18,6 @@
               allows for spurious results in the isoclinism functions
  * (09/11/15) resolve whether XModCentre = CentreXMod 
  * (15/10/15) need a function CrossedSquareByCentralExtension 
- * (24/09/15) keep or dispose of the `dom2d3d` functions? 
  * (03/09/15) XModCentre etc. fail with pc-groups 
  * (22/06/12) need to fix construction of endomorphism classes 
               so that they can be printed/displayed. 
@@ -27,8 +25,9 @@
               and the inclusion SL25.C2 -> GL25 using the matrix groups 
               (construction worked OK with isomorphic perm groups). 
 
-## 2.64 -> 2.64dev (20/02/2018) 
+## 2.64 -> 2.65 (21/02/2018) 
 
+ * (18/03/18) remove some of the temporary synonyms (09/08/17) 
  * (13/02/18) CompositeDerivation/Section now WhiteheadProduct 
               SectionByImages now SectionByHomomorphism 
               added IdentityDerivation; IdentitySection; WhiteheadOrder  
