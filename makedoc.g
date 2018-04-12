@@ -12,7 +12,7 @@ AutoDoc( rec(
         includes := [ "intro.xml",     "gp2obj.xml",    "gp2map.xml", 
                       "isoclinic.xml", "gp2up.xml",     "gp2act.xml",
                       "gp2ind.xml",    "gp3objmap.xml", "gpd2obj.xml",
-                      "util.xml",      "history.xml"
+                      "apps.xml",      "util.xml",      "history.xml"
                     ],
         bib := "bib.xml", 
         gapdoc_latex_options := rec( EarlyExtraPreamble := """

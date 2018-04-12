@@ -91,6 +91,16 @@
   <publisher>Cambridge University Press</publisher>
 </inproceedings></entry>
 
+<entry id="B18"><article>
+  <author>
+    <name><first>R.</first><last>Brown</last></name>
+  </author>  
+  <title>Crossed modules, and the homotopy 2-type of a free loop space</title>
+  <year>2018</year>
+  <pages>1--11</pages>
+  <journal>arXiv:1003.5617 [math.AT]</journal>
+</article></entry>
+
 <entry id="BH1"><article>
   <author>
     <name><first>R.</first><last>Brown</last></name>
@@ -175,7 +185,7 @@ with applications to homotopy <M>2</M>-types</title>
   <title>Crossed modules and their higher dimensional analogues</title>
   <school>University of Wales, Bangor</school>
   <year>1984</year>
-  <type>Ph.{D}. thesis</type>
+  <type>Ph.{D.} thesis</type>
 </phdthesis></entry>
 
 <entry id="ell:st"><article>
