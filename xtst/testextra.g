@@ -2,15 +2,14 @@
 ##
 #W  testextra.g                    XMod Package                  Chris Wensley 
 ##
-#Y  Copyright (C) 2000-2017, Chris Wensley et al,  
+#Y  Copyright (C) 2000-2018, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
-##  
 
 LoadPackage( "xmod" );
 
 pkgname := "xmod"; 
 pkgdir := DirectoriesPackageLibrary( pkgname, "xtst" );
-testfiles := [ "allxmods.tst", "cat1mor.tst" ];
+testfiles := [ "allxmods.tst", "cat1mor.tst", "loops.tst" ];
 testresult := true;
 for ff in testfiles do
     fn := Filename( pkgdir, ff );

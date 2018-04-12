@@ -25,7 +25,11 @@
               and the inclusion SL25.C2 -> GL25 using the matrix groups 
               (construction worked OK with isomorphic perm groups). 
 
-## 2.64 -> 2.65 (21/02/2018) 
+## 2.65 -> 2.66 (12/04/2018) 
+
+ * (12/04/18) added LoopsXMod functions: apps.{gd,gi,xml}, loops.{g,tst} 
+
+## 2.64 -> 2.65 (21/03/2018) 
 
  * (18/03/18) remove some of the temporary synonyms (09/08/17) 
  * (13/02/18) CompositeDerivation/Section now WhiteheadProduct 
