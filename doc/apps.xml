@@ -12,7 +12,7 @@
 <Chapter Label="chap-apps">
 <Heading>Applications</Heading>
 
-This chapter was started in April 2018 for version 2.66 of &XMod;. 
+This chapter was added in April 2018 for version 2.66 of &XMod;. 
 Initially it describes crossed modules for free loop spaces. 
 Further applications may arise in due course. 
 
@@ -22,7 +22,7 @@ Further applications may arise in due course.
 <Index>loop space</Index>
 <Index>free loop space</Index>
 
-These functions have been used to produce examples for Ronnie Brown's paper 
+These functions have been used to produce examples for Ronald Brown's paper 
 <E>Crossed modules, and the homotopy <M>2</M>-type of a free loop space</E>
 <Cite Key="B18" />.  
 The relevant theorem in that paper is as follows. 
@@ -83,6 +83,7 @@ The operation <C>LoopsXMod(M,a)</C> calculates the crossed module
 <P/> 
 The operation <C>AllLoopsXMod(M)</C> returns a list of crossed modules, 
 one for each equivalence class of elements <M>p \in P</M>. 
+<B>These operations should be considered experimental at present.</B> 
 <P/>
 In the example below the automorphism crossed module <C>X8</C> has 
 <M>M \cong C_2^3</M> and <M>P = PSL(3,2)</M> 

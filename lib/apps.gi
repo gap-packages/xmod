@@ -75,6 +75,9 @@ function( X0, a )
         imda[j] := g; 
     od; 
     bdy1 := GroupHomomorphismByImages( M0, Pa, genM0, imda ); 
+    if ( bdy1 = fail ) then 
+        Error( "bdy1 fails to be a homomorphism" ); 
+    fi;
     ## construct the action map for X1 
     imact1 := ListWithIdenticalEntries( ngPa, 0 ); 
     for i in [1..ngPa] do  
@@ -113,7 +116,7 @@ function( X0 )
     nclP0 := Length( conjP0 ); 
     if ( InfoLevel( InfoXMod ) > 1 ) then 
         Print( "#I  Size(P0) = ", Size(P0), "\n" ); 
-        Print( "#I  imgenM0 = ", imgenM0, "\n" ); 
+        Print( "#I  imgenM0 = ", imgenM0, "\n" );   #? this is not used 
         Print( "#I  cokernel of boundary has IdGroup ", IdGroup(Q0), "\n" ); 
         Print( "#I  conjugacy class sizes, reps and orders:classes for P :-\n" ); 
         Print( "#I  ", List( conjP0, c -> Size(c) ), "\n" ); 
