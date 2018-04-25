@@ -25,7 +25,7 @@
               and the inclusion SL25.C2 -> GL25 using the matrix groups 
               (construction worked OK with isomorphic perm groups). 
 
-## 2.65 -> 2.66 (16/04/2018) 
+## 2.65 -> 2.66 (12/04/2018) 
 
  * (12/04/18) added LoopsXMod functions: apps.{gd,gi,xml}, loops.{g,tst} 
 
