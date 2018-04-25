@@ -2,7 +2,7 @@
 ##
 #W  gp2obj.tst                    XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2017, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2018, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 gap> START_TEST( "XMod package: gp2obj.tst" );
@@ -15,18 +15,19 @@ gap> SetInfoLevel( InfoGroupoids, 0 );;
 gap> c5 := Group( (5,6,7,8,9) );;
 gap> SetName( c5, "c5" );
 gap> X1 := XModByAutomorphismGroup( c5 );
-[c5->PAut(c5)]
+[c5->Aut(c5)]
 gap> Display(X1);
 
-Crossed module [c5->PAut(c5)] :- 
+Crossed module [c5->Aut(c5)] :- 
 : Source group c5 has generators:
   [ (5,6,7,8,9) ]
-: Range group PAut(c5) has generators:
-  [ (1,2,3,4) ]
+: Range group Aut(c5) has generators:
+  [ GroupHomomorphismByImages( c5, c5, [ (5,6,7,8,9) ], [ (5,7,9,6,8) ] ) ]
 : Boundary homomorphism maps source generators to:
-  [ () ]
+  [ IdentityMapping( c5 ) ]
 : Action homomorphism maps range generators to automorphisms:
-  (1,2,3,4) --> { source gens --> [ (5,7,9,6,8) ] }
+  GroupHomomorphismByImages( c5, c5, [ (5,6,7,8,9) ], 
+[ (5,7,9,6,8) ] ) --> { source gens --> [ (5,7,9,6,8) ] }
   This automorphism generates the group of automorphisms.
 
 gap> Size( X1 );
@@ -37,11 +38,15 @@ gap> ext := ExternalSetXMod( X1 );
 <xset:[ (), (5,6,7,8,9), (5,7,9,6,8), (5,8,6,9,7), (5,9,8,7,6) ]>
 gap> Orbits( ext );
 [ [ () ], [ (5,6,7,8,9), (5,7,9,6,8), (5,9,8,7,6), (5,8,6,9,7) ] ]
+gap> a := GeneratorsOfGroup( Range( X1 ) )[1]^2; 
+[ (5,6,7,8,9) ] -> [ (5,9,8,7,6) ]
+gap> ImageElmXModAction( X1, (5,7,9,6,8), a );
+(5,8,6,9,7)
 gap> Print( RepresentationsOfObject(X1), "\n" );
 [ "IsComponentObjectRep", "IsAttributeStoringRep", "IsPreXModObj" ]
 gap> Print( KnownAttributesOfObject(X1), "\n" );
 [ "Name", "Size", "Range", "Source", "IdGroup", "Boundary", "XModAction", 
-  "ExternalSetXMod" ]
+  "ExternalSetXMod", "IsomorphismPerm2DimensionalGroup" ]
 
 ## Section 2.2.2
 gap> s4 := Group( (1,2), (2,3), (3,4) );; 

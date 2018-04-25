@@ -5,7 +5,7 @@
 ##  This file implements generic methods for (pre-)crossed squares 
 ##  and (pre-)cat2-groups.
 ##
-#Y  Copyright (C) 2001-2017, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2018, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
     
 #############################################################################
@@ -751,16 +751,16 @@ function( C2G )
     gensrc := GeneratorsOfGroup( G ); 
 
     t1 := GroupHomomorphismByImagesNC( G, G, gensrc, 
-              List(gensrc, x -> Image( t1, x ) ) ); 
+              List(gensrc, x -> ImageElm( t1, x ) ) ); 
     h1 := GroupHomomorphismByImagesNC( G, G, gensrc, 
-              List(gensrc, x -> Image( h1, x ) ) ); 
+              List(gensrc, x -> ImageElm( h1, x ) ) ); 
     t2 := GroupHomomorphismByImagesNC( G, G, gensrc, 
-              List(gensrc, x -> Image( t2, x ) ) ); 
+              List(gensrc, x -> ImageElm( t2, x ) ) ); 
     h2 := GroupHomomorphismByImagesNC( G, G, gensrc, 
-              List(gensrc, x -> Image( h2, x ) ) ); 
+              List(gensrc, x -> ImageElm( h2, x ) ) ); 
     
     L := Intersection( Kernel( t1 ), Kernel( t2 ) ) ;
-    M := Intersection( Image ( t1 ), Kernel( t2 ) );
+    M := Intersection( Image( t1 ), Kernel( t2 ) );
     N := Intersection( Kernel ( t1 ), Image( t2 ) );
     P := Intersection( Image( t1 ), Image( t2 ) )  ;
     
@@ -770,19 +770,19 @@ function( C2G )
     Info( InfoXMod, 4, "N = ", N );
     Info( InfoXMod, 4, "P = ", P );
     
-    bdy1 := GroupHomomorphismByFunction( L, M, x -> Image(h1,x) );
+    bdy1 := GroupHomomorphismByFunction( L, M, x -> ImageElm(h1,x) );
     act := ConjugationActionForCrossedSquare(M,L);
     up := XModByBoundaryAndAction(bdy1,act);
     
-    bdy2 := GroupHomomorphismByFunction( L, N, x -> Image(h2,x) );
+    bdy2 := GroupHomomorphismByFunction( L, N, x -> ImageElm(h2,x) );
     act2 := ConjugationActionForCrossedSquare(N,L);
     left := XModByBoundaryAndAction(bdy2,act2);
     
-    bdy3 := GroupHomomorphismByFunction( N, P, x -> Image(h1,x) );
+    bdy3 := GroupHomomorphismByFunction( N, P, x -> ImageElm(h1,x) );
     act3 := ConjugationActionForCrossedSquare(P,N);
     down := XModByBoundaryAndAction(bdy3,act3);
     
-    bdy4 := GroupHomomorphismByFunction( M, P, x -> Image(h2,x) );
+    bdy4 := GroupHomomorphismByFunction( M, P, x -> ImageElm(h2,x) );
     act4 := ConjugationActionForCrossedSquare(P,M);
     right := XModByBoundaryAndAction(bdy4,act4);
     
@@ -826,7 +826,7 @@ function( GxH  )
     embH := info!.embeddings[2];
     for g in elG do
         for h in elH do
-            im := Image( embG, g) * Image( embH, h );
+            im := ImageElm( embG, g) * ImageElm( embH, h );
             Add( list1, [g,h] );
             Add( list2, im );
         od;
@@ -842,8 +842,8 @@ InstallMethod( PreCat2GroupOfPreCrossedSquare, true,
     [ IsPreCrossedSquare ], 0,
 function( XS )
  
-    local L, M, N, P, up, left, down, right, bdy_up, bdy_left, bdy_right, 
-          bdy_down, act_up, act_left, act_down, act_right, act_diag, 
+    local L, M, N, P, up, left, down, right, bdy_up, bdy_lt, bdy_rt, 
+          bdy_dn, act_up, act_lt, act_dn, act_rt, act_diag, 
           h, g, n, l, nl, m, p, pm, a, aut, act, aut2, act2, i, 
           G2, relsG2, 
           pmnl, n2p, l2p, l2pm, hmn2p, 
@@ -878,14 +878,14 @@ function( XS )
     Info( InfoXMod, 4, "P = ", P );
 
     bdy_up := Boundary(up);
-    bdy_left := Boundary(left);
-    bdy_down := Boundary(down);
-    bdy_right := Boundary(right);
+    bdy_lt := Boundary(left);
+    bdy_dn := Boundary(down);
+    bdy_rt := Boundary(right);
      
     act_up := XModAction(up);
-    act_left := XModAction(left);
-    act_down := XModAction(down);
-    act_right := XModAction(right);
+    act_lt := XModAction(left);
+    act_dn := XModAction(down);
+    act_rt := XModAction(right);
     act_diag := DiagonalAction(XS);
     h := CrossedPairing( XS );
 
@@ -894,7 +894,7 @@ function( XS )
     e2NxL := Embedding( NxL, 2 ); 
     p1NxL := Projection( NxL, 1 );
     p2NxL := Projection( NxL, 2 );
-    PxM := SemidirectProduct(P,act_down,M);
+    PxM := SemidirectProduct(P,act_dn,M);
     e1PxM := Embedding( PxM, 1 ); 
     e2PxM := Embedding( PxM, 2 ); 
     p1PxM := Projection( PxM, 1 ); 
@@ -921,9 +921,9 @@ function( XS )
             imautgen := [ ]; 
             n := p1NxL( nl );
             l := p2NxL( nl );
-            n2p := Image( Image( act_right, p ), n ); 
-            l2p := Image( Image( act_diag, p ), l ); 
-            l2pm := Image( Image( act_left, m ), l2p ); 
+            n2p := ImageElm( ImageElm( act_rt, p ), n ); 
+            l2p := ImageElm( ImageElm( act_diag, p ), l ); 
+            l2pm := ImageElm( ImageElm( act_lt, m ), l2p ); 
             hmn2p := ImageElmCrossedPairing( h, [m,n2p] ); 
             Add( imautgen, e1NxL( n2p ) * e2NxL( (hmn2p^-1)*l2pm ) ); 
         od; 
@@ -948,9 +948,9 @@ function( XS )
         nl := p2G( pmnl );
         n := p1NxL( nl ); 
         l := p2NxL( nl ); 
-        a := [ Image(bdy_right,m)*p, 
-               Image(bdy_left,l) * 
-                   Image(Image(act_right,Image(bdy_down,n)),m) ];
+        a := [ ImageElm( bdy_rt, m )*p, 
+               ImageElm( bdy_lt, l ) * 
+                   ImageElm( ImageElm( act_rt, ImageElm(bdy_dn,n) ), m ) ];
         Add( imt1, a );
     od;
     imt1form2 := List( imt1, x -> relsPxM[2][ Position( relsPxM[1], x )] );
@@ -960,15 +960,15 @@ function( XS )
 
     h1 := Projection( G );
         t1 := GroupHomomorphismByImagesNC( G, G, genG, 
-              List( genG, x -> Image( t1, x ) ) );
+              List( genG, x -> ImageElm( t1, x ) ) );
     h1 := GroupHomomorphismByImagesNC( G, G, genG, 
-              List( genG, x -> Image( h1, x ) )  );
+              List( genG, x -> ImageElm( h1, x ) )  );
     C1 := PreCat1GroupByEndomorphisms( t1, h1 );
     
     MxL := SemidirectProduct( M, act_up, L );     
     emb := Embedding( MxL, 1 ); 
     emb := Embedding( MxL, 2 ); 
-    PxN := SemidirectProduct( P, act_down, N);    
+    PxN := SemidirectProduct( P, act_dn, N);    
     emb := Embedding( PxN, 1 ); 
     emb := Embedding( PxN, 2 ); 
     genMxL := GeneratorsOfGroup( MxL );    
@@ -1000,9 +1000,9 @@ function( XS )
         n := g[2];
         ##  l := ml[2] and m := ml[1];
         imautgen2form2 := List( genMxLform2, 
-                                ml -> [ Image( Image( act_right, p ), ml[1]),
-        Image ( Image(act_left, n ), Image( Image(act_diag,p), ml[2]) ) * 
-         ImageElmCrossedPairing(h,[Image(Image(act_right,p),ml[1]), n] )] );
+                                ml -> [ ImageElm( ImageElm( act_rt, p ), ml[1]),
+        Image ( ImageElm(act_lt, n ), ImageElm( ImageElm(act_diag,p), ml[2]) ) * 
+         ImageElmCrossedPairing(h,[ImageElm(ImageElm(act_rt,p),ml[1]), n] )] );
         imautgen2 := List( imautgen2form2, 
                            x -> relsMxL[2][ Position( relsMxL[1], x )] );
         a := GroupHomomorphismByImages( MxL, MxL, genMxL, imautgen2 );
@@ -1039,8 +1039,8 @@ function( XS )
         n := genG2form4[i][2];
         m := genG2form4[i][3];
         l := genG2form4[i][4];
-        a := [ Image(bdy_right,m)*p, Image(bdy_left,l) * 
-               Image( Image( act_down, Image(bdy_right,m) ), n) ];
+        a := [ ImageElm(bdy_rt,m)*p, ImageElm(bdy_lt,l) * 
+               ImageElm( ImageElm( act_dn, ImageElm(bdy_rt,m) ), n) ];
         Add( imt2, a );        
     od;
    
@@ -1048,9 +1048,9 @@ function( XS )
     t2 := GroupHomomorphismByImages(G2, PxN, genG2,  imt2form2 );
     h2 := Projection( G2 ); 
     t2 := GroupHomomorphismByImagesNC( G2, G2, genG2, 
-              List(genG2, x -> Image( t2, x ) )  );
+              List(genG2, x -> ImageElm( t2, x ) )  );
     h2 := GroupHomomorphismByImagesNC( G2, G2, genG2, 
-              List(genG2, x -> Image( h2, x ) )  );
+              List(genG2, x -> ImageElm( h2, x ) )  );
     C2 := PreCat1GroupByEndomorphisms( t2, h2 );
     Cat2 := CatnGroup( [ C1, C2 ] );
     if HasName( XS ) then 

@@ -250,7 +250,7 @@ gap> [ WhiteheadOrder( chi2 ), WhiteheadOrder( xi2 ) ];
 
 
 
-<Section Label="sect-whitehead-mult">
+<Section Label="sect-whitehead-monoids">
 <Heading>Whitehead Groups and Monoids</Heading>
 
 As mentioned at the beginning of this chapter, 

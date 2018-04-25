@@ -2,7 +2,7 @@
 ##
 #W  gp3objmap.tst                 XMOD test file                Chris Wensley
 ##
-#Y  Copyright (C) 2001-2017, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2018, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 gap> START_TEST( "XMod package: gp3objmap.tst" );
@@ -12,9 +12,10 @@ gap> saved_infolevel_groupoids := InfoLevel( InfoGroupoids );;
 gap> SetInfoLevel( InfoGroupoids, 0 );;
 
 ## make independent of isoclinic.tst
-gap> d24 := DihedralGroup(24);; 
+gap> d24 := DihedralGroup( IsPermGroup, 24 );; 
 gap> SetName( d24, "d24" );
-gap> X24 := XModByAutomorphismGroup( d24 );; 
+gap> Y24 := XModByAutomorphismGroup( d24 );; 
+gap> X24 := Image( IsomorphismPerm2DimensionalGroup( Y24 ) );;
 gap> nsx := NormalSubXMods( X24 );; 
 gap> ids := List( nsx, n -> IdGroup(n) );; 
 
@@ -57,7 +58,7 @@ gap> pos7 := Position( ids, [ [12,2], [24,5] ] );;
 gap> Xn7 := nsx[pos7];; 
 gap> IdGroup( Xn7 );
 [ [ 12, 2 ], [ 24, 5 ] ]
-gap> IdGroup( CentreXMod(Xn7) );  
+gap> IdGroup( CentreXMod( Xn7 ) );  
 [ [ 4, 1 ], [ 4, 1 ] ]
 gap> CQXn7 := CentralQuotient( Xn7 );;
 gap> IdGroup( CQXn7 );

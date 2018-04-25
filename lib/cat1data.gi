@@ -2,7 +2,7 @@
 ##
 #W  cat1data.gi                GAP4 package `XMod'               Chris Wensley
 ##
-#Y  Copyright (C) 2001-2017, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2018, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 ##  These functions are used in the construction of the data file cat1data.g 
@@ -109,7 +109,7 @@ function( gp )
             Add( ireps, R ); 
             genR := GeneratorsOfGroup( R ); 
             for a in aut do 
-                igenR := List( genR, g -> Image( a, g ) ); 
+                igenR := List( genR, g -> ImageElm( a, g ) ); 
                 aR := Subgroup( gp, igenR ); 
                 pos := Position( reps, aR ); 
                 if ( not( pos = fail ) and ( pos > i ) ) then 
@@ -152,7 +152,7 @@ function( gp )
     for i in [1..nireps] do 
         idem := idems[i]; 
         for j in [1..Length(idem)] do 
-            mgi := List( gens, g -> Image( idem[j], g ) ); 
+            mgi := List( gens, g -> ImageElm( idem[j], g ) ); 
             idem[j] := GroupHomomorphismByImages( gp, gp, gens, mgi ); 
         od;  
     od; 
@@ -227,13 +227,13 @@ function( gp )
                             # check no. generators fixed by tail map 
                             len1 := 0; 
                             for z in gens1 do 
-                                if ( Image(TailMap(CC),z) = z ) then 
+                                if ( ImageElm(TailMap(CC),z) = z ) then 
                                     len1 := len1 + 1; 
                                 fi; 
                             od;
                             len2 := 0; 
                             for z in gens2 do 
-                                if ( Image(TailMap(CC),z) = z ) then 
+                                if ( ImageElm(TailMap(CC),z) = z ) then 
                                     len2 := len2 + 1; 
                                 fi; 
                             od; 
@@ -289,10 +289,10 @@ function( gp )
         genr := SmallGeneratingSet( Range(a) ); 
         egenr := List( genr, g -> ExtRepOfObj(g) ); 
         t := TailMap( a ); 
-        imt := List( gensgp, g -> Image( t, g ) ); 
+        imt := List( gensgp, g -> ImageElm( t, g ) ); 
         eimt := List( imt, g -> ExtRepOfObj(g) ); 
         h := HeadMap( a ); 
-        imh := List( gensgp, g -> Image( h, g ) ); 
+        imh := List( gensgp, g -> ImageElm( h, g ) ); 
         eimh := List( imh, g -> ExtRepOfObj(g) ); 
         AppendTo( out,"[ ",egenr,",\n  ",eimt,",\n  ",eimh," ],\n" ); 
     od; 
@@ -338,7 +338,7 @@ function( gp )
             Add( ireps, R ); 
             genR := GeneratorsOfGroup( R ); 
             for a in aut do 
-                igenR := List( genR, g -> Image( a, g ) ); 
+                igenR := List( genR, g -> ImageElm( a, g ) ); 
                 aR := Subgroup( gp, igenR ); 
                 pos := Position( reps, aR ); 
                 if ( not( pos = fail ) and ( pos > i ) ) then 
@@ -419,7 +419,7 @@ function( gp, ireps, fst, lst )
         ## now convert entries in idem back to endomorphisms of gp 
         ## GQuotients may have picked an alternative generating set for gp 
         for j in [1..Length(idem)] do 
-            mgi := List( gens, g -> Image( idem[j], g ) ); 
+            mgi := List( gens, g -> ImageElm( idem[j], g ) ); 
             idem[j] := GroupHomomorphismByImages( gp, gp, gens, mgi ); 
         od;  
         Print( "# idempotents = ", Length( idem ), "\n" ); 
@@ -483,7 +483,7 @@ function( gp, nn, kk, range )
         iso := IsomorphismGroups( gpj, gp );
         Rj := Range( Cj ); 
         res := GeneralRestrictedMapping( iso, Rj, gp );
-        res := GeneralRestrictedMapping( iso, Rj, Image(res) ); 
+        res := GeneralRestrictedMapping( iso, Rj, ImagesSource(res) ); 
         ok := IsBijective( iso ) and IsBijective( res ); 
         if not ok then 
             Error( "iso/res not bijective in CooectPartsAlreadyDone" ); 
@@ -600,13 +600,13 @@ function( gp, ireps, idems, range, C )
                             # check no. generators fixed by tail map 
                             len1 := 0; 
                             for z in gens1 do 
-                                if ( Image(TailMap(CC),z) = z ) then 
+                                if ( ImageElm(TailMap(CC),z) = z ) then 
                                     len1 := len1 + 1; 
                                 fi; 
                             od;
                             len2 := 0; 
                             for z in gens2 do 
-                                if ( Image(TailMap(CC),z) = z ) then 
+                                if ( ImageElm(TailMap(CC),z) = z ) then 
                                     len2 := len2 + 1; 
                                 fi; 
                             od; 
@@ -661,10 +661,10 @@ function( gp, ireps, idems, range, C )
         genr := SmallGeneratingSet( Range(a) ); 
         egenr := List( genr, g -> ExtRepOfObj(g) ); 
         t := TailMap( a ); 
-        imt := List( gensgp, g -> Image( t, g ) ); 
+        imt := List( gensgp, g -> ImageElm( t, g ) ); 
         eimt := List( imt, g -> ExtRepOfObj(g) ); 
         h := HeadMap( a ); 
-        imh := List( gensgp, g -> Image( h, g ) ); 
+        imh := List( gensgp, g -> ImageElm( h, g ) ); 
         eimh := List( imh, g -> ExtRepOfObj(g) ); 
         AppendTo( out,"[ ",egenr,",\n  ",eimt,",\n  ",eimh," ],\n" ); 
     od; 
@@ -727,10 +727,10 @@ function( n, fst, lst )
                 genr := SmallGeneratingSet( Range(a) ); 
                 egenr := List( genr, g -> ExtRepOfObj(g) ); 
                 t := TailMap( a ); 
-                imt := List( gensgp, g -> Image( t, g ) ); 
+                imt := List( gensgp, g -> ImageElm( t, g ) ); 
                 eimt := List( imt, g -> ExtRepOfObj(g) ); 
                 h := HeadMap( a ); 
-                imh := List( gensgp, g -> Image( h, g ) ); 
+                imh := List( gensgp, g -> ImageElm( h, g ) ); 
                 eimh := List( imh, g -> ExtRepOfObj(g) ); 
                 AppendTo( out,"[ ",egenr,",\n  ",eimt,",\n  ",eimh," ]" ); 
                 if ( i < len-1 ) then 
@@ -850,7 +850,7 @@ function( G )
     reps := List( ccs, c -> Representative( c ) );
     rcosG := List( normG, N -> RightCosets( G, N ) );
     natG := List( normG, N -> NaturalHomomorphismByNormalSubgroup( G, N ) );
-    quotG := List( natG, n -> Image( n ) );
+    quotG := List( natG, h -> Image( h ) );
     normal := List( reps, R -> ( Normalizer( G, R ) = G ) );
     classes := [ ];
     for i in [2..(nnum-1)] do
@@ -865,7 +865,7 @@ function( G )
             if not ( iso = fail ) then
                 # (unnecessary?) check that this gives a homomorphism
                 comp := CompositionMapping( iso, proj );
-                im := List( genG, x -> Image( comp, x ) );
+                im := List( genG, x -> ImageElm( comp, x ) );
                 phi := GroupHomomorphismByImages( G, R, genG, im );
                 if not IsGroupHomomorphism( phi ) then
                     Error( "phi not a homomorphism" );
@@ -908,7 +908,7 @@ function( G )
     reps := List( ccs, c -> Representative( c ) );
     rcosG := List( normG, N -> RightCosets( G, N ) );
     natG := List( normG, N -> NaturalHomomorphismByNormalSubgroup( G, N ) );
-    quotG := List( natG, n -> Image( n ) );
+    quotG := List( natG, h -> Image( h ) );
     normal := List( reps, R -> ( Normalizer( G, R ) = G ) );
 
     classes := [ ];
@@ -926,7 +926,7 @@ function( G )
             if ( ok and not ( iso = fail ) ) then
                 # (unnecessary?) check that this gives a homomorphism
                 comp := CompositionMapping( iso, proj );
-                im := List( genG, x -> Image( comp, x ) );
+                im := List( genG, x -> ImageElm( comp, x ) );
                 phi := GroupHomomorphismByImages( G, R, genG, im );
                 if not IsGroupHomomorphism( phi ) then
                     Error( "phi not a homomorphism" );
@@ -1012,15 +1012,15 @@ function( classes )
         aut := EndoClassAutoGroup( c );
         conj := EndoClassConjugators( c );
         comp := CompositionMapping( iso, nat );
-        R := Image( comp );
+        R := ImagesSource( comp );
         cjnum := Length( conj );
-        Q := Image( nat );
+        Q := ImagesSource( nat );
         autos := Elements( aut );
         LR := [ ];
         for k in [ 1..Length( autos ) ] do
             rho := autos[k];
             psi := nat * rho * iso;
-            im := List( genG, x -> Image( psi, x ) );
+            im := List( genG, x -> ImageElm( psi, x ) );
             Add( LR, im );
         od;
         Lnum := Length( LR );
@@ -1068,12 +1068,12 @@ function( classes )
         autQ := EndoClassAutoGroup( cl );
         conj := EndoClassConjugators( cl ); 
         psi := CompositionMapping( theta, nu );
-        Q := Image( psi ); 
-        Q0 := Image( nu ); 
+        Q := ImagesSource( psi ); 
+        Q0 := ImagesSource( nu ); 
         L1 := [ ];
         for alpha0 in autQ do
             psi := nu * alpha0 * theta;
-            im := List( genR, x -> Image( psi, x ) );
+            im := List( genR, x -> ImageElm( psi, x ) );
             Add( L1, im );
         od; 
         L2 := [ ]; 
@@ -1081,7 +1081,7 @@ function( classes )
             for im in L1 do 
                 cim := List( im, x -> x^c ); 
                 psi2 := GroupHomomorphismByImages( R, R, genR, cim );
-                im2 := List( cim, x -> Image( psi2, x ) ); 
+                im2 := List( cim, x -> ImageElm( psi2, x ) ); 
                 if ( cim = im2 ) then
                     Add( L2, cim );
                 fi;

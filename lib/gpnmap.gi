@@ -5,7 +5,7 @@
 ##  This file implements functions for Higher Dimensional Mappings for 
 ##  (pre-)catn-groups. 
 ##
-#Y  Copyright (C) 2001-2017, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2018, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 ##############################################################################
@@ -103,12 +103,12 @@ function( mor )
     perm2dmor := [];
     
     for i in [1..Length(2dmor)] do
-        G1 := Source(SourceHom( 2dmor[i] ));
-        G2 := Range(SourceHom( 2dmor[i] ));
-        P1 := Image(IsomorphismPermGroup(G1));
-        P2 := Image(IsomorphismPermGroup(G2));
-        p := IsomorphismGroups(P1,G1);
-        q := IsomorphismGroups(G2,P2);
+        G1 := Source( SourceHom( 2dmor[i] ) );
+        G2 := Range( SourceHom( 2dmor[i] ) );
+        P1 := ImagesSource( IsomorphismPermGroup( G1 ) );
+        P2 := ImagesSource( IsomorphismPermGroup( G2 ) );
+        p := IsomorphismGroups( P1, G1 );
+        q := IsomorphismGroups( G2, P2 );
         comp := p * SourceHom( 2dmor[i] ) * q;    
         Add(perm2dmor,comp,i);
     od;

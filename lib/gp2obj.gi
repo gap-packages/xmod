@@ -2,7 +2,7 @@
 ##
 #W  gp2obj.gi                 GAP4 package `XMod'               Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2017, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2018, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 ##  This file contains generic methods for (pre-)crossed modules and
@@ -167,7 +167,7 @@ function( PM )
     act := XModAction( PM );
     genrng := GeneratorsOfGroup( Range( PM ) );
     onesrc := IdentityMapping( Source( PM ) );
-    return ForAll( genrng, r -> ( Image( act, r ) = onesrc ) );
+    return ForAll( genrng, r -> ( ImageElm( act, r ) = onesrc ) );
 end );
 
 ##############################################################################
@@ -251,7 +251,7 @@ function( PM )
     genR := GeneratorsOfGroup( rng ); 
     act := XModAction( PM );
     return ExternalSet( rng, Source(PM), genR, 
-               List( genR, g -> Image(act,g) ) ); 
+               List( genR, g -> ImageElm( act, g ) ) ); 
 end ); 
 
 #############################################################################
@@ -374,9 +374,9 @@ function( g2d )
     if ( HasIsPreXMod( g2d ) and IsPreXMod( g2d ) ) then 
         Print( ": Boundary homomorphism maps source generators to:\n" );
         bdy := Boundary( g2d );
-        Print( "  ",  List( gensrc, s -> Image( bdy, s ) ), "\n" );
+        Print( "  ",  List( gensrc, s -> ImageElm( bdy, s ) ), "\n" );
         act := XModAction( g2d );
-        imact := List( genrng, r -> Image( act, r ) );
+        imact := List( genrng, r -> ImageElm( act, r ) );
         aut := Range( act );
         triv := ( aut = Group( InclusionMappingGroups( src, src ) ) );
         len := Length( genrng );
@@ -392,7 +392,7 @@ function( g2d )
             Print( " range generators to automorphisms:\n" );
             for i in [1..len] do
                 Print( "  ", genrng[i], " --> { source gens --> " );
-                Print( List( gensrc, s -> Image( imact[i], s ) ), " }\n" );
+                Print( List( gensrc, s -> ImageElm( imact[i], s ) ), " }\n" );
             od;
         fi;
         if triv then
@@ -413,11 +413,11 @@ function( g2d )
         e := RangeEmbedding( g2d );
         b := Boundary( g2d );
         k := KernelEmbedding( g2d );
-        imt := List( gensrc, x -> Image( t, x ) );
-        imh := List( gensrc, x -> Image( h, x ) );
-        ime := List( genrng, x -> Image( e, x ) );
-        imb := List( genker, x -> Image( b, x ) );
-        imk := List( genker, x -> Image( k, x ) );
+        imt := List( gensrc, x -> ImageElm( t, x ) );
+        imh := List( gensrc, x -> ImageElm( h, x ) );
+        ime := List( genrng, x -> ImageElm( e, x ) );
+        imb := List( genker, x -> ImageElm( b, x ) );
+        imk := List( genker, x -> ImageElm( k, x ) );
         Print( ": tail homomorphism maps source generators to:\n" );
         Print( "  ", imt, "\n" );
         Print( ": head homomorphism maps source generators to:\n" );
@@ -532,10 +532,10 @@ function( bdy, act )
               "aut.identity <> IdentityMapping( src )" );
         return fail;
     fi;
-    imact := List( genrng, r -> Image( act, r ) );
+    imact := List( genrng, r -> ImageElm( act, r ) );
     for i in [ 1..Length( imact ) ] do
         a0 := imact[i];
-        ima := List( gensrc, s -> Image( a0, s ) );
+        ima := List( gensrc, s -> ImageElm( a0, s ) );
         a := GroupHomomorphismByImages( src, src, gensrc, ima );
         imact[i] := a;
     od;
@@ -601,24 +601,21 @@ function( C1G )
     if spi then 
         info := SemidirectProductInfo( G ); 
         emb := info!.embeddings[2]; 
-Print("case1: ", MappingGeneratorsImages(emb), "\n" );
     elif dpi then 
         info := DirectProductInfo( G ); 
         emb := info!.embeddings[2];
-Print("case2: ", MappingGeneratorsImages(emb), "\n" );
     else 
         pxm := PreXModOfPreCat1Group( C1G ); 
         sc := Source( C1G );
         sx := Source( pxm );
         if IsSubgroup( sc, sx ) then 
             emb := InclusionMappingGroups( sc, sx ); 
-Print("case3: ", MappingGeneratorsImages(emb), "\n" );
         else 
             Error( "case still to be implemented" ); 
         fi;
     fi; 
     src := Source( emb ); 
-    rng := ImagesSource( emb ); 
+    rng := Image( emb ); 
     mgi := MappingGeneratorsImages( emb );
     return GroupHomomorphismByImages( src, rng, mgi[1], mgi[2] ); 
 end );
@@ -633,9 +630,9 @@ function( t, h, e )
 
     local src, rng, type, C1G, ok, name;
 
-    src := Source( h ); 
-    rng := Range( h );
-    if not ( ( src = Source( t ) ) and ( rng = Range( t ) ) ) then
+    src := Source( t ); 
+    rng := Range( t );
+    if not ( ( src = Source( h ) ) and ( rng = Range( h ) ) ) then
         Error( "tail & head must have same source and range" );
     fi;
     if not ( ( Source( e ) = rng ) and ( Range( e ) = src ) ) then
@@ -650,20 +647,28 @@ function( t, h, e )
     fi;
     C1G := rec();
     ObjectifyWithAttributes( C1G, type,
-      Source, Source( t ),
-      Range, Range( t ),
+      Source, src,
+      Range, rng,
       TailMap, t,
       HeadMap, h,
       RangeEmbedding, e, 
       IsPreCat1Domain, true, 
       Is2DimensionalGroup, true );
-    ok := IsPreCat1Group( C1G );
-    # name := Name( C1G );
+    ok := IsPreCat1Group( C1G ); 
     if not ok then
         Error( "not a pre-cat1-group" );
     fi;
     ok := IsEndomorphismPreCat1Group( C1G ); 
     ok := IsCat1Group( C1G );
+    ## check the types 
+    if ( IsPermGroup( src ) and IsPermGroup( rng ) ) then 
+        SetIsPerm2DimensionalGroup( C1G, true ); 
+    elif ( IsPcGroup( src ) and IsPcGroup( rng ) ) then 
+        SetIsPc2DimensionalGroup( C1G, true ); 
+    fi;
+    if ( HasName( src ) and HasName( rng ) ) then 
+        name := Name( C1G );
+    fi; 
     return C1G;
 end );
 
@@ -707,7 +712,7 @@ InstallGlobalFunction( PreCat1Group, function( arg )
     elif ( nargs=2 ) then
         if ( IsEndoMapping( arg[1] ) and IsEndoMapping( arg[2] ) ) then
             return PreCat1GroupByEndomorphisms( arg[1], arg[2] ); 
-        elif ( ImagesSource( arg[1] ) = Source( arg[2] ) ) then 
+        elif ( Image( arg[1] ) = Source( arg[2] ) ) then 
             return PreCat1GroupByTailHeadEmbedding( arg[1], arg[1], arg[2] );
         fi;
     # two homomorphisms and an embedding
@@ -750,7 +755,7 @@ function( XM )
         genG := GeneratorsOfGroup( G );
         gensrc := GeneratorsOfGroup( Xsrc );
         genrng := GeneratorsOfGroup( Xrng );
-        imbdy := List( gensrc, s -> Image( Xbdy, s ) );
+        imbdy := List( gensrc, s -> ImageElm( Xbdy, s ) );
         imt := Concatenation( genrng, List( gensrc, s -> one ) );
         imh := Concatenation( genrng, imbdy );
         t := GroupHomomorphismByImages( G, Xrng, genG, imt );
@@ -768,16 +773,16 @@ function( XM )
         fi;
         genG := GeneratorsOfGroup( G );
         eR := Embedding( G, 1 );
-        imeR := List( genrng, r -> Image( eR, r ) );
+        imeR := List( genrng, r -> ImageElm( eR, r ) );
         eS := Embedding( G, 2 );
-        imeS := List( gensrc, s -> Image( eS, s ) );
+        imeS := List( gensrc, s -> ImageElm( eS, s ) );
         t := Projection( G );
-        imt := List( genG, g -> Image( t, g ) );
-        projS := List( imt, r -> Image( eR, r^-1 ) );
+        imt := List( genG, g -> ImageElm( t, g ) );
+        projS := List( imt, r -> ImageElm( eR, r^-1 ) );
         projS := List( [ 1..Length( genG ) ], i -> projS[i] * genG[i] );
         projS := List( projS, x -> PreImagesRepresentative( eS, x ) );
         imh := List( [ 1..Length( genG ) ],
-            i -> imt[i] * Image( Xbdy, projS[i] ) );
+            i -> imt[i] * ImageElm( Xbdy, projS[i] ) );
         h := GroupHomomorphismByImages( G, Xrng, genG, imh );
     fi;
     SetSourceEmbedding( XM, eR );
@@ -850,7 +855,7 @@ function( f )
     fi;
     R := Range( f );
     ZR := Centre( R );
-    if not IsSubgroup( ZR, Image( f, S ) ) then
+    if not IsSubgroup( ZR, ImageElm( f, S ) ) then
         Error( "image of source must lie in the centre of range" );
     fi;
     aut := Group( IdentityMapping( S ) );
@@ -924,7 +929,7 @@ function( hom )
     fi;
     gensrc := GeneratorsOfGroup( src );
     ngsrc := Length( gensrc );
-    imhom := List( gensrc, s -> Image( hom, s ) );
+    imhom := List( gensrc, s -> ImageElm( hom, s ) );
     genrng := GeneratorsOfGroup( rng );
     autgen := ListWithIdenticalEntries( ngsrc, 0 );
     for j in [1..ngsrc] do 
@@ -970,42 +975,32 @@ InstallMethod( XModByGroupOfAutomorphisms, "automorphism crossed module",
     true, [ IsGroup, IsGroupOfAutomorphisms ], 0,
 function( G, A )
 
-    local genA, ispc, a2p, p2a, a, ima, genG, oneP, P, genP, bdy, img, imbdy,
-           g, idG, abelian, XM;
+    local genA, abelian, genG, oneA, imbdy, g, ima, a, bdy, XM, iso;
 
-    ispc := IsPcGroup( G ); 
-    if ispc then 
-        a2p := IsomorphismPcGroup( A ); 
-        ispc := not ( a2p = fail ); 
-    else 
-        a2p := IsomorphismSmallPermGroup( A );
-    fi; 
-    P := ImagesSource( a2p );
-    if ( not HasName( P ) and HasName( A ) ) then
-        SetName( P, Concatenation( "P", Name( A ) ) );
-    fi;
     genA := GeneratorsOfGroup( A ); 
-    genP := List( genA, a -> Image( a2p, a ) ); 
-    p2a := GroupHomomorphismByImages( P, A, genP, genA );
     abelian := IsAbelian( G );
     genG := GeneratorsOfGroup( G );
-    oneP := One( P );
+    oneA := One( A );
     if abelian then
-        imbdy := List( genG, g -> oneP );
+        imbdy := List( genG, g -> oneA );
     else
         imbdy := [ ];
         for g in genG do
             ima := List( genG, h -> h^g );
             a := GroupHomomorphismByImages( G, G, genG, ima );
-            img := Image( a2p, a );
-            Add( imbdy, img );
+            Add( imbdy, a );
         od;
     fi;  
-    bdy := GroupHomomorphismByImages( G, P, genG, imbdy );
-    XM := PreXModObj( bdy, p2a );
+    bdy := GroupHomomorphismByImages( G, A, genG, imbdy ); 
+    XM := PreXModObj( bdy, IdentityMapping( A ) );
     SetIsAutomorphismGroup2DimensionalGroup( XM, true );
     if not IsXMod( XM ) then
         Error( "this boundary and action only defines a pre-crossed module" );
+    fi; 
+    if IsPermGroup( G ) then 
+        iso := IsomorphismPerm2DimensionalGroup( XM ); 
+    elif IsPcGroup( G ) then 
+        iso := IsomorphismPc2DimensionalGroup( XM ); 
     fi;
     return XM;
 end );
@@ -1112,9 +1107,9 @@ function( PM )
     gensrc := GeneratorsOfGroup( src );
     Pf := TrivialSubgroup( src );
     for s1 in gensrc do
-        a1 := Image( act, Image( bdy, s1 ) );
+        a1 := ImageElm( act, ImageElm( bdy, s1 ) );
         for s2 in gensrc do
-            comm := (s2^-1)^s1 * Image( a1, s2 );
+            comm := (s2^-1)^s1 * ImageElm( a1, s2 );
             if not ( comm in Pf ) then
                 Pf := ClosureSubgroup( Pf, comm );
             fi;
@@ -1297,7 +1292,7 @@ function( PM, SM )
     gensrc := GeneratorsOfGroup( Ssrc );
     genrng := GeneratorsOfGroup( Srng );
     for s in gensrc do
-        if ( Image( Boundary( PM ), s ) <> Image( Boundary( SM ), s ) ) then
+        if ( ImageElm( Boundary(PM), s ) <> ImageElm( Boundary(SM), s ) ) then
             ok := false;
         fi;
     od;
@@ -1306,11 +1301,11 @@ function( PM, SM )
         return false;
     fi;
     for r in genrng do
-        r1 := Image( XModAction( PM ), r );
-        r2 := Image( XModAction( SM ), r );
+        r1 := ImageElm( XModAction( PM ), r );
+        r2 := ImageElm( XModAction( SM ), r );
         for s in gensrc do
-            im1 := Image( r1, s );
-            im2 := Image( r2, s );
+            im1 := ImageElm( r1, s );
+            im2 := ImageElm( r2, s );
             if ( im1 <> im2 ) then
                 ok := false;
                 Info( InfoXMod, 3, "s,im1,im2 = ", [s,im1,im2] );
@@ -1370,10 +1365,10 @@ function( C0, S0 )
     tc := TailMap(C0);  hc := HeadMap(C0);  ec := RangeEmbedding(C0);
     ts := TailMap(S0);  hs := HeadMap(S0);  es := RangeEmbedding(S0);
     for s in gensrc do
-        if ( Image( tc, s ) <> Image( ts, s ) ) then
+        if ( ImageElm( tc, s ) <> ImageElm( ts, s ) ) then
             ok := false;
         fi;
-        if ( Image( hc, s ) <> Image( hs, s ) ) then
+        if ( ImageElm( hc, s ) <> ImageElm( hs, s ) ) then
             ok := false;
         fi;
     od;
@@ -1382,7 +1377,7 @@ function( C0, S0 )
         return false;
     fi;
     for r in genrng do
-        if ( Image( ec, r ) <> Image( es, r ) ) then
+        if ( ImageElm( ec, r ) <> ImageElm( es, r ) ) then
             ok := false;
         fi;
     od;
@@ -1462,7 +1457,7 @@ function( PM, Ssrc, Srng )
     genSsrc := GeneratorsOfGroup( Ssrc );
     genSrng := GeneratorsOfGroup( Srng );
     incSsrc := InclusionMappingGroups( Psrc, Ssrc ); 
-    imgen := List( genSsrc, x -> Image( Pbdy, x ) );
+    imgen := List( genSsrc, x -> ImageElm( Pbdy, x ) );
     imSsrc := Subgroup( Prng, imgen );
     if not IsSubgroup( Srng, imSsrc ) then
         Info( InfoXMod, 2, "Pbdy(Ssrc) is not a subgroup of Srng" );
@@ -1477,8 +1472,8 @@ function( PM, Ssrc, Srng )
     fi;
     innaut := [ ];
     for r in genSrng do
-        alpha := Image( Pact, r );
-        imgen := List( genSsrc, x -> Image( alpha, x ) );
+        alpha := ImageElm( Pact, r );
+        imgen := List( genSsrc, x -> ImageElm( alpha, x ) );
         if not ForAll( imgen, x -> ( x in Ssrc ) ) then
             return fail;
         fi;
@@ -1892,16 +1887,12 @@ InstallMethod( PreCat1GroupByTailHeadEmbedding,
     [ IsGroupHomomorphism, IsGroupHomomorphism, IsGroupHomomorphism ], 0,
 function( t, h, e )
 
-    local genG, R, genR, imh, imt, ime, eR, hres, tres, eres,
-           kert, kergen, bdy, imbdy, f, C1G, ok, G, PC;
+    local genG, R, genR, imh, imt, ime, eR, kert, kergen, bdy, imbdy, 
+          f, C1G, ok, G, PC;
 
     G := Source( t );
     genG := GeneratorsOfGroup( G );
-    if IsSurjective( t ) then
-        R := Range( t ); 
-    else
-        R := Image( t ); 
-    fi;
+    R := Range( t );
     genR := SmallGeneratingSet( R ); 
     eR := Image( e ); 
     if not ( ( Source( h ) = G )
@@ -1909,26 +1900,20 @@ function( t, h, e )
              and IsInjective( e ) and IsSubgroup( G, eR ) )  then
         return fail;
     fi;
-    imh := List( genG, x -> Image( h, x ) );
-    imt := List( genG, x -> Image( t, x ) );
-    ime := List( genR, x -> Image( e, x ) );
+    imh := List( genG, x -> ImageElm( h, x ) );
+    imt := List( genG, x -> ImageElm( t, x ) );
+    ime := List( genR, x -> ImageElm( e, x ) );
     kert := Kernel( t );
     f := InclusionMappingGroups( G, kert );
-    hres := GroupHomomorphismByImages( G, R, genG, imh );
-    tres := GroupHomomorphismByImages( G, R, genG, imt );
-    eres := GroupHomomorphismByImages( R, G, genR, ime );
+    ## hres := GroupHomomorphismByImages( G, R, genG, imh );
+    ## tres := GroupHomomorphismByImages( G, R, genG, imt );
+    ## eres := GroupHomomorphismByImages( R, G, genR, ime );
     kergen := GeneratorsOfGroup( kert );
-    imbdy := List( kergen, x -> Image( h, x) );
+    imbdy := List( kergen, x -> ImageElm( h, x) );
     bdy := GroupHomomorphismByImages( kert, R, kergen, imbdy );
-    PC := PreCat1Obj( tres, hres, eres );
+    PC := PreCat1Obj( t, h, e );
     SetBoundary( PC, bdy );
     SetKernelEmbedding( PC, f );
-    ## check the types 
-    if ( IsPermGroup(G) and IsPermGroup(R) ) then 
-        SetIsPerm2DimensionalGroup( PC, true ); 
-    elif ( IsPcGroup(G) and IsPcGroup(R) ) then 
-        SetIsPc2DimensionalGroup( PC, true ); 
-    fi;
     return PC;
 end );
 
@@ -1959,8 +1944,8 @@ function( et, eh )
     fi;
     R := Image( et );
     gG := GeneratorsOfGroup( G );
-    t := GroupHomomorphismByImages( G, R, gG, List( gG, g->Image(et,g) ) );
-    h := GroupHomomorphismByImages( G, R, gG, List( gG, g->Image(eh,g) ) );
+    t := GroupHomomorphismByImages( G, R, gG, List( gG, g->ImageElm(et,g) ) );
+    h := GroupHomomorphismByImages( G, R, gG, List( gG, g->ImageElm(eh,g) ) );
     e := InclusionMappingGroups( G, R );
     return PreCat1GroupByTailHeadEmbedding( t, h, e ); 
 end );
@@ -2003,9 +1988,9 @@ function( C1G )
     if ( Size( kert ) = 1 ) then 
         SetName( kert, "triv" ); 
     fi; 
-    if ( ( not HasName( kert ) ) and HasName( C1G ) ) then
-        SetName( kert, Concatenation( "ker(", Name( C1G ), ")" ) );
-    fi; 
+    #?  if ( ( not HasName( kert ) ) and HasName( C1G ) ) then
+    ##      SetName( kert, Concatenation( "ker(", Name( C1G ), ")" ) );
+    ##  fi; 
     gensrc := GeneratorsOfGroup( Csrc );
     genrng := GeneratorsOfGroup( Crng );
     genker := GeneratorsOfGroup( kert );
@@ -2018,8 +2003,8 @@ function( C1G )
     else
         autgen := [ ];
         for r in genrng do
-            imautgen := List( genker, s -> Image( Cek, s ) );
-            imautgen := List( imautgen, g -> g^( Image( Cer, r ) ) );
+            imautgen := List( genker, s -> ImageElm( Cek, s ) );
+            imautgen := List( imautgen, g -> g^( ImageElm( Cer, r ) ) );
             imautgen := List( imautgen,
                               g -> PreImagesRepresentative( Cek, g ) );
             a := GroupHomomorphismByImages( kert, kert, genker, imautgen );
@@ -2042,7 +2027,9 @@ function( C1G )
     if ( IsSubgroup( Crng, kert ) and IsNormal( Crng, kert ) ) then 
         SetIsNormalSubgroup2DimensionalGroup( PM, true ); 
     fi; 
-    if HasName( C1G ) then 
+    if ( HasName( Source( bdy ) ) and HasName( Range( bdy ) ) ) then 
+        name := Name( PM ); 
+    elif HasName( C1G ) then 
         SetName( PM, Concatenation( "xmod(", Name( C1G ), ")" ) ); 
     fi; 
     return PM;
@@ -2121,11 +2108,11 @@ function( PC )
     qgen := GeneratorsOfGroup( quot );
     # construct the head, tail and embedding
     pqgen := List( qgen, q -> PreImagesRepresentative( nat, q ) );
-    tpqgen := List( pqgen, p -> Image( PCt, p ) );
+    tpqgen := List( pqgen, p -> ImageElm( PCt, p ) );
     tail := GroupHomomorphismByImages( quot, PCrng, qgen, tpqgen );
-    hpqgen := List( pqgen, p -> Image( PCh, p ) );
+    hpqgen := List( pqgen, p -> ImageElm( PCh, p ) );
     head := GroupHomomorphismByImages( quot, PCrng, qgen, hpqgen );
-    ime := List( genrng, r -> Image( nat, Image( PCe, r ) ) );
+    ime := List( genrng, r -> ImageElm( nat, ImageElm( PCe, r ) ) );
     embed := GroupHomomorphismByImages( PCrng, quot, genrng, ime );
     C1G := PreCat1GroupByTailHeadEmbedding( tail, head, embed );
     if not IsCat1Group( C1G ) then
@@ -2331,20 +2318,20 @@ function( list, X1 )
     Xact := XModAction( X1 );
     Yact := XModAction( Y1 );
     imXbdy := List( genS{ XSpos },
-        s -> Image( eXR, Image( Xbdy, Image( pXS, s ) ) ) );
+        s -> ImageElm( eXR, ImageElm( Xbdy, ImageElm( pXS, s ) ) ) );
     imYbdy := List( genS{ YSpos },
-        s -> Image( eYR, Image( Ybdy, Image( pYS, s ) ) ) );
+        s -> ImageElm( eYR, ImageElm( Ybdy, ImageElm( pYS, s ) ) ) );
     imbdy := Concatenation( imXbdy, imYbdy );
     bdy := GroupHomomorphismByImages( S, R, genS, imbdy );
     autgen := 0 * [ 1..lenR ];
     for i in XRpos do
-        a := Image( Xact, genXrng[i] );
+        a := ImageElm( Xact, genXrng[i] );
         imaut := 0 * Spos;
         for j in YSpos do
             imaut[j] := genS[j];
         od;
         for j in XSpos do
-            imaut[j] := Image( eXS, Image( a, Image( pXS, genS[j] ) ) );
+            imaut[j] := ImageElm( eXS, ImageElm( a, ImageElm( pXS, genS[j] ) ) );
         od;
         alpha := GroupHomomorphismByImages( S, S, genS, imaut );
         autgen[i] := alpha;
@@ -2355,13 +2342,13 @@ function( list, X1 )
         k := Length( genXrng );
     fi; 
     for i in YRpos do
-        a := Image( Yact, genYrng[i-k] );
+        a := ImageElm( Yact, genYrng[i-k] );
         imaut := 0 * Spos;
         for j in XSpos do
             imaut[j] := genS[j];
         od;
         for j in YSpos do
-            imaut[j] := Image( eYS, Image( a, Image( pYS, genS[j] ) ) );
+            imaut[j] := ImageElm( eYS, ImageElm( a, ImageElm( pYS, genS[j] ) ) );
         od;
         alpha := GroupHomomorphismByImages( S, S, genS, imaut );
         autgen[i] := alpha;
@@ -2512,7 +2499,7 @@ function( obj )
     gensrc := GeneratorsOfGroup( src );
     if IsXMod( obj ) then
         return ( IsNormal(rng,src) and
-                 ( gensrc = List( gensrc, s -> Image( Boundary(obj), s ) ) ) );
+                 ( gensrc = List( gensrc, s -> ImageElm( Boundary(obj), s ) ) ) );
     elif IsCat1Group( obj ) then
         return IsNormalSubgroup2DimensionalGroup( XModOfCat1Group( obj ) );
     else
@@ -2536,9 +2523,9 @@ function( XM, SM )
     Ssrc := Source( SM );
     Xact := XModAction( XM );
     for xr in GeneratorsOfGroup( Range( XM ) ) do
-        a := Image( Xact, xr );
+        a := ImageElm( Xact, xr );
         for ss in GeneratorsOfGroup( Ssrc ) do
-            im := Image( a, ss );
+            im := ImageElm( a, ss );
             if not ( im in Ssrc ) then
                 Info( InfoXMod, 2, "ss,xr,ss^xr = ", [ss,xr,im] );
                 return false;
@@ -2546,9 +2533,9 @@ function( XM, SM )
         od;
     od;
     for sr in GeneratorsOfGroup( Range( SM ) ) do
-        a := Image( Xact, sr );
+        a := ImageElm( Xact, sr );
         for xs in GeneratorsOfGroup( Source( XM ) ) do
-            im := xs^(-1) * Image( a, xs );
+            im := xs^(-1) * ImageElm( a, xs );
             if not ( im in Ssrc ) then
                 Info( InfoXMod, 3, "sr,xs,sr^(-1)*xs^sr = ", [sr,xs,im] );
                 return false;

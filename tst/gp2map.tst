@@ -2,7 +2,7 @@
 ##
 #W  gp2map.tst                    XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2017, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2018, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 ##
@@ -38,17 +38,17 @@ gap> X2 := XModOfCat1Group( C2 );;
 gap> sigma1 := GroupHomomorphismByImages(c5,c5,[(5,6,7,8,9)],[(5,9,8,7,6)] );;
 gap> rho1 := IdentityMapping( Range(X1) );;
 gap> mor1 := XModMorphism( X1, X1, sigma1, rho1 );
-[[c5->PAut(c5)] => [c5->PAut(c5)]]
+[[c5->Aut(c5)] => [c5->Aut(c5)]]
 gap> Display( mor1 );
 Morphism of crossed modules :- 
-: Source = [c5->PAut(c5)] with generating sets:
+: Source = [c5->Aut(c5)] with generating sets:
   [ (5,6,7,8,9) ]
-  [ (1,2,3,4) ]
+  [ GroupHomomorphismByImages( c5, c5, [ (5,6,7,8,9) ], [ (5,7,9,6,8) ] ) ]
 : Range = Source
 : Source Homomorphism maps source generators to:
   [ (5,9,8,7,6) ]
 : Range Homomorphism maps range generators to:
-  [ (1,2,3,4) ]
+  [ GroupHomomorphismByImages( c5, c5, [ (5,6,7,8,9) ], [ (5,7,9,6,8) ] ) ]
 gap> IsAutomorphism2DimensionalDomain(mor1);
 true
 gap> Order(mor1);

@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.gi               GAP4 package `XMod'                Alper Odabas
 #W                                                                & Enver Uslu
-#Y  Copyright (C) 2001-2017, Chris Wensley et al 
+#Y  Copyright (C) 2001-2018, Chris Wensley et al 
 #Y   
 ##  This file contains generic methods for finding isoclinism classes 
 ##  of crossed modules. 
@@ -23,7 +23,7 @@ function( XM, T, Q )
     fi; 
     genQ := GeneratorsOfGroup( Q ); 
     act := XModAction( XM );
-    ext := ExternalSet( Q, T, genQ, List( genQ, g -> Image(act,g) ) ); 
+    ext := ExternalSet( Q, T, genQ, List( genQ, g -> ImageElm(act,g) ) ); 
     orb := Orbits( ext );  
     elts := Concatenation( Filtered( orb, o -> Length(o) = 1) ); 
     fix := Subgroup( T, elts ); 
@@ -48,7 +48,7 @@ function( XM, T, Q )
     alpha := XModAction( XM );
     list := [];
     for q in Q do
-        if ForAll( T, t -> Image(Image(alpha,q),t)=t ) then
+        if ForAll( T, t -> ImageElm(ImageElm(alpha,q),t)=t ) then
             Add( list, q );
         fi;        
     od;
@@ -96,7 +96,7 @@ function( XM, YM )
     rngY := Range( YM  ); 
     genR := GeneratorsOfGroup( rngY ); 
     actY := XModAction( YM );
-    ext := ExternalSet( rngY, srcX, genR, List( genR, g -> Image(actY,g) ) ); 
+    ext := ExternalSet( rngY, srcX, genR, List( genR, g -> ImageElm(actY,g) ) ); 
     orb := Orbits( ExternalSetXMod( XM ) );  
     elts := Concatenation( Filtered( orb, o -> Length(o) = 1) ); 
     fix := Subgroup( srcX, elts ); 
@@ -126,11 +126,11 @@ function( alpha, r, s )
     if not ( r in Source(alpha) ) then 
         Error( "r not in Source(alpha)" ); 
     fi; 
-    a := Image( alpha, r );
+    a := ImageElm( alpha, r );
     if not ( ( Range(a) = Source(a) ) and ( s in Source(a) ) ) then 
         Error( "alpha not an automorphism of group containing s" ); 
     fi;
-    return Image( a, s^-1 ) * s;
+    return ImageElm( a, s^-1 ) * s;
 end ); 
 
 #############################################################################
@@ -149,9 +149,9 @@ function( XM )
     list := []; 
     one := One( T );
     for g in GeneratorsOfGroup( G ) do 
-        alp := Image( alpha, g ); 
+        alp := ImageElm( alpha, g ); 
         for t in GeneratorsOfGroup( T ) do
-            t0 := Image( alp, t^-1 ) * t; 
+            t0 := ImageElm( alp, t^-1 ) * t; 
             if ( ( t0 <> one ) and ( Position(list,t0) = fail ) ) then  
                 Add( list, t0 );
             fi;
@@ -223,18 +223,18 @@ function( TG, SH, RK )
     list := [];
     one := One( T );
     for k in GeneratorsOfGroup( Range(RK) ) do 
-        alp := Image( alpha, k ); 
+        alp := ImageElm( alpha, k ); 
         for s in GeneratorsOfGroup( Source(SH) ) do 
-            s0 := s^-1 * Image( alp, s ); 
+            s0 := s^-1 * ImageElm( alp, s ); 
             if ( ( s0 <> one ) and ( Position(list,s0) = fail ) ) then  
                 Add( list, s0 );
             fi;
         od;
     od;
     for h in GeneratorsOfGroup( Range(SH) ) do 
-        alp := Image( alpha, h ); 
+        alp := ImageElm( alpha, h ); 
         for r in GeneratorsOfGroup( Source(RK) ) do 
-            r0 := Image( alp, r^-1 ) * r; 
+            r0 := ImageElm( alp, r^-1 ) * r; 
             if ( ( r0 <> one ) and ( Position(list,r0) = fail ) ) then  
                 Add( list, r0 );
             fi;
@@ -280,7 +280,7 @@ InstallMethod( NaturalMorphismByNormalSubPreXMod,
 function( XM, SM )
 
     local actX, bdyX, nhomQ, nhomF, T, G, S, H, Q, F, sgQ, sgF, imbdy, bdy, 
-          lenF, psgQ, psgF, asgF, i, autF, aut, act, FM;
+          lenF, psgQ, psgF, asgF, i, autF, aut, act, FM, nat;
 
     if not IsNormal( XM, SM ) then 
         Error( "not a normal subcrossed module" ); 
@@ -290,10 +290,10 @@ function( XM, SM )
     T := Source( XM );
     S := Source( SM );
     nhomQ := NaturalHomomorphismByNormalSubgroup( T, S );
-    Q := ImagesSource( nhomQ ); 
+    Q := Image( nhomQ ); 
     sgQ := SmallGeneratingSet( Q ); 
     Q := GroupWithGenerators( sgQ, One(Q) );           # T/S bölüm grubu 
-    psgQ := List( sgQ, q -> PreImagesRepresentative( nhomQ, q ) ); 
+    psgQ := List( sgQ, q -> PreImagesRepresentative( nhomQ, q ) );
     G := Range( XM );
     H := Range( SM );
     if IsTrivial( H ) then 
@@ -303,20 +303,19 @@ function( XM, SM )
         psgF := SmallGeneratingSet( G ); 
     else 
         nhomF := NaturalHomomorphismByNormalSubgroup( G, H );
-        F := ImagesSource( nhomF ); 
+        F := Image( nhomF ); 
         sgF := SmallGeneratingSet( F ); 
         F := GroupWithGenerators( sgF, One(F) );       # G/H bölüm grubu
         psgF := List( sgF, f -> PreImagesRepresentative( nhomF, f ) ); 
     fi; 
-    imbdy := List( sgQ, q -> Image( nhomF, Image( bdyX, 
-                             PreImagesRepresentative( nhomQ, q ) ) ) );
+    imbdy := List( psgQ, t -> ImageElm( nhomF, ImageElm( bdyX, t ) ) );
     bdy := GroupHomomorphismByImages( Q, F, sgQ, imbdy ); 
     lenF := Length( psgF );
-    asgF := List( psgF, g -> Image( actX, g ) ); 
+    asgF := List( psgF, g -> ImageElm( actX, g ) ); 
     autF := ListWithIdenticalEntries( lenF, 0 ); 
     for i in [1..lenF] do 
         autF[i] := GroupHomomorphismByImages( Q, Q, sgQ, 
-                   List( psgQ, t -> Image( nhomQ, Image(asgF[i],t) ) ) ); 
+                   List( psgQ, t -> ImageElm( nhomQ, ImageElm(asgF[i],t) ) ) ); 
     od; 
     if ( lenF = 0 ) then 
         aut := Group( IdentityMapping( Q ) ); 
@@ -329,7 +328,9 @@ function( XM, SM )
     if ( HasName( XM ) and HasName( SM ) ) then 
         SetName( FM, Concatenation( Name( XM ), "/", Name( SM ) ) ); 
     fi; 
-    return PreXModMorphismByHoms( XM, FM, nhomQ, nhomF ); 
+    nat := PreXModMorphismByHoms( XM, FM, nhomQ, nhomF ); 
+    SetProjectionOfFactorPreXMod( FM, nat ); 
+    return nat;
 end );
 
 #############################################################################
@@ -339,13 +340,7 @@ end );
 InstallMethod( FactorPreXMod, "generic method for precrossed modules", true, 
     [ IsPreXMod, IsPreXMod ], 0,
 function( XM, SM )
-
-    local nat, FM; 
-
-    nat := NaturalMorphismByNormalSubPreXMod( XM, SM ); 
-    FM := Range( nat ); 
-    SetProjectionOfFactorPreXMod( FM, nat ); 
-    return FM;  
+    return Image( NaturalMorphismByNormalSubPreXMod( XM, SM ) ); 
 end );
 
 #############################################################################
@@ -746,14 +741,14 @@ function( G )
     local ZG, Q, nat, XQ; 
 
     ZG := Centre( G ); 
-    Q := FactorGroup( G, ZG ); 
+    nat := NaturalHomomorphismByNormalSubgroup( G, ZG ); 
+    Q := Image( nat ); 
     if HasName(G) then 
         if not HasName(ZG) then 
             SetName( ZG, Concatenation( "Z(", Name(G), ")" ) ); 
         fi;
         SetName( Q, Concatenation( Name(G), "/", Name(ZG) ) ); 
     fi; 
-    nat := NaturalHomomorphismByNormalSubgroup( G, ZG ); 
     XQ := XModByCentralExtension( nat ); 
     return XQ;
 end );
@@ -767,7 +762,8 @@ function( XM )
 
     act := XModAction( XM ); 
     ZM := CentreXMod( XM ); 
-    QM := FactorPreXMod( XM, ZM ); 
+    nat := NaturalMorphismByNormalSubPreXMod( XM, ZM ); 
+    QM := Image( nat );
     ul := Source( XM ); 
     dl := Range( XM );
     ur := Source( QM ); 
@@ -775,29 +771,34 @@ function( XM )
     if ( HasName( XM ) and not HasName(ZM) ) then 
         SetName( ZM, Concatenation( "Z(", Name( XM ), ")" ) ); 
     fi; 
-    nat := NaturalMorphismByNormalSubPreXMod( XM, ZM ); 
-    up := XModByCentralExtension( SourceHom(nat) );
-    dn := XModByCentralExtension( RangeHom(nat) );
+    if HasName( XM ) then 
+        if not HasName( ZM ) then 
+            SetName( ZM, Concatenation( "Z(", Name( XM ), ")" ) ); 
+        fi;
+        SetName( QM, Concatenation( Name(XM), "/", Name(ZM) ) ); 
+    fi; 
+    up := XModByCentralExtension( SourceHom( nat ) );
+    dn := XModByCentralExtension( RangeHom( nat ) );
     gdl := GeneratorsOfGroup( dl ); 
-    gdr := List( gdl, r -> Image( Boundary(dn), r ) ); 
-    iul := List( gdl, r -> Image( act, r ) ); 
+    gdr := List( gdl, r -> ImageElm( Boundary(dn), r ) ); 
+    iul := List( gdl, r -> ImageElm( act, r ) ); 
     adg := GroupHomomorphismByImages( dr, Range(act), gdr, iul );
     prod := DirectProduct( dl, ur );
     proj1 := Projection( prod, 1 );
     proj2 := Projection( prod, 2 );
     map := MappingByFunction( prod, ul, 
-               function(c) 
+             function(c) 
                local a,s;
-               a := Image( act, Image(proj1,c) ); 
-               s := PreImagesRepresentative( Boundary(up), Image(proj2,c) );  
-               return Image(a,s^-1)*s; 
-               end );
+               a := ImageElm( act, ImageElm(proj1,c) ); 
+               s := PreImagesRepresentative( Boundary(up), ImageElm(proj2,c) );  
+               return ImageElm(a,s^-1)*s; 
+             end );
     xp := CrossedPairingObj( [dl,ur], ul, map );
     CrossedSquare := PreCrossedSquareObj( up, XM, dn, QM, adg, xp );
     SetIsCrossedSquare( CrossedSquare, true );
-    if HasName( XM ) then 
-        SetName( QM, Concatenation( Name( XM ), "/", Name(ZM) ) ); 
-    fi;
+    ## if HasName( XM ) then 
+    ##     SetName( QM, Concatenation( Name( XM ), "/", Name(ZM) ) ); 
+    ## fi;
     return CrossedSquare;
 end );
 
@@ -874,16 +875,16 @@ function( G1, G2 )
                 p1 := p1+1; 
                 q1 := sgQ1[p1]; 
                 g1 := PreImagesRepresentative( nhom1, q1 );
-                iq1 := Image( i, q1 );
+                iq1 := ImageElm( i, q1 );
                 h1 := PreImagesRepresentative( nhom2, iq1 );
                 p2 := 0;
                 while ( ok and ( p2 < lsgQ1 ) ) do 
                     p2 := p2+1;
                     q2 := sgQ1[p2];
                     g2 := PreImagesRepresentative( nhom1, q2 );
-                    iq2 := Image( i, q2 ); 
+                    iq2 := ImageElm( i, q2 ); 
                     h2 := PreImagesRepresentative( nhom2, iq2 );            
-                    gor1 := Image( j, Comm(g1,g2) );    
+                    gor1 := ImageElm( j, Comm(g1,g2) );    
                     gor2 := Comm( h1, h2 );
                     ok := ( gor1 = gor2 ); 
                 od;
@@ -1009,16 +1010,16 @@ function( X1, X2 )
                 p1 := p1+1;
                 r1 := sgRQ1[p1];
                 x1 := PreImagesRepresentative( rhom1, r1 );
-                ir1 := Image( ri, r1 ); 
+                ir1 := ImageElm( ri, r1 ); 
                 d1 := PreImagesRepresentative( rhom2, ir1 );
                 p2 := 0;
                 while ( ok and ( p2 < lsgRQ1 ) ) do
                     p2 := p2+1;
                     r2 := sgRQ1[p2];
                     x2 := PreImagesRepresentative( rhom1, r2 );
-                    ir2 := Image( ri, r2 ); 
+                    ir2 := ImageElm( ri, r2 ); 
                     d2 := PreImagesRepresentative( rhom2, ir2 );
-                    gor1 := Image( rj, Comm(x1,x2) );
+                    gor1 := ImageElm( rj, Comm(x1,x2) );
                     gor2 := Comm( d1, d2 );
                     ok := ( gor1 = gor2 ); 
                 od;
@@ -1027,9 +1028,9 @@ function( X1, X2 )
                     p3 := p3+1;
                     s1 := sgSQ1[p3];
                     y1 := PreImagesRepresentative( shom1, s1 );
-                    is1 := Image( si, s1 );
+                    is1 := ImageElm( si, s1 );
                     e1 := PreImagesRepresentative( shom2, is1 );
-                    gor1 := Image( sj, Displacement( actX1, x1, y1 ) ); 
+                    gor1 := ImageElm( sj, Displacement( actX1, x1, y1 ) ); 
                     gor2 := Displacement( actX2, d1, e1 );
                     ok := ( gor1 = gor2 ); 
                 od;
@@ -1146,10 +1147,10 @@ function( XM )
     fi;
     ZXMod := CentreXMod( XM );
     DXMod := DerivedSubXMod( XM );
-    QXMod := FactorPreXMod(XM,ZXMod);
-    KXMod := IntersectionSubXMods(XM,ZXMod,DXMod);
-    m1 := Size(QXMod);
-    m2 := Size(KXMod);
+    QXMod := FactorPreXMod( XM, ZXMod );
+    KXMod := IntersectionSubXMods( XM, ZXMod, DXMod );
+    m1 := Size( QXMod );
+    m2 := Size( KXMod );
     l1 := Tau( m1[1] ) + Tau( m2[1] ) - 2;
     l2 := Tau( m1[2] ) + Tau( m2[2] ) - 2;
     return [l1,l2];
@@ -1164,8 +1165,8 @@ function(G)
     if not IsPrimePowerInt( Size(G) ) then 
         return fail; 
     fi;
-    ZG := Centre(G); 
-    DG := DerivedSubgroup(G); 
+    ZG := Centre( G ); 
+    DG := DerivedSubgroup( G ); 
     KG := Intersection( ZG, DG );
     QG := DG/KG;
     return Tau( Size(QG) ) - 1;
@@ -1184,25 +1185,25 @@ function( XM )
     fi;
     ZXMod := CentreXMod( XM );
     DXMod := DerivedSubXMod( XM );
-    KXMod := IntersectionSubXMods(XM,ZXMod,DXMod);
-    QXMod := FactorPreXMod(DXMod,KXMod);
-    size := Size(QXMod);     
+    KXMod := IntersectionSubXMods( XM, ZXMod, DXMod );
+    QXMod := FactorPreXMod( DXMod, KXMod );
+    size := Size( QXMod ); 
     return [ Tau(size[1])-1, Tau(size[2])-1 ];
 end );
 
 #############################################################################
 ##
-#M  TableRowXMod  . .. . table row for isoclinism families of crossed modules
+#M  TableRowXMod  . . . table row for isoclinism families of crossed modules
 ##
 InstallMethod( TableRowXMod, "generic method for crossed modules", true, 
     [ Is2DimensionalGroup, IsList ], 0,
-function(XM,XM_ler)
+function( XM, XM_ler )
 
     local Eler, Iler, i, j, sinif, B;
 
     sinif := IsoclinicXModFamily( XM, XM_ler );
     B := LowerCentralSeries( XM );
-    
+
 Print("---------------------------------------------------------------------------------------------------------------------------------- \n");
 Print("---------------------------------------------------------------------------------------------------------------------------------- \n");
 Print("Number","\t","Rank","\t\t","M. L.","\t\t","Class","\t","|G/Z|","\t\t",
@@ -1213,13 +1214,12 @@ Print( Length(sinif), "\t", IsoclinicRank( XM ), "\t",
        NilpotencyClassOf2DimensionalGroup( XM ), "\t", 
        Size( FactorPreXMod( XM, CentreXMod( XM ) ) ) );    
 
-if Length(B) > 1 then
-for i in [2..Length(B)] do
-        Print("\t");
-        Print(Size(B[i]));  
-od;
-fi;
-
+    if Length(B) > 1 then
+        for i in [2..Length(B)] do
+            Print( "\t" );
+            Print( Size( B[i] ) );  
+        od;
+    fi;
 Print("\n---------------------------------------------------------------------------------------------------------------------------------- \n");
-return sinif;
+    return sinif;
 end );

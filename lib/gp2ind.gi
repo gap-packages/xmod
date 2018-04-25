@@ -2,7 +2,7 @@
 ##
 #W  gp2ind.gi                      XMOD Package                  Chris Wensley
 ##
-#Y  Copyright (C) 2001-2017, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2018, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file implements functions for induced crossed modules. 
@@ -24,11 +24,11 @@ function( X1, X2 )
     ##  function to split a semedirectproduct element into two parts 
     f := function( g ) 
         local x, x1, y1, y; 
-        x := Image( proj, g );
-        x1 := Image( emb1, x ); 
+        x := ImageElm( proj, g );
+        x1 := ImageElm( emb1, x ); 
         y1 := x1^-1 * g;
         y := PreImagesRepresentative( emb2, y1 );
-        if not ( g = x1 * Image( emb2, y ) ) then 
+        if not ( g = x1 * ImageElm( emb2, y ) ) then 
             Error( "problem with factoring g" ); 
         fi;
         return [x,y]; 
@@ -55,7 +55,7 @@ function( X1, X2 )
     act1 := XModAction( X1 ); 
     act2 := XModAction( X2 ); 
     aut2 := Range( act2 );
-    imu := List( gen1, g -> Image( act2, Image( bdy1, g ) ) ); 
+    imu := List( gen1, g -> ImageElm( act2, ImageElm( bdy1, g ) ) ); 
     mu := GroupHomomorphismByImages( S1, aut2, gen1, imu ); 
     sdp := SemidirectProduct( S1, mu, S2 ); 
     proj := Projection( sdp ); 
@@ -71,7 +71,7 @@ function( X1, X2 )
     ## now construct the pre-xmod boundary (sdp->R)
     imbdy := ListWithIdenticalEntries( lens, 0 ); 
     for i in [1..lens] do 
-        imbdy[i] := Image(bdy1,gens1[i]) * Image(bdy2,gens2[i]);
+        imbdy[i] := ImageElm(bdy1,gens1[i]) * ImageElm(bdy2,gens2[i]);
     od;
     cbdy := GroupHomomorphismByImages( sdp, R, gens, imbdy );
     ## now construct the pre-xmod action 
@@ -79,11 +79,11 @@ function( X1, X2 )
     for j in [1..lenR] do 
         r := genR[j];  
         imalpha := ListWithIdenticalEntries( lens, 0 ); 
-        a1 := Image( act1, r ); 
-        a2 := Image( act2, r );
+        a1 := ImageElm( act1, r ); 
+        a2 := ImageElm( act2, r );
         for i in [1..lens] do 
-            imalpha[i] := Image( emb1, Image(a1,gens1[i]) ) 
-                          * Image( emb2, Image(a2,gens2[i]) );
+            imalpha[i] := ImageElm( emb1, ImageElm(a1,gens1[i]) ) 
+                          * ImageElm( emb2, ImageElm(a2,gens2[i]) );
         od; 
         imcact[j] := GroupHomomorphismByImages( sdp, sdp, gens, imalpha ); 
     od; 
@@ -209,7 +209,7 @@ InstallGlobalFunction( InducedXMod, function( arg )
         I1 := Source( X1 );
         genI1 := GeneratorsOfGroup( I1 );
         bdy1 := Boundary( X1 );
-        im1 := List( genI1, s -> Image( bdy1, s ) );
+        im1 := List( genI1, s -> ImageElm( bdy1, s ) );
         P1 := Subgroup( iP, im1 );
         if not ( P1 = iP ) then
             Print( "VERY SURPRISING RESULT : P1 <> iP\n" );
@@ -287,7 +287,7 @@ function( X0, iota, trans )
     ngFM := Length( genFM );
     ## image of P under iota
     iP := ImagesSource( iota );
-    eliP := List( elP, p -> Image( iota, p ) );
+    eliP := List( elP, p -> ImageElm( iota, p ) );
     indQP := oQ/oP;
     presFM := PresentationFpGroup( FM );
     TzInitGeneratorImages( presFM );
@@ -314,7 +314,7 @@ function( X0, iota, trans )
             posn := Position( genN, n2 );
             if ( posn = fail ) then
                 Add( genN, n2 );
-                m2 := Image( g2fpM, n2 ); ## is this better?
+                m2 := ImageElm( g2fpM, n2 ); ## is this better?
                 if not ( n2 in M ) then 
                     Error( "M is not a normal subgroup of P" ); 
                 fi; 
@@ -349,7 +349,7 @@ function( X0, iota, trans )
     genFN :=  [ ];
     for n1 in genN do
         n2 := PreImagesRepresentative( fp2gM, n1 );
-        m1 := Image( g2fpM, n1 ); 
+        m1 := ImageElm( g2fpM, n1 ); 
         l1 := Length( m1 );
         l2 := Length( n2 );
         if ( l2 < l1 ) then
@@ -361,7 +361,7 @@ function( X0, iota, trans )
     Info( InfoXMod, 2, "genFN = ", genFN );
     diff := ngN - ngFM;
     N := Subgroup( P, genN );
-    geniN := List( genN, r -> Image( iota, r ) );
+    geniN := List( genN, r -> ImageElm( iota, r ) );
     iN := Subgroup( Q, geniN );
     if ( ( InfoLevel( InfoXMod ) > 1 ) and ( diff > 0 ) ) then
         Print( "Closed generating set for N :-\n", genN, "\n" );
@@ -673,7 +673,7 @@ function( X0, iota, trans )
     homFIQ := GroupHomomorphismByImages( FI2, Q, genFI2, genD );
     FK := Kernel( homFIQ );
     genFK := GeneratorsOfGroup( FK );
-    genK := List( genFK, k -> Image( f2p, k ) );
+    genK := List( genFK, k -> ImageElm( f2p, k ) );
     Info( InfoXMod, 2, "genFK = ", genFK );
     Info( InfoXMod, 2, " genK = ", genK );
     K := Subgroup( I, genK );
@@ -688,7 +688,7 @@ function( X0, iota, trans )
     Info( InfoXMod, 2, "mgiFIQ[1] = genFI2 ?? ", mgiFIQ[1] = genFI2 );
     words := List( imold, w -> MappedWord( w, gensFI2, genFI2 ) );
     Info( InfoXMod, 2, "words = ", words ); 
-    imrem := List( words, w -> Image( f2p, w ) );
+    imrem := List( words, w -> ImageElm( f2p, w ) );
     Info( InfoXMod, 2, "imrem = ", imrem ); 
 
     if ( InfoLevel( InfoXMod ) > 1 ) then
@@ -760,9 +760,9 @@ function( X0, iota )
     genH := [ ];
     H := Subgroup( S, genH );
     for r in genK do
-        a := Image( act, r );
+        a := ImageElm( act, r );
         for s in genS do
-            x := s^(-1) * Image( a, s );
+            x := s^(-1) * ImageElm( a, s );
             if not ( x in H ) then
                 Add( genH, x );
                 H := Subgroup( S, genH );
@@ -774,7 +774,7 @@ function( X0, iota )
     preQ := List( genQ, q -> PreImagesRepresentative( iota, q ) );
     rcos := RightCosets( S, H );
     reps := List( rcos, r -> Representative( r ) );
-    imb := List( genS, r -> Image( iota, Image( bdy, r ) ) );
+    imb := List( genS, r -> ImageElm( iota, ImageElm( bdy, r ) ) );
     #? (06/07/10) modified to make Pc2DimensionalDomain 
     PI := Action( S, rcos, OnRight ); 
     actPI := ActionHomomorphism( S, PI ); 
@@ -783,7 +783,7 @@ function( X0, iota )
         ispc := not ( isoI = fail ); 
     fi; 
     if ispc then 
-        I := Image( isoI ); 
+        I := ImagesSource( isoI ); 
         acthom := actPI * isoI; 
     else 
         I := PI; 
@@ -794,7 +794,7 @@ function( X0, iota )
     if HasName( S ) then
         SetName( I, Concatenation( Name( S ), "/ker" ) );
     fi;
-    imi := List( genS, s -> Image( acthom, s ) ); 
+    imi := List( genS, s -> ImageElm( acthom, s ) ); 
     #? (06/07/10)  removed when adding pcgroup option 
     ##  if ( genI <> imi ) then
     ##    Error( "unequal images: genI <> imi" );
@@ -805,9 +805,9 @@ function( X0, iota )
     lenQ := Length( genQ );
     autgen := 0 * [1..lenQ];
     for i in [1..lenQ] do
-        a := Image( act, preQ[i] );
-        imS := List( genS, s -> Image( a, s ) );
-        imI := List( imS, s -> Image( acthom, s ) );
+        a := ImageElm( act, preQ[i] );
+        imS := List( genS, s -> ImageElm( a, s ) );
+        imI := List( imS, s -> ImageElm( acthom, s ) );
         autgen[i] := GroupHomomorphismByImages( I, I, imi, imI );
     od;
     idI := InclusionMappingGroups( I, I );
@@ -1007,7 +1007,7 @@ local Q, R, G,                    # 3 permutation groups
     fp2gG := Ginfo!.fp2g;
     for i in [1..oG] do
         m := elFG[i];
-        rm := Image( fp2gG, m );
+        rm := ImageElm( fp2gG, m );
         pos := Position( elG, rm );
         posf2g[i] := pos;
         posg2f[pos] := i;
@@ -1129,11 +1129,11 @@ function( info )
     od;
     # Adding extra relations from embedding and iota
     uuQ := [ ];
-    imembed := List( genCrng, x -> Image( e, x ) );
-    wG := List( imembed, x -> Image( Gfp!.p2f, x ) ); 
+    imembed := List( genCrng, x -> ImageElm( e, x ) );
+    wG := List( imembed, x -> ImageElm( Gfp!.p2f, x ) ); 
     uG := List( wG, g -> MappedWord( g, genGfp, imG ) );
-    imiota := List( genCrng, x -> Image( iota, x ) ); 
-    wQ := List( imiota, x -> Image( Qfp!.p2f, x ) );
+    imiota := List( genCrng, x -> ImageElm( iota, x ) ); 
+    wQ := List( imiota, x -> ImageElm( Qfp!.p2f, x ) );
     uQ := List( wQ, u -> MappedWord( u, genQfp, imQ ) );
     for i in [1..Length(uG)] do     
         uQG := uG[i]*uQ[i]^-1;
@@ -1147,9 +1147,9 @@ function( info )
     kerh := Kernel( h );
     genkert := kert!.generators;
     genkerh := kerh!.generators;
-    imt := List( genkert, x -> Image( Gfp!.p2f, x ) );
+    imt := List( genkert, x -> ImageElm( Gfp!.p2f, x ) );
     tG := List( imt, i -> MappedWord( i, genGfp, imG ) );
-    imh := List( genkerh, x -> Image( Gfp!.p2f, x ) );
+    imh := List( genkerh, x -> ImageElm( Gfp!.p2f, x ) );
     hG := List( imh, i -> MappedWord( i, genGfp, imG ) );
     for u in genfI do
     Yt := List( tG, x -> x^u );
@@ -1189,17 +1189,17 @@ function( info )
     Print("******************** \n");
     imG := genPI{[1..ngG]};
     iotastar := GroupHomomorphismByImages( Csrc, PI, genCsrc, imG );
-    imh1 := List( genCsrc, x -> Image( h, x ) );
-    imh2 := List( imh1, x -> Image( iota, x ) );
+    imh1 := List( genCsrc, x -> ImageElm( h, x ) );
+    imh2 := List( imh1, x -> ImageElm( iota, x ) );
     imh := Concatenation( imh2, genQ );
     hstar := GroupHomomorphismByImages( PI, Q, genPI, imh );
-    imt1 := List( genCsrc, x -> Image( t, x ) );
-    imt2 := List( imt1, x -> Image( iota, x ) );
+    imt1 := List( genCsrc, x -> ImageElm( t, x ) );
+    imt2 := List( imt1, x -> ImageElm( iota, x ) );
     imt := Concatenation( imt2, genQ );
     tstar := GroupHomomorphismByImages( PI, Q, genPI, imt );
-    imm := List( genQ, x -> Image( Qfp!.p2f, x ) );
+    imm := List( genQ, x -> ImageElm( Qfp!.p2f, x ) );
     imag := List( imm, x -> MappedWord( x, genQfp, imQ ) );
-    images := List( imag, x -> Image( newFIfp!.f2p, x ) );
+    images := List( imag, x -> ImageElm( newFIfp!.f2p, x ) );
     estar := GroupHomomorphismByImages( Q, PI, genQ, images );
     IC := Cat1Group( PI, tstar, hstar, estar );
     IC!.isCat1 := IsCat1Group( IC );

@@ -2,7 +2,7 @@
 ##
 #W  util.gi                    GAP4 package `XMod'               Chris Wensley
 #W                                                                 & Murat Alp
-#Y  Copyright (C) 2001-2017, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2018, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 ##############################################################################
@@ -107,9 +107,9 @@ function( G )
     else
         G2P := IsomorphismPermGroup( G );
         SetNiceMonomorphism( G, G2P );
-        SetNiceObject( G, Image( G2P ) );
+        SetNiceObject( G, ImagesSource( G2P ) );
     fi;
-    P := Image( G2P );
+    P := ImagesSource( G2P );
     nP := NrMovedPoints( P );
     P2S := SmallerDegreePermutationRepresentation( P );
     if ( P2S = fail ) then
@@ -127,8 +127,8 @@ function( G )
             numG := Length( genG );
             imiso := ListWithIdenticalEntries( numG, 0 );
             for j in [1..numG] do
-                p := Image( G2P, genG[j] );
-                imiso[j] := Image( P2S, p );
+                p := ImageElm( G2P, genG[j] );
+                imiso[j] := ImageElm( P2S, p );
             od; 
             iso := GroupHomomorphismByImages( G, S, genG, imiso );
         fi;
@@ -138,7 +138,7 @@ function( G )
     fi;
     SetNicerMonomorphism( G, iso );
     if not ( iso = fail ) then
-        SetNicerObject( G, Image( iso ) );
+        SetNicerObject( G, ImagesSource( iso ) );
     fi;
     return iso;
 end );
@@ -694,7 +694,7 @@ function( m, n, l )
     rels := [ x^m, y^n, x^(-1)*y*x*y^(-l) ];
     fp := f/rels;
     iso := IsomorphismPermGroup( fp );
-    return Image( iso );
+    return ImagesSource( iso );
 end );
 
 ##############################################################################

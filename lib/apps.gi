@@ -107,7 +107,7 @@ function( X0 )
     genP0 := GeneratorsOfGroup( P0 ); 
     igenP0 := List( genP0, g -> ImageElm( act0, g ) ); 
     imgenM0 := List( genM0, g -> List( igenP0, p -> ImageElm(p,g) ) ); 
-    imbdy0 := Image( bdy0, M0 ); 
+    imbdy0 := ImagesSource( bdy0 ); 
     Q0 := P0/imbdy0; 
     SetName( P0, "P0" ); 
     conjP0 := ConjugacyClasses( P0 ); 

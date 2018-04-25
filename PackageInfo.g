@@ -66,17 +66,7 @@ Persons := [
     LastName      := "Uslu",
     FirstNames    := "Enver Onder",
     IsAuthor      := true,
-    IsMaintainer  := false,
-    Email         := "enveruslu@ogu.edu.tr",
-    PostalAddress := Concatenation( [ 
-                       "Dr. E. O. Uslu \n",
-                       "Osmangazi University \n",
-                       "Arts and Sciences Faculty \n",
-                       "Department of Mathematics and Computer Science \n",
-                       "Eskisehir \n",
-                       "Turkey"] ),
-    Place         := "Eskisehir",
-    Institution   := "Osmangazi University"
+    IsMaintainer  := false
   )
 ],
 
@@ -133,7 +123,7 @@ BannerString := Concatenation(
   " with contributions from:\n", 
   "    Murat Alp (muratalp@nigde.edu.tr),\n", 
   "    Alper Odabas (aodabas@ogu.edu.tr),\n", 
-  "and Enver Uslu (enveruslu@ogu.edu.tr).\n", 
+  "and Enver Uslu.\n", 
   "----------",
   "-------------------------------------------------------------------\n" ), 
 
