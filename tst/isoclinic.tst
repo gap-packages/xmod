@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.tst                 XMOD test file                 Alper Odabas
 #W                                                               & Enver Uslu
-#Y  Copyright (C) 2001-2017, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2018, Chris Wensley et al, 
 ##
 gap> START_TEST( "XMod package: isoclinic.tst" );
 gap> saved_infolevel_xmod := InfoLevel( InfoXMod );; 
@@ -13,18 +13,23 @@ gap> SetInfoLevel( InfoGroupoids, 0 );;
 ## Chapter 4
 
 #### 4.1.1 
-gap> d24 := DihedralGroup(24);;  SetName( d24, "d24" );
-gap> X24 := XModByAutomorphismGroup( d24 );; 
-gap> Size(X24);
+gap> d24 := DihedralGroup( IsPermGroup, 24 );; 
+gap> SetName( d24, "d24" );
+gap> Y24 := XModByAutomorphismGroup( d24 );; 
+gap> Size( Y24 );
 [ 24, 48 ]
+gap> X24 := Image( IsomorphismPerm2DimensionalGroup( Y24 ) );
+[d24->Group( [ ( 2, 4), ( 1, 2, 3, 4)( 5, 8)( 6, 9)( 7,10), ( 6,10)( 7, 9), 
+  ( 5, 9, 7)( 6,10, 8) ] )]
 gap> nsx := NormalSubXMods( X24 );; 
+gap> Length( nsx );
+40
 gap> ids := List( nsx, n -> IdGroup(n) );; 
 gap> pos1 := Position( ids, [ [4,1], [8,3] ] );;
 gap> Xn1 := nsx[pos1];; 
 gap> IdGroup( Xn1 );
 [ [ 4, 1 ], [ 8, 3 ] ]
-gap> nat1 := NaturalMorphismByNormalSubPreXMod( X24, Xn1 ); 
-[[d24->PAut(d24)] => [..]]
+gap> nat1 := NaturalMorphismByNormalSubPreXMod( X24, Xn1 );; 
 gap> Qn1 := FactorPreXMod( X24, Xn1 ); 
 [Group( [ f1, f2 ] )->Group( [ f1, f2 ] )]
 gap> Size( Qn1 );
@@ -48,16 +53,16 @@ gap> Sn4 := Source(Xn4);;
 gap> Rn4 := Range(Xn4);; 
 gap> r := Rn4.1;;  s := Sn4.1;; 
 gap> d := Displacement( XModAction(Xn4), r, s );
-f4
+(1,5,9)(2,6,10)(3,7,11)(4,8,12)
 gap> bn4 := Boundary( Xn4 );;
 gap> Image( bn4, d ) = Comm( r, Image( bn4, s ) );  
 true
 gap> DisplacementSubgroup( Xn4 );
-Group([ f4 ])
+Group([ (1,5,9)(2,6,10)(3,7,11)(4,8,12) ])
 
 #### 4.1.4
 gap> CrossActionSubgroup( X24, Xn2, Xn3 );
-Group([ f2 ])
+Group([ (1,6,11,4,9,2,7,12,5,10,3,8), (1,10,7,4)(2,11,8,5)(3,12,9,6) ])
 gap> Cn23 := CommutatorSubXMod( X24, Xn2, Xn3 );;
 gap> Size(Cn23);
 [ 12, 6 ]
@@ -66,11 +71,12 @@ true
 
 #### 4.1.5
 gap> DXn4 := DerivedSubXMod( Xn4 );  
-[Group( [ f4 ] )->Group( [ f2 ] )]
+[Group( [ ( 1, 5, 9)( 2, 6,10)( 3, 7,11)( 4, 8,12) ] )->Group( 
+[ ( 5, 9, 7)( 6,10, 8) ] )]
 
 #### 4.1.6
 gap> fix := FixedPointSubgroupXMod( Xn4, Sn4, Rn4 );
-Group([ f3*f4 ])
+Group([ (1,7)(2,8)(3,9)(4,10)(5,11)(6,12) ])
 gap> stab := StabilizerSubgroupXMod( Xn4, Sn4, Rn4 );;
 gap> IdGroup( stab );
 [ 12, 5 ]
@@ -88,7 +94,7 @@ gap> IdGroup( NDXn4 );
 
 #### 4.1.8
 gap> Q24 := CentralQuotient( d24);  Size( Q24 );                     
-[d24->Group( [ f1, f2, f3 ] )]
+[d24->d24/Z(d24)]
 [ 24, 12 ]
 
 #### 4.1.9
@@ -184,9 +190,11 @@ gap> AreIsoclinicDomains( X8, X9 );
 true
 gap> ism89 := Isoclinism( X8, X9 );;
 gap> Display( ism89 );
-[ [[Group( [ f1 ] )->Group( [ f2, f2 ] )] => [Group( [ f1 ] )->Group( 
-    [ f2, f2 ] )]], [[Group( [ f3 ] )->Group( <identity> of ... )] => [Group( 
-    [ f3 ] )->Group( <identity> of ... )]] ]
+[ [[Group( [ f1, f2, <identity> of ... ] ) -> Group( [ f2, f2 ] )] => [Group( 
+    [ f1, f2, <identity> of ..., <identity> of ... ] ) -> Group( 
+    [ f2, f2 ] )]], 
+  [[Group( [ f3 ] ) -> Group( <identity> of ... )] => [Group( 
+    [ f3 ] ) -> Group( <identity> of ... )]] ]
 
 #### 4.3.2
 gap> IsStemDomain(X8);

@@ -11,7 +11,8 @@ gap> SetInfoLevel( InfoXMod, 1 );;
 
 gap> k8 := Group( (3,4), (5,6), (7,8) );; 
 gap> SetName( k8, "k8" ); 
-gap> X8 := XModByAutomorphismGroup( k8 );; 
+gap> Y8 := XModByAutomorphismGroup( k8 );; 
+gap> X8 := Image( IsomorphismPerm2DimensionalGroup( Y8 ) );;
 gap> SetName( X8, "X8" );
 gap> Print( "X8: ", Size( X8 ), " : ", StructureDescription( X8 ), "\n" );  
 X8: [ 8, 168 ] : [ "C2 x C2 x C2", "PSL(3,2)" ]

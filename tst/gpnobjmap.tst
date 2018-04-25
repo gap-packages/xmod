@@ -2,7 +2,7 @@
 ##
 #W  gpnobjmap.tst                 XMOD test file                Chris Wensley
 ##                                                               Alper Odabas
-#Y  Copyright (C) 2001-2017, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2018, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 gap> START_TEST( "XMod package: gpnobjmap.tst" );
@@ -53,8 +53,8 @@ generating (pre-)cat1-groups:
 
 gap> Display( CC5 );
 generating (pre-)cat1-groups:
-1 :
-Cat1-group :-
+1 : 
+Cat1-group :- 
 : Source group C4 x C2 has generators:
   [ f1, f2, f3 ]
 : Range group has generators:
@@ -71,11 +71,11 @@ Cat1-group :-
   [ <identity> of ..., <identity> of ..., <identity> of ... ]
 : kernel embedding maps generators of kernel to:
   [ f1, f2, f3 ]
-: associated crossed module is [Group( [ f1, f2, f3 ] )->Group(
+: associated crossed module is [Group( [ f1, f2, f3 ] ) -> Group( 
 [ <identity> of ..., <identity> of ..., <identity> of ... ] )]
 
-2 :
-Cat1-group :-
+2 : 
+Cat1-group :- 
 : Source group C4 x C2 has generators:
   [ f1, f2, f3 ]
 : Range group has generators:
@@ -92,11 +92,11 @@ Cat1-group :-
   [ <identity> of ..., <identity> of ... ]
 : kernel embedding maps generators of kernel to:
   [ f1, f3 ]
-: associated crossed module is [Group( [ f1, f3 ] )->Group(
+: associated crossed module is [Group( [ f1, f3 ] ) -> Group( 
 [ <identity> of ..., f2 ] )]
 
-3 :
-Cat1-group :-
+3 : 
+Cat1-group :- 
 : Source group C4 x C2 has generators:
   [ f1, f2, f3 ]
 : Range group has generators:
@@ -113,11 +113,11 @@ Cat1-group :-
   [ <identity> of ... ]
 : kernel embedding maps generators of kernel to:
   [ f2 ]
-: associated crossed module is [Group( [ f2 ] )->Group(
+: associated crossed module is [Group( [ f2 ] ) -> Group( 
 [ f1, <identity> of ... ] )]
 
-4 :
-Cat1-group [C4 x C2=>C4 x C2] :-
+4 : 
+Cat1-group [C4 x C2=>C4 x C2] :- 
 : Source group C4 x C2 has generators:
   [ f1, f2, f3 ]
 : Range group C4 x C2 has generators:
@@ -129,10 +129,10 @@ Cat1-group [C4 x C2=>C4 x C2] :-
 : range embedding maps range generators to:
   [ f1, f2, f3 ]
 : the kernel is trivial.
-: associated crossed module is [Group( <identity> of ... )->C4 x C2]
+: associated crossed module is [triv->C4 x C2]
 
-5 :
-Cat1-group [C4 x C2=>C4 x C2] :-
+5 : 
+Cat1-group [C4 x C2=>C4 x C2] :- 
 : Source group C4 x C2 has generators:
   [ f1, f2, f3 ]
 : Range group C4 x C2 has generators:
@@ -144,7 +144,7 @@ Cat1-group [C4 x C2=>C4 x C2] :-
 : range embedding maps range generators to:
   [ f1, f2, f3 ]
 : the kernel is trivial.
-: associated crossed module is [Group( <identity> of ... )->C4 x C2]
+: associated crossed module is [triv->C4 x C2]
 
 gap> CC6 := Cat2Group( Cat1Group(6,2,2), Cat1Group(6,2,3) );
 generating (pre-)cat1-groups:

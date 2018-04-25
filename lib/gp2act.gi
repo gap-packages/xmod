@@ -5,7 +5,7 @@
 ##
 ##  This file implements methods for actor crossed squares of crossed modules. 
 ##
-#Y  Copyright (C) 2001-2017, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2018, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 #############################################################################
@@ -38,18 +38,26 @@ function( XM )
     genAS := GeneratorsOfGroup( AS );
     a2pS := IsomorphismPermGroup( AS );    ### check if smaller possible
     PAS := Image( a2pS );
-    genPAS := List( genAS, a -> Image( a2pS, a ) );
-    p2aS := GroupHomomorphismByImages( PAS, AS, genPAS, genAS );
-    SetAutoGroupIsomorphism( PAS, p2aS );
+    genPAS := List( genAS, a -> ImageElm( a2pS, a ) );
+    p2aS := GroupHomomorphismByImages( PAS, AS, genPAS, genAS ); 
+    if ( p2aS = fail ) then 
+        Error( "p2aS = fail" );
+    else 
+        SetAutoGroupIsomorphism( PAS, p2aS );
+    fi; 
 
     imbdy := Image( bdy );
     AR := AutomorphismGroup( R );
     genAR := GeneratorsOfGroup( AR );
     a2pR := IsomorphismPermGroup( AR );    ### ditto
     PAR := Image( a2pR );
-    genPAR := List( genAR, a -> Image( a2pR, a ) );
+    genPAR := List( genAR, a -> ImageElm( a2pR, a ) );
     p2aR := GroupHomomorphismByImages( PAR, AR, genPAR, genAR );
-    SetAutoGroupIsomorphism( PAR, p2aR );
+    if ( p2aR = fail ) then 
+        Error( "p2aR = fail" );
+    else 
+        SetAutoGroupIsomorphism( PAR, p2aR );
+    fi; 
 
     D := DirectProduct( PAS, PAR );
     genD := GeneratorsOfGroup( D );
@@ -58,8 +66,8 @@ function( XM )
     fi;
     emS := Embedding( D, 1 );
     emR := Embedding( D, 2 );
-    emgenPAS := List( genPAS, a -> Image( emS, a ) );
-    emgenPAR := List( genPAR, a -> Image( emR, a ) ); 
+    emgenPAS := List( genPAS, a -> ImageElm( emS, a ) );
+    emgenPAR := List( genPAR, a -> ImageElm( emR, a ) ); 
     emAS := GroupHomomorphismByImages( AS, D, genAS, emgenPAS );  
     emAR := GroupHomomorphismByImages( AR, D, genAR, emgenPAR ); 
     infoD := DirectProductInfo( D );
@@ -67,9 +75,9 @@ function( XM )
     num := 0;
     autogens := [ ];
     for as in AS do 
-        eas := Image( emAS, as );
+        eas := ImageElm( emAS, as );
         for ar in AR do 
-            ear := Image( emAR, ar );
+            ear := ImageElm( emAR, ar );
             if not ( eas*ear in P ) then
                 mor := Make2DimensionalGroupMorphism( [ XM, XM, as, ar ] );
                 ispre := ( not( mor = fail ) and IsPreXModMorphism( mor ) );
@@ -154,16 +162,24 @@ function( XM )
     ngAR := Length( genAR );
     a2pR := IsomorphismSmallPermGroup( AR );
     PAR := Image( a2pR, AR );
-    genPAR := List( genAR, a -> Image( a2pR, a ) );
+    genPAR := List( genAR, a -> ImageElm( a2pR, a ) );
     Info( InfoXMod, 2, "genPAR = ", genPAR );
     p2aR := GroupHomomorphismByImages( PAR, AR, genPAR, genAR );
-    SetAutoGroupIsomorphism( PAR, p2aR );
+    if ( p2aR = fail ) then 
+        Error( "p2aR = fail" );
+    else 
+        SetAutoGroupIsomorphism( PAR, p2aR );
+    fi; 
     a2pS := IsomorphismSmallPermGroup( AS );
     PAS := Image( a2pS, AS );
-    genPAS := List( genAS, a -> Image( a2pS, a ) );
+    genPAS := List( genAS, a -> ImageElm( a2pS, a ) );
     Info( InfoXMod, 2, "genPAS = ", genPAS );
     p2aS := GroupHomomorphismByImages( PAS, AS, genPAS, genAS );
-    SetAutoGroupIsomorphism( PAS, p2aS );
+    if ( p2aS = fail ) then 
+        Error( "p2aS = fail" );
+    else 
+        SetAutoGroupIsomorphism( PAS, p2aS );
+    fi; 
     restrict := GroupHomomorphismByImages( PAR, PAS, genPAR, genPAS );
 
     D := DirectProduct( PAS, PAR );
@@ -176,8 +192,8 @@ function( XM )
     ## this looks odd, but ngAR=ngAS
     filtS := Filtered( [1..ngAR], i -> not IsOne( genPAS[i] ) ); 
     Info( InfoXMod, 2,  "filtS = ", filtS ); 
-    emgenPAS := List( genPAS, a -> Image( emS, a ) );
-    emgenPAR := List( genPAR, a -> Image( emR, a ) );
+    emgenPAS := List( genPAS, a -> ImageElm( emS, a ) );
+    emgenPAR := List( genPAR, a -> ImageElm( emR, a ) );
     ##  (05/03/07)  allowed for the case that AS is trivial
     emAS := GroupHomomorphismByImages( AS,D,genAS{filtS},emgenPAS{filtS} );
     emAR := GroupHomomorphismByImages( AR,D,genAR,       emgenPAR );
@@ -186,7 +202,7 @@ function( XM )
     genP := ListWithIdenticalEntries( ngAR, 0 );
     autogens := ListWithIdenticalEntries( ngAR, 0 );
     for j in [1..ngAR] do
-        genP[j] := Image( emAS, genAS[j] ) * Image( emAR, genAR[j] );
+        genP[j] := ImageElm( emAS, genAS[j] ) * ImageElm( emAR, genAR[j] );
         autogens[j] := XModMorphism( XM, XM, genAS[j], genAR[j] );
     od;
     P := Subgroup( D, genP );
@@ -227,13 +243,13 @@ function( XM, a )
 
     APXM := AutomorphismPermGroup( XM );
     sp := SourceProjection( APXM );
-    sa := Image( sp, a );
+    sa := ImageElm( sp, a );
     si := AutoGroupIsomorphism( Range( sp ) );
-    smor := Image( si, sa );
+    smor := ImageElm( si, sa );
     rp := RangeProjection( APXM );
-    ra := Image( rp, a );
+    ra := ImageElm( rp, a );
     ri := AutoGroupIsomorphism( Range( rp ) );
-    rmor := Image( ri, ra );
+    rmor := ImageElm( ri, ra );
     mor := XModMorphism( XM, XM, smor, rmor ); 
     return mor;
 end );
@@ -254,14 +270,14 @@ function( mor, chi )
     R := Range( XM );
     stgR := StrongGeneratorsStabChain( StabChain( R ) );
     rngR := [ 1..Length( stgR ) ];
-    imrho := List( stgR, r -> Image( rho, r ) );
+    imrho := List( stgR, r -> ImageElm( rho, r ) );
     invrho := GroupHomomorphismByImages( R, R, imrho, stgR );
     imj := 0 * rngR;
     for k in rngR do
         r := stgR[k];
-        rr := Image( invrho, r );
+        rr := ImageElm( invrho, r );
         crr := DerivationImage( chi, rr );
-        imj[k] := Image( sigma, crr );
+        imj[k] := ImageElm( sigma, crr );
     od;
     chj := DerivationByImages( XM, imj );
     return chj;
@@ -310,7 +326,7 @@ function( XM )
         for j in [1..nposW] do
             chi := genchi[j];
             sigma := SourceEndomorphism( chi );
-            ima := List( genS, s -> Image( sigma, s ) );
+            ima := List( genS, s -> ImageElm( sigma, s ) );
             a := GroupHomomorphismByImages( S, S, genS, ima );
             imact[j] := a;
         od;
@@ -369,12 +385,12 @@ function( XM )
     # determine the boundary map
     im := [ ]; 
     for r in genR do 
-        autr := Image( XModAction( XM ), r );
-        psrc := Image( a2pS, autr );
-        emsrc := Image( EmbedSourceAutos( P ), psrc );
+        autr := ImageElm( XModAction( XM ), r );
+        psrc := ImageElm( a2pS, autr );
+        emsrc := ImageElm( EmbedSourceAutos( P ), psrc );
         conjr := InnerAutomorphism( R, r );
-        prng := Image( a2pR, conjr );
-        emrng := Image( EmbedRangeAutos( P ), prng );
+        prng := ImageElm( a2pR, conjr );
+        emrng := ImageElm( EmbedRangeAutos( P ), prng );
         Add( im, emrng * emsrc );  ### assumes direct product ###
     od;
     bdy := GroupHomomorphismByImages( R, P, genR, im );
@@ -382,9 +398,9 @@ function( XM )
     imact := 0 * Prng;
     for i in Prng do
         p := genP[i];
-        projp := Image( RangeProjection( P ), p );
-        proja := Image( p2aR, projp );
-        ima := List( genR, r -> Image( proja, r ) );
+        projp := ImageElm( RangeProjection( P ), p );
+        proja := ImageElm( p2aR, projp );
+        ima := List( genR, r -> ImageElm( proja, r ) );
         a := GroupHomomorphismByImages( R, R, genR, ima );
         imact[i] := a;
     od;
@@ -436,9 +452,9 @@ function( XM )
     imact := 0 * Prng;
     for i in Prng  do
         p := genP[i];
-        projp := Image( SourceProjection( P ), p );
-        proja := Image( p2aS, projp );
-        ima := List( genS, s -> Image( proja, s ) );
+        projp := ImageElm( SourceProjection( P ), p );
+        proja := ImageElm( p2aS, projp );
+        ima := List( genS, s -> ImageElm( proja, s ) );
         a := GroupHomomorphismByImages( S, S, genS, ima );
         imact[i] := a;
     od;
@@ -512,8 +528,8 @@ function( XM )
         j := genpos[i];
         chj := DerivationByImages( XM, L[j] );
         mor := Object2dEndomorphism( chj );
-        imsrc := Image( emsrc, Image( a2pS, SourceHom( mor ) ) );
-        imrng := Image( emrng, Image( a2pR, RangeHom( mor ) ) );
+        imsrc := ImageElm( emsrc, ImageElm( a2pS, SourceHom( mor ) ) );
+        imrng := ImageElm( emrng, ImageElm( a2pR, RangeHom( mor ) ) );
         imdelta[i] := imsrc * imrng;
     od;
     delta := GroupHomomorphismByImages( W, P, genW, imdelta );

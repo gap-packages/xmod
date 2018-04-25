@@ -76,8 +76,8 @@ function( chi )
     for j in genrng do
         r := stgR[j];
         s := im[j];
-        aut := Image( act, r^(-1) );
-        inv[j] := Image( aut, s )^(-1);
+        aut := ImageElm( act, r^(-1) );
+        inv[j] := ImageElm( aut, s )^(-1);
     od;
     Info( InfoXMod, 3, "  Images = ", im, ",  inverses = ", inv );
 
@@ -100,8 +100,8 @@ function( chi )
                 r := invR[-g];
                 s := inv[-g];
             fi;
-            aut := Image( act, v );
-            u := Image( aut, s );
+            aut := ImageElm( act, v );
+            u := ImageElm( aut, s );
             w := u * w;
             v := r * v;
         od;
@@ -167,7 +167,7 @@ function( u )
         imsigma := [ 1..ngenS ];
         for i in [1..ngenS] do
             s := genS[i];
-            r := Image( bdy, s );
+            r := ImageElm( bdy, s );
             s2 := DerivationImage( u, r );
             imsigma[i] := s * s2;
         od;
@@ -198,7 +198,7 @@ function( u )
         for i in [1..ngenR] do
             r := genR[i];
             s := DerivationImage( u, r );
-            r2 := Image( bdy, s );
+            r2 := ImageElm( bdy, s );
             imrho[i] := r * r2;
         od;
         rho := GroupHomomorphismByImages( R, R, genR, imrho );
@@ -343,8 +343,8 @@ function( chi, r )
         g := P[j][2];
         j := P[j][1];
         s := imchi[g];
-        a := Image( act, v );
-        u := Image( a, s ) * u;
+        a := ImageElm( act, v );
+        u := ImageElm( a, s ) * u;
         v := stgR[g] * v;
     od;
     return u;
@@ -367,7 +367,7 @@ function( chi )
     ngR := Length( stgR );
     imchi := UpGeneratorImages( chi );
     act := XModAction( XM );
-    agen := List( stgR, r -> Image( act, r ) );
+    agen := List( stgR, r -> ImageElm( act, r ) );
     S := Source( XM );
     elR := Elements( R );
     elS := Elements( S );
@@ -386,7 +386,7 @@ function( chi )
         j := P[i][2];
         x := elS[ L[ P[i][1] ] ];
         a := agen[j];
-        y := Image( a, x ) * imchi[j]; 
+        y := ImageElm( a, x ) * imchi[j]; 
         L[i] := Position( elS, y );
     od;
     return L;
@@ -437,8 +437,8 @@ function( XM, s )
     imiota := 0 * [1..ngen];
     for j in [1..ngen] do
         r := stgR[j];
-        a := Image( act, r );
-        q := Image( a, s^(-1) );
+        a := ImageElm( act, r );
+        q := ImageElm( a, s^(-1) );
         imiota[j] := q * s;
     ##  Print( "[r,a,q,q*s] = ", [r,a,q,q*s], "\n" );
     ##  now using  r -> (s^-1)^r * s,  rather than  s^r * s^-1  ##
@@ -504,7 +504,7 @@ function( chi, chj )
         r := stgR[k];
         sj := imj[k];
         si := imi[k];
-        bsi := Image( bdy, si );
+        bsi := ImageElm( bdy, si );
         s := DerivationImage( chj, bsi );
         imcomp[k] := sj * si * s;
     od;
@@ -601,7 +601,7 @@ function( chi )
     stgR := StrongGeneratorsStabChain( StabChain( R ) );
     im := UpGeneratorImages( chi );
     genrng := [ 1..Length( stgR ) ];
-    imrho := List( genrng, i -> stgR[i] * Image( bdy, im[i] ) );
+    imrho := List( genrng, i -> stgR[i] * ImageElm( bdy, im[i] ) );
     rho := GroupHomomorphismByImages( R, R , stgR, imrho);
     ok := ( ( rho <> fail ) and IsBijective( rho ) );
     return ok;
@@ -683,7 +683,7 @@ function( C, hom )
         Object2d, C, 
         UpHomomorphism, hom, 
         IsUp2DimensionalMapping, true, 
-        UpGeneratorImages, List( stgR, r -> Image( hom, r ) ) ); 
+        UpGeneratorImages, List( stgR, r -> ImageElm( hom, r ) ) ); 
     ok := IsSection( xi );
     if not ok then 
         return fail;
@@ -739,11 +739,11 @@ function( chi )
     eR := RangeEmbedding( C );
     eK := KernelEmbedding( C );
     imchi := UpGeneratorImages( chi );
-    eKchi := List( imchi, s -> Image( eK, s ) );
+    eKchi := List( imchi, s -> ImageElm( eK, s ) );
     imhom := 0 * [ 1..ngR ];
     for i in [ 1..Length( stgR ) ] do
         r := stgR[i];
-        er := Image( eR, r );
+        er := ImageElm( eR, r );
         g := er * eKchi[i];
         imhom[i] := g;
     od;
@@ -778,7 +778,7 @@ function( xi )
     imchi := 0 * [ 1..ngR ];
     for i in [ 1..Length( stgR ) ] do
         r := stgR[i];
-        er := Image( eR, r );
+        er := ImageElm( eR, r );
         s := er^(-1) * imxi[i];
         imchi[i] := PreImagesRepresentative( eK, s );
         Info( InfoXMod, 2, "In xi->chi :- ", [ i, r, er, s] );
@@ -921,7 +921,7 @@ function( XM, subs, imrho, imchi, j, str )
         derivgen := [ ];
         for s in Xsrc do
             imchi[ j ] := s;
-            imrho[ j ] := genJ[j] * Image( bdy, s );
+            imrho[ j ] := genJ[j] * ImageElm( bdy, s );
             rho := GroupHomomorphismByImages( J, Xrng, genJ, imrho );
             ok := IsGroupHomomorphism( rho );
             if ok then
@@ -929,9 +929,9 @@ function( XM, subs, imrho, imchi, j, str )
                 ord := Order( r );
                 w := s;
                 t := s;
-                aut := Image( XModAction( XM ), r );
+                aut := ImageElm( XModAction( XM ), r );
                 for i in [1..ord-1] do
-                    t := Image( aut, t );
+                    t := ImageElm( aut, t );
                     w := t * w;
                 od;
                 if ( w <> onesrc ) then

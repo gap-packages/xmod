@@ -49,16 +49,22 @@ is a special case of this construction.
 <P/>
 <Example>
 <![CDATA[
-gap> d24 := DihedralGroup(24);;  SetName( d24, "d24" );
-gap> X24 := XModByAutomorphismGroup( d24 );;  Size(X24);
+gap> d24 := DihedralGroup( IsPermGroup, 24 );; 
+gap> SetName( d24, "d24" );
+gap> Y24 := XModByAutomorphismGroup( d24 );; 
+gap> Size( Y24 );
 [ 24, 48 ]
+gap> X24 := Image( IsomorphismPerm2DimensionalGroup( Y24 ) );
+[d24->Group( [ ( 2, 4), ( 1, 2, 3, 4)( 5, 8)( 6, 9)( 7,10), ( 6,10)( 7, 9), 
+  ( 5, 9, 7)( 6,10, 8) ] )]
 gap> nsx := NormalSubXMods( X24 );; 
+gap> Length( nsx );
+40
 gap> ids := List( nsx, n -> IdGroup(n) );; 
 gap> pos1 := Position( ids, [ [4,1], [8,3] ] );;
 gap> Xn1 := nsx[pos1]; 
 [Group( [ f2*f4^2, f3*f4 ] )->Group( [ f3, f4, f5 ] )]
-gap> nat1 := NaturalMorphismByNormalSubPreXMod( X24, Xn1 ); 
-[[d24->PAut(d24)] => [..]]
+gap> nat1 := NaturalMorphismByNormalSubPreXMod( X24, Xn1 );; 
 gap> Qn1 := FactorPreXMod( X24, Xn1 );; 
 gap> [ Size(Xn1), Size(Qn1) ];
 [ [ 4, 8 ], [ 6, 6 ] ]
@@ -78,13 +84,10 @@ of the sources and ranges of <C>X1</C> and <C>X2</C> respectively.
 <Example>
 <![CDATA[
 gap> pos2 := Position( ids, [ [24,6], [12,4] ] );;
-gap> Xn2 := nsx[pos2]; 
-[d24->Group( [ f1*f3, f2, f5 ] )]
+gap> Xn2 := nsx[pos2];; 
 gap> pos3 := Position( ids, [ [12,2], [24,5] ] );;
-gap> Xn3 := nsx[pos3]; 
-[Group( [ f2, f3, f4 ] )->Group( [ f1, f2, f4, f5 ] )]
-gap> Xn23 := IntersectionSubXMods( X24, Xn2, Xn3 );
-[Group( [ f2, f3, f4 ] )->Group( [ f2, f5, f2^2, f2*f5, f2^2*f5 ] )]
+gap> Xn3 := nsx[pos3];; 
+gap> Xn23 := IntersectionSubXMods( X24, Xn2, Xn3 );;
 gap> [ Size(Xn2), Size(Xn3), Size(Xn23) ];
 [ [ 24, 12 ], [ 12, 24 ], [ 12, 6 ] ]
 ]]>
@@ -628,9 +631,11 @@ gap> AreIsoclinicDomains( X8, X9 );
 true
 gap> ism89 := Isoclinism( X8, X9 );;
 gap> Display( ism89 );
-[ [[Group( [ f1 ] )->Group( [ f2 ] )] => [Group( [ f1 ] )->Group( [ f2 ] )]], 
-  [[Group( [ f3 ] )->Group( <identity> of ... )] => [Group( 
-    [ f3 ] )->Group( <identity> of ... )]] ]
+[ [[Group( [ f1, f2, <identity> of ... ] ) -> Group( [ f2, f2 ] )] => [Group( 
+    [ f1, f2, <identity> of ..., <identity> of ... ] ) -> Group( 
+    [ f2, f2 ] )]], 
+  [[Group( [ f3 ] ) -> Group( <identity> of ... )] => [Group( 
+    [ f3 ] ) -> Group( <identity> of ... )]] ]
 ]]>
 </Example>
 

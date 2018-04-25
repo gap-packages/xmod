@@ -25,6 +25,11 @@
               and the inclusion SL25.C2 -> GL25 using the matrix groups 
               (construction worked OK with isomorphic perm groups). 
 
+## 2.66 -> 2.67 (??/04/2018) 
+
+ * (23/04/18) avoid use of FactorGroup - just use Image( nat ) 
+ * (19/04/18) replace Image(f,x) by ImageElm(f,x) throughout 
+
 ## 2.65 -> 2.66 (12/04/2018) 
 
  * (12/04/18) added LoopsXMod functions: apps.{gd,gi,xml}, loops.{g,tst} 
