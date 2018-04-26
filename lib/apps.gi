@@ -176,8 +176,7 @@ function( X0 )
     for i in [1..numreps] do
         a := eqreps[i]; 
         X1 := LoopsXMod( X0, a ); 
-        Info( InfoXMod, 1, "LoopsXMod with a = ", a );  
-        Info( InfoXMod, 1, Size(X1), " : ", StructureDescription(X1) ); 
+        Info( InfoXMod, 1, "LoopsXMod with a = ", a, ", ", Size( X1 ) );  
         if ( InfoLevel( InfoXMod ) > 1 ) then 
             Display( X1 ); 
         fi; 
