@@ -280,7 +280,7 @@ InstallMethod( NaturalMorphismByNormalSubPreXMod,
 function( XM, SM )
 
     local actX, bdyX, nhomQ, nhomF, T, G, S, H, Q, F, sgQ, sgF, imbdy, bdy, 
-          lenF, psgQ, psgF, asgF, i, autF, aut, act, FM;
+          lenF, psgQ, psgF, asgF, i, autF, aut, act, FM, nat;
 
     if not IsNormal( XM, SM ) then 
         Error( "not a normal subcrossed module" ); 
@@ -329,7 +329,9 @@ function( XM, SM )
     if ( HasName( XM ) and HasName( SM ) ) then 
         SetName( FM, Concatenation( Name( XM ), "/", Name( SM ) ) ); 
     fi; 
-    return PreXModMorphismByHoms( XM, FM, nhomQ, nhomF ); 
+    nat := PreXModMorphismByHoms( XM, FM, nhomQ, nhomF ); 
+    SetProjectionOfFactorPreXMod( FM, nat ); 
+    return nat;
 end );
 
 #############################################################################
@@ -339,13 +341,7 @@ end );
 InstallMethod( FactorPreXMod, "generic method for precrossed modules", true, 
     [ IsPreXMod, IsPreXMod ], 0,
 function( XM, SM )
-
-    local nat, FM; 
-
-    nat := NaturalMorphismByNormalSubPreXMod( XM, SM ); 
-    FM := Range( nat ); 
-    SetProjectionOfFactorPreXMod( FM, nat ); 
-    return FM;  
+    return Range( NaturalMorphismByNormalSubPreXMod( XM, SM ) ); 
 end );
 
 #############################################################################

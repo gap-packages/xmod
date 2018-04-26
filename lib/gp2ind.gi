@@ -2,7 +2,7 @@
 ##
 #W  gp2ind.gi                      XMOD Package                  Chris Wensley
 ##
-#Y  Copyright (C) 2001-2017, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2018, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file implements functions for induced crossed modules. 
