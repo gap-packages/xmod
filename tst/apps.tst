@@ -34,6 +34,8 @@ gap> LX8 := AllLoopsXMod( X8 );;
 gap> iso := IsomorphismGroups( Range( LX ), Range( LX8[2] ) );;
 gap> iso = fail;
 false
+gap> 3+4;
+7
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> STOP_TEST( "apps.tst", 10000 );
