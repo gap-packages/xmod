@@ -340,7 +340,7 @@ end );
 InstallMethod( FactorPreXMod, "generic method for precrossed modules", true, 
     [ IsPreXMod, IsPreXMod ], 0,
 function( XM, SM )
-    return Image( NaturalMorphismByNormalSubPreXMod( XM, SM ) ); 
+    return Range( NaturalMorphismByNormalSubPreXMod( XM, SM ) ); 
 end );
 
 #############################################################################
