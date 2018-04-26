@@ -185,16 +185,11 @@ gap> tau := ImageElm( act, g4 );
 Pcgs([ f1, f3, f2, f4 ]) -> [ f1*f3, f3, f2, f4 ]
 
 gap> all := AllLoopsXMod( X0 ); 
-#I  LoopsXMod with a = <identity> of ...
-#I  [ 16, 128 ] : [ "C4 : C4", "C2 x C2 x ((C2 x C2 x C2 x C2) : C2)" ]
-#I  LoopsXMod with a = f1
-#I  [ 16, 64 ] : [ "C4 : C4", "C2 x C2 x C2 x C2 x C2 x C2" ]
-#I  LoopsXMod with a = f3
-#I  [ 16, 64 ] : [ "C4 : C4", "C2 x C2 x C2 x D8" ]
-#I  LoopsXMod with a = f1*f3
-#I  [ 16, 64 ] : [ "C4 : C4", "C2 x C2 x ((C4 x C2) : C2)" ]
-#I  LoopsXMod with a = f3*f4
-#I  [ 16, 128 ] : [ "C4 : C4", "C2 x C2 x ((C2 x C2 x C2 x C2) : C2)" ]
+#I  LoopsXMod with a = <identity> of ..., [ 16, 128 ]
+#I  LoopsXMod with a = f1, [ 16, 64 ]
+#I  LoopsXMod with a = f3, [ 16, 64 ]
+#I  LoopsXMod with a = f1*f3, [ 16, 64 ]
+#I  LoopsXMod with a = f3*f4, [ 16, 128 ]
 [ [c4|Xc4->Group( [ f9, f7, f5, f4, f3, f2, f1 ] )], 
   [c4|Xc4->Group( [ f9, f7, f5, f3*f4, f2, f1 ] )], 
   [c4|Xc4->Group( [ f9, f7, f5, f4, f3, f2*f8 ] )], 
