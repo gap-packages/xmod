@@ -2,7 +2,7 @@
 
 ## Problems and ToDos: 
 
- * (29/04/18) problems with AutomorphismPermGroup - see expt/23-03-17.g
+ * (29/04/18) problems with AutomorphismPermGroup - see file expt/23-03-17.g
  * (06/02/18) implement the kernel->cokernel crossed module, Lemma 1.1(iii)?
  * (30/10/17) there is no IsCrossedSquare method - and IsPreCrossedSquare 
               makes no checks on the crossed pairing map
