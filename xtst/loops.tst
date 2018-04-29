@@ -26,33 +26,57 @@ gap> SetName( M0, "c4|Xc4" );
 
 gap> X0 := XModByAutomorphismGroup( M0 );; 
 gap> Display( X0 );
-Crossed module [c4|Xc4->PAut(c4|Xc4)] :- 
+Crossed module [c4|Xc4->Aut(c4|Xc4)] :- 
 : Source group c4|Xc4 has generators:
   [ f1, f2, f3, f4 ]
-: Range group has generators:
-  [ f1, f2, f3, f4, f5 ]
+: Range group Aut(c4|Xc4) has generators:
+  [ Pcgs([ f1, f2, f3, f4 ]) -> [ f1*f3, f2, f3, f4 ], 
+  Pcgs([ f1, f2, f3, f4 ]) -> [ f1*f4, f2, f3, f4 ], 
+  Pcgs([ f1, f2, f3, f4 ]) -> [ f1, f2, f3*f4, f4 ], 
+  Pcgs([ f1, f2, f3, f4 ]) -> [ f1*f2, f2, f3, f4 ], 
+  Pcgs([ f1, f2, f3, f4 ]) -> [ f1, f2, f2*f3, f4 ] ]
 : Boundary homomorphism maps source generators to:
-  [ f2, <identity> of ..., f5, <identity> of ... ]
+  [ Pcgs([ f1, f2, f3, f4 ]) -> [ f1, f2, f3*f4, f4 ], 
+  Pcgs([ f1, f2, f3, f4 ]) -> [ f1, f2, f3, f4 ], 
+  Pcgs([ f1, f2, f3, f4 ]) -> [ f1*f4, f2, f3, f4 ], 
+  Pcgs([ f1, f2, f3, f4 ]) -> [ f1, f2, f3, f4 ] ]
 : Action homomorphism maps range generators to automorphisms:
-  f1 --> { source gens --> [ f1, f2, f2*f3, f4 ] }
-  f2 --> { source gens --> [ f1, f2, f3*f4, f4 ] }
-  f3 --> { source gens --> [ f1*f2*f3, f2, f3, f4 ] }
-  f4 --> { source gens --> [ f1*f3, f2, f3, f4 ] }
-  f5 --> { source gens --> [ f1*f4, f2, f3, f4 ] }
+  Pcgs([ f1, f2, f3, f4 ]) -> [ f1*f3, f2, f3, f4 ] --> { source gens --> 
+[ f1*f3, f2, f3, f4 ] }
+  Pcgs([ f1, f2, f3, f4 ]) -> [ f1*f4, f2, f3, f4 ] --> { source gens --> 
+[ f1*f4, f2, f3, f4 ] }
+  Pcgs([ f1, f2, f3, f4 ]) -> [ f1, f2, f3*f4, f4 ] --> { source gens --> 
+[ f1, f2, f3*f4, f4 ] }
+  Pcgs([ f1, f2, f3, f4 ]) -> [ f1*f2, f2, f3, f4 ] --> { source gens --> 
+[ f1*f2, f2, f3, f4 ] }
+  Pcgs([ f1, f2, f3, f4 ]) -> [ f1, f2, f2*f3, f4 ] --> { source gens --> 
+[ f1, f2, f2*f3, f4 ] }
   These 5 automorphisms generate the group of automorphisms.
 
+gap> IdGroup( X0 );
+[ [ 16, 4 ], [ 32, 27 ] ]
 gap> bdy0 := Boundary( X0 );; 
-gap> A0 := AutomorphismGroup( M0 );; 
-gap> isoP0 := IsomorphismPcGroup( A0 );; 
-gap> Range( X0 ) = Range( isoP0 ); 
-true 
-gap> P0 := Range( X0 );; 
-gap> Size( P0 ); 
-32
+gap> idM0 := IdentityMapping( M0 );;
+gap> AM0 := Range( X0 );
+Aut(c4|Xc4)
+gap> GeneratorsOfGroup( AM0 );
+[ Pcgs([ f1, f3, f2, f4 ]) -> [ f1*f3, f3, f2, f4 ], 
+  Pcgs([ f1, f3, f2, f4 ]) -> [ f1*f4, f3, f2, f4 ], 
+  Pcgs([ f1, f3, f2, f4 ]) -> [ f1, f3*f4, f2, f4 ], 
+  Pcgs([ f1, f3, f2, f4 ]) -> [ f1*f2, f3, f2, f4 ], 
+  Pcgs([ f1, f3, f2, f4 ]) -> [ f1, f2*f3, f2, f4 ] ]
+gap> isoAM0 := IsomorphismPcGroup( AM0 );; 
+gap> PAM0 := Range( isoAM0 );;
+gap> SetName( PAM0, Concatenation( "P", Name( AM0 ) ) );
+gap> iso := IsomorphismByIsomorphisms( X0, [idM0, isoAM0] );
+[[c4|Xc4->Aut(c4|Xc4)] => [c4|Xc4->PAut(c4|Xc4)]]
+gap> PX0 := Range( iso );                                   
+[c4|Xc4->PAut(c4|Xc4)]
+gap> P0 := Range( PX0 );;
 gap> genP0 := GeneratorsOfGroup( P0 );; 
 gap> g1 := genP0[1];;  g2 := genP0[2];;  g3 := genP0[3];; 
 gap> g4 := genP0[4];;  g5 := genP0[5];; 
-gap> act := XModAction( X0 );; 
+gap> act := XModAction( PX0 );; 
 gap> igenP0 := List( genP0, g -> ImageElm( act, g ) );; 
 gap> ima := List( igenP0, g -> ImageElm( g, a ) ); 
 [ f1, f1, f1*f2*f3, f1*f3, f1*f4 ]
@@ -174,22 +198,23 @@ gamma = f1*f2*f3*f4*f5
 tau = f1*f2*f3*f4*f5
 
 gap> alpha := ImageElm( act, g5 ); 
-Pcgs([ f1, f3, f2, f4 ]) -> [ f1*f4, f3, f2, f4 ]
+[ f1*f4, f2, f3, f4 ] -> [ f1, f2, f3, f4 ]
 gap> beta := ImageElm( act, g2 ); 
-Pcgs([ f1, f3, f2, f4 ]) -> [ f1, f3*f4, f2, f4 ]
+[ f1, f2, f3*f4, f4 ] -> [ f1, f2, f3, f4 ]
 gap> gamma := ImageElm( act, g3*g4*g5 ); 
 Pcgs([ f1, f2, f3, f4 ]) -> [ f1*f2, f2, f3, f4 ]
 gap> delta := ImageElm( act, g1 ); 
-Pcgs([ f1, f3, f2, f4 ]) -> [ f1, f2*f3, f2, f4 ]
+[ f1, f2, f2*f3, f4 ] -> [ f1, f2, f3, f4 ]
 gap> tau := ImageElm( act, g4 ); 
-Pcgs([ f1, f3, f2, f4 ]) -> [ f1*f3, f3, f2, f4 ]
+[ f1*f3*f4, f2, f3, f4 ] -> Pcgs([ f1, f2, f3, f4 ])
 
-gap> all := AllLoopsXMod( X0 ); 
-#I  LoopsXMod with a = <identity> of ..., [ 16, 128 ]
-#I  LoopsXMod with a = f1, [ 16, 64 ]
-#I  LoopsXMod with a = f3, [ 16, 64 ]
-#I  LoopsXMod with a = f1*f3, [ 16, 64 ]
-#I  LoopsXMod with a = f3*f4, [ 16, 128 ]
+gap> all := AllLoopsXMod( PX0 ); 
+#I  LoopsXMod with a = <identity> of ...,  IdGroup = [ [ 16, 4 ], [ 128, 2163 \
+] ]
+#I  LoopsXMod with a = f1,  IdGroup = [ [ 16, 4 ], [ 64, 267 ] ]
+#I  LoopsXMod with a = f3,  IdGroup = [ [ 16, 4 ], [ 64, 261 ] ]
+#I  LoopsXMod with a = f1*f3,  IdGroup = [ [ 16, 4 ], [ 64, 193 ] ]
+#I  LoopsXMod with a = f3*f4,  IdGroup = [ [ 16, 4 ], [ 128, 2163 ] ]
 [ [c4|Xc4->Group( [ f9, f7, f5, f4, f3, f2, f1 ] )], 
   [c4|Xc4->Group( [ f9, f7, f5, f3*f4, f2, f1 ] )], 
   [c4|Xc4->Group( [ f9, f7, f5, f4, f3, f2*f8 ] )], 
