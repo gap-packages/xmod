@@ -2,6 +2,7 @@
 
 ## Problems and ToDos: 
 
+ * (29/04/18) problems with AutomorphismPermGroup - see expt/23-03-17.g
  * (06/02/18) implement the kernel->cokernel crossed module, Lemma 1.1(iii)?
  * (30/10/17) there is no IsCrossedSquare method - and IsPreCrossedSquare 
               makes no checks on the crossed pairing map
@@ -25,7 +26,7 @@
               and the inclusion SL25.C2 -> GL25 using the matrix groups 
               (construction worked OK with isomorphic perm groups). 
 
-## 2.66 -> 2.67 (??/04/2018) 
+## 2.66 -> 2.67 (29/04/2018) 
 
  * (23/04/18) avoid use of FactorGroup - just use Image( nat ) 
  * (19/04/18) replace Image(f,x) by ImageElm(f,x) throughout 
