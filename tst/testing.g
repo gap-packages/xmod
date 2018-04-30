@@ -12,7 +12,7 @@ pkgdir := DirectoriesPackageLibrary( pkgname, "tst" );
 testfiles := 
     [ "gp2obj.tst", "gp2map.tst",    "gp2up.tst",     "gp2act.tst", 
       "gp2ind.tst", "isoclinic.tst", "gp3objmap.tst", "gpd2obj.tst", 
-      "util.tst",   "coprod.tst",    "gpnobjmap.tst", "apps.tst" ];
+      "util.tst",   "gpnobjmap.tst", "apps.tst" ];
 testresult := true;
 for ff in testfiles do
     fn := Filename( pkgdir, ff );

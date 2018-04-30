@@ -5,7 +5,6 @@
 #Y  Copyright (C) 2001-2018, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
-##
 gap> START_TEST( "XMod package: gp2ind.tst" );
 gap> saved_infolevel_xmod := InfoLevel( InfoXMod );; 
 gap> SetInfoLevel( InfoXMod, 0 );;
@@ -15,7 +14,7 @@ gap> SetInfoLevel( InfoGroupoids, 0 );;
 ##  make independent of gp2obj.tst  
 gap> s4 := Group( (1,2), (2,3), (3,4) );; 
 gap> a4 := Subgroup( s4, [ (1,2,3), (2,3,4) ] );; 
-gap> SetName(s4,"s4");  SetName(a4,"a4"); 
+gap> SetName( s4, "s4" );  SetName( a4, "a4" ); 
 gap> b1 := (11,12,13,14,15,16,17,18);; 
 gap> b2 := (12,18)(13,17)(14,16);;
 gap> d16 := Group( b1, b2 );;
@@ -24,6 +23,25 @@ gap> SetName( d16, "d16" );
 ## Chapter 7
 
 ## Section 7.1.1
+gap> q8 := Group( (1,2,3,4)(5,8,7,6), (1,5,3,7)(2,6,4,8) );;
+gap> X8 := XModByAutomorphismGroup( q8 );;
+gap> s4b := Range( X8 );; 
+gap> SetName( q8, "q8" );  SetName( s4b, "s4b" ); 
+gap> k4b := NormalSubgroups( s4b )[3];;  SetName( k4b, "k4b" );
+gap> Z8 := XModByNormalSubgroup( s4b, k4b );;
+gap> SetName( X8, "X8" );  SetName( Z8, "Z8" );  
+gap> SetInfoLevel( InfoXMod, 1 ); 
+gap> XZ8 := CoproductXMod( X8, Z8 );
+#I  prexmod is [ [ 32, 47 ], [ 24, 12 ] ]
+#I  peiffer subgroup is C2, [ 2, 1 ]
+#I  the coproduct is [ "C2 x C2 x C2 x C2", "S4" ], [ [ 16, 14 ], [ 24, 12 ] ]
+[Group( [ f1, f2, f3, f4 ] )->s4b]
+gap> SetName( XZ8, "XZ8" ); 
+gap> info := CoproductInfo( XZ8 );
+rec( embeddings := [ [X8 => XZ8], [Z8 => XZ8] ], xmods := [ X8, Z8 ] )
+gap> SetInfoLevel( InfoXMod, 0 ); 
+
+## Section 7.2.1
 gap> s4gens := GeneratorsOfGroup( s4 );
 [ (1,2), (2,3), (3,4) ]
 gap> a4gens := GeneratorsOfGroup( a4 );
@@ -75,6 +93,8 @@ gap> indXs3c := InducedXMod( s4, s3c, s3c );
 i*([s3c->s3c])
 gap> StructureDescription( indXs3c );
 [ "GL(2,3)", "S4" ]
+
+## Section 7.2.2
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 
