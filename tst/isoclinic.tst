@@ -30,10 +30,9 @@ gap> Xn1 := nsx[pos1];;
 gap> IdGroup( Xn1 );
 [ [ 4, 1 ], [ 8, 3 ] ]
 gap> nat1 := NaturalMorphismByNormalSubPreXMod( X24, Xn1 );; 
-gap> Qn1 := FactorPreXMod( X24, Xn1 ); 
-[Group( [ f1, f2 ] )->Group( [ f1, f2 ] )]
-gap> Size( Qn1 );
-[ 6, 6 ]
+gap> Qn1 := FactorPreXMod( X24, Xn1 );; 
+gap> [ Size( Xn1 ), Size( Qn1 ) ];
+[ [ 4, 8 ], [ 6, 6 ] ]
 
 #### 4.1.2
 gap> pos2 := Position( ids, [ [24,6], [12,4] ] );;
@@ -42,37 +41,47 @@ gap> IdGroup( Xn2 );
 [ [ 24, 6 ], [ 12, 4 ] ]
 gap> pos3 := Position( ids, [ [12,2], [24,5] ] );;
 gap> Xn3 := nsx[pos3];; 
+gap> IdGroup( Xn3 );
+[ [ 12, 2 ], [ 24, 5 ] ]
 gap> Xn23 := IntersectionSubXMods( X24, Xn2, Xn3 );;
-gap> [ Size(Xn2), Size(Xn3), Size(Xn23) ];
-[ [ 24, 12 ], [ 12, 24 ], [ 12, 6 ] ]
+gap> IdGroup( Xn23 );
+[ [ 12, 2 ], [ 6, 2 ] ]
 
 #### 4.1.3
 gap> pos4 := Position( ids, [ [6,2], [24,14] ] );;
 gap> Xn4 := nsx[pos4];; 
+gap> bn4 := Boundary( Xn4 );;
 gap> Sn4 := Source(Xn4);; 
 gap> Rn4 := Range(Xn4);; 
-gap> r := Rn4.1;;  s := Sn4.1;; 
-gap> d := Displacement( XModAction(Xn4), r, s );
+gap> genRn4 := GeneratorsOfGroup( Rn4 );;
+gap> L := List( genRn4, g -> ( Order(g) = 2 ) and 
+>                 not ( IsNormal( Rn4, Subgroup( Rn4, [g] ) ) ) );;
+gap> pos := Position( L, true );;
+gap> s := Sn4.1;  r := genRn4[pos]; 
+(1,3,5,7,9,11)(2,4,6,8,10,12)
+(6,10)(7,9)
+gap> act := XModAction( Xn4 );; 
+gap> d := Displacement( act, r, s );
 (1,5,9)(2,6,10)(3,7,11)(4,8,12)
-gap> bn4 := Boundary( Xn4 );;
 gap> Image( bn4, d ) = Comm( r, Image( bn4, s ) );  
 true
 gap> DisplacementSubgroup( Xn4 );
 Group([ (1,5,9)(2,6,10)(3,7,11)(4,8,12) ])
 
 #### 4.1.4
-gap> CrossActionSubgroup( X24, Xn2, Xn3 );
-Group([ (1,6,11,4,9,2,7,12,5,10,3,8), (1,10,7,4)(2,11,8,5)(3,12,9,6) ])
+gap> CAn23 := CrossActionSubgroup( X24, Xn2, Xn3 );;
+gap> IdGroup( CAn23 );
+[ 12, 2 ]
 gap> Cn23 := CommutatorSubXMod( X24, Xn2, Xn3 );;
-gap> Size(Cn23);
-[ 12, 6 ]
+gap> IdGroup( Cn23 );
+[ [ 12, 2 ], [ 6, 2 ] ]
 gap> Xn23 = Cn23;
 true
 
 #### 4.1.5
-gap> DXn4 := DerivedSubXMod( Xn4 );  
-[Group( [ ( 1, 5, 9)( 2, 6,10)( 3, 7,11)( 4, 8,12) ] )->Group( 
-[ ( 5, 9, 7)( 6,10, 8) ] )]
+gap> DXn4 := DerivedSubXMod( Xn4 );;
+gap> IdGroup( DXn4 );
+[ [ 3, 1 ], [ 3, 1 ] ]
 
 #### 4.1.6
 gap> fix := FixedPointSubgroupXMod( Xn4, Sn4, Rn4 );
@@ -93,15 +102,15 @@ gap> IdGroup( NDXn4 );
 [ [ 1, 1 ], [ 12, 5 ] ]
 
 #### 4.1.8
-gap> Q24 := CentralQuotient( d24);  Size( Q24 );                     
+gap> Q24 := CentralQuotient( d24);  IdGroup( Q24 );                     
 [d24->d24/Z(d24)]
-[ 24, 12 ]
+[ [ 24, 6 ], [ 12, 4 ] ]
 
 #### 4.1.9
 gap> [ IsAbelian2DimensionalGroup(Xn4), IsAbelian2DimensionalGroup(X24) ];
 [ false, false ]
 gap> pos7 := Position( ids, [ [3,1], [6,1] ] );;
-gap> IsAspherical2DimensionalGroup( nsx[pos7] );
+gap> IsAspherical2DimensionalGroup( nsx[ pos7 ] );
 true
 gap> IsAspherical2DimensionalGroup( X24 );
 false
@@ -169,7 +178,7 @@ gap> AllStemGroupFamilies( 16 );
 [ [ [ 16, 7 ], [ 16, 8 ], [ 16, 9 ] ] ]
 
 #### 4.2.3
-gap> IsoclinicMiddleLength(G);
+gap> IsoclinicMiddleLength( G );
 1
 gap> IsoclinicRank( G );
 4
@@ -177,11 +186,11 @@ gap> IsoclinicRank( G );
 #### testing isoclinism of crossed modules #### 
 
 #### 4.3.1
-gap> C8 := Cat1Group(16,8,1);;
+gap> C8 := Cat1Group( 16, 8, 1 );;
 gap> X8 := XMod(C8);  IdGroup( X8 );
 [Group( [ f1*f2*f3, f3, f4 ] )->Group( [ f2, f2 ] )]
 [ [ 8, 1 ], [ 2, 1 ] ]
-gap> C9 := Cat1Group(32,9,1);
+gap> C9 := Cat1Group( 32, 9, 1 );
 [(C8 x C2) : C2=>Group( [ f2, f2 ] )]
 gap> X9 := XMod( C9 );  IdGroup( X9 );
 [Group( [ f1*f2*f3, f3, f4, f5 ] )->Group( [ f2, f2 ] )]

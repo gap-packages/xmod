@@ -55,7 +55,10 @@ gap> q8 := Group( (1,2,3,4)(5,8,7,6), (1,5,3,7)(2,6,4,8) );;
 gap> X8 := XModByAutomorphismGroup( q8 );;
 gap> s4b := Range( X8 );; 
 gap> SetName( q8, "q8" );  SetName( s4b, "s4b" ); 
-gap> k4b := NormalSubgroups( s4b )[3];;  SetName( k4b, "k4b" );
+gap> a := q8.1;;  b := q8.2;; 
+gap> alpha := GroupHomomorphismByImages( q8, q8, [a,b], [a^-1,b] );;
+gap> beta := GroupHomomorphismByImages( q8, q8, [a,b], [a,b^-1] );;
+gap> k4b := Subgroup( s4b, [ alpha, beta ] );;  SetName( k4b, "k4b" );
 gap> Z8 := XModByNormalSubgroup( s4b, k4b );;
 gap> SetName( X8, "X8" );  SetName( Z8, "Z8" );  
 gap> SetInfoLevel( InfoXMod, 1 ); 
@@ -178,11 +181,17 @@ gap> inc8 := InclusionMorphism2DimensionalDomains( Y16, Y8 );
 [[c4->d8] => [d8->d16]]
 gap> incd8 := RangeHom( inc8 );;
 gap> indY8 := InducedXMod( Y8, incd8 );
-#I induced group has Size: 16
-#I factor 2 is abelian  with invariants: [ 4, 4 ]
 i*([c4->d8])
+gap> StructureDescription( indY8 );
+[ "C4 x C4", "D16" ]
 gap> morY8 := MorphismOfInducedXMod( indY8 );
 [[c4->d8] => i*([c4->d8])]
+gap> s3c := Subgroup( s4, [ (2,3), (3,4) ] );;  
+gap> SetName( s3c, "s3c" );
+gap> indXs3c := InducedXMod( s4, s3c, s3c );
+i*([s3c->s3c])
+gap> StructureDescription( indXs3c );
+[ "GL(2,3)", "S4" ]
 ]]>
 </Example>
 
