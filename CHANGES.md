@@ -1,34 +1,8 @@
 # CHANGES to the 'XMod' package
 
-## Problems and ToDos: 
+## 2.67 -> 2.68 (01/05/2018) 
 
- * (29/04/18) problems with AutomorphismPermGroup - see file expt/23-03-17.g
- * (06/02/18) implement the kernel->cokernel crossed module, Lemma 1.1(iii)?
- * (30/10/17) there is no IsCrossedSquare method - and IsPreCrossedSquare 
-              makes no checks on the crossed pairing map
- * (13/10/17) need more examples in 2.1, e.g. DirectProductOp (+Proj,Embed) 
- * (22/07/17) X4 (etc) is a HigherDimensionalDomain but not a 
-              HigherDimensionalGroup - discrepancy to be sorted out! 
- * (14/06/17) Need String, View, Print for 3d- and nd-groups 
- * (28/04/17) implement inclusion of the kernel of an xmod-morphism as xsq 
- * (25/04/17) tst/gpd2obj.tst needs more material 
- * (19/08/16) error report from Tedar Tegstrom: he discovered that 
-              InducedXMod(X0,iota) fails when Boundary(X0) not mono. 
- * (11/11/15) resolve the problem of the best 'sgQ1' to use in Isoclinism, and 
-              more generally, check whether using SmallGeneratingSet elsewhere 
-              allows for spurious results in the isoclinism functions
- * (09/11/15) resolve whether XModCentre = CentreXMod 
- * (15/10/15) need a function CrossedSquareByCentralExtension 
- * (03/09/15) XModCentre etc. fail with pc-groups 
- * (22/06/12) need to fix construction of endomorphism classes 
-              so that they can be printed/displayed. 
- * (15/02/12) failed to construct induced xmod from X = (SL25 -> SL25.C2) 
-              and the inclusion SL25.C2 -> GL25 using the matrix groups 
-              (construction worked OK with isomorphic perm groups). 
-
-## 2.67 -> 2.68 (??/05/2018) 
-
- * ( 
+ * (30/04/18) made tests more robust; moved coprod.tst to /xtst 
 
 ## 2.66 -> 2.67 (29/04/2018) 
 
