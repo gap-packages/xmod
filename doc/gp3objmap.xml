@@ -661,7 +661,7 @@ true
 <P/>
 These functions provide the conversion from crossed square to cat2-group, 
 and conversely.  (They are the 3-dimensional equivalents of 
-<C>Cat1GroupOfXMod</C> and <C>XModOfCat1Group</C>.) 
+<Ref Oper="Cat1GroupOfXMod"/> and <Ref Oper="XModOfCat1Group"/>.) 
 </Description>
 </ManSection>
 <P/>

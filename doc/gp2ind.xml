@@ -83,10 +83,12 @@ gap> SetInfoLevel( InfoXMod, 0 );
 <ManSection>
    <Func Name="InducedXMod"
          Arg="args" />
-   <Func Name="InducedCat1"
-         Arg="args" />
    <Prop Name="IsInducedXMod"
          Arg="xmod" />
+   <Oper Name="SurjectiveInducedXMod"
+         Arg="xmod, hom" />
+   <Oper Name="InclusionInducedXModByCopower"
+         Arg="xmod, hom, list" />
    <Attr Name="MorphismOfInducedXMod"
          Arg="xmod" />
 <Description>
@@ -219,6 +221,33 @@ This function calculates all the induced crossed modules
 <C>InducedXMod( Q, P, M )</C>, 
 where <C>P</C> runs over all conjugacy classes of subgroups of <C>Q</C> 
 and <C>M</C> runs over all non-trivial subgroups of <C>P</C>.
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> all := AllInducedXMods( q8 );;
+gap> ids := List( all, x -> IdGroup(x) );;
+gap> Sort( ids );
+gap> ids;
+[ [ [ 1, 1 ], [ 8, 4 ] ], [ [ 1, 1 ], [ 8, 4 ] ], [ [ 1, 1 ], [ 8, 4 ] ], 
+  [ [ 1, 1 ], [ 8, 4 ] ], [ [ 4, 2 ], [ 8, 4 ] ], [ [ 4, 2 ], [ 8, 4 ] ], 
+  [ [ 4, 2 ], [ 8, 4 ] ], [ [ 16, 2 ], [ 8, 4 ] ], [ [ 16, 2 ], [ 8, 4 ] ], 
+  [ [ 16, 2 ], [ 8, 4 ] ], [ [ 16, 14 ], [ 8, 4 ] ] ]
+]]>
+</Example>
+
+</Section>
+
+<Section><Heading>Induced cat<M>^1</M>-groups</Heading>
+<Index>induced cat1-groups</Index>
+
+<ManSection>
+   <Func Name="InducedCat1Group"
+         Arg="args" />
+   <Prop Name="InducedCat1GroupByFreeProduct"
+         Arg="grp, hom" />
+<Description>
+This area requires development. 
 </Description>
 </ManSection>
 

@@ -103,7 +103,8 @@ true
          Arg="obj" />
 <Description>
 An abelian module is an abelian group together with a group action.
-These are used by the crossed module constructor <C>XModByAbelianModule</C>.
+These are used by the crossed module constructor 
+<Ref Oper="XModByAbelianModule"/>.
 <P/>
 The resulting <C>Xabmod</C> is isomorphic to the output from 
 <C>XModByAutomorphismGroup( k4 );</C>.
