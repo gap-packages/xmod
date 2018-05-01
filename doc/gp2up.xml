@@ -157,21 +157,22 @@ Sections <E>are</E> group homomorphisms,
 so do not need a special representation.
 Operations <C>SectionByDerivation</C> and <C>DerivationBySection</C> 
 convert derivations to sections, and vice-versa, 
-calling <C>Cat1GroupOfXMod</C> and <C>XModOfCat1Group</C> automatically.
+calling <Ref Oper="Cat1GroupOfXMod"/> and <Ref Oper="XModOfCat1Group"/> 
+automatically.
 <P/>
 Two strategies for calculating derivations and sections are implemented,
 see <Cite Key="AW1" />.
-The default method for <C>AllDerivations</C> is to search for all possible
-sets of images using a backtracking procedure, and when all the derivations
-are found it is not known which are regular.
+The default method for <Ref Attr="AllDerivations"/> 
+is to search for all possible sets of images using a backtracking procedure, 
+and when all the derivations are found it is not known which are regular.
 In early versions of this package, the default method for 
 <C>AllSections( &lt;C&gt; )</C> was to compute all endomorphisms
 on the range group <C>R</C> of <C>C</C> as possibilities 
 for the composite <M>h \xi</M>.
 A backtrack method then found possible images for such a section.
 In the current version the derivations of the associated crossed module
-are calculated, and these are all converted to sections
-using <C>SectionByDerivation</C>. 
+are calculated, and these are all converted to sections 
+using <Ref Oper="SectionByDerivation"/>. 
 </Description>
 </ManSection>
 <P/>
@@ -227,7 +228,7 @@ to two derivations to form <M>\chi_1 \star \chi_2</M>,
 or to two sections to form <M>\xi_1 \star \xi_2</M>. 
 The <C>WhiteheadOrder</C> of a regular derivation <M>\chi</M> 
 is the smallest power of <M>\chi</M>, using this product, 
-equal to the <C>IdentityDerivation</C>. 
+equal to the <Ref Oper="IdentityDerivation"/>. 
 </Description>
 </ManSection>
 <P/>

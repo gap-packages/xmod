@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2ind.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  Copyright (C) 2001-2017, Chris Wensley et al,                      --> 
+<!--  Copyright (C) 2001-2018, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -24,6 +24,8 @@ Need to add here a reference (or two) for coproducts.
 <ManSection>
    <Oper Name="CoproductXMod"
          Arg="X1, X2" />
+   <Attr Name="CoproductInfo"
+         Arg="X0" />
 <Description>
 This function calculates the coproduct crossed module of
 crossed modules <M>{\mathcal X}_1 = (\partial_1 : S_1 \to R)</M> 
@@ -51,20 +53,24 @@ which includes the embedding morphisms of the two factors.
 <![CDATA[
 gap> q8 := Group( (1,2,3,4)(5,8,7,6), (1,5,3,7)(2,6,4,8) );;
 gap> X8 := XModByAutomorphismGroup( q8 );;
-gap> s4 := Range( X8 );; 
-gap> SetName( q8, "q8" );  SetName( s4, "s4" ); 
-gap> k4 := NormalSubgroups( s4 )[3];;  SetName( k4, "k4" );
-gap> Z8 := XModByNormalSubgroup( s4, k4 );;
+gap> s4b := Range( X8 );; 
+gap> SetName( q8, "q8" );  SetName( s4b, "s4b" ); 
+gap> a := q8.1;;  b := q8.2;; 
+gap> alpha := GroupHomomorphismByImages( q8, q8, [a,b], [a^-1,b] );;
+gap> beta := GroupHomomorphismByImages( q8, q8, [a,b], [a,b^-1] );;
+gap> k4b := Subgroup( s4b, [ alpha, beta ] );;  SetName( k4b, "k4b" );
+gap> Z8 := XModByNormalSubgroup( s4b, k4b );;
 gap> SetName( X8, "X8" );  SetName( Z8, "Z8" );  
 gap> SetInfoLevel( InfoXMod, 1 ); 
 gap> XZ8 := CoproductXMod( X8, Z8 );
-#I  prexmod is [ "C2 x C2 x Q8", "S4" ]
-#I  peiffer subgroup is C2
-#I  the coproduct is [ "C2 x C2 x C2 x C2", "S4" ]
-[Group( [ f1, f2, f3, f4 ] )->s4]
+#I  prexmod is [ [ 32, 47 ], [ 24, 12 ] ]
+#I  peiffer subgroup is C2, [ 2, 1 ]
+#I  the coproduct is [ "C2 x C2 x C2 x C2", "S4" ], [ [ 16, 14 ], [ 24, 12 ] ]
+[Group( [ f1, f2, f3, f4 ] )->s4b]
 gap> SetName( XZ8, "XZ8" ); 
 gap> info := CoproductInfo( XZ8 );
 rec( embeddings := [ [X8 => XZ8], [Z8 => XZ8] ], xmods := [ X8, Z8 ] )
+gap> SetInfoLevel( InfoXMod, 0 ); 
 ]]>
 </Example>
 
@@ -77,10 +83,12 @@ rec( embeddings := [ [X8 => XZ8], [Z8 => XZ8] ], xmods := [ X8, Z8 ] )
 <ManSection>
    <Func Name="InducedXMod"
          Arg="args" />
-   <Func Name="InducedCat1"
-         Arg="args" />
    <Prop Name="IsInducedXMod"
          Arg="xmod" />
+   <Oper Name="SurjectiveInducedXMod"
+         Arg="xmod, hom" />
+   <Oper Name="InclusionInducedXModByCopower"
+         Arg="xmod, hom, list" />
    <Attr Name="MorphismOfInducedXMod"
          Arg="xmod" />
 <Description>
@@ -175,11 +183,17 @@ gap> inc8 := InclusionMorphism2DimensionalDomains( Y16, Y8 );
 [[c4->d8] => [d8->d16]]
 gap> incd8 := RangeHom( inc8 );;
 gap> indY8 := InducedXMod( Y8, incd8 );
-#I induced group has Size: 16
-#I factor 2 is abelian  with invariants: [ 4, 4 ]
 i*([c4->d8])
+gap> StructureDescription( indY8 );
+[ "C4 x C4", "D16" ]
 gap> morY8 := MorphismOfInducedXMod( indY8 );
 [[c4->d8] => i*([c4->d8])]
+gap> s3c := Subgroup( s4, [ (2,3), (3,4) ] );;  
+gap> SetName( s3c, "s3c" );
+gap> indXs3c := InducedXMod( s4, s3c, s3c );
+i*([s3c->s3c])
+gap> StructureDescription( indXs3c );
+[ "GL(2,3)", "S4" ]
 ]]>
 </Example>
 
@@ -207,6 +221,33 @@ This function calculates all the induced crossed modules
 <C>InducedXMod( Q, P, M )</C>, 
 where <C>P</C> runs over all conjugacy classes of subgroups of <C>Q</C> 
 and <C>M</C> runs over all non-trivial subgroups of <C>P</C>.
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> all := AllInducedXMods( q8 );;
+gap> ids := List( all, x -> IdGroup(x) );;
+gap> Sort( ids );
+gap> ids;
+[ [ [ 1, 1 ], [ 8, 4 ] ], [ [ 1, 1 ], [ 8, 4 ] ], [ [ 1, 1 ], [ 8, 4 ] ], 
+  [ [ 1, 1 ], [ 8, 4 ] ], [ [ 4, 2 ], [ 8, 4 ] ], [ [ 4, 2 ], [ 8, 4 ] ], 
+  [ [ 4, 2 ], [ 8, 4 ] ], [ [ 16, 2 ], [ 8, 4 ] ], [ [ 16, 2 ], [ 8, 4 ] ], 
+  [ [ 16, 2 ], [ 8, 4 ] ], [ [ 16, 14 ], [ 8, 4 ] ] ]
+]]>
+</Example>
+
+</Section>
+
+<Section><Heading>Induced cat<M>^1</M>-groups</Heading>
+<Index>induced cat1-groups</Index>
+
+<ManSection>
+   <Func Name="InducedCat1Group"
+         Arg="args" />
+   <Prop Name="InducedCat1GroupByFreeProduct"
+         Arg="grp, hom" />
+<Description>
+This area requires development. 
 </Description>
 </ManSection>
 

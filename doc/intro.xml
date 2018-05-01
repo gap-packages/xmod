@@ -69,7 +69,8 @@ the pre-structures were added, and version 2.001 was released.
 The final two parts, covering derivations, sections and actors, 
 were included in the January 2004 release 2.002 for &GAP; 4.4.
 Many of the function names have been changed during the conversion,
-for example <C>ConjugationXMod</C> has become <C>XModByNormalSubgroup</C>.
+for example <C>ConjugationXMod</C> 
+has become <Ref Oper="XModByNormalSubgroup"/>.
 For a list of name changes see the file <F>names.pdf</F> 
 in the <F>doc</F> directory.
 <P/> 
@@ -156,7 +157,7 @@ There are also plans to implement cat2-groups,
 and conversion betwen these and crossed squares. 
 <P/>
 The equivalent categories  <C>XMod</C>  (crossed modules) and
-<C>Cat1</C>  (cat1-groups) are also equivalent to  <C>GpGpd</C>, 
+<C>Cat1</C> (cat1-groups) are also equivalent to  <C>GpGpd</C>, 
 the subcategory of group objects in the category <C>Gpd</C> of groupoids.
 Finite groupoids have been implemented in Emma Moore's package 
 <Package>groupoids</Package> <Cite Key="M1"/> 

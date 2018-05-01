@@ -26,6 +26,10 @@
               and the inclusion SL25.C2 -> GL25 using the matrix groups 
               (construction worked OK with isomorphic perm groups). 
 
+## 2.67 -> 2.68 (??/05/2018) 
+
+ * ( 
+
 ## 2.66 -> 2.67 (29/04/2018) 
 
  * (23/04/18) avoid use of FactorGroup - just use Image( nat ) 

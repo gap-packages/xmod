@@ -62,8 +62,8 @@ and are morphisms for the two actions:
 \sigma(s^r) ~=~ (\sigma s)^{\rho r}.
 </Display>
 
-Here  <M>\sigma</M> is the <C>SourceHom</C>  
-and  <M>\rho</M>  is the <C>RangeHom</C>  of the morphism. 
+Here  <M>\sigma</M> is the <Ref Attr="SourceHom"/>  
+and  <M>\rho</M>  is the <Ref Attr="RangeHom"/>  of the morphism. 
 When <M>\mathcal{X}_{1} = \mathcal{X}_{2}</M>
 and <M>\sigma, \rho</M> are automorphisms then 
 <M>(\sigma, \rho)</M>  is an automorphism of <M>\mathcal{X}_1</M>. 
@@ -88,8 +88,8 @@ by <M>{\rm Aut}(\mathcal{X}_1 )</M>.
          Arg="map" />
 <Description>
 The usual properties of mappings are easily checked.
-It is usually sufficient to verify that both the <C>SourceHom</C> and the
-<C>RangeHom</C> have the required property.
+It is usually sufficient to verify that both the <Ref Attr="SourceHom"/> 
+and the <Ref Attr="RangeHom"/> have the required property.
 </Description>
 </ManSection>
 
@@ -169,10 +169,10 @@ where <M>{\mathcal D}'</M> has source <M>S'</M> and range <M>R'</M>.
 Be sure to test <C>IsBijective</C> for the two functions 
 <M>\sigma,\rho</M> before applying this operation.  
 <P/> 
-Using <C>IsomorphismByIsomorphisms</C> with a pair of isomorphisms 
+Using <Ref Oper="IsomorphismByIsomorphisms"/> with a pair of isomorphisms 
 obtained using <C>IsomorphismPermGroup</C> or <C>IsomorphismPcGroup</C>, 
-we may construct a crossed module or a cat1-group 
-of permutation groups or pc-groups.  
+we may construct a crossed module or a cat1-group of permutation groups 
+or pc-groups.  
 </Description>
 </ManSection>
 <P/>
@@ -277,10 +277,12 @@ Morphism of cat1-groups :-
 <Description>
 The global function <C>IsomorphismPermObject</C> 
 calls <C>IsomorphismPerm2DimensionalGroup</C>, 
-which constructs a morphism whose <C>SourceHom</C> and <C>RangeHom</C> 
-are calculated using <C>IsomorphismPermGroup</C> on the source and range.  
-Similarly <C>SmallerDegreePermutationRepresentation</C> may be used on the
-two groups to obtain <C>SmallerDegreePerm2DimensionalDomain</C>.
+which constructs a morphism whose <Ref Attr="SourceHom"/> 
+and <Ref Attr="RangeHom"/> are calculated using 
+<C>IsomorphismPermGroup</C> on the source and range.  
+Similarly the operation <C>SmallerDegreePermutationRepresentation</C> 
+may be used on the two groups to obtain the attribute 
+<C>SmallerDegreePerm2DimensionalDomain</C>.
 Names are assigned automatically.
 </Description>
 </ManSection>
@@ -330,8 +332,8 @@ Morphism of cat1-groups :-
 <Description>
 Composition of morphisms (written <C>(&lt;map1&gt; * &lt;map2&gt;)</C> 
 when maps act on the right) 
-calls the <C>CompositionMorphism</C> function for maps (acting on the left),
-applied to the appropriate type of 2d-mapping.
+calls the <Ref Oper="CompositionMorphism"/> function for maps 
+(acting on the left), applied to the appropriate type of 2d-mapping.
 </Description>
 </ManSection>
 <P/>

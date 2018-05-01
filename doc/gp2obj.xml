@@ -170,7 +170,7 @@ The name is formed by concatenating the names of the source and range
 (if these exist). 
 <C>Size</C> and <C>IdGroup</C> return two-element lists. 
 <P/> 
-The <C>ExternalSetXMod</C> for a crossed module is the source group considered as a G-set of the range group using the crossed module action. 
+The <Ref Attr="ExternalSetXMod"/> for a crossed module is the source group considered as a G-set of the range group using the crossed module action. 
 <P/> 
 <Index>display a 2d-group</Index>
 The <C>Display</C> function is used to print details of 2d-groups.
@@ -268,7 +268,8 @@ There are also properties corresponding to the various construction methods
 listed in section <Ref Sect="sect-constructions" />: 
 <C>IsTrivialAction2DimensionalGroup</C>; 
 <C>IsNormalSubgroup2DimensionalGroup</C>; 
-<C>IsCentralExtension2DimensionalGroup</C>; <C>IsAutomorphismGroup2DimensionalGroup</C>; 
+<C>IsCentralExtension2DimensionalGroup</C>; 
+<C>IsAutomorphismGroup2DimensionalGroup</C>; 
 <C>IsAbelianModule2DimensionalGroup</C>. 
 </Description>
 </ManSection>
@@ -763,7 +764,7 @@ The data is read into the list <C>CAT1&uscore;LIST</C>
 only when this function is called. 
 
 <ManSection>
-   <Attr Name="Cat1Select"
+   <Oper Name="Cat1Select"
          Arg="size gpnum num" />
 <Description>
 The function <C>Cat1Select</C> may be used in three ways. 

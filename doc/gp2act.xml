@@ -31,17 +31,17 @@ of the automorphism group <M>\Aut(\mathcal{X})</M> of <M>\mathcal{X}</M>.
          Arg="xmod" />
    <Attr Name="GeneratingAutomorphisms"
          Arg="xmod" />
-   <Attr Name="PermAutomorphismAsXModMorphism"
+   <Oper Name="PermAutomorphismAsXModMorphism"
          Arg="xmod perm" />
 <Description>
 The automorphisms <M>( \sigma, \rho )</M> of <M>\mathcal{X}</M> form a group 
 <M>\Aut(\mathcal{X})</M> of crossed module isomorphisms. 
-The function <C>AutomorphismPermGroup</C> finds a set of 
-<C>GeneratingAutomorphisms</C> for <M>\Aut(\mathcal{X})</M>, 
+The function <Ref Attr="AutomorphismPermGroup"/> finds a set of 
+<Ref Attr="GeneratingAutomorphisms"/> for <M>\Aut(\mathcal{X})</M>, 
 and then constructs a permutation representation of this group, 
 which is used as the range of the actor crossed module of <M>\mathcal{X}</M>. 
 The individual automorphisms can be constructed from the permutation group 
-using the function <C>PermAutomorphismAsXModMorphism</C>. 
+using the function <Ref Oper="PermAutomorphismAsXModMorphism"/>. 
 The example below uses the crossed module <Code>X3=[c3->s3]</Code> 
 constructed in section <Ref Sect="sect-whitehead-mult" />. 
 </Description>
@@ -213,7 +213,7 @@ In the example which follows, the inner morphism of
 is an inclusion of crossed modules. 
 <P/>
 Note that we appear to have defined <E>two</E> sorts of <E>centre</E> 
-for a crossed module: <C>XModCentre</C> here, 
+for a crossed module: <Ref Attr="XModCentre"/> here, 
 and <Ref Func="CentreXMod" /> in the chapter on isoclinism. 
 We suspect that these two definitions give the same answer, 
 but this remains to be resolved.  

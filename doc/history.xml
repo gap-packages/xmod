@@ -75,15 +75,16 @@ During May 2002 converted the code for induced crossed modules.
 
 <Subsection><Heading>Versions 2.002 -- 2.006</Heading>
 
-Version 2.004 of April 14th 2004 added the <C>Cat1Select</C> functionality 
-of version 1 to the <C>Cat1</C> function.
+Version 2.004 of April 14th 2004 added the <Ref Oper="Cat1Select"/> 
+functionality of version 1 to the <Ref Oper="Cat1Group"/> function.
 <P/>
 A significant addition in Version 2.005 was the conversion of 
 the actor crossed module functions from the <F>3.4.4</F> version. 
-This included <C>AutomorphismPermGroup</C> for a crossed module, 
-<C>WhiteheadXMod</C>, <C>NorrieXMod</C>, <C>LueXMod</C>, <C>ActorXMod</C>, 
-<C>Centre</C> of a crossed module, <C>InnerMorphism</C> 
-and <C>InnerActorXMod</C>.
+This included <Ref Oper="AutomorphismPermGroup"/> for a crossed module;  
+<Ref Oper="WhiteheadXMod"/>; <Ref Oper="NorrieXMod"/>; 
+<Ref Oper="LueXMod"/>; <Ref Oper="ActorXMod"/>; 
+<Ref Oper="CentreXMod"/> of a crossed module; 
+<Ref Oper="InnerMorphism"/>; and <Ref Oper="InnerActorXMod"/>.
 </Subsection>
 
 
@@ -103,13 +104,13 @@ provide standard examples of crossed squares.
 Converted the documentation to the format of the &GAPDoc; package.
 </Item>
 <Item>
-Improved <C>AutomorphismPermGroup</C> for crossed modules, 
+Improved <Ref Oper="AutomorphismPermGroup"/> for crossed modules, 
 and introduced a special method for conjugation crossed modules.
 </Item>
 <Item>
-Substantial revisons made to <C>XModByCentralExtension</C>, 
-<C>NorrieXMod</C>, <C>LueXMod</C>, <C>ActorXMod</C>, 
-and <C>InclusionInducedXModByCopower</C>. 
+Substantial revisons made to <Ref Oper="XModByCentralExtension"/>; 
+<Ref Oper="NorrieXMod"/>; <Ref Oper="LueXMod"/>; <Ref Oper="ActorXMod"/>; 
+and <Ref Oper="InclusionInducedXModByCopower"/>. 
 </Item>
 <Item> 
 Version 2.010, of October 2007, was timed to coincide with the release 
@@ -138,14 +139,14 @@ A GNU General Public License declaration was added.
 </List> 
 
 <Subsection><Heading>AllCat1s</Heading>
-Version 2.21 contained major changes to the <C>Cat1Select</C> operation: 
+Version 2.21 contained major changes to the <Ref Oper="Cat1Select"/> operation: 
 the list <C>CAT1_LIST</C> of cat1-structures in the data file 
 <F>cat1data.g</F> was changed from permutation groups to pc-groups, 
 with the generators of subgroups; images of the tail map; and images of 
 the head map being given as <C>ExtRepOfObj</C> of words in the generators. 
 <P/> 
 The <C>AllCat1s</C> function was reintroduced from the &GAP;3 version, 
-and renamed as the operation <C>AllCat1sBasic</C>. 
+and renamed as the operation <Ref Oper="AllCat1DataGroupsBasic"/>. 
 <P/> 
 In version 2.25 the data in <F>cat1data.g</F> was extended from groups 
 of size up to <M>48</M> to groups of size up to <M>70</M>. 
