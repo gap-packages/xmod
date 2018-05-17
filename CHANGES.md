@@ -1,5 +1,9 @@
 # CHANGES to the 'XMod' package
 
+## 2.68 -> 2.68dev (??/05/2018) 
+
+ * (17/05/18) corrected SinglePiecePreXModWithObjects in the discrete case 
+
 ## 2.67 -> 2.68 (01/05/2018) 
 
  * (30/04/18) made tests more robust; moved coprod.tst to /xtst 

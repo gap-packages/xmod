@@ -2,7 +2,7 @@
 ##
 #W  gpd2obj.gi                 GAP4 package `XMod'               Chris Wensley
 ##
-#Y  Copyright (C) 2001-2017, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2018, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 #############################################################################
@@ -123,9 +123,10 @@ InstallMethod( SinglePiecePreXModWithObjectsNC, "for prexmod, obs, isdisc?",
     true, [ IsPreXMod, IsList, IsBool ], 0,
 function( px, obs, isdisc )
 
-    local spx, rpx, src, rng, gens, bpx, imbdy, i, a, im, bdy, 
+    local nobs, spx, rpx, src, rng, gens, bpx, homs, imbdy, i, a, im, bdy, 
           apx, AS, AR, AS0, obs0, imobs, fact, act, pxwo; 
 
+    nobs := Length( obs );
     spx := Source( px ); 
     rpx := Range( px ); 
     ## pxwo := rec( 
@@ -142,20 +143,21 @@ function( px, obs, isdisc )
     ## construct the boundary 
     gens := GeneratorsOfGroupoid( src ); 
     bpx := Boundary( px ); 
-    imbdy := ShallowCopy( gens ); 
-    for i in [1..Length(imbdy)] do 
-        a := gens[i]; 
-        if ( a![2] = a![3] ) then 
-            im := ImageElm( bpx, a![1] ); 
-            imbdy[i] := ArrowNC( true, im, a![2], a![3] ); 
-        else 
-            imbdy[i] := ArrowNC( true, One(rpx), a![2], a![3] ); 
-        fi; 
-    od; 
     if isdisc then 
-        bdy := GroupoidHomomorphismFromHomogeneousDiscrete(src,rng,gens,imbdy);
-    else 
-        bdy := GroupoidHomomorphismFromSinglePiece(src,rng,gens,imbdy); 
+        homs := ListWithIdenticalEntries( nobs, bpx );
+        bdy := GroupoidHomomorphismFromHomogeneousDiscrete(src,rng,homs,obs);
+    else
+        imbdy := ShallowCopy( gens ); 
+        for i in [1..Length(imbdy)] do 
+            a := gens[i]; 
+            if ( a![2] = a![3] ) then 
+                im := ImageElm( bpx, a![1] ); 
+                imbdy[i] := ArrowNC( true, im, a![2], a![3] ); 
+            else 
+                imbdy[i] := ArrowNC( true, One(rpx), a![2], a![3] ); 
+            fi; 
+        od; 
+        bdy := GroupoidHomomorphismFromSinglePiece( src, rng, gens, imbdy ); 
     fi; 
     ## construct the action 
     apx := XModAction( px ); 

@@ -172,9 +172,11 @@ function( X0 )
             Add( eqreps, repsP0[i] ); 
         fi;
     od; 
-    Info( InfoXMod, 2, "eqreps = ", eqreps ); 
-    ## now run LoopsXMod on on the list eqreps 
     numreps := Length( eqreps ); 
+    Info( InfoXMod, 2, "there are ", numreps, 
+                       " equivalence classes with representatives:" ); 
+    Info( InfoXMod, 2, eqreps ); 
+    ## now run LoopsXMod on on the list eqreps 
     allX := ListWithIdenticalEntries( numreps, 0 );
     for i in [1..numreps] do
         a := eqreps[i]; 
