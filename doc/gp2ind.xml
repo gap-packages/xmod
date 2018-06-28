@@ -115,7 +115,9 @@ The output from the calculation is a crossed module
 together with a morphism of crossed modules
 <M>{\mathcal X} \to \iota_{\ast}{\mathcal X}</M>.
 When <M>\iota</M> is a surjection with kernel <M>K</M> then
-<M>\iota_{\ast}S = [S,K]</M> (see <Cite Key="BH1" />).
+<M>\iota_{\ast}S = S/[K,S]</M> (see <Cite Key="BH1" />). 
+(For many years, up until June 2018, this manual has stated the result to be 
+<M>[K,S]</M>, though the correct quotient has been calculated.) 
 When <M>\iota</M> is an inclusion the induced crossed module may be
 calculated using a copower construction <Cite Key="BW1" /> or,
 in the case when <M>R</M> is normal in <M>Q</M>, 
@@ -197,7 +199,9 @@ gap> StructureDescription( indXs3c );
 ]]>
 </Example>
 
-For a third example we take the identity mapping on <C>s3c</C> as boundary,
+For a third example we use the version <C>InducedXMod(Q,R,S)</C> 
+of this global function. 
+We take the identity mapping on <C>s3c</C> as boundary,
 and the inclusion of <C>s3c</C> in <C>s4</C> as <M>\iota</M>.
 The induced group is a general linear group <C>GL(2,3)</C>.
 <P/>
@@ -218,9 +222,9 @@ gap> StructureDescription( indXs3c );
          Arg="Q" />
 <Description>
 This function calculates all the induced crossed modules 
-<C>InducedXMod( Q, P, M )</C>, 
-where <C>P</C> runs over all conjugacy classes of subgroups of <C>Q</C> 
-and <C>M</C> runs over all non-trivial subgroups of <C>P</C>.
+<C>InducedXMod( Q, R, S )</C>, 
+where <C>R</C> runs over all conjugacy classes of subgroups of <C>Q</C> 
+and <C>S</C> runs over all non-trivial subgroups of <C>R</C>.
 </Description>
 </ManSection>
 <Example>
@@ -247,7 +251,7 @@ gap> ids;
    <Prop Name="InducedCat1GroupByFreeProduct"
          Arg="grp, hom" />
 <Description>
-This area requires development. 
+This area awaits development. 
 </Description>
 </ManSection>
 
