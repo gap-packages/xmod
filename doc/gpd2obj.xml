@@ -46,8 +46,9 @@ is homogeneous and discrete and <C>false</C> when the source groupoid
 is connected.  
 Other operations will be added as time permits. 
 <P/> 
-In the example the crossed module <C>DX4</C> has discrete source,
-and is a groupoid equivalent of <Ref Oper="XModByNormalSubgroup"/>. 
+In the example the crossed module <C>DX4</C> has discrete source, 
+while the crossed module <C>CX4</C> has connected source. 
+These are groupoid equivalents of <Ref Oper="XModByNormalSubgroup"/>. 
 </Description>
 </ManSection>
 <P/>
