@@ -129,7 +129,9 @@ InstallGlobalFunction( InducedXMod, function( arg )
         Print("\nUsage: InducedXMod( Q, P, M [, T] );");
         Print("\n where  Q >= P |>= M  and  T  is a transversal for Q/P");
         Print("\n   or: InducedXMod( X, iota [, T] );");
-        Print("\n where  X  is a conjugation XMod and iota is injective.\n\n");
+        Print("\n where  X  is a conjugation XMod and iota is injective");
+        Print("\n   or: InducedXMod( X, iota );"); 
+        Print("\n where  X  is a conjugation XMod and iota is surjective\n\n");
     end;
     nargs := Length( arg );
     if ( ( nargs < 2 ) or ( nargs > 4 ) ) then
@@ -147,10 +149,10 @@ InstallGlobalFunction( InducedXMod, function( arg )
             usage( 0 );
             Info( InfoXMod, 2, "iota not a GroupGeneralMapping" );
             return fail;
-        fi;
-        if not IsInjective( iota ) then
+        fi; 
+        if not ( IsInjective( iota ) or IsSurjective( iota ) ) then
             usage( 0 );
-            Info( InfoXMod, 2, "iota not injective" );
+            Info( InfoXMod, 2, "iota neither injective nor surjective" );
             return fail;
         fi;
         Q := Range( iota );
