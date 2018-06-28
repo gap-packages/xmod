@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.gd              GAP4 package `XMod'                Alper Odabas
 #W                                                               & Enver Uslu
-#Y  Copyright (C) 2001-2017, Chris Wensley et al 
+#Y  Copyright (C) 2001-2018, Chris Wensley et al 
 
 #############################################################################
 ##
@@ -14,11 +14,13 @@ DeclareOperation( "StabilizerSubgroupXMod", [ IsPreXMod, IsGroup, IsGroup ] );
 
 #############################################################################
 ##
-#O Displacement(  )
+#O Displacement( act, r, s )
+#O DisplacementGroup( act, R, S )
 #A DisplacementSubgroup( XM )
 #O CrossActionSubgroup( XM )
 ##
 DeclareOperation( "Displacement", [ IsGroupHomomorphism, IsObject, IsObject ] );
+DeclareOperation( "DisplacementGroup", [ IsXMod, IsGroup, IsGroup ] );
 DeclareAttribute( "DisplacementSubgroup", IsXMod );
 DeclareOperation( "CrossActionSubgroup", [ IsXMod, IsXMod, IsXMod ] ); 
 

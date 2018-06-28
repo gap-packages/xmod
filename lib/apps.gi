@@ -25,6 +25,10 @@ function( X0, a )
     if not ( a in P0 ) then 
         Error( "element a not in the range group P0" ); 
     fi; 
+    Info( InfoXMod, 3, "M0: ", Elements(M0) ); 
+    Info( InfoXMod, 3, List( Elements(M0), g -> Order(g) ) );
+    Info( InfoXMod, 3, "P0: ", Elements(P0) ); 
+    Info( InfoXMod, 3, List( Elements(P0), g -> Order(g) ) );
     bdy0 := Boundary( X0 ); 
     act0 := XModAction( X0 ); 
     aut0 := Range( act0 ); 
@@ -39,6 +43,8 @@ function( X0, a )
         od; 
     od; 
     nPa := Length( elPa );
+    Info( InfoXMod, 2, "elPa has length ", nPa );
+    Info( InfoXMod, 3, "with elements ", elPa );
     C0 := Cat1GroupOfXMod( X0 ); 
     G0 := Source( C0 ); 
     e1 := Embedding( G0, 1 ); 
@@ -59,6 +65,7 @@ function( X0, a )
             Pa := Subgroup( G0, genPa ); 
         fi;
     od;
+    Info( InfoXMod, 2, "Pa has size ", Size( Pa ) ); 
     ngPa := Length( genPa ); 
     ## construct the boundary for X1 
     imda := ListWithIdenticalEntries( lenM0, 0 ); 
@@ -78,6 +85,10 @@ function( X0, a )
     if ( bdy1 = fail ) then 
         Error( "bdy1 fails to be a homomorphism" ); 
     fi;
+    if ( InfoLevel( InfoXMod ) > 1 ) then 
+        Print( "the boundary map:\n" ); 
+        Display( bdy1 ); 
+    fi; 
     ## construct the action map for X1 
     imact1 := ListWithIdenticalEntries( ngPa, 0 ); 
     for i in [1..ngPa] do  
@@ -85,6 +96,10 @@ function( X0, a )
         imact1[i] := ImageElm( act0, p ); 
     od; 
     act1 := GroupHomomorphismByImages( Pa, aut0, genPa, imact1 ); 
+    if ( InfoLevel( InfoXMod ) > 1 ) then 
+        Print( "the action map:\n" ); 
+        Display( act1 ); 
+    fi; 
     ## now we can construct the crossed module 
     return XModByBoundaryAndAction( bdy1, act1 );  
 end ); 

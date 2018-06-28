@@ -65,6 +65,10 @@ gap> d := Displacement( act, r, s );
 (1,5,9)(2,6,10)(3,7,11)(4,8,12)
 gap> Image( bn4, d ) = Comm( r, Image( bn4, s ) );  
 true
+gap> Qn4 := Subgroup( Rn4, [ (6,10)(7,9), (1,3), (2,4) ] );;   
+gap> Tn4 := Subgroup( Sn4, [ (1,3,5,7,9,11)(2,4,6,8,10,12) ] );;
+gap> DisplacementGroup( Xn4, Qn4, Tn4 );                        
+Group([ (1,5,9)(2,6,10)(3,7,11)(4,8,12) ])
 gap> DisplacementSubgroup( Xn4 );
 Group([ (1,5,9)(2,6,10)(3,7,11)(4,8,12) ])
 
