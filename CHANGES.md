@@ -2,6 +2,7 @@
 
 ## 2.68 -> 2.68dev (??/05/2018) 
 
+ * (28/06/18) added operation DisplacementGroup; changed DisplacementSubgroup
  * (17/05/18) corrected SinglePiecePreXModWithObjects in the discrete case 
 
 ## 2.67 -> 2.68 (01/05/2018) 

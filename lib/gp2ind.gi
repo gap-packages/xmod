@@ -759,23 +759,14 @@ function( X0, iota )
     act := XModAction( X0 );
     K := Kernel( iota );
     genK := GeneratorsOfGroup( K );
-    genH := [ ];
-    H := Subgroup( S, genH );
-    for r in genK do
-        a := ImageElm( act, r );
-        for s in genS do
-            x := s^(-1) * ImageElm( a, s );
-            if not ( x in H ) then
-                Add( genH, x );
-                H := Subgroup( S, genH );
-            fi;
-        od;
-    od;
+    H := DisplacementGroup( X0, K, S );
+    genH := GeneratorsOfGroup( H );
     Q := Range( iota );
     genQ := GeneratorsOfGroup( Q );
     preQ := List( genQ, q -> PreImagesRepresentative( iota, q ) );
     rcos := RightCosets( S, H );
     reps := List( rcos, r -> Representative( r ) );
+    Info( InfoXMod, 2, "reps = ", reps ); 
     imb := List( genS, r -> ImageElm( iota, ImageElm( bdy, r ) ) );
     #? (06/07/10) modified to make Pc2DimensionalDomain 
     PI := Action( S, rcos, OnRight ); 
@@ -791,16 +782,13 @@ function( X0, iota )
         I := PI; 
         acthom := actPI; 
     fi;
+    Info( InfoXMod, 2, "acthom = ", MappingGeneratorsImages( acthom ) ); 
     genI := GeneratorsOfGroup( I );
     Info( InfoXMod, 2, "genI = ", genI ); 
     if HasName( S ) then
         SetName( I, Concatenation( Name( S ), "/ker" ) );
     fi;
     imi := List( genS, s -> ImageElm( acthom, s ) ); 
-    #? (06/07/10)  removed when adding pcgroup option 
-    ##  if ( genI <> imi ) then
-    ##    Error( "unequal images: genI <> imi" );
-    ##  fi;
     istar := GroupHomomorphismByImages( S, I, genS, imi );
     bdystar := GroupHomomorphismByImages( I, Q, imi, imb );
     Info( InfoXMod, 3, "bdystar = ", bdystar ); 
