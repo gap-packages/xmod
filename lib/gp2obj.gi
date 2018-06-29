@@ -170,6 +170,43 @@ function( PM )
     return ForAll( genrng, r -> ( ImageElm( act, r ) = onesrc ) );
 end );
 
+###############################################################################
+##
+#M  IsCentralExtension2DimensionalGroup( <xmod> ) . . . . . . check the axioms
+##
+InstallMethod( IsCentralExtension2DimensionalGroup, "for an xmod",
+    true, [ IsXMod ], 0,
+function( X0 )
+
+    local S, R, bdy, act, genS, genR, preR, len, i, r, pr, actr, s; 
+
+    S := Source( X0 ); 
+    R := Range( X0 ); 
+    bdy := Boundary( X0 ); 
+    if not IsSurjective( bdy ) then 
+        return false; 
+    fi;
+    if not IsSubgroup( Centre( S ), Kernel( bdy ) ) then 
+        return false; 
+    fi; 
+    act := XModAction( X0 ); 
+    genS := GeneratorsOfGroup( S );
+    genR := GeneratorsOfGroup( R );
+    preR := List( genR, r -> PreImagesRepresentative( bdy, r ) ); 
+    len := Length( genR ); 
+    for i in [1..len] do 
+        r := genR[i];
+        pr := preR[i];
+        actr := ImageElm( act, r ); 
+        for s in genS do 
+            if not ( ImageElm( actr, s ) = s^pr ) then 
+                return false; 
+            fi;
+        od;
+    od; 
+    return true; 
+end );
+
 ##############################################################################
 ##
 #M  PreXModObj( <bdy>, <act> ) . . . . . . . . . . . make a pre-crossed module
