@@ -21,7 +21,7 @@ function( X1, X2 )
           genR, lenR, cbdy, a1, a2, alpha, imalpha, cact, imcact, caut, 
           prexmod, peiffer, pmor, pmor1, pmor2, info, coprod; 
 
-    ##  function to split a semedirectproduct element into two parts 
+    ##  function to split a semidirect product element into two parts 
     f := function( g ) 
         local x, x1, y1, y; 
         x := ImageElm( proj, g );
@@ -122,20 +122,17 @@ end );
 ##
 InstallGlobalFunction( InducedXMod, function( arg )
 
-    local usage, nargs, X0, bdy0, M, P, Q, iota, ires, T, mono, surj, iP,
-          mor01, X1, I1, genI1, bdy1, im1, P1, inc, mor12, IX;
+    local usage, nargs, X0, M, P, Q, iota, ires, T, iP, X1, inc, IX;
 
     usage := function( u )
         Print("\nUsage: InducedXMod( Q, P, M [, T] );");
         Print("\n where  Q >= P |>= M  and  T  is a transversal for Q/P");
         Print("\n   or: InducedXMod( X, iota [, T] );");
-        Print("\n where  X  is a conjugation XMod and iota is injective");
-        Print("\n   or: InducedXMod( X, iota );"); 
-        Print("\n where  X  is a conjugation XMod and iota is surjective\n\n");
+        Print("\n where X is a crossed module and iota is a homomorphism\n\n");
     end;
     nargs := Length( arg );
     if ( ( nargs < 2 ) or ( nargs > 4 ) ) then
-        Info( InfoXMod, 2, "expecting 2 or 4 arguments" );
+        Info( InfoXMod, 2, "expecting 2, 3 or 4 arguments" );
         usage( 0 );
         return fail;
     fi;
@@ -147,14 +144,7 @@ InstallGlobalFunction( InducedXMod, function( arg )
         iota := arg[2];
         if not ( IsGroupGeneralMapping(iota) and ( Source(iota) = P ) ) then
             usage( 0 );
-            Info( InfoXMod, 2, "iota not a GroupGeneralMapping" );
-            return fail;
         fi; 
-        if not ( IsInjective( iota ) or IsSurjective( iota ) ) then
-            usage( 0 );
-            Info( InfoXMod, 2, "iota neither injective nor surjective" );
-            return fail;
-        fi;
         Q := Range( iota );
         if ( ( nargs = 3 ) and IsList( arg[3] ) ) then
             T := arg[3];
@@ -179,23 +169,16 @@ InstallGlobalFunction( InducedXMod, function( arg )
         Info( InfoXMod, 2, "T specified: ", T );
     fi;
     ## we have now defined X0, iota, M, P, Q in both cases ##
-    mono := IsInjective( iota );
-    surj := IsSurjective( iota );
-    if mono then
+    if ( Size( M ) = 1 ) then 
+        Info( InfoXMod, 3, "using induced xmod with trivial source" ); 
+        IX := InducedXModFromTrivialSource( X0, iota ); 
+    elif ( Size( P ) = 1 ) then 
+        Info( InfoXMod, 3, "using induced xmod with trivial range" ); 
+        IX := InducedXModFromTrivialRange( X0, iota ); 
+    elif IsInjective( iota ) then
         Info( InfoXMod, 3, "iota is mono" );
-        if not IsSubgroup( P, M ) then
-            mor01 := IsomorphismXModByNormalSubgroup( X0 );
-            if ( mor01 = fail ) then 
-                Error( 
-                "InducedXMod(X0,iota) requires X0 to be a normal inclusion" );
-            fi;
-            X1 := Range( mor01 );
-        else
-            mor01 := IdentityMapping( X0 );
-            X1 := X0;
-        fi;
-        IX := InclusionInducedXModByCopower( X1, iota, T );
-    elif surj then
+        IX := InclusionInducedXModByCopower( X0, iota, T );
+    elif IsSurjective( iota ) then
         Info( InfoXMod, 3, "iota is surj" );
         IX := SurjectiveInducedXMod( X0, iota );
     else  ## split in two ##
@@ -208,15 +191,6 @@ InstallGlobalFunction( InducedXMod, function( arg )
             Print( "surjective induced xmod:\n" );
             Display( X1 );
         fi;
-        I1 := Source( X1 );
-        genI1 := GeneratorsOfGroup( I1 );
-        bdy1 := Boundary( X1 );
-        im1 := List( genI1, s -> ImageElm( bdy1, s ) );
-        P1 := Subgroup( iP, im1 );
-        if not ( P1 = iP ) then
-            Print( "VERY SURPRISING RESULT : P1 <> iP\n" );
-        fi;
-        mor12 := IsomorphismXModByNormalSubgroup( X1 );
         inc := InclusionMappingGroups( Q, iP );
         IX := InclusionInducedXModByCopower( X1, inc, [ ] );
     fi;
@@ -230,37 +204,148 @@ end );
 
 ##############################################################################
 ##
+#M  InducedXModFromTrivialSource( <xmod>, <hom> ) . . . induced xmod
+##
+InstallMethod( InducedXModFromTrivialSource, "for an xmod and an inclusion", 
+    true, [ IsXMod, IsGroupHomomorphism ], 0,
+function( X0, iota )
+
+    local M, Q, I, IX, morsrc, mor, ok; 
+
+    Info( InfoXMod, 2, "calling InducedXModFromTrivialSource" ); 
+    Q := Range( iota );
+    I := Subgroup( Q, [ One(Q) ] ); 
+    IX := XModByNormalSubgroup( Q, I ); 
+    M := Source( X0 ); 
+    if not ( Size( M ) = 1 ) then 
+        Error( "M is not a trivial group" ); 
+    fi;
+    morsrc := GroupHomomorphismByImages( M, I, [ One(M) ], [ One(I) ] ); 
+    mor := PreXModMorphism( X0, IX, morsrc, iota ); 
+    if ( mor = fail ) then 
+        Error( "mor fails to be a precrossed module morphism" ); 
+    else 
+        ok := IsXModMorphism( mor ); 
+    fi;
+    SetMorphismOfInducedXMod( IX, mor ); 
+    return IX;
+end );
+
+##############################################################################
+##
+#M  InducedXModFromTrivialRange( <xmod>, <hom> ) . . . induced xmod
+##
+InstallMethod( InducedXModFromTrivialRange, "for an xmod and a monomorphism", 
+    true, [ IsXMod, IsGroupHomomorphism ], 0,
+function( X0, iota )
+
+    local P, Q, oQ, genQ, lenQ, regQ, M, genM, lenM, I, genI, lenI, info, 
+          morsrc, Ibdy, n, q, rq, L, i, j, k, imact, Iact, Iaut, IX, mor, ok; 
+
+    Info( InfoXMod, 2, "calling InducedXModFromTrivialRange" ); 
+    P := Range( X0 ); 
+    if not ( Size( P ) = 1 ) then 
+        Error( "P is not the trivial group" ); 
+    fi;
+    Q := Range( iota );
+    oQ := Size( Q ); 
+    genQ := GeneratorsOfGroup( Q ); 
+    lenQ := Length( genQ ); 
+    regQ := RegularActionHomomorphism( Q ); 
+    M := Source( X0 ); 
+    genM := GeneratorsOfGroup( M ); 
+    lenM := Length( genM ); 
+    I := DirectProduct( ListWithIdenticalEntries( oQ, M ) ); 
+    if HasName( M ) then 
+        SetName( I, Concatenation( Name( M ), "^", String( oQ ) ) ); 
+    fi; 
+    genI := GeneratorsOfGroup( I ); 
+    lenI := Length( genI ); 
+    if not ( lenI = oQ * lenM ) then 
+        Error( "genI has unexpected length" ); 
+    fi;
+    info := DirectProductInfo( I );
+    morsrc := Embedding( I, 1 );
+    Ibdy := MappingToOne( I, Q ); 
+    imact := ListWithIdenticalEntries( lenQ, 0 ); 
+    for n in [1..lenQ] do 
+        q := genQ[n]; 
+        rq := ImageElm( regQ, q ); 
+        L := ListWithIdenticalEntries( lenI, 0 ); 
+        for i in [1..oQ] do 
+            j := i^rq; 
+            for k in [1..lenM] do 
+                L[(i-1)*lenM+k] := genI[(j-1)*lenM+k]; 
+            od; 
+        od;
+        imact[n] := GroupHomomorphismByImages( I, I, genI, L );
+    od; 
+    Iaut := Group( imact );
+    Iact := GroupHomomorphismByImages( Q, Iaut, genQ, imact );
+    IX := XModByBoundaryAndAction( Ibdy, Iact ); 
+    mor := PreXModMorphism( X0, IX, morsrc, iota ); 
+    if ( mor = fail ) then 
+        Error( "mor fails to be a precrossed module morphism" ); 
+    else 
+        ok := IsXModMorphism( mor ); 
+    fi;
+    SetMorphismOfInducedXMod( IX, mor ); 
+    return IX;
+end );
+
+##############################################################################
+##
 #M  InclusionInducedXModByCopower( <xmod>, <hom>, <trans> ) . . . induced xmod
 ##
 InstallMethod( InclusionInducedXModByCopower, 
-    "for a group, a homomorphism, and a transversal", true, 
-
+    "for an xmod, an inclusion, and a transversal", true, 
     [ IsXMod, IsGroupHomomorphism, IsList ], 0,
 function( X0, iota, trans )
 
-    local imgeniota, T, t, kept, diff, ok, l1, l2, m1, m2, 
-          qP, qT, pos, posn, posm, words, total, tietze,
-          Q, oQ, q, elQ, genQ, ngQ, Qinfo, actQ, p2fQ, FQ, degQ, indQP,
-          P, oP, p, elP, genP, Pinfo, FP, iP, eliP,
-          M, oM, m, elM, genM, ngM, Minfo, g2fpM, fp2gM, mgiM, imM, xgM, 
-          FM, genFM, ngFM, presFM, relFM, nrFM, 
-          freeM, genfreeM, free1, genfree1, free2, genfree2, 
-          N, n1, n2, genN, ngN, 
-          iN, geniN, FN, genFN, relFN, nrFN, fN, genfN, subfN, defN,  
-          I, info, ngI, xgI, nxI, genI, relI, degI, imI, idI, 
-          FI1, presFI1, genFI1, f2p, gensFI1, 
-          ofpi, oFI2, FI2, genFI2, ngFI2, gensFI2, imact, 
-          imIQ, homFIQ, FK, genFK, genK, oK, K, big,
-          fpi, Idi, ck, cl, cm, qk, fl, gk, gl, gm, hk, hl, hm,
-          i, ik, il, im, j, jk, jl, jm, k, nk, nl, pm, rm,
-          tk, tl, tm, zk, zl, zm, u, v, x, y, z, ix, iy, 
-          imD, gimD, elimD, genD, ind, gpos, vpos, imrem, genpos, genim,
-          IX, bdy, act, aut, mor, morsrc, Iname, Xname, IdGp,
-          degi, imold, prenew, iso12, pres2, 
-          comp, mgicomp, series, idseries, 
-          imFIQ, mgiFIQ, relFI, genFI, ishom, ispc, ispcI;
+    local CopowerAction, 
+          Q, genQ, oQ, elQ, ngQ, q, q1, P, genP, oP, elP, p, iP, eliP, 
+          M, genM, oM, elM, ngM, m, m1, m2, N, genN, ngN, n1, n2, posn, 
+          act0, bdy0, comp, mgiota, iP2P, indQP, 
+          Minfo, FM, genFM, ngFM, g2fpM, fp2gM, mgiM, presFM, relFM, nrFM, 
+          freeM, genfreeM, genFN, fN, genfN, subfN, defN, relFN, nrFN, FN, 
+          i, i1, i2, j, j1, j2, k, l1, l2, diff, c1, c2, 
+          T, t, t1, t2, ok, qP, qT, pos, iN, geniN, 
+          xgM, ngI, nxI, free1, one1, genfree1, free2, genfree2, 
+          genFI, ngFI, fgenFI, nfgFI, g1, g2, h1, h2, ag2, u, v, 
+          ofpi, actQ, imFIQ, imD, gimD, genD, ind, relFI, 
+          FI1, presFI1, gensFI1, tietze, total, 
+          FI2, genFI2, ngFI2, oFI2, gensFI2, 
+          info, ispc, I, f2p, degI, prenew, imold, 
+          homFIQ, imIQ, FK, genFK, genK, K, oK, mgiFIQ, words, imrem, imM, 
+          idI, genI, genpos, imact, imI, genim, aut, mor, morsrc, 
+          bdy, act, ishom, IX, series, idseries;
 
-    Info( InfoXMod,2,"calling InclusionInducedXModByCopower" ); 
+    CopowerAction := function( i, j, q ) 
+    ## calculates (s,u)^q where (s,u) corresponds generator genFI[i][j] 
+    ## and returns generator genFI[k][l] corresponding to (m,v)
+        local s, u, pos, ip, p, v, k, l; 
+        s := genN[j]; 
+        u := T[i]; 
+        pos := Position( elQ, u*q ); 
+        ip := qP[pos]; 
+        p := ImageElm( iP2P, ip ); 
+        v := qT[pos]; 
+        m := ImageElm( ImageElm( act0, p ), s ); 
+        l := Position( genN, m ); 
+        k := Position( T, v ); 
+        if ( ( l = fail ) or ( k = fail ) ) then 
+            Error( "position failure in CopowerAction" ); 
+        fi; 
+        return genFI[k][l]; 
+    end; 
+
+    M := Source( X0 );
+    oM := Size( M );
+    genM := GeneratorsOfGroup( M ); 
+    if ( oM = 1 ) then 
+        return InducedXModFromTrivialSource( X0, iota ); 
+    fi;
+    Info( InfoXMod, 2, "calling InclusionInducedXModByCopower" ); 
     Q := Range( iota );
     genQ := GeneratorsOfGroup( Q );
     oQ := Size( Q );
@@ -268,14 +353,18 @@ function( X0, iota, trans )
     elQ := Elements( Q );
     P := Range( X0 );;
     genP := GeneratorsOfGroup( P );
-    oP := Size( P );
+    oP := Size( P ); 
     elP := Elements( P );
-    M := Source( X0 );
-    oM := Size( M );
-    #? need to generalise beyond normal subgroup xmods?    
-    if not IsNormal( P, M ) then
-        Error( "M not a normal subgroup of P" );
-    fi;
+    ## image of P under iota
+    iP := ImagesSource( iota );
+    eliP := List( elP, p -> ImageElm( iota, p ) );
+    mgiota := MappingGeneratorsImages( iota );
+    iP2P := GroupHomomorphismByImages( iP, P, mgiota[2], mgiota[1] ); 
+    indQP := oQ/oP;
+    act0 := XModAction( X0 ); 
+    bdy0 := Boundary( X0 ); 
+    comp := GroupHomomorphismByImages( M, Q, genM, 
+                List( genM, m -> ImageElm( iota, ImageElm( bdy0, m ) ) ) );  
     Minfo := IsomorphismFpInfo( M );
     FM := Minfo!.fp;
     fp2gM := Minfo!.fp2g;
@@ -287,10 +376,6 @@ function( X0, iota, trans )
     genFM := mgiM[2];
     ngM := Length( genM );
     ngFM := Length( genFM );
-    ## image of P under iota
-    iP := ImagesSource( iota );
-    eliP := List( elP, p -> ImageElm( iota, p ) );
-    indQP := oQ/oP;
     presFM := PresentationFpGroup( FM );
     TzInitGeneratorImages( presFM );
     if ( InfoLevel( InfoXMod ) > 1 ) then
@@ -303,16 +388,16 @@ function( X0, iota, trans )
     nrFM := Length( relFM );
 
     # determine  genN = closure of  genM  under conjugation by  P 
+    Info( InfoXMod, 2, "finding closure of GeneratorsOfGroup(M) by P-action");
     genN := ShallowCopy( genM );
+    ngN := Length( genN );
     genFN := ShallowCopy( genFM );
     i := 0;
-    ngN := Length( genN );
-    Info( InfoXMod, 2, "finding closure of GeneratorsOfGroup(M) by P-action");
     while ( i < ngN ) do
         i := i + 1;
         n1 := genN[i];
         for p in genP do
-            n2 := n1^p;
+            n2 := ImageElm( ImageElm( act0, p ), n1 ); 
             posn := Position( genN, n2 );
             if ( posn = fail ) then
                 Add( genN, n2 );
@@ -328,7 +413,7 @@ function( X0, iota, trans )
     Info( InfoXMod, 2, "genN = P-closure of GeneratorsOfGroup(M) :- ");
     Info( InfoXMod, 2, genN );
 
-    # prepare copy FN of FM with more generators
+    # prepare enlargement FN of FM with more generators
     fN := FreeGroup( ngN, "fN" );
     genfN := GeneratorsOfGroup( fN );
     subfN := genfN{[1..ngFM]};
@@ -360,27 +445,28 @@ function( X0, iota, trans )
             Add( genFN, m1 );
         fi;
     od;
-    Info( InfoXMod, 2, "genFN = ", genFN );
+    Info( InfoXMod, 2, "revised genFN = ", genFN );
+    FN := Subgroup( FM, genFN );
     diff := ngN - ngFM;
-    N := Subgroup( P, genN );
-    geniN := List( genN, r -> ImageElm( iota, r ) );
+    N := Subgroup( M, genN );
+    geniN := List( genN, n -> ImageElm( iota, ImageElm( bdy0, n ) ) );
     iN := Subgroup( Q, geniN );
     if ( ( InfoLevel( InfoXMod ) > 1 ) and ( diff > 0 ) ) then
-        Print( "Closed generating set for N :-\n", genN, "\n" );
+        Print( "Closed generating set for iN :-\n", geniN, "\n" );
     fi;
-    FN := Subgroup( FM, genFN );
 
     ## process transversal
     if ( trans <> [ ] ) then
         T := trans;
     else
-        T := CommonTransversal( Q, P );
+        T := CommonTransversal( Q, iP );
     fi;
-    ok := IsCommonTransversal( Q, P, T );
+    ok := IsCommonTransversal( Q, iP, T );
     if not ok then
         Error( "T fails to be a common transversal" );
     fi;
     Info( InfoXMod, 2, "Using transversal :- \n", T );
+    #? these lists grow large so perhaps better to avoid them? 
     ## express each  q in Q  as  p.t with  p in iP, t in T
     qP := 0 * [1..oQ];
     qT := 0 * [1..oQ];
@@ -392,13 +478,14 @@ function( X0, iota, trans )
             qT[pos] := t;
         od;
     od;
-    Info( InfoXMod, 2, "qP = ", qP, "\nqT = ", qT );
-
+    Info( InfoXMod, 2, "qP = ", qP );
+    Info( InfoXMod, 2, "qT = ", qT );
     Info( InfoXMod, 3, "\nstarting InclusionInducedXModByCopower here" );
     xgM := ngN-ngM;
     ngI := ngN*indQP;
     nxI := xgM*indQP;
     free1 := FreeGroup( ngI, "f1" );
+    one1 := One( free1 );
     genfree1 := GeneratorsOfGroup( free1 );
     genFI := [ ];
     for i in [1..indQP] do
@@ -406,6 +493,7 @@ function( X0, iota, trans )
         k := i*ngN;
         Add( genFI, genfree1{[j..k]} );
     od;
+    ngFI := Length( genFI );
     ofpi := 0 * [1..ngI];
     actQ := 0 * [1..ngQ];
     for i in [1..ngQ] do
@@ -423,10 +511,10 @@ function( X0, iota, trans )
     for i in [1..indQP] do
         t := T[i];
         for j in [1..ngN] do
-            x := geniN[j];
-            y := x^t;
+            n1 := geniN[j];
+            n2 := n1^t;
             k := (i-1)*ngN + j;
-            imFIQ[k] := y;
+            imFIQ[k] := n2;
         od;
     od;
 
@@ -436,43 +524,30 @@ function( X0, iota, trans )
     Info( InfoXMod, 2, " genQ = ", genQ ); 
     Info( InfoXMod, 2, "geniN = ", geniN ); 
     Info( InfoXMod, 2, "  elQ = ", elQ );
+    Info( InfoXMod, 2, "imFIQ = images in Q of the generators of I: ", imFIQ );
     # Action of the generators of Q on the generators of I
-    Info( InfoXMod, 2, "Images in Q of the generators of I :- \n", imFIQ );
-    for jk in [1..ngQ] do
-        qk := genQ[jk];
-        for il in [1..indQP] do
-            tl := T[il];
-            nl := (il-1)*ngN;
-            zl := tl*qk;
-            Info( InfoXMod, 4, "[jk,qk,il,tl,zl] = ", [jk,qk,il,tl,zl] );
-            pm := Position( elQ, zl );
-            tm := qT[pm];
-            im := Position( T, tm );
-            rm := qP[pm];
-            Info( InfoXMod, 4, "[pm,tm,im,rm] = ", [pm,tm,im,rm] );
-            for jl in [1..ngN] do
-                fl := geniN[jl];
-                cl := nl + jl;
-                zm := fl^rm;
-                jm := Position( geniN, zm );
-                if ( jm = fail ) then
-                    Print( "\n\n !!! Position Error !!! \n\n" );
-                fi;
-                cm := (im-1)*ngN + jm;
-                Info( InfoXMod, 4, "[jl,fl,cl,zm,jm,cm] = " );
-                Info( InfoXMod, 4, [jl,fl,cl,zm,jm,cm] );
-                actQ[jk][cl] := cm;
+    for j1 in [1..ngQ] do
+        q1 := genQ[j1];
+        for i2 in [1..indQP] do
+            n2 := (i2-1)*ngN;
+            for j2 in [1..ngN] do 
+                actQ[j1][n2+j2] := CopowerAction( i2, j2, q1 ); 
             od;
         od;
-    od;
-    if ( InfoLevel( InfoXMod ) > 1 ) then
-        Print( "\nAction of Q on generators of I :- \n" );
-        for i in [1..ngQ] do
-            Print( "  ", genQ[i], " : ", PermList( actQ[i] ), "\n" );
-        od;
-        Print( "\n" );
-    fi;
-    relFI := [ ];
+    od; 
+    Info( InfoXMod, 2, "\nactQ = ", actQ ); 
+    fgenFI := Flat( genFI ); 
+    nfgFI := Length( fgenFI );
+    Info( InfoXMod, 2, "Action of Q on the generators of I :-" ); 
+    for i in [1..ngQ] do 
+        for j in [1..nfgFI] do 
+            actQ[i][j] := Position( fgenFI, actQ[i][j] ); 
+        od; 
+        Info( InfoXMod, 2, genQ[i], " : ", PermList( actQ[i] ) ); 
+    od; 
+
+    relFI := [ ]; 
+    ## add in the copower relators for FI1 
     for i in [1..indQP] do
         for j in [1..nrFN] do
             u := relFN[j];
@@ -481,92 +556,62 @@ function( X0, iota, trans )
             Info( InfoXMod, 3, "u,v = ", u, " -> ", v );
         od;
     od;
-    ## make list of relators for FI1
-    gimD := [];
-    for ik in [1..indQP] do
-        tk := T[ik];
-        nk := (ik-1)*ngN;
-        Info( InfoXMod, 4, "[ik,tk] = ", [ik,tk] );
-        for jk in [1..ngM] do                 # no longer [1..ngN]
-            qk := geniN[jk];
-            gk := genFI[ik][jk];
-            ck := nk + jk;
-            if ( ofpi[ck] > 2 ) then
-                hk := gk^-1;
+    gimD := [ ];
+    ## add in the Peiffer commutators for FI1
+    for i1 in [1..indQP] do
+        t1 := T[i1];
+        n1 := (i1-1)*ngN;
+        Info( InfoXMod, 4, "[i1,t1] = ", [i1,t1] );
+        for j1 in [1..ngM] do                 #? no longer [1..ngN]
+            m1 := genM[j1];
+            t := ImageElm( comp, m1 )^t1; 
+            if not ( t in gimD ) then 
+                Add( gimD, t ); 
+            fi; 
+            g1 := genFI[i1][j1];
+            c1 := n1 + j1;
+            if ( ofpi[c1] > 2 ) then
+                h1 := g1^-1;
             else
-                hk := gk;
+                h1 := g1;
             fi;
-            zk := qk^tk;
-            gpos := Position( gimD, zk );
-            if ( gpos = fail ) then
-                Add( gimD, zk );
-            fi;
-            Info( InfoXMod, 4, "[jk,qk,gk,ck,hk,zk,gpos] = " );
-            Info( InfoXMod, 4, [jk,qk,gk,ck,hk,zk,gpos] );
-            for il in [1..indQP] do
-                tl := T[il];
-                nl := (il-1)*ngN;
-                Info( InfoXMod, 4, "[il,tl] = ", [il,tl] );
-                for jl in [1..ngM] do         # no longer [1..ngN]
-                    fl := geniN[jl];
-                    gl := genFI[il][jl];
-                    cl := nl + jl;
-                    if ( ofpi[cl] > 2 ) then
-                        hl := gl^-1;
+            ## \delta(r,t) = t^-1(iota mu r)t 
+            q1 := ImageElm( comp, m1 )^t1; 
+            for i2 in [1..indQP] do
+                t2 := T[i2];
+                n2 := (i2-1)*ngN;
+                Info( InfoXMod, 4, "[i2,t2] = ", [i2,t2] );
+                for j2 in [1..ngM] do         # no longer [1..ngN]
+                    g2 := genFI[i2][j2];
+                    c2 := n2 + j2;
+                    if ( ofpi[c2] > 2 ) then
+                        h2 := g2^-1;
                     else 
-                        hl := gl;
+                        h2 := g2;
                     fi;
-                    zl := tl*zk;
-                    Info( InfoXMod, 4, "[jl,fl,gl,cl,hl,zl] = " );
-                    Info( InfoXMod, 4, [jl,fl,gl,cl,hl,zl] );
-                    m := Position( elQ, zl );
-                    tm := qT[m];
-                    im := Position( T, tm );
-                    rm := qP[m];
-                    zm := fl^rm;
-                    jm := Position( geniN, zm );
-                    if ( jm = fail ) then
-                        Print("\n\n !!! Position Error !!! \n\n");
+                    ag2 := CopowerAction( i2, j2, q1 );
+                    pos := PositionMaximum( [g1, g2, ag2 ] ); 
+                    if ( pos = 1 ) then 
+                        v := h1 * h2 * g1 * ag2; 
+                    elif( pos = 2 ) then 
+                        v := g2 * g1 * ag2^-1 * h1; 
+                    else 
+                        v := ag2 * h1 * h2 * g1; 
                     fi;
-                    gm := genFI[im][jm];
-                    cm := (im-1)*ngN + jm;
-                    if ( ofpi[cm] > 2 ) then
-                        hm := gm^-1;
-                    else
-                        hm := gm; 
-                    fi;
-                    Info( InfoXMod, 3, "[m,tm,im,rm,zm,jm,gm,cm,hm] = " );
-                    Info( InfoXMod, 3, [m,tm,im,rm,zm,jm,gm,cm,hm] );
-                    if (ik <> il) then
-                        big := cm;
-                        if ( big < cl ) then 
-                            big := cl; 
-                        fi;
-                        if ( big < ck ) then 
-                            big := ck;
-                        fi;
-                        if ( big = cm ) then 
-                            v := gm * hk * hl * gk;
-                        elif ( big = cl ) then 
-                            v := gl * gk * hm * hk;
-                        elif ( ( hk = gk ) and ( cl < cm ) ) then
-                            v := hk * hl * gk * gm;
-                        else
-                            v := gk * gm * hk * hl;
-                        fi;
-                        vpos := Position( relFI, v );
-                        Info( InfoXMod, 2, "[big,v,vpos] = ", [big,v,vpos] );
-                        if ( vpos = fail ) then 
-                            Add( relFI, v );            # new relator!
-                        fi;
-                    fi;
+                    Info( InfoXMod, 3,  "v = ", v ); 
+                    if ( v <> one1 ) then 
+                        pos := Position( relFI, v ); 
+                        if ( pos = fail ) then 
+                            Add( relFI, v );            # new relator! 
+                        fi; 
+                    fi; 
                 od;
             od;
         od;
     od;
     imD := Subgroup( Q, gimD );
     ind := Index( Q, imD );
-    Info( InfoXMod, 2, "Image of I has index ", ind, 
+    Info( InfoXMod, 2, "\nImage of I has index ", ind, 
                        " in Q, and is generated by" );
     Info( InfoXMod, 2, gimD );
     FI1 := free1 / relFI;
@@ -623,13 +668,14 @@ function( X0, iota, trans )
             f2p := info!.g2pc; 
         else 
             I := info!.perm;
-            degi := NrMovedPoints( I );
+            degI := NrMovedPoints( I );
             f2p := info!.g2perm; 
         fi; 
         Info( InfoXMod, 2, "IsomorphismPermOrPcInfo: ", info ); 
     else 
         Print( "\n#I  unexpected order(I) = 1\n" ); 
         I := Group( () );
+        ##I := Subgroup( Group( () ), [ ] );
     fi; 
 
     # now identify I (if possible)
@@ -665,10 +711,10 @@ function( X0, iota, trans )
     Info( InfoXMod, 2, "PreImagesNewGens: ", prenew );        
     genD := 0 * [1..ngFI2];
     for i in [1..ngFI2] do
-        x := prenew[i];
+        g1 := prenew[i];
         ##  change made as a test (14/01/04)
-        ##  j := Position( gensFI1, x );
-        j := Position( imold, x );
+        ##  j := Position( gensFI1, g1 );
+        j := Position( imold, g1 );
         genD[i] := imFIQ[j];
     od;
     Info( InfoXMod, 2, "genD = ", genD );
@@ -715,13 +761,16 @@ function( X0, iota, trans )
     od;
     imIQ := List( genpos, p -> imFIQ[p] );
     Info( InfoXMod, 2, " imFIQ = ", imFIQ );
-    Info( InfoXMod, 2, "imIQ = ", imIQ );
+    Info( InfoXMod, 2, "  imIQ = ", imIQ );
     bdy := GroupHomomorphismByImages( I, Q, genI, imIQ );
     ishom := IsGroupHomomorphism( bdy );
     imM := imrem{[1..ngM]};
     Info( InfoXMod, 2, [ M, I, genM, imM ] );
     Info( InfoXMod, 2, "------------------------------------------------" );
     morsrc := GroupHomomorphismByImages( M, I, genM, imM );
+    if ( morsrc = fail ) then 
+        Error( "morsrc fails to be a group homomorphism" ); 
+    fi;
     Info( InfoXMod, 2, "morsrc: ", morsrc, "\n" );
     aut := GroupWithGenerators( imact, idI );
     SetName( aut, "aut(i*)" );
@@ -742,15 +791,16 @@ end );
 ##
 #M  SurjectiveInducedXMod( <xmod>, <hom> ) . . induced xmod
 ##
-InstallMethod( SurjectiveInducedXMod, "for xmod and homomorphism",
+InstallMethod( SurjectiveInducedXMod, "for xmod and surjective homomorphism",
     true, [ IsXMod, IsGroupHomomorphism ], 0,
 function( X0, iota )
 
     local ispc, S, genS, R, bdy, act, K, genK, s, r, a, x, 
           H, genH, rcos, reps, Q, lenQ, genQ, preQ, PI, actPI, 
           isoI, I, genI, imi, istar, acthom, imb, bdystar, i, 
-          autgen, imI, imS, actstar, autstar, idI, IX, mor;
+          autgen, imI, imS, actstar, autstar, idI, IX, ok, mor;
 
+    Info( InfoXMod, 2, "calling SurjectiveInducedXMod" ); 
     R := Range( X0 );
     S := Source( X0 );
     ispc := IsPc2DimensionalGroup( X0 ); 
@@ -761,6 +811,7 @@ function( X0, iota )
     genK := GeneratorsOfGroup( K );
     H := DisplacementGroup( X0, K, S );
     genH := GeneratorsOfGroup( H );
+    Info( InfoXMod, 2, "displacement group generators: ", genH ); 
     Q := Range( iota );
     genQ := GeneratorsOfGroup( Q );
     preQ := List( genQ, q -> PreImagesRepresentative( iota, q ) );
@@ -768,7 +819,6 @@ function( X0, iota )
     reps := List( rcos, r -> Representative( r ) );
     Info( InfoXMod, 2, "reps = ", reps ); 
     imb := List( genS, r -> ImageElm( iota, ImageElm( bdy, r ) ) );
-    #? (06/07/10) modified to make Pc2DimensionalDomain 
     PI := Action( S, rcos, OnRight ); 
     actPI := ActionHomomorphism( S, PI ); 
     if ispc then 
@@ -808,6 +858,10 @@ function( X0, iota )
     SetIsInducedXMod( IX, true );
     if HasName( X0 ) then
         SetName( IX, Concatenation( "i*(", Name( X0 ), ")" ) );
+    fi;
+    if ( HasIsCentralExtension2DimensionalGroup( X0 ) 
+         and IsCentralExtension2DimensionalGroup( X0 ) ) then 
+        ok := IsCentralExtension2DimensionalGroup( IX ); 
     fi;
     mor := XModMorphism( X0, IX, istar, iota );
     SetMorphismOfInducedXMod( IX, mor );

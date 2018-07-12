@@ -1,7 +1,9 @@
 # CHANGES to the 'XMod' package
 
-## 2.68 -> 2.68dev (??/06/2018) 
+## 2.68 -> 2.68dev (??/07/2018) 
 
+ * (12/07/18) added operations InducedXModFromTrivialSource/Range  
+ * (05/07/18) major revision of InclusionInducedXModByCopower 
  * (29/06/18) added method for IsCentralExtension2DimensionalGroup 
  * (28/06/18) added operation DisplacementGroup; changed DisplacementSubgroup
  * (17/05/18) corrected SinglePiecePreXModWithObjects in the discrete case 

@@ -2,7 +2,7 @@
 ##
 #W  gp2ind.gd                   GAP4 package `XMod'               Chris Wensley
 ##
-#Y  Copyright (C) 2001-2017, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2018, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file declares functions for induced crossed modules. 
@@ -65,11 +65,17 @@ DeclareAttribute( "MorphismOfInducedXMod", IsInducedXMod );
 ##
 #F  InducedXMod( <args> )
 #O  InclusionInducedXModByCopower( <grp>, <hom>, <trans> )
+#O  InducedXModFromTrivialSource( <xmod>, <hom> )
+#O  InducedXModFromTrivialRange( <xmod>, <hom> )
 #O  SurjectiveInducedXMod( <xmod>, <hom> )
 ##
 DeclareGlobalFunction( "InducedXMod" );
 DeclareOperation( "InclusionInducedXModByCopower", 
     [ IsXMod, IsGroupHomomorphism, IsList ] );
+DeclareOperation( "InducedXModFromTrivialSource", 
+    [ IsXMod, IsGroupHomomorphism ] );
+DeclareOperation( "InducedXModFromTrivialRange", 
+    [ IsXMod, IsGroupHomomorphism ] );
 DeclareOperation( "SurjectiveInducedXMod", [ IsXMod, IsGroupHomomorphism ] );
 
 ##############################################################################

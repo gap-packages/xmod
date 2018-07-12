@@ -892,7 +892,7 @@ function( f )
     fi;
     R := Range( f );
     ZR := Centre( R );
-    if not IsSubgroup( ZR, ImageElm( f, S ) ) then
+    if not IsSubgroup( ZR, Image( f, S ) ) then
         Error( "image of source must lie in the centre of range" );
     fi;
     aut := Group( IdentityMapping( S ) );
