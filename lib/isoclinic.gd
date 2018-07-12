@@ -15,7 +15,7 @@ DeclareOperation( "StabilizerSubgroupXMod", [ IsPreXMod, IsGroup, IsGroup ] );
 #############################################################################
 ##
 #O Displacement( act, r, s )
-#O DisplacementGroup( act, R, S )
+#O DisplacementGroup( XM, R, S )
 #A DisplacementSubgroup( XM )
 #O CrossActionSubgroup( XM )
 ##

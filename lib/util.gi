@@ -552,7 +552,11 @@ function( grp )
 
     iso := IsomorphismPermGroup( grp );
     perm := ImagesSource( iso );
-    mgi := MappingGeneratorsImages( iso );
+    mgi := MappingGeneratorsImages( iso ); 
+    if ( ( mgi[1] = [ ] ) or ( mgi[2] = [ ] ) ) then 
+        iso := GroupHomomorphismByImagesNC( grp, perm, [ One(grp) ], [ () ] ); 
+        mgi := MappingGeneratorsImages( iso ); 
+    fi;
     inv := GroupHomomorphismByImagesNC( perm, grp, mgi[2], mgi[1] );
     if IsFpGroup( grp ) then
         SetIsomorphismFpInfo( perm,

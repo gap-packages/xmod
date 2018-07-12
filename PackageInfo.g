@@ -1,15 +1,14 @@
 #############################################################################
 ##
 ##  PackageInfo.g  file for the package XMod 
-##  Chris Wensley et al  
-##
+##  Chris Wensley et al 
 
 SetPackageInfo( rec( 
 
 PackageName := "XMod",
 Subtitle := "Crossed Modules and Cat1-Groups",
 Version := "2.68dev",
-Date := "00/05/2018",
+Date := "00/07/2018",
 
 Persons := [
   rec(
@@ -105,11 +104,12 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">=4.9.0",
-  NeededOtherPackages := [ ["Utils", ">= 0.54"], 
+  GAP := ">=4.9.2",
+  NeededOtherPackages := [ ["Utils", ">= 0.57"], 
                            ["groupoids", ">= 1.55"], 
-                           ["Hap", ">= 1.12.5"],
-                           ["AutPGrp", ">= 1.8"] ], 
+                           ["Hap", ">= 1.12.6"],
+                           ["AutPGrp", ">= 1.9"], 
+                           ["SmallGrp", ">= 1.3" ] ], 
   SuggestedOtherPackages := [ ["GAPDoc", ">= 1.6.1"] ],
   ExternalConditions := [ ]
 ),
