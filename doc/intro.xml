@@ -29,6 +29,9 @@ derivations of crossed modules and sections of cat1-groups;
 isoclinism of groups and crossed modules; 
 </Item>
 <Item>
+induced crossed modules; 
+</Item>
+<Item>
 the actor crossed square of a crossed module; 
 </Item>
 <Item>
@@ -62,8 +65,12 @@ For further references see <Cite Key="AW1" />,
 where we discuss some of the data structures and algorithms 
 used in this package, and also tabulate
 isomorphism classes of cat1-groups up to size <M>30</M>.
+<P/> 
+&GAP; was initially used by the first author in order to construct 
+induced crossed modules.  
+This work resulted in papers <Cite Key="BW1"/> and <Cite Key="BW2"/>. 
 <P/>
-&XMod; was originally implemented in 1997 using the &GAP; 3 language.
+&XMod; was originally implemented in 1997 using the &GAP; 3 language.  
 In April 2002 the first and third parts were converted to &GAP; 4, 
 the pre-structures were added, and version 2.001 was released. 
 The final two parts, covering derivations, sections and actors, 
@@ -138,6 +145,9 @@ whose kernel is the centre of <M>\mathcal{X}</M>.
 <P/>
 The sixth part, which remains under development, contains 
 functions to compute induced crossed modules. 
+This was where our use of &GAP; started, but was restricted to the case 
+where the initial crossed module was the inclusion of a normal subgroup. 
+More general cases were not considered until July 2018 (version 2.69). 
 <P/>
 Since version 2.007 there are experimental functions for 
 <E>crossed squares</E> and their morphisms, 

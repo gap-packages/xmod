@@ -64,13 +64,13 @@ DeclareAttribute( "MorphismOfInducedXMod", IsInducedXMod );
 #############################################################################
 ##
 #F  InducedXMod( <args> )
-#O  InclusionInducedXModByCopower( <grp>, <hom>, <trans> )
+#O  InjectiveInducedXMod( <grp>, <hom>, <trans> )
 #O  InducedXModFromTrivialSource( <xmod>, <hom> )
 #O  InducedXModFromTrivialRange( <xmod>, <hom> )
 #O  SurjectiveInducedXMod( <xmod>, <hom> )
 ##
 DeclareGlobalFunction( "InducedXMod" );
-DeclareOperation( "InclusionInducedXModByCopower", 
+DeclareOperation( "InjectiveInducedXMod", 
     [ IsXMod, IsGroupHomomorphism, IsList ] );
 DeclareOperation( "InducedXModFromTrivialSource", 
     [ IsXMod, IsGroupHomomorphism ] );

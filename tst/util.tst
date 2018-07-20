@@ -62,6 +62,8 @@ gap> acta := GroupHomomorphismByImages( s3a, auta, gens3a, [alpha,beta] );;
 gap> abmod := AbelianModuleObject( k4a, acta );;
 gap> Xabmod := XModByAbelianModule( abmod );
 [k4a->s3a]
+gap> IsAbelianModule2DimensionalGroup( Xabmod );
+true
 gap> Display( Xabmod );
 
 Crossed module [k4a->s3a] :- 

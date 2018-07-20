@@ -32,7 +32,7 @@ gap> c2 := Range( X4 );;
 gap> SetName( c2, "c2" );
 gap> iota := GroupHomomorphismByImages( c2, c6, 
 >                [ (1,2) ], [ (11,14)(12,15)(13,16) ] );; 
-gap> indc4c2c6 := InclusionInducedXModByCopower( X4, iota, [ ] );; 
+gap> indc4c2c6 := InclusionInducedXMod( X4, iota, [ ] );; 
 gap> StructureDescription( indc4c2c6 ); 
 [ "C4 x C4 x C4", "C6" ]
 gap> Size( indc4c2c6 );
@@ -82,7 +82,7 @@ true
 gap> StructureDescription( ind1 );
 [ "C10", "C5" ] 
 gap> inc := GroupHomomorphismByImages( cn, c2n, [g^2], [g^2] );; 
-gap> ind2 := InclusionInducedXModByCopower( ind1, inc, [ ] );; 
+gap> ind2 := InclusionInducedXMod( ind1, inc, [ ] );; 
 gap> StructureDescription( ind2 );
 [ "C10 x C10", "C10" ]
 gap> Display( ind2 );

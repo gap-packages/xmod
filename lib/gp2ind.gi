@@ -99,8 +99,10 @@ function( X1, X2 )
     Info( InfoXMod, 1, "peiffer subgroup is ", 
         StructureDescription( peiffer:nice ), ", ", IdGroup( peiffer ) ); 
     coprod := XModByPeifferQuotient( prexmod ); 
-    Info( InfoXMod, 1, "the coproduct is ", 
-        StructureDescription( coprod:nice ), ", ", IdGroup( coprod ) ); 
+    if ( Size( Source( coprod ) ) <= 1000 ) then 
+        Info( InfoXMod, 1, "the coproduct is ", 
+            StructureDescription( coprod:nice ), ", ", IdGroup( coprod ) ); 
+    fi; 
     if HasProjectionOfFactorPreXMod( coprod ) then 
         pmor := ProjectionOfFactorPreXMod( coprod ); 
         ok := IsPreXModMorphism( pmor ); 
@@ -125,9 +127,9 @@ InstallGlobalFunction( InducedXMod, function( arg )
     local usage, nargs, X0, M, P, Q, iota, ires, T, iP, X1, inc, IX;
 
     usage := function( u )
-        Print("\nUsage: InducedXMod( Q, P, M [, T] );");
+        Print("\nUsage: InducedXMod( X, iota [, T] );");
         Print("\n where  Q >= P |>= M  and  T  is a transversal for Q/P");
-        Print("\n   or: InducedXMod( X, iota [, T] );");
+        Print("\n   or: InducedXMod( Q, P, M [, T] );");
         Print("\n where X is a crossed module and iota is a homomorphism\n\n");
     end;
     nargs := Length( arg );
@@ -170,30 +172,30 @@ InstallGlobalFunction( InducedXMod, function( arg )
     fi;
     ## we have now defined X0, iota, M, P, Q in both cases ##
     if ( Size( M ) = 1 ) then 
-        Info( InfoXMod, 3, "using induced xmod with trivial source" ); 
+        Info( InfoXMod, 1, "using induced xmod with trivial source" ); 
         IX := InducedXModFromTrivialSource( X0, iota ); 
     elif ( Size( P ) = 1 ) then 
-        Info( InfoXMod, 3, "using induced xmod with trivial range" ); 
+        Info( InfoXMod, 1, "using induced xmod with trivial range" ); 
         IX := InducedXModFromTrivialRange( X0, iota ); 
     elif IsInjective( iota ) then
-        Info( InfoXMod, 3, "iota is mono" );
-        IX := InclusionInducedXModByCopower( X0, iota, T );
+        Info( InfoXMod, 1, "iota is mono" );
+        IX := InjectiveInducedXMod( X0, iota, T );
     elif IsSurjective( iota ) then
-        Info( InfoXMod, 3, "iota is surj" );
+        Info( InfoXMod, 1, "iota is surj" );
         IX := SurjectiveInducedXMod( X0, iota );
     else  ## split in two ##
-        Info( InfoXMod, 3, "splitting into surjective and injective cases" );
+        Info( InfoXMod, 1, "splitting into surjective and injective cases" );
         iP := ImagesSource( iota );
         ires := GeneralRestrictedMapping( iota, P, iP );
         Info( InfoXMod, 3, "iota splits: ires =", ires );
-        X1 := SurjectiveInducedXMod( X0, ires );
+        X1 := InducedXMod( X0, ires );
         if ( InfoLevel( InfoXMod ) > 1 ) then
             Print( "surjective induced xmod:\n" );
             Display( X1 );
         fi;
         inc := InclusionMappingGroups( Q, iP );
-        IX := InclusionInducedXModByCopower( X1, inc, [ ] );
-    fi;
+        IX := InducedXMod( X1, inc );
+    fi; 
     if HasName( M ) then
         SetName( IX, Concatenation( "i*(", Name( M ), ")" ) );
     elif HasName( X0 ) then
@@ -226,6 +228,10 @@ function( X0, iota )
         Error( "mor fails to be a precrossed module morphism" ); 
     else 
         ok := IsXModMorphism( mor ); 
+    fi;
+    if HasMorphismOfInducedXMod( X0 ) then 
+        Info( InfoXMod, 1, "composing morphisms of induced xmods" ); 
+        mor := MorphismOfInducedXMod( X0 ) * mor; 
     fi;
     SetMorphismOfInducedXMod( IX, mor ); 
     return IX;
@@ -289,15 +295,19 @@ function( X0, iota )
     else 
         ok := IsXModMorphism( mor ); 
     fi;
+    if HasMorphismOfInducedXMod( X0 ) then 
+        Info( InfoXMod, 1, "composing morphisms of induced xmods" ); 
+        mor := MorphismOfInducedXMod( X0 ) * mor; 
+    fi;
     SetMorphismOfInducedXMod( IX, mor ); 
     return IX;
 end );
 
 ##############################################################################
 ##
-#M  InclusionInducedXModByCopower( <xmod>, <hom>, <trans> ) . . . induced xmod
+#M  InjectiveInducedXMod( <xmod>, <hom>, <trans> ) . . . induced xmod
 ##
-InstallMethod( InclusionInducedXModByCopower, 
+InstallMethod( InjectiveInducedXMod, 
     "for an xmod, an inclusion, and a transversal", true, 
     [ IsXMod, IsGroupHomomorphism, IsList ], 0,
 function( X0, iota, trans )
@@ -339,13 +349,10 @@ function( X0, iota, trans )
         return genFI[k][l]; 
     end; 
 
+    Info( InfoXMod, 2, "calling InjectiveInducedXMod" ); 
     M := Source( X0 );
     oM := Size( M );
     genM := GeneratorsOfGroup( M ); 
-    if ( oM = 1 ) then 
-        return InducedXModFromTrivialSource( X0, iota ); 
-    fi;
-    Info( InfoXMod, 2, "calling InclusionInducedXModByCopower" ); 
     Q := Range( iota );
     genQ := GeneratorsOfGroup( Q );
     oQ := Size( Q );
@@ -480,7 +487,7 @@ function( X0, iota, trans )
     od;
     Info( InfoXMod, 2, "qP = ", qP );
     Info( InfoXMod, 2, "qT = ", qT );
-    Info( InfoXMod, 3, "\nstarting InclusionInducedXModByCopower here" );
+    Info( InfoXMod, 3, "\nstarting InjectiveInducedXMod here" );
     xgM := ngN-ngM;
     ngI := ngN*indQP;
     nxI := xgM*indQP;
@@ -688,7 +695,8 @@ function( X0, iota, trans )
             DisplayCompositionSeries( series );
         fi; 
         ## (21/01/10, 06/07/10) changed this condition - also changed below 
-        if ( Size( series[1] ) < 2000 ) then 
+        if ( ( Size( series[1] ) < 2000 ) and 
+             ( Size( series[1] ) <> 1024 ) ) then 
             if ( RemInt( Size(series[1]), 128 ) <> 0 ) then 
                 idseries := List( series, g -> StructureDescription( g ) ); 
             else 
@@ -782,6 +790,10 @@ function( X0, iota, trans )
     mor := PreXModMorphism( X0, IX, morsrc, iota );
     if not IsXModMorphism( mor ) then
         Print( "mor: X0 -> IX  not an xmod morphism!\n" );
+    fi;
+    if HasMorphismOfInducedXMod( X0 ) then 
+        Info( InfoXMod, 1, "composing morphisms of induced xmods" ); 
+        mor := MorphismOfInducedXMod( X0 ) * mor; 
     fi;
     SetMorphismOfInducedXMod( IX, mor );
     return IX;

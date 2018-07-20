@@ -89,7 +89,7 @@ In the example below the automorphism crossed module <C>X8</C> has
 <M>M \cong C_2^3</M> and <M>P = PSL(3,2)</M> 
 is the automorphism group of <M>M</M>. 
 There are <M>6</M> equivalence classes and, for each <M>LX</M> calculated, 
-the <Ref Meth="Size" Label="for crossed modules"/> and 
+the <Ref Meth="Size" Label="for 2d-groups"/> and 
 <Ref Meth="StructureDescription" Label="for 2d-groups"/> are printed out. 
 </Description>
 </ManSection>

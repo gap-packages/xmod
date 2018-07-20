@@ -110,7 +110,7 @@ and introduced a special method for conjugation crossed modules.
 <Item>
 Substantial revisons made to <Ref Oper="XModByCentralExtension"/>; 
 <Ref Oper="NorrieXMod"/>; <Ref Oper="LueXMod"/>; <Ref Oper="ActorXMod"/>; 
-and <Ref Oper="InclusionInducedXModByCopower"/>. 
+and <Ref Oper="InclusionInducedXMod"/>. 
 </Item>
 <Item> 
 Version 2.010, of October 2007, was timed to coincide with the release 
@@ -121,7 +121,7 @@ and correct file protection codes. </Item>
 </Section> 
 
 
-<Section><Heading>Versions for &GAP; [4.5 .. 4.8]</Heading>
+<Section><Heading>Versions for &GAP; [4.5 .. 4.9]</Heading>
 
 Version 2.19, released on 9th June 2012, included the following changes:  
 <List>
@@ -177,20 +177,26 @@ was moved to the <Package>Utils</Package> package.
 </List> 
 </Subsection>
 
-<Subsection><Heading>Version 2.61</Heading>
+<Subsection><Heading>Versions 2.61 - 2.65</Heading>
 Major changes in names took place, with 
 <C>2dDomain, 2dGroup, 2dMapping</C>, etc. becoming 
 <C>2DimensionalDomain, 2DimensionalGroup, 2DimensionalMapping</C>, etc., 
 and similarly for 3-dimensional versions. 
 Also <C>HigherDimensionalDomain</C> and related categories, domains, 
 properties, attributes and operations were introduced. 
-At the same time, functions for cat2-groups were introduced by Alper Odabas.   
+At the same time, functions for cat2-groups were introduced by Alper Odabas. 
+<P/> 
+Version 2.64 contained additional material on crossed modules of groupoids. 
 </Subsection>
 
 
-<Subsection><Heading>Latest Version</Heading>
-The latest version conmtains additional material on crossed modules of groupoids. 
+<Subsection><Heading>Version 2.69</Heading>
+The latest version, released in July 2018, contains a substantial revision 
+of the functions to compute induced crossed modules.  
+In particular, when calling <C>InducedXMod(X0,iota);</C> 
+it is no longer required that <C>X0</C> be the inclusion of a normal subgroup. 
 </Subsection>
+
 </Section> 
 
 
