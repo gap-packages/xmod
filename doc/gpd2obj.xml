@@ -137,7 +137,7 @@ false
 <Index>ObjectList</Index> 
 The attributes of a precrossed module with objects include the standard 
 <C>Source</C>; <C>Range</C>; 
-<Ref Attr="Boundary" Label="for crossed modules of groups"/>; 
+<Ref Attr="Boundary" Label="for crossed modules"/>; 
 and <Ref Meth="XModAction" Label="for crossed modules of groups"/>
 as with precrossed modules of groups. 
 There is also <C>ObjectList</C>, 

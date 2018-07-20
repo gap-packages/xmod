@@ -489,24 +489,15 @@ end );
 ##
 InstallOtherMethod( IdGroup, "method for a 2d-domain", true, 
     [ Is2DimensionalDomain ], 0,
-function( dom ) 
-    local ok, src, ids, rng, idr; 
-    ok := true; 
-    src := Source( dom ); 
-    rng := Range( dom ); 
-    if not ( ( SMALL_AVAILABLE( Size( src ) ) = fail ) or 
-             ( SMALL_AVAILABLE( Size( rng ) ) = fail ) ) then 
-        return [ IdGroup( src ), IdGroup( rng ) ]; 
-    else 
-        return fail; 
-    fi; 
+function( dom )
+    return [ IdGroup( Source(dom) ), IdGroup( Range(dom) ) ]; 
 end ); 
 
 InstallOtherMethod( StructureDescription, "method for a 2d-domain", true, 
     [ Is2DimensionalDomain ], 0,
 function( dom )
-    return [ StructureDescription( Source( dom ) ), 
-             StructureDescription( Range( dom ) ) ]; 
+    return [ StructureDescription( Source(dom) ), 
+             StructureDescription( Range(dom) ) ]; 
 end ); 
 
 #############################################################################
@@ -1007,12 +998,10 @@ InstallMethod( XModByAbelianModule, "abelian module crossed module", true,
     [ IsAbelianModule ], 0,
 function( abmod )
 
-    local aut, act, z, X0;
+    local aut, act, z;
     act := AbelianModuleAction( abmod );
     z := MappingToOne( AbelianModuleGroup( abmod ), Source( act ) );
-    X0 := XModByBoundaryAndAction( z, act ); 
-    SetIsAbelianModule2DimensionalGroup( X0, true ); 
-    return X0;
+    return XModByBoundaryAndAction( z, act );
 end );
 
 #############################################################################
@@ -1285,11 +1274,6 @@ InstallGlobalFunction( XMod, function( arg )
     elif ( ( nargs = 3 ) and IsXMod( arg[1] ) 
            and IsList( arg[2] ) and IsBool( arg[3] ) ) then
         return SinglePiecePreXModWithObjects( arg[1], arg[2], arg[3] );
-
-    # direct product 
-    elif ( ( nargs = 2 ) and IsList( arg[1] ) 
-                         and IsPreXMod( arg[2] ) ) then 
-        return DirectProductOp( arg[1], arg[2] ); 
 
     # surjective homomorphism
     elif ( ( nargs = 1 ) and IsGroupHomomorphism( arg[1] )
