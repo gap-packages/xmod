@@ -1,6 +1,10 @@
 # CHANGES to the 'XMod' package
 
-## 2.68 -> 2.68dev (??/07/2018) 
+## 2.69 -> 2.69dev (30/07/2018) 
+
+ * (30/07/18) fixed issue #9 
+
+## 2.68 -> 2.69 (20/07/2018) 
 
  * (12/07/18) added operations InducedXModFromTrivialSource/Range  
  * (05/07/18) major revision of InclusionInducedXModByCopower 

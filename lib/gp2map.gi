@@ -95,7 +95,7 @@ function( L )
 
     local mor;
 
-    if not Is2DimensionalGroupMorphismData( L ) then
+    if not Is2DimensionalGroupMorphismData( L ) then 
         return fail; 
     fi;
     mor := rec();

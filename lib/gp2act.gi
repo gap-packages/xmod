@@ -21,9 +21,9 @@ function( XM )
           AR, genAR, a2pR, PAR, genPAR, p2aR, 
           D, genD, emS, emR, emgenPAS, emgenPAR, emAS, emAR, infoD, 
           P, num, autogens, as, eas, ar, ear, mor, ispre, ismor, 
-          genP, p2, p2i, newS, oldS, newR, oldR, imsrc, imrng, 
-          projS, projR, ePAS, egenR, ePAR;
+          genP, imsrc, imrng, projDS, projDR, projPS, projPR, ePAS, ePAR;
 
+    Info( InfoXMod, 1, "using standard AutomorphismPermGroup method" );
     S := Source( XM );
     genS := GeneratorsOfGroup( S );
     ngS := Length( genS );
@@ -32,7 +32,6 @@ function( XM )
     ngR := Length( genR );
     bdy := Boundary( XM );
     act := XModAction( XM );
-
     ker := Kernel( bdy );
     AS := AutomorphismGroup( S ); 
     genAS := GeneratorsOfGroup( AS );
@@ -58,7 +57,6 @@ function( XM )
     else 
         SetAutoGroupIsomorphism( PAR, p2aR );
     fi; 
-
     D := DirectProduct( PAS, PAR );
     genD := GeneratorsOfGroup( D );
     if ( HasName( PAS ) and HasName( PAR ) ) then
@@ -94,34 +92,29 @@ function( XM )
         od;
     od;
     genP := GeneratorsOfGroup( P );
-    p2 := infoD.perms[2];
-    p2i := p2^(-1);
-    newS := infoD.news[1];  oldS := infoD.olds[1];
-    newR := infoD.news[2];  oldR := infoD.olds[2];
-    imsrc := List( genP, g -> 
-                   MappingPermListList( oldS, List( newS, x->(x^g) ) ) );
-    imrng := List( genP, g -> 
-                   MappingPermListList( oldR, List( newR, x->(x^g)^p2i ) ) );
-    projS := GroupHomomorphismByImages( P, PAS, genP, imsrc );
-    projR := GroupHomomorphismByImages( P, PAR, genP, imrng );
-    ### 21/06/06 ### genPAS := GeneratorsOfGroup( PAS );
-    ePAS := GroupHomomorphismByImages( PAS, D, genPAS, genPAS );
-    ### 21/06/06 ### genPAR := GeneratorsOfGroup( PAR );
-    egenR := List( genPAR, p -> p^p2 );
-    ePAR := GroupHomomorphismByImages( PAR, D, genPAR, egenR );
+    projDS := Projection( D, 1 );
+    projDR := Projection( D, 2 );
+    imsrc := List( genP, g -> ImageElm( projDS, g ) ); 
+    imrng := List( genP, g -> ImageElm( projDR, g ) ); 
+    projPS := GroupHomomorphismByImages( P, PAS, genP, imsrc );
+    projPR := GroupHomomorphismByImages( P, PAR, genP, imrng );
     SetGeneratingAutomorphisms( XM, autogens );
     SetIsAutomorphismPermGroupOfXMod( P, true );
-    ### 22/06/06 ###
-    ### these two functions would better be  AS -> P
+    ### 22/06/06, revised 30/07/18 ###
+    ### these two functions could be changed as follows:  AS -> P 
+    ### imePAS := List( genAS, a -> ImageElm( emS, ImageElm( a2pS, a ) ) ); 
+    ### ePAS := GroupHomomorphismByImages( AS, D, genAS, imePAS ); 
+    ### imePAR := List( genAR, a -> ImageElm( emR, ImageElm( a2pR, a ) ) ); 
+    ### ePAR := GroupHomomorphismByImages( AR, D, genAR, imePAR ); 
+    ePAS := GroupHomomorphismByImages( PAS, D, genPAS, emgenPAS ); 
+    ePAR := GroupHomomorphismByImages( PAR, D, genPAR, emgenPAR ); 
     SetEmbedSourceAutos( P, ePAS );
     SetEmbedRangeAutos( P, ePAR );
-    SetSourceProjection( P, projS );
-    SetRangeProjection( P, projR );
+    SetSourceProjection( P, projPS );
+    SetRangeProjection( P, projPR );
     SetAutomorphismDomain( P, XM ); 
     return P;
 end );
-
-#######  special version for XModByNormalSubgroup, 23/06/06  #######
 
 InstallMethod( AutomorphismPermGroup, "automorphism perm group of xmod", 
     true, [ IsXMod and IsNormalSubgroup2DimensionalGroup ], 0, 
@@ -134,7 +127,6 @@ function( XM )
           imsrc, imrng, projS, projR, filtS, ePAS, egenR, ePAR;
 
     Info( InfoXMod, 1, "using special AutomorphismPermGroup method" );
-
     S := Source( XM );
     genS := GeneratorsOfGroup( S );
     R := Range( XM );
