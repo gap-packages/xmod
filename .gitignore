@@ -20,10 +20,15 @@
 /doc/*.toc
 /doc/manual.pdf
 /doc/bib.xml.bib
-/tst/error*
+/tst/apps.g
+/tst/der.g
 /tst/gp*.g
-/tst/iso*.g
+/tst/isoclinic.g
 /tst/util.g
+/xtst/c*.g 
+/xtst/induced.g
+/xtst/loops.g
+/xtst/others.g
 
 /tmp/
 /gh-pages/

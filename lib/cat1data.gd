@@ -2,7 +2,7 @@
 ##
 #W  cat1data.gd                GAP4 package `XMod'               Chris Wensley
 ##
-#Y  Copyright (C) 2001-2017, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2018, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 ##  These functions are used in the construction of the data file cat1data.g 
@@ -31,7 +31,9 @@ DeclareOperation( "MakeAllCat1DataGroups", [ IsPosInt, IsPosInt, IsPosInt ] );
 
 #############################################################################
 ##
-#R  IsEndomorphismClassObj( <obj> )
+#R  IsEndomorphismClassObj( <obj> )  . . . . classes of endomorphisms G -> G 
+#V  FamilyEndomorphismClass  . . . . . . . . family for endomorphism classes
+#T  EndomorphismClassType  . . . . . . . . . . type for endomorphism classes
 #P  IsEndomorphismClass( <cl> )
 #O  EndomorphismClassObj( <nat>, <iso>, <aut>, <conj> )
 #A  EndoClassAutoGroup( <class> )
@@ -45,6 +47,10 @@ DeclareOperation( "MakeAllCat1DataGroups", [ IsPosInt, IsPosInt, IsPosInt ] );
 DeclareRepresentation( "IsEndomorphismClassObj",
     IsObject and IsAttributeStoringRep, [ "EndoClassNaturalHom", 
     "EndoClassIsomorphism", "EndoClassAutoGroup",  "EndoClassConjugators" ] );
+BindGlobal( "FamilyEndomorphismClass", NewFamily( "FamilyEndomorphismClass", 
+    IsEndomorphismClassObj, CanEasilySortElements, CanEasilySortElements ) ); 
+BindGlobal( "EndomorphismClassType", 
+            NewType( FamilyEndomorphismClass, IsEndomorphismClassObj ) ); 
 DeclareProperty( "IsEndomorphismClass", IsObject );
 DeclareOperation( "EndomorphismClassObj",
  [IsGroupHomomorphism, IsGroupHomomorphism, IsGroupOfAutomorphisms, IsList] );
@@ -55,14 +61,14 @@ DeclareAttribute( "EndoClassConjugators", IsEndomorphismClassObj );
 
 #############################################################################
 ##
-#F  EndomorphismClasses( <G> )
+#O  EndomorphismClasses( <G>, <n> )
 #A  NontrivialEndomorphismClasses( <G> )
 #A  NonIntersectingEndomorphismClasses( <G> )
 #A  ZeroEndomorphismClass( <G> )
 #O  EndomorphismImages( <list> )
 #O  IdempotentImages( <list> )
 ##
-DeclareGlobalFunction( "EndomorphismClasses", [ IsGroup, IsInt ] );
+DeclareOperation( "EndomorphismClasses", [ IsGroup, IsInt ] );
 DeclareAttribute( "NontrivialEndomorphismClasses", IsGroup );
 DeclareAttribute( "NonIntersectingEndomorphismClasses", IsGroup );
 DeclareAttribute( "ZeroEndomorphismClass", IsGroup );

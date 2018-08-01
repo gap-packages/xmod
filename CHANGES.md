@@ -1,7 +1,8 @@
 # CHANGES to the 'XMod' package
 
-## 2.69 -> 2.69dev (30/07/2018) 
+## 2.69 -> 2.69dev (00/08/2018) 
 
+ * (01/08/18) fixed issue #24 and added xtst/cat1data.tst 
  * (30/07/18) fixed issue #9 
 
 ## 2.68 -> 2.69 (20/07/2018) 
