@@ -963,6 +963,9 @@ function( XM, str )
         Error( "Invalid derivation class" );
     fi;
     R := Range( XM );
+    if not IsPermGroup( R ) then 
+        Error( "BacktrackDerivations only implemented for perm groups" ); 
+    fi;
     stgR := StrongGeneratorsStabChain( StabChain( R ) );
     len := Length( stgR );
     subs := List( [1..len], i -> Subgroup( R, stgR{[1..i]} ) ); 
