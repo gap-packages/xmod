@@ -361,7 +361,7 @@ function( gp )
     iout := Filename( path, iname ); 
     PrintTo( iout, "GHBI := GroupHomomorphismByImages;\n" ); 
     AppendTo( iout, "idems := [ \n" ); 
-    Print( "Remember to edit the file ", rname, ",\n" ); 
+    Print( "Remember to edit the file ", rname, " in /lib,\n" ); 
     Print( "changing the first entry in ireps to TrivialSubgroup(gp).\n" ); 
     return nireps; 
 end ); 
@@ -496,7 +496,7 @@ end );
 
 ##############################################################################
 ##
-#M  AllCat1DataGroupsInParts . . . . . . . . . . . . . . . . . . . . . . . for a group
+#M  AllCat1DataGroupsInParts . . . . . . . . . . . . . . . . . . . for a group
 ##
 InstallMethod( AllCat1DataGroupsInParts, "construct all cat1-groups on a given group", 
     true, [ IsGroup, IsList, IsList, IsList, IsList ], 0,
@@ -677,7 +677,7 @@ end );
 
 ##############################################################################
 ##
-#M  MakeAllCat1DataGroups . . . . . . . . . . . . . . . . . for three positive integers
+#M  MakeAllCat1DataGroups . . . . . . . . . . . . for three positive integers
 ##
 InstallMethod( MakeAllCat1DataGroups, "all cat1-groups of a chosen order", 
     true, [ IsPosInt, IsPosInt, IsPosInt ], 0,
@@ -744,10 +744,6 @@ function( n, fst, lst )
     return all; 
 end );
 
-############################################################################## 
-##  the following was placed in removed.gi, then brought back here 27/09/12 ## 
-############################################################################## 
-
 ##############################################################################
 ##
 #M  EndomorphismClassObj( <nat>, <iso>, <aut>, <conj> ) . . . . . make a class
@@ -758,26 +754,32 @@ InstallMethod( EndomorphismClassObj,
   0,
 function( nat, iso, aut, conj )
 
-    local filter, fam, class;
+    local class;
 
-    fam := FamilyObj( [ nat, iso, aut, conj ] );
-    filter := IsEndomorphismClassObj;
     class := rec(); 
-    ObjectifyWithAttributes( class, NewType( fam, filter ), 
-      IsEndomorphismClass, true,
-      EndoClassNaturalHom, nat,
-      EndoClassIsomorphism, iso,
-      EndoClassAutoGroup, aut,
-      EndoClassConjugators, conj );
+    ObjectifyWithAttributes( class, EndomorphismClassType, 
+        IsEndomorphismClass, true,
+        EndoClassNaturalHom, nat,
+        EndoClassIsomorphism, iso,
+        EndoClassAutoGroup, aut,
+        EndoClassConjugators, conj );
     return class;
 end );
 
 #############################################################################
 ##
-#M  Display . . . . . . . . . . . . . . . . . . . . . for endomorphism classes
+#M  ViewObj . . . . . . . . . . . . . . . . . . . . for endomorphism classes
+#M  Display . . . . . . . . . . . . . . . . . . . . for endomorphism classes
 ##
+InstallMethod( ViewObj, "generic method for endomorphism classes",
+    true, [ IsEndomorphismClass ], 0,
+function( class )
+    Print( "endomorphism class for group ", 
+           Source( EndoClassNaturalHom( class ) ) ); 
+end ); 
+
 InstallMethod( Display, "generic method for endomorphism classes",
-    true, [ IsEndomorphismClassObj ], 0,
+    true, [ IsEndomorphismClass ], 0,
 function( class )
     Print( "class of group endomorphisms with\n" );
     Print( "natural hom: " );
@@ -947,27 +949,21 @@ end );
 
 ##############################################################################
 ##
-#F  EndomorphismClasses                       finds all homomorphisms  G -> G
+#M  EndomorphismClasses                       finds all homomorphisms  G -> G
 ##
-InstallGlobalFunction( EndomorphismClasses, 
-function( arg )
-    
-    local nargs, valid, G, case, classes, auts, ends, zero, disj;
+InstallMethod( EndomorphismClasses, "generic method for a group", true, 
+    [ IsGroup, IsPosInt ], 0, 
+function( G, case )
 
-    nargs := Length( arg );
-    G := arg[1];
-    valid := ( IsGroup( G ) and ( nargs = 2 ) and ( arg[2] in [0..3] ) );
+    local valid, classes, auts, ends, zero, disj;
+
+    valid := case in [1..3];
     if not valid then
-         Print( "\nUsage:  EndomorphismClasses( G [, case] );\n" );
+         Print( "\nUsage:  EndomorphismClasses( G, case );\n" );
          Print( " choose  case = 1  to include automorphisms & zero,\n" );
          Print( "default  case = 2  to exclude automorphisms & zero,\n" );
          Print( "         case = 3  when  N meet H  trivial,\n" );
          return fail;
-    fi;
-    if ( Length( arg ) = 1 ) then
-        case := 2;
-    else
-        case := arg[2];
     fi;
     ends := NontrivialEndomorphismClasses( G );
     if ( case = 1 ) then

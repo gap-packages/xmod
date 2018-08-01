@@ -9,8 +9,9 @@ LoadPackage( "xmod" );
 
 pkgname := "xmod"; 
 pkgdir := DirectoriesPackageLibrary( pkgname, "xtst" );
-testfiles := [ "allxmods.tst", "cat1mor.tst", "coprod.tst",   
-               "induced.tst",  "loops.tst",   "others.tst"  ];
+testfiles := [ "allxmods.tst", "cat1data.tst", "cat1mor.tst", 
+               "coprod.tst",   "induced.tst",  "loops.tst", 
+               "others.tst"  ];
 testresult := true;
 for ff in testfiles do
     fn := Filename( pkgdir, ff );
