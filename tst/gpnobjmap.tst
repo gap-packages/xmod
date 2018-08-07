@@ -155,7 +155,7 @@ gap> IsCat2Group( CC6 );
 true
 
 gap> xsCC6 := CrossedSquareOfCat2Group( CC6 );
-crossed square with:
+crossed square with crossed modules:
       up = [Group( () )->Group( [ (1,2) ] )]
     left = [Group( () )->Group( [ (), (3,4,5) ] )]
     down = [Group( [ (), (3,4,5) ] )->Group( () )]

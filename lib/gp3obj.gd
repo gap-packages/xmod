@@ -2,20 +2,11 @@
 ##
 ##  gp3obj.gd                 GAP4 package `XMod'                Chris Wensley
 ##                                                                Alper Odabas
-#Y  Copyright (C) 2001-2017, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2018, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file declares generic methods for (pre-)crossed squares and
 ##  (pre-)cat2-groups.
-
-#############################################################################
-##
-#R  IsPreCrossedSquareObj ( <obj> ) 
-##  A pre-crossed square is a square of pre-crossed modules 
-##
-DeclareRepresentation( "IsPreCrossedSquareObj", 
-    IsHigherDimensionalGroup and IsAttributeStoringRep,
-    [ "up2d", "down2d", "left2d", "right2d", "action", "pairing" ] );
 
 #############################################################################
 ##
@@ -26,53 +17,6 @@ DeclareRepresentation( "IsPreCrossedSquareObj",
 DeclareProperty( "IsPerm3DimensionalGroup", IsHigherDimensionalGroup );
 DeclareProperty( "IsFp3DimensionalGroup", IsHigherDimensionalGroup );
 DeclareProperty( "IsPc3DimensionalGroup", IsHigherDimensionalGroup );
-
-#############################################################################
-##
-#T  PreCrossedSquareObjType . . . . . . . . . . . .  type for crossed squares
-#T  PermPreCrossedSquareObjType . . . . . .  .  type for perm crossed squares
-#T  PcPreCrossedSquareObjType . . . . . . . . . . type for pc crossed squares
-## 
-BindGlobal( "PreCrossedSquareObjType", 
-            NewType( FamilyHigherDimensionalGroup, 
-                     IsPreCrossedSquareObj ) ); 
-BindGlobal( "PermPreCrossedSquareObjType", 
-            NewType( FamilyHigherDimensionalGroup, 
-                     IsPreCrossedSquareObj and IsPerm3DimensionalGroup ) ); 
-BindGlobal( "PcPreCrossedSquareObjType", 
-            NewType( FamilyHigherDimensionalGroup, 
-                     IsPreCrossedSquareObj and IsPc3DimensionalGroup ) ); 
-
-#############################################################################
-##
-#P  IsPreCrossedSquare( <PM> } 
-#P  IsPermPreCrossedSquare( <PM> ) 
-#P  IsFpPreCrossedSquare( <PM> ) 
-#P  IsPcPreCrossedSquare( <PM> }
-##
-DeclareProperty( "IsPreCrossedSquare", IsHigherDimensionalGroup );
-DeclareSynonym( "IsPermPreCrossedSquare", 
-    IsPreCrossedSquare and IsPerm3DimensionalGroup );
-DeclareSynonym( "IsFpPreCrossedSquare", 
-    IsPreCrossedSquare and IsFp3DimensionalGroup );
-DeclareSynonym( "IsPcPreCrossedSquare", 
-    IsPreCrossedSquare and IsPc3DimensionalGroup );
-
-#############################################################################
-##
-#P  IsCrossedSquare( <PM> ) 
-#P  IsPermCrossedSquare( <XS> } 
-#P  IsFpCrossedSquare( <XS> ) 
-#P  IsPcCrossedSquare( <XS> )
-##
-DeclareProperty( "IsCrossedSquare", IsHigherDimensionalGroup );
-InstallTrueMethod( IsPreCrossedSquare, IsCrossedSquare );
-DeclareSynonym( "IsPermCrossedSquare", 
-    IsCrossedSquare and IsPerm3DimensionalGroup );
-DeclareSynonym( "IsFpCrossedSquare", 
-    IsCrossedSquare and IsFp3DimensionalGroup );
-DeclareSynonym( "IsPcCrossedSquare", 
-    IsCrossedSquare and IsPc3DimensionalGroup );
 
 #############################################################################
 ##
@@ -108,149 +52,128 @@ DeclareOperation( "CrossedPairingByDerivations", [ IsXMod ] );
 
 #############################################################################
 ##
-#P  IsPreCat2Group( <PCG> ) 
-#P  IsPermPreCat2Group( <PCG> ) 
-#P  IsFpPreCat2Group( <PCG> ) 
-#P  IsPcPreCat2Group( <PCG> )
+#P  IsTrivialAction3DimensionalGroup( <obj> ) 
+#P  IsNormalSubgroup3DimensionalGroup( <obj> ) 
+#P  IsAutomorphismGroup3DimensionalGroup( <XS> ) 
+#P  IsCentralExtension3DimensionalGroup( <XS> ) 
+#P  IsAbelianSquare3DimensionalGroup( <obj> ) 
 ##
-DeclareProperty( "IsPreCat2Group", IsHigherDimensionalGroup );
-DeclareSynonym( "IsPermPreCat2Group", 
-    IsPreCat2Group and IsPerm3DimensionalGroup );
-DeclareSynonym( "IsFpPreCat2Group", IsPreCat2Group and IsFp3DimensionalGroup ); 
-DeclareSynonym( "IsPcPreCat2Group", IsPreCat2Group and IsPc3DimensionalGroup );
+DeclareProperty( "IsTrivialAction3DimensionalGroup", 
+    IsHigherDimensionalGroup );
+DeclareProperty( "IsNormalSubgroup3DimensionalGroup", 
+    IsHigherDimensionalGroup );
+DeclareProperty( "IsCentralExtension3DimensionalGroup", 
+    IsHigherDimensionalGroup );
+DeclareProperty( "IsAutomorphismGroup3DimensionalGroup", 
+    IsHigherDimensionalGroup );
+DeclareProperty( "IsAbelian3DimensionalGroup", 
+    IsHigherDimensionalGroup );
 
 #############################################################################
 ##
-#P  IsCat2Group( <C1G> ) 
-#P  IsPermCat2Group( <CG> ) 
-#P  IsFpCat2Group( <CG> ) 
-#P  IsPcCat2Group( <CG> )
-##
-DeclareProperty( "IsCat2Group", IsHigherDimensionalGroup );
-InstallTrueMethod( IsPreCat2Group, IsCat2Group );
-DeclareSynonym( "IsPermCat2Group", IsCat2Group and IsPerm3DimensionalGroup );
-DeclareSynonym( "IsFpCat2Group", IsCat2Group and IsFp3DimensionalGroup );
-DeclareSynonym( "IsPcCat2Group", IsCat2Group and IsPc3DimensionalGroup );
-
-#############################################################################
-##
-#O  PreCrossedSquareObj( <bdy>, <act> ) 
-#O  PreCat2Group0bj ( <arg> ) 
 #A  Up2DimensionalGroup( <PS> ) 
 #A  Down2DimensionalGroup ( <PS> ) 
 #A  Left2DimensionalGroup( <PS> ) 
 #A  Right2DimensionalGroup( <PS> ) 
+#A  Diagonal2DimensionalGroup( <PS> ) 
 #A  DiagonalAction( <PS> ) 
 #A  CrossedPairing( <PS> )
+#A  Transpose3DimensionalGroup( <PS> )
+#A  LeftRightMorphism( <PS> )
+#A  UpDownMorphism( <PS> )
 ##
-DeclareOperation( "PreCrossedSquareObj", 
-    [ IsPreXMod, IsPreXMod, IsPreXMod, IsPreXMod, IsObject, IsObject] );
 DeclareAttribute( "Up2DimensionalGroup", IsHigherDimensionalGroup );
 DeclareAttribute( "Left2DimensionalGroup", IsHigherDimensionalGroup );
 DeclareAttribute( "Down2DimensionalGroup", IsHigherDimensionalGroup );
 DeclareAttribute( "Right2DimensionalGroup", IsHigherDimensionalGroup );
+DeclareAttribute( "Diagonal2DimensionalGroup", IsHigherDimensionalGroup );
 DeclareAttribute( "DiagonalAction", IsHigherDimensionalGroup );
 DeclareAttribute( "CrossedPairing", IsHigherDimensionalGroup );
+DeclareAttribute( "Transpose3DimensionalGroup", IsHigherDimensionalGroup );
 DeclareAttribute( "LeftRightMorphism", IsHigherDimensionalGroup );
 DeclareAttribute( "UpDownMorphism", IsHigherDimensionalGroup ); 
 
 #############################################################################
 ##
-#F  CrossedSquare( <args> ) 
-#0  AsCrossedSquare( <arg> ) 
-#0  CrossedSquareByXMods( <up>, <left>, <down>, <right>, <action>, <pairing> ) 
-#0  CrossedSquareByNormalSubgroups( <P>, <N>, <M>, <L> )
-#A  ActorCrossedSquare( <xmod> )
-#A  Transpose3DimensionalGroup( <CrossedSquare> )
+#R  IsPreCrossedSquareObj ( <obj> ) 
+#T  PreCrossedSquareObjType . . . . . . . . . . . .  type for crossed squares
+#O  PreCrossedSquareObj( <bdy>, <act> ) 
+##  A pre-crossed square is a square of pre-crossed modules 
 ##
+DeclareRepresentation( "IsPreCrossedSquareObj", 
+    IsHigherDimensionalGroup and IsAttributeStoringRep,
+    [ "up2d", "left2d", "down2d", "right2d", "action", "pairing" ] );
+BindGlobal( "PreCrossedSquareObjType", 
+            NewType( FamilyHigherDimensionalGroup, IsPreCrossedSquareObj ) ); 
+DeclareOperation( "PreCrossedSquareObj", 
+    [ IsPreXMod, IsPreXMod, IsPreXMod, IsPreXMod, IsObject, IsObject] );
+
+#############################################################################
+##
+#P  IsPreCrossedSquare( <PM> } 
+#P  IsCrossedSquare( <PM> ) 
+##
+DeclareProperty( "IsPreCrossedSquare", IsHigherDimensionalGroup );
+DeclareProperty( "IsCrossedSquare", IsHigherDimensionalGroup );
+InstallTrueMethod( IsPreCrossedSquare, IsCrossedSquare );
+
+#############################################################################
+##
+#F  PreCrossedSquare( <args> ) 
+#F  CrossedSquare( <args> ) 
+#O  CrossedSquareByXMods( <up>, <left>, <down>, <right>, <action>, <pairing> ) 
+#O  CrossedSquareByNormalSubgroups( <P>, <N>, <M>, <L> )
+#A  ActorCrossedSquare( <xmod> )
+##
+DeclareGlobalFunction( "PreCrossedSquare" );
 DeclareGlobalFunction( "CrossedSquare" );
 DeclareOperation( "CrossedSquareByXMods", 
   [ IsXMod, IsXMod, IsXMod, IsXMod, IsGroupHomomorphism, IsCrossedPairing ] );
 DeclareOperation( "CrossedSquareByNormalSubgroups", 
     [ IsGroup, IsGroup, IsGroup, IsGroup ] );
 DeclareAttribute( "ActorCrossedSquare", IsXMod );
-DeclareAttribute( "Transpose3DimensionalGroup", IsHigherDimensionalGroup );
 
 #############################################################################
 ##
-#P  IsTrivialAction3DimensionalGroup( <obj> ) 
-#P  IsNormalSubgroup3DimensionalGroup( <obj> ) 
-#P  IsAutomorphismGroup3DimensionalGroup( <XS> ) 
-#P  IsAbelianSquare3DimensionalGroup( <obj> ) 
-#P  IsFreeCrossedSquare( <XS> )
+#R  IsPreCat2GroupObj ( <obj> ) 
+#T  PreCat2GroupObjType 
+#O  PreCat2GroupObj( <cat1gp>, <cat1gp> ) 
+##  A pre-cat2-group is a square of commjuting pre-cat1-groups 
 ##
-DeclareProperty( "IsTrivialAction3DimensionalGroup", IsHigherDimensionalGroup );
-DeclareProperty( "IsNormalSubgroup3DimensionalGroup", IsHigherDimensionalGroup );
-DeclareProperty( "IsCentralExtension3DimensionalGroup", IsHigherDimensionalGroup );
-DeclareProperty( "IsAutomorphismGroup3DimensionalGroup", IsHigherDimensionalGroup );
-DeclareProperty( "IsAbelianSquare3DimensionalGroup", IsHigherDimensionalGroup );
-DeclareProperty( "IsFreeCrossedSquare", IsPreCrossedSquareObj );
+DeclareRepresentation( "IsPreCat2GroupObj", 
+    IsHigherDimensionalGroup and IsAttributeStoringRep,
+    [ "up2d", "left2d", "down2d", "right2d" ] );
+BindGlobal( "PreCat2GroupObjType", 
+            NewType( FamilyHigherDimensionalGroup, IsPreCat2GroupObj ) ); 
+DeclareOperation( "PreCat2GroupObj", [ IsList] );
 
 #############################################################################
 ##
-#0  IsSubPreCrossedSquare( <obj> ) 
-#0  IsSubCrossedSquare( <obj> ) 
-#0  IsSubPreCat2Group( <obj> ) 
-#0  IsSubCat2Group( <obj> )
+#P  IsPreCat2Group( <PCG> ) 
+#P  IsCat2Group( <C1G> ) 
 ##
-DeclareOperation( "IsSubPreCrossedSquare", 
-    [ IsHigherDimensionalGroup, IsHigherDimensionalGroup ] );
-DeclareOperation( "IsSubCrossedSquare", 
-    [ IsHigherDimensionalGroup, IsHigherDimensionalGroup ] );
-DeclareOperation( "IsSubPreCat2Group", 
-    [ IsHigherDimensionalGroup, IsHigherDimensionalGroup ] );
-DeclareOperation( "IsSubCat2Group", 
-    [ IsHigherDimensionalGroup, IsHigherDimensionalGroup ] );
-
-##############################################################################
-##
-#0  SubPreCrossedSquare( <PM, Ssrc, Srng> ) 
-#0  SubCrossedSquare( <PM, Ssrc, Srng> ) 
-#0  SubPreCat2Group( <C>, <H> )
-##
-DeclareOperation( "SubPreCrossedSquare", 
-    [ IsPreCrossedSquare, IsGroup, IsGroup ] );
-DeclareOperation( "SubCrossedSquare", [ IsCrossedSquare, IsGroup, IsGroup ] );
-DeclareOperation( "SubPreCat2Group", [ IsPreCat2Group, IsGroup, IsGroup ] );
-DeclareOperation( "SubCat2Group", [ IsCat2Group, IsGroup, IsGroup ] );
-
-#############################################################################
-##
-#0  TrivialSubHigherDimensionalGroup( <obj> ) 
-#A  TrivialSubPreCrossedSquare( <obj> ) 
-#A  TrivialSubCrossedSquare( <obj> ) 
-#A  TrivialSubPreCat2Group( <obj> ) 
-#A  TrivialSubCat2Group( <obj> ) 
-#P  IsIdentityCat2Group( <C1G> )
-##
-DeclareOperation( "TrivialSubHigherDimensionalGroup", 
-    [ IsHigherDimensionalGroup ] );
-DeclareAttribute( "TrivialSubPreCrossedSquare", IsPreCrossedSquare );
-DeclareAttribute( "TrivialSubCrossedSquare", IsCrossedSquare );
-DeclareAttribute( "TrivialSubPreCat2Group", IsPreCat2Group );
-DeclareAttribute( "TrivialSubCat2Group", IsCat2Group );
-DeclareProperty( "IsIdentityCat2Group", IsCat2Group );
-
-#############################################################################
-##
-#A  ElementsRelationsForSemidirectProduct( <G> ) 
-##
-DeclareAttribute( "ElementsRelationsForSemidirectProduct", IsGroup );
+DeclareProperty( "IsPreCat2Group", IsHigherDimensionalGroup );
+DeclareProperty( "IsCat2Group", IsHigherDimensionalGroup );
+InstallTrueMethod( IsPreCat2Group, IsCat2Group );
 
 #############################################################################
 ##
 #F  PreCat2Group( <arg> ) 
-#0  PreCat2GroupByPreCat1Groups( <first>, <second> )
+#F  Cat2Group( <arg> }
+#O  PreCat2GroupByPreCat1Groups( <first>, <second> )
 ##
 DeclareGlobalFunction( "PreCat2Group" );
+DeclareGlobalFunction( "Cat2Group" );
 DeclareOperation( "PreCat2GroupByPreCat1Groups", 
     [ IsPreCat1Group, IsPreCat1Group ] );
 
 #############################################################################
+## 
+#?  this function should be got rid of a.s.a.p. 
 ##
-#F  Cat2Group( <arg> }
+#A  ElementsRelationsForSemidirectProduct( <G> ) 
 ##
-DeclareGlobalFunction( "Cat2Group" );
+DeclareAttribute( "ElementsRelationsForSemidirectProduct", IsGroup );
 
 #############################################################################
 ##
@@ -266,12 +189,56 @@ DeclareAttribute( "PreCat2GroupOfPreCrossedSquare", IsPreCrossedSquare );
 DeclareAttribute( "CrossedSquareOfCat2Group", IsCat2Group );
 DeclareAttribute( "Cat2GroupOfCrossedSquare", IsCrossedSquare );
 
+########################################################## 
+##                                                      ##
+##  NONE OF THE FOLLOWING HAVE BEEN IMPLEMENTED SO FAR  ## 
+##                                                      ## 
+########################################################## 
+
 #############################################################################
 ##
-#A  DirectProductHigherDimensionalInfo( <D> }
+#O  IsSubPreCrossedSquare( <obj> ) 
+#O  IsSubCrossedSquare( <obj> ) 
+#O  IsSubPreCat2Group( <obj> ) 
+#O  IsSubCat2Group( <obj> )
 ##
-DeclareAttribute( "DirectProductHigherDimensionalInfo", 
-     IsHigherDimensionalDomain, "mutable" );
+DeclareOperation( "IsSubPreCrossedSquare", 
+    [ IsHigherDimensionalGroup, IsHigherDimensionalGroup ] );
+DeclareOperation( "IsSubCrossedSquare", 
+    [ IsHigherDimensionalGroup, IsHigherDimensionalGroup ] );
+DeclareOperation( "IsSubPreCat2Group", 
+    [ IsHigherDimensionalGroup, IsHigherDimensionalGroup ] );
+DeclareOperation( "IsSubCat2Group", 
+    [ IsHigherDimensionalGroup, IsHigherDimensionalGroup ] );
+
+##############################################################################
+##
+#O  SubPreCrossedSquare( <PM, Ssrc, Srng> ) 
+#O  SubCrossedSquare( <PM, Ssrc, Srng> ) 
+#O  SubPreCat2Group( <C>, <H> )
+##
+DeclareOperation( "SubPreCrossedSquare", 
+    [ IsPreCrossedSquare, IsGroup, IsGroup ] );
+DeclareOperation( "SubCrossedSquare", [ IsCrossedSquare, IsGroup, IsGroup ] );
+DeclareOperation( "SubPreCat2Group", [ IsPreCat2Group, IsGroup, IsGroup ] );
+DeclareOperation( "SubCat2Group", [ IsCat2Group, IsGroup, IsGroup ] );
+
+#############################################################################
+##
+#O  TrivialSubHigherDimensionalGroup( <obj> ) 
+#A  TrivialSubPreCrossedSquare( <obj> ) 
+#A  TrivialSubCrossedSquare( <obj> ) 
+#A  TrivialSubPreCat2Group( <obj> ) 
+#A  TrivialSubCat2Group( <obj> ) 
+#P  IsIdentityCat2Group( <C1G> )
+##
+DeclareOperation( "TrivialSubHigherDimensionalGroup", 
+    [ IsHigherDimensionalGroup ] );
+DeclareAttribute( "TrivialSubPreCrossedSquare", IsPreCrossedSquare );
+DeclareAttribute( "TrivialSubCrossedSquare", IsCrossedSquare );
+DeclareAttribute( "TrivialSubPreCat2Group", IsPreCat2Group );
+DeclareAttribute( "TrivialSubCat2Group", IsCat2Group );
+DeclareProperty( "IsIdentityCat2Group", IsCat2Group );
 
 #############################################################################
 ##

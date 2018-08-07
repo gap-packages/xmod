@@ -115,6 +115,13 @@ DeclareOperation( "IsSubHigherDimensionalDomain",
 DeclareOperation( "SubHigherDimensionalDomain", 
     [ IsHigherDimensionalDomain, IsList ] );
 
+#############################################################################
+##
+#A  DirectProductHigherDimensionalInfo( <D> }
+##
+DeclareAttribute( "DirectProductHigherDimensionalInfo", 
+     IsHigherDimensionalDomain, "mutable" );
+
 
 #########################  2 DIMENSIONAL DOMAINS  ########################### 
 

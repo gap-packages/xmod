@@ -16,26 +16,28 @@
 ##
 InstallMethod( IsPerm3DimensionalGroup, "generic method for 3d-group objects",
     true, [ IsHigherDimensionalGroup ], 0,
-function (obj)
+function( obj )
     return ( IsPermGroup( Up2DimensionalGroup(obj) ) 
-             and IsPermGroup( Range(obj) )
              and IsPermGroup( Left2DimensionalGroup(obj) ) 
+             and IsPermGroup( Down2DimensionalGroup(obj) ) 
              and IsPermGroup( Right2DimensionalGroup(obj) ) );
 end );
 
 InstallMethod( IsFp3DimensionalGroup, "generic method for 3d-group objects",
     true, [ IsHigherDimensionalGroup ], 0,
-function (obj)
-    return ( IsFpGroup( Up2DimensionalGroup(obj) ) and IsFpGroup( Range(obj) )
+function( obj )
+    return ( IsFpGroup( Up2DimensionalGroup(obj) ) 
              and IsFpGroup( Left2DimensionalGroup(obj) ) 
+             and IsFpGroup( Down2DimensionalGroup(obj) ) 
              and IsFpGroup( Right2DimensionalGroup(obj) ) );
 end );
 
 InstallMethod( IsPc3DimensionalGroup, "generic method for 3d-group obj ects",
     true, [ IsHigherDimensionalGroup ], 0,
-function (obj)
-    return ( IsPcGroup( Up2DimensionalGroup(obj) ) and IsPcGroup( Range(obj) )
+function( obj )
+    return ( IsPcGroup( Up2DimensionalGroup(obj) ) 
              and IsPcGroup( Left2DimensionalGroup(obj) ) 
+             and IsPcGroup( Down2DimensionalGroup(obj) ) 
              and IsPcGroup( Right2DimensionalGroup(obj) ) );
 end );
 
@@ -74,10 +76,19 @@ function( h )
     Print( "crossed pairing: ", Source(map), " -> ", Range(map), "\n" ); 
 end ); 
 
+#############################################################################
+##
+#M  ImageElmCrossedPairing( <map>, <elm> )  . . . . . . . for crossed pairing
+##
+InstallMethod( ImageElmCrossedPairing, "for crossed pairing", true, 
+    [ IsCrossedPairing, IsList ], 0,
+function ( xp, elm ) 
+    return ImageElm( CrossedPairingMap( xp ), elm );
+end );
+
 ##############################################################################
 ##
-#M  CrossedPairingByNormalSubgroups( <grp>, <grp>, <grp> ) 
-##                                                 . . . make a CrossedPairing
+#M  CrossedPairingByNormalSubgroups( <grp>, <grp>, <grp> ) . . . make an xpair
 ##
 InstallMethod( CrossedPairingByNormalSubgroups, 
     "for the intersection of two normal subgroups", true,
@@ -119,16 +130,6 @@ function( X0 )
                    return DerivationImage( chi, r ); 
                end );
     return CrossedPairingObj( [RX,WX], SX, map );
-end );
-
-#############################################################################
-##
-#M  ImageElmCrossedPairing( <map>, <elm> )  . . . . . . . for crossed pairing
-##
-InstallMethod( ImageElmCrossedPairing, "for crossed pairing", true, 
-    [ IsCrossedPairing, IsList ], 0,
-function ( xp, elm ) 
-    return ImageElm( CrossedPairingMap( xp ), elm );
 end );
 
 #############################################################################
@@ -218,78 +219,28 @@ function( u, l, d, r, a, p )
     if not IsPreCrossedSquare( PS ) then
         Info( InfoXMod, 1, "Warning: not a pre-crossed square." );
     fi;
-    # ok := IsCrossedSquare( PS );
-    # name:= Name( PS );
     return PS;
 end );
 
 #############################################################################
 ##
-#M  IsPreCat2Group . . . . . . . . . . .  check that this is a pre-cat2-group
-##
-InstallMethod( IsPreCat2Group, "generic method for a pre-cat2-group",
-    true, [ IsHigherDimensionalGroup ], 0,
-function( P )
-
-    local u, d, h1, t1, h2, t2, h1h2, h2h1, t1t2, t2t1, h1t2, 
-           t2h1, h2t1, t1h2, G, gensrc, x, y, z;
-
-    if not ( IsPreCatnObj( P )  ) then
-        return false;
-    fi;
-    
-    if ( IsPreCatnGroup( P ) and ( HigherDimension( P ) = 3 )  ) then
-        return true;
-    else 
-        return false;
-    fi;
-end );
-
-#############################################################################
-##
-#M  IsCat2Group . . . . . . . . . . . . check that the object is a cat2-group
-##
-InstallMethod( IsCat2Group, "generic method for a cat2-group",
-    true, [ IsHigherDimensionalGroup ], 0,
-function( P )
-
-    local u, d;
-
-    if not ( HigherDimension( P ) = 3 ) then 
-        return false; 
-    fi;
-    if (  IsCatnGroup( P ) ) then
-        return true;
-    fi;        
-    
-    if not ( HasIsPreCat2Group(P) and IsPreCat2Group(P) ) then 
-        return false; 
-    elif ( HasIsPreCrossedSquare(P) and IsPreCrossedSquare(P) ) then 
-        return false; 
-    else 
-        Print( "no method for checking IsCat2Group is available so far\n" );  
-    fi;
-end );
-
-#############################################################################
-##
-#F  CrossedSquare( <up>, <left>, <down>, <right>, <action>, <pairing> ) 
+#F  (Pre)CrossedSquare( <up>, <left>, <down>, <right>, <action>, <pairing> ) 
 ##      . . . . . . crossed square from xmods
-#F  CrossedSquare( <P>, <N>, <M>, <L> )  
+#F  (Pre)CrossedSquare( <P>, <N>, <M>, <L> )  
 ##      . . . . . . crossed square normal subgroups
-#F  CrossedSquare( <xmod> )                                                 
+#F  (Pre)CrossedSquare( <xmod> )                                                 
 ##      . . . . . . actor crossed square
-#F  CrossedSquare( <cat2-group> )                                            
-##      . . . . . . crossed square from cat2-group
+#F  (Pre)CrossedSquare( <(pre)cat2-group> )                                            
+##      . . . . . . crossed square from (pre)cat2-group
 ##
-InstallGlobalFunction( CrossedSquare, function( arg )
+InstallGlobalFunction( PreCrossedSquare, function( arg )
 
     local nargs, XS, ok;
 
     nargs := Length( arg );
     if ( nargs = 1 ) then
         if ( IsHigherDimensionalGroup( arg[1] ) ) then
-            XS := CrossedSquareOfCat2Group( arg[1] );
+            XS := PreCrossedSquareOfPreCat2Group( arg[1] );
         elif  IsXMod( arg[1] )   then
             XS := ActorCrossedSquare( arg[1] );
         fi;
@@ -301,79 +252,58 @@ InstallGlobalFunction( CrossedSquare, function( arg )
         Print( "standard usage: CrossedSquare( <up>, <left>, <down>, <right>, <action>, <pairing> );\n" );
         Print( "            or: CrossedSquare( <P>, <N>, <M>, <L> );\n" );
         Print( "            or: CrossedSquare( <xmod> );\n" );
-        Print( "            or: CrossedSquare( <cat2-group> );\n" );
+        Print( "            or: PreCrossedSquare( <pre-cat2-group> );\n" );
         return fail;
     fi;
-    ok := IsCrossedSquare( XS );
-    if ok then
+    ok := IsPreCrossedSquare( XS );
+    if ok then 
+        ok := IsCrossedSquare( XS ); 
         return XS;
     else
         return fail;
     fi;
 end );
 
-#############################################################################
-##
-#F  Cat2Group( <size>, <gpnum>, <num> )     cat2-group from data in CAT2_LIST
-#F  Cat2Group( C1G1, C1G2 )                 cat2-group from two cat1-groups
-#F  Cat2Group( XS )                         cat2-group from crossed square
-##
-InstallGlobalFunction( Cat2Group, function( arg )
+InstallGlobalFunction( CrossedSquare, function( arg )
 
-    local nargs, C1G1, C1G2, C2G, ok;
+    local nargs, XS, ok;
 
-    nargs := Length( arg );
-    if ( ( nargs < 1 ) or ( nargs > 3 ) ) then
-        Print( "standard usage: Cat2Group( cat1, cat1 );\n" );
-        Print( "            or: Cat2Group( size, gpnum, num );\n" );
-        Print( "            or: Cat2Group( XS );\n" );
+    if ( nargs = 1 ) then 
+        XS := PreCrossedSquare( arg[1] ); 
+    elif ( nargs = 4 ) then 
+        XS := PreCrossedSquare( arg[1], arg[2], arg[3], arg[4] ); 
+    elif ( nargs = 6 ) then 
+        XS := PreCrossedSquare(arg[1], arg[2], arg[3], arg[4], arg[5], arg[6]); 
+    else 
+        Print( "standard usage: CrossedSquare( <up>, <left>, <down>, <right>, <action>, <pairing> );\n" );
+        Print( "            or: CrossedSquare( <P>, <N>, <M>, <L> );\n" );
+        Print( "            or: CrossedSquare( <xmod> );\n" );
+        Print( "            or: PreCrossedSquare( <pre-cat2-group> );\n" );
         return fail;
-    elif not IsInt( arg[1] ) then
-        if ( nargs = 1 ) then 
-            if not IsCrossedSquare( arg[1] ) then 
-                Error( "argument is not a crossed square" ); 
-            fi; 
-            C2G := Cat2GroupOfCrossedSquare( arg[1] );
-        elif ( nargs = 2 ) then 
-            if not IsCat1Group( arg[1] ) and IsCat1Group( arg[2] ) then 
-                Error( "the two argumewnts are not cat1-groups" ); 
-            fi; 
-            C2G := PreCatnObj( [ arg[1], arg[2] ] ); 
-            if ( C2G = fail ) then 
-                Error( "C2G fails to be a PreCatnObj" ); 
-            fi;
-        fi;
-        ok := IsCatnGroup( C2G );
-        if ok then
-            return C2G;
-        else
-            return fail;
-        fi;
-    else   
-        Print( "Cat2Select is not yet implemented\n" );
+    fi;
+    if ( XS = fail ) then 
+        return fail; 
+    else 
+        ok := IsCrossedSquare( XS ); 
+        if ( ok = fail ) then 
+            return fail; 
+        else 
+            return XS; 
+        fi; 
     fi;
 end );
 
 ##############################################################################
 ##
-#M  LeftRightMorphism . . . . . . . . . . . . . . . . for a precrossed square
-#M  UpDownMorphism . . . . . . . . . . . . . . . . . for a precrossed square
+#M  CrossedSquareByXMods . . . . crossed square from 4 xmods + action & xpair
 ##
-InstallMethod( LeftRightMorphism, "for a precrossed square", true,
-    [ IsPreCrossedSquare ], 0,
-function( s )
-    return XModMorphismByHoms( 
-        Left2DimensionalGroup(s), Right2DimensionalGroup(s), 
-        Boundary( Up2DimensionalGroup(s) ), 
-        Boundary( Down2DimensionalGroup(s) ) ); 
-end );
+InstallMethod( CrossedSquareByXMods, "default crossed square", true, 
+    [ IsXMod, IsXMod, IsXMod, IsXMod, IsGroupHomomorphism, IsCrossedPairing ], 
+    0,
+function( top, left, down, right, action, xpair )
 
-InstallMethod( UpDownMorphism, "for a precrossed square", true,
-    [ IsPreCrossedSquare ], 0,
-function( s )
-    return XModMorphismByHoms( Up2DimensionalGroup(s), Down2DimensionalGroup(s), 
-           Boundary( Left2DimensionalGroup(s) ), 
-           Boundary( Right2DimensionalGroup(s) ) ); 
+    Error( "this operation is not yet implemented" ); 
+    return fail;
 end );
 
 ##############################################################################
@@ -390,11 +320,9 @@ function( P, N, M, L )
              and IsNormal( M, L ) and IsNormal( N, L ) ) then
         return fail;
     fi;
-    if not ( L = Intersection( M, N ) ) then 
-        Print( "Warning: expecting L = Intersection( M, N )\n" );
-    fi;
-    if ( not HasName(L) and HasName(M) and HasName(N) ) then
-        SetName( L, Concatenation ( "(", Name(M), "^", Name(N), ")" ) );
+    if not ( IsSubgroup( Intersection(M,N), L ) 
+         and IsSubgroup( L, CommutatorSubgroup(M,N) ) ) then 
+        Error( "require CommutatorSubgroup(M,N) <= L <= Intersection(M,N)" );
     fi;
     u := XModByNormalSubgroup( N, L );
     l := XModByNormalSubgroup( M, L );
@@ -443,64 +371,43 @@ function( X0 )
     return XS;
 end );
 
-##############################################################################
-##
-#M  Transpose3DimensionalGroup . . . . . . . the transpose of a crossed square
-##
-InstallMethod( Transpose3DimensionalGroup, "transposed crossed square", true, 
-    [ IsCrossedSquare ], 0,
-function( XS )
-
-    local xpS, NM, L, map, xpT, XT;
-
-    xpS := CrossedPairing( XS );
-    NM := Reversed( Source( xpS ) );
-    L := Range( xpS );
-    map := Mapping2ArgumentsByFunction( NM, L, 
-        function(c) 
-            return ImageElmCrossedPairing( xpS, Reversed(c) )^(-1); 
-        end );
-    xpT := CrossedPairingObj( NM, L, map );
-    XT := PreCrossedSquareObj( Left2DimensionalGroup(XS), 
-              Up2DimensionalGroup(XS), Right2DimensionalGroup(XS), 
-              Down2DimensionalGroup(XS), DiagonalAction(XS), xpT );
-    SetIsCrossedSquare( XT, true );
-    return XT;
-end );    
-
 #############################################################################
 ##
 #M  Name . . . . . . . . . . . . . . . . . . . . . . for a pre-crossed square
 ##
 InstallMethod( Name, "method for a pre-crossed square", true, 
-    [ IsPreCrossedSquare ], 0,
+    [ IsHigherDimensionalGroup ], 0,
 function( PS )
 
     local nul, nur, ndl, ndr, name, mor;
 
-    if HasName( Source( Up2DimensionalGroup( PS ) ) ) then
-        nul := Name( Source( Up2DimensionalGroup( PS ) ) );
-    else
-        nul := "..";
+    if not ( HigherDimension( PS ) = 3 ) then 
+        TryNextMethod(); 
+    else 
+        if HasName( Source( Up2DimensionalGroup( PS ) ) ) then
+            nul := Name( Source( Up2DimensionalGroup( PS ) ) );
+        else
+            nul := "..";
+        fi;
+        if HasName( Range( Up2DimensionalGroup( PS ) ) ) then
+            nur := Name( Range( Up2DimensionalGroup( PS ) ) );
+        else
+            nur := "..";
+        fi;
+        if HasName( Source( Down2DimensionalGroup( PS ) ) ) then
+            ndl := Name( Source( Down2DimensionalGroup( PS ) ) );
+        else
+            ndl := "..";
+        fi;
+        if HasName( Range( Down2DimensionalGroup( PS ) ) ) then
+            ndr := Name( Range( Down2DimensionalGroup( PS ) ) );
+        else
+            ndr := "..";
+        fi;
+        name := Concatenation( "[", nul, "->", nur, ",", ndl, "->", ndr, "]" );
+        SetName( PS, name );
+        return name;
     fi;
-    if HasName( Range( Up2DimensionalGroup( PS ) ) ) then
-        nur := Name( Range( Up2DimensionalGroup( PS ) ) );
-    else
-        nur := "..";
-    fi;
-    if HasName( Source( Down2DimensionalGroup( PS ) ) ) then
-        ndl := Name( Source( Down2DimensionalGroup( PS ) ) );
-    else
-        ndl := "..";
-    fi;
-    if HasName( Range( Down2DimensionalGroup( PS ) ) ) then
-        ndr := Name( Range( Down2DimensionalGroup( PS ) ) );
-    else
-        ndr := "..";
-    fi;
-    name := Concatenation( "[", nul, "->", nur, ",", ndl, "->", ndr, "]" );
-    SetName( PS, name );
-    return name;
 end );
 
 ##############################################################################
@@ -508,14 +415,19 @@ end );
 #M  \=( <dom1>, <dom2> ) . . . . . . . . . . test if two 3d-objects are equal
 ##
 InstallMethod( \=,
-    "generic method for two 3d-domain",
-    IsIdenticalObj, [ IsPreCrossedSquare, IsPreCrossedSquare ], 0,
-function ( dom1, dom2 )
+    "generic method for two 3d-domains",
+    IsIdenticalObj, [ IsHigherDimensionalGroup, IsHigherDimensionalGroup ], 0,
+function ( dom1, dom2 ) 
+    if not ( ( HigherDimension( dom1 ) = 3 ) 
+           and ( HigherDimension( dom2 ) = 3 ) ) then 
+        TryNextMethod(); 
+    else 
         return( 
-            ( Up2DimensionalGroup( dom1 ) = Up2DimensionalGroup( dom2 ) )
-        and ( Down2DimensionalGroup( dom1 ) = Down2DimensionalGroup( dom2 ) ) 
-        and ( Right2DimensionalGroup( dom1 ) = Right2DimensionalGroup( dom2 ) ) 
-        and ( Left2DimensionalGroup( dom1 ) = Left2DimensionalGroup( dom2 ) ) );
+            ( Up2DimensionalGroup(dom1) = Up2DimensionalGroup(dom2) )
+        and ( Left2DimensionalGroup(dom1) = Left2DimensionalGroup(dom2) ) 
+        and ( Down2DimensionalGroup(dom1) = Down2DimensionalGroup(dom2) ) 
+        and ( Right2DimensionalGroup(dom1) = Right2DimensionalGroup(dom2) ) ); 
+    fi;
 end );
 
 #############################################################################
@@ -585,9 +497,9 @@ function( g3d )
         else 
             if ispsq then 
                 if ( HasIsCrossedSquare(g3d) and IsCrossedSquare(g3d) ) then 
-                    Print( "crossed square with:\n" ); 
+                    Print( "crossed square with crossed modules:\n" ); 
                 else 
-                    Print( "pre-crossed square with:\n" ); 
+                    Print( "pre-crossed square with pre-crossed modules:\n" ); 
                 fi; 
             fi;
             Print( "      up = ",    Up2DimensionalGroup( g3d ), "\n" );
@@ -653,7 +565,7 @@ function( g3d )
         Print( " ]\n" );
     else 
         if ispsq then 
-        Print( "(pre-)crossed square with:\n" ); 
+        Print( "(pre-)crossed square with (pre-)crossed modules:\n" ); 
         Print( "      up = ",    Up2DimensionalGroup( g3d ), "\n" );
         Print( "    left = ",  Left2DimensionalGroup( g3d ), "\n" );
         Print( "    down = ",  Down2DimensionalGroup( g3d ), "\n" );
@@ -661,6 +573,221 @@ function( g3d )
         fi; 
     fi; 
 end );
+
+#############################################################################
+##
+#M  IsPreCat2Group . . . . . . . . . . .  check that this is a pre-cat2-group
+#M  IsCat2Group . . . . . . . . . . . . check that the object is a cat2-group
+##
+InstallMethod( IsPreCat2Group, "generic method for a pre-cat2-group",
+    true, [ IsHigherDimensionalGroup ], 0,
+function( P )
+
+    local u, d, h1, t1, h2, t2, h1h2, h2h1, t1t2, t2t1, h1t2, 
+           t2h1, h2t1, t1h2, G, gensrc, x, y, z;
+
+    if not ( IsPreCatnObj( P )  ) then
+        return false;
+    fi;
+    if ( IsPreCatnGroup( P ) and ( HigherDimension( P ) = 3 )  ) then
+        return true;
+    else 
+        return false;
+    fi;
+end );
+
+InstallMethod( IsCat2Group, "generic method for a cat2-group",
+    true, [ IsHigherDimensionalGroup ], 0,
+function( P )
+    return ( HigherDimension( P ) = 3 ) 
+        and IsCat1Group( Up2DimensionalGroup( P ) )  
+        and IsCat1Group( Left2DimensionalGroup( P ) )  
+        and IsCat1Group( Down2DimensionalGroup( P ) )  
+        and IsCat1Group( Right2DimensionalGroup( P ) );  
+end ); 
+
+##############################################################################
+##
+#M  PreCat2GroupObj ( [<up>,<down>,<left>,<right>(,<diag>)] ) 
+##
+InstallMethod( PreCat2GroupObj, "for a list of pre-cat1-groups", true,
+    [ IsList ], 0,
+function( L )
+
+    local len, d, PC, ok;
+
+    len := Length( L ); 
+    if not ( len in [4,5] ) then 
+        Error( "there should be 4 or 5 pre-cat1-groups in the list L" ); 
+    fi; 
+    if ( len = 4 ) then 
+        Error( "add code here to construct the diagonal d" ); 
+    fi;
+    d := L[5]; 
+    PC := rec();
+    ObjectifyWithAttributes( PC, PreCat2GroupObjType, 
+      Up2DimensionalGroup, L[1], 
+      Left2DimensionalGroup, L[2],
+      Down2DimensionalGroup, L[3],
+      Right2DimensionalGroup, L[4],
+      Diagonal2DimensionalGroup, d, 
+      GeneratingCat1Groups, [ L[1], L[2] ],
+      HigherDimension, 3, 
+      IsHigherDimensionalGroup, true, 
+      IsPreCat2Group, true, 
+      IsPreCatnGroup, true );
+    ok := IsCat2Group( PC );
+    return PC;
+end );
+
+#############################################################################
+##
+#F  (Pre)Cat2Group( C1G1, C1G2 )         cat2-group from two (pre)cat1-groups
+#F  (Pre)Cat2Group( XS )                 cat2-group from (pre)crossed square
+##
+InstallGlobalFunction( PreCat2Group, function( arg )
+
+    local nargs, C1G1, C1G2, C2G, ok;
+
+    nargs := Length( arg );
+    if ( ( nargs < 1 ) or ( nargs > 2 ) ) then
+        Print( "standard usage: (Pre)Cat2Group( cat1, cat1 );\n" );
+        Print( "            or: (Pre)Cat2Group( XS );\n" );
+        return fail;
+    fi; 
+    if ( nargs = 1 ) then 
+        if not IsPreCrossedSquare( arg[1] ) then 
+            Error( "argument is not a pre-crossed square" ); 
+        fi; 
+        C2G := PreCat2GroupOfPreCrossedSquare( arg[1] );
+    else 
+        if not IsPreCat1Group( arg[1] ) and IsPreCat1Group( arg[2] ) then 
+            Error( "the two arguments are not pre-cat1-groups" ); 
+        fi; 
+        C2G := PreCat2GroupByPreCat1Groups( arg[1], arg[2] ); 
+        if ( C2G = fail ) then 
+            Error( "C2G fails to be a PreCat2Group" ); 
+        fi;
+    fi;
+    ok := IsPreCat2Group( C2G );
+    if ok then 
+        ok := IsCat2Group( C2G ); 
+        return C2G;
+    else
+        return fail;
+    fi;
+end );
+
+InstallGlobalFunction( Cat2Group, function( arg )
+
+    local nargs, arg2, C2G, ok; 
+
+    nargs := Length( arg );
+    if ( nargs = 1 ) then 
+        C2G := PreCat2Group( arg[1] ); 
+    elif ( nargs = 2 ) then 
+        C2G := PreCat2Group( arg[1], arg[2] ); 
+    else 
+        Print( "standard usage: (Pre)Cat2Group( cat1, cat1 );\n" );
+        Print( "            or: (Pre)Cat2Group( XS );\n" );
+        return fail; 
+    fi;
+    ok := IsCat2Group( C2G ); 
+    if ok then 
+        return C2G; 
+    else 
+        return fail; 
+    fi; 
+end ); 
+
+##############################################################################
+##
+#M  PreCat2GroupByPreCat1Groups . . . . . . . . . . . for two pre-cat1-groups
+## 
+InstallMethod( PreCat2GroupByPreCat1Groups, "for two pre-cat1-groups", true,
+    [ IsPreCat1Group, IsPreCat1Group ], 0,
+function( top, left )
+
+    local G, genG, R1, R2, genR1, genR2, ddt1, ddh1, dde1, ddt2, ddh2, dde2, 
+          tau1, tau2, im, dt1, dh1, de1, dt2, dh2, de2,  
+          P, genP, isoP, invP, down, right, dt0, dh0, de0, diag, PC2, ok; 
+
+    G := Source( top ); 
+    genG := GeneratorsOfGroup( G ); 
+    R1 := Range( top ); 
+    genR1 := GeneratorsOfGroup( R1 ); 
+    if not ( G = Source( left ) ) then 
+        Error( "the two cat1-groups should have the same source" ); 
+    fi; 
+    R2 := Range( left );
+    genR2 := GeneratorsOfGroup( R2 );
+    ddt1 := TailMap( top ); 
+    ddh1 := HeadMap( top ); 
+    dde1 := RangeEmbedding( top ); 
+    ddt2 := TailMap( left ); 
+    ddh2 := HeadMap( left ); 
+    dde2 := RangeEmbedding( left ); 
+    ## check that the 1-maps commute with the 2-maps 
+    if not ( ( MappingGeneratorsImages( ddt1*dde1*ddt2*dde2 ) 
+               = MappingGeneratorsImages( ddt2*dde2*ddt1*dde1 ) ) 
+         and ( MappingGeneratorsImages( ddh1*dde1*ddh2*dde2 ) 
+               = MappingGeneratorsImages( ddh2*dde2*ddh1*dde1 ) ) 
+         and ( MappingGeneratorsImages( ddt1*dde1*ddh2*dde2 ) 
+               = MappingGeneratorsImages( ddh2*dde2*ddt1*dde1 ) ) 
+         and ( MappingGeneratorsImages( ddh1*dde1*ddt2*dde2 ) 
+               = MappingGeneratorsImages( ddt2*dde2*ddh1*dde1 ) ) ) then 
+        Info( InfoXMod, 1, "1-maps do not commute with the 2-maps" ); 
+        return fail; 
+    fi; 
+    Info( InfoXMod, 1, "1-maps do commute with the 2-maps" ); 
+    ## more checks? 
+    im := List( genG, g -> ImageElm( ddt1 * dde1, g ) ); 
+    tau1 := GroupHomomorphismByImages( G, G, genG, im ); 
+    im := List( genG, g -> ImageElm( ddt2 * dde2, g ) ); 
+    tau2 := GroupHomomorphismByImages( G, G, genG, im ); 
+    P := Intersection( ImagesSource( tau1 ), ImagesSource( tau2 ) ); 
+    genP := GeneratorsOfGroup( P ); 
+    if ( genP = [ ] ) then 
+        dt1 := MappingToOne( R2, P ); 
+        dh1 := MappingToOne( R2, P ); 
+        de1 := MappingToOne( P, R2 ); 
+        dt2 := MappingToOne( R1, P ); 
+        dh2 := MappingToOne( R1, P ); 
+        de2 := MappingToOne( P, R1 ); 
+    else 
+        im := List( genR2, g -> ImageElm( dde2 * tau1, g ) ); 
+        dt1 := GroupHomomorphismByImages( R2, P, genR1, im ); 
+        im := List( genR2, g -> ImageElm( dde2 * ddh1 * dde1, g ) ); 
+        dh1 := GroupHomomorphismByImages( R2, P, genR1, im ); 
+        im := List( genP, g -> ImageElm( dde2, g ) ); 
+        de1 := GroupHomomorphismByImages( P, R2, genP, im ); 
+        im := List( genR1, g -> ImageElm( dde1 * tau2, g ) ); 
+        dt2 := GroupHomomorphismByImages( R1, P, genR1, im ); 
+        im := List( genR1, g -> ImageElm( dde1 * ddh2 * dde2, g ) ); 
+        dh2 := GroupHomomorphismByImages( R1, P, genR1, im ); 
+        im := List( genP, g -> ImageElm( dde1, g ) ); 
+        de2 := GroupHomomorphismByImages( P, R1, genP, im ); 
+    fi; 
+    down := PreCat1GroupByTailHeadEmbedding( dt1, dh1, de1 ); 
+    Info( InfoXMod, 1, "cat1-group down constructed" ); 
+    right := PreCat1GroupByTailHeadEmbedding( dt2, dh2, de2 );
+    Info( InfoXMod, 1, "cat1-group right constructed" ); 
+    if ( ( right = fail ) or ( down = fail) ) then 
+        Error( "right or down fail to be cat1-groups" ); 
+        return fail; 
+    fi; 
+    im := List( genG, g -> ImageElm( ddt2 * dt1, g ) ); 
+    dt0 := GroupHomomorphismByImages( G, P, genG, im ); 
+    im := List( genG, g -> ImageElm( ddh2 * dh1, g ) ); 
+    dh0 := GroupHomomorphismByImages( G, P, genG, im ); 
+    im := List( genP, g -> ImageElm( de1 * dde2, g ) ); 
+    de0 := GroupHomomorphismByImages( P, G, genP, im ); 
+    diag := PreCat1GroupByTailHeadEmbedding( dt0, dh0, de0 ); 
+    PC2 := PreCat2GroupObj( [ top, left, down, right, diag ] );
+    SetIsPreCat2Group( PC2, true );
+    ok := IsCat2Group( PC2 );
+    return PC2;
+end ); 
 
 ##############################################################################
 ##
@@ -693,35 +820,45 @@ function( G, N )
 end ); 
 
 ##############################################################################
+## 
+#?  this function should be got rid of a.s.a.p. 
 ##
-#M  CrossedSquareOfCat2Group
-#M  Cat2GroupOfCrossedSquare
+#M  ElementsRelationsForSemidirectProduct 
 ##
-InstallMethod( CrossedSquareOfCat2Group, "generic method for cat2-groups",
-    true, [ IsCat2Group ], 0,
-function( C2 )
+InstallMethod( ElementsRelationsForSemidirectProduct, "elements relation",
+    true, [ IsGroup ], 0,
+function( GxH  )
 
-    local XS;
-    XS := PreCrossedSquareOfPreCat2Group( C2 );
-    SetCrossedSquareOfCat2Group( C2, XS );
-    SetCat2GroupOfCrossedSquare( XS, C2 );
-    return XS;
-end );
+    local info, G, H, elG, embG, embH, elH, g, h, im, list1, list2, genGxH;
 
-InstallMethod( Cat2GroupOfCrossedSquare, "generic method for crossed squares",
-    true, [ IsCrossedSquare ], 0,
-function( XS )
+    if not HasSemidirectProductInfo( GxH ) then 
+        Error( "group is not a semidirect product" ); 
+    fi; 
+    info := SemidirectProductInfo( GxH ); 
+    G := info!.groups[1]; 
+    H := info!.groups[2];
+    elG := Elements( G );
+    elH := Elements( H );
+    list1 := [ ];
+    list2 := [ ];
+    embG := info!.embeddings[1];
+    embH := info!.embeddings[2];
+    for g in elG do
+        for h in elH do
+            im := ImageElm( embG, g) * ImageElm( embH, h );
+            Add( list1, [g,h] );
+            Add( list2, im );
+        od;
+    od;
+    return [ list1, list2 ];
+end ); 
 
-    local C2;
-    C2 := PreCat2GroupOfPreCrossedSquare(XS);
-    SetCrossedSquareOfCat2Group( C2, XS );
-    SetCat2GroupOfCrossedSquare( XS, C2 );
-    return C2;
-end );
-    
 #############################################################################
 ##
 #M  PreCrossedSquareOfPreCat2Group
+#M  PreCat2GroupOfPreCrossedSquare
+#M  CrossedSquareOfCat2Group
+#M  Cat2GroupOfCrossedSquare
 ##
 InstallMethod( PreCrossedSquareOfPreCat2Group, true, 
     [ IsPreCat2Group ], 0,
@@ -801,43 +938,6 @@ function( C2G )
     return XS;
 end );
 
-#?  this function should be got rid of a.s.a.p. 
-##############################################################################
-##
-#M  ElementsRelationsForSemidirectProduct 
-##
-InstallMethod( ElementsRelationsForSemidirectProduct, "elements relation",
-    true, [ IsGroup ], 0,
-function( GxH  )
-
-    local info, G, H, elG, embG, embH, elH, g, h, im, list1, list2, genGxH;
-
-    if not HasSemidirectProductInfo( GxH ) then 
-        Error( "group is not a semidirect product" ); 
-    fi; 
-    info := SemidirectProductInfo( GxH ); 
-    G := info!.groups[1]; 
-    H := info!.groups[2];
-    elG := Elements( G );
-    elH := Elements( H );
-    list1 := [ ];
-    list2 := [ ];
-    embG := info!.embeddings[1];
-    embH := info!.embeddings[2];
-    for g in elG do
-        for h in elH do
-            im := ImageElm( embG, g) * ImageElm( embH, h );
-            Add( list1, [g,h] );
-            Add( list2, im );
-        od;
-    od;
-    return [ list1, list2 ];
-end ); 
-
-#############################################################################
-##
-#M  PreCat2GroupOfPreCrossedSquare
-##
 InstallMethod( PreCat2GroupOfPreCrossedSquare, true, 
     [ IsPreCrossedSquare ], 0,
 function( XS )
@@ -845,8 +945,7 @@ function( XS )
     local L, M, N, P, up, left, down, right, bdy_up, bdy_lt, bdy_rt, 
           bdy_dn, act_up, act_lt, act_dn, act_rt, act_diag, 
           h, g, n, l, nl, m, p, pm, a, aut, act, aut2, act2, i, 
-          G2, relsG2, 
-          pmnl, n2p, l2p, l2pm, hmn2p, 
+          G2, relsG2, pmnl, n2p, l2p, l2pm, hmn2p, 
           PxM, genPxM, e1PxM, e2PxM, p1PxM, p2PxM, relsPxM, 
           NxL, genNxL, e1NxL, e2NxL, p1NxL, p2NxL, 
           PxN, genPxN, e1PxN, e2PxN, p1PxN, p2PxN, relsPxN, genPxNform2, 
@@ -859,7 +958,7 @@ function( XS )
           MxL, genMxL, relsMxL, genMxLform2, 
           autgen2, imautgen2, imautgen2form2, emb;
 
-    Print( "Warning: these conversion functions are still under development\n" ); 
+    Print( "Warning: these conversion functions are still being developed.\n" ); 
     return fail; 
 
     up := Up2DimensionalGroup(XS);
@@ -1057,6 +1156,96 @@ function( XS )
         SetName( Cat2, Concatenation( "cat2(", Name(XS), ")" ) ); 
     fi;
     return Cat2;
+end );
+
+InstallMethod( CrossedSquareOfCat2Group, "generic method for cat2-groups",
+    true, [ IsCat2Group ], 0,
+function( C2 )
+
+    local XS;
+    XS := PreCrossedSquareOfPreCat2Group( C2 );
+    SetCrossedSquareOfCat2Group( C2, XS );
+    SetCat2GroupOfCrossedSquare( XS, C2 );
+    return XS;
+end );
+
+InstallMethod( Cat2GroupOfCrossedSquare, "generic method for crossed squares",
+    true, [ IsCrossedSquare ], 0,
+function( XS )
+
+    local C2;
+    C2 := PreCat2GroupOfPreCrossedSquare( XS );
+    SetCrossedSquareOfCat2Group( C2, XS );
+    SetCat2GroupOfCrossedSquare( XS, C2 );
+    return C2;
+end );
+    
+##############################################################################
+##
+#M  Diagonal2DimensionalGroup . . . . . . . . . . . . . . for a crossed square
+## 
+InstallMethod( Diagonal2DimensionalGroup, "for a precrossed square", true,
+    [ IsPreCrossedSquare ], 0,
+function( s )
+
+    local ur, dl, act, diag; 
+
+    ur := Boundary( Up2DimensionalGroup( s ) ) 
+          * Boundary( Right2DimensionalGroup( s ) ); 
+    dl := Boundary( Left2DimensionalGroup( s ) ) 
+          * Boundary( Down2DimensionalGroup( s ) ); 
+    if not ( ur = dl ) then 
+        Error( "diagonal boundary is not well-defined" );
+    fi;
+    act := DiagonalAction( s );
+    return XModByBoundaryAndAction( ur, act );  
+end );
+
+##############################################################################
+##
+#M  Transpose3DimensionalGroup . . . . . . . the transpose of a crossed square
+##
+InstallMethod( Transpose3DimensionalGroup, "transposed crossed square", true, 
+    [ IsCrossedSquare ], 0,
+function( XS )
+
+    local xpS, NM, L, map, xpT, XT;
+
+    xpS := CrossedPairing( XS );
+    NM := Reversed( Source( xpS ) );
+    L := Range( xpS );
+    map := Mapping2ArgumentsByFunction( NM, L, 
+        function(c) 
+            return ImageElmCrossedPairing( xpS, Reversed(c) )^(-1); 
+        end );
+    xpT := CrossedPairingObj( NM, L, map );
+    XT := PreCrossedSquareObj( Left2DimensionalGroup(XS), 
+              Up2DimensionalGroup(XS), Right2DimensionalGroup(XS), 
+              Down2DimensionalGroup(XS), DiagonalAction(XS), xpT );
+    SetIsCrossedSquare( XT, true );
+    return XT;
+end );    
+
+##############################################################################
+##
+#M  LeftRightMorphism . . . . . . . . . . . . . . . . for a precrossed square
+#M  UpDownMorphism  . . . . . . . . . . . . . . . . . for a precrossed square
+## 
+InstallMethod( LeftRightMorphism, "for a precrossed square", true,
+    [ IsPreCrossedSquare ], 0,
+function( s )
+    return XModMorphismByHoms( 
+        Left2DimensionalGroup(s), Right2DimensionalGroup(s), 
+        Boundary( Up2DimensionalGroup(s) ), 
+        Boundary( Down2DimensionalGroup(s) ) ); 
+end );
+
+InstallMethod( UpDownMorphism, "for a precrossed square", true,
+    [ IsPreCrossedSquare ], 0,
+function( s )
+    return XModMorphismByHoms( Up2DimensionalGroup(s), Down2DimensionalGroup(s), 
+           Boundary( Left2DimensionalGroup(s) ), 
+           Boundary( Right2DimensionalGroup(s) ) ); 
 end );
 
 #############################################################################

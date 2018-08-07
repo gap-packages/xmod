@@ -35,7 +35,10 @@ as given by Ellis and Steiner <Cite Key="ell:st"/>.
 A <E>crossed square</E> <M>\mathcal{S}</M> consists of the following:
 <List>
 <Item>
-groups <M>S_J</M> for each of the four subsets <M>J \subseteq [2]</M>;
+groups <M>S_J</M> for each of the four subsets <M>J \subseteq [2]</M> 
+(we often find it convenient to write 
+<M>L = S_{[2]},~ M = S_{\{1\}},~ N = S_{\{2\}}</M> 
+and <M>P = S_{\emptyset}</M>); 
 </Item>
 <Item>
 a commutative diagram of group homomorphisms:
@@ -43,8 +46,11 @@ a commutative diagram of group homomorphisms:
   \ddot{\partial}_1 : S_{[2]} \to S_{\{2\}}, \quad 
   \ddot{\partial}_2 : S_{[2]} \to S_{\{1\}}, \quad 
   \dot{\partial}_1 : S_{\{1\}} \to S_{\emptyset}, \quad 
-  \dot{\partial}_2 : S_{\{2\}} \to S_{\emptyset}; 
-  </Display>
+  \dot{\partial}_2 : S_{\{2\}} \to S_{\emptyset} 
+  </Display> 
+(again we often write 
+<M>\lambda_1 = \ddot{\partial}_1,~ \lambda_2 = \ddot{\partial}_2,~ 
+\mu = \dot{\partial}_1</M> and <M> \nu = \dot{\partial}_2</M>); 
 </Item>
 <Item>
 actions of <M>S_{\emptyset}</M> on <M>S_{\{1\}}, S_{\{2\}}</M> 
@@ -65,36 +71,39 @@ Here is a picture of the situation:
 <![CDATA[
 \vcenter{\xymatrix{
        &   &  S_{[2]} \ar[rr]^{\ddot{\partial}_1} \ar[dd]_{\ddot{\partial}_2} 
-              && S_{\{2\}} \ar[dd]^{\dot{\partial}_2} &   \\
-\mathcal{S}  & = &  &&  \\
-       &   &  S_{\{1\}} \ar[rr]_{\dot{\partial}_1}  
-              && S_{\emptyset} 
+              && S_{\{2\}} \ar[dd]^{\dot{\partial}_2} && 
+              L \ar[rr]^{\lambda_1} \ar[dd]_{\lambda_2} 
+              && N \ar[dd]^{\nu} &   \\
+\mathcal{S}  & = &  &&  & = &&  \\
+       &   &  S_{\{1\}} \ar[rr]_{\lambda_1}  
+              && S_{\emptyset} &&  
+              M \ar[rr]_{\mu}  
+              && P 
 }}
 ]]></Display>
 
 The following axioms must be satisfied for all 
-<M>l \in S_{[2]},\; m,m_1,m_2 \in S_{\{1\}},\; 
-n,n_1,n_2 \in S_{\{2\}},\; p \in S_{\emptyset}</M>:
+<M>l \in L,\; m,m_1,m_2 \in M,\; n,n_1,n_2 \in N,\; p \in P</M>.
 <List>
 <Item>
-the homomorphisms <M>\ddot{\partial}_1, \ddot{\partial}_2</M> 
-preserve the action of <M>S_{\emptyset}\;</M>;
+The homomorphisms <M>\lambda_1, \lambda_2</M> preserve the action of <M>P\;</M>.
 </Item>
 <Item>
-each of the upper, left-hand, lower, and right-hand sides of the square, 
+Each of the upper, left-hand, lower, and right-hand sides of the square, 
 <Display>
- \ddot{\mathcal{S}}_1 = (\ddot{\partial}_1 : S_{[2]} \to S_{\{2\}}), 
- \ddot{\mathcal{S}}_2 = (\ddot{\partial}_2 : S_{[2]} \to S_{\{1\}}), 
-  \dot{\mathcal{S}}_1  = (\dot{\partial}_1 : S_{\{1\}} \to S_{\emptyset}), 
-  \dot{\mathcal{S}}_2  = (\dot{\partial}_2 : S_{\{2\}} \to S_{\emptyset}),
+ \ddot{\mathcal{S}}_1 = (\lambda_1 : L \to N), \quad 
+ \ddot{\mathcal{S}}_2 = (\lambda_2 : L \to M), \quad 
+  \dot{\mathcal{S}}_1  = (\mu : M \to P), \quad 
+  \dot{\mathcal{S}}_2  = (\nu : N \to P),
 </Display>
 and the diagonal  
 <Display>
-\mathcal{S}_{12} = (\partial_{12} := \dot{\partial}_1\ddot{\partial}_2 
-                  = \dot{\partial}_2\ddot{\partial}_1 
-                  : S_{[2]} \to S_{\emptyset})
+\mathcal{S}_{12} = (\partial_{12} := 
+                   \mu \circ \lambda_2 = \nu \circ \lambda_1 : L \to P)
 </Display>
-are crossed modules (with actions via <M>S_{\emptyset}</M>);
+are crossed modules (with actions via <M>P</M>). 
+The first four of these are called the <E>up, left, down</E> and <E>right</E> 
+crossed modules of <M>\mathcal{S}</M>. 
 </Item>
 <Item>
 <Index>crossed pairing</Index>
@@ -109,14 +118,14 @@ are crossed modules (with actions via <M>S_{\emptyset}</M>);
      (m \boxtimes n_2)\;{(m \boxtimes n_1)}^{n_2}</M>,
   </Item>
   <Item> 
-  <M>(m \boxtimes n)^{p} \;=\; (m^p \boxtimes n^p)</M>;
+  <M>(m \boxtimes n)^{p} \;=\; (m^p \boxtimes n^p)</M>.
   </Item>
   </List>
 </Item>
 <Item>
 <M>\ddot{\partial}_1 (m \boxtimes n) \;=\; (n^{-1})^{m}\;n
 \quad \mbox{and} \quad
-\ddot{\partial}_2 (m \boxtimes n) \;=\; m^{-1}\;m^{n}</M>,
+\ddot{\partial}_2 (m \boxtimes n) \;=\; m^{-1}\;m^{n}</M>.
 </Item>
 <Item>
 <M>(m \boxtimes \ddot{\partial}_1 l) \;=\; (l^{-1})^{m}\;l
@@ -124,9 +133,8 @@ are crossed modules (with actions via <M>S_{\emptyset}</M>);
 (\ddot{\partial}_2 l \boxtimes n) \;=\; l^{-1}\;l^n</M>.
 </Item>
 </List>
-Note that the actions of  <M>S_{\{1\}}</M>  on  <M>S_{\{2\}}</M>  
-and  <M>S_{\{2\}}</M>  on  <M>S_{\{1\}}</M>  via  <M>S_{\emptyset}</M>
-are compatible since
+Note that the actions of <M>M</M> on <M>N</M> and <M>N</M> on <M>M</M> 
+via <M>P</M> are compatible since
 <Display>
 {m_1}^{(n^m)} \;=\; {m_1}^{\dot{\partial}_2(n^m)} 
               \;=\; {m_1}^{m^{-1}(\dot{\partial}_2 n)m}
@@ -136,13 +144,9 @@ are compatible since
 (A <E>precrossed square</E> is a similar structure which satisfies 
 some subset of these axioms.  [More needed here.]) 
 <P/>
-In what follows we shall generally use the following notation for the 
-<M>S_J</M>, namely <M>L = S_{[2]};~ M = S_{\{1\}};~ N = S_{\{2\}}</M> 
-and <M>P = S_{\emptyset}</M>.  
-<P/> 
 Crossed squares are the <M>n=2</M> case of a 
 crossed <M>n</M>-cube of groups, defined as follows. 
-(This is an attempt to translate Definition 2.1 in Ronnie's 
+(This is an attempt to translate Definition 2.1 in Ronnie Brown's 
 <E>Computing homotopy types using crossed n-cubes of groups</E> 
 into right actions -- but this definition is not yet completely understood!) 
 <P/>
@@ -167,7 +171,7 @@ functions <M>\boxtimes_{A,B} : S_A \times S_B \to S_{A \cup B},
 (A,B \subseteq [n])</M>. 
 </Item> 
 </List>
-The following axioms must be satisfied (long list to be added). 
+There is then a long list of axioms which must be satisfied. 
 
 </Section> 
 
@@ -183,7 +187,7 @@ with conversion between the two types of structure.
 Some standard constructions of crossed squares are listed below. 
 At present, a limited number of constructions are implemented.
 Morphisms of crossed squares have also been implemented, 
-though there is a lot still to be done.
+though there is still a lot to be done.
 
 <ManSection>
    <Func Name="CrossedSquare"
@@ -205,14 +209,14 @@ though there is a lot still to be done.
 Here are some standard examples of crossed squares.
 <List>
 <Item>
-If <M>M, N</M> are normal subgroups of a group <M>P</M>, 
-and <M>L = M \cap N</M>, then the four inclusions, 
+If <M>L, M, N</M> are normal subgroups of a group <M>P</M>, 
+and <M>[M,N] \leqslant L \leqslant M \cap N</M>, then the four inclusions 
 <M>L \to N,~ L \to M,~ M \to P,~ N \to P</M>, 
 together with the actions of <M>P</M> on <M>M, N</M> 
 and <M>L</M> given by conjugation, 
 form a crossed square with crossed pairing  
 <Display>
-\boxtimes \;:\; M \times N \to M\cap N, \quad 
+\boxtimes \;:\; M \times N \to L, \quad 
 (m,n) \mapsto [m,n] \,=\, m^{-1}n^{-1}mn \,=\,(n^{-1})^mn \,=\, m^{-1}m^n\,. 
 </Display>  
 This construction is implemented as <C>CrossedSquareByNormalSubgroups(P,N,M,L);</C>.
@@ -224,17 +228,15 @@ The crossed pairing is given by
 <Display>
 \boxtimes \;:\;  R \times W \,\to\, S, \quad (r,\chi) \,\mapsto\, \chi r~.
 </Display>
-This is implemented as <C>ActorCrossedSquare( X0 );</C>.
+This is implemented as <C>ActorCrossedSquare(X0);</C>.
 </Item>
 <Item>
 The <E>transpose</E> of <M>\mathcal{S}</M> is the crossed square  
-<M>\tilde{\mathcal{S}}</M> obtained by interchanging 
-<M>S_{\{1\}}</M> with <M>S_{\{2\}}</M>, 
-<M>\ddot{\partial}_1</M> with <M>\ddot{\partial}_2</M>, and 
-<M>\dot{\partial}_1</M> with <M>\dot{\partial}_2</M>.  
+<M>\tilde{\mathcal{S}}</M> obtained by interchanging <M>M</M> with <M>N</M>, 
+<M>\lambda_1</M> with <M>\lambda_2</M>, and <M>\mu</M> with <M>\nu</M>.  
 The crossed pairing is given by 
 <Display>
-\tilde{\boxtimes} \;:\; S_{\{2\}} \times S_{\{1\}} \to S_{[2]}, \quad 
+\tilde{\boxtimes} \;:\; N \times M \to L, \quad 
 (n,m) \;\mapsto\; n\,\tilde{\boxtimes}\,m := (m \boxtimes n)^{-1}~.
 </Display>
 </Item>
@@ -293,7 +295,7 @@ the right crossed module is the quotient <M>\mathcal{X}/Z(\mathcal{X})</M>
 (see <Ref Func="CentreXMod"/>); 
 </Item>
 <Item>
-the top and bottom homomorphisms are the natural homomorphisms 
+the up and down homomorphisms are the natural homomorphisms 
 onto the quotient groups; 
 </Item>
 <Item>
@@ -366,17 +368,20 @@ and crossed squares in particular.
          Arg="XS" />
    <Oper Name="ImageElmCrossedPairing"
          Arg="XS pair" />
+   <Attr Name="Diagonal2DimensionalGroup"
+         Arg="XS" />
 <Description>
 In this implementation the attributes used in the construction of
 a crossed square <C>XS</C> are the four crossed modules (2d-groups) 
-on the sides of the square (up; down, left; and right); 
+on the sides of the square (up; left; down and right); 
 the diagonal action of <M>P</M> on <M>L</M>; 
-and the crossed pairing.
+and the crossed pairing. 
+The diagonal crossed module <M>(L \to P)</M> is an additional attribute. 
 <P/>
 The &GAP; development team have suggested that crossed pairings should be 
 implemented as a special case of <C>BinaryMappings</C> -- a structure 
 which does not yet exist in &GAP;.
-As a temporary measure, crossed pairings have been implemented using 
+In the meantime crossed pairings have been implemented using 
 <C>Mapping2ArgumentsByFunction</C>.
 </Description>
 </ManSection>
@@ -390,11 +395,11 @@ Actor[d10a->d20]
 gap> xpconj := CrossedPairing( XSconj );;
 gap> ImageElmCrossedPairing( xpconj, [ p2, p12 ] );
 (1,9,7,5,3)(2,10,8,6,4)
-gap> diag := DiagonalAction( XSact );
-[ (1,3,5,2,4)(6,10,14,8,12)(7,11,15,9,13), (1,2,5,4)(6,8,14,12)(7,11,13,9) 
- ] -> 
-[ (1,3,5,2,4)(6,10,14,8,12)(7,11,15,9,13), (1,2,5,4)(6,8,14,12)(7,11,13,9) 
- ] -> [ ^(1,3,5,7,9)(2,4,6,8,10), ^(1,2,5,4)(3,8)(6,7,10,9) ]
+gap> diact := DiagonalAction( XSact );;
+gap> ImageElm( diact, (1,4)(2,3)(6,9)(7,8) );  
+^(1,5,7,3)(2,8,6,10)
+gap> diag := Diagonal2DimensionalGroup( XSconj );
+[c5d->d20]
 ]]>
 </Example>
 
@@ -570,7 +575,7 @@ the four sides of the square are cat<M>^1</M>-groups, denoted
  \dot{h}_1\circ\ddot{h}_2 = \dot{h}_2\circ\ddot{h}_1 = h_{[2]}, ~
  \dot{e}_1\circ\ddot{e}_2 = \dot{e}_2\circ\ddot{e}_1 = e_{[2]},
 </M>
-making the diagonal a cat<M>^1</M>-group
+making the diagonal a pre-cat<M>^1</M>-group
 <M>(e_{[2]}; t_{[2]}, h_{[2]} : C_{[2]} \to C_{\emptyset})</M>.
 </Item>
 </List>
@@ -631,6 +636,8 @@ and similarly for <M>\ker h</M>.
          Arg="args" />
    <Func Name="PreCat2Group"
          Arg="args" />
+   <Prop Name="IsCat2Group"
+         Arg="C" />
    <Oper Name="PreCat2GroupByPreCat1Groups"
          Arg="L" />
 <Description>
@@ -641,13 +648,23 @@ are normally called with a single argument, a list of cat1-groups.
 <P/>
 <Example>
 <![CDATA[
-gap> CC6 := Cat2Group( Cat1Group(6,2,2), Cat1Group(6,2,3) );
+gap> a := (1,2,3,4)(5,6,7,8);;
+gap> b := (1,5)(2,6)(3,7)(4,8);; 
+gap> c := (2,6)(4,8);;
+gap> G16 := Group( a, b, c );; 
+gap> SetName( G16, "c4c2:c2" );
+gap> t1a := GroupHomomorphismByImages( G16, G16, [a,b,c], [(),(),c] );; 
+gap> C1a := PreCat1GroupByEndomorphisms( t1a, t1a );;
+gap> t1b := GroupHomomorphismByImages( G16, G16, [a,b,c], [a,(),()] );; 
+gap> C1b := PreCat1GroupByEndomorphisms( t1b, t1b );;
+gap> C16 := Cat2Group( C1a, C1b );
 generating (pre-)cat1-groups:
-1 : [C6=>Group( [ f1 ] )]
-2 : [C6=>Group( [ f2 ] )]
-
-gap> IsCat2Group( CC6 );
+1 : [c4c2:c2 => Group( [ (), (), (2,6)(4,8) ] )]
+2 : [c4c2:c2 => Group( [ (1,2,3,4)(5,6,7,8), (), () ] )]
+gap> IsCat2Group( C16 );
 true
+gap> IsCat1Group( Diagonal2DimensionalGroup( C16 ) );
+false
 ]]>
 </Example>
 
@@ -667,14 +684,15 @@ and conversely.  (They are the 3-dimensional equivalents of
 <P/>
 <Example>
 <![CDATA[
-gap> xsCC6 := CrossedSquareOfCat2Group( CC6 );
-crossed square with:
-      up = [Group( () )->Group( [ (1,2) ] )]
-    left = [Group( () )->Group( [ (), (3,4,5) ] )]
-    down = [Group( [ (), (3,4,5) ] ) -> Group( () )]
-   right = [Group( [ (1,2) ] ) -> Group( () )]
+gap> xsC16 := CrossedSquareOfCat2Group( C16 );
+crossed square with crossed modules:
+      up = [Group( [ (1,5)(2,6)(3,7)(4,8) ] ) -> Group( [ ( 2, 6)( 4, 8) ] )]
+    left = [Group( [ (1,5)(2,6)(3,7)(4,8) ] ) -> Group( 
+[ (1,2,3,4)(5,6,7,8), (), () ] )]
+    down = [Group( [ (1,2,3,4)(5,6,7,8), (), () ] ) -> Group( () )]
+   right = [Group( [ ( 2, 6)( 4, 8) ] ) -> Group( () )]
 gap> Cat2GroupOfCrossedSquare( XSact );
-Warning: these conversion functions are still under development
+Warning: these conversion functions are still being developed.
 fail
 ]]>
 </Example>
