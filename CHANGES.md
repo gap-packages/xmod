@@ -2,6 +2,7 @@
 
 ## 2.69 -> 2.69dev (00/08/2018) 
 
+ * (07/08/18) added PreCat2GroupByPreCat1Groups and other changes to gp3obj.*
  * (01/08/18) fixed issue #24 and added xtst/cat1data.tst 
  * (30/07/18) fixed issue #9 
 

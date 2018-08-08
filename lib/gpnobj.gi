@@ -322,12 +322,14 @@ function( gnd )
     n := HigherDimension( gnd ) - 1;
     if IsPreCatnGroup( gnd ) then 
         L := GeneratingCat1Groups( gnd );
-        Print( "generating (pre-)cat1-groups:\n" );
-    fi;     
-    for i in [1..n] do 
-        Print( i, " : " ); 
-        Display( L[i] );
-    od;      
+        Print( "generating (pre-)cat1-groups:\n" ); 
+        for i in [1..n] do 
+            Print( i, " : " ); 
+            Display( L[i] );
+        od; 
+    else 
+        Print( "Display not yet implemented for this object\n" ); 
+    fi;
 end );
 
 #############################################################################
