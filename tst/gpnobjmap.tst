@@ -154,19 +154,17 @@ generating (pre-)cat1-groups:
 gap> IsCat2Group( CC6 );
 true
 
-gap> xsCC6 := CrossedSquareOfCat2Group( CC6 );
-crossed square with crossed modules:
-      up = [Group( () )->Group( [ (1,2) ] )]
-    left = [Group( () )->Group( [ (), (3,4,5) ] )]
-    down = [Group( [ (), (3,4,5) ] )->Group( () )]
-   right = [Group( [ (1,2) ] )->Group( () )]
-   
-gap> IsCrossedSquare( xsCC6 );
-true
-
-## CCconj := Cat2GroupOfCrossedSquare( XSconj );
-## this command produces an error! 
-## IsCat2Group( CCconj );
+## now producing an error (08/08/18)
+## gap> xsCC6 := PreCrossedSquareOfPreCat2Group( CC6 );
+## crossed square with crossed modules:
+##      up = [Group( () )->Group( [ (1,2) ] )]
+##    left = [Group( () )->Group( [ (), (3,4,5) ] )]
+##    down = [Group( [ (), (3,4,5) ] )->Group( () )]
+##   right = [Group( [ (1,2) ] )->Group( () )]   
+## gap> IsCrossedSquare( xsCC6 );
+## true
+## gap> CCconj := Cat2GroupOfCrossedSquare( XSconj );
+## gap> IsCat2Group( CCconj );
 ## true
 
 gap> idCC233 := IdentityMapping( CC233 );

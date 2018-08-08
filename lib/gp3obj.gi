@@ -647,7 +647,7 @@ end );
 ##
 InstallGlobalFunction( PreCat2Group, function( arg )
 
-    local nargs, C1G1, C1G2, C2G, ok;
+    local nargs, C1G1, C1G2, C2G, S1, S2, iso, idR2, isoC1, ok;
 
     nargs := Length( arg );
     if ( ( nargs < 1 ) or ( nargs > 2 ) ) then
@@ -661,10 +661,26 @@ InstallGlobalFunction( PreCat2Group, function( arg )
         fi; 
         C2G := PreCat2GroupOfPreCrossedSquare( arg[1] );
     else 
-        if not IsPreCat1Group( arg[1] ) and IsPreCat1Group( arg[2] ) then 
+        C1G1 := arg[1]; 
+        C1G2 := arg[2];
+        if not IsPreCat1Group( C1G1 ) and IsPreCat1Group( C1G2 ) then 
             Error( "the two arguments are not pre-cat1-groups" ); 
         fi; 
-        C2G := PreCat2GroupByPreCat1Groups( arg[1], arg[2] ); 
+        S1 := Source( C1G1 ); 
+        S2 := Source( C1G2 ); 
+        ## if the two sources are unequal but isomorphic then make 
+        ## an isomorphic copy of C1G2 with the same source as C1G1
+        if not ( S1 = S2 ) then 
+            iso := IsomorphismGroups( S2, S1 ); 
+            if ( iso = fail ) then 
+                Error( "the two arguments are not pre-cat1-groups" ); 
+            else 
+                idR2 := IdentityMapping( Range( C1G2 ) ); 
+                isoC1 := IsomorphismByIsomorphisms( C1G2, [ iso, idR2 ] );
+                C1G2 := Range( isoC1 ); 
+            fi; 
+        fi; 
+        C2G := PreCat2GroupByPreCat1Groups( C1G1, C1G2 ); 
         if ( C2G = fail ) then 
             Error( "C2G fails to be a PreCat2Group" ); 
         fi;
@@ -931,7 +947,7 @@ function( C2G )
     a := ConjugationActionForCrossedSquare( P, L );
     xp := CrossedPairingByNormalSubgroups( M, N, L );
     XS := PreCrossedSquareObj( up, left, down, right, a, xp );
-    SetIsCrossedSquare( XS, true );
+    ## SetIsCrossedSquare( XS, true );
     if HasName( C2G ) then 
         SetName( XS, Concatenation( "xsq(", Name( C2G ), ")" ) ); 
     fi; 
@@ -1164,6 +1180,7 @@ function( C2 )
 
     local XS;
     XS := PreCrossedSquareOfPreCat2Group( C2 );
+    SetIsCrossedSquare( XS, true ); 
     SetCrossedSquareOfCat2Group( C2, XS );
     SetCat2GroupOfCrossedSquare( XS, C2 );
     return XS;
