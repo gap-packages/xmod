@@ -25,3 +25,7 @@ ReadPackage( "xmod", "lib/gp3map.gi" );
 ReadPackage( "xmod", "lib/gpd2obj.gi" ); 
 ReadPackage( "xmod", "lib/cat1data.gi" ); 
 ReadPackage( "xmod", "lib/apps.gi" );
+
+## temporary Reread while waiting for Alex.H's fix to make it into GAP 4.10? 
+RereadPackage( "xmod", "lib/myghomperm.gi" ); 
+

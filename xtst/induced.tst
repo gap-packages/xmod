@@ -8,13 +8,14 @@
 gap> START_TEST( "XMod package: induced.tst" );
 gap> saved_infolevel_xmod := InfoLevel( InfoXMod );; 
 gap> SetInfoLevel( InfoXMod, 0 );;
-
+gap> 
 gap> c4 := Group( (5,6,7,8) );; 
 gap> SetName( c4, "c4" );
 gap> AX4 := XModByAutomorphismGroup( c4 );; 
 gap> isoX4 := IsomorphismPerm2DimensionalGroup( AX4 );; 
 gap> X4 := Range( isoX4 );; 
 gap> Display( X4 ); 
+
 Crossed module [c4->PAut(c4)] :- 
 : Source group c4 has generators:
   [ (5,6,7,8) ]
@@ -38,6 +39,7 @@ gap> StructureDescription( indc4c2c6 );
 gap> Size( indc4c2c6 );
 [ 64, 6 ]
 gap> Display( indc4c2c6 );
+
 Crossed module i*([c4->PAut(c4)]) :- 
 : Source group has generators:
   [ ( 1, 2, 3, 4), ( 5, 6, 7, 8), ( 9,10,11,12) ]
@@ -67,7 +69,6 @@ gap> StructureDescription( ind8 );
 [ "C2 x C2", "S3" ]
 gap> Size( ind8 );
 [ 4, 6 ]
-
 gap> n := 5;; 
 gap> c2n := CyclicGroup( 2*n );; 
 gap> SetName( c2n, "c2n" );
@@ -80,12 +81,13 @@ gap> ind1 := SurjectiveInducedXMod( X2n, surj );;
 gap> ok := IsCentralExtension2DimensionalGroup( ind1 );
 true
 gap> StructureDescription( ind1 );
-[ "C10", "C5" ] 
+[ "C10", "C5" ]
 gap> inc := GroupHomomorphismByImages( cn, c2n, [g^2], [g^2] );; 
 gap> ind2 := InclusionInducedXModByCopower( ind1, inc, [ ] );; 
 gap> StructureDescription( ind2 );
 [ "C10 x C10", "C10" ]
 gap> Display( ind2 );
+
 Crossed module i*([c2n/ker->cn]) :- 
 : Source group has generators:
   [ ( 1, 2)( 5, 6, 7, 8, 9), ( 3, 4)(10,11,12,13,14) ]
@@ -190,7 +192,6 @@ gap> Size( ind4 );
 [ 48, 12 ]
 gap> StructureDescription( ind4 );
 [ "C2 x SL(2,3)", "A4" ]
-
 gap> triv := Group( () );; 
 gap> SetName( triv, "triv" );
 gap> zero := GroupHomomorphismByImages( c6, triv, [c], [()] );; 

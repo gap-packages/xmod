@@ -658,7 +658,7 @@ gap> C1a := PreCat1GroupByEndomorphisms( t1a, t1a );;
 gap> t1b := GroupHomomorphismByImages( G16, G16, [a,b,c], [a,(),()] );; 
 gap> C1b := PreCat1GroupByEndomorphisms( t1b, t1b );;
 gap> C16 := Cat2Group( C1a, C1b );
-generating (pre-)cat1-groups:
+cat2-group with generating (pre-)cat1-groups:
 1 : [c4c2:c2 => Group( [ (), (), (2,6)(4,8) ] )]
 2 : [c4c2:c2 => Group( [ (1,2,3,4)(5,6,7,8), (), () ] )]
 gap> IsCat2Group( C16 );

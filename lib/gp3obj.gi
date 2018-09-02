@@ -132,6 +132,27 @@ function( X0 )
     return CrossedPairingObj( [RX,WX], SX, map );
 end );
 
+##############################################################################
+##
+#M  CrossedPairingByXModAction( <xmod> ) . . convert action to crossed pairing
+##
+InstallMethod( CrossedPairingByXModAction, "for a crossed module", true,
+    [ IsXMod ], 0,
+function( X0 )
+
+    local S, R, act, map, xp;
+
+    S := Source( X0 ); 
+    R := Range( X0 ); 
+    act := XModAction( X0 );
+    map := Mapping2ArgumentsByFunction( [S,R], S, 
+               function(c) 
+                   return c[1]^(-1) * ImageElm( ImageElm(act,c[2]), c[1] ); 
+               end );
+    xp := CrossedPairingObj( [S,R], S, map );
+    return xp;
+end );
+
 #############################################################################
 ##
 #M  IsPreCrossedSquare . . . . . . . . . . . . check that the square commutes
@@ -172,13 +193,7 @@ function( P )
         Info( InfoXMod, 2, "Boundaries in square do not commute" );
         return false;
     fi;
-    ## check the action of the diagonal
-    autu := Range( XModAction( u ) );
-    autl := Range( XModAction( l ) );
-    if not ( autu = autl ) then
-        Info( InfoXMod, 1, "Allow the case autu <> autl ?" );
-        return false;
-    fi;
+    ## check the action of the diagonal? 
     diag := PreXModByBoundaryAndAction( blbd, act );
     ok := IsPreXMod( diag );
     if not ok then
@@ -318,7 +333,7 @@ function( P, N, M, L )
 
     if not ( IsNormal( P, M ) and IsNormal( P, N ) 
              and IsNormal( M, L ) and IsNormal( N, L ) ) then
-        return fail;
+        Error( "M,N,L fail to be normal subgroups of P" ); 
     fi;
     if not ( IsSubgroup( Intersection(M,N), L ) 
          and IsSubgroup( L, CommutatorSubgroup(M,N) ) ) then 
@@ -334,6 +349,7 @@ function( P, N, M, L )
     xp := CrossedPairingByNormalSubgroups( M, N, L ); 
     XS := PreCrossedSquareObj( u, l, d, r, a, xp );
     SetIsCrossedSquare( XS, true );
+    SetDiagonal2DimensionalGroup( XS, diag ); 
     return XS;
 end );
 
@@ -348,6 +364,26 @@ function( P, M, N )
     fi;
     L := Intersection( M, N );
     return CrossedSquareByNormalSubgroups( P, M, N, L );;
+end );
+
+###############################################################################
+##
+#M  CrossedSquareByXModUpDown . . . . . . create a crossed square from an xmod 
+##
+InstallMethod( CrossedSquareByXModUpDown, "use a repeated xmod", true, 
+    [ IsXMod ], 0,
+function( X0 )
+
+    local S, R, X1S, X1R, xp, XS;
+
+    S := Source( X0 ); 
+    X1S := XModByNormalSubgroup( S, S ); 
+    R := Range( X0 ); 
+    X1R := XModByNormalSubgroup( R, R ); 
+    xp := CrossedPairingByXModAction( X0 ); 
+    XS := PreCrossedSquareObj( X0, X1S, X0, X1R, XModAction( X0 ), xp );
+    SetIsCrossedSquare( XS, true );
+    return XS;
 end );
 
 ###############################################################################
@@ -647,7 +683,7 @@ end );
 ##
 InstallGlobalFunction( PreCat2Group, function( arg )
 
-    local nargs, C1G1, C1G2, C2G, S1, S2, iso, idR2, isoC1, ok;
+    local nargs, C1G1, C1G2, C2G, S1, S2, iso, idR2, isoC1, dr, ok;
 
     nargs := Length( arg );
     if ( ( nargs < 1 ) or ( nargs > 2 ) ) then
@@ -680,7 +716,8 @@ InstallGlobalFunction( PreCat2Group, function( arg )
                 C1G2 := Range( isoC1 ); 
             fi; 
         fi; 
-        C2G := PreCat2GroupByPreCat1Groups( C1G1, C1G2 ); 
+        dr := DetermineDownRightCat1Groups( C1G1, C1G2 );
+        C2G := PreCat2GroupByPreCat1Groups( C1G1, C1G2, dr[1], dr[2] ); 
         if ( C2G = fail ) then 
             Error( "C2G fails to be a PreCat2Group" ); 
         fi;
@@ -718,9 +755,9 @@ end );
 
 ##############################################################################
 ##
-#M  PreCat2GroupByPreCat1Groups . . . . . . . . . . . for two pre-cat1-groups
+#M  DetermineDownRightCat1Groups . . . . . . . . . . . for two pre-cat1-groups
 ## 
-InstallMethod( PreCat2GroupByPreCat1Groups, "for two pre-cat1-groups", true,
+InstallMethod( DetermineDownRightCat1Groups, "for two pre-cat1-groups", true,
     [ IsPreCat1Group, IsPreCat1Group ], 0,
 function( top, left )
 
@@ -744,18 +781,13 @@ function( top, left )
     ddh2 := HeadMap( left ); 
     dde2 := RangeEmbedding( left ); 
     ## check that the 1-maps commute with the 2-maps 
-    if not ( ( MappingGeneratorsImages( ddt1*dde1*ddt2*dde2 ) 
-               = MappingGeneratorsImages( ddt2*dde2*ddt1*dde1 ) ) 
-         and ( MappingGeneratorsImages( ddh1*dde1*ddh2*dde2 ) 
-               = MappingGeneratorsImages( ddh2*dde2*ddh1*dde1 ) ) 
-         and ( MappingGeneratorsImages( ddt1*dde1*ddh2*dde2 ) 
-               = MappingGeneratorsImages( ddh2*dde2*ddt1*dde1 ) ) 
-         and ( MappingGeneratorsImages( ddh1*dde1*ddt2*dde2 ) 
-               = MappingGeneratorsImages( ddt2*dde2*ddh1*dde1 ) ) ) then 
-        Info( InfoXMod, 1, "1-maps do not commute with the 2-maps" ); 
-        return fail; 
+    if not ( ( ddt1*dde1*ddt2*dde2 = ddt2*dde2*ddt1*dde1 ) 
+         and ( ddh1*dde1*ddh2*dde2 = ddh2*dde2*ddh1*dde1 ) 
+         and ( ddt1*dde1*ddh2*dde2 = ddh2*dde2*ddt1*dde1 ) 
+         and ( ddh1*dde1*ddt2*dde2 = ddt2*dde2*ddh1*dde1 ) )  then 
+        Error( "1-maps do not commute with the 2-maps" ); 
     fi; 
-    Info( InfoXMod, 1, "1-maps do commute with the 2-maps" ); 
+    Info( InfoXMod, 1, "yes : 1-maps do commute with the 2-maps" ); 
     ## more checks? 
     im := List( genG, g -> ImageElm( ddt1 * dde1, g ) ); 
     tau1 := GroupHomomorphismByImages( G, G, genG, im ); 
@@ -772,16 +804,16 @@ function( top, left )
         de2 := MappingToOne( P, R1 ); 
     else 
         im := List( genR2, g -> ImageElm( dde2 * tau1, g ) ); 
-        dt1 := GroupHomomorphismByImages( R2, P, genR1, im ); 
+        dt1 := GroupHomomorphismByImages( R2, P, genR2, im ); 
         im := List( genR2, g -> ImageElm( dde2 * ddh1 * dde1, g ) ); 
-        dh1 := GroupHomomorphismByImages( R2, P, genR1, im ); 
-        im := List( genP, g -> ImageElm( dde2, g ) ); 
+        dh1 := GroupHomomorphismByImages( R2, P, genR2, im ); 
+        im := List( genP, g -> ImageElm( ddt2, g ) ); 
         de1 := GroupHomomorphismByImages( P, R2, genP, im ); 
         im := List( genR1, g -> ImageElm( dde1 * tau2, g ) ); 
         dt2 := GroupHomomorphismByImages( R1, P, genR1, im ); 
         im := List( genR1, g -> ImageElm( dde1 * ddh2 * dde2, g ) ); 
         dh2 := GroupHomomorphismByImages( R1, P, genR1, im ); 
-        im := List( genP, g -> ImageElm( dde1, g ) ); 
+        im := List( genP, g -> ImageElm( ddt1, g ) ); 
         de2 := GroupHomomorphismByImages( P, R1, genP, im ); 
     fi; 
     down := PreCat1GroupByTailHeadEmbedding( dt1, dh1, de1 ); 
@@ -792,18 +824,68 @@ function( top, left )
         Error( "right or down fail to be cat1-groups" ); 
         return fail; 
     fi; 
-    im := List( genG, g -> ImageElm( ddt2 * dt1, g ) ); 
-    dt0 := GroupHomomorphismByImages( G, P, genG, im ); 
-    im := List( genG, g -> ImageElm( ddh2 * dh1, g ) ); 
-    dh0 := GroupHomomorphismByImages( G, P, genG, im ); 
-    im := List( genP, g -> ImageElm( de1 * dde2, g ) ); 
-    de0 := GroupHomomorphismByImages( P, G, genP, im ); 
+    return [ down, right ]; 
+end ); 
+
+##############################################################################
+##
+#M  PreCat2GroupByPreCat1Groups . . . . . . . . . . . for four pre-cat1-groups
+## 
+InstallMethod( PreCat2GroupByPreCat1Groups, "for four pre-cat1-groups", true,
+    [ IsPreCat1Group, IsPreCat1Group, IsPreCat1Group, IsPreCat1Group ], 0,
+function( top, left, down, right )
+
+    local G, genG, R1, R2, P, genR1, genR2, genP, 
+          ddt1, ddh1, dde1, ddt2, ddh2, dde2, dt1, dh1, de1, dt2, dh2, de2, 
+          imt, imt2, imh, imh2, ime, ime2, dt0, dh0, de0, diag, PC2, ok;
+
+    G := Source( top ); 
+    genG := GeneratorsOfGroup( G ); 
+    R1 := Range( top ); 
+    R2 := Range( left );
+    P := Range( down ); 
+    if not ( ( G = Source( left ) ) and ( R1 = Source( right ) ) 
+             and ( R2 = Source( down ) ) and ( P = Range( right ) ) ) then 
+        Error( "sources and/or ranges do not agree" ); 
+    fi; 
+    genR1 := GeneratorsOfGroup( R1 ); 
+    genR2 := GeneratorsOfGroup( R2 );
+    genP := GeneratorsOfGroup( P ); 
+    ddt1 := TailMap( top ); 
+    ddh1 := HeadMap( top ); 
+    dde1 := RangeEmbedding( top ); 
+    ddt2 := TailMap( left ); 
+    ddh2 := HeadMap( left ); 
+    dde2 := RangeEmbedding( left ); 
+    dt1 := TailMap( down ); 
+    dh1 := HeadMap( down ); 
+    de1 := RangeEmbedding( down ); 
+    dt2 := TailMap( right ); 
+    dh2 := HeadMap( right ); 
+    de2 := RangeEmbedding( right ); 
+
+    imt := List( genG, g -> ImageElm( dt1, ImageElm( ddt2, g ) ) ); 
+    dt0 := GroupHomomorphismByImages( G, P, genG, imt ); 
+    imt2 := List( genG, g -> ImageElm( dt2, ImageElm( ddt1, g ) ) ); 
+    imh := List( genG, g -> ImageElm( dh1, ImageElm( ddh2, g ) ) ); 
+    dh0 := GroupHomomorphismByImages( G, P, genG, imh ); 
+    imh2 := List( genG, g -> ImageElm( dh2, ImageElm( ddh1, g ) ) ); 
+    ime := List( genP, g -> ImageElm( dde2, ImageElm( de1, g ) ) ); 
+    de0 := GroupHomomorphismByImages( P, G, genP, ime ); 
+    ime2 := List( genP, g -> ImageElm( dde1, ImageElm( de2, g ) ) ); 
+    if not ( ( imt = imt2 ) and ( imh = imh2 ) and ( ime = ime2 ) ) then 
+        Error( "tail/head/embedding maps do not all commute" ); 
+    fi; 
     diag := PreCat1GroupByTailHeadEmbedding( dt0, dh0, de0 ); 
     PC2 := PreCat2GroupObj( [ top, left, down, right, diag ] );
     SetIsPreCat2Group( PC2, true );
     ok := IsCat2Group( PC2 );
     return PC2;
 end ); 
+
+
+
+
 
 ##############################################################################
 ##
@@ -958,24 +1040,18 @@ InstallMethod( PreCat2GroupOfPreCrossedSquare, true,
     [ IsPreCrossedSquare ], 0,
 function( XS )
  
-    local L, M, N, P, up, left, down, right, bdy_up, bdy_lt, bdy_rt, 
-          bdy_dn, act_up, act_lt, act_dn, act_rt, act_diag, 
-          h, g, n, l, nl, m, p, pm, a, aut, act, aut2, act2, i, 
-          G2, relsG2, pmnl, n2p, l2p, l2pm, hmn2p, 
-          PxM, genPxM, e1PxM, e2PxM, p1PxM, p2PxM, relsPxM, 
-          NxL, genNxL, e1NxL, e2NxL, p1NxL, p2NxL, 
-          PxN, genPxN, e1PxN, e2PxN, p1PxN, p2PxN, relsPxN, genPxNform2, 
-          NxM, genNxM, e1NxM, e2NxM, p1NxM, p2NxM, 
-          G, e1G, e2G, p1G, p2G, 
-          autgen, imautgen, imautgenform2, genGform2, 
-          genG, genGform3, genGform4, imt1, imt1form2, t1, h1, C1, 
-          genG2form2, genG2, genG2form3, genG2form4, imt2, 
-          imt2form2, t2, h2, C2, Cat2, 
-          MxL, genMxL, relsMxL, genMxLform2, 
-          autgen2, imautgen2, imautgen2form2, emb;
+    local up, left, down, right, L, M, N, P, genL, genM, genN, genP, 
+          bdy_up, bdy_lt, bdy_dn, bdy_rt, act_up, act_lt, act_dn, act_rt, 
+          act_diag, xpair, 
+          Cup, NxL, genNxL, e1NxL, e2NxL, Cleft, MxL, genMxL, e1MxL, e2MxL, 
+          Cdown, PxM, genPxM, e1PxM, e2PxM, Cright, PxN, genPxN, e1PxN, e2PxN, 
+          autgenMxL, autMxL, actPNML, autgenNxL, autNxL, actPMNL, 
+          imPNML, bdyPNML, XPNML, CPNML, PNML, e1PNML, e2PNML, genPNML, 
+          imPMNL, bdyPMNL, XPMNL, CPMNL, PMNL, e1PMNL, e2PMNL, genPMNL, 
+          imiso, iso, inv, iminv, guess, ok, tup, hup, eup, C2PMNL, 
+          tlt, hlt, elt, tdn, hdn, edn, trt, hrt, ert, tdi, hdi, edi, PC, Cdiag; 
 
-    Print( "Warning: these conversion functions are still being developed.\n" ); 
-    return fail; 
+    Info( InfoXMod, 1, "these conversion functions are under development\n" ); 
 
     up := Up2DimensionalGroup(XS);
     left := Left2DimensionalGroup(XS);
@@ -986,7 +1062,11 @@ function( XS )
     N := Range(up);
     M := Source(down);
     P := Range(down);
-    
+    genL := GeneratorsOfGroup( L ); 
+    genM := GeneratorsOfGroup( M ); 
+    genN := GeneratorsOfGroup( N ); 
+    genP := GeneratorsOfGroup( P ); 
+
     Info( InfoXMod, 4, "L = ", L );    
     Info( InfoXMod, 4, "M = ", M );
     Info( InfoXMod, 4, "N = ", N );
@@ -1002,177 +1082,158 @@ function( XS )
     act_dn := XModAction(down);
     act_rt := XModAction(right);
     act_diag := DiagonalAction(XS);
-    h := CrossedPairing( XS );
+    xpair := CrossedPairing( XS );
 
-    NxL := SemidirectProduct(N,act_up,L); 
-    e1NxL := Embedding( NxL, 1 ); 
-    e2NxL := Embedding( NxL, 2 ); 
-    p1NxL := Projection( NxL, 1 );
-    p2NxL := Projection( NxL, 2 );
-    PxM := SemidirectProduct(P,act_dn,M);
-    e1PxM := Embedding( PxM, 1 ); 
-    e2PxM := Embedding( PxM, 2 ); 
-    p1PxM := Projection( PxM, 1 ); 
-    p2PxM := Projection( PxM, 2 );
-    genNxL := GeneratorsOfGroup( NxL );    
-    genPxM := GeneratorsOfGroup( PxM );    
-    if ( Length( genNxL ) = 0 ) then
-        genMxL := [ Identity( NxL ) ];
+    Cup := Cat1GroupOfXMod( up );
+    NxL := Source( Cup );
+    e1NxL := Embedding( NxL, 1 );
+    e2NxL := Embedding( NxL, 2 );
+    genNxL := Concatenation( List( genN, n -> ImageElm( e1NxL, n ) ), 
+                             List( genL, l -> ImageElm( e2NxL, l ) ) ); 
+    Cleft := Cat1GroupOfXMod( left );
+    MxL := Source( Cleft );
+    e1MxL := Embedding( MxL, 1 );
+    e2MxL := Embedding( MxL, 2 );
+    genMxL := Concatenation( List( genM, m -> ImageElm( e1MxL, m ) ), 
+                             List( genL, l -> ImageElm( e2MxL, l ) ) ); 
+    Cdown := Cat1GroupOfXMod( down ); 
+    PxM := Source( Cdown ); 
+    e1PxM := Embedding( PxM, 1 );
+    e2PxM := Embedding( PxM, 2 );
+    genPxM := Concatenation( List( genP, p -> ImageElm( e1PxM, p ) ), 
+                             List( genM, m -> ImageElm( e2PxM, m ) ) ); 
+    Cright := Cat1GroupOfXMod( right ); 
+    PxN := Source( Cright ); 
+    e1PxN := Embedding( PxN, 1 );
+    e2PxN := Embedding( PxN, 2 );
+    genPxN := Concatenation( List( genP, p -> ImageElm( e1PxN, p ) ), 
+                             List( genN, n -> ImageElm( e2PxN, n ) ) ); 
+
+    ## construct the action of PxN on MxL using: 
+    ## (m,l)^(p,n) = ( m^p, (m^p \box n).l^{pn} ) 
+    autgenMxL := Concatenation( 
+        List( genP, p -> GroupHomomorphismByImages( MxL, MxL, genMxL, 
+            Concatenation( 
+                List( genM, m -> ImageElm( e1MxL, 
+                                 ImageElm( ImageElm( act_dn, p ), m ) )),
+                List( genL, l -> ImageElm( e2MxL, 
+                                 ImageElm( ImageElm( act_diag, p ), l ))) ))),  
+        List( genN, n -> GroupHomomorphismByImages( MxL, MxL, genMxL, 
+            Concatenation( 
+                List( genM, m -> ImageElm( e1MxL, m ) * 
+                                 ImageElm( e2MxL,  
+                                 ImageElmCrossedPairing( xpair, [m,n] ))), 
+                List( genL, l -> ImageElm( e2MxL, 
+                                 ImageElm( ImageElm( act_up, n ), l ))) ))) ); 
+    Info( InfoXMod, 2, "autgenMxL = ", autgenMxL ); 
+    autMxL := Group( autgenMxL ); 
+    Info( InfoXMod, 2, "autMxL has size ", Size( autMxL ) );
+    SetIsGroupOfAutomorphisms( autMxL, true ); 
+    actPNML := GroupHomomorphismByImages( PxN, autMxL, genPxN, autgenMxL );
+    imPNML := Concatenation( 
+                List( genM, m -> ImageElm( e1PxN, ImageElm( bdy_dn, m ) ) ), 
+                List( genL, l -> ImageElm( e2PxN, ImageElm( bdy_up, l ) ) ) ); 
+    Info( InfoXMod, 2, "imPNML = ", imPNML ); 
+    bdyPNML := GroupHomomorphismByImages( MxL, PxN, genMxL, imPNML );
+    XPNML := XModByBoundaryAndAction( bdyPNML, actPNML ); 
+    if ( InfoLevel( InfoXMod ) > 1 ) then 
+        Print( "crossed module XPNML:\n" );
+        Display( XPNML );
+    fi; 
+    CPNML := Cat1GroupOfXMod( XPNML ); 
+    Info( InfoXMod, 2, "cat1-group CPNML: ", StructureDescription(CPNML) );
+    PNML := Source( CPNML );
+    e1PNML := Embedding( PNML, 1 );
+    e2PNML := Embedding( PNML, 2 );
+    genPNML := Concatenation( List( genPxN, g -> ImageElm( e1PNML, g ) ), 
+                              List( genMxL, g -> ImageElm( e2PNML, g ) ) ); 
+
+    ## construct the action of PxM on NxL using the transpose action: 
+    ## (n,l)^(p,m) = (n^p, (m \box n^p)^{-1}.l^{pm} ) 
+    autgenNxL := Concatenation( 
+        List( genP, p -> GroupHomomorphismByImages( NxL, NxL, genNxL, 
+            Concatenation( 
+                List( genN, n -> ImageElm( e1NxL, 
+                                 ImageElm( ImageElm( act_rt, p ), n ) )),
+                List( genL, l -> ImageElm( e2NxL, 
+                                 ImageElm( ImageElm( act_diag, p ), l ))) ))),  
+        List( genM, m -> GroupHomomorphismByImages( NxL, NxL, genNxL, 
+            Concatenation( 
+                List( genN, n -> ImageElm( e1NxL, n ) * 
+                                 ImageElm( e2NxL,  
+                                 ImageElmCrossedPairing( xpair, [n,m] ) )), 
+                List( genL, l -> ImageElm( e2NxL, 
+                                 ImageElm( ImageElm( act_lt, m ), l ))) ))) ); 
+    Info( InfoXMod, 2, "autgenNxL = ", autgenNxL ); 
+    autNxL := Group( autgenNxL ); 
+    SetIsGroupOfAutomorphisms( autNxL, true ); 
+    actPMNL := GroupHomomorphismByImages( PxM, autNxL, genPxM, autgenNxL );
+    imPMNL := Concatenation( 
+                List( genN, n -> ImageElm( e1PxM, ImageElm( bdy_rt, n ) ) ), 
+                List( genL, l -> ImageElm( e2PxM, ImageElm( bdy_lt, l ) ) ) ); 
+    bdyPMNL := GroupHomomorphismByImages( NxL, PxM, genNxL, imPMNL );
+    XPMNL := XModByBoundaryAndAction( bdyPMNL, actPMNL ); 
+    if ( InfoLevel( InfoXMod ) > 2 ) then 
+        Print( "crossed module XPMNL:\n" );
+        Display( XPMNL );
     fi;
-    if ( Length( genPxM ) = 0 ) then
-        genPxN := [ Identity(PxM) ];
-    fi;
-    
-    Info( InfoXMod, 3, "genPxM = ", genPxM );
-    Info( InfoXMod, 3, "NxL = ", NxL );
-    Info( InfoXMod, 3, "genNxL = ", genNxL );
+    CPMNL := Cat1GroupOfXMod( XPMNL ); 
+    Info( InfoXMod, 2, "cat1-group CPMNL: ", StructureDescription(CPMNL) );
+    PMNL := Source( CPMNL );
+    e1PMNL := Embedding( PMNL, 1 );
+    e2PMNL := Embedding( PMNL, 2 );
+    genPMNL := Concatenation( List( genPxM, g -> ImageElm( e1PMNL, g ) ), 
+                              List( genNxL, g -> ImageElm( e2PMNL, g ) ) ); 
 
-    ## action: (n,l)^(p,m) = ( n^p, (h(m,n^p)^-1)*l^(pn) ) 
-    autgen := [ ];
-    for pm in genPxM do
-        p := p1PxM( pm );
-        m := p2PxM( pm );
-        for nl in genNxL do 
-            imautgen := [ ]; 
-            n := p1NxL( nl );
-            l := p2NxL( nl );
-            n2p := ImageElm( ImageElm( act_rt, p ), n ); 
-            l2p := ImageElm( ImageElm( act_diag, p ), l ); 
-            l2pm := ImageElm( ImageElm( act_lt, m ), l2p ); 
-            hmn2p := ImageElmCrossedPairing( h, [m,n2p] ); 
-            Add( imautgen, e1NxL( n2p ) * e2NxL( (hmn2p^-1)*l2pm ) ); 
-        od; 
-        Add( autgen, GroupHomomorphismByImages( NxL, NxL, genNxL, imautgen ) );
-    od;
-    aut := Group( autgen );
-    SetIsGroupOfAutomorphisms( aut, true );
-    act := GroupHomomorphismByImages( PxM, aut, genPxM, autgen ); 
-    G := SemidirectProduct( PxM, act, NxL ); 
-    e1G := Embedding( G, 1 ); 
-    e2G := Embedding( G, 2 ); 
-    p1G := Projection( G, 1 ); 
-    p2G := Projection( G, 2 ); 
-    genG := GeneratorsOfGroup( G ); 
-    Info( InfoXMod, 3, "G = ", G );
-    Info( InfoXMod, 3, "genG = ", genG ); 
-    imt1 := [ ];
-    for pmnl in genG do 
-        pm := p1G( pmnl ); 
-        p := p1PxM( pm ); 
-        m := p2PxM( pm );
-        nl := p2G( pmnl );
-        n := p1NxL( nl ); 
-        l := p2NxL( nl ); 
-        a := [ ImageElm( bdy_rt, m )*p, 
-               ImageElm( bdy_lt, l ) * 
-                   ImageElm( ImageElm( act_rt, ImageElm(bdy_dn,n) ), m ) ];
-        Add( imt1, a );
-    od;
-    imt1form2 := List( imt1, x -> relsPxM[2][ Position( relsPxM[1], x )] );
+    ##  now find the isomorphism between the sources PNML and PMNL 
+    imiso := Concatenation( 
+           List( genP, p -> ImageElm( e1PMNL, ImageElm( e1PxM, p ) ) ), 
+           List( genN, n -> ImageElm( e2PMNL, ImageElm( e1NxL, n ) ) ), 
+           List( genM, m -> ImageElm( e1PMNL, ImageElm( e2PxM, m ) ) ), 
+           List( genL, l -> ImageElm( e2PMNL, ImageElm( e2NxL, l ) ) ) ); 
+    iso := GroupHomomorphismByImages( PNML, PMNL, genPNML, imiso ); 
+    inv := InverseGeneralMapping(iso); 
+    iminv := List( genPMNL, g -> ImageElm( inv, g ) ); 
+    guess := Concatenation( 
+           List( genP, p -> ImageElm( e1PNML, ImageElm( e1PxN, p ) ) ), 
+           List( genM, m -> ImageElm( e2PNML, ImageElm( e1MxL, m ) ) ), 
+           List( genN, n -> ImageElm( e1PNML, ImageElm( e2PxN, n ) ) ), 
+           List( genL, l -> ImageElm( e2PNML, ImageElm( e2MxL, l ) ) ) ); 
+    ok := (iminv = guess); 
+    Info( InfoXMod, 2, "iminv = guess? ", ok ); 
+    ##  construct an isomorphic up cat1-group 
+    tup := iso * TailMap( CPMNL );
+    hup := iso * HeadMap( CPMNL ); 
+    eup := e1PMNL * inv; 
+    C2PMNL := PreCat1GroupByTailHeadEmbedding( tup, hup, eup ); 
 
-    t1 := GroupHomomorphismByImages( G, PxM, genG, imt1form2 );
-## returns fail on calling C2conj := PreCat2GroupOfPreCrossedSquare( XSconj );
-
-    h1 := Projection( G );
-        t1 := GroupHomomorphismByImagesNC( G, G, genG, 
-              List( genG, x -> ImageElm( t1, x ) ) );
-    h1 := GroupHomomorphismByImagesNC( G, G, genG, 
-              List( genG, x -> ImageElm( h1, x ) )  );
-    C1 := PreCat1GroupByEndomorphisms( t1, h1 );
-    
-    MxL := SemidirectProduct( M, act_up, L );     
-    emb := Embedding( MxL, 1 ); 
-    emb := Embedding( MxL, 2 ); 
-    PxN := SemidirectProduct( P, act_dn, N);    
-    emb := Embedding( PxN, 1 ); 
-    emb := Embedding( PxN, 2 ); 
-    genMxL := GeneratorsOfGroup( MxL );    
-    genPxN := GeneratorsOfGroup( PxN );
-    if ( Length( genMxL ) = 0 ) then
-        genMxL := [ Identity( MxL ) ];
-    fi;
-    if ( Length( genPxN ) = 0 ) then
-        genPxN := [ Identity(PxN) ];
-    fi;
-
-    relsMxL := ElementsRelationsForSemidirectProduct( MxL );
-    relsPxN := ElementsRelationsForSemidirectProduct( PxN );
-    genMxLform2 := List( genMxL, x -> relsMxL[1][ Position( relsMxL[2], x )] );
-    genPxNform2 := List( genPxN, x -> relsPxN[1][ Position( relsPxN[2], x )] );
-
-    Info( InfoXMod, 3, "PxN = ", PxN );    
-    Info( InfoXMod, 3, "genPxN = ", genPxN );
-    Info( InfoXMod, 3, "genPxN2 = ", genPxNform2 );
-    Info( InfoXMod, 3, "relsPxN = ", relsPxN );
-    Info( InfoXMod, 3, "MxL = ", MxL );
-    Info( InfoXMod, 3, "genMxL = ", genMxL );
-    Info( InfoXMod, 3, "genMxL2 = ", genMxLform2 );
-    Info( InfoXMod, 3, "relsMxL = ", relsMxL );
-    
-    autgen2 := [ ];
-    for g in genPxNform2 do
-        p := g[1];
-        n := g[2];
-        ##  l := ml[2] and m := ml[1];
-        imautgen2form2 := List( genMxLform2, 
-                                ml -> [ ImageElm( ImageElm( act_rt, p ), ml[1]),
-        Image ( ImageElm(act_lt, n ), ImageElm( ImageElm(act_diag,p), ml[2]) ) * 
-         ImageElmCrossedPairing(h,[ImageElm(ImageElm(act_rt,p),ml[1]), n] )] );
-        imautgen2 := List( imautgen2form2, 
-                           x -> relsMxL[2][ Position( relsMxL[1], x )] );
-        a := GroupHomomorphismByImages( MxL, MxL, genMxL, imautgen2 );
-        Add( autgen2, a );
-    od;
-    
-    aut2 := Group( autgen2 );
-    SetIsGroupOfAutomorphisms( aut2, true );
-    act2 := GroupHomomorphismByImages( PxN, aut2, genPxN, autgen2 );
-    G2 := SemidirectProduct( PxN, act2, MxL );    
-    emb := Embedding( G2, 1 ); 
-    emb := Embedding( G2, 2 ); 
-    relsG2 := ElementsRelationsForSemidirectProduct( G2 );
-    genG2 := GeneratorsOfGroup( G2 );
-    genG2form2 := List( genG2, x -> relsG2[1][ Position( relsG2[2], x )] );
-    genG2form3 := List( genG2form2, 
-                        x -> [ relsPxN[1][ Position( relsPxN[2], x[1] )], 
-                               relsMxL[1][ Position( relsMxL[2], x[2] )] ] );
-    genG2form4 := []; 
-    for i in [1..Length(genG2form3)] do
-        Add( genG2form4, Flat(genG2form3[i]) );
-    od;
- 
-    Info( InfoXMod, 3, "G2 = ", G2 );
-    Info( InfoXMod, 3, "genG2 = ", genG2 );
-    Info( InfoXMod, 3, "relsG2 = ", relsG2 );
-    Info( InfoXMod, 3, "genG2form2 = ", genG2form2 );
-    Info( InfoXMod, 3, "genG2form3 = ", genG2form3 );
-    Info( InfoXMod, 3, "genG2form4 = ", genG2form4 );
-    
-    imt2 := [];    
-    for i in [1..Length(genG2form4)] do
-        p := genG2form4[i][1];
-        n := genG2form4[i][2];
-        m := genG2form4[i][3];
-        l := genG2form4[i][4];
-        a := [ ImageElm(bdy_rt,m)*p, ImageElm(bdy_lt,l) * 
-               ImageElm( ImageElm( act_dn, ImageElm(bdy_rt,m) ), n) ];
-        Add( imt2, a );        
-    od;
-   
-    imt2form2 := List( imt2, x -> relsPxN[2][ Position( relsPxN[1], x )] );
-    t2 := GroupHomomorphismByImages(G2, PxN, genG2,  imt2form2 );
-    h2 := Projection( G2 ); 
-    t2 := GroupHomomorphismByImagesNC( G2, G2, genG2, 
-              List(genG2, x -> ImageElm( t2, x ) )  );
-    h2 := GroupHomomorphismByImagesNC( G2, G2, genG2, 
-              List(genG2, x -> ImageElm( h2, x ) )  );
-    C2 := PreCat1GroupByEndomorphisms( t2, h2 );
-    Cat2 := CatnGroup( [ C1, C2 ] );
-    if HasName( XS ) then 
-        SetName( Cat2, Concatenation( "cat2(", Name(XS), ")" ) ); 
-    fi;
-    return Cat2;
-end );
+    ##  now see if a cat2-group has been constructed 
+    tlt := TailMap( CPNML );
+    hlt := HeadMap( CPNML ); 
+    elt := e1PNML; 
+    tdn := TailMap( Cright ); 
+    hdn := HeadMap( Cright );
+    edn := e1PxN; 
+    trt := TailMap( Cdown );
+    hrt := HeadMap( Cdown ); 
+    ert := e1PxM; 
+    tdi := tlt * tdn; 
+    if not ( tdi = tup * trt ) then 
+        Error( "tlt * tdn <> tup * trt" );  
+    fi; 
+    hdi := hlt * hdn; 
+    if not ( hdi = hup * hrt ) then 
+        Error( "hlt * hdn <> hup * hrt" );  
+    fi; 
+    edi := edn * elt; 
+    if not ( edi = ert * eup ) then 
+        Error( "edn * elt <> ert * eup" );  
+    fi; 
+    PC := PreCat2GroupByPreCat1Groups( CPNML, C2PMNL, Cdown, Cright );
+    Cdiag := PreCat1GroupByTailHeadEmbedding( tdi, hdi, edi ); 
+    SetDiagonal2DimensionalGroup( PC, Cdiag ); 
+    return PC; 
+end ); 
 
 InstallMethod( CrossedSquareOfCat2Group, "generic method for cat2-groups",
     true, [ IsCat2Group ], 0,

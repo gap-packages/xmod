@@ -20,15 +20,10 @@ gap> Z8 := XModByNormalSubgroup( s4b, k4b );;
 gap> SetName( X8, "X8" );  SetName( Z8, "Z8" );  
 gap> XZ8 := CoproductXMod( X8, Z8 );; 
 
-gap> A := AutomorphismPermGroup( X8 ); 
-<permutation group with 3 generators>
-gap> StructureDescription( A ); 
-"PSL(3,2)"
-gap> Size( A );
-168
-gap> A := AutomorphismPermGroup( Z8 );
-Group([ (1,3)(4,8)(5,6)(7,9), (1,3,2)(4,6,7)(5,8,9), (4,5)(7,9) ])
-gap> StructureDescription(A);     
+gap> AX8 := AutomorphismPermGroup( X8 );; 
+gap> StructureDescription( AX8 ); 
+"S4"
+gap> AZ8 := AutomorphismPermGroup( Z8 );;
 "S4"
 
 

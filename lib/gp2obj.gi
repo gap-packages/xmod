@@ -815,11 +815,12 @@ function( XM )
         imeS := List( gensrc, s -> ImageElm( eS, s ) );
         t := Projection( G );
         imt := List( genG, g -> ImageElm( t, g ) );
+        t := GroupHomomorphismByImages( G, Xrng, genG, imt );
         projS := List( imt, r -> ImageElm( eR, r^-1 ) );
         projS := List( [ 1..Length( genG ) ], i -> projS[i] * genG[i] );
         projS := List( projS, x -> PreImagesRepresentative( eS, x ) );
         imh := List( [ 1..Length( genG ) ],
-            i -> imt[i] * ImageElm( Xbdy, projS[i] ) );
+            i -> imt[i] * ImageElm( Xbdy, projS[i] ) ); 
         h := GroupHomomorphismByImages( G, Xrng, genG, imh );
     fi;
     SetSourceEmbedding( XM, eR );
@@ -2136,7 +2137,7 @@ function( PC )
     PCh := HeadMap( PC );
     PCe := RangeEmbedding( PC );
     # construct the quotient
-    Pf := PeifferSubgroup( PC );
+    Pf := PeifferSubgroupPreCat1Group( PC );
     if not IsNormal( PCsrc, Pf ) then
         Error( "Peiffer subgroup not normal in source group" );
     fi;

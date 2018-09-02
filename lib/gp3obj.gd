@@ -44,11 +44,13 @@ DeclareOperation( "ImageElmCrossedPairing", [ IsCrossedPairing, IsObject ] );
 #############################################################################
 ##
 #O  CrossedPairingByNormalSubgroups
-#O  CrossedPairingByDerivations
+#O  CrossedPairingByDerivation 
+#O  CrossedPairingByXModAction 
 ##
 DeclareOperation( "CrossedPairingByNormalSubgroups", 
     [ IsGroup, IsGroup, IsGroup ] );
 DeclareOperation( "CrossedPairingByDerivations", [ IsXMod ] );
+DeclareOperation( "CrossedPairingByXModAction", [ IsXMod ] );
 
 #############################################################################
 ##
@@ -123,6 +125,7 @@ InstallTrueMethod( IsPreCrossedSquare, IsCrossedSquare );
 #F  CrossedSquare( <args> ) 
 #O  CrossedSquareByXMods( <up>, <left>, <down>, <right>, <action>, <pairing> ) 
 #O  CrossedSquareByNormalSubgroups( <P>, <N>, <M>, <L> )
+#O  CrossedSquareByXModUpDown( <xmod> ) 
 #A  ActorCrossedSquare( <xmod> )
 ##
 DeclareGlobalFunction( "PreCrossedSquare" );
@@ -131,6 +134,7 @@ DeclareOperation( "CrossedSquareByXMods",
   [ IsXMod, IsXMod, IsXMod, IsXMod, IsGroupHomomorphism, IsCrossedPairing ] );
 DeclareOperation( "CrossedSquareByNormalSubgroups", 
     [ IsGroup, IsGroup, IsGroup, IsGroup ] );
+DeclareOperation( "CrossedSquareByXModUpDown", [ IsXMod ] );
 DeclareAttribute( "ActorCrossedSquare", IsXMod );
 
 #############################################################################
@@ -160,12 +164,15 @@ InstallTrueMethod( IsPreCat2Group, IsCat2Group );
 ##
 #F  PreCat2Group( <arg> ) 
 #F  Cat2Group( <arg> }
-#O  PreCat2GroupByPreCat1Groups( <first>, <second> )
+#O  DetermineDownRightCat1Groups( <first>, <second> )
+#O  PreCat2GroupByPreCat1Groups( <up>, <left>, <down>, <right> )
 ##
 DeclareGlobalFunction( "PreCat2Group" );
 DeclareGlobalFunction( "Cat2Group" );
-DeclareOperation( "PreCat2GroupByPreCat1Groups", 
+DeclareOperation( "DetermineDownRightCat1Groups", 
     [ IsPreCat1Group, IsPreCat1Group ] );
+DeclareOperation( "PreCat2GroupByPreCat1Groups", 
+    [ IsPreCat1Group, IsPreCat1Group, IsPreCat1Group, IsPreCat1Group ] );
 
 #############################################################################
 ## 
