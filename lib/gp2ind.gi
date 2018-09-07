@@ -968,7 +968,7 @@ InstallGlobalFunction( AllInducedXMods, function( arg )
     if ( InfoLevel( InfoXMod ) > 0 ) then 
         Print( "#I induced crossed modules [M->P] -> [iM->Q] where:\n" ); 
         Print( "#I groups [ M, P, iM, Q, ker(bdy) ] are:\n" ); 
-        PrintOneItemPerLine( descrip ); 
+        Perform( descrip, Display ); 
     fi;
     return all;
 end );
