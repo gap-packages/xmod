@@ -105,8 +105,8 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">=4.9.2",
-  NeededOtherPackages := [ ["Utils", ">= 0.57"], 
-                           ["groupoids", ">= 1.56"], 
+  NeededOtherPackages := [ ["Utils", ">= 0.58"], 
+                           ["groupoids", ">= 1.58"], 
                            ["Hap", ">= 1.12.6"],
                            ["AutPGrp", ">= 1.9"], 
                            ["SmallGrp", ">= 1.3" ] ], 
