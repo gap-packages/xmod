@@ -2,6 +2,7 @@
 
 ## 2.69 -> 2.69dev (00/09/2018) 
 
+ * (10/09/18) replaced PrintOneItemPerLine(L); with Perform(L,Display); 
  * (02/09/18) added CrossedPairingByXModAction, CrossedSquareByXModUpDown
  * (30/08/18) PreCat2GroupOfPreCrossedSquare revised : q8xscat2.tst, d24.tst 
  * (07/08/18) added PreCat2GroupByPreCat1Groups and other changes to gp3obj.*

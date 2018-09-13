@@ -845,7 +845,7 @@ function( mon )
     else 
         Error( "neither derivations nor sections" ); 
     fi; 
-    PrintListOneItemPerLine( ImagesList( mon ) ); 
+    Perform( ImagesList( mon ), Display ); 
 end ); 
 
 InstallMethod( ViewObj, "for IsMonoidOfUp2DimensionalMappings", true,

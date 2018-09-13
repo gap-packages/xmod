@@ -93,16 +93,15 @@ gap> [ WhiteheadOrder( chi2 ), WhiteheadOrder( xi2 ) ];
 ## Section 5.2.1
 gap> all3 := AllDerivations( X3 );
 monoid of derivations with images list:
-[ [ (), () ],
-  [ (), (1,3,2)(4,5,6) ],
-  [ (), (1,2,3)(4,6,5) ],
-  [ (1,3,2)(4,5,6), () ],
-  [ (1,3,2)(4,5,6), (1,3,2)(4,5,6) ],
-  [ (1,3,2)(4,5,6), (1,2,3)(4,6,5) ],
-  [ (1,2,3)(4,6,5), () ],
-  [ (1,2,3)(4,6,5), (1,3,2)(4,5,6) ],
-  [ (1,2,3)(4,6,5), (1,2,3)(4,6,5) ]
-  ]
+[ (), () ]
+[ (), (1,3,2)(4,5,6) ]
+[ (), (1,2,3)(4,6,5) ]
+[ (1,3,2)(4,5,6), () ]
+[ (1,3,2)(4,5,6), (1,3,2)(4,5,6) ]
+[ (1,3,2)(4,5,6), (1,2,3)(4,6,5) ]
+[ (1,2,3)(4,6,5), () ]
+[ (1,2,3)(4,6,5), (1,3,2)(4,5,6) ]
+[ (1,2,3)(4,6,5), (1,2,3)(4,6,5) ]
 gap> DerivationClass( all3 );
 "all"
 gap> Perform( ImagesTable( all3 ), Display );
@@ -136,12 +135,12 @@ gap> GeneratorsOfMonoid( wtm3 );
 ## Section 5.2.2
 gap> reg3 := RegularDerivations( X3 );
 monoid of derivations with images list:
-[ [ (), () ],
-  [ (), (1,3,2)(4,5,6) ],
-  [ (), (1,2,3)(4,6,5) ],
-  [ (1,3,2)(4,5,6), () ],
-  [ (1,3,2)(4,5,6), (1,3,2)(4,5,6) ],
-  [ (1,3,2)(4,5,6), (1,2,3)(4,6,5) ] ]
+[ (), () ]
+[ (), (1,3,2)(4,5,6) ]
+[ (), (1,2,3)(4,6,5) ]
+[ (1,3,2)(4,5,6), () ]
+[ (1,3,2)(4,5,6), (1,3,2)(4,5,6) ]
+[ (1,3,2)(4,5,6), (1,2,3)(4,6,5) ]
 gap> wgt3 := WhiteheadGroupTable( X3 );; 
 gap> Perform( wgt3, Display );
 [ 1, 2, 3, 4, 5, 6 ]
@@ -156,10 +155,9 @@ Group([ (1,2,3)(4,5,6), (1,4)(2,6)(3,5) ])
 ## Section 5.2.3
 gap> PDX3 := PrincipalDerivations( X3 );
 monoid of derivations with images list:
-[ [ (), () ],
-  [ (), (1,3,2)(4,5,6) ],
-  [ (), (1,2,3)(4,6,5) ]
-  ]
+[ (), () ]
+[ (), (1,3,2)(4,5,6) ]
+[ (), (1,2,3)(4,6,5) ]
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 

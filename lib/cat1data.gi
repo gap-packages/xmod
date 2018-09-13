@@ -126,7 +126,7 @@ function( gp )
                    StructureDescription( ireps[i] ), "\n" ); 
         od; 
     elif ( InfoLevel( InfoXMod ) > 0 ) then 
-        PrintListOneItemPerLine( ireps ); 
+        Perform( ireps, Display ); 
     fi;
     idems := ListWithIdenticalEntries( nireps, 0 ); 
     for i in [1..nireps] do 
@@ -162,7 +162,7 @@ function( gp )
     fi; 
     if ( InfoLevel( InfoXMod ) > 1 ) then 
         Print( "\nidems = \n" ); 
-        PrintListOneItemPerLine( idems ); 
+        Perform( idems, Display ); 
     fi; 
 
     C := [ ];
@@ -354,7 +354,7 @@ function( gp )
             Print( ireps[i], " <--> ", StructureDescription(ireps[i]), "\n" ); 
         od; 
     else 
-        PrintListOneItemPerLine( ireps ); 
+        Perform( ireps, Display ); 
     fi; 
     PrintTo( rout, "ireps := ", ireps, ";\n" ); 
     iname := Concatenation( String(size), ".", String(num), ".ids" ); 
@@ -424,7 +424,7 @@ function( gp, ireps, fst, lst )
         od;  
         Print( "# idempotents = ", Length( idem ), "\n" ); 
         if ( InfoLevel( InfoXMod ) >= 2 ) then 
-            PrintListOneItemPerLine( idem ); 
+            Perform( idem, Display ); 
         fi; 
         if ( idem = [ ] ) then 
             AppendTo( iout, "[ ]" ); 
