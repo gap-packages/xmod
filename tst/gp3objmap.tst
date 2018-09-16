@@ -150,9 +150,7 @@ crossed square with crossed modules:
     down = [Group( [ (1,2,3,4)(5,6,7,8), (), () ] ) -> Group( () )]
    right = [Group( [ ( 2, 6)( 4, 8) ] ) -> Group( () )]
 
-gap> Cat2GroupOfCrossedSquare( XSact );
-Warning: these conversion functions are still being developed.
-fail
+## gap> Cat2GroupOfCrossedSquare( XSact );
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 

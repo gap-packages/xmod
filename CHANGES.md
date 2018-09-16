@@ -1,6 +1,6 @@
 # CHANGES to the 'XMod' package
 
-## 2.69 -> 2.71 (13/09/2018) 
+## 2.69 -> 2.72 (16/09/2018) 
 
  * (10/09/18) replaced PrintOneItemPerLine(L); with Perform(L,Display); 
  * (02/09/18) added CrossedPairingByXModAction, CrossedSquareByXModUpDown
