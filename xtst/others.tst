@@ -23,9 +23,6 @@ gap> XZ8 := CoproductXMod( X8, Z8 );;
 gap> AX8 := AutomorphismPermGroup( X8 );; 
 gap> StructureDescription( AX8 ); 
 "S4"
-gap> AZ8 := AutomorphismPermGroup( Z8 );;
-"S4"
-
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> STOP_TEST( "others.tst", 10000 );
