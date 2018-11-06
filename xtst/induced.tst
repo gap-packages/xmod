@@ -27,10 +27,15 @@ Crossed module [c4->PAut(c4)] :-
   (1,2) --> { source gens --> [ (5,8,7,6) ] }
   This automorphism generates the group of automorphisms.
 
-gap> c6 := Group( (11,12,13,14,15,16) );; 
-gap> SetName( c6, "c6" ); 
 gap> c2 := Range( X4 );; 
 gap> SetName( c2, "c2" );
+gap> c2dash := Group( (3,4) );;
+gap> dash := GroupHomomorphismByImages( c2, c2dash, [(1,2)], [(3,4)] );;
+gap> X4dash := InducedXMod( X4, dash );
+i*([c4->PAut(c4)])
+
+gap> c6 := Group( (11,12,13,14,15,16) );; 
+gap> SetName( c6, "c6" ); 
 gap> iota := GroupHomomorphismByImages( c2, c6, 
 >                [ (1,2) ], [ (11,14)(12,15)(13,16) ] );; 
 gap> indc4c2c6 := InclusionInducedXModByCopower( X4, iota, [ ] );; 
@@ -106,9 +111,9 @@ gap> c5 := Group( (1,2,3,4,5) );;
 gap> SetName( c5, "c5" );
 gap> c4 := Group( (4,5,6,7) );; 
 gap> SetName( c4, "c4" ); 
-gap> bdy4 := GroupHomomorphismByImages( c5, c4, [ (1,2,3,4,5) ], [ () ] );; 
-gap> X4 := XModByTrivialAction( bdy4 );; 
-gap> Display( X4 ); 
+gap> bdy54 := GroupHomomorphismByImages( c5, c4, [ (1,2,3,4,5) ], [ () ] );; 
+gap> X54 := XModByTrivialAction( bdy54 );; 
+gap> Display( X54 ); 
 
 Crossed module [c5->c4] :- 
 : Source group c5 has generators:
@@ -124,11 +129,11 @@ gap> SetName( c2, "c2" );
 gap> surj := GroupHomomorphismByImages( c4, c2, [ (4,5,6,7) ], [ (8,9) ] );; 
 gap> K := Kernel( surj );; 
 gap> SetName( K, "ker(surj)" ); 
-gap> D := DisplacementGroup( X4, K, c5 );; 
+gap> D := DisplacementGroup( X54, K, c5 );; 
 gap> SetName( D, "D" ); 
 gap> Size( D ) = 1; 
 true
-gap> ind2 := InducedXMod( X4, surj );; 
+gap> ind2 := InducedXMod( X54, surj );; 
 gap> Display( ind2 );
 
 Crossed module i*([c5->c4]) :- 
@@ -216,6 +221,36 @@ Crossed module [c6^6->s3] :-
   (25,26,27,28,29,30), (31,32,33,34,35,36), (13,14,15,16,17,18), 
   (19,20,21,22,23,24) ] }
   These 2 automorphisms generate the group of automorphisms.
+
+gap> ## this example used to be in tst/gp2ind.tst 
+gap> b1 := (11,12,13,14,15,16,17,18);; 
+gap> b2 := (12,18)(13,17)(14,16);;
+gap> d16 := Group( b1, b2 );;
+gap> SetName( d16, "d16" ); 
+gap> d8 := Subgroup( d16, [ b1^2, b2 ] );  SetName( d8, "d8" ); 
+Group([ (11,13,15,17)(12,14,16,18), (12,18)(13,17)(14,16) ])
+gap> c4 := Subgroup( d8, [ b1^2 ] );  SetName( c4, "c4" ); 
+Group([ (11,13,15,17)(12,14,16,18) ])
+gap> Y16 := XModByNormalSubgroup( d16, d8 );                   
+[d8->d16]
+gap> Y8 := SubXMod( Y16, c4, d8 );            
+[c4->d8]
+gap> inc8 := InclusionMorphism2DimensionalDomains( Y16, Y8 ); 
+[[c4->d8] => [d8->d16]]
+gap> incd8 := RangeHom( inc8 );;
+gap> indY8 := InducedXMod( Y8, incd8 );
+i*([c4->d8])
+gap> StructureDescription( indY8 );
+[ "C4 x C4", "D16" ]
+gap> morY8 := MorphismOfInducedXMod( indY8 );
+[[c4->d8] => i*([c4->d8])]
+gap> s4 := Group( (1,2), (2,3), (3,4) );; 
+gap> s3c := Subgroup( s4, [ (2,3), (3,4) ] );;  
+gap> SetName( s3c, "s3c" );
+gap> indXs3c := InducedXMod( s4, s3c, s3c );
+i*([s3c->s3c])
+gap> StructureDescription( indXs3c );
+[ "GL(2,3)", "S4" ]
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> STOP_TEST( "induced.tst", 10000 );

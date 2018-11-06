@@ -1,5 +1,9 @@
 # CHANGES to the 'XMod' package
 
+## 2.72 -> 2.72dev (00/11/2018) 
+
+ * (06/11/18) added special case of InducedXMod when iota is bijective 
+
 ## 2.69 -> 2.72 (16/09/2018) 
 
  * (10/09/18) replaced PrintOneItemPerLine(L); with Perform(L,Display); 
