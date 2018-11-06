@@ -263,6 +263,10 @@ gap> XSconj := CrossedSquareByNormalSubgroups( d20, d10b, d10a, c5d );
 
 gap> Name( XSconj );
 "[c5d->d10b,d10a->d20]"
+gap> Size( XSconj );
+[ 5, 10, 10, 20 ]
+gap> IdGroup( XSconj );
+[ [ 5, 1 ], [ 10, 1 ], [ 10, 1 ], [ 20, 4 ] ]
 gap> XStrans := Transpose3dGroup( XSconj ); 
 [  c5d -> d10a ]
 [   |      |   ]
