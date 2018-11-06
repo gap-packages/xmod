@@ -66,7 +66,7 @@ gap> IdGroup( CentreXMod( Xn7 ) );
 [ [ 4, 1 ], [ 4, 1 ] ]
 gap> CQXn7 := CentralQuotient( Xn7 );;
 gap> IdGroup( CQXn7 );
-[ [ [ 12, 2 ], [ 3, 1 ] ], [ [ 24, 5 ], [ 6, 1 ] ] ]
+[ [ 12, 2 ], [ 3, 1 ], [ 24, 5 ], [ 6, 1 ] ]
 
 ## Section 8.2.4
 gap> Up2DimensionalGroup( XSconj );
@@ -154,7 +154,12 @@ crossed square with crossed modules:
     down = [Group( [ (1,2,3,4)(5,6,7,8), (), () ] ) -> Group( () )]
    right = [Group( [ ( 2, 6)( 4, 8) ] ) -> Group( () )]
 
-## gap> Cat2GroupOfCrossedSquare( XSact );
+gap> ## should the name be c4:c5 ?? 
+gap> SetName(Range(Up2DimensionalGroup(XSact)),"c5:c4");
+gap> SetName(Range(Down2DimensionalGroup(XSact)),"c5:c4");
+gap> Name(XSact);
+"[d10a->c5:c4,d20->c5:c4]"
+## gap> PreCat2GroupOfPreCrossedSquare( XSact );
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 

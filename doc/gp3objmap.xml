@@ -332,7 +332,7 @@ crossed square with:
    right = [Group( [ f1 ] )->Group( [ f1, f2 ] )]
 
 gap> IdGroup( CQXn7 );
-[ [ [ 12, 2 ], [ 3, 1 ] ], [ [ 24, 5 ], [ 6, 1 ] ] ]
+[ [ 12, 2 ], [ 3, 1 ], [ 24, 5 ], [ 6, 1 ] ]
 ]]>
 </Example>
 
