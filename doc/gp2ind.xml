@@ -106,10 +106,9 @@ Induced crossed modules and induced cat1-groups also provide the
 building blocks for constructing pushouts in the categories
 <E>XMod</E> and <E>Cat1</E>.
 <P/>
-Data for the cases of algebraic interest is provided by a conjugation
+Data for the cases of algebraic interest is provided by a 
 crossed module  <M>{\mathcal X} = (\partial  :  S \to R)</M>
-and a homomorphism  <M>\iota</M>  from  <M>R</M>  to a third group  <M>Q</M>. 
-(It is hoped to implement more general cases in due course.) 
+and a homomorphism  <M>\iota : R \to Q</M>. 
 The output from the calculation is a crossed module
 <M>\iota_{\ast}{\mathcal X} = (\delta  :  \iota_{\ast}S \to Q)</M>
 together with a morphism of crossed modules
@@ -134,7 +133,7 @@ As a first, surjective example, we take for <M>{\mathcal X}</M>
 the normal inclusion crossed module of <C>a4</C> in <C>s4</C>,
 and for <M>\iota</M> the surjection from <C>s4</C> to <C>s3</C> 
 with kernel <C>k4</C>.  
-The induced crossed module is isomorphic to <C>X3</C>.
+The induced crossed module is isomorphic to <C>X3 = [c3->s3]</C>.
 </Description>
 </ManSection>
 <P/>
@@ -169,38 +168,28 @@ gap> morX4 := MorphismOfInducedXMod( indX4 );
 </Example>
 
 For a second, injective example we take for <M>{\mathcal X}</M> 
-a conjugation crossed module. 
+the automorphism crossed module <C>X8</C> of <Ref Oper="CoproductXMod"/>, 
+and for <M>\iota</M> an inclusion of <C>s4b</C> in <C>s5</C>. 
+The resulting source group is <C>SL(2,5)</C>. 
 <P/>
 <Example>
 <![CDATA[
-gap> d8 := Subgroup( d16, [ b1^2, b2 ] );  SetName( d8, "d8" ); 
-Group([ (11,13,15,17)(12,14,16,18), (12,18)(13,17)(14,16) ])
-gap> c4 := Subgroup( d8, [ b1^2 ] );  SetName( c4, "c4" ); 
-Group([ (11,13,15,17)(12,14,16,18) ])
-gap> Y16 := XModByNormalSubgroup( d16, d8 );                   
-[d8->d16]
-gap> Y8 := SubXMod( Y16, c4, d8 );            
-[c4->d8]
-gap> inc8 := InclusionMorphism2DimensionalDomains( Y16, Y8 ); 
-[[c4->d8] => [d8->d16]]
-gap> incd8 := RangeHom( inc8 );;
-gap> indY8 := InducedXMod( Y8, incd8 );
-i*([c4->d8])
-gap> StructureDescription( indY8 );
-[ "C4 x C4", "D16" ]
-gap> morY8 := MorphismOfInducedXMod( indY8 );
-[[c4->d8] => i*([c4->d8])]
-gap> s3c := Subgroup( s4, [ (2,3), (3,4) ] );;  
-gap> SetName( s3c, "s3c" );
-gap> indXs3c := InducedXMod( s4, s3c, s3c );
-i*([s3c->s3c])
-gap> StructureDescription( indXs3c );
-[ "GL(2,3)", "S4" ]
+gap> iso4 := IsomorphismGroups( s4b, s4 );; 
+gap> s5 := Group( (1,2,3,4,5), (4,5) );; 
+gap> SetName( s5, "s5" ); 
+gap> inc45 := InclusionMappingGroups( s5, s4 );;
+gap> iota45 := iso4 * inc45;; 
+gap> indX8 := InducedXMod( X8, iota45 );
+i*(X8)
+gap> Size( indX8 );
+[ 120, 120 ]
+gap> StructureDescription( indX8 );          
+[ "SL(2,5)", "S5" ]
 ]]>
 </Example>
 
 For a third example we use the version <C>InducedXMod(Q,R,S)</C> 
-of this global function. 
+of this global function, with <M>Q \geqslant R \unrhd S</M>. 
 We take the identity mapping on <C>s3c</C> as boundary,
 and the inclusion of <C>s3c</C> in <C>s4</C> as <M>\iota</M>.
 The induced group is a general linear group <C>GL(2,3)</C>.
@@ -222,9 +211,9 @@ gap> StructureDescription( indXs3c );
          Arg="Q" />
 <Description>
 This function calculates all the induced crossed modules 
-<C>InducedXMod( Q, R, S )</C>, 
+<C>InducedXMod(Q,R,S)</C>, 
 where <C>R</C> runs over all conjugacy classes of subgroups of <C>Q</C> 
-and <C>S</C> runs over all non-trivial subgroups of <C>R</C>.
+and <C>S</C> runs over all non-trivial normal subgroups of <C>R</C>.
 </Description>
 </ManSection>
 <Example>

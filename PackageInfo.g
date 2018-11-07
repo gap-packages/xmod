@@ -7,8 +7,8 @@ SetPackageInfo( rec(
 
 PackageName := "XMod",
 Subtitle := "Crossed Modules and Cat1-Groups",
-Version := "2.72",
-Date := "16/09/2018",
+Version := "2.72dev",
+Date := "00/11/2018",
 
 Persons := [
   rec(
@@ -105,8 +105,8 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">=4.9.3",
-  NeededOtherPackages := [ ["Utils", ">= 0.58"], 
-                           ["groupoids", ">= 1.59"], 
+  NeededOtherPackages := [ ["Utils", ">= 0.59"], 
+                           ["groupoids", ">= 1.63"], 
                            ["Hap", ">= 1.12.6"],
                            ["AutPGrp", ">= 1.9"], 
                            ["SmallGrp", ">= 1.3" ] ], 

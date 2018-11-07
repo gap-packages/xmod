@@ -117,18 +117,18 @@ end );
 
 ##############################################################################
 ##
-#F  InducedXMod( <grp>, <grp>, <grp>, <trans> )         crossed module induced 
-#F  InducedXMod( <xmod>, <hom> [, <trans>] )             by group homomorphism
+#F  InducedXMod( <xmod>, <hom> [, <trans>] )            crossed module induced
+#F  InducedXMod( <grp>, <grp>, <grp> [, <trans>] )       by group homomorphism 
 ##
 InstallGlobalFunction( InducedXMod, function( arg )
 
     local usage, nargs, X0, M, P, Q, iota, ires, T, iP, X1, inc, IX;
 
     usage := function( u )
-        Print("\nUsage: InducedXMod( Q, P, M [, T] );");
-        Print("\n where  Q >= P |>= M  and  T  is a transversal for Q/P");
-        Print("\n   or: InducedXMod( X, iota [, T] );");
-        Print("\n where X is a crossed module and iota is a homomorphism\n\n");
+        Print("\nUsage: InducedXMod( X, iota [, T] );");
+        Print("\n where X is a crossed module and iota is a homomorphism");
+        Print("\n   or: InducedXMod( Q, P, M [, T] );");
+        Print("\n where  Q >= P |>= M  and  T  is a transversal for Q/P\n\n");
     end;
     nargs := Length( arg );
     if ( ( nargs < 2 ) or ( nargs > 4 ) ) then
@@ -175,12 +175,12 @@ InstallGlobalFunction( InducedXMod, function( arg )
     elif ( Size( P ) = 1 ) then 
         Info( InfoXMod, 3, "using induced xmod with trivial range" ); 
         IX := InducedXModFromTrivialRange( X0, iota ); 
-    elif IsInjective( iota ) then
-        Info( InfoXMod, 3, "iota is mono" );
-        IX := InclusionInducedXModByCopower( X0, iota, T );
     elif IsSurjective( iota ) then
         Info( InfoXMod, 3, "iota is surj" );
         IX := SurjectiveInducedXMod( X0, iota );
+    elif IsInjective( iota ) then
+        Info( InfoXMod, 3, "iota is mono" );
+        IX := InclusionInducedXModByCopower( X0, iota, T );
     else  ## split in two ##
         Info( InfoXMod, 3, "splitting into surjective and injective cases" );
         iP := ImagesSource( iota );
@@ -194,10 +194,10 @@ InstallGlobalFunction( InducedXMod, function( arg )
         inc := InclusionMappingGroups( Q, iP );
         IX := InclusionInducedXModByCopower( X1, inc, [ ] );
     fi;
-    if HasName( M ) then
-        SetName( IX, Concatenation( "i*(", Name( M ), ")" ) );
-    elif HasName( X0 ) then
-        SetName( IX, Concatenation( "i*(Source(", Name( X0 ), "))" ) );
+    if HasName( X0 ) then
+        SetName( IX, Concatenation( "i*(", Name( X0 ), ")" ) );
+    elif HasName(M) and HasName(P) and HasName(Q) then
+        SetName( IX, Concatenation( "i*(", [Name(Q),Name(P),Name(M)], ")" ) );
     fi;
     return IX;
 end );
@@ -803,6 +803,14 @@ function( X0, iota )
     Info( InfoXMod, 2, "calling SurjectiveInducedXMod" ); 
     R := Range( X0 );
     S := Source( X0 );
+    if IsBijective( iota ) then 
+        Info( InfoXMod, 2, "constructing isomorphic xmod" ); 
+        istar := IdentityMapping( S ); 
+        mor := IsomorphismByIsomorphisms( X0, [ istar, iota ] );
+        IX := Image( mor ); 
+        SetMorphismOfInducedXMod( IX, mor );
+        return IX;
+    fi; 
     ispc := IsPc2DimensionalGroup( X0 ); 
     genS := GeneratorsOfGroup( S );
     bdy := Boundary( X0 );

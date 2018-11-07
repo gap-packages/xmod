@@ -44,7 +44,7 @@ gap> info := CoproductInfo( XZ8 );
 rec( embeddings := [ [X8 => XZ8], [Z8 => XZ8] ], xmods := [ X8, Z8 ] )
 gap> SetInfoLevel( InfoXMod, 0 ); 
 
-## Section 7.2.1
+## Section 7.2.1 : Example 1
 gap> s4gens := GeneratorsOfGroup( s4 );
 [ (1,2), (2,3), (3,4) ]
 gap> a4gens := GeneratorsOfGroup( a4 );
@@ -71,24 +71,20 @@ Crossed module [a4/ker->s3b] :-
 gap> morX4 := MorphismOfInducedXMod( indX4 );
 [[a4->s4] => [a4/ker->s3b]]
 
+## Section 7.2.1 : Example 2 
+gap> iso4 := IsomorphismGroups( s4b, s4 );; 
+gap> s5 := Group( (1,2,3,4,5), (4,5) );; 
+gap> SetName( s5, "s5" ); 
+gap> inc45 := InclusionMappingGroups( s5, s4 );;
+gap> iota45 := iso4 * inc45;; 
+gap> indX8 := InducedXMod( X8, iota45 );
+i*(X8)
+gap> Size( indX8 );
+[ 120, 120 ]
+gap> StructureDescription( indX8 );          
+[ "SL(2,5)", "S5" ]
 
-gap> d8 := Subgroup( d16, [ b1^2, b2 ] );  SetName( d8, "d8" ); 
-Group([ (11,13,15,17)(12,14,16,18), (12,18)(13,17)(14,16) ])
-gap> c4 := Subgroup( d8, [ b1^2 ] );  SetName( c4, "c4" ); 
-Group([ (11,13,15,17)(12,14,16,18) ])
-gap> Y16 := XModByNormalSubgroup( d16, d8 );                   
-[d8->d16]
-gap> Y8 := SubXMod( Y16, c4, d8 );            
-[c4->d8]
-gap> inc8 := InclusionMorphism2DimensionalDomains( Y16, Y8 ); 
-[[c4->d8] => [d8->d16]]
-gap> incd8 := RangeHom( inc8 );;
-gap> indY8 := InducedXMod( Y8, incd8 );
-i*([c4->d8])
-gap> StructureDescription( indY8 );
-[ "C4 x C4", "D16" ]
-gap> morY8 := MorphismOfInducedXMod( indY8 );
-[[c4->d8] => i*([c4->d8])]
+## Section 7.2.1 : Example 2 
 gap> s3c := Subgroup( s4, [ (2,3), (3,4) ] );;  
 gap> SetName( s3c, "s3c" );
 gap> indXs3c := InducedXMod( s4, s3c, s3c );

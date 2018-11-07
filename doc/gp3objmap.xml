@@ -142,7 +142,9 @@ via <M>P</M> are compatible since
 </Display>
 <P/>
 (A <E>precrossed square</E> is a similar structure which satisfies 
-some subset of these axioms.  [More needed here.]) 
+some subset of these axioms. 
+<P/>
+[More needed here.]) 
 <P/>
 Crossed squares are the <M>n=2</M> case of a 
 crossed <M>n</M>-cube of groups, defined as follows. 
@@ -181,11 +183,11 @@ There is then a long list of axioms which must be satisfied.
 
 Analogously to the data structure used for crossed modules, 
 crossed squares are implemented as <C>3d-groups</C>. 
-When times allows, cat<M>^2</M>-groups will also be implemented, 
+There are also experimental implementations of cat<M>^2</M>-groups, 
 with conversion between the two types of structure.
 
 Some standard constructions of crossed squares are listed below. 
-At present, a limited number of constructions are implemented.
+At present, a limited number of constructions is implemented.
 Morphisms of crossed squares have also been implemented, 
 though there is still a lot to be done.
 
@@ -198,13 +200,8 @@ though there is still a lot to be done.
          Arg="X0" />
    <Attr Name="Transpose3dGroup" 
          Arg="S0" />
-   <Attr Name="Name" 
+   <Meth Name="Name" 
          Arg="S0" />
-<!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
-<!--   <Oper Name="CrossedSquareByXMods"                   -->
-<!--         Arg="X1 X2 X3 X4 action pairing" /> -->
-<!--   <Oper Name="AsCrossedSquare"                        -->
-<!--         Arg="obj" />                        -->
 <Description>
 Here are some standard examples of crossed squares.
 <List>
@@ -263,6 +260,10 @@ gap> XSconj := CrossedSquareByNormalSubgroups( d20, d10b, d10a, c5d );
 
 gap> Name( XSconj );
 "[c5d->d10b,d10a->d20]"
+gap> Size( XSconj );
+[ 5, 10, 10, 20 ]
+gap> IdGroup( XSconj );
+[ [ 5, 1 ], [ 10, 1 ], [ 10, 1 ], [ 20, 4 ] ]
 gap> XStrans := Transpose3dGroup( XSconj ); 
 [  c5d -> d10a ]
 [   |      |   ]
@@ -316,19 +317,14 @@ constructed in section <Ref Sect="sect-more-xmod-ops" />.
 <Example>
 <![CDATA[
 gap> pos7 := Position( ids, [ [12,2], [24,5] ] );;
-gap> Xn7 := nsx[pos7]; 
-[Group( [ f2, f3, f4 ] )->Group( [ f1, f2, f4, f5 ] )]
-gap> IdGroup( CentreXMod(Xn7) );  
+gap> Xn7 := nsx[pos7];; 
+gap> IdGroup( Xn7 );
+[ [ 12, 2 ], [ 24, 5 ] ]
+gap> IdGroup( CentreXMod( Xn7 ) );  
 [ [ 4, 1 ], [ 4, 1 ] ]
-gap> CQXn7 := CentralQuotient( Xn7 );
-crossed square with:
-      up = [Group( [ f2, f3, f4 ] )->Group( [ f1 ] )]
-    left = [Group( [ f2, f3, f4 ] )->Group( [ f1, f2, f4, f5 ] )]
-    down = [Group( [ f1, f2, f4, f5 ] )->Group( [ f1, f2 ] )]
-   right = [Group( [ f1 ] )->Group( [ f1, f2 ] )]
-
+gap> CQXn7 := CentralQuotient( Xn7 );;
 gap> IdGroup( CQXn7 );
-[ [ [ 12, 2 ], [ 3, 1 ] ], [ [ 24, 5 ], [ 6, 1 ] ] ]
+[ [ 12, 2 ], [ 3, 1 ], [ 24, 5 ], [ 6, 1 ] ]
 ]]>
 </Example>
 
@@ -674,7 +670,7 @@ false
    <Attr Name="CrossedSquareOfCat2Group"
          Arg="CC" />
 <Description>
-<E>These functions are very experimental, and should not be relied on!</E> 
+<E>These functions are very experimental!</E> 
 <P/>
 These functions provide the conversion from crossed square to cat2-group, 
 and conversely.  (They are the 3-dimensional equivalents of 
@@ -691,9 +687,18 @@ crossed square with crossed modules:
 [ (1,2,3,4)(5,6,7,8), (), () ] )]
     down = [Group( [ (1,2,3,4)(5,6,7,8), (), () ] ) -> Group( () )]
    right = [Group( [ ( 2, 6)( 4, 8) ] ) -> Group( () )]
-gap> Cat2GroupOfCrossedSquare( XSact );
-Warning: these conversion functions are still being developed.
-fail
+
+gap> SetName( Range( Up2DimensionalGroup( XSact ) ), "c5:c4" );
+gap> SetName( Range( Down2DimensionalGroup( XSact ) ), "c5:c4" );
+gap> Name( XSact );
+"[d10a->c5:c4,d20->c5:c4]"
+
+gap> C2act := Cat2GroupOfCrossedSquare( XSact );             
+cat2-group with generating (pre-)cat1-groups:
+1 : [((c5:c4 |X c5:c4) |X (d20 |X d10a))=>(c5:c4 |X c5:c4)]
+2 : [((c5:c4 |X c5:c4) |X (d20 |X d10a))=>(c5:c4 |X d20)]
+gap> Size( C2act );
+[ 80000, 400, 400, 20 ]
 ]]>
 </Example>
 

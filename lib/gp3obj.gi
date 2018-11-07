@@ -409,9 +409,9 @@ end );
 
 #############################################################################
 ##
-#M  Name . . . . . . . . . . . . . . . . . . . . . . for a pre-crossed square
+#M  Name . . . . . . . . . . . . . . . . . . . . .  for a 3-dimensional group 
 ##
-InstallMethod( Name, "method for a pre-crossed square", true, 
+InstallOtherMethod( Name, "method for a pre-crossed square", true, 
     [ IsHigherDimensionalGroup ], 0,
 function( PS )
 
@@ -445,6 +445,32 @@ function( PS )
         return name;
     fi;
 end );
+
+#############################################################################
+##
+#M  Size . . . . . . . . . . . . . . . . . . . . .  for a 3-dimensional group
+##
+InstallOtherMethod( Size, "method for a 3-dimensional group", true, 
+    [ IsHigherDimensionalGroup ], 0,
+function( PS ) 
+    return [ Size( Source( Up2DimensionalGroup( PS ) ) ), 
+             Size( Range( Up2DimensionalGroup( PS ) ) ),
+             Size( Source( Down2DimensionalGroup( PS ) ) ),
+             Size( Range( Down2DimensionalGroup( PS ) ) ) ]; 
+end ); 
+
+#############################################################################
+##
+#M  IdGroup . . . . . . . . . . . . . . . . . . . . for a 3-dimensional group
+##
+InstallOtherMethod( IdGroup, "method for a 3-dimensional group", true, 
+    [ IsHigherDimensionalGroup ], 0,
+function( PS ) 
+    return [ IdGroup( Source( Up2DimensionalGroup( PS ) ) ), 
+             IdGroup( Range( Up2DimensionalGroup( PS ) ) ),
+             IdGroup( Source( Down2DimensionalGroup( PS ) ) ),
+             IdGroup( Range( Down2DimensionalGroup( PS ) ) ) ]; 
+end ); 
 
 ##############################################################################
 ##
@@ -1161,7 +1187,7 @@ function( XS )
             Concatenation( 
                 List( genN, n -> ImageElm( e1NxL, n ) * 
                                  ImageElm( e2NxL,  
-                                 ImageElmCrossedPairing( xpair, [n,m] ) )), 
+                                 ImageElmCrossedPairing( xpair, [m,n] ) )^-1 ), 
                 List( genL, l -> ImageElm( e2NxL, 
                                  ImageElm( ImageElm( act_lt, m ), l ))) ))) ); 
     Info( InfoXMod, 2, "autgenNxL = ", autgenNxL ); 
