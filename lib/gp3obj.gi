@@ -1187,7 +1187,7 @@ function( XS )
             Concatenation( 
                 List( genN, n -> ImageElm( e1NxL, n ) * 
                                  ImageElm( e2NxL,  
-                                 ImageElmCrossedPairing( xpair, [n,m] ) )), 
+                                 ImageElmCrossedPairing( xpair, [m,n] ) )^-1 ), 
                 List( genL, l -> ImageElm( e2NxL, 
                                  ImageElm( ImageElm( act_lt, m ), l ))) ))) ); 
     Info( InfoXMod, 2, "autgenNxL = ", autgenNxL ); 

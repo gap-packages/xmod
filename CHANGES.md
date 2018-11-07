@@ -2,6 +2,7 @@
 
 ## 2.72 -> 2.72dev (00/11/2018) 
 
+ * (07/11/18) fixed problem with Cat2GroupOfCrossedSquare 
  * (06/11/18) added special case of InducedXMod when iota is bijective 
 
 ## 2.69 -> 2.72 (16/09/2018) 

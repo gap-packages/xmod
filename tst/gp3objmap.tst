@@ -126,7 +126,7 @@ gap> KnownPropertiesOfObject( autoconj );
   "IsEndomorphismHigherDimensionalDomain", 
   "IsAutomorphismHigherDimensionalDomain" ]
 
-# Section 8.4.2 
+# Section 8.4.1 
 gap> a := (1,2,3,4)(5,6,7,8);;
 gap> b := (1,5)(2,6)(3,7)(4,8);; 
 gap> c := (2,6)(4,8);;
@@ -154,12 +154,17 @@ crossed square with crossed modules:
     down = [Group( [ (1,2,3,4)(5,6,7,8), (), () ] ) -> Group( () )]
    right = [Group( [ ( 2, 6)( 4, 8) ] ) -> Group( () )]
 
-gap> ## should the name be c4:c5 ?? 
-gap> SetName(Range(Up2DimensionalGroup(XSact)),"c5:c4");
-gap> SetName(Range(Down2DimensionalGroup(XSact)),"c5:c4");
-gap> Name(XSact);
+gap> SetName( Range( Up2DimensionalGroup( XSact ) ), "c5:c4" );
+gap> SetName( Range( Down2DimensionalGroup( XSact ) ), "c5:c4" );
+gap> Name( XSact );
 "[d10a->c5:c4,d20->c5:c4]"
-## gap> PreCat2GroupOfPreCrossedSquare( XSact );
+
+gap> C2act := Cat2GroupOfCrossedSquare( XSact );             
+cat2-group with generating (pre-)cat1-groups:
+1 : [((c5:c4 |X c5:c4) |X (d20 |X d10a))=>(c5:c4 |X c5:c4)]
+2 : [((c5:c4 |X c5:c4) |X (d20 |X d10a))=>(c5:c4 |X d20)]
+gap> Size( C2act );
+[ 80000, 400, 400, 20 ]
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 

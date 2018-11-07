@@ -804,9 +804,10 @@ function( XM )
         G := SemidirectProduct( Xrng, Xact, Xsrc );
         info := SemidirectProductInfo( G );
         if ( HasName( Xsrc ) and HasName( Xrng ) ) then
-             SetName( G, Concatenation ( Name(Xrng), " |X ", Name(Xsrc) ) );
+             SetName( G, 
+                 Concatenation( "(", Name(Xrng), " |X ", Name(Xsrc), ")" ) );
         else
-             SetName( G, "..|X.." );
+             SetName( G, "(..|X..)" );
         fi;
         genG := GeneratorsOfGroup( G );
         eR := Embedding( G, 1 );

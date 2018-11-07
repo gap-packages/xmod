@@ -24,8 +24,8 @@ gap> xs24 := CrossedSquareByNormalSubgroups( d24, d12a, d12b, c6 );
 [ d12b -> d24 ]
 gap> cxs24 := PreCat2GroupOfPreCrossedSquare( xs24 ); 
 cat2-group with generating (pre-)cat1-groups:
-1 : [d24 |X d12a |X d12b |X c6=>d24 |X d12a]
-2 : [d24 |X d12a |X d12b |X c6=>d24 |X d12b]
+1 : [((d24 |X d12a) |X (d12b |X c6))=>(d24 |X d12a)]
+2 : [((d24 |X d12a) |X (d12b |X c6))=>(d24 |X d12b)]
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> STOP_TEST( "d24.tst", 10000 );
