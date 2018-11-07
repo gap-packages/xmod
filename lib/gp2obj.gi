@@ -1011,12 +1011,23 @@ end );
 #M  XModByGroupOfAutomorphisms                       crossed module  [G -> A]
 ##
 InstallMethod( XModByGroupOfAutomorphisms, "automorphism crossed module",
-    true, [ IsGroup, IsGroupOfAutomorphisms ], 0,
+    true, [ IsGroup, IsGroup ], 0,
 function( G, A )
 
-    local genA, abelian, genG, oneA, imbdy, g, ima, a, bdy, XM, iso;
+    local genA, autG, innG, abelian, genG, oneA, imbdy, g, ima, a, bdy, XM, iso;
 
+    if not IsGroupOfAutomorphisms( A ) then 
+        Error( "A is not a group of automorphisms" ); 
+    fi;
     genA := GeneratorsOfGroup( A ); 
+    autG := AutomorphismGroup( G );
+    if not IsSubgroup( autG, A ) then 
+        Error( "A is not a group of automorphisms of G" ); 
+    fi;
+    innG := InnerAutomorphismsAutomorphismGroup( autG ); 
+    if not IsSubgroup( A, innG ) then 
+        Error( "the inner automorphism group of G is not a subgroup of A" ); 
+    fi;
     abelian := IsAbelian( G );
     genG := GeneratorsOfGroup( G );
     oneA := One( A );
@@ -1046,44 +1057,23 @@ end );
 
 #############################################################################
 ##
-#F  XModByAutomorphismGroup( <G> )               crossed module [G -> Aut(G)]
-#F  XModByAutomorphismGroup( <G>, <A> )          crossed module [G -> A]
-##
-InstallGlobalFunction( XModByAutomorphismGroup, function( arg )
-
-    local nargs, G, A, innG, a;
-
-    nargs := Length( arg );
-    # A not specified
-    if ( ( nargs = 1 ) and IsGroup( arg[1] ) ) then
-        G := arg[1];
-        A := AutomorphismGroup( G );
-        if ( not HasName( A ) and HasName( G ) ) then
-            SetName( A, Concatenation( "Aut(", Name( G ), ")" ) );
-        fi;
-    elif ( ( nargs = 2 ) and IsGroupOfAutomorphisms( arg[2] ) ) then
-        G := arg[1];
-        A := arg[2];
-        innG := InnerAutomorphismsByNormalSubgroup( G, G );
-        for a in GeneratorsOfGroup( innG ) do
-            if not ( a in A ) then
-                Error( "arg[2] must include all inner automorphisms.\n" );
-            fi;
-        od;
-    else
-        # alternatives not allowed
-        Print( "usage: XModByAutomorphismGroup( G );\n" ); 
-        Print( "   or: XModByAutomorphismGroup( G, A );\n" );
-        return fail;
-    fi;
-    SetIsGroupOfAutomorphisms( A, true );
-    return XModByGroupOfAutomorphisms( G, A );
-end );
-
-#############################################################################
-##
+#M  XModByAutomorphismGroup( <G> )               crossed module [G -> Aut(G)]
 #M  XModByInnerAutomorphismGroup( <G> )          crossed module [G -> Inn(G)]
 ##
+InstallMethod( XModByAutomorphismGroup, "automorphism xmod of a group",
+    true, [ IsGroup ], 0,
+function( G )
+
+    local  autG, innG, a;
+
+    autG := AutomorphismGroup( G );
+    if ( not HasName( autG ) and HasName( G ) ) then
+        SetName( autG, Concatenation( "Aut(", Name( G ), ")" ) );
+    fi;
+    SetIsGroupOfAutomorphisms( autG, true );
+    return XModByGroupOfAutomorphisms( G, autG );
+end );
+
 InstallMethod( XModByInnerAutomorphismGroup, "inner automorphism xmod",
     true, [ IsGroup ], 0,
 function( G )

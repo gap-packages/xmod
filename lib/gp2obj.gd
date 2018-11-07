@@ -157,7 +157,7 @@ DeclareOperation( "PreXModByBoundaryAndAction",
 #O  XModByNormalSubgroup( <G>, <N> )
 #O  XModByCentralExtension( <hom> )
 #O  XModByGroupOfAutomorphisms( <G>, <A> )
-#F  XModByAutomorphismGroup( <args> )
+#A  XModByAutomorphismGroup( <G> )
 #A  XModByInnerAutomorphismGroup( <G> )
 #O  XModByAbelianModule( <R> )
 #A  XModByPeifferQuotient( <PM> )
@@ -169,9 +169,8 @@ DeclareOperation( "XModByBoundaryAndAction",
 DeclareOperation( "XModByTrivialAction", [ IsGroupHomomorphism ] );
 DeclareOperation( "XModByNormalSubgroup", [ IsGroup, IsGroup ] );
 DeclareOperation( "XModByCentralExtension", [ IsGroupHomomorphism ] );
-DeclareOperation( "XModByGroupOfAutomorphisms", 
-    [ IsGroup, IsGroupOfAutomorphisms ] );
-DeclareGlobalFunction( "XModByAutomorphismGroup" );
+DeclareOperation( "XModByGroupOfAutomorphisms", [ IsGroup, IsGroup ] );
+DeclareAttribute( "XModByAutomorphismGroup", IsGroup );
 DeclareAttribute( "XModByInnerAutomorphismGroup", IsGroup );
 DeclareOperation( "XModByAbelianModule", [ IsAbelianModule ] );
 DeclareAttribute( "XModByPeifferQuotient", IsPreXMod );

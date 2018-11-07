@@ -62,12 +62,12 @@ There are a variety of constructors for crossed modules:
          Arg="G N" />
    <Oper Name="XModByCentralExtension"
          Arg="bdy" />
-   <Oper Name="XModByAutomorphismGroup"
-         Arg="grp" />
-   <Oper Name="XModByInnerAutomorphismGroup"
-         Arg="grp" />
    <Oper Name="XModByGroupOfAutomorphisms"
          Arg="G A" />
+   <Attr Name="XModByAutomorphismGroup"
+         Arg="grp" />
+   <Attr Name="XModByInnerAutomorphismGroup"
+         Arg="grp" />
    <Oper Name="XModByAbelianModule"
          Arg="abmod" />
    <Oper Name="DirectProductOp"
