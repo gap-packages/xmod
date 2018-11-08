@@ -258,7 +258,7 @@ end );
 
 #############################################################################
 ##
-#M  ImageElmXModAction( <pxmod>, <r>, <s> )  pre-xmod module action of s on r
+#M  ImageElmXModAction( <pxmod>, <s>, <r> )  pre-xmod module action of s on r
 ##
 InstallMethod( ImageElmXModAction, "method for a precrossed module", true, 
     [ Is2DimensionalDomain, IsObject, IsObject ], 0,
@@ -267,6 +267,7 @@ function( PM, s, r )
     local actr; 
 
     if ( HasIsPreXModWithObjects(PM) and IsPreXModWithObjects(PM) ) then 
+        ## this is the crossed module of groupoids case 
         actr := ImageElm( XModAction( PM ), r )![1]; 
         return ImageElm( actr, s ); 
     else 
