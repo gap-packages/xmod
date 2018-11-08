@@ -63,6 +63,15 @@ gap> NX4 := NormalSubXMods( X4 );;
 gap> Length( NX4 ); 
 5
 
+## Section 2.2.2
+gap> d8d8 := Group( (1,2,3,4), (1,3), (5,6,7,8), (5,7) );;
+gap> X88 := XModByAutomorphismGroup( d8d8 );;
+gap> Size( X88 );
+[ 64, 2048 ]
+gap> Y88 := KernelCokernelXMod( X88 );;
+gap> StructureDescription( Y88 );
+[ "C2 x C2", "(D8 x D8) : C2" ]
+
 ## Section 2.3.1
 gap> b1 := (11,12,13,14,15,16,17,18);;  b2 := (12,18)(13,17)(14,16);;
 gap> d16 := Group( b1, b2 );;

@@ -177,6 +177,12 @@ DeclareAttribute( "XModByPeifferQuotient", IsPreXMod );
 
 #############################################################################
 ##
+#A  KernelCokernelXMod( <xmod> )
+##
+DeclareAttribute( "KernelCokernelXMod", IsXMod );
+
+#############################################################################
+##
 #P  IsTrivialAction2DimensionalGroup( <obj> )
 #P  IsNormalSubgroup2DimensionalGroup( <obj> )
 #P  IsCentralExtension2DimensionalGroup( <obj> )

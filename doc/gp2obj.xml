@@ -346,6 +346,32 @@ gap> Length( NX4 );
 ]]>
 </Example>
 
+<ManSection>
+   <Attr Name="KernelCokernelXMod"
+         Arg="X0" />
+<Description>
+Let <M>\mathcal{X} = (\partial : S \to R)</M>. 
+If <M>K \leqslant S</M> is the kernel of <M>\partial</M>,  
+and <M>J \leqslant R</M> is the image of <M>\partial</M>, 
+form <M>C = R/J</M>. 
+Then <M>(\nu\partial|_K : K \to C)</M> is a crossed module 
+where <M>\nu : R \to C, r \mapsto Jr</M> is the natural map, 
+and the action of <M>C</M> on <M>K</M> is given by <M>k^{Jr} = k^r</M>. 
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> d8d8 := Group( (1,2,3,4), (1,3), (5,6,7,8), (5,7) );;
+gap> X88 := XModByAutomorphismGroup( d8d8 );;
+gap> Size( X88 );
+[ 64, 2048 ]
+gap> Y88 := KernelCokernelXMod( X88 );;
+gap> StructureDescription( Y88 );
+[ "C2 x C2", "(D8 x D8) : C2" ] 
+]]>
+</Example>
+
 </Section>
 
 

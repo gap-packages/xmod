@@ -1207,7 +1207,7 @@ end );
 
 ##############################################################################
 ##
-#F  XModByPeifferQuotient               xmod from prexmod and Peiffer subgroup
+#A  XModByPeifferQuotient               xmod from prexmod and Peiffer subgroup
 ##
 InstallMethod( XModByPeifferQuotient, 
     "crossed module from a pre-crossed module and Peiffer subgroup", true,
@@ -1238,6 +1238,54 @@ function( PM )
     return FM; 
 end );
     
+##############################################################################
+##
+#A  KernelCokernelXMod . . . . . ( ker(bdy) -> range/image(bdy) ) for an xmod 
+##
+InstallMethod( KernelCokernelXMod, "kernel -> cokernel for an xmod", true,
+    [ IsXMod ], 0,
+function( X0 )
+
+    local S, R, bdy, act, K, J, nat, F, iso, mgi, inv, C, genK, imres, res, 
+          genC, preC, imact, i, g, p, ap, im, autK, actC;
+
+    S := Source( X0 );
+    R := Range( X0 ); 
+    bdy := Boundary( X0 );
+    act := XModAction( X0 );
+    K := Kernel( bdy );
+    J := Image( bdy );
+    if ( J = R ) then ## trivial cokernel 
+        C := Group( () ); 
+        res := MappingToOne( K, C );
+        return XModByTrivialAction( res );
+    fi; 
+    nat := NaturalHomomorphismByNormalSubgroup( R, J );
+    F := FactorGroup( R, J ); 
+    iso := IsomorphismPermGroup( F ); 
+    C := Image( iso );
+    mgi := MappingGeneratorsImages( iso );
+    inv := GroupHomomorphismByImages( C, F, mgi[2], mgi[1] ); 
+    genK := GeneratorsOfGroup( K ); 
+    imres := List( genK, g -> Image( iso, Image( nat, Image( bdy, g ) ) ) );
+    res := GroupHomomorphismByImages( K, C, genK, imres ); 
+    genC := GeneratorsOfGroup( C ); 
+    preC := List( genC, 
+                  g -> PreImagesRepresentative( nat, ImageElm( inv, g ) ) ); 
+    imact := ShallowCopy( genC ); 
+    for i in [1..Length( genC )] do 
+        g := genC[i]; 
+        p := preC[i];
+        ap := ImageElm( act, p ); 
+        im := List( genK, k -> ImageElm( ap, k ) );
+        imact[i] := GroupHomomorphismByImages( K, K, genK, im ); 
+    od;
+    autK := Group( imact );
+    SetIsGroupOfAutomorphisms( autK, true ); 
+    actC := GroupHomomorphismByImages( C, autK, genC, imact );  
+    return XModByBoundaryAndAction( res, actC );  
+end );
+
 #############################################################################
 ##
 #F  XMod( <bdy>, <act> )          crossed module from given boundary & action
