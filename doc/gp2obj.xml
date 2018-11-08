@@ -28,7 +28,8 @@ A crossed module (of groups)  <M>\mathcal{X} = (\partial : S \to R )</M>
 consists of a group homomorphism <M>\partial </M>, 
 called the <E>boundary</E> of <M>\mathcal{X}</M>, 
 with <E>source</E> <M>S</M>  and <E>range</E> <M>R</M>. 
-The group <M>R</M> acts on itself by conjugation, and on <M>S</M> by an action 
+The group <M>R</M> acts on itself by conjugation, 
+and on <M>S</M> by an <E>action</E> 
 <M>\alpha : R \to {\rm Aut}(S)</M> such that,  
 for all <M>s,s_1,s_2 \in S</M>  and  <M>r \in R</M>,
 <Display>
@@ -43,66 +44,167 @@ for all <M>s,s_1,s_2 \in S</M>  and  <M>r \in R</M>,
 When only the first of these axioms is satisfied, the resulting structure is 
 a <E>pre-crossed module</E> 
 (see section <Ref Sect="sect-precrossed-modules" />).
+The kernel of  <M>\partial</M>  is abelian.
+<P/> 
 (Much of the literature on crossed modules uses left actions, 
 but we have chosen to use right actions in this package 
 since that is the standard choice for group actions in &GAP;.) 
-<P/>
-The kernel of  <M>\partial</M>  is abelian.
-<P/>
-There are a variety of constructors for crossed modules:
 
 <ManSection>
    <Func Name="XMod"
          Arg="args" />
    <Oper Name="XModByBoundaryAndAction"
          Arg="bdy act" />
-   <Oper Name="XModByTrivialAction"
-         Arg="bdy" />
+<Description>
+The global function <C>XMod</C> calls one of the standard constructions
+described in the following subsections. 
+In the example the boundary is the identity mapping on <C>c5</C> 
+and the action is trivial. 
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> c5 := Group( (5,6,7,8,9) );;
+gap> SetName( c5, "c5" );
+gap> id5 := IdentityMapping( c5 );;
+gap> ac5 := AutomorphismGroup( c5 );; 
+gap> act := MappingToOne( c5, ac5 );;
+gap> XMod( id5, act ) = XModByBoundaryAndAction( id5, act );
+true
+]]>
+</Example>
+
+<ManSection>
    <Oper Name="XModByNormalSubgroup"
          Arg="G N" />
-   <Oper Name="XModByCentralExtension"
+<Description>
+A <E>conjugation crossed module</E> is the inclusion of a normal subgroup  
+<M>S \unlhd R</M>, where <M>R</M> acts on <M>S</M> by conjugation.
+</Description>
+</ManSection>
+
+<ManSection>
+   <Oper Name="XModByTrivialAction"
          Arg="bdy" />
-   <Oper Name="XModByGroupOfAutomorphisms"
-         Arg="G A" />
+<Description>
+A <E>trivial action crossed module</E>  <M>(\partial : S \to R)</M>
+has  <M>s^r = s</M>  for all  <M>s \in S, \; r \in R</M>,  
+the source is abelian and the image lies in the centre of the range.
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> q8 := QuaternionGroup( IsPermGroup, 8 );
+Group([ (1,5,3,7)(2,8,4,6), (1,2,3,4)(5,6,7,8) ])
+gap> SetName( q8, "q8" );
+gap> c2 := Centre( q8 );                     
+Group([ (1,3)(2,4)(5,7)(6,8) ])
+gap> SetName( c2, "<-1>" );
+gap> bdy := InclusionMappingGroups( q8, c2 );;
+gap> X8a := XModByTrivialAction( bdy );
+[<-1>->q8]
+gap> c4 := Subgroup( q8, [q8.1] );;
+gap> SetName( c4, "<i>" );
+gap> X8b := XModByNormalSubgroup( q8, c4 );
+[<i>->q8]
+gap> Display(X8b);        
+Crossed module [<i>->q8] :- 
+: Source group has generators:
+  [ (1,5,3,7)(2,8,4,6) ]
+: Range group q8 has generators:
+  [ (1,5,3,7)(2,8,4,6), (1,2,3,4)(5,6,7,8) ]
+: Boundary homomorphism maps source generators to:
+  [ (1,5,3,7)(2,8,4,6) ]
+: Action homomorphism maps range generators to automorphisms:
+  (1,5,3,7)(2,8,4,6) --> { source gens --> [ (1,5,3,7)(2,8,4,6) ] }
+  (1,2,3,4)(5,6,7,8) --> { source gens --> [ (1,7,3,5)(2,6,4,8) ] }
+  These 2 automorphisms generate the group of automorphisms.
+]]>
+</Example>
+
+<ManSection>
    <Attr Name="XModByAutomorphismGroup"
          Arg="grp" />
    <Attr Name="XModByInnerAutomorphismGroup"
          Arg="grp" />
-   <Oper Name="XModByAbelianModule"
-         Arg="abmod" />
-   <Oper Name="DirectProductOp"
-         Arg="L X1" Label="for crossed modules" />
+   <Oper Name="XModByGroupOfAutomorphisms"
+         Arg="G A" />
 <Description>
-The global function <C>XMod</C> implements one of the following
-standard constructions:
-<List>
-<Item>
-A <E>trivial action crossed module</E>  <M>(\partial : S \to R)</M>
-has  <M>s^r = s</M>  for all  <M>s \in S, \; r \in R</M>,  
-the source is abelian and the image lies in the centre of the range.
-</Item>
-<Item>
-A <E>conjugation crossed module</E> is the inclusion of a normal subgroup  
-<M>S \unlhd R</M>, where <M>R</M> acts on <M>S</M> by conjugation.
-</Item>
-<Item>
-A <E>central extension crossed module</E> has as boundary a surjection
-<M>\partial : S \to R</M>, with central kernel,
-where <M>r \in R</M> acts on <M>S</M> by conjugation 
-with <M>\partial^{-1}r</M>.
-</Item>
-<Item>
 An <E>automorphism crossed module</E> has as range a subgroup <M>R</M>
 of the automorphism group  Aut<M>(S)</M>  of  <M>S</M>
 which contains the inner automorphism group of <M>S</M>.
 The boundary maps <M>s \in S</M> to the inner automorphism of <M>S</M> 
 by <M>s</M>.
-</Item>
-<Item>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> X5 := XModByAutomorphismGroup( c5 );
+[c5 -> Aut(c5)] 
+gap> Display( X5 );
+Crossed module [c5->Aut(c5)] :- 
+: Source group c5 has generators:
+  [ (5,6,7,8,9) ]
+: Range group Aut(c5) has generators:
+  [ GroupHomomorphismByImages( c5, c5, [ (5,6,7,8,9) ], [ (5,7,9,6,8) ] ) ]
+: Boundary homomorphism maps source generators to:
+  [ IdentityMapping( c5 ) ]
+: Action homomorphism maps range generators to automorphisms:
+  GroupHomomorphismByImages( c5, c5, [ (5,6,7,8,9) ], 
+[ (5,7,9,6,8) ] ) --> { source gens --> [ (5,7,9,6,8) ] }
+  This automorphism generates the group of automorphisms.
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="XModByCentralExtension"
+         Arg="bdy" />
+<Description>
+A <E>central extension crossed module</E> has as boundary a surjection
+<M>\partial : S \to R</M>, with central kernel,
+where <M>r \in R</M> acts on <M>S</M> by conjugation 
+with <M>\partial^{-1}r</M>.
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> gen12 := [ (1,2,3,4,5,6), (2,6)(3,5) ];;
+gap> d12 := Group( gen12 );;                  
+gap> gen6 := [ (7,8,9), (8,9) ];;
+gap> s3 := Group( gen6 );;
+gap> pr12 := GroupHomomorphismByImages( d12, s3, gen12, gen6 );;
+gap> Kernel( pr12 ) = Centre( d12 );
+true
+gap> X12 := XModByCentralExtension( pr12 );;
+gap> Display( X12 );                         
+Crossed module :- 
+: Source group has generators:
+  [ (1,2,3,4,5,6), (2,6)(3,5) ]
+: Range group has generators:
+  [ (7,8,9), (8,9) ]
+: Boundary homomorphism maps source generators to:
+  [ (7,8,9), (8,9) ]
+: Action homomorphism maps range generators to automorphisms:
+  (7,8,9) --> { source gens --> [ (1,2,3,4,5,6), (1,3)(4,6) ] }
+  (8,9) --> { source gens --> [ (1,6,5,4,3,2), (2,6)(3,5) ] }
+  These 2 automorphisms generate the group of automorphisms.
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="XModByAbelianModule"
+         Arg="abmod" />
+<Description>
 A <E>crossed abelian module</E> has an abelian module as source
 and the zero map as boundary.
-</Item>
-<Item>
+See section <Ref Sect="sect-abelian-modules" /> for an example. 
+</Description>
+</ManSection>
+
+<ManSection>
+   <Oper Name="DirectProductOp"
+         Arg="L X1" Label="for crossed modules" />
+<Description>
 The direct product  <M>\mathcal{X}_{1} \times \mathcal{X}_{2}</M>
 of two crossed modules has source  <M>S_1 \times S_2</M>,
 range  <M>R_1 \times R_2</M>  and boundary
@@ -110,14 +212,24 @@ range  <M>R_1 \times R_2</M>  and boundary
 trivially on  <M>S_2,\ S_1</M>  respectively.
 <P/> 
 Since <C>DirectProduct</C> is a global function which only accepts groups, 
-it is necessary to provide an "other method" for operation 
-<C>DirectProductOp</C> which, as usual, takes as parameters a list of 
+it is necessary to provide an "other method" for the operation 
+<C>DirectProductOp</C>. 
+This operation takes as parameters a list of 
 crossed modules, followed by the first of these: 
-<C>DirectProductOp([X1,X2],X1);</C>  
-</Item>
-</List>
+<C>DirectProductOp([X1,X2],X1);</C>. 
+At present only the direct product of two crossed modules is implemented. 
+<P/>
+The example constructs the product of the two crossed modules formed in 
+subsection <Ref Oper="XModByTrivialAction"/>. 
+<P/>
 </Description>
 </ManSection>
+<Example>
+<![CDATA[
+gap> DirectProductOp( [X8a,X8b], X8a );
+[<-1>x<i>->q8xq8]
+]]>
+</Example>
 
 <ManSection>
    <Attr Name="Source"
@@ -144,8 +256,26 @@ to a group of automorphisms of <C>X0</C>.
 <Index>AutoGroup</Index> 
 (Up until version 2.63 there was an additional attribute <C>AutoGroup</C>, 
 the range of <C>XModAction(X0)</C>.) 
+<P/>
+The example uses the crossed module <C>X12</C> constructed in 
+subsection <Ref Oper="XModByCentralExtension"/>. 
+
 </Description>
 </ManSection>
+<Example>
+<![CDATA[
+gap> Source( X12 );   
+Group([ (1,2,3,4,5,6), (2,6)(3,5) ])
+gap> Range( X12 );    
+Group([ (7,8,9), (8,9) ])
+gap> Boundary( X12 ); 
+[ (1,2,3,4,5,6), (2,6)(3,5) ] -> [ (7,8,9), (8,9) ]
+gap> XModAction( X12 );
+[ (7,8,9), (8,9) ] -> 
+[ [ (1,2,3,4,5,6), (2,6)(3,5) ] -> [ (1,2,3,4,5,6), (1,3)(4,6) ], 
+  [ (1,2,3,4,5,6), (2,6)(3,5) ] -> [ (1,6,5,4,3,2), (2,6)(3,5) ] ]
+]]>
+</Example>
 
 <ManSection>
    <Oper Name="ImageElmXModAction"
@@ -177,43 +307,27 @@ The <C>Display</C> function is used to print details of 2d-groups.
 </Description>
 </ManSection>
 
-In the simple example below, <Code>X1</Code> is an automorphism crossed module, 
-using a cyclic group of size five.
-The <C>Print</C> statements at the end list the &GAP; representations, 
-properties and attributes of <Code>X1</Code>. 
+In the simple example below, <Code>X5</Code> is the automorphism crossed module 
+constructed in subsection <Ref Oper="XModByAutomorphismGroup"/>. 
+The <C>Print</C> statements at the end of the example list the &GAP; 
+representations and attributes of <Code>X5</Code>. 
 <P/>
 <Example>
 <![CDATA[
-gap> c5 := Group( (5,6,7,8,9) );;
-gap> SetName( c5, "c5" );
-gap> X1 := XModByAutomorphismGroup( c5 );
-[c5 -> Aut(c5)] 
-gap> Display( X1 );
-Crossed module [c5->Aut(c5)] :- 
-: Source group c5 has generators:
-  [ (5,6,7,8,9) ]
-: Range group Aut(c5) has generators:
-  [ GroupHomomorphismByImages( c5, c5, [ (5,6,7,8,9) ], [ (5,7,9,6,8) ] ) ]
-: Boundary homomorphism maps source generators to:
-  [ IdentityMapping( c5 ) ]
-: Action homomorphism maps range generators to automorphisms:
-  GroupHomomorphismByImages( c5, c5, [ (5,6,7,8,9) ], 
-[ (5,7,9,6,8) ] ) --> { source gens --> [ (5,7,9,6,8) ] }
-  This automorphism generates the group of automorphisms.
-gap> Size( X1 );  IdGroup( X1 ); 
+gap> Size( X5 );  IdGroup( X5 ); 
 [ 5, 4 ]
 [ [ 5, 1 ], [ 4, 1 ] ]
-gap> ext := ExternalSetXMod( X1 ); 
+gap> ext := ExternalSetXMod( X5 ); 
 <xset:[ (), (5,6,7,8,9), (5,7,9,6,8), (5,8,6,9,7), (5,9,8,7,6) ]>
 gap> Orbits( ext );
 [ [ () ], [ (5,6,7,8,9), (5,7,9,6,8), (5,9,8,7,6), (5,8,6,9,7) ] ]
-gap> a := GeneratorsOfGroup( Range( X1 ) )[1]^2; 
+gap> a := GeneratorsOfGroup( Range( X5 ) )[1]^2; 
 [ (5,6,7,8,9) ] -> [ (5,9,8,7,6) ]
-gap> ImageElmXModAction( X1, (5,7,9,6,8), a );
+gap> ImageElmXModAction( X5, (5,7,9,6,8), a );
 (5,8,6,9,7)
-gap> RepresentationsOfObject( X1 );
+gap> RepresentationsOfObject( X5 );
 [ "IsComponentObjectRep", "IsAttributeStoringRep", "IsPreXModObj" ]
-gap> KnownAttributesOfObject( X1);
+gap> KnownAttributesOfObject( X5);
 [ "Name", "Size", "Range", "Source", "IdGroup", "Boundary", "XModAction", 
   "ExternalSetXMod", "IsomorphismPerm2DimensionalGroup" ]
 ]]>
@@ -262,7 +376,7 @@ or a pre-cat1-group (see section <Ref Sect="sect-cat1" />)
 whose source and range are both permutation groups. 
 The properties <C>IsPc2DimensionalGroup</C>, <C>IsFp2DimensionalGroup</C> 
 are defined similarly. 
-In the example below we see that <Code>X1</Code> has 
+In the example below we see that <Code>X5</Code> has 
 <C>IsPreXMod</C>, <C>IsXMod</C> and <C>IsPerm2DimensionalGroup</C>. 
 There are also properties corresponding to the various construction methods 
 listed in section <Ref Sect="sect-constructions" />: 
@@ -276,7 +390,7 @@ listed in section <Ref Sect="sect-constructions" />:
 
 <Example>
 <![CDATA[
-gap> KnownPropertiesOfObject( X1 );
+gap> KnownPropertiesOfObject( X5 );
 [ "IsEmpty", "IsTrivial", "IsNonTrivial", "IsFinite", 
   "CanEasilyCompareElements", "CanEasilySortElements", "IsDuplicateFree", 
   "IsGeneratorsOfSemigroup", "IsPreXModDomain", "IsPerm2DimensionalGroup", 

@@ -787,7 +787,7 @@ function( XM )
         G := DirectProduct( Xrng, Xsrc );
         info := DirectProductInfo( G );
         if ( HasName( Xsrc ) and HasName( Xrng ) ) then
-            SetName( G, Concatenation( Name( Xrng ), Name( Xsrc ) ) );
+            SetName( G, Concatenation( Name( Xrng ), "x", Name( Xsrc ) ) );
         fi;
         genG := GeneratorsOfGroup( G );
         gensrc := GeneratorsOfGroup( Xsrc );
@@ -2306,7 +2306,7 @@ function( list, X1 )
         Error( "direct product not yet implemented for more than 2 terms" );
     fi;
     if not ( list[1] = X1 ) then
-        Error( "second argument should be first in first argument" );
+        Error( "second argument should be first entry in first argument list" );
     fi;
     Y1 := list[2]; 
     ##  first the source group 
@@ -2408,7 +2408,7 @@ function( list, X1 )
             imaut[j] := genS[j];
         od;
         for j in XSpos do
-            imaut[j] := ImageElm( eXS, ImageElm( a, ImageElm( pXS, genS[j] ) ) );
+            imaut[j] := ImageElm( eXS, ImageElm( a, ImageElm(pXS,genS[j] ) ) );
         od;
         alpha := GroupHomomorphismByImages( S, S, genS, imaut );
         autgen[i] := alpha;
@@ -2425,7 +2425,7 @@ function( list, X1 )
             imaut[j] := genS[j];
         od;
         for j in YSpos do
-            imaut[j] := ImageElm( eYS, ImageElm( a, ImageElm( pYS, genS[j] ) ) );
+            imaut[j] := ImageElm( eYS, ImageElm( a, ImageElm(pYS,genS[j] ) ) );
         od;
         alpha := GroupHomomorphismByImages( S, S, genS, imaut );
         autgen[i] := alpha;
@@ -2438,6 +2438,9 @@ function( list, X1 )
     fi;
     if ( HasName( X1 ) and HasName( Y1 ) ) then
         SetName( XY, Concatenation( Name( X1 ), "x", Name( Y1 ) ) );
+    elif ( HasName( Source(XY) ) and HasName( Range(XY) ) ) then 
+        SetName( XY, Concatenation( "[", Name( Source(XY ) ), 
+                     "->", Name( Range(XY) ), "]" ) ); 
     fi;
     info := DirectProductInfo( XY );
     info!.objects := [ X1, Y1 ];

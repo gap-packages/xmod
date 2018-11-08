@@ -11,12 +11,47 @@ gap> SetInfoLevel( InfoXMod, 0 );
 gap> saved_infolevel_groupoids := InfoLevel( InfoGroupoids );; 
 gap> SetInfoLevel( InfoGroupoids, 0 );;
 
-## Chapter 2,  Section 2.1.3
+## Chapter 2,  Section 2.1.2
 gap> c5 := Group( (5,6,7,8,9) );;
 gap> SetName( c5, "c5" );
-gap> X1 := XModByAutomorphismGroup( c5 );
+gap> id5 := IdentityMapping( c5 );;
+gap> ac5 := AutomorphismGroup( c5 );; 
+gap> act := MappingToOne( c5, ac5 );;
+gap> XMod( id5, act ) = XModByBoundaryAndAction( id5, act );
+true
+
+## Section 2.1.3
+gap> q8 := QuaternionGroup( IsPermGroup, 8 );
+Group([ (1,5,3,7)(2,8,4,6), (1,2,3,4)(5,6,7,8) ])
+gap> SetName( q8, "q8" );
+gap> c2 := Centre( q8 );                     
+Group([ (1,3)(2,4)(5,7)(6,8) ])
+gap> SetName( c2, "<-1>" );
+gap> bdy := InclusionMappingGroups( q8, c2 );;
+gap> X8a := XModByTrivialAction( bdy );
+[<-1>->q8]
+gap> c4 := Subgroup( q8, [q8.1] );;
+gap> SetName( c4, "<i>" );
+gap> X8b := XModByNormalSubgroup( q8, c4 );
+[<i>->q8]
+gap> Display(X8b);        
+
+Crossed module [<i>->q8] :- 
+: Source group has generators:
+  [ (1,5,3,7)(2,8,4,6) ]
+: Range group q8 has generators:
+  [ (1,5,3,7)(2,8,4,6), (1,2,3,4)(5,6,7,8) ]
+: Boundary homomorphism maps source generators to:
+  [ (1,5,3,7)(2,8,4,6) ]
+: Action homomorphism maps range generators to automorphisms:
+  (1,5,3,7)(2,8,4,6) --> { source gens --> [ (1,5,3,7)(2,8,4,6) ] }
+  (1,2,3,4)(5,6,7,8) --> { source gens --> [ (1,7,3,5)(2,6,4,8) ] }
+  These 2 automorphisms generate the group of automorphisms.
+
+## Section 2.1.4
+gap> X5 := XModByAutomorphismGroup( c5 );
 [c5->Aut(c5)]
-gap> Display(X1);
+gap> Display( X5 );
 
 Crossed module [c5->Aut(c5)] :- 
 : Source group c5 has generators:
@@ -30,23 +65,70 @@ Crossed module [c5->Aut(c5)] :-
 [ (5,7,9,6,8) ] ) --> { source gens --> [ (5,7,9,6,8) ] }
   This automorphism generates the group of automorphisms.
 
-gap> Size( X1 );
+## Section 2.1.5
+gap> gen12 := [ (1,2,3,4,5,6), (2,6)(3,5) ];;
+gap> d12 := Group( gen12 );;                  
+gap> gen6 := [ (7,8,9), (8,9) ];;
+gap> s3 := Group( gen6 );;
+gap> pr12 := GroupHomomorphismByImages( d12, s3, gen12, gen6 );;
+gap> Kernel( pr12 ) = Centre( d12 );
+true
+gap> X12 := XModByCentralExtension( pr12 );;
+gap> Display( X12 );                         
+
+Crossed module :- 
+: Source group has generators:
+  [ (1,2,3,4,5,6), (2,6)(3,5) ]
+: Range group has generators:
+  [ (7,8,9), (8,9) ]
+: Boundary homomorphism maps source generators to:
+  [ (7,8,9), (8,9) ]
+: Action homomorphism maps range generators to automorphisms:
+  (7,8,9) --> { source gens --> [ (1,2,3,4,5,6), (1,3)(4,6) ] }
+  (8,9) --> { source gens --> [ (1,6,5,4,3,2), (2,6)(3,5) ] }
+  These 2 automorphisms generate the group of automorphisms.
+
+## Section 2.1.7
+gap> DirectProductOp( [X8a,X8b], X8a );
+[<-1>x<i>->q8xq8]
+
+## Section 2.1.8
+gap> Source( X12 );   
+Group([ (1,2,3,4,5,6), (2,6)(3,5) ])
+gap> Range( X12 );    
+Group([ (7,8,9), (8,9) ])
+gap> Boundary( X12 ); 
+[ (1,2,3,4,5,6), (2,6)(3,5) ] -> [ (7,8,9), (8,9) ]
+gap> XModAction( X12 );
+[ (7,8,9), (8,9) ] -> 
+[ [ (1,2,3,4,5,6), (2,6)(3,5) ] -> [ (1,2,3,4,5,6), (1,3)(4,6) ], 
+  [ (1,2,3,4,5,6), (2,6)(3,5) ] -> [ (1,6,5,4,3,2), (2,6)(3,5) ] ]
+
+## Section 2.1.10
+gap> Size( X5 );
 [ 5, 4 ]
-gap> IdGroup( X1 ); 
+gap> IdGroup( X5 ); 
 [ [ 5, 1 ], [ 4, 1 ] ]
-gap> ext := ExternalSetXMod( X1 ); 
+gap> ext := ExternalSetXMod( X5 ); 
 <xset:[ (), (5,6,7,8,9), (5,7,9,6,8), (5,8,6,9,7), (5,9,8,7,6) ]>
 gap> Orbits( ext );
 [ [ () ], [ (5,6,7,8,9), (5,7,9,6,8), (5,9,8,7,6), (5,8,6,9,7) ] ]
-gap> a := GeneratorsOfGroup( Range( X1 ) )[1]^2; 
+gap> a := GeneratorsOfGroup( Range( X5 ) )[1]^2; 
 [ (5,6,7,8,9) ] -> [ (5,9,8,7,6) ]
-gap> ImageElmXModAction( X1, (5,7,9,6,8), a );
+gap> ImageElmXModAction( X5, (5,7,9,6,8), a );
 (5,8,6,9,7)
-gap> Print( RepresentationsOfObject(X1), "\n" );
+gap> Print( RepresentationsOfObject(X5), "\n" );
 [ "IsComponentObjectRep", "IsAttributeStoringRep", "IsPreXModObj" ]
-gap> Print( KnownAttributesOfObject(X1), "\n" );
+gap> Print( KnownAttributesOfObject(X5), "\n" );
 [ "Name", "Size", "Range", "Source", "IdGroup", "Boundary", "XModAction", 
   "ExternalSetXMod", "IsomorphismPerm2DimensionalGroup" ]
+
+## Section 2.2.1
+gap> KnownPropertiesOfObject(X5);
+[ "IsEmpty", "IsTrivial", "IsNonTrivial", "IsFinite", 
+  "CanEasilyCompareElements", "CanEasilySortElements", "IsDuplicateFree", 
+  "IsGeneratorsOfSemigroup", "IsPreXModDomain", "IsPerm2DimensionalGroup", 
+  "IsPreXMod", "IsXMod", "IsAutomorphismGroup2DimensionalGroup" ]
 
 ## Section 2.2.2
 gap> s4 := Group( (1,2), (2,3), (3,4) );; 

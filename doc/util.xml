@@ -89,7 +89,8 @@ true
 </Section>
 
 
-<Section><Heading>Abelian Modules</Heading>
+<Section Label="sect-abelian-modules">
+<Heading>Abelian Modules</Heading>
 <Index>abelian module</Index>
 
 <ManSection>
