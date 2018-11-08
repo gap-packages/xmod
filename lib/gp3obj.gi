@@ -147,7 +147,7 @@ function( X0 )
     act := XModAction( X0 );
     map := Mapping2ArgumentsByFunction( [S,R], S, 
                function(c) 
-                   return c[1]^(-1) * ImageElm( ImageElm(act,c[2]), c[1] ); 
+                   return ImageElm( ImageElm(act,c[2]), c[1]^(-1) ) * c[1];
                end );
     xp := CrossedPairingObj( [S,R], S, map );
     return xp;

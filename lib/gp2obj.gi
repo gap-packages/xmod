@@ -258,7 +258,7 @@ end );
 
 #############################################################################
 ##
-#M  ImageElmXModAction( <pxmod>, <r>, <s> )  pre-xmod module action of s on r
+#M  ImageElmXModAction( <pxmod>, <s>, <r> )  pre-xmod module action of s on r
 ##
 InstallMethod( ImageElmXModAction, "method for a precrossed module", true, 
     [ Is2DimensionalDomain, IsObject, IsObject ], 0,
@@ -267,6 +267,7 @@ function( PM, s, r )
     local actr; 
 
     if ( HasIsPreXModWithObjects(PM) and IsPreXModWithObjects(PM) ) then 
+        ## this is the crossed module of groupoids case 
         actr := ImageElm( XModAction( PM ), r )![1]; 
         return ImageElm( actr, s ); 
     else 
@@ -787,7 +788,7 @@ function( XM )
         G := DirectProduct( Xrng, Xsrc );
         info := DirectProductInfo( G );
         if ( HasName( Xsrc ) and HasName( Xrng ) ) then
-            SetName( G, Concatenation( Name( Xrng ), Name( Xsrc ) ) );
+            SetName( G, Concatenation( Name( Xrng ), "x", Name( Xsrc ) ) );
         fi;
         genG := GeneratorsOfGroup( G );
         gensrc := GeneratorsOfGroup( Xsrc );
@@ -1011,12 +1012,23 @@ end );
 #M  XModByGroupOfAutomorphisms                       crossed module  [G -> A]
 ##
 InstallMethod( XModByGroupOfAutomorphisms, "automorphism crossed module",
-    true, [ IsGroup, IsGroupOfAutomorphisms ], 0,
+    true, [ IsGroup, IsGroup ], 0,
 function( G, A )
 
-    local genA, abelian, genG, oneA, imbdy, g, ima, a, bdy, XM, iso;
+    local genA, autG, innG, abelian, genG, oneA, imbdy, g, ima, a, bdy, XM, iso;
 
+    if not IsGroupOfAutomorphisms( A ) then 
+        Error( "A is not a group of automorphisms" ); 
+    fi;
     genA := GeneratorsOfGroup( A ); 
+    autG := AutomorphismGroup( G );
+    if not IsSubgroup( autG, A ) then 
+        Error( "A is not a group of automorphisms of G" ); 
+    fi;
+    innG := InnerAutomorphismsAutomorphismGroup( autG ); 
+    if not IsSubgroup( A, innG ) then 
+        Error( "the inner automorphism group of G is not a subgroup of A" ); 
+    fi;
     abelian := IsAbelian( G );
     genG := GeneratorsOfGroup( G );
     oneA := One( A );
@@ -1046,44 +1058,23 @@ end );
 
 #############################################################################
 ##
-#F  XModByAutomorphismGroup( <G> )               crossed module [G -> Aut(G)]
-#F  XModByAutomorphismGroup( <G>, <A> )          crossed module [G -> A]
-##
-InstallGlobalFunction( XModByAutomorphismGroup, function( arg )
-
-    local nargs, G, A, innG, a;
-
-    nargs := Length( arg );
-    # A not specified
-    if ( ( nargs = 1 ) and IsGroup( arg[1] ) ) then
-        G := arg[1];
-        A := AutomorphismGroup( G );
-        if ( not HasName( A ) and HasName( G ) ) then
-            SetName( A, Concatenation( "Aut(", Name( G ), ")" ) );
-        fi;
-    elif ( ( nargs = 2 ) and IsGroupOfAutomorphisms( arg[2] ) ) then
-        G := arg[1];
-        A := arg[2];
-        innG := InnerAutomorphismsByNormalSubgroup( G, G );
-        for a in GeneratorsOfGroup( innG ) do
-            if not ( a in A ) then
-                Error( "arg[2] must include all inner automorphisms.\n" );
-            fi;
-        od;
-    else
-        # alternatives not allowed
-        Print( "usage: XModByAutomorphismGroup( G );\n" ); 
-        Print( "   or: XModByAutomorphismGroup( G, A );\n" );
-        return fail;
-    fi;
-    SetIsGroupOfAutomorphisms( A, true );
-    return XModByGroupOfAutomorphisms( G, A );
-end );
-
-#############################################################################
-##
+#M  XModByAutomorphismGroup( <G> )               crossed module [G -> Aut(G)]
 #M  XModByInnerAutomorphismGroup( <G> )          crossed module [G -> Inn(G)]
 ##
+InstallMethod( XModByAutomorphismGroup, "automorphism xmod of a group",
+    true, [ IsGroup ], 0,
+function( G )
+
+    local  autG, innG, a;
+
+    autG := AutomorphismGroup( G );
+    if ( not HasName( autG ) and HasName( G ) ) then
+        SetName( autG, Concatenation( "Aut(", Name( G ), ")" ) );
+    fi;
+    SetIsGroupOfAutomorphisms( autG, true );
+    return XModByGroupOfAutomorphisms( G, autG );
+end );
+
 InstallMethod( XModByInnerAutomorphismGroup, "inner automorphism xmod",
     true, [ IsGroup ], 0,
 function( G )
@@ -1217,7 +1208,7 @@ end );
 
 ##############################################################################
 ##
-#F  XModByPeifferQuotient               xmod from prexmod and Peiffer subgroup
+#A  XModByPeifferQuotient               xmod from prexmod and Peiffer subgroup
 ##
 InstallMethod( XModByPeifferQuotient, 
     "crossed module from a pre-crossed module and Peiffer subgroup", true,
@@ -1248,6 +1239,54 @@ function( PM )
     return FM; 
 end );
     
+##############################################################################
+##
+#A  KernelCokernelXMod . . . . . ( ker(bdy) -> range/image(bdy) ) for an xmod 
+##
+InstallMethod( KernelCokernelXMod, "kernel -> cokernel for an xmod", true,
+    [ IsXMod ], 0,
+function( X0 )
+
+    local S, R, bdy, act, K, J, nat, F, iso, mgi, inv, C, genK, imres, res, 
+          genC, preC, imact, i, g, p, ap, im, autK, actC;
+
+    S := Source( X0 );
+    R := Range( X0 ); 
+    bdy := Boundary( X0 );
+    act := XModAction( X0 );
+    K := Kernel( bdy );
+    J := Image( bdy );
+    if ( J = R ) then ## trivial cokernel 
+        C := Group( () ); 
+        res := MappingToOne( K, C );
+        return XModByTrivialAction( res );
+    fi; 
+    nat := NaturalHomomorphismByNormalSubgroup( R, J );
+    F := FactorGroup( R, J ); 
+    iso := IsomorphismPermGroup( F ); 
+    C := Image( iso );
+    mgi := MappingGeneratorsImages( iso );
+    inv := GroupHomomorphismByImages( C, F, mgi[2], mgi[1] ); 
+    genK := GeneratorsOfGroup( K ); 
+    imres := List( genK, g -> Image( iso, Image( nat, Image( bdy, g ) ) ) );
+    res := GroupHomomorphismByImages( K, C, genK, imres ); 
+    genC := GeneratorsOfGroup( C ); 
+    preC := List( genC, 
+                  g -> PreImagesRepresentative( nat, ImageElm( inv, g ) ) ); 
+    imact := ShallowCopy( genC ); 
+    for i in [1..Length( genC )] do 
+        g := genC[i]; 
+        p := preC[i];
+        ap := ImageElm( act, p ); 
+        im := List( genK, k -> ImageElm( ap, k ) );
+        imact[i] := GroupHomomorphismByImages( K, K, genK, im ); 
+    od;
+    autK := Group( imact );
+    SetIsGroupOfAutomorphisms( autK, true ); 
+    actC := GroupHomomorphismByImages( C, autK, genC, imact );  
+    return XModByBoundaryAndAction( res, actC );  
+end );
+
 #############################################################################
 ##
 #F  XMod( <bdy>, <act> )          crossed module from given boundary & action
@@ -2268,7 +2307,7 @@ function( list, X1 )
         Error( "direct product not yet implemented for more than 2 terms" );
     fi;
     if not ( list[1] = X1 ) then
-        Error( "second argument should be first in first argument" );
+        Error( "second argument should be first entry in first argument list" );
     fi;
     Y1 := list[2]; 
     ##  first the source group 
@@ -2370,7 +2409,7 @@ function( list, X1 )
             imaut[j] := genS[j];
         od;
         for j in XSpos do
-            imaut[j] := ImageElm( eXS, ImageElm( a, ImageElm( pXS, genS[j] ) ) );
+            imaut[j] := ImageElm( eXS, ImageElm( a, ImageElm(pXS,genS[j] ) ) );
         od;
         alpha := GroupHomomorphismByImages( S, S, genS, imaut );
         autgen[i] := alpha;
@@ -2387,7 +2426,7 @@ function( list, X1 )
             imaut[j] := genS[j];
         od;
         for j in YSpos do
-            imaut[j] := ImageElm( eYS, ImageElm( a, ImageElm( pYS, genS[j] ) ) );
+            imaut[j] := ImageElm( eYS, ImageElm( a, ImageElm(pYS,genS[j] ) ) );
         od;
         alpha := GroupHomomorphismByImages( S, S, genS, imaut );
         autgen[i] := alpha;
@@ -2400,6 +2439,9 @@ function( list, X1 )
     fi;
     if ( HasName( X1 ) and HasName( Y1 ) ) then
         SetName( XY, Concatenation( Name( X1 ), "x", Name( Y1 ) ) );
+    elif ( HasName( Source(XY) ) and HasName( Range(XY) ) ) then 
+        SetName( XY, Concatenation( "[", Name( Source(XY ) ), 
+                     "->", Name( Range(XY) ), "]" ) ); 
     fi;
     info := DirectProductInfo( XY );
     info!.objects := [ X1, Y1 ];
