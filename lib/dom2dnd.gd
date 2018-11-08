@@ -58,11 +58,11 @@ DeclareGlobalFunction( "MakeHigherDimensionalMagma" );
 
 #############################################################################
 ##
-#P  IsHigherDimensionalSemigroup( <ndmag> )
+#C  IsHigherDimensionalSemigroup( <ndmag> )
 #F  MakeHigherDimensionalSemigroup( <mag>, <obs> )  
 #O  SinglePieceHigherDimensionalSemigroup( <sgp>, <obs> ) 
 ##
-DeclareSynonymAttr( "IsHigherDimensionalSemigroup", 
+DeclareCategory( "IsHigherDimensionalSemigroup", 
     IsHigherDimensionalMagma and CategoryCollections( IsAssociativeElement ) );
 DeclareGlobalFunction( "MakeHigherDimensionalSemigroup" ); 
 ## DeclareOperation( "SinglePieceHigherDimensionalSemigroup", 
@@ -70,11 +70,11 @@ DeclareGlobalFunction( "MakeHigherDimensionalSemigroup" );
 
 #############################################################################
 ##
-#P  IsHigherDimensionalMonoid( <ndmagma> )
+#C  IsHigherDimensionalMonoid( <ndmagma> )
 #F  MakeHigherDimensionalMonoid( <mag>, <obs> )  
 #O  SinglePieceHigherDimensionalMonoid( <mon>, <obs> ) 
 ##
-DeclareSynonymAttr( "IsHigherDimensionalMonoid", 
+DeclareCategory( "IsHigherDimensionalMonoid", 
     IsHigherDimensionalMagmaWithOne 
     and CategoryCollections(IsAssociativeElement) );
 DeclareGlobalFunction( "MakeHigherDimensionalMonoid" ); 
@@ -88,9 +88,9 @@ DeclareGlobalFunction( "MakeHigherDimensionalMonoid" );
 
 #############################################################################
 ##
-#S  IsHigherDimensionalGroup( <obj> ) 
+#C  IsHigherDimensionalGroup( <obj> ) 
 ##
-DeclareSynonymAttr( "IsHigherDimensionalGroup", 
+DeclareCategory( "IsHigherDimensionalGroup", 
     IsHigherDimensionalMagmaWithInverses 
     and CategoryCollections( IsAssociativeElement ) );
 
@@ -170,11 +170,11 @@ DeclareGlobalFunction( "Make2DimensionalMagma" );
 
 #############################################################################
 ##
-#P  Is2DimensionalSemigroup( <2dmag> )
+#C  Is2DimensionalSemigroup( <2dmag> )
 #F  Make2DimensionalSemigroup( <mag>, <obs> )  
 #O  SinglePiece2DimensionalSemigroup( <sgp>, <obs> ) 
 ##
-DeclareSynonymAttr( "Is2DimensionalSemigroup", 
+DeclareCategory( "Is2DimensionalSemigroup", 
     Is2DimensionalMagma and CategoryCollections( IsAssociativeElement ) );
 DeclareGlobalFunction( "Make2DimensionalSemigroup" ); 
 ## DeclareOperation( "SinglePiece2DimensionalSemigroup", 
@@ -182,11 +182,11 @@ DeclareGlobalFunction( "Make2DimensionalSemigroup" );
 
 #############################################################################
 ##
-#P  Is2DimensionalMonoid( <2dmagma> )
+#C  Is2DimensionalMonoid( <2dmagma> )
 #F  Make2DimensionalMonoid( <mag>, <obs> )  
 #O  SinglePiece2DimensionalMonoid( <mon>, <obs> ) 
 ##
-DeclareSynonymAttr( "Is2DimensionalMonoid", 
+DeclareCategory( "Is2DimensionalMonoid", 
     Is2DimensionalMagmaWithOne and CategoryCollections(IsAssociativeElement) );
 DeclareGlobalFunction( "Make2DimensionalMonoid" ); 
 ##  DeclareOperation( "SinglePiece2DimensionalMonoid", 
