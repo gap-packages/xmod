@@ -5,7 +5,7 @@
 ##  This file declares functions for n-dimensional-mappings: 
 ##  (pre-)catn-groups. 
 ##
-#Y  Copyright (C) 2001-2017, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2018, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 ###############################  nd MAPPINGS  ################################ 

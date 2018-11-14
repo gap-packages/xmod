@@ -433,6 +433,24 @@ These functions return <C>fail</C> when invalid data is supplied.
 </Description>
 </ManSection>
 
+<ManSection>
+   <Func Name="CrossedSquareMorphism"
+         Arg="args" />
+   <Oper Name="CrossedSquareMorphismByXModMorphisms"
+         Arg="src, rng, mors" />
+   <Oper Name="CrossedSquareMorphismByGroupHomomorphisms"
+         Arg="src, rng, homs" />
+   <Func Name="Cat2GroupMorphism" 
+         Arg="args" />
+   <Oper Name="Cat2GroupMorphismByCat1GroupMorphisms" 
+         Arg="src, rng, mors" />
+   <Oper Name="Cat2GroupMorphismByGroupHomomorphisms" 
+         Arg="src, rng, mors" />
+   <Oper Name="InclusionMorphismHigherDimensionalDomains" 
+         Arg="obj, sub" />
+<Description>
+</Description>
+</ManSection>
 
 <ManSection>
    <Prop Name="IsCrossedSquareMorphism"

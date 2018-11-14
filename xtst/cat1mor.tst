@@ -2,7 +2,7 @@
 ##
 #W  cat1mor.tst                   XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2017, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2018, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 gap> START_TEST( "XMod package: allxmods.tst" );
@@ -27,7 +27,7 @@ gap> B18 := Cat1Group( t2, h, e2 );;
 gap> imgamma := [ (4,5,6), (1,2,3), (2,3)(5,6) ];; 
 gap> gamma := GroupHomomorphismByImages( g18, g18, g18gens, imgamma );;
 gap> rho := IdentityMapping( s3a );; 
-gap> mor := Cat1Morphism( C18, B18, gamma, rho );;
+gap> mor := Cat1GroupMorphism( C18, B18, gamma, rho );;
 gap> Display( mor );;
 Morphism of cat1-groups :- 
 : Source = [g18=>s3a] with generating sets:

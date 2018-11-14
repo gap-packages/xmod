@@ -227,9 +227,9 @@ end );
 
 #############################################################################
 ##
-#M  IsPreCat1Morphism . . . . . . . . . check diagram of group homs commutes 
+#M  IsPreCat1GroupMorphism . . . . . . . . . check diagram of group homs commutes 
 ##
-InstallMethod( IsPreCat1Morphism, "generic method for morphisms of 2d-groups", 
+InstallMethod( IsPreCat1GroupMorphism, "generic method for morphisms of 2d-groups", 
     true, [ Is2DimensionalGroupMorphism ], 0,
 function( mor )
 
@@ -288,10 +288,10 @@ end );
 
 #############################################################################
 ##
-#M  IsCat1Morphism
+#M  IsCat1GroupMorphism
 ##
-InstallMethod( IsCat1Morphism, "generic method for cat1-group homomorphisms",
-    true, [ IsPreCat1Morphism ], 0,
+InstallMethod( IsCat1GroupMorphism, "generic method for cat1-group homomorphisms",
+    true, [ IsPreCat1GroupMorphism ], 0,
 function( mor )
     return ( IsCat1Group( Source( mor ) ) and IsCat1Group(  Range( mor ) ) );
 end );
@@ -301,13 +301,13 @@ end );
 #F  Display( <mor> ) . . . . . . print details of a (pre-)cat1-group morphism
 ##
 InstallMethod( Display, "display a morphism of pre-cat1 groups", true,
-    [ IsPreCat1Morphism ], 0,
+    [ IsPreCat1GroupMorphism ], 0,
 function( mor )
 
     local morsrc, morrng, gensrc, genrng, P, Q, name, ok;
 
     if not HasName( mor ) then
-        # name := PreCat1MorphismName( mor );
+        # name := PreCat1GroupMorphismName( mor );
         SetName( mor, "[..=>..]=>[..=>..]" );
     fi;
     name := Name( mor );
@@ -317,7 +317,7 @@ function( mor )
     gensrc := GeneratorsOfGroup( Source( P ) );
     morrng := RangeHom( mor );
     genrng := GeneratorsOfGroup( Range( P ) );
-    if IsCat1Morphism( mor ) then
+    if IsCat1GroupMorphism( mor ) then
         Print( "Morphism of cat1-groups :- \n" );
     else
         Print( "Morphism of pre-cat1 groups :- \n" );
@@ -356,11 +356,11 @@ function( mor2, mor1 )
     comp := Make2DimensionalGroupMorphism( 
                 [ Source(mor1), Range(mor2), srchom, rnghom ]);
     if IsPreCat1Group( Source( mor1 ) ) then
-        if ( IsPreCat1Morphism( mor1 ) and IsPreCat1Morphism( mor2 ) ) then
-            SetIsPreCat1Morphism( comp, true );
+        if ( IsPreCat1GroupMorphism( mor1 ) and IsPreCat1GroupMorphism( mor2 ) ) then
+            SetIsPreCat1GroupMorphism( comp, true );
         fi;
-        if ( IsCat1Morphism( mor1 ) and IsCat1Morphism( mor2 ) ) then
-            SetIsCat1Morphism( comp, true );
+        if ( IsCat1GroupMorphism( mor1 ) and IsCat1GroupMorphism( mor2 ) ) then
+            SetIsCat1GroupMorphism( comp, true );
         fi;
     else
         if ( IsPreXModMorphism( mor1 ) and 
@@ -394,10 +394,10 @@ function( mor )
         if IsXModMorphism( mor ) then 
             SetIsXModMorphism( inv, true );
         fi;
-    elif IsPreCat1Morphism( mor ) then 
-        SetIsPreCat1Morphism( inv, true );
-        if IsCat1Morphism( mor ) then 
-            SetIsCat1Morphism( inv, true );
+    elif IsPreCat1GroupMorphism( mor ) then 
+        SetIsPreCat1GroupMorphism( inv, true );
+        if IsCat1GroupMorphism( mor ) then 
+            SetIsCat1GroupMorphism( inv, true );
         fi;
     fi;
     SetIsInjective( inv, true );
@@ -420,7 +420,7 @@ function( obj )
     if IsPreXModObj( obj ) then
         return PreXModMorphismByHoms( obj, obj, shom, rhom );
     elif IsPreCat1Obj( obj ) then
-        return PreCat1MorphismByHoms( obj, obj, shom, rhom );
+        return PreCat1GroupMorphismByHoms( obj, obj, shom, rhom );
     else
         return fail;
     fi;
@@ -441,7 +441,7 @@ function( obj, sub )
     if IsPreXModObj( obj ) then
         return PreXModMorphismByHoms( sub, obj, shom, rhom );
     elif IsPreCat1Obj( obj ) then
-        return PreCat1MorphismByHoms( sub, obj, shom, rhom );
+        return PreCat1GroupMorphismByHoms( sub, obj, shom, rhom );
     else
         return fail;
     fi;
@@ -494,11 +494,11 @@ end );
 
 ###############################################################################
 ##
-#F  PreCat1Morphism( <src>,<rng>,<srchom>,<rnghom> )    pre-cat1-group morphism
+#F  PreCat1GroupMorphism( <src>,<rng>,<srchom>,<rnghom> )    pre-cat1-group morphism
 ##
 ##  (need to extend to other sets of parameters)
 ##
-InstallGlobalFunction( PreCat1Morphism, function( arg )
+InstallGlobalFunction( PreCat1GroupMorphism, function( arg )
 
     local nargs;
 
@@ -507,20 +507,20 @@ InstallGlobalFunction( PreCat1Morphism, function( arg )
     if ( ( nargs = 4 ) and IsPreCat1Group( arg[1] ) and IsPreCat1Group( arg[2])
                        and IsGroupHomomorphism( arg[3] )
                        and IsGroupHomomorphism( arg[4] ) ) then
-        return PreCat1MorphismByHoms( arg[1], arg[2], arg[3], arg[4] );
+        return PreCat1GroupMorphismByHoms( arg[1], arg[2], arg[3], arg[4] );
     fi;
     # alternatives not allowed
-    Info( InfoXMod, 2, "usage: PreCat1Morphism( src, rng, srchom, rnghom );" );
+    Info( InfoXMod, 2, "usage: PreCat1GroupMorphism( src, rng, srchom, rnghom );" );
     return fail;
 end );
 
 ###############################################################################
 ##
-#F  Cat1Morphism( <src>, <rng>, <srchom>, <rnghom> )        cat1-group morphism
+#F  Cat1GroupMorphism( <src>, <rng>, <srchom>, <rnghom> )        cat1-group morphism
 ##
 ##  (need to extend to other sets of parameters)
 ##
-InstallGlobalFunction( Cat1Morphism, function( arg )
+InstallGlobalFunction( Cat1GroupMorphism, function( arg )
 
     local nargs;
 
@@ -529,10 +529,10 @@ InstallGlobalFunction( Cat1Morphism, function( arg )
     if ( ( nargs = 4 ) and IsCat1Group( arg[1] ) and IsCat1Group( arg[2])
                        and IsGroupHomomorphism( arg[3] )
                        and IsGroupHomomorphism( arg[4] ) ) then
-        return Cat1MorphismByHoms( arg[1], arg[2], arg[3], arg[4] );
+        return Cat1GroupMorphismByHoms( arg[1], arg[2], arg[3], arg[4] );
     fi;
     # alternatives not allowed
-    Info( InfoXMod, 2, "usage: Cat1Morphism( src, rng, srchom, rnghom );" );
+    Info( InfoXMod, 2, "usage: Cat1GroupMorphism( src, rng, srchom, rnghom );" );
     return fail;
 end );
 
@@ -603,7 +603,7 @@ function( C1G, r )
     s := ImageElm( RangeEmbedding( C1G ), r );
     shom := GroupHomomorphismByImages( Csrc, Csrc, gensrc, 
                 List( gensrc, g -> g^s ) );
-    return Cat1MorphismByHoms( C1G, C1G, shom, rhom );
+    return Cat1GroupMorphismByHoms( C1G, C1G, shom, rhom );
 end );
 
 #############################################################################
@@ -717,7 +717,7 @@ function( PC, isos )
     h2 := CompositionMapping( isoR, h, invG );
     e2 := CompositionMapping( isoG, e, invR );
     PC2 := PreCat1GroupByTailHeadEmbedding( t2, h2, e2 );
-    mor := PreCat1Morphism( PC, PC2, isoG, isoR ); 
+    mor := PreCat1GroupMorphism( PC, PC2, isoG, isoR ); 
     return mor; 
 end );
 
@@ -783,7 +783,9 @@ function( PM )
         shom := IdentityMapping( Psrc );
     else
         Psgen := GeneratorsOfGroup( Psrc );
-        shom := IsomorphismSmallPermGroup( Psrc );
+        shom := IsomorphismPermGroup( Psrc );
+        Qsrc := Image( shom ); 
+        shom := shom * SmallerDegreePermutationRepresentation( Qsrc );
         Qsrc := ImagesSource( shom );
         Qsgen := List( Psgen, s -> ImageElm( shom, s ) );
         if HasName( Psrc ) then 
@@ -796,7 +798,9 @@ function( PM )
         rhom := IdentityMapping( Prng );
     else
         Prgen := GeneratorsOfGroup( Prng );
-        rhom := IsomorphismSmallPermGroup( Prng );
+        rhom := IsomorphismPermGroup( Prng );
+        Qrng := Image( rhom ); 
+        rhom := rhom * SmallerDegreePermutationRepresentation( Qrng );
         Qrng := ImagesSource( rhom );
         Qrgen := List( Prgen, r -> ImageElm( rhom, r ) );
         if HasName( Prng ) then 
@@ -828,7 +832,9 @@ function( PCG )
         shom := IdentityMapping( Psrc );
     else
         Psgen := GeneratorsOfGroup( Psrc );
-        shom := IsomorphismSmallPermGroup( Psrc );
+        shom := IsomorphismPermGroup( Psrc );
+        Qsrc := Image( shom ); 
+        shom := shom * SmallerDegreePermutationRepresentation( Qsrc );
         Qsrc := ImagesSource( shom );
         Qsgen := List( Psgen, s -> ImageElm( shom, s ) );
         shom := GroupHomomorphismByImages( Psrc, Qsrc, Psgen, Qsgen );
@@ -841,7 +847,9 @@ function( PCG )
         if IsEndomorphismPreCat1Group( PCG ) then 
             rhom := RestrictedMapping( shom, Prng ); 
         else 
-            rhom := IsomorphismSmallPermGroup( Prng );
+            rhom := IsomorphismPermGroup( Prng );
+            Qrng := Image( rhom ); 
+            rhom := rhom * SmallerDegreePermutationRepresentation( Qrng );
         fi;
         Qrng := ImagesSource( rhom );
         Qrgen := List( Prgen, r -> ImageElm( rhom, r ) );
@@ -852,7 +860,7 @@ function( PCG )
     if HasName( PCG ) then
         SetName( QCG, Concatenation( "Pc", Name( PCG ) ) );
     fi;
-    iso := PreCat1Morphism( PCG, QCG, shom, rhom ); 
+    iso := PreCat1GroupMorphism( PCG, QCG, shom, rhom ); 
     return iso;
 end );
 
@@ -954,7 +962,7 @@ function( PCG )
     if HasName( PCG ) then
         SetName( QCG, Concatenation( "Pc", Name( PCG ) ) );
     fi;
-    iso := PreCat1Morphism( PCG, QCG, shom, rhom );
+    iso := PreCat1GroupMorphism( PCG, QCG, shom, rhom );
     return iso;
 end );
 
@@ -1054,7 +1062,7 @@ function( PCG )
     if HasName( PCG ) then
         SetName( QCG, Concatenation( "Fp", Name( PCG ) ) );
     fi;
-    iso := PreCat1Morphism( PCG, QCG, shom, rhom ); 
+    iso := PreCat1GroupMorphism( PCG, QCG, shom, rhom ); 
     return iso;
 end );
 
@@ -1102,7 +1110,7 @@ function( C1, C2 )
         if ( ( e1*gamma = rho*e2 ) and 
              ( gamma*h2 = h1*rho ) and 
              ( gamma*t2 = t1*rho ) ) then 
-            return PreCat1MorphismByHoms( C1, C2, gamma, rho ); 
+            return PreCat1GroupMorphismByHoms( C1, C2, gamma, rho ); 
         fi; 
     od;
     return fail;
@@ -1172,9 +1180,9 @@ end );
 
 ##############################################################################
 ##
-#M  PreCat1MorphismByHoms( <P>, <Q>, <hsrc>, <hrng> ) . make pre-cat1 morphism
+#M  PreCat1GroupMorphismByHoms( <P>, <Q>, <hsrc>, <hrng> ) . make pre-cat1 morphism
 ##
-InstallMethod( PreCat1MorphismByHoms,
+InstallMethod( PreCat1GroupMorphismByHoms,
     "for pre-cat1-group, pre-cat1-group, homomorphism, homomorphism,", true,
     [ IsPreCat1Group, IsPreCat1Group, IsGroupHomomorphism, IsGroupHomomorphism ], 0,
 function( src, rng, srchom, rnghom )
@@ -1182,7 +1190,7 @@ function( src, rng, srchom, rnghom )
     local filter, fam, mor, ok, nsrc, nrng, name;
 
     mor := Make2DimensionalGroupMorphism( [ src, rng, srchom, rnghom ] ); 
-    if not IsPreCat1Morphism( mor ) then
+    if not IsPreCat1GroupMorphism( mor ) then
         Info( InfoXMod, 2, "not a morphism of pre-cat1 groups.\n" );
         return fail;
     fi;
@@ -1198,22 +1206,22 @@ function( src, rng, srchom, rnghom )
     fi;
     name := Concatenation( "[", nsrc, " => ", nrng, "]" );
     SetName( mor, name );
-    ok := IsCat1Morphism( mor );
+    ok := IsCat1GroupMorphism( mor );
     return mor;
 end );
 
 #############################################################################
 ##
-#M  Cat1MorphismByHoms( <Cs>, <Cr>, <hsrc>, <hrng> ) . . . make cat1 morphism
+#M  Cat1GroupMorphismByHoms( <Cs>, <Cr>, <hsrc>, <hrng> ) . . . make cat1 morphism
 ##
-InstallMethod( Cat1MorphismByHoms, "for 2 cat1s and 2 homomorphisms", true,
+InstallMethod( Cat1GroupMorphismByHoms, "for 2 cat1s and 2 homomorphisms", true,
     [ IsCat1Group, IsCat1Group, IsGroupHomomorphism, IsGroupHomomorphism ], 0,
 function( src, rng, srchom, rnghom )
 
     local mor, ok;
 
-    mor := PreCat1MorphismByHoms( src, rng, srchom, rnghom );
-    ok := IsCat1Morphism( mor );
+    mor := PreCat1GroupMorphismByHoms( src, rng, srchom, rnghom );
+    ok := IsCat1GroupMorphism( mor );
     if not ok then
         return fail;
     fi;
@@ -1226,20 +1234,20 @@ end );
 ##  . . . . . . . . . . . . . . . . . . . . for a morphism of pre-cat1 groups 
 ##
 InstallMethod( String, "method for a morphism of pre-cat1 groups", true, 
-    [ IsPreCat1Morphism ], 0, 
+    [ IsPreCat1GroupMorphism ], 0, 
 function( mor ) 
     return( STRINGIFY( "[", String( Source(mor) ), " => ", 
                             String( Range(mor) ), "]" ) ); 
 end );
 
 InstallMethod( ViewString, "method for a morphism of pre-cat1 groups", true, 
-    [ IsPreCat1Morphism ], 0, String ); 
+    [ IsPreCat1GroupMorphism ], 0, String ); 
 
 InstallMethod( PrintString, "fmethod for a morphism of pre-cat1 groups", true, 
-    [ IsPreCat1Morphism ], 0, String ); 
+    [ IsPreCat1GroupMorphism ], 0, String ); 
 
 InstallMethod( ViewObj, "method for a morphism of pre-cat1 groups", true,
-    [ IsPreCat1Morphism ], 0,
+    [ IsPreCat1GroupMorphism ], 0,
 function( mor )
     if HasName( mor ) then
         Print( Name( mor ), "\n" );
@@ -1249,7 +1257,7 @@ function( mor )
 end );
 
 InstallMethod( PrintObj, "method for a morphism of pre-cat1 groups", true,
-    [ IsPreCat1Morphism ], 0,
+    [ IsPreCat1GroupMorphism ], 0,
 function( mor )
     if HasName( mor ) then
         Print( Name( mor ), "\n" );
@@ -1278,7 +1286,7 @@ function( C1G )
         g -> ImageElm( e, ImageElm(h,g) )*g^-1*ImageElm( e, ImageElm(t,g) ) );
     shom := GroupHomomorphismByImages( src, src, gensrc, im );
     rhom := IdentityMapping( Range( C1G ) );
-    return PreCat1MorphismByHoms( C1G, rev, shom, rhom );
+    return PreCat1GroupMorphismByHoms( C1G, rev, shom, rhom );
 end );
 
 ##############################################################################
@@ -1428,11 +1436,11 @@ end );
 
 ############################################################################
 ##
-#M  XModMorphismOfCat1Morphism
-#M  Cat1MorphismOfXModMorphism
+#M  XModMorphismOfCat1GroupMorphism
+#M  Cat1GroupMorphismOfXModMorphism
 ##
-InstallMethod( XModMorphismOfCat1Morphism, "for a cat1-group morphism",
-    true, [ IsCat1Morphism ], 0,
+InstallMethod( XModMorphismOfCat1GroupMorphism, "for a cat1-group morphism",
+    true, [ IsCat1GroupMorphism ], 0,
 function( phi )
 
     local C1, C2, C1src, genC1src, e2, t2, proj2,
@@ -1467,12 +1475,12 @@ function( phi )
         x -> ImageElm( proj2, ImageElm(e2,ImageElm(t2,x^-1)) * x ) );
     smor := GroupHomomorphismByImages( X1src, X2src, genX1src, images );
     mor := XModMorphismByHoms( X1, X2, smor, rphi );
-    SetXModMorphismOfCat1Morphism( phi, mor );
-    SetCat1MorphismOfXModMorphism( mor, phi );
+    SetXModMorphismOfCat1GroupMorphism( phi, mor );
+    SetCat1GroupMorphismOfXModMorphism( mor, phi );
     return mor;
 end );
 
-InstallMethod( Cat1MorphismOfXModMorphism, "for a pre-crossed module morphism",
+InstallMethod( Cat1GroupMorphismOfXModMorphism, "for a pre-crossed module morphism",
     true, [ IsXModMorphism ], 0,
 function( mor )
 
@@ -1526,9 +1534,9 @@ function( mor )
         Info( InfoXMod, 2, "<sphi> not a homomorphism" );
         return fail;
     fi;
-    phi := Cat1MorphismByHoms( C1, C2, sphi, rphi );
-    SetCat1MorphismOfXModMorphism( mor, phi );
-    SetXModMorphismOfCat1Morphism( phi, mor );
+    phi := Cat1GroupMorphismByHoms( C1, C2, sphi, rphi );
+    SetCat1GroupMorphismOfXModMorphism( mor, phi );
+    SetXModMorphismOfCat1GroupMorphism( phi, mor );
     return phi;
 end );
 

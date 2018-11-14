@@ -2469,7 +2469,7 @@ function( D, i )
     if IsPreXMod( D ) then
         mor := PreXModMorphism( obj, D, eS, eR );
     elif IsPreCat1Group( D ) then
-        mor := PreCat1Morphism( obj, D, eS, eR );
+        mor := PreCat1GroupMorphism( obj, D, eS, eR );
     else
         mor := fail;
     fi;
@@ -2509,7 +2509,7 @@ function( D, i )
     if IsPreXMod( D ) then
         mor := PreXModMorphism( info!.objects[i], D, pS, pR );
     elif IsPreCat1Group( D ) then
-        mor := PreCat1Morphism( info!.objects[i], D, pS, pR );
+        mor := PreCat1GroupMorphism( info!.objects[i], D, pS, pR );
     else
         mor := fail;
     fi;

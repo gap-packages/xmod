@@ -152,8 +152,10 @@ function( XM )
     Info( InfoXMod, 2, " genAR = ", genAR );
     Info( InfoXMod, 2, " genAS = ", genAS );
     ngAR := Length( genAR );
-    a2pR := IsomorphismSmallPermGroup( AR );
-    PAR := Image( a2pR, AR );
+    a2pR := IsomorphismPermGroup( AR );
+    PAR := Image( a2pR );
+    a2pR := a2pR * SmallerDegreePermutationRepresentation( PAR );
+    PAR := ImagesSource( a2pR );
     genPAR := List( genAR, a -> ImageElm( a2pR, a ) );
     Info( InfoXMod, 2, "genPAR = ", genPAR );
     p2aR := GroupHomomorphismByImages( PAR, AR, genPAR, genAR );
@@ -162,8 +164,10 @@ function( XM )
     else 
         SetAutoGroupIsomorphism( PAR, p2aR );
     fi; 
-    a2pS := IsomorphismSmallPermGroup( AS );
-    PAS := Image( a2pS, AS );
+    a2pS := IsomorphismPermGroup( AS );
+    PAS := Image( a2pS );
+    a2pS := a2pS * SmallerDegreePermutationRepresentation( PAS );
+    PAS := ImagesSource( a2pS );
     genPAS := List( genAS, a -> ImageElm( a2pS, a ) );
     Info( InfoXMod, 2, "genPAS = ", genPAS );
     p2aS := GroupHomomorphismByImages( PAS, AS, genPAS, genAS );

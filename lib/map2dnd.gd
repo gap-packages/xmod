@@ -94,14 +94,14 @@ BindGlobal( "Type2DimensionalGroupMorphism",
 #############################################################################
 ##
 #P  IsPreXModMorphism( <map> ) 
-#P  IsPreCat1Morphism( <map> ) 
+#P  IsPreCat1GroupMorphism( <map> ) 
 #P  IsXModMorphism( <map> ) 
-#P  IsCat1Morphism( <map> ) 
+#P  IsCat1GroupMorphism( <map> ) 
 ##  
 DeclareProperty( "IsPreXModMorphism", Is2DimensionalGroupMorphism );
-DeclareProperty( "IsPreCat1Morphism", Is2DimensionalGroupMorphism );
+DeclareProperty( "IsPreCat1GroupMorphism", Is2DimensionalGroupMorphism );
 DeclareProperty( "IsXModMorphism", IsPreXModMorphism );
-DeclareProperty( "IsCat1Morphism", IsPreCat1Morphism );
+DeclareProperty( "IsCat1GroupMorphism", IsPreCat1GroupMorphism );
 
 ############################################################################## 
 ## 
@@ -221,15 +221,15 @@ DeclareCategory( "IsNonSPGeneral3DimensionalMapping",
 #############################################################################
 ##
 #P  IsPreSqMorphism( <map> ) 
-#P  IsPreCat2Morphism( <map> ) 
+#P  IsPreCat2GroupMorphism( <map> ) 
 #P  IsCrossedSquareMorphism( <map> ) 
-#P  IsCat2Morphism( <map> ) 
+#P  IsCat2GroupMorphism( <map> ) 
 ##  
 DeclareProperty( "IsPreCrossedSquareMorphism", 
     IsHigherDimensionalGroupMorphism );
-DeclareProperty( "IsPreCat2Morphism", IsHigherDimensionalGroupMorphism );
+DeclareProperty( "IsPreCat2GroupMorphism", IsHigherDimensionalGroupMorphism );
 DeclareProperty( "IsCrossedSquareMorphism", IsHigherDimensionalGroupMorphism );
-DeclareProperty( "IsCat2Morphism", IsHigherDimensionalGroupMorphism );
+DeclareProperty( "IsCat2GroupMorphism", IsHigherDimensionalGroupMorphism );
 
 #############################################################################
 ##

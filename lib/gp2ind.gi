@@ -1141,7 +1141,7 @@ function( info )
           imm, imag, images, 
           estar,            # new embed homomorphism for Ind.cat1
           IC,               # Induced Cat1-group variable
-          mor,              # Cat1Morphism from C to IC 
+          mor,              # Cat1GroupMorphism from C to IC 
           u, v, j, x, i, g; # using variables
 
     Q := info!.Qinfo!.perm;
@@ -1260,8 +1260,8 @@ function( info )
     estar := GroupHomomorphismByImages( Q, PI, genQ, images );
     IC := Cat1Group( PI, tstar, hstar, estar );
     IC!.isCat1 := IsCat1Group( IC );
-    mor := Cat1Morphism( C, IC, [ iotastar, iota ] );
-    if not ( IsCat1Morphism( mor ) ) then
+    mor := Cat1GroupMorphism( C, IC, [ iotastar, iota ] );
+    if not ( IsCat1GroupMorphism( mor ) ) then
         Print( " mor : C --> IC not a cat1-group morphism \n" );
     fi;
     IC := rec( 

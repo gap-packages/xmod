@@ -3,7 +3,7 @@
 #W  util.gd                    GAP4 package `XMod'               Chris Wensley
 #W                                                                 & Murat Alp
 ##
-#Y  Copyright (C) 2001-2016, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2018, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 ##############################################################################
@@ -100,22 +100,6 @@ DeclareGlobalFunction( "IsomorphismPermOrPcObject" );
 #O  MetacyclicGroup( <m>, <n>, <l> )
 ##
 DeclareOperation( "MetacyclicGroup", [ IsPosInt, IsPosInt, IsPosInt ] );
-
-#############################################################################
-## added Iso... 08/01/04;  changed to Nicer... 23/06/06
-## 16/07/07 ... perhaps better to get rid of these
-##              and just use  HasSmallerDegreePermRep  ???
-#############################################################################
-##
-#P  HasSmallerDegreePermRep( <perm-gp> )
-#A  NicerMonomorphism( <grp> )
-#A  NicerObject( <grp> )
-#O  IsomorphismSmallPermGroup( <grp> )
-##
-DeclareProperty( "HasSmallerDegreePermRep", IsPermGroup ); 
-DeclareAttribute( "NicerMonomorphism", IsGroup );
-DeclareAttribute( "NicerObject", IsGroup );
-DeclareOperation( "IsomorphismSmallPermGroup", [ IsGroup ] );
 
 #############################################################################
 ##  17/07/07

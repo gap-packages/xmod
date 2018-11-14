@@ -258,7 +258,7 @@ function( obj )
                     IdentityMapping( Left2DimensionalGroup( obj ) ), 
                     IdentityMapping( Right2DimensionalGroup( obj ) ), 
                     IdentityMapping( Down2DimensionalGroup( obj ) ) ]; 
-        return CrossedSquareMorphismByMorphisms( obj, obj, idmaps ); 
+        return CrossedSquareMorphismByXModMorphisms( obj, obj, idmaps ); 
     else 
         idmaps := List( GeneratingCat1Groups( obj ), C -> IdentityMapping(C) ); 
         return PreCatnMorphismByMorphisms( obj, obj, idmaps ); 

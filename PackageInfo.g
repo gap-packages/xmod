@@ -104,13 +104,13 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">=4.9.3",
+  GAP := ">=4.10.0",
   NeededOtherPackages := [ ["Utils", ">= 0.59"], 
                            ["groupoids", ">= 1.63"], 
-                           ["Hap", ">= 1.12.6"],
-                           ["AutPGrp", ">= 1.9"], 
+                           ["Hap", ">= 1.15"],
+                           ["autpgrp", ">= 1.10"], 
                            ["SmallGrp", ">= 1.3" ] ], 
-  SuggestedOtherPackages := [ ["GAPDoc", ">= 1.6.1"] ],
+  SuggestedOtherPackages := [ ["GAPDoc", ">= 1.6.2"] ],
   ExternalConditions := [ ]
 ),
 

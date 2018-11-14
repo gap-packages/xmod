@@ -214,17 +214,17 @@ e_2 \circ \rho ~=~ \gamma \circ e_1.
 </Display>
 
 <ManSection>
-   <Prop Name="IsCat1Morphism"
+   <Prop Name="IsCat1GroupMorphism"
          Arg="map" />
-   <Prop Name="IsPreCat1Morphism"
+   <Prop Name="IsPreCat1GroupMorphism"
          Arg="map" />
-   <Func Name="Cat1Morphism"
+   <Func Name="Cat1GroupMorphism"
          Arg="args" />
-   <Oper Name="Cat1MorphismByHoms"
+   <Oper Name="Cat1GroupMorphismByHoms"
          Arg="C1 C2 gamma rho" />
-   <Func Name="PreCat1Morphism"
+   <Func Name="PreCat1GroupMorphism"
          Arg="args" />
-   <Oper Name="PreCat1MorphismByHoms"
+   <Oper Name="PreCat1GroupMorphismByHoms"
          Arg="P1 P2 gamma rho" />
    <Oper Name="InclusionMorphism2DimensionalDomains"
          Arg="C1 S1" Label="for cat1-groups" />
@@ -247,7 +247,7 @@ gap> C2 := Cat1Group( t2, h1, e2 );;
 gap> imgamma := [ (4,5,6), (1,2,3), (2,3)(5,6) ];; 
 gap> gamma := GroupHomomorphismByImages( g18, g18, g18gens, imgamma );;
 gap> rho := IdentityMapping( s3a );; 
-gap> mor := Cat1Morphism( C1, C2, gamma, rho );;
+gap> mor := Cat1GroupMorphism( C1, C2, gamma, rho );;
 gap> Display( mor );;
 Morphism of cat1-groups :- 
 : Source = [g18=>s3a] with generating sets:

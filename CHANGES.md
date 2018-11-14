@@ -2,6 +2,8 @@
 
 ## 2.72 -> 2.72dev (00/11/2018) 
 
+ * (14/11/18) Cat1Morphism -> Cat1GroupMorphism, ditto Cat2Morphism, etc. 
+              removed IsomorphismSmallPermGroup, NiceObject, etc from util.*
  * (08/11/18) added KernelCokernelXMod, fixing issue #34 
  * (07/11/18) XModByAutomorphismGroup is now an attribute, not a global fn. 
  * (07/11/18) fixed problem with Cat2GroupOfCrossedSquare 

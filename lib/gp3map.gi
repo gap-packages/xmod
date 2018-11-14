@@ -5,7 +5,7 @@
 ##  This file implements functions for 3Dimensional Mappings for 
 ##  (pre-)crossed squares and (pre-)cat2-groups. 
 ##
-#Y  Copyright (C) 2001-2017, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2018, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 #############################################################################
@@ -72,9 +72,9 @@ end );
 
 #############################################################################
 ##
-#M  IsPreCat2Morphism      check the axioms for a pre-cat2 
+#M  IsPreCat2GroupMorphism      check the axioms for a pre-cat2 
 ##
-InstallMethod( IsPreCat2Morphism,
+InstallMethod( IsPreCat2GroupMorphism,
     "generic method for pre-cat2 homomorphisms", true, 
     [ IsHigherDimensionalGroupMorphism ], 0,
 function( mor )
@@ -91,21 +91,21 @@ end );
 
 #############################################################################
 ##
-#M  IsCat2Morphism
+#M  IsCat2GroupMorphism
 ##
-InstallMethod( IsCat2Morphism, "generic method for cat2 morphisms", true, 
-    [ IsPreCat2Morphism ], 0,
+InstallMethod( IsCat2GroupMorphism, "generic method for cat2 morphisms", true, 
+    [ IsPreCat2GroupMorphism ], 0,
 function( mor )
     return ( IsCat2Group( Source( mor ) ) and IsCat2Group(  Range( mor ) ) );
 end );
 
-InstallMethod( IsCat2Morphism, "generic method for 3d-mappings", true,
+InstallMethod( IsCat2GroupMorphism, "generic method for 3d-mappings", true,
     [ IsHigherDimensionalGroupMorphism ], 0,
 function( mor )
 
     local ispre;
 
-    ispre := IsPreCat2Morphism( mor );
+    ispre := IsPreCat2GroupMorphism( mor );
     if not ispre then
         return false;
     else
@@ -198,7 +198,7 @@ function( mor )
             Print( "Morphism of pre-crossed squares :- \n" );
         fi; 
     else 
-        if ( HasIsCat2Morphism( mor ) and IsCat2Morphism( mor ) ) then
+        if ( HasIsCat2GroupMorphism( mor ) and IsCat2GroupMorphism( mor ) ) then
             Print( "Morphism of cat2-groups :- \n" );
         else
             Print( "Morphism of pre-cat2-groups :- \n" );
@@ -243,9 +243,10 @@ function( obj, sub )
               Left2DimensionalGroup(sub) );
         rt := InclusionMorphism2DimensionalDomains( Right2DimensionalGroup(obj), 
               Right2DimensionalGroup(sub) );
-        return PreCrossedSquareMorphismByMorphisms( sub, obj, [up,lt,rt,dn] );
+        return PreCrossedSquareMorphismByXModMorphisms( 
+                   sub, obj, [up,lt,rt,dn] );
     elif IsPreCat2Group( obj ) then
-        return PreCat2MorphismByMorphisms( sub, obj, [ up, dn ] );
+        return PreCat2GroupMorphismByCat1GroupMorphisms( sub, obj, [ up, dn ] );
     else
         return fail;
     fi;
@@ -262,11 +263,16 @@ InstallGlobalFunction( CrossedSquareMorphism, function( arg )
     local nargs;
     nargs := Length( arg );
 
-    # two CrossedSquares and four homomorphisms
-    if ( ( nargs = 3 ) 
-             and IsCrossedSquare( arg[1] ) and IsCrossedSquare( arg[2]) 
-             and ForAll( arg[3], m -> IsXModMorphism(m) ) ) then 
-        return  CrossedSquareMorphismByMorphisms( arg[1], arg[2], arg[3] );
+    # two CrossedSquares and list of four xmod morphisms
+    if ( nargs = 3 ) then 
+        if IsCrossedSquare( arg[1] ) and IsCrossedSquare( arg[2] ) 
+               and ForAll( arg[3], m -> IsXModMorphism(m) ) then 
+            return  CrossedSquareMorphismByXModMorphisms(arg[1],arg[2],arg[3]); 
+        elif IsCrossedSquare( arg[1] ) and IsCrossedSquare( arg[2]) 
+               and ForAll( arg[3], m -> IsGroupHomomorphism(m) ) then 
+            return 
+               CrossedSquareMorphismByGroupHomomorphisms(arg[1],arg[2],arg[3]); 
+        fi;
     fi;
     # alternatives not allowed
     Info( InfoXMod, 2, 
@@ -276,30 +282,36 @@ end );
 
 ##############################################################################
 ##
-#F  Cat2Morphism( <src>, <rng>, <up>, <dn> ) . . cat2 morphism
+#F  Cat2GroupMorphism( <src>, <rng>, <up>, <dn> ) . . cat2 morphism
 ##
 ##  (need to extend to other sets of parameters)
 ##
-InstallGlobalFunction( Cat2Morphism, function( arg )
+InstallGlobalFunction( Cat2GroupMorphism, function( arg )
 
     local nargs;
 
     nargs := Length( arg );
     # two cat2-groups and two homomorphisms
-    if ( ( nargs = 3 ) and IsCat2Group( arg[1] ) and IsCat2Group( arg[2])
-        and IsCat1Morphism( arg[3][1] ) and IsCat1Morphism( arg[3][2] ) ) then
-        return  Cat2MorphismByMorphisms( arg[1], arg[2], arg[3] );
+    if ( nargs = 3 ) then 
+        if IsCat2Group( arg[1] ) and IsCat2Group( arg[2])
+               and ForAll( arg[3], m -> IsCat1GroupMorphism(m) ) then 
+            return Cat2GroupMorphismByCat1GroupMorphisms(arg[1],arg[2],arg[3]); 
+        elif IsCat2Group( arg[1] ) and IsCat2Group( arg[2]) 
+               and ForAll( arg[3], m -> IsGroupHomomorphism(m) )  then 
+            return 
+               Cat2GroupMorphismByGroupHomomorphisms(arg[1],arg[2],arg[3]); 
+        fi;
     fi;
     # alternatives not allowed
-    Info( InfoXMod, 2, "usage: Cat2Morphism( src, rng, list of maps );" );
+    Info( InfoXMod, 2, "usage: Cat2GroupMorphism( src, rng, list of maps );" );
     return fail;
 end );
 
 ###############################################################################
 ##
-#M  PreCrossedSquareMorphismByMorphisms( <src>, <rng>, <list of maps> ) 
+#M  PreCrossedSquareMorphismByXModMorphisms( <src>, <rng>, <list of maps> ) 
 ##
-InstallMethod( PreCrossedSquareMorphismByMorphisms,
+InstallMethod( PreCrossedSquareMorphismByXModMorphisms,
     "for two pre-crossed squares and four pre-xmod morphisms,", true,
     [ IsPreCrossedSquare, IsPreCrossedSquare, IsList ], 0,
 function( src, rng, list )
@@ -320,32 +332,32 @@ end );
 
 ###############################################################################
 ##
-#M  PreCat2MorphismByMorphisms( <src>, <rng>, <list> ) 
+#M  PreCat2GroupMorphismByCat1GroupMorphisms( <src>, <rng>, <list> ) 
 ##
-InstallMethod( PreCat2MorphismByMorphisms,
+InstallMethod( PreCat2GroupMorphismByCat1GroupMorphisms,
     "for two pre-cat2 and two pre-cat1 morphisms,", true,
     [ IsPreCat2Group, IsPreCat2Group, IsList ], 0,
 function( src, rng, list )
 
     local filter, fam, mor, ok, nsrc, nrng, name;
 
-    if not ForAll( list, m-> IsPreCat2Morphism(m) ) then 
+    if not ForAll( list, m-> IsPreCat2GroupMorphism(m) ) then 
         Error( "third argument should be a list of pre-cat2-morphisms" );
     fi;
     mor := MakeHigherDimensionalGroupMorphism( src, rng, list );
-    if not IsPreCat2Morphism( mor ) then
+    if not IsPreCat2GroupMorphism( mor ) then
         Info( InfoXMod, 2, "not a morphism of pre-cat2.\n" );
         return fail;
     fi;
-    ok := IsCat2Morphism( mor );
+    ok := IsCat2GroupMorphism( mor );
     return mor;
 end );
 
 ##############################################################################
 ##
-#M  CrossedSquareMorphismByMorphisms( <Xs>, <Xr>, <list> )  
+#M  CrossedSquareMorphismByXModMorphisms( <Xs>, <Xr>, <list> )  
 ##
-InstallMethod( CrossedSquareMorphismByMorphisms, 
+InstallMethod( CrossedSquareMorphismByXModMorphisms, 
     "for 2 CrossedSquares and 4 morphisms", true,
     [ IsCrossedSquare, IsCrossedSquare, IsList ], 0,
 function( src, rng, list )
@@ -355,7 +367,7 @@ function( src, rng, list )
     if not ForAll( list, m -> IsXModMorphism(m) ) then 
         Error( "third argument should be a list of xmod morphisms" ); 
     fi; 
-    mor := PreCrossedSquareMorphismByMorphisms( src, rng, list );
+    mor := PreCrossedSquareMorphismByXModMorphisms( src, rng, list );
     ok := IsCrossedSquareMorphism( mor );
     if not ok then
         return fail;
@@ -365,19 +377,20 @@ end );
 
 ##############################################################################
 ##
-#M  Cat2MorphismByMorphisms( <Cs>, <Cr>, <list> ) . . make cat2-group mapping
+#M  Cat2GroupMorphismByCat1GroupMorphisms( <Cs>, <Cr>, <list> ) . . make cat2-group mapping
 ##
-InstallMethod( Cat2MorphismByMorphisms, "for two cat2-groups and 2 morphisms", 
-    true, [ IsCat2Group, IsCat2Group, IsList ], 0,
+InstallMethod( Cat2GroupMorphismByCat1GroupMorphisms, 
+    "for two cat2-groups and 2 morphisms", true, 
+    [ IsCat2Group, IsCat2Group, IsList ], 0,
 function( src, rng, list )
 
     local mor, ok;
 
-    if not ForAll( list, m -> IsCat1Morphism(m) ) then 
+    if not ForAll( list, m -> IsCat1GroupMorphism(m) ) then 
         Error( "third argument should be a list of cat1-morphisms" ); 
     fi; 
-    mor := PreCat2MorphismByMorphisms( src, rng, list );
-    ok := IsCat2Morphism( mor );
+    mor := PreCat2GroupMorphismByCat1GroupMorphisms( src, rng, list );
+    ok := IsCat2GroupMorphism( mor );
     if not ok then
         return fail;
     fi;

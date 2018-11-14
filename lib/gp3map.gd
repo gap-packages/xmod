@@ -5,36 +5,42 @@
 ##  This file declares functions for 3dimensional-mappings: 
 ##  (pre-)crossed squares and (pre-)cat2-groups. 
 ##
-#Y  Copyright (C) 2001-2017, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2018, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 #############################################################################
 ##
 #F  PreCrossedSquareMorphism( <args> )
-#O  PreCrossedSquareMorphismByMorphisms( <src>, <rng>, <list> )
-#F  PreCat2Morphism( <args> )
-#O  PreCat2MorphismByMorphisms( <src>, <rng>, <list> )
+#O  PreCrossedSquareMorphismByXModMorphisms( <src>, <rng>, <list> )
+#F  PreCat2GroupMorphism( <args> )
+#O  PreCat2GroupMorphismByCat1GroupMorphisms( <src>, <rng>, <list> )
 ##
 DeclareGlobalFunction( "PreCrossedSquareMorphism" );
-DeclareOperation( "PreCrossedSquareMorphismByMorphisms",
+DeclareOperation( "PreCrossedSquareMorphismByXModMorphisms",
     [ IsPreCrossedSquare, IsPreCrossedSquare, IsList ] );
-DeclareGlobalFunction( "PreCat2Morphism" );
-DeclareOperation( "PreCat2MorphismByMorphisms",
+DeclareGlobalFunction( "PreCat2GroupMorphism" );
+DeclareOperation( "PreCat2GroupMorphismByCat1GroupMorphisms",
     [ IsPreCat2Group, IsPreCat2Group, IsList ] );
 
 #############################################################################
 ##
 #F  CrossedSquareMorphism( <args> )
-#O  CrossedSquareMorphismByMorphisms( <src>, <rng>, <list> )
-#F  Cat2Morphism( <args> )
-#O  Cat2MorphismByMorphisms( <src>, <rng>, <list> )
+#O  CrossedSquareMorphismByXModMorphisms( <src>, <rng>, <list> )
+#O  CrossedSquareMorphismByGroupHomomorphisms( <src>, <rng>, <list> )
+#F  Cat2GroupMorphism( <args> )
+#O  Cat2GroupMorphismByCat1GroupMorphisms( <src>, <rng>, <list> )
+#O  Cat2GroupMorphismByGroupHomomorphisms( <src>, <rng>, <list> )
 #O  InclusionMorphismHigherDimensionalDomains( <obj>, <sub> )
 ##
 DeclareGlobalFunction( "CrossedSquareMorphism" );
-DeclareOperation( "CrossedSquareMorphismByMorphisms",
+DeclareOperation( "CrossedSquareMorphismByXModMorphisms",
     [ IsCrossedSquare, IsCrossedSquare, IsList ] );
-DeclareGlobalFunction( "Cat2Morphism" );
-DeclareOperation( "Cat2MorphismByMorphisms",
+DeclareOperation( "CrossedSquareMorphismByGroupHomomorphisms",
+    [ IsCrossedSquare, IsCrossedSquare, IsList ] );
+DeclareGlobalFunction( "Cat2GroupMorphism" );
+DeclareOperation( "Cat2GroupMorphismByCat1GroupMorphisms",
+    [ IsCat2Group, IsCat2Group, IsList ] );
+DeclareOperation( "Cat2GroupMorphismByGroupHomomorphisms",
     [ IsCat2Group, IsCat2Group, IsList ] );
 DeclareOperation( "InclusionMorphismHigherDimensionalDomains", 
     [ IsHigherDimensionalDomain, IsHigherDimensionalDomain ] );
@@ -51,11 +57,11 @@ DeclareOperation( "InnerAutomorphismCat2Group",
 
 #############################################################################
 ##
-#A  CrossedSquareMorphismOfCat2Morphism( <mor> )
-#A  Cat2MorphismOfCrossedSquareMorphism( <mor> )
+#A  CrossedSquareMorphismOfCat2GroupMorphism( <mor> )
+#A  Cat2GroupMorphismOfCrossedSquareMorphism( <mor> )
 ##
-DeclareAttribute( "CrossedSquareMorphismOfCat2Morphism", IsCat2Morphism );
-DeclareAttribute( "Cat2MorphismOfCrossedSquareMorphism", 
+DeclareAttribute( "CrossedSquareMorphismOfCat2GroupMorphism", IsCat2GroupMorphism );
+DeclareAttribute( "Cat2GroupMorphismOfCrossedSquareMorphism", 
     IsCrossedSquareMorphism );
 
 #############################################################################

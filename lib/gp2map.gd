@@ -2,7 +2,7 @@
 ##
 #W  gp2map.gd                   GAP4 package `XMod'              Chris Wensley
 #W                                                                 & Murat Alp
-#Y  Copyright (C) 2001-2017, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2018, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 ##  This file contains implementations of 2DimensionalMappings 
@@ -13,14 +13,14 @@
 ##
 #F  PreXModMorphism( <args> )
 #O  PreXModMorphismByHoms( <src>, <rng>, <srchom>, <rnghom> )
-#F  PreCat1Morphism( <args> )
-#O  PreCat1MorphismByHoms( <src>, <rng>, <srchom>, <rnghom> )
+#F  PreCat1GroupMorphism( <args> )
+#O  PreCat1GroupMorphismByHoms( <src>, <rng>, <srchom>, <rnghom> )
 ##
 DeclareGlobalFunction( "PreXModMorphism" );
 DeclareOperation( "PreXModMorphismByHoms",
     [ IsPreXMod, IsPreXMod, IsGroupHomomorphism, IsGroupHomomorphism ] );
-DeclareGlobalFunction( "PreCat1Morphism" );
-DeclareOperation( "PreCat1MorphismByHoms",
+DeclareGlobalFunction( "PreCat1GroupMorphism" );
+DeclareOperation( "PreCat1GroupMorphismByHoms",
     [ IsPreCat1Group, IsPreCat1Group, IsGroupHomomorphism, 
       IsGroupHomomorphism ] );
 
@@ -39,15 +39,15 @@ DeclareOperation( "Make2DimensionalGroupMorphism", [ IsList ] );
 ##
 #F  XModMorphism( <args> )
 #O  XModMorphismByHoms( <src>, <rng>, <srchom>, <rnghom> )
-#F  Cat1Morphism( <args> )
-#O  Cat1MorphismByHoms( <src>, <rng>, <srchom>, <rnghom> )
+#F  Cat1GroupMorphism( <args> )
+#O  Cat1GroupMorphismByHoms( <src>, <rng>, <srchom>, <rnghom> )
 #O  InclusionMorphism2DimensionalDomains( <obj>, <sub> )
 ##
 DeclareGlobalFunction( "XModMorphism" );
 DeclareOperation( "XModMorphismByHoms",
     [ IsXMod, IsXMod, IsGroupHomomorphism, IsGroupHomomorphism ] );
-DeclareGlobalFunction( "Cat1Morphism" );
-DeclareOperation( "Cat1MorphismByHoms",
+DeclareGlobalFunction( "Cat1GroupMorphism" );
+DeclareOperation( "Cat1GroupMorphismByHoms",
     [ IsCat1Group, IsCat1Group, IsGroupHomomorphism, IsGroupHomomorphism ] );
 DeclareOperation( "InclusionMorphism2DimensionalDomains", 
     [ Is2DimensionalDomain, Is2DimensionalDomain ] );
@@ -73,10 +73,10 @@ DeclareProperty( "IsAutomorphism2DimensionalDomain", Is2DimensionalMapping );
 #############################################################################
 ##
 #P  IsPermPreXModMorphism( <mor> )
-#P  IsPermPreCat1Morphism( <mor> )
+#P  IsPermPreCat1GroupMorphism( <mor> )
 ##
 DeclareProperty( "IsPermPreXModMorphism", IsPreXModMorphism );
-DeclareProperty( "IsPermPreCat1Morphism", IsPreCat1Morphism );
+DeclareProperty( "IsPermPreCat1GroupMorphism", IsPreCat1GroupMorphism );
 
 #############################################################################
 ##
@@ -96,11 +96,11 @@ DeclareOperation( "PreXModBySourceHom", [ IsPreXModMorphism ] );
 
 #############################################################################
 ##
-#A  XModMorphismOfCat1Morphism( <mor> )
-#A  Cat1MorphismOfXModMorphism( <mor> )
+#A  XModMorphismOfCat1GroupMorphism( <mor> )
+#A  Cat1GroupMorphismOfXModMorphism( <mor> )
 ##
-DeclareAttribute( "XModMorphismOfCat1Morphism", IsCat1Morphism );
-DeclareAttribute( "Cat1MorphismOfXModMorphism", IsXModMorphism );
+DeclareAttribute( "XModMorphismOfCat1GroupMorphism", IsCat1GroupMorphism );
+DeclareAttribute( "Cat1GroupMorphismOfXModMorphism", IsXModMorphism );
 
 #############################################################################
 ##
