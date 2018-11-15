@@ -582,7 +582,7 @@ function( XM )
     WX := WhiteheadXMod( XM );
     NX := NorrieXMod( XM );
     ActX := ActorXMod( XM );
-    mor := XModMorphismByHoms( XM, ActX, Boundary(WX), Boundary(NX) );
+    mor := XModMorphismByGroupHomomorphisms(XM,ActX,Boundary(WX),Boundary(NX));
     return mor;
 end );
 

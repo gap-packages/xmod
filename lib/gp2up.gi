@@ -222,7 +222,7 @@ function( u )
         obj := Object2d( u );
         sigma := SourceEndomorphism( u );
         rho := RangeEndomorphism( u );
-        mor := XModMorphismByHoms( obj, obj, sigma, rho );
+        mor := XModMorphismByGroupHomomorphisms( obj, obj, sigma, rho );
         return mor;
     else
         Error( "Object2dEndomorphism for sections not yet implemented" );

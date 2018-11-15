@@ -12,15 +12,15 @@
 #############################################################################
 ##
 #F  PreXModMorphism( <args> )
-#O  PreXModMorphismByHoms( <src>, <rng>, <srchom>, <rnghom> )
+#O  PreXModMorphismByGroupHomomorphisms( <src>, <rng>, <srchom>, <rnghom> )
 #F  PreCat1GroupMorphism( <args> )
-#O  PreCat1GroupMorphismByHoms( <src>, <rng>, <srchom>, <rnghom> )
+#O  PreCat1GroupMorphismByGroupHomomorphisms( <src>, <rng>, <srchom>, <rnghom> )
 ##
 DeclareGlobalFunction( "PreXModMorphism" );
-DeclareOperation( "PreXModMorphismByHoms",
+DeclareOperation( "PreXModMorphismByGroupHomomorphisms",
     [ IsPreXMod, IsPreXMod, IsGroupHomomorphism, IsGroupHomomorphism ] );
 DeclareGlobalFunction( "PreCat1GroupMorphism" );
-DeclareOperation( "PreCat1GroupMorphismByHoms",
+DeclareOperation( "PreCat1GroupMorphismByGroupHomomorphisms",
     [ IsPreCat1Group, IsPreCat1Group, IsGroupHomomorphism, 
       IsGroupHomomorphism ] );
 
@@ -38,16 +38,16 @@ DeclareOperation( "Make2DimensionalGroupMorphism", [ IsList ] );
 #############################################################################
 ##
 #F  XModMorphism( <args> )
-#O  XModMorphismByHoms( <src>, <rng>, <srchom>, <rnghom> )
+#O  XModMorphismByGroupHomomorphisms( <src>, <rng>, <srchom>, <rnghom> )
 #F  Cat1GroupMorphism( <args> )
-#O  Cat1GroupMorphismByHoms( <src>, <rng>, <srchom>, <rnghom> )
+#O  Cat1GroupMorphismByGroupHomomorphisms( <src>, <rng>, <srchom>, <rnghom> )
 #O  InclusionMorphism2DimensionalDomains( <obj>, <sub> )
 ##
 DeclareGlobalFunction( "XModMorphism" );
-DeclareOperation( "XModMorphismByHoms",
+DeclareOperation( "XModMorphismByGroupHomomorphisms",
     [ IsXMod, IsXMod, IsGroupHomomorphism, IsGroupHomomorphism ] );
 DeclareGlobalFunction( "Cat1GroupMorphism" );
-DeclareOperation( "Cat1GroupMorphismByHoms",
+DeclareOperation( "Cat1GroupMorphismByGroupHomomorphisms",
     [ IsCat1Group, IsCat1Group, IsGroupHomomorphism, IsGroupHomomorphism ] );
 DeclareOperation( "InclusionMorphism2DimensionalDomains", 
     [ Is2DimensionalDomain, Is2DimensionalDomain ] );

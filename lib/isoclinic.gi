@@ -338,7 +338,7 @@ function( XM, SM )
     if ( HasName( XM ) and HasName( SM ) ) then 
         SetName( FM, Concatenation( Name( XM ), "/", Name( SM ) ) ); 
     fi; 
-    nat := PreXModMorphismByHoms( XM, FM, nhomQ, nhomF ); 
+    nat := PreXModMorphismByGroupHomomorphisms( XM, FM, nhomQ, nhomF ); 
     SetProjectionOfFactorPreXMod( FM, nat ); 
     return nat;
 end );

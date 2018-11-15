@@ -96,11 +96,11 @@ and the <Ref Attr="RangeHom"/> have the required property.
 <ManSection>
    <Func Name="XModMorphism"
          Arg="args" />
-   <Oper Name="XModMorphismByHoms"
+   <Oper Name="XModMorphismByGroupHomomorphisms"
          Arg="X1 X2 sigma rho" />
    <Func Name="PreXModMorphism"
          Arg="args" />
-   <Oper Name="PreXModMorphismByHoms"
+   <Oper Name="PreXModMorphismByGroupHomomorphisms"
          Arg="P1 P2 sigma rho" />
    <Oper Name="InclusionMorphism2DimensionalDomains"
          Arg="X1 S1" Label="for crossed modules" />

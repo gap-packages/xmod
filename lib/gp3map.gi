@@ -228,25 +228,26 @@ end );
 #M  InclusionMorphismHigherDimensionalDomains( <obj>, <sub> )
 ##
 InstallMethod( InclusionMorphismHigherDimensionalDomains, 
-    "one n-dimensional object in another", true, 
+    "one n-dimensional object in another (but with n=3)", true, 
     [ IsHigherDimensionalDomain, IsHigherDimensionalDomain ], 0,
 function( obj, sub )
 
     local up, lt, rt, dn;
 
-    up := InclusionMorphism2DimensionalDomains( Up2DimensionalGroup(obj), 
-              Up2DimensionalGroup(sub) );
-    dn := InclusionMorphism2DimensionalDomains( Down2DimensionalGroup(obj), 
-              Down2DimensionalGroup(sub) );    
+    up := InclusionMorphism2DimensionalDomains( 
+              Up2DimensionalGroup(obj), Up2DimensionalGroup(sub) );
+    lt := InclusionMorphism2DimensionalDomains( 
+              Left2DimensionalGroup(obj), Left2DimensionalGroup(sub) );
+    rt := InclusionMorphism2DimensionalDomains( 
+              Right2DimensionalGroup(obj), Right2DimensionalGroup(sub) );
+    dn := InclusionMorphism2DimensionalDomains( 
+              Down2DimensionalGroup(obj), Down2DimensionalGroup(sub) );    
     if IsPreCrossedSquare( obj ) then
-        lt := InclusionMorphism2DimensionalDomains( Left2DimensionalGroup(obj), 
-              Left2DimensionalGroup(sub) );
-        rt := InclusionMorphism2DimensionalDomains( Right2DimensionalGroup(obj), 
-              Right2DimensionalGroup(sub) );
-        return PreCrossedSquareMorphismByXModMorphisms( 
-                   sub, obj, [up,lt,rt,dn] );
+        return PreCrossedSquareMorphismByPreXModMorphisms( 
+                   sub, obj, [ up, lt, rt, dn ] );
     elif IsPreCat2Group( obj ) then
-        return PreCat2GroupMorphismByCat1GroupMorphisms( sub, obj, [ up, dn ] );
+        return PreCat2GroupMorphismByPreCat1GroupMorphisms( 
+                   sub, obj, [ up, lt, rt, dn ] );
     else
         return fail;
     fi;
@@ -309,17 +310,18 @@ end );
 
 ###############################################################################
 ##
-#M  PreCrossedSquareMorphismByXModMorphisms( <src>, <rng>, <list of maps> ) 
+#M  PreCrossedSquareMorphismByPreXModMorphisms( <src>, <rng>, <list of mors> ) 
 ##
-InstallMethod( PreCrossedSquareMorphismByXModMorphisms,
+InstallMethod( PreCrossedSquareMorphismByPreXModMorphisms,
     "for two pre-crossed squares and four pre-xmod morphisms,", true,
     [ IsPreCrossedSquare, IsPreCrossedSquare, IsList ], 0,
 function( src, rng, list )
 
-    local filter, fam, mor, ok, nsrc, nrng, name;
+    local mor, ok;
 
-    if not ForAll( list, m -> IsPreXModMorphism(m) ) then 
-        Error( "third argument should be a list of pre-xmod-morphisms" ); 
+    if not ( Length( list ) = 4 ) and 
+           ForAll( list, m -> IsPreXModMorphism(m) ) then 
+        Error( "third argument should be a list of 4 pre-xmod-morphisms" ); 
     fi; 
     mor := MakeHigherDimensionalGroupMorphism( src, rng, list );
     if not IsPreCrossedSquareMorphism( mor ) then
@@ -332,17 +334,80 @@ end );
 
 ###############################################################################
 ##
-#M  PreCat2GroupMorphismByCat1GroupMorphisms( <src>, <rng>, <list> ) 
+#M  PreCrossedSquareMorphismByGroupHomomorphisms( <src>, <rng>, <list of homs> ) 
 ##
-InstallMethod( PreCat2GroupMorphismByCat1GroupMorphisms,
+InstallMethod( PreCrossedSquareMorphismByGroupHomomorphisms,
+    "for two pre-crossed squares and four group homomorphisms,", true,
+    [ IsPreCrossedSquare, IsPreCrossedSquare, IsList ], 0,
+function( xs1, xs2, list )
+
+    local up1, lt1, dn1, rt1, up2, lt2, dn2, rt2, L1, M1, N1, P1, 
+          L2, M2, N2, P2, l, m, n, p, upmor, ltmor, dnmor, rtmor, mor, ok;
+
+    if not ( Length( list ) = 4 ) and 
+           ForAll( list, m -> IsGroupHomomorphism(m) ) then 
+        Error( "third argument should be a list of 4 group homomorphisms" ); 
+    fi; 
+    up1 := Up2DimensionalGroup( xs1 ); 
+    lt1 := Left2DimensionalGroup( xs1 ); 
+    dn1 := Down2DimensionalGroup( xs1 ); 
+    rt1 := Right2DimensionalGroup( xs1 ); 
+    up2 := Up2DimensionalGroup( xs2 ); 
+    lt2 := Left2DimensionalGroup( xs2 ); 
+    dn2 := Down2DimensionalGroup( xs2 ); 
+    rt2 := Right2DimensionalGroup( xs2 ); 
+    L1 := Source( up1 ); 
+    M1 := Range( up1 );
+    N1 := Source( dn1 );
+    P1 := Range( dn1 );
+    L2 := Source( up2 ); 
+    M2 := Range( up2 );
+    N2 := Source( dn2 );
+    P2 := Range( dn2 );
+    l := list[1];
+    m := list[2];
+    n := list[3]; 
+    p := list[4];
+    if not ( Source(l) = L1 ) and ( Range(l) = L2 ) then 
+        Error( "l : L1 -> L2  fails" ); 
+    fi; 
+    if not ( Source(m) = M1 ) and ( Range(m) = M2 ) then 
+        Error( "m : M1 -> M2  fails" ); 
+    fi; 
+    if not ( Source(n) = N1 ) and ( Range(n) = N2 ) then 
+        Error( "n : N1 -> N2  fails" ); 
+    fi; 
+    if not ( Source(p) = P1 ) and ( Range(p) = P2 ) then 
+        Error( "p : P1 -> P2  fails" ); 
+    fi; 
+    upmor := PreXModMorphismByGroupHomomorphisms( up1, up2, l, m ); 
+    ltmor := PreXModMorphismByGroupHomomorphisms( lt1, lt2, l, n ); 
+    rtmor := PreXModMorphismByGroupHomomorphisms( rt1, rt2, m, p ); 
+    dnmor := PreXModMorphismByGroupHomomorphisms( dn1, dn2, n, p ); 
+    mor := MakeHigherDimensionalGroupMorphism( xs1, xs2, 
+               [ upmor, ltmor, rtmor, dnmor ] );
+    if not IsPreCrossedSquareMorphism( mor ) then
+        Info( InfoXMod, 2, "not a morphism of pre-crossed squares.\n" );
+        return fail;
+    fi;
+    ok := IsCrossedSquareMorphism( mor );
+    return mor;
+end );
+
+###############################################################################
+##
+#M  PreCat2GroupMorphismByPreCat1GroupMorphisms( <src>, <rng>, <list of mors> ) 
+##
+InstallMethod( PreCat2GroupMorphismByPreCat1GroupMorphisms,
     "for two pre-cat2 and two pre-cat1 morphisms,", true,
     [ IsPreCat2Group, IsPreCat2Group, IsList ], 0,
 function( src, rng, list )
 
-    local filter, fam, mor, ok, nsrc, nrng, name;
+    local mor, ok;
 
-    if not ForAll( list, m-> IsPreCat2GroupMorphism(m) ) then 
-        Error( "third argument should be a list of pre-cat2-morphisms" );
+    if not ( Length( list ) = 4 ) and 
+           ForAll( list, m-> IsPreCat2GroupMorphism(m) ) then 
+        Error( "third argument should be a list of 4 pre-cat2-morphisms" );
     fi;
     mor := MakeHigherDimensionalGroupMorphism( src, rng, list );
     if not IsPreCat2GroupMorphism( mor ) then
@@ -358,16 +423,17 @@ end );
 #M  CrossedSquareMorphismByXModMorphisms( <Xs>, <Xr>, <list> )  
 ##
 InstallMethod( CrossedSquareMorphismByXModMorphisms, 
-    "for 2 CrossedSquares and 4 morphisms", true,
+    "for 2 crossed squares and 4 morphisms", true,
     [ IsCrossedSquare, IsCrossedSquare, IsList ], 0,
 function( src, rng, list )
 
     local mor, ok;
 
-    if not ForAll( list, m -> IsXModMorphism(m) ) then 
+    if not ( Length( list ) = 4 ) and 
+           ForAll( list, m -> IsXModMorphism(m) ) then 
         Error( "third argument should be a list of xmod morphisms" ); 
     fi; 
-    mor := PreCrossedSquareMorphismByXModMorphisms( src, rng, list );
+    mor := PreCrossedSquareMorphismByPreXModMorphisms( src, rng, list );
     ok := IsCrossedSquareMorphism( mor );
     if not ok then
         return fail;
@@ -377,7 +443,31 @@ end );
 
 ##############################################################################
 ##
-#M  Cat2GroupMorphismByCat1GroupMorphisms( <Cs>, <Cr>, <list> ) . . make cat2-group mapping
+#M  CrossedSquareMorphismByGroupHomomorphisms( <Xs>, <Xr>, <list> )  
+##
+InstallMethod( CrossedSquareMorphismByGroupHomomorphisms, 
+    "for 2 crossed squares and 4 morphisms", true,
+    [ IsCrossedSquare, IsCrossedSquare, IsList ], 0,
+function( src, rng, list )
+
+    local mor, ok;
+
+    if not ( Length( list ) = 4 ) and 
+           ForAll( list, m -> IsGroupHomomorphism(m) ) then 
+        Error( "third argument should be a list of xmod morphisms" ); 
+    fi; 
+    mor := PreCrossedSquareMorphismByGroupHomomorphisms( src, rng, list );
+    ok := IsCrossedSquareMorphism( mor );
+    if not ok then
+        return fail;
+    fi;
+    return mor;
+end );
+
+##############################################################################
+##
+#M  Cat2GroupMorphismByCat1GroupMorphisms( <Cs>, <Cr>, <list> ) 
+##  . . . make cat2-group mapping
 ##
 InstallMethod( Cat2GroupMorphismByCat1GroupMorphisms, 
     "for two cat2-groups and 2 morphisms", true, 
@@ -389,7 +479,7 @@ function( src, rng, list )
     if not ForAll( list, m -> IsCat1GroupMorphism(m) ) then 
         Error( "third argument should be a list of cat1-morphisms" ); 
     fi; 
-    mor := PreCat2GroupMorphismByCat1GroupMorphisms( src, rng, list );
+    mor := PreCat2GroupMorphismByPreCat1GroupMorphisms( src, rng, list );
     ok := IsCat2GroupMorphism( mor );
     if not ok then
         return fail;

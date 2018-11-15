@@ -2,6 +2,11 @@
 
 ## 2.72 -> 2.72dev (00/11/2018) 
 
+ * (15/11/18) renamed CrossedSquareMorphismByMorphisms 
+              as CrossedSquareMorphismByXModMorphisms 
+              and added CrossedSquareMorphismByGroupHomomorphisms; 
+              ditto for Cat2GroupMorphisms 
+              XModMorphismByHoms -> XModMorphismByGroupHomomorphisms 
  * (14/11/18) Cat1Morphism -> Cat1GroupMorphism, ditto Cat2Morphism, etc. 
               removed IsomorphismSmallPermGroup, NiceObject, etc from util.*
  * (08/11/18) added KernelCokernelXMod, fixing issue #34 

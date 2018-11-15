@@ -1338,7 +1338,7 @@ end );
 InstallMethod( LeftRightMorphism, "for a precrossed square", true,
     [ IsPreCrossedSquare ], 0,
 function( s )
-    return XModMorphismByHoms( 
+    return XModMorphismByGroupHomomorphisms( 
         Left2DimensionalGroup(s), Right2DimensionalGroup(s), 
         Boundary( Up2DimensionalGroup(s) ), 
         Boundary( Down2DimensionalGroup(s) ) ); 
@@ -1347,7 +1347,8 @@ end );
 InstallMethod( UpDownMorphism, "for a precrossed square", true,
     [ IsPreCrossedSquare ], 0,
 function( s )
-    return XModMorphismByHoms( Up2DimensionalGroup(s), Down2DimensionalGroup(s), 
+    return XModMorphismByGroupHomomorphisms( 
+           Up2DimensionalGroup(s), Down2DimensionalGroup(s), 
            Boundary( Left2DimensionalGroup(s) ), 
            Boundary( Right2DimensionalGroup(s) ) ); 
 end );

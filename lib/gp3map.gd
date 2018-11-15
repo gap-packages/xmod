@@ -11,15 +11,21 @@
 #############################################################################
 ##
 #F  PreCrossedSquareMorphism( <args> )
-#O  PreCrossedSquareMorphismByXModMorphisms( <src>, <rng>, <list> )
+#O  PreCrossedSquareMorphismByPreXModMorphisms( <src>, <rng>, <list> )
+#O  PreCrossedSquareMorphismByGroupHomomorphisms( <src>, <rng>, <list> )
 #F  PreCat2GroupMorphism( <args> )
-#O  PreCat2GroupMorphismByCat1GroupMorphisms( <src>, <rng>, <list> )
+#O  PreCat2GroupMorphismByPreCat1GroupMorphisms( <src>, <rng>, <list> )
+#O  PreCat2GroupMorphismByGroupHomomorphisms( <src>, <rng>, <list> )
 ##
 DeclareGlobalFunction( "PreCrossedSquareMorphism" );
-DeclareOperation( "PreCrossedSquareMorphismByXModMorphisms",
+DeclareOperation( "PreCrossedSquareMorphismByPreXModMorphisms",
+    [ IsPreCrossedSquare, IsPreCrossedSquare, IsList ] );
+DeclareOperation( "PreCrossedSquareMorphismByGroupHomomorphisms",
     [ IsPreCrossedSquare, IsPreCrossedSquare, IsList ] );
 DeclareGlobalFunction( "PreCat2GroupMorphism" );
-DeclareOperation( "PreCat2GroupMorphismByCat1GroupMorphisms",
+DeclareOperation( "PreCat2GroupMorphismByPreCat1GroupMorphisms",
+    [ IsPreCat2Group, IsPreCat2Group, IsList ] );
+DeclareOperation( "PreCat2GroupMorphismByGroupHomomorphisms",
     [ IsPreCat2Group, IsPreCat2Group, IsList ] );
 
 #############################################################################
