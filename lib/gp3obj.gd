@@ -50,19 +50,19 @@ DeclareOperation( "ImageElmCrossedPairing", [ IsCrossedPairing, IsObject ] );
 DeclareOperation( "CrossedPairingByNormalSubgroups", 
     [ IsGroup, IsGroup, IsGroup ] );
 DeclareOperation( "CrossedPairingByDerivations", [ IsXMod ] );
-DeclareOperation( "CrossedPairingByXModAction", [ IsXMod ] );
+DeclareOperation( "CrossedPairingByXModAction", [ IsXMod, IsXMod ] );
 
 #############################################################################
 ##
 #P  IsTrivialAction3DimensionalGroup( <obj> ) 
-#P  IsNormalSubgroup3DimensionalGroup( <obj> ) 
+#P  IsNormalSub3DimensionalGroup( <obj> ) 
 #P  IsAutomorphismGroup3DimensionalGroup( <XS> ) 
 #P  IsCentralExtension3DimensionalGroup( <XS> ) 
 #P  IsAbelianSquare3DimensionalGroup( <obj> ) 
 ##
 DeclareProperty( "IsTrivialAction3DimensionalGroup", 
     IsHigherDimensionalGroup );
-DeclareProperty( "IsNormalSubgroup3DimensionalGroup", 
+DeclareProperty( "IsNormalSub3DimensionalGroup", 
     IsHigherDimensionalGroup );
 DeclareProperty( "IsCentralExtension3DimensionalGroup", 
     IsHigherDimensionalGroup );
@@ -104,7 +104,7 @@ DeclareAttribute( "UpDownMorphism", IsHigherDimensionalGroup );
 ##
 DeclareRepresentation( "IsPreCrossedSquareObj", 
     IsHigherDimensionalGroup and IsAttributeStoringRep,
-    [ "up2d", "left2d", "down2d", "right2d", "action", "pairing" ] );
+    [ "up2d", "left2d", "right2d", "down2d", "action", "pairing" ] );
 BindGlobal( "PreCrossedSquareObjType", 
             NewType( FamilyHigherDimensionalGroup, IsPreCrossedSquareObj ) ); 
 DeclareOperation( "PreCrossedSquareObj", 
@@ -124,8 +124,8 @@ InstallTrueMethod( IsPreCrossedSquare, IsCrossedSquare );
 #F  PreCrossedSquare( <args> ) 
 #F  CrossedSquare( <args> ) 
 #O  CrossedSquareByXMods( <up>, <left>, <down>, <right>, <action>, <pairing> ) 
-#O  CrossedSquareByNormalSubgroups( <P>, <N>, <M>, <L> )
-#O  CrossedSquareByXModUpDown( <xmod> ) 
+#O  CrossedSquareByNormalSubgroups( <L>, <M>, <N>, <P> )
+#O  CrossedSquareByNormalSubXMod( <xmod>, <subxmod> ) 
 #A  ActorCrossedSquare( <xmod> )
 ##
 DeclareGlobalFunction( "PreCrossedSquare" );
@@ -134,7 +134,7 @@ DeclareOperation( "CrossedSquareByXMods",
   [ IsXMod, IsXMod, IsXMod, IsXMod, IsGroupHomomorphism, IsCrossedPairing ] );
 DeclareOperation( "CrossedSquareByNormalSubgroups", 
     [ IsGroup, IsGroup, IsGroup, IsGroup ] );
-DeclareOperation( "CrossedSquareByXModUpDown", [ IsXMod ] );
+DeclareOperation( "CrossedSquareByNormalSubXMod", [ IsXMod, IsXMod ] );
 DeclareAttribute( "ActorCrossedSquare", IsXMod );
 
 #############################################################################
@@ -164,12 +164,12 @@ InstallTrueMethod( IsPreCat2Group, IsCat2Group );
 ##
 #F  PreCat2Group( <arg> ) 
 #F  Cat2Group( <arg> }
-#O  DetermineDownRightCat1Groups( <first>, <second> )
-#O  PreCat2GroupByPreCat1Groups( <up>, <left>, <down>, <right> )
+#O  DetermineRightDownCat1Groups( <first>, <second> )
+#O  PreCat2GroupByPreCat1Groups( <up>, <left>, <right>, <down> )
 ##
 DeclareGlobalFunction( "PreCat2Group" );
 DeclareGlobalFunction( "Cat2Group" );
-DeclareOperation( "DetermineDownRightCat1Groups", 
+DeclareOperation( "DetermineRightDownCat1Groups", 
     [ IsPreCat1Group, IsPreCat1Group ] );
 DeclareOperation( "PreCat2GroupByPreCat1Groups", 
     [ IsPreCat1Group, IsPreCat1Group, IsPreCat1Group, IsPreCat1Group ] );

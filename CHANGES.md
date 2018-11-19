@@ -2,6 +2,8 @@
 
 ## 2.72 -> 2.72dev (00/11/2018) 
 
+ * (19/11/18) added IsNormalSub2DimensionalGroup and used this when calling 
+              CrossedSquareByNormalSubXMod
  * (15/11/18) renamed CrossedSquareMorphismByMorphisms 
               as CrossedSquareMorphismByXModMorphisms 
               and added CrossedSquareMorphismByGroupHomomorphisms; 

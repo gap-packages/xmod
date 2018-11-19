@@ -1485,6 +1485,29 @@ end );
 
 ##############################################################################
 ##
+#M  IsNormalSub2DimensionalGroup( <XM>, <SM> )
+##
+InstallMethod( IsNormalSub2DimensionalGroup, "for xmod and subxmod etc.", 
+    true, [ Is2DimensionalGroup, Is2DimensionalGroup ], 0,
+function( XM, SM )
+
+    local ispx, ok; 
+
+    ispx := IsPreXMod( XM );
+    if ispx then 
+        ok := IsSubPreXMod( XM, SM ); 
+    else 
+        ok := IsSubPreCat1Group( XM, SM ); 
+    fi; 
+    if not ok then 
+        return false; 
+    fi;
+    Print( "#I  Warning: tests not yet installed\n" ); 
+    return true;
+end );
+
+##############################################################################
+##
 #M  Sub2DimensionalGroup . .  creates Sub2bObject from Ssrc<=Osrc & Srng<=Orng
 ##
 InstallMethod( Sub2DimensionalGroup, "generic method for 2d-objects", true,

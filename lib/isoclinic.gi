@@ -767,12 +767,14 @@ InstallOtherMethod( CentralQuotient, "generic method for crossed modules",
     true, [ IsXMod ], 0,
 function( XM ) 
 
-    local act, ZM, QM, ul, ur, dl, dr, nat, up, dn, gdl, gdr, iul, adg, 
-          prod, proj1, proj2, map, xp, CrossedSquare; 
+    local act, ZM, QM, ul, ur, dl, dr, nat, snat, rnat, up, dn, gdl, gdr, 
+          iul, adg, prod, proj1, proj2, map, xp, xs; 
 
     act := XModAction( XM ); 
     ZM := CentreXMod( XM ); 
     nat := NaturalMorphismByNormalSubPreXMod( XM, ZM ); 
+    snat := SourceHom( nat );
+    rnat := RangeHom( nat ); 
     QM := Image( nat );
     ul := Source( XM ); 
     dl := Range( XM );
@@ -787,10 +789,10 @@ function( XM )
         fi;
         SetName( QM, Concatenation( Name(XM), "/", Name(ZM) ) ); 
     fi; 
-    up := XModByCentralExtension( SourceHom( nat ) );
-    dn := XModByCentralExtension( RangeHom( nat ) );
+    up := XModByCentralExtension( snat );
+    dn := XModByCentralExtension( rnat );
     gdl := GeneratorsOfGroup( dl ); 
-    gdr := List( gdl, r -> ImageElm( Boundary(dn), r ) ); 
+    gdr := List( gdl, r -> ImageElm( rnat, r ) ); 
     iul := List( gdl, r -> ImageElm( act, r ) ); 
     adg := GroupHomomorphismByImages( dr, Range(act), gdr, iul );
     prod := DirectProduct( dl, ur );
@@ -800,16 +802,13 @@ function( XM )
              function(c) 
                local a,s;
                a := ImageElm( act, ImageElm(proj1,c) ); 
-               s := PreImagesRepresentative( Boundary(up), ImageElm(proj2,c) );  
+               s := PreImagesRepresentative( snat, ImageElm(proj2,c) );  
                return ImageElm(a,s^-1)*s; 
              end );
     xp := CrossedPairingObj( [dl,ur], ul, map );
-    CrossedSquare := PreCrossedSquareObj( up, XM, dn, QM, adg, xp );
-    SetIsCrossedSquare( CrossedSquare, true );
-    ## if HasName( XM ) then 
-    ##     SetName( QM, Concatenation( Name( XM ), "/", Name(ZM) ) ); 
-    ## fi;
-    return CrossedSquare;
+    xs := PreCrossedSquareObj( up, XM, QM, dn, adg, xp );
+    SetIsCrossedSquare( xs, true );
+    return xs;
 end );
 
 #############################################################################

@@ -10,10 +10,8 @@
 
 #############################################################################
 ##
-#F  PreCrossedSquareMorphism( <args> )
 #O  PreCrossedSquareMorphismByPreXModMorphisms( <src>, <rng>, <list> )
 #O  PreCrossedSquareMorphismByGroupHomomorphisms( <src>, <rng>, <list> )
-#F  PreCat2GroupMorphism( <args> )
 #O  PreCat2GroupMorphismByPreCat1GroupMorphisms( <src>, <rng>, <list> )
 #O  PreCat2GroupMorphismByGroupHomomorphisms( <src>, <rng>, <list> )
 ##

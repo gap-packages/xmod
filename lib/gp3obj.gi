@@ -134,22 +134,35 @@ end );
 
 ##############################################################################
 ##
-#M  CrossedPairingByXModAction( <xmod> ) . . convert action to crossed pairing
+#M  CrossedPairingByXModAction( <xmod>, <subxmod> ) . . action -> x-pairing
 ##
-InstallMethod( CrossedPairingByXModAction, "for a crossed module", true,
-    [ IsXMod ], 0,
-function( X0 )
+InstallMethod( CrossedPairingByXModAction, "for xmod and normal subxmod", 
+    true, [ IsXMod, IsXMod ], 0,
+function( X0, X1 )
 
-    local S, R, act, map, xp;
+    local S0, S1, R0, R1, act, map, xp;
 
-    S := Source( X0 ); 
-    R := Range( X0 ); 
+    if not IsNormalSub2DimensionalGroup( X0, X1 ) then 
+        Error( "X1 not a normal subxmod of X0" ); 
+    fi;
+    S0 := Source( X0 ); 
+    S1 := Source( X1 );
+    R0 := Range( X0 );
+    R1 := Range( X1 ); 
     act := XModAction( X0 );
-    map := Mapping2ArgumentsByFunction( [S,R], S, 
+    map := Mapping2ArgumentsByFunction( [R1,S0], S1, 
                function(c) 
-                   return ImageElm( ImageElm(act,c[2]), c[1]^(-1) ) * c[1];
+                   local r1, ar, s0, s1; 
+                   r1 := c[1];
+                   s0 := c[2];
+                   ar := ImageElm( act, r1 );
+                   s1 := ImageElm( ar, s0 );
+                   if not ( s1 in S1 ) then 
+                       Error( "s0^r1 not in nthe subgroup S1" ); 
+                   fi; 
+                   return s1;
                end );
-    xp := CrossedPairingObj( [S,R], S, map );
+    xp := CrossedPairingObj( [R1,S0], S1, map );
     return xp;
 end );
 
@@ -170,8 +183,8 @@ function( P )
     fi;
     u := Up2DimensionalGroup( P );
     l := Left2DimensionalGroup( P );
-    d := Down2DimensionalGroup( P );
     r := Right2DimensionalGroup( P );
+    d := Down2DimensionalGroup( P );
     act := DiagonalAction( P );
     ul := Source( u );
     ur := Range( u );
@@ -212,12 +225,12 @@ end );
 
 ##############################################################################
 ##
-#M  PreCrossedSquareObj ( <up>, <down>, <left>, <right>, <act>, <pair> ) 
+#M  PreCrossedSquareObj ( <up>, <down>, <right>, <left>, <act>, <pair> ) 
 ##                                               . . . make a PreCrossedSquare
 ##
 InstallMethod( PreCrossedSquareObj, "for prexmods, action and pairing", true,
     [ IsPreXMod, IsPreXMod, IsPreXMod, IsPreXMod, IsObject, IsObject ], 0,
-function( u, l, d, r, a, p )
+function( u, l, r, d, a, p )
 
     local PS, ok, src, rng, aut, narne;
 
@@ -226,8 +239,8 @@ function( u, l, d, r, a, p )
     ObjectifyWithAttributes( PS, PreCrossedSquareObjType, 
       Up2DimensionalGroup, u, 
       Left2DimensionalGroup, l,
-      Down2DimensionalGroup, d,
       Right2DimensionalGroup, r,
+      Down2DimensionalGroup, d,
       CrossedPairing, p,
       DiagonalAction, a,
       IsHigherDimensionalGroup, true );
@@ -241,7 +254,7 @@ end );
 ##
 #F  (Pre)CrossedSquare( <up>, <left>, <down>, <right>, <action>, <pairing> ) 
 ##      . . . . . . crossed square from xmods
-#F  (Pre)CrossedSquare( <P>, <N>, <M>, <L> )  
+#F  (Pre)CrossedSquare( <L>, <M>, <N>, <P> )  
 ##      . . . . . . crossed square normal subgroups
 #F  (Pre)CrossedSquare( <xmod> )                                                 
 ##      . . . . . . actor crossed square
@@ -259,13 +272,14 @@ InstallGlobalFunction( PreCrossedSquare, function( arg )
         elif  IsXMod( arg[1] )   then
             XS := ActorCrossedSquare( arg[1] );
         fi;
-    elif ( nargs = 4 ) then
+    elif ( nargs = 4 ) and ForAll( arg, a -> IsGroup(a) ) then
         XS := CrossedSquareByNormalSubgroups(arg[1],arg[2],arg[3],arg[4]);
     elif ( nargs = 6  ) then
         XS := CrossedSquareByXMods(arg[1],arg[2],arg[3],arg[4],arg[5],arg[6]);
     else   
-        Print( "standard usage: CrossedSquare( <up>, <left>, <down>, <right>, <action>, <pairing> );\n" );
-        Print( "            or: CrossedSquare( <P>, <N>, <M>, <L> );\n" );
+        Print( Concatenation( "standard usage: CrossedSquare( ", 
+               "<up>, <left>, <right>, <down>, <action>, <pairing> );\n" ) );
+        Print( "            or: CrossedSquare( <L>, <M>, <N>, <P> );\n" );
         Print( "            or: CrossedSquare( <xmod> );\n" );
         Print( "            or: PreCrossedSquare( <pre-cat2-group> );\n" );
         return fail;
@@ -290,8 +304,8 @@ InstallGlobalFunction( CrossedSquare, function( arg )
     elif ( nargs = 6 ) then 
         XS := PreCrossedSquare(arg[1], arg[2], arg[3], arg[4], arg[5], arg[6]); 
     else 
-        Print( "standard usage: CrossedSquare( <up>, <left>, <down>, <right>, <action>, <pairing> );\n" );
-        Print( "            or: CrossedSquare( <P>, <N>, <M>, <L> );\n" );
+        Print( "standard usage: CrossedSquare( <up>, <left>, <right>, <down>, <action>, <pairing> );\n" );
+        Print( "            or: CrossedSquare( <L>, <M>, <N>, <P> );\n" );
         Print( "            or: CrossedSquare( <xmod> );\n" );
         Print( "            or: PreCrossedSquare( <pre-cat2-group> );\n" );
         return fail;
@@ -315,7 +329,7 @@ end );
 InstallMethod( CrossedSquareByXMods, "default crossed square", true, 
     [ IsXMod, IsXMod, IsXMod, IsXMod, IsGroupHomomorphism, IsCrossedPairing ], 
     0,
-function( top, left, down, right, action, xpair )
+function( up, left, right, down, action, xpair )
 
     Error( "this operation is not yet implemented" ); 
     return fail;
@@ -323,14 +337,17 @@ end );
 
 ##############################################################################
 ##
-#M  CrossedSquareByNormalSubgroups . . . . crossed square from normal M,N in P
+#M  CrossedSquareByNormalSubgroups . . . crossed square from normal L,M,N in P
 ##
 InstallMethod( CrossedSquareByNormalSubgroups, "conjugation crossed square",
     true, [ IsGroup, IsGroup, IsGroup, IsGroup ], 0,
-function( P, N, M, L )
+function( L, M, N, P )
 
     local XS, u, d, l, r, a, xp, diag;
 
+    if IsSubgroup( L, P ) and ( L <> P ) then 
+        Error( "require ordering L <= M,N <= P" ); 
+    fi;
     if not ( IsNormal( P, M ) and IsNormal( P, N ) 
              and IsNormal( M, L ) and IsNormal( N, L ) ) then
         Error( "M,N,L fail to be normal subgroups of P" ); 
@@ -339,15 +356,15 @@ function( P, N, M, L )
          and IsSubgroup( L, CommutatorSubgroup(M,N) ) ) then 
         Error( "require CommutatorSubgroup(M,N) <= L <= Intersection(M,N)" );
     fi;
-    u := XModByNormalSubgroup( N, L );
-    l := XModByNormalSubgroup( M, L );
-    d := XModByNormalSubgroup( P, M );
-    r := XModByNormalSubgroup( P, N );
+    u := XModByNormalSubgroup( M, L );
+    l := XModByNormalSubgroup( N, L );
+    r := XModByNormalSubgroup( P, M );
+    d := XModByNormalSubgroup( P, N );
     diag := XModByNormalSubgroup( P, L );
     a := XModAction( diag );
     ##  define the pairing as a commutator
     xp := CrossedPairingByNormalSubgroups( M, N, L ); 
-    XS := PreCrossedSquareObj( u, l, d, r, a, xp );
+    XS := PreCrossedSquareObj( u, l, r, d, a, xp );
     SetIsCrossedSquare( XS, true );
     SetDiagonal2DimensionalGroup( XS, diag ); 
     return XS;
@@ -355,7 +372,7 @@ end );
 
 InstallOtherMethod( CrossedSquareByNormalSubgroups, 
     "conjugation crossed square", true, [ IsGroup, IsGroup, IsGroup ], 0,
-function( P, M, N )
+function( M, N, P )
 
     local XS, genP, genM, genN, L, genL, u, d, l, r, a, p, diag;
 
@@ -363,25 +380,32 @@ function( P, M, N )
         return fail;
     fi;
     L := Intersection( M, N );
-    return CrossedSquareByNormalSubgroups( P, M, N, L );;
+    return CrossedSquareByNormalSubgroups( L, M, N, P ); 
 end );
 
 ###############################################################################
 ##
-#M  CrossedSquareByXModUpDown . . . . . . create a crossed square from an xmod 
+#M  CrossedSquareByNormalSubXMod . crossed square from xmod and normal subxmod 
 ##
-InstallMethod( CrossedSquareByXModUpDown, "use a repeated xmod", true, 
-    [ IsXMod ], 0,
-function( X0 )
+InstallMethod( CrossedSquareByNormalSubXMod, "for an xmod and normal subxmod", 
+    true, [ IsXMod, IsXMod ], 0,
+function( X0, X1 )
 
-    local S, R, X1S, X1R, xp, XS;
+    local S0, S1, up, R0, R1, down, xp, act1, diag, act, XS;
 
-    S := Source( X0 ); 
-    X1S := XModByNormalSubgroup( S, S ); 
-    R := Range( X0 ); 
-    X1R := XModByNormalSubgroup( R, R ); 
-    xp := CrossedPairingByXModAction( X0 ); 
-    XS := PreCrossedSquareObj( X0, X1S, X0, X1R, XModAction( X0 ), xp );
+    if not IsNormalSub2DimensionalGroup( X0, X1 ) then 
+        return fail; 
+    fi;
+    S0 := Source( X0 ); 
+    S1 := Source( X1 );
+    up := XModByNormalSubgroup( S0, S1 ); 
+    R0 := Range( X0 ); 
+    R1 := Range( X1 );
+    down := XModByNormalSubgroup( R0, R1 ); 
+    xp := CrossedPairingByXModAction( X0, X1 ); 
+    diag := SubXMod( X0, S1, R0 );
+    act := XModAction( diag );
+    XS := PreCrossedSquareObj( up, X1, X0, down, act, xp );
     SetIsCrossedSquare( XS, true );
     return XS;
 end );
@@ -402,7 +426,7 @@ function( X0 )
     da := XModAction( LX );
     ##  define the pairing as evaluation of a derivation
     xp := CrossedPairingByDerivations( X0 );
-    XS := PreCrossedSquareObj( WX, X0, NX, AX, da, xp );
+    XS := PreCrossedSquareObj( WX, X0, AX, NX, da, xp );
     SetIsCrossedSquare( XS, true );
     return XS;
 end );
@@ -472,6 +496,19 @@ function( PS )
              IdGroup( Range( Down2DimensionalGroup( PS ) ) ) ]; 
 end ); 
 
+#############################################################################
+##
+#M  StructureDescription  . . . . . . . . . . . . . for a 3-dimensional group
+##
+InstallOtherMethod( StructureDescription, "method for a 3-dimensional group", 
+    true, [ IsHigherDimensionalGroup ], 0,
+function( PS ) 
+    return [ StructureDescription( Source( Up2DimensionalGroup( PS ) ) ), 
+             StructureDescription( Range( Up2DimensionalGroup( PS ) ) ),
+             StructureDescription( Source( Down2DimensionalGroup( PS ) ) ),
+             StructureDescription( Range( Down2DimensionalGroup( PS ) ) ) ]; 
+end ); 
+
 ##############################################################################
 ##
 #M  \=( <dom1>, <dom2> ) . . . . . . . . . . test if two 3d-objects are equal
@@ -525,8 +562,8 @@ function( g3d )
             arrow := " => "; 
         fi; 
         L := Source( Up2DimensionalGroup( g3d ) );
-        M := Source( Down2DimensionalGroup( g3d ) );
-        N := Range( Up2DimensionalGroup( g3d ) );
+        M := Range( Up2DimensionalGroup( g3d ) );
+        N := Source( Down2DimensionalGroup( g3d ) );
         P := Range( Down2DimensionalGroup( g3d ) );
         ok := HasName(L) and HasName(M) and HasName(N) and HasName(P);
         if ok then
@@ -534,14 +571,14 @@ function( g3d )
             lenM := Length( Name( M ) );
             lenN := Length( Name( N ) );
             lenP := Length( Name( P ) );
-            len1 := Maximum( lenL, lenM );
-            len2 := Maximum( lenN, lenP );
+            len1 := Maximum( lenL, lenN );
+            len2 := Maximum( lenM, lenP );
             q1 := QuoInt( len1, 2 );
             q2 := QuoInt( len2, 2 );
             Print( "[ " );
-            for j in [1..lenM-lenL] do Print(" "); od;
-            Print( Name(L), arrow, Name(N) );
-            for j in [1..lenP-lenN] do Print(" "); od;
+            for j in [1..lenN-lenL] do Print(" "); od;
+            Print( Name(L), arrow, Name(M) );
+            for j in [1..lenP-lenM] do Print(" "); od;
             Print( " ]\n[ " );
             for j in [1..q1] do Print(" "); od;
             Print( "|" );
@@ -552,9 +589,9 @@ function( g3d )
             for j in [1..q2] do Print(" "); od;
             Print( " ]\n" );
             Print( "[ " );
-            for j in [1..lenL-lenM] do Print(" "); od;
-            Print( Name(M), " -> ", Name(P) );
-            for j in [1..lenN-lenP] do Print(" "); od;
+            for j in [1..lenL-lenN] do Print(" "); od;
+            Print( Name(N), " -> ", Name(P) );
+            for j in [1..lenM-lenP] do Print(" "); od;
             Print( " ]\n" );
         else 
             if ispsq then 
@@ -566,8 +603,8 @@ function( g3d )
             fi;
             Print( "      up = ",    Up2DimensionalGroup( g3d ), "\n" );
             Print( "    left = ",  Left2DimensionalGroup( g3d ), "\n" );
-            Print( "    down = ",  Down2DimensionalGroup( g3d ), "\n" );
             Print( "   right = ", Right2DimensionalGroup( g3d ), "\n" );
+            Print( "    down = ",  Down2DimensionalGroup( g3d ), "\n" );
         fi;
     fi;
 end );
@@ -594,8 +631,8 @@ function( g3d )
         arrow := " => "; 
     fi; 
     L := Source( Up2DimensionalGroup( g3d ) );
-    M := Source( Down2DimensionalGroup( g3d ) );
-    N := Range( Up2DimensionalGroup( g3d ) );
+    M := Range( Up2DimensionalGroup( g3d ) );
+    N := Source( Down2DimensionalGroup( g3d ) );
     P := Range( Down2DimensionalGroup( g3d ) );
     ok := HasName(L) and HasName(M) and HasName(N) and HasName(P);
     if ok then
@@ -603,14 +640,14 @@ function( g3d )
         lenM := Length( Name( M ) );
         lenN := Length( Name( N ) );
         lenP := Length( Name( P ) );
-        len1 := Maximum( lenL, lenM );
-        len2 := Maximum( lenN, lenP );
+        len1 := Maximum( lenL, lenN );
+        len2 := Maximum( lenM, lenP );
         q1 := QuoInt( len1, 2 );
         q2 := QuoInt( len2, 2 );
         Print( "[ " );
-        for j in [1..lenM-lenL] do Print(" "); od;
-        Print( Name(L), arrow, Name(N) );
-        for j in [1..lenP-lenN] do Print(" "); od;
+        for j in [1..lenN-lenL] do Print(" "); od;
+        Print( Name(L), arrow, Name(M) );
+        for j in [1..lenP-lenM] do Print(" "); od;
         Print( " ]\n[ " );
         for j in [1..q1] do Print(" "); od;
         Print( "|" );
@@ -621,17 +658,17 @@ function( g3d )
         for j in [1..q2] do Print(" "); od;
         Print( " ]\n" );
         Print( "[ " );
-        for j in [1..lenL-lenM] do Print(" "); od;
-        Print( Name(M), " -> ", Name(P) );
-        for j in [1..lenN-lenP] do Print(" "); od;
+        for j in [1..lenL-lenN] do Print(" "); od;
+        Print( Name(N), " -> ", Name(P) );
+        for j in [1..lenM-lenP] do Print(" "); od;
         Print( " ]\n" );
     else 
         if ispsq then 
         Print( "(pre-)crossed square with (pre-)crossed modules:\n" ); 
         Print( "      up = ",    Up2DimensionalGroup( g3d ), "\n" );
         Print( "    left = ",  Left2DimensionalGroup( g3d ), "\n" );
-        Print( "    down = ",  Down2DimensionalGroup( g3d ), "\n" );
         Print( "   right = ", Right2DimensionalGroup( g3d ), "\n" );
+        Print( "    down = ",  Down2DimensionalGroup( g3d ), "\n" );
         fi; 
     fi; 
 end );
@@ -742,7 +779,7 @@ InstallGlobalFunction( PreCat2Group, function( arg )
                 C1G2 := Range( isoC1 ); 
             fi; 
         fi; 
-        dr := DetermineDownRightCat1Groups( C1G1, C1G2 );
+        dr := DetermineRightDownCat1Groups( C1G1, C1G2 );
         C2G := PreCat2GroupByPreCat1Groups( C1G1, C1G2, dr[1], dr[2] ); 
         if ( C2G = fail ) then 
             Error( "C2G fails to be a PreCat2Group" ); 
@@ -781,28 +818,28 @@ end );
 
 ##############################################################################
 ##
-#M  DetermineDownRightCat1Groups . . . . . . . . . . . for two pre-cat1-groups
+#M  DetermineRightDownCat1Groups . . . . . . . . . . . for two pre-cat1-groups
 ## 
-InstallMethod( DetermineDownRightCat1Groups, "for two pre-cat1-groups", true,
+InstallMethod( DetermineRightDownCat1Groups, "for two pre-cat1-groups", true,
     [ IsPreCat1Group, IsPreCat1Group ], 0,
-function( top, left )
+function( up, left )
 
     local G, genG, R1, R2, genR1, genR2, ddt1, ddh1, dde1, ddt2, ddh2, dde2, 
           tau1, tau2, im, dt1, dh1, de1, dt2, dh2, de2,  
           P, genP, isoP, invP, down, right, dt0, dh0, de0, diag, PC2, ok; 
 
-    G := Source( top ); 
+    G := Source( up ); 
     genG := GeneratorsOfGroup( G ); 
-    R1 := Range( top ); 
+    R1 := Range( up ); 
     genR1 := GeneratorsOfGroup( R1 ); 
     if not ( G = Source( left ) ) then 
         Error( "the two cat1-groups should have the same source" ); 
     fi; 
     R2 := Range( left );
     genR2 := GeneratorsOfGroup( R2 );
-    ddt1 := TailMap( top ); 
-    ddh1 := HeadMap( top ); 
-    dde1 := RangeEmbedding( top ); 
+    ddt1 := TailMap( up ); 
+    ddh1 := HeadMap( up ); 
+    dde1 := RangeEmbedding( up ); 
     ddt2 := TailMap( left ); 
     ddh2 := HeadMap( left ); 
     dde2 := RangeEmbedding( left ); 
@@ -850,7 +887,7 @@ function( top, left )
         Error( "right or down fail to be cat1-groups" ); 
         return fail; 
     fi; 
-    return [ down, right ]; 
+    return [ right, down ]; 
 end ); 
 
 ##############################################################################
@@ -859,15 +896,15 @@ end );
 ## 
 InstallMethod( PreCat2GroupByPreCat1Groups, "for four pre-cat1-groups", true,
     [ IsPreCat1Group, IsPreCat1Group, IsPreCat1Group, IsPreCat1Group ], 0,
-function( top, left, down, right )
+function( up, left, right, down )
 
     local G, genG, R1, R2, P, genR1, genR2, genP, 
           ddt1, ddh1, dde1, ddt2, ddh2, dde2, dt1, dh1, de1, dt2, dh2, de2, 
           imt, imt2, imh, imh2, ime, ime2, dt0, dh0, de0, diag, PC2, ok;
 
-    G := Source( top ); 
+    G := Source( up ); 
     genG := GeneratorsOfGroup( G ); 
-    R1 := Range( top ); 
+    R1 := Range( up ); 
     R2 := Range( left );
     P := Range( down ); 
     if not ( ( G = Source( left ) ) and ( R1 = Source( right ) ) 
@@ -877,9 +914,9 @@ function( top, left, down, right )
     genR1 := GeneratorsOfGroup( R1 ); 
     genR2 := GeneratorsOfGroup( R2 );
     genP := GeneratorsOfGroup( P ); 
-    ddt1 := TailMap( top ); 
-    ddh1 := HeadMap( top ); 
-    dde1 := RangeEmbedding( top ); 
+    ddt1 := TailMap( up ); 
+    ddh1 := HeadMap( up ); 
+    dde1 := RangeEmbedding( up ); 
     ddt2 := TailMap( left ); 
     ddh2 := HeadMap( left ); 
     dde2 := RangeEmbedding( left ); 
@@ -903,7 +940,7 @@ function( top, left, down, right )
         Error( "tail/head/embedding maps do not all commute" ); 
     fi; 
     diag := PreCat1GroupByTailHeadEmbedding( dt0, dh0, de0 ); 
-    PC2 := PreCat2GroupObj( [ top, left, down, right, diag ] );
+    PC2 := PreCat2GroupObj( [ up, left, down, right, diag ] );
     SetIsPreCat2Group( PC2, true );
     ok := IsCat2Group( PC2 );
     return PC2;
@@ -1039,22 +1076,22 @@ function( C2G )
     act2 := ConjugationActionForCrossedSquare(N,L);
     left := XModByBoundaryAndAction(bdy2,act2);
     
-    bdy3 := GroupHomomorphismByFunction( N, P, x -> ImageElm(h1,x) );
-    act3 := ConjugationActionForCrossedSquare(P,N);
-    down := XModByBoundaryAndAction(bdy3,act3);
+    bdy3 := GroupHomomorphismByFunction( M, P, x -> ImageElm(h2,x) );
+    act3 := ConjugationActionForCrossedSquare(P,M);
+    right := XModByBoundaryAndAction(bdy3,act3);
     
-    bdy4 := GroupHomomorphismByFunction( M, P, x -> ImageElm(h2,x) );
-    act4 := ConjugationActionForCrossedSquare(P,M);
-    right := XModByBoundaryAndAction(bdy4,act4);
+    bdy4 := GroupHomomorphismByFunction( N, P, x -> ImageElm(h1,x) );
+    act4 := ConjugationActionForCrossedSquare(P,N);
+    down := XModByBoundaryAndAction(bdy4,act4);
     
     Info( InfoXMod, 3, "   up = ", up );
     Info( InfoXMod, 3, " left = ", left );
-    Info( InfoXMod, 3, " down = ", down );
     Info( InfoXMod, 3, "right = ", right );
+    Info( InfoXMod, 3, " down = ", down );
 
     a := ConjugationActionForCrossedSquare( P, L );
     xp := CrossedPairingByNormalSubgroups( M, N, L );
-    XS := PreCrossedSquareObj( up, left, down, right, a, xp );
+    XS := PreCrossedSquareObj( up, left, right, down, a, xp );
     ## SetIsCrossedSquare( XS, true );
     if HasName( C2G ) then 
         SetName( XS, Concatenation( "xsq(", Name( C2G ), ")" ) ); 
@@ -1074,135 +1111,92 @@ function( XS )
           autgenMxL, autMxL, actPNML, autgenNxL, autNxL, actPMNL, 
           imPNML, bdyPNML, XPNML, CPNML, PNML, e1PNML, e2PNML, genPNML, 
           imPMNL, bdyPMNL, XPMNL, CPMNL, PMNL, e1PMNL, e2PMNL, genPMNL, 
-          imiso, iso, inv, iminv, guess, ok, tup, hup, eup, C2PMNL, 
+          imiso, iso, inv, iminv, guess, ok, tup, hup, eup, C2PNML, 
           tlt, hlt, elt, tdn, hdn, edn, trt, hrt, ert, tdi, hdi, edi, PC, Cdiag; 
 
     Info( InfoXMod, 1, "these conversion functions are under development\n" ); 
 
     up := Up2DimensionalGroup(XS);
     left := Left2DimensionalGroup(XS);
-    down := Down2DimensionalGroup(XS);
     right := Right2DimensionalGroup(XS);
-     
+    down := Down2DimensionalGroup(XS);
     L := Source(up);
-    N := Range(up);
-    M := Source(down);
+    M := Range(up);
+    N := Source(down);
     P := Range(down);
     genL := GeneratorsOfGroup( L ); 
     genM := GeneratorsOfGroup( M ); 
     genN := GeneratorsOfGroup( N ); 
     genP := GeneratorsOfGroup( P ); 
-
     Info( InfoXMod, 4, "L = ", L );    
     Info( InfoXMod, 4, "M = ", M );
     Info( InfoXMod, 4, "N = ", N );
     Info( InfoXMod, 4, "P = ", P );
-
     bdy_up := Boundary(up);
     bdy_lt := Boundary(left);
-    bdy_dn := Boundary(down);
     bdy_rt := Boundary(right);
-     
+    bdy_dn := Boundary(down);
     act_up := XModAction(up);
     act_lt := XModAction(left);
-    act_dn := XModAction(down);
     act_rt := XModAction(right);
+    act_dn := XModAction(down);
     act_diag := DiagonalAction(XS);
     xpair := CrossedPairing( XS );
-
     Cup := Cat1GroupOfXMod( up );
-    NxL := Source( Cup );
-    e1NxL := Embedding( NxL, 1 );
-    e2NxL := Embedding( NxL, 2 );
-    genNxL := Concatenation( List( genN, n -> ImageElm( e1NxL, n ) ), 
-                             List( genL, l -> ImageElm( e2NxL, l ) ) ); 
-    Cleft := Cat1GroupOfXMod( left );
-    MxL := Source( Cleft );
+    MxL := Source( Cup );
     e1MxL := Embedding( MxL, 1 );
     e2MxL := Embedding( MxL, 2 );
     genMxL := Concatenation( List( genM, m -> ImageElm( e1MxL, m ) ), 
                              List( genL, l -> ImageElm( e2MxL, l ) ) ); 
-    Cdown := Cat1GroupOfXMod( down ); 
-    PxM := Source( Cdown ); 
+    Cleft := Cat1GroupOfXMod( left );
+    NxL := Source( Cleft );
+    e1NxL := Embedding( NxL, 1 );
+    e2NxL := Embedding( NxL, 2 );
+    genNxL := Concatenation( List( genN, n -> ImageElm( e1NxL, n ) ), 
+                             List( genL, l -> ImageElm( e2NxL, l ) ) ); 
+    Cright := Cat1GroupOfXMod( right ); 
+    PxM := Source( Cright ); 
     e1PxM := Embedding( PxM, 1 );
     e2PxM := Embedding( PxM, 2 );
     genPxM := Concatenation( List( genP, p -> ImageElm( e1PxM, p ) ), 
                              List( genM, m -> ImageElm( e2PxM, m ) ) ); 
-    Cright := Cat1GroupOfXMod( right ); 
-    PxN := Source( Cright ); 
+    Cdown := Cat1GroupOfXMod( down ); 
+    PxN := Source( Cdown ); 
     e1PxN := Embedding( PxN, 1 );
     e2PxN := Embedding( PxN, 2 );
     genPxN := Concatenation( List( genP, p -> ImageElm( e1PxN, p ) ), 
                              List( genN, n -> ImageElm( e2PxN, n ) ) ); 
-
-    ## construct the action of PxN on MxL using: 
-    ## (m,l)^(p,n) = ( m^p, (m^p \box n).l^{pn} ) 
-    autgenMxL := Concatenation( 
-        List( genP, p -> GroupHomomorphismByImages( MxL, MxL, genMxL, 
-            Concatenation( 
-                List( genM, m -> ImageElm( e1MxL, 
-                                 ImageElm( ImageElm( act_dn, p ), m ) )),
-                List( genL, l -> ImageElm( e2MxL, 
-                                 ImageElm( ImageElm( act_diag, p ), l ))) ))),  
-        List( genN, n -> GroupHomomorphismByImages( MxL, MxL, genMxL, 
-            Concatenation( 
-                List( genM, m -> ImageElm( e1MxL, m ) * 
-                                 ImageElm( e2MxL,  
-                                 ImageElmCrossedPairing( xpair, [m,n] ))), 
-                List( genL, l -> ImageElm( e2MxL, 
-                                 ImageElm( ImageElm( act_up, n ), l ))) ))) ); 
-    Info( InfoXMod, 2, "autgenMxL = ", autgenMxL ); 
-    autMxL := Group( autgenMxL ); 
-    Info( InfoXMod, 2, "autMxL has size ", Size( autMxL ) );
-    SetIsGroupOfAutomorphisms( autMxL, true ); 
-    actPNML := GroupHomomorphismByImages( PxN, autMxL, genPxN, autgenMxL );
-    imPNML := Concatenation( 
-                List( genM, m -> ImageElm( e1PxN, ImageElm( bdy_dn, m ) ) ), 
-                List( genL, l -> ImageElm( e2PxN, ImageElm( bdy_up, l ) ) ) ); 
-    Info( InfoXMod, 2, "imPNML = ", imPNML ); 
-    bdyPNML := GroupHomomorphismByImages( MxL, PxN, genMxL, imPNML );
-    XPNML := XModByBoundaryAndAction( bdyPNML, actPNML ); 
-    if ( InfoLevel( InfoXMod ) > 1 ) then 
-        Print( "crossed module XPNML:\n" );
-        Display( XPNML );
-    fi; 
-    CPNML := Cat1GroupOfXMod( XPNML ); 
-    Info( InfoXMod, 2, "cat1-group CPNML: ", StructureDescription(CPNML) );
-    PNML := Source( CPNML );
-    e1PNML := Embedding( PNML, 1 );
-    e2PNML := Embedding( PNML, 2 );
-    genPNML := Concatenation( List( genPxN, g -> ImageElm( e1PNML, g ) ), 
-                              List( genMxL, g -> ImageElm( e2PNML, g ) ) ); 
-
-    ## construct the action of PxM on NxL using the transpose action: 
-    ## (n,l)^(p,m) = (n^p, (m \box n^p)^{-1}.l^{pm} ) 
+    ## construct the action of PxM on NxL using: 
+    ## (n,l)^(p,m) = ( n^p, (n^p \box m).l^{pm} ) 
     autgenNxL := Concatenation( 
         List( genP, p -> GroupHomomorphismByImages( NxL, NxL, genNxL, 
             Concatenation( 
                 List( genN, n -> ImageElm( e1NxL, 
-                                 ImageElm( ImageElm( act_rt, p ), n ) )),
+                                 ImageElm( ImageElm( act_dn, p ), n ) )),
                 List( genL, l -> ImageElm( e2NxL, 
                                  ImageElm( ImageElm( act_diag, p ), l ))) ))),  
         List( genM, m -> GroupHomomorphismByImages( NxL, NxL, genNxL, 
             Concatenation( 
                 List( genN, n -> ImageElm( e1NxL, n ) * 
                                  ImageElm( e2NxL,  
-                                 ImageElmCrossedPairing( xpair, [m,n] ) )^-1 ), 
+                                 ImageElmCrossedPairing( xpair, [n,m] ))), 
                 List( genL, l -> ImageElm( e2NxL, 
-                                 ImageElm( ImageElm( act_lt, m ), l ))) ))) ); 
+                                 ImageElm( ImageElm( act_up, m ), l ))) ))) ); 
     Info( InfoXMod, 2, "autgenNxL = ", autgenNxL ); 
     autNxL := Group( autgenNxL ); 
+    Info( InfoXMod, 2, "autNxL has size ", Size( autNxL ) );
     SetIsGroupOfAutomorphisms( autNxL, true ); 
     actPMNL := GroupHomomorphismByImages( PxM, autNxL, genPxM, autgenNxL );
     imPMNL := Concatenation( 
-                List( genN, n -> ImageElm( e1PxM, ImageElm( bdy_rt, n ) ) ), 
-                List( genL, l -> ImageElm( e2PxM, ImageElm( bdy_lt, l ) ) ) ); 
+                List( genN, n -> ImageElm( e1PxM, ImageElm( bdy_dn, n ) ) ), 
+                List( genL, l -> ImageElm( e2PxM, ImageElm( bdy_up, l ) ) ) ); 
+    Info( InfoXMod, 2, "imPMNL = ", imPMNL ); 
     bdyPMNL := GroupHomomorphismByImages( NxL, PxM, genNxL, imPMNL );
     XPMNL := XModByBoundaryAndAction( bdyPMNL, actPMNL ); 
-    if ( InfoLevel( InfoXMod ) > 2 ) then 
+    if ( InfoLevel( InfoXMod ) > 1 ) then 
         Print( "crossed module XPMNL:\n" );
         Display( XPMNL );
-    fi;
+    fi; 
     CPMNL := Cat1GroupOfXMod( XPMNL ); 
     Info( InfoXMod, 2, "cat1-group CPMNL: ", StructureDescription(CPMNL) );
     PMNL := Source( CPMNL );
@@ -1210,39 +1204,74 @@ function( XS )
     e2PMNL := Embedding( PMNL, 2 );
     genPMNL := Concatenation( List( genPxM, g -> ImageElm( e1PMNL, g ) ), 
                               List( genNxL, g -> ImageElm( e2PMNL, g ) ) ); 
-
-    ##  now find the isomorphism between the sources PNML and PMNL 
+    ## construct the action of PxN on MxL using the transpose action: 
+    ## (m,l)^(p,n) = (m^p, (n \box m^p)^{-1}.l^{pn} ) 
+    autgenMxL := Concatenation( 
+        List( genP, p -> GroupHomomorphismByImages( MxL, MxL, genMxL, 
+            Concatenation( 
+                List( genM, m -> ImageElm( e1MxL, 
+                                 ImageElm( ImageElm( act_rt, p ), m ) )),
+                List( genL, l -> ImageElm( e2MxL, 
+                                 ImageElm( ImageElm( act_diag, p ), l ))) ))),  
+        List( genN, n -> GroupHomomorphismByImages( MxL, MxL, genMxL, 
+            Concatenation( 
+                List( genM, m -> ImageElm( e1MxL, m ) * 
+                                 ImageElm( e2MxL,  
+                                 ImageElmCrossedPairing( xpair, [n,m] ) )^-1 ), 
+                List( genL, l -> ImageElm( e2MxL, 
+                                 ImageElm( ImageElm( act_lt, n ), l ))) ))) ); 
+    Info( InfoXMod, 2, "autgenMxL = ", autgenMxL ); 
+    autMxL := Group( autgenMxL ); 
+    SetIsGroupOfAutomorphisms( autMxL, true ); 
+    actPNML := GroupHomomorphismByImages( PxN, autMxL, genPxN, autgenMxL );
+    imPNML := Concatenation( 
+                List( genM, m -> ImageElm( e1PxN, ImageElm( bdy_rt, m ) ) ), 
+                List( genL, l -> ImageElm( e2PxN, ImageElm( bdy_lt, l ) ) ) ); 
+    bdyPNML := GroupHomomorphismByImages( MxL, PxN, genMxL, imPNML );
+    XPNML := XModByBoundaryAndAction( bdyPNML, actPNML ); 
+    if ( InfoLevel( InfoXMod ) > 2 ) then 
+        Print( "crossed module XPNML:\n" );
+        Display( XPNML );
+    fi;
+    CPNML := Cat1GroupOfXMod( XPNML ); 
+    Info( InfoXMod, 2, "cat1-group CPNML: ", StructureDescription(CPNML) );
+    PNML := Source( CPNML );
+    e1PNML := Embedding( PNML, 1 );
+    e2PNML := Embedding( PNML, 2 );
+    genPNML := Concatenation( List( genPxN, g -> ImageElm( e1PNML, g ) ), 
+                              List( genMxL, g -> ImageElm( e2PNML, g ) ) ); 
+    ##  now find the isomorphism between the sources PMNL and PNML 
     imiso := Concatenation( 
-           List( genP, p -> ImageElm( e1PMNL, ImageElm( e1PxM, p ) ) ), 
-           List( genN, n -> ImageElm( e2PMNL, ImageElm( e1NxL, n ) ) ), 
-           List( genM, m -> ImageElm( e1PMNL, ImageElm( e2PxM, m ) ) ), 
-           List( genL, l -> ImageElm( e2PMNL, ImageElm( e2NxL, l ) ) ) ); 
-    iso := GroupHomomorphismByImages( PNML, PMNL, genPNML, imiso ); 
-    inv := InverseGeneralMapping(iso); 
-    iminv := List( genPMNL, g -> ImageElm( inv, g ) ); 
-    guess := Concatenation( 
            List( genP, p -> ImageElm( e1PNML, ImageElm( e1PxN, p ) ) ), 
            List( genM, m -> ImageElm( e2PNML, ImageElm( e1MxL, m ) ) ), 
            List( genN, n -> ImageElm( e1PNML, ImageElm( e2PxN, n ) ) ), 
            List( genL, l -> ImageElm( e2PNML, ImageElm( e2MxL, l ) ) ) ); 
+    iso := GroupHomomorphismByImages( PMNL, PNML, genPMNL, imiso ); 
+    inv := InverseGeneralMapping( iso ); 
+    iminv := List( genPNML, g -> ImageElm( inv, g ) ); 
+    guess := Concatenation( 
+           List( genP, p -> ImageElm( e1PMNL, ImageElm( e1PxM, p ) ) ), 
+           List( genM, m -> ImageElm( e1PMNL, ImageElm( e2PxM, m ) ) ), 
+           List( genN, n -> ImageElm( e2PMNL, ImageElm( e1NxL, n ) ) ), 
+           List( genL, l -> ImageElm( e2PMNL, ImageElm( e2NxL, l ) ) ) ); 
     ok := (iminv = guess); 
     Info( InfoXMod, 2, "iminv = guess? ", ok ); 
     ##  construct an isomorphic up cat1-group 
-    tup := iso * TailMap( CPMNL );
-    hup := iso * HeadMap( CPMNL ); 
-    eup := e1PMNL * inv; 
-    C2PMNL := PreCat1GroupByTailHeadEmbedding( tup, hup, eup ); 
+    tup := iso * TailMap( CPNML );
+    hup := iso * HeadMap( CPNML ); 
+    eup := e1PNML * inv; 
+    C2PNML := PreCat1GroupByTailHeadEmbedding( tup, hup, eup ); 
 
     ##  now see if a cat2-group has been constructed 
-    tlt := TailMap( CPNML );
-    hlt := HeadMap( CPNML ); 
-    elt := e1PNML; 
+    tlt := TailMap( CPMNL );
+    hlt := HeadMap( CPMNL ); 
+    elt := e1PMNL; 
     tdn := TailMap( Cright ); 
     hdn := HeadMap( Cright );
-    edn := e1PxN; 
+    edn := e1PxM; 
     trt := TailMap( Cdown );
     hrt := HeadMap( Cdown ); 
-    ert := e1PxM; 
+    ert := e1PxN; 
     tdi := tlt * tdn; 
     if not ( tdi = tup * trt ) then 
         Error( "tlt * tdn <> tup * trt" );  
@@ -1255,7 +1284,7 @@ function( XS )
     if not ( edi = ert * eup ) then 
         Error( "edn * elt <> ert * eup" );  
     fi; 
-    PC := PreCat2GroupByPreCat1Groups( CPNML, C2PMNL, Cdown, Cright );
+    PC := PreCat2GroupByPreCat1Groups( CPMNL, C2PNML, Cright, Cdown );
     Cdiag := PreCat1GroupByTailHeadEmbedding( tdi, hdi, edi ); 
     SetDiagonal2DimensionalGroup( PC, Cdiag ); 
     return PC; 
@@ -1313,19 +1342,19 @@ InstallMethod( Transpose3DimensionalGroup, "transposed crossed square", true,
     [ IsCrossedSquare ], 0,
 function( XS )
 
-    local xpS, NM, L, map, xpT, XT;
+    local xpS, NxM, L, map, xpT, XT;
 
     xpS := CrossedPairing( XS );
-    NM := Reversed( Source( xpS ) );
+    NxM := Reversed( Source( xpS ) );
     L := Range( xpS );
-    map := Mapping2ArgumentsByFunction( NM, L, 
+    map := Mapping2ArgumentsByFunction( NxM, L, 
         function(c) 
             return ImageElmCrossedPairing( xpS, Reversed(c) )^(-1); 
         end );
-    xpT := CrossedPairingObj( NM, L, map );
+    xpT := CrossedPairingObj( NxM, L, map );
     XT := PreCrossedSquareObj( Left2DimensionalGroup(XS), 
-              Up2DimensionalGroup(XS), Right2DimensionalGroup(XS), 
-              Down2DimensionalGroup(XS), DiagonalAction(XS), xpT );
+              Up2DimensionalGroup(XS), Down2DimensionalGroup(XS), 
+              Right2DimensionalGroup(XS), DiagonalAction(XS), xpT );
     SetIsCrossedSquare( XT, true );
     return XT;
 end );    

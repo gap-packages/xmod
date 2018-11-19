@@ -32,7 +32,7 @@ gap> d10b := Subgroup( d20, [ p1^2, p12 ] );;
 gap> c5d := Subgroup( d20, [ p1^2 ] );;
 gap> SetName( d20, "d20" );  SetName( d10a, "d10a" ); 
 gap> SetName( d10b, "d10b" );  SetName( c5d, "c5d" ); 
-gap> XSconj := CrossedSquareByNormalSubgroups( d20, d10b, d10a, c5d );
+gap> XSconj := CrossedSquareByNormalSubgroups( c5d, d10b, d10a, d20 );
 [  c5d -> d10b ]
 [   |      |   ]
 [ d10a -> d20  ]
@@ -54,8 +54,8 @@ gap> XSact := ActorCrossedSquare( X20 );
 crossed square with crossed modules:
       up = Whitehead[d10a->d20]
     left = [d10a->d20]
-    down = Norrie[d10a->d20]
    right = Actor[d10a->d20]
+    down = Norrie[d10a->d20]
 
 ## Section 8.2.2
 gap> pos7 := Position( ids, [ [12,2], [24,5] ] );;
@@ -65,8 +65,8 @@ gap> IdGroup( Xn7 );
 gap> IdGroup( CentreXMod( Xn7 ) );  
 [ [ 4, 1 ], [ 4, 1 ] ]
 gap> CQXn7 := CentralQuotient( Xn7 );;
-gap> IdGroup( CQXn7 );
-[ [ 12, 2 ], [ 3, 1 ], [ 24, 5 ], [ 6, 1 ] ]
+gap> StructureDescription( CQXn7 );
+[ "C12", "C3", "C4 x S3", "S3" ]
 
 ## Section 8.2.4
 gap> Up2DimensionalGroup( XSconj );
@@ -151,8 +151,8 @@ crossed square with crossed modules:
       up = [Group( [ (1,5)(2,6)(3,7)(4,8) ] ) -> Group( [ ( 2, 6)( 4, 8) ] )]
     left = [Group( [ (1,5)(2,6)(3,7)(4,8) ] ) -> Group( 
 [ (1,2,3,4)(5,6,7,8), (), () ] )]
-    down = [Group( [ (1,2,3,4)(5,6,7,8), (), () ] ) -> Group( () )]
    right = [Group( [ ( 2, 6)( 4, 8) ] ) -> Group( () )]
+    down = [Group( [ (1,2,3,4)(5,6,7,8), (), () ] ) -> Group( () )]
 
 gap> SetName( Range( Up2DimensionalGroup( XSact ) ), "c5:c4" );
 gap> SetName( Range( Down2DimensionalGroup( XSact ) ), "c5:c4" );

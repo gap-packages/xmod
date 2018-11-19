@@ -184,7 +184,7 @@ DeclareAttribute( "KernelCokernelXMod", IsXMod );
 #############################################################################
 ##
 #P  IsTrivialAction2DimensionalGroup( <obj> )
-#P  IsNormalSubgroup2DimensionalGroup( <obj> )
+#P  IsNormalSubgroup2DimensionalGroup( <obj> ) 
 #P  IsCentralExtension2DimensionalGroup( <obj> )
 #P  IsAutomorphismGroup2DimensionalGroup( <XM> )
 #P  IsAbelianModule2DimensionalGroup( <obj> )
@@ -199,17 +199,21 @@ DeclareProperty( "IsFreeXMod", IsPreXModObj );
 
 #############################################################################
 ##
-#O  IsSubPreXMod( <obj> )
-#O  IsSubXMod( <obj> )
-#O  IsSubPreCat1Group( <obj> )
-#O  IsSubCat1Group( <obj> )
+#O  IsSubPreXMod( <obj>, <subobj>  )
+#O  IsSubXMod( <obj>, <subobj> )
+#O  IsSubPreCat1Group( <obj>, <subobj> )
+#O  IsSubCat1Group( <obj>, <subobj> )
+#O  IsNormalSub2DimensionalGroup( <obj>, <subobj> ) 
 ##
 DeclareOperation( "IsSubPreXMod", 
     [ Is2DimensionalGroup, Is2DimensionalGroup ] );
 DeclareOperation( "IsSubXMod", [ Is2DimensionalGroup, Is2DimensionalGroup ] );
 DeclareOperation( "IsSubPreCat1Group", 
     [ Is2DimensionalGroup, Is2DimensionalGroup ] );
-DeclareOperation( "IsSubCat1Group", [ Is2DimensionalGroup, Is2DimensionalGroup ] );
+DeclareOperation( "IsSubCat1Group", 
+    [ Is2DimensionalGroup, Is2DimensionalGroup ] );
+DeclareOperation( "IsNormalSub2DimensionalGroup", 
+    [ Is2DimensionalGroup, Is2DimensionalGroup ] );
 
 ##############################################################################
 ##
