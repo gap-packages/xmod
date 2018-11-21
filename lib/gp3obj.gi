@@ -93,16 +93,16 @@ end );
 InstallMethod( CrossedPairingByNormalSubgroups, 
     "for the intersection of two normal subgroups", true,
     [ IsGroup, IsGroup, IsGroup ], 0,
-function( M, N, L )
+function( N, M, L )
 
     local map, xp;
 
     if not ( IsNormal( M, L ) and IsNormal( N, L ) ) then 
         Error( "L not normal in M and N" );
     fi;
-    map := Mapping2ArgumentsByFunction( [M,N], L, 
+    map := Mapping2ArgumentsByFunction( [N,M], L, 
                function(c) return Comm( c[1], c[2] ); end );
-    xp := CrossedPairingObj( [M,N], L, map );
+    xp := CrossedPairingObj( [N,M], L, map );
     return xp;
 end );
 
@@ -134,36 +134,34 @@ end );
 
 ##############################################################################
 ##
-#M  CrossedPairingByXModAction( <xmod>, <subxmod> ) . . action -> x-pairing
+#M  CrossedPairingByXModAction( <xmod>, <subxmod> ) . . action -> x-pairing 
+#M  PrincipalCrossedPairing( <xmod > )  . . . . . . . . action -> x-pairing 
 ##
 InstallMethod( CrossedPairingByXModAction, "for xmod and normal subxmod", 
     true, [ IsXMod, IsXMod ], 0,
 function( X0, X1 )
 
-    local S0, S1, R0, R1, act, map, xp;
+    local S0, S1, R1, act, map, xp;
 
-    if not IsNormalSub2DimensionalGroup( X0, X1 ) then 
+    ## this assumes that X0 is right and X1 is left in a crossed square 
+    if not IsNormalSub2DimensionalDomain( X0, X1 ) then 
         Error( "X1 not a normal subxmod of X0" ); 
     fi;
     S0 := Source( X0 ); 
     S1 := Source( X1 );
-    R0 := Range( X0 );
     R1 := Range( X1 ); 
     act := XModAction( X0 );
     map := Mapping2ArgumentsByFunction( [R1,S0], S1, 
-               function(c) 
-                   local r1, ar, s0, s1; 
-                   r1 := c[1];
-                   s0 := c[2];
-                   ar := ImageElm( act, r1 );
-                   s1 := ImageElm( ar, s0 );
-                   if not ( s1 in S1 ) then 
-                       Error( "s0^r1 not in nthe subgroup S1" ); 
-                   fi; 
-                   return s1;
+               function( c ) 
+                   return ImageElm( ImageElm( act, c[1] ), c[2]^(-1) ) * c[2];
                end );
     xp := CrossedPairingObj( [R1,S0], S1, map );
     return xp;
+end );
+
+InstallMethod( PrincipalCrossedPairing, "for an xmod", true, [ IsXMod ], 0,
+function( X0 )
+    return CrossedPairingByXModAction( X0, X0 ); 
 end );
 
 #############################################################################
@@ -363,7 +361,7 @@ function( L, M, N, P )
     diag := XModByNormalSubgroup( P, L );
     a := XModAction( diag );
     ##  define the pairing as a commutator
-    xp := CrossedPairingByNormalSubgroups( M, N, L ); 
+    xp := CrossedPairingByNormalSubgroups( N, M, L ); 
     XS := PreCrossedSquareObj( u, l, r, d, a, xp );
     SetIsCrossedSquare( XS, true );
     SetDiagonal2DimensionalGroup( XS, diag ); 
@@ -393,7 +391,7 @@ function( X0, X1 )
 
     local S0, S1, up, R0, R1, down, xp, act1, diag, act, XS;
 
-    if not IsNormalSub2DimensionalGroup( X0, X1 ) then 
+    if not IsNormalSub2DimensionalDomain( X0, X1 ) then 
         return fail; 
     fi;
     S0 := Source( X0 ); 
@@ -946,10 +944,6 @@ function( up, left, right, down )
     return PC2;
 end ); 
 
-
-
-
-
 ##############################################################################
 ##
 #M  ConjugationActionForCrossedSquare 
@@ -1090,7 +1084,7 @@ function( C2G )
     Info( InfoXMod, 3, " down = ", down );
 
     a := ConjugationActionForCrossedSquare( P, L );
-    xp := CrossedPairingByNormalSubgroups( M, N, L );
+    xp := CrossedPairingByNormalSubgroups( N, M, L );
     XS := PreCrossedSquareObj( up, left, right, down, a, xp );
     ## SetIsCrossedSquare( XS, true );
     if HasName( C2G ) then 
@@ -1178,7 +1172,7 @@ function( XS )
         List( genM, m -> GroupHomomorphismByImages( NxL, NxL, genNxL, 
             Concatenation( 
                 List( genN, n -> ImageElm( e1NxL, n ) * 
-                                 ImageElm( e2NxL,  
+                                 ImageElm( e2NxL, 
                                  ImageElmCrossedPairing( xpair, [n,m] ))), 
                 List( genL, l -> ImageElm( e2NxL, 
                                  ImageElm( ImageElm( act_up, m ), l ))) ))) ); 

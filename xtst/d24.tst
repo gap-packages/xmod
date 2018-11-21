@@ -18,7 +18,7 @@ gap> d12b := norm[4];;
 gap> SetName( d12b, "d12b" ); 
 gap> c6 := Intersection( d12a, d12b );; 
 gap> SetName( c6, "c6" ); 
-gap> xs24 := CrossedSquareByNormalSubgroups( d24, d12a, d12b, c6 ); 
+gap> xs24 := CrossedSquareByNormalSubgroups( c6, d12a, d12b, d24 ); 
 [   c6 -> d12a ]
 [   |      |  ]
 [ d12b -> d24 ]

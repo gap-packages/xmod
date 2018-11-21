@@ -542,7 +542,7 @@ InstallMethod( PreXModByBoundaryAndAction,
     true, [ IsGroupHomomorphism, IsGroupHomomorphism ], 0,
 function( bdy, act )
 
-    local rng, src, genrng, gensrc, aut, genaut, imact, i, a0, ima, a;
+    local rng, src, genrng, gensrc, aut, genaut, imact, i, a0, ima, a, PX;
 
     src := Source( bdy );
     gensrc := GeneratorsOfGroup( src );
@@ -577,7 +577,11 @@ function( bdy, act )
         a := GroupHomomorphismByImages( src, src, gensrc, ima );
         imact[i] := a;
     od;
-    return PreXModObj( bdy, act ); 
+    PX := PreXModObj( bdy, act ); 
+    if not IsPreXMod( PX ) then 
+        Error( "PX fails to be a pre-crossed module" ); 
+    fi;
+    return PX; 
 end );
 
 #############################################################################
@@ -1485,24 +1489,48 @@ end );
 
 ##############################################################################
 ##
-#M  IsNormalSub2DimensionalGroup( <XM>, <SM> )
+#M  IsNormalSub2DimensionalDomain( <XM>, <SM> )
 ##
-InstallMethod( IsNormalSub2DimensionalGroup, "for xmod and subxmod etc.", 
+InstallMethod( IsNormalSub2DimensionalDomain, "for xmod and subxmod etc.", 
     true, [ Is2DimensionalGroup, Is2DimensionalGroup ], 0,
-function( XM, SM )
+function( X0, X1 )
 
-    local ispx, ok; 
+    local ispx, ok, S0, R0, S1, R1, r0, s0, r1, s1; 
 
-    ispx := IsPreXMod( XM );
+    ispx := IsPreXMod( X0 );
     if ispx then 
-        ok := IsSubPreXMod( XM, SM ); 
+        ok := IsSubPreXMod( X0, X1 ); 
     else 
-        ok := IsSubPreCat1Group( XM, SM ); 
+        ok := IsSubPreCat1Group( X0, X1 ); 
     fi; 
     if not ok then 
         return false; 
     fi;
-    Print( "#I  Warning: tests not yet installed\n" ); 
+    if not ispx then 
+        Error( "not yet installed for cat1-groups" ); 
+    fi; 
+    S0 := Source( X0 );
+    R0 := Range( X0 );
+    S1 := Source( X1 );
+    R1 := Range( X1 );
+    if not IsNormal( R0, R1 ) then 
+        return false; 
+    fi;
+    ## apparently no requirement for S1 to be normal in S0
+    for r0 in GeneratorsOfGroup( R0 ) do 
+        for s1 in GeneratorsOfGroup( S1 ) do
+            if not ImageElmXModAction( X0, s1, r0 ) in S1 then 
+                return false; 
+            fi; 
+        od; 
+    od; 
+    for r1 in GeneratorsOfGroup( R1 ) do 
+        for s0 in GeneratorsOfGroup( S0 ) do
+            if not s0^-1 * ImageElmXModAction( X0, s0, r1 ) in S1 then 
+                return false; 
+            fi; 
+        od; 
+    od; 
     return true;
 end );
 

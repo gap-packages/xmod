@@ -46,11 +46,13 @@ DeclareOperation( "ImageElmCrossedPairing", [ IsCrossedPairing, IsObject ] );
 #O  CrossedPairingByNormalSubgroups
 #O  CrossedPairingByDerivation 
 #O  CrossedPairingByXModAction 
+#A  PrincipalCrossedPairing
 ##
 DeclareOperation( "CrossedPairingByNormalSubgroups", 
     [ IsGroup, IsGroup, IsGroup ] );
 DeclareOperation( "CrossedPairingByDerivations", [ IsXMod ] );
 DeclareOperation( "CrossedPairingByXModAction", [ IsXMod, IsXMod ] );
+DeclareAttribute( "PrincipalCrossedPairing", IsXMod ); 
 
 #############################################################################
 ##

@@ -2,7 +2,8 @@
 
 ## 2.72 -> 2.72dev (00/11/2018) 
 
- * (19/11/18) added IsNormalSub2DimensionalGroup and used this when calling 
+ * (21/11/18) added PrincipalCrossedPairing 
+ * (19/11/18) added IsNormalSub2DimensionalDomain and used this when calling 
               CrossedSquareByNormalSubXMod
  * (15/11/18) renamed CrossedSquareMorphismByMorphisms 
               as CrossedSquareMorphismByXModMorphisms 
@@ -153,7 +154,7 @@
  * (06/11/15) IsStemGroup & IsStemXMod -> IsStemDomain etc. 
  * (04/11/15) RestrictionMappingGroups -> GeneralRestgrictedMapping 
  * (01/11/15) `makedocrel.g` : added MathJax; changed "doc" to XModDoc 
- * (20/10/15) moved code from FactorXMod to NaturalMorphiusmByNormalSubXMod 
+ * (20/10/15) moved code from FactorXMod to NaturalMorphismByNormalSubXMod 
               corrected formulae in Displacement and DisplacementSubgroup 
  * (19/10/15) revised Isoclinism for xmods; IsoAllXMods -> AllXModsUpToIso..
  * (16/10/15) changed all occurrences of XSq to CrossedSquare 
