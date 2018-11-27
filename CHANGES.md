@@ -2,6 +2,7 @@
 
 ## 2.72 -> 2.72dev (00/11/2018) 
 
+ * (26/11/18) added CrossedSquareByPullback and XModByPullback  
  * (21/11/18) added PrincipalCrossedPairing 
  * (19/11/18) added IsNormalSub2DimensionalDomain and used this when calling 
               CrossedSquareByNormalSubXMod
@@ -20,7 +21,7 @@
 ## 2.69 -> 2.72 (16/09/2018) 
 
  * (10/09/18) replaced PrintOneItemPerLine(L); with Perform(L,Display); 
- * (02/09/18) added CrossedPairingByXModAction, CrossedSquareByXModUpDown
+ * (02/09/18) added CrossedPairingByXModAction, CrossedSquareByNormalSubXMod
  * (30/08/18) PreCat2GroupOfPreCrossedSquare revised : q8xscat2.tst, d24.tst 
  * (07/08/18) added PreCat2GroupByPreCat1Groups and other changes to gp3obj.*
  * (01/08/18) fixed issue #24 and added xtst/cat1data.tst 

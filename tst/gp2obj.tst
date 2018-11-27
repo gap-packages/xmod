@@ -88,11 +88,28 @@ Crossed module :-
   (8,9) --> { source gens --> [ (1,6,5,4,3,2), (2,6)(3,5) ] }
   These 2 automorphisms generate the group of automorphisms.
 
-## Section 2.1.7
+## Section 2.1.6
+gap> gens4 := [ (11,12), (12,13), (13,14) ];; 
+gap> s4 := Group( gens4 );; 
+gap> theta := GroupHomomorphismByImages( s4, s3, gens4, [(7,8),(8,9),(7,8)] );;
+gap> X1 := XModByPullback( X12, theta );; 
+gap> StructureDescription( Source( X1 ) );
+"C2 x S4"
+gap> info := PullbackInfo( Source( X1 ) );;
+gap> info!.directProduct;
+Group([ (1,2), (2,3), (3,4), (5,6,7,8,9,10), (6,10)(7,9) ])
+gap> info!.projections[1];
+[ (5,8)(6,9)(7,10), (3,4)(5,9)(6,8), (2,3,4)(5,7,9)(6,8,10), (1,2)(3,4) ] -> 
+[ (), (13,14), (12,13,14), (11,12)(13,14) ]
+gap> info!.projections[2];
+[ (5,8)(6,9)(7,10), (3,4)(5,9)(6,8), (2,3,4)(5,7,9)(6,8,10), (1,2)(3,4) ] -> 
+[ (1,4)(2,5)(3,6), (1,5)(2,4), (1,3,5)(2,4,6), () ]
+
+## Section 2.1.8
 gap> DirectProductOp( [X8a,X8b], X8a );
 [<-1>x<i>->q8xq8]
 
-## Section 2.1.8
+## Section 2.1.9
 gap> Source( X12 );   
 Group([ (1,2,3,4,5,6), (2,6)(3,5) ])
 gap> Range( X12 );    
@@ -104,7 +121,7 @@ gap> XModAction( X12 );
 [ [ (1,2,3,4,5,6), (2,6)(3,5) ] -> [ (1,2,3,4,5,6), (1,3)(4,6) ], 
   [ (1,2,3,4,5,6), (2,6)(3,5) ] -> [ (1,6,5,4,3,2), (2,6)(3,5) ] ]
 
-## Section 2.1.10
+## Section 2.1.11
 gap> Size( X5 );
 [ 5, 4 ]
 gap> IdGroup( X5 ); 

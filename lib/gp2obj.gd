@@ -161,6 +161,7 @@ DeclareOperation( "PreXModByBoundaryAndAction",
 #A  XModByInnerAutomorphismGroup( <G> )
 #O  XModByAbelianModule( <R> )
 #A  XModByPeifferQuotient( <PM> )
+#O  XModByPullback( <PM>, <hom> )
 ##
 DeclareGlobalFunction( "XMod" );
 DeclareOperation( "AsXMod", [ IsDomain ] );
@@ -174,6 +175,7 @@ DeclareAttribute( "XModByAutomorphismGroup", IsGroup );
 DeclareAttribute( "XModByInnerAutomorphismGroup", IsGroup );
 DeclareOperation( "XModByAbelianModule", [ IsAbelianModule ] );
 DeclareAttribute( "XModByPeifferQuotient", IsPreXMod );
+DeclareOperation( "XModByPullback", [ IsXMod, IsGroupHomomorphism ] ); 
 
 #############################################################################
 ##

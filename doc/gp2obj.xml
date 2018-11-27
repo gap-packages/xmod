@@ -192,6 +192,45 @@ Crossed module :-
 </Example>
 
 <ManSection>
+   <Oper Name="XModByPullback"
+         Arg="xmod hom" />
+<Description>
+Let <M>\mathcal{X}_0</M> be a crossed module with boundary 
+<M>\partial_0 : S_0 \to R_0</M>. 
+If <M>\theta : R_1 \to R_0</M> is a group homomorphism with the same range 
+as <M>X_0</M>, form the pullback group <M>S_1 = R_1 \times_{R_0} S_0</M>, 
+with projection <M>\partial_1 : S_1 \to R_1</M> 
+(as defined in the <Package>Utils</Package> package). 
+Then <M>R_1</M> acts on <M>S_0</M> by 
+<M>(r_1,s_1)^r := (r_1^r, s_1^{\theta r})</M>, 
+so that <M>\mathcal{X}_1 = (\partial_1 : S_1 \to R_1)</M> 
+is the <E> pullback crossed module</E> 
+determined by <M>\mathcal{X}_0</M> and <M>\theta</M>. 
+<P/>
+The example uses the crossed module <C>X12</C> of the previous subsection. 
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> gens4 := [ (11,12), (12,13), (13,14) ];; 
+gap> s4 := Group( gens4 );; 
+gap> theta := GroupHomomorphismByImages( s4, s3, gens4, [(7,8),(8,9),(7,8)] );;
+gap> X1 := XModByPullback( X12, theta );; 
+gap> StructureDescription( Source( X1 ) );
+"C2 x S4"
+gap> info := PullbackInfo( Source( X1 ) );;
+gap> info!.directProduct;
+Group([ (1,2), (2,3), (3,4), (5,6,7,8,9,10), (6,10)(7,9) ])
+gap> info!.projections[1];
+[ (5,8)(6,9)(7,10), (3,4)(5,9)(6,8), (2,3,4)(5,7,9)(6,8,10), (1,2)(3,4) ] -> 
+[ (), (13,14), (12,13,14), (11,12)(13,14) ]
+gap> info!.projections[2];
+[ (5,8)(6,9)(7,10), (3,4)(5,9)(6,8), (2,3,4)(5,7,9)(6,8,10), (1,2)(3,4) ] -> 
+[ (1,4)(2,5)(3,6), (1,5)(2,4), (1,3,5)(2,4,6), () ]
+]]>
+</Example>
+
+<ManSection>
    <Oper Name="XModByAbelianModule"
          Arg="abmod" />
 <Description>
