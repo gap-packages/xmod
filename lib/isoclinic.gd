@@ -111,7 +111,7 @@ DeclareOperation( "AllXModsWithGroups3", [ IsGroup, IsGroup ] );
 DeclareProperty( "IsStemDomain", IsGroup );
 DeclareOperation( "AllStemGroupIds", [ IsPosInt ] );
 DeclareOperation( "AllStemGroupFamilies", [ IsPosInt ] );
-DeclareAttribute( "CentralQuotient", IsGroup ); 
+DeclareAttribute( "CentralQuotient", IsDomain ); 
 
 #############################################################################
 ##

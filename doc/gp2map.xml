@@ -195,6 +195,20 @@ gap> Zq8 := Image( mor );
  ] )->SymmetricGroup( [ 1 .. 4 ] )]
 ]]>
 </Example>
+
+<ManSection>
+   <Attr Name="MorphismOfPullback"
+         Arg="xmod" Label="for a crossed module by pullback" />
+<Description>
+Let <M>\mathcal{X}_1 = (\lambda : L \to N)</M> be the pullback crossed module 
+obtained from a crossed module <M>\mathcal{X}_0 = (\mu : M \to P)</M> 
+and a group homomorphism <M>\nu : N \to P</M>. 
+Then the associated crossed module morphism is 
+<M>(\kappa,\nu) : \mathcal{X}_1 \to \mathcal{X}_0</M> 
+where <M>\kappa</M> is the projection from <M>L</M> to <M>M</M>. 
+</Description> 
+</ManSection> 
+
 </Section>
 
 

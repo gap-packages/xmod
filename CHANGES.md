@@ -1,7 +1,14 @@
 # CHANGES to the 'XMod' package
 
-## 2.72 -> 2.72dev (00/11/2018) 
+## 2.72 -> 2.72dev (00/01/2019) 
 
+ * (08/12/18) added InducedXModByBijection, InducedXModByCoproduct and 
+              renamed SurjectiveInducedXMod, InclusionInducedXModByCopower 
+ * (06/12/18) added a CoproductXMod method for a list with more than two xmods 
+ * (05/12/18) added CrossedSquareByXModSplitting 
+ * (03/12/18) add CrossedSquareByAutomorphismGroup, CrossedPairingByConjugators
+ * (01/12/18) added method for IsCrossedSquare 
+ * (28/11/18) new version of 2-argument functions in map2arg.{gd,gi} 
  * (26/11/18) added CrossedSquareByPullback and XModByPullback  
  * (21/11/18) added PrincipalCrossedPairing 
  * (19/11/18) added IsNormalSub2DimensionalDomain and used this when calling 

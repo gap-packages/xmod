@@ -64,15 +64,17 @@ DeclareOperation( "InnerAutomorphismCat2Group",
 #A  CrossedSquareMorphismOfCat2GroupMorphism( <mor> )
 #A  Cat2GroupMorphismOfCrossedSquareMorphism( <mor> )
 ##
-DeclareAttribute( "CrossedSquareMorphismOfCat2GroupMorphism", IsCat2GroupMorphism );
+DeclareAttribute( "CrossedSquareMorphismOfCat2GroupMorphism", 
+    IsCat2GroupMorphism );
 DeclareAttribute( "Cat2GroupMorphismOfCrossedSquareMorphism", 
     IsCrossedSquareMorphism );
 
 #############################################################################
 ##
-#O  Display3dMorphism( <mor )
+#O  Display3DimensionalMorphism( <mor )
 ##
-DeclareOperation( "Display3dMorphism", [ IsHigherDimensionalMapping ] );
+DeclareOperation( "Display3DimensionalMorphism", 
+    [ IsHigherDimensionalMapping ] );
 
 #############################################################################
 ##

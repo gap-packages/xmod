@@ -1250,45 +1250,47 @@ end );
 InstallMethod( XModByPullback, 
     "crossed module from a crossed module and a group homomorphism", true,
     [ IsXMod, IsGroupHomomorphism ], 0,
-function( X0, hom )
+function( X0, nu )
 
-    local S0, R0, act0, R1, S1, genS1, lenS1, info, dp, emb1, emb2, bdy1, 
-          hom1, genS1R1, genS1S0, aut1, genR1, lenR1, imact1, i, r, ar, 
-          actS1R1, actS1S0, prod, act1, X1;
+    local M, P, act0, N, L, genL, lenL, info, dp, emb1, emb2, lambda, 
+          kappa, genLN, genLM, autL, genN, lenN, imact1, i, n, an, 
+          actLN, actLM, prod, act1, X1, mor;
     
-    S0 := Source( X0 ); 
-    R0 := Range( X0 ); 
-    if not ( Range( hom ) = R0 ) then
+    M := Source( X0 ); 
+    P := Range( X0 ); 
+    if not ( Range( nu ) = P ) then
         Error( "Range(hom) <> Range(X0)" );
     fi;
     act0 := XModAction( X0 ); 
-    R1 := Source( hom ); 
-    S1 := Pullback( hom, Boundary( X0 ) ); 
-    genS1 := GeneratorsOfGroup( S1 ); 
-    lenS1 := Length( genS1 );
-    info := PullbackInfo( S1 ); 
+    N := Source( nu ); 
+    L := Pullback( Boundary( X0 ), nu ); 
+    genL := GeneratorsOfGroup( L ); 
+    lenL := Length( genL );
+    info := PullbackInfo( L ); 
     dp := info!.directProduct;
     emb1 := Embedding( dp, 1 ); 
     emb2 := Embedding( dp, 2 );
-    bdy1 := info!.projections[1]; 
-    hom1 := info!.projections[2]; 
-    genS1R1 := List( genS1, g -> ImageElm( bdy1, g ) ); 
-    genS1S0 := List( genS1, g -> ImageElm( hom1, g ) ); 
-    aut1 := AutomorphismGroup( S1 );
-    genR1 := GeneratorsOfGroup( R1 );
-    lenR1 := Length( genR1 ); 
-    imact1 := ListWithIdenticalEntries( lenR1, 0 ); 
-    for i in [1..lenR1] do 
-        r := genR1[i]; 
-        ar := ImageElm( act0, ImageElm( hom, r ) ); 
-        actS1R1 := List( genS1R1, g -> g^r ); 
-        actS1S0 := List( genS1S0, g -> ImageElm( ar, g ) ); 
-        prod := List( [1..lenS1], j -> ImageElm( emb1, actS1R1[j] ) 
-                                     * ImageElm( emb2, actS1S0[j] ) ); 
-        imact1[i] := GroupHomomorphismByImages( S1, S1, genS1, prod ); 
+    kappa := info!.projections[1]; 
+    lambda := info!.projections[2]; 
+    genLN := List( genL, g -> ImageElm( lambda, g ) ); 
+    genLM := List( genL, g -> ImageElm( kappa, g ) ); 
+    autL := AutomorphismGroup( L );
+    genN := GeneratorsOfGroup( N );
+    lenN := Length( genN ); 
+    imact1 := ListWithIdenticalEntries( lenN, 0 ); 
+    for i in [1..lenN] do 
+        n := genN[i]; 
+        an := ImageElm( act0, ImageElm( nu, n ) ); 
+        actLN := List( genLN, g -> g^n ); 
+        actLM := List( genLM, g -> ImageElm( an, g ) ); 
+        prod := List( [1..lenL], j -> ImageElm( emb1, actLM[j] ) 
+                                    * ImageElm( emb2, actLN[j] ) ); 
+        imact1[i] := GroupHomomorphismByImages( L, L, genL, prod ); 
     od;
-    act1 := GroupHomomorphismByImages( R1, aut1, genR1, imact1 ); 
-    X1 := XMod( bdy1, act1 ); 
+    act1 := GroupHomomorphismByImages( N, autL, genN, imact1 ); 
+    X1 := XMod( lambda, act1 ); 
+    mor := XModMorphismByGroupHomomorphisms( X1, X0, kappa, nu ); 
+    SetMorphismOfPullback( X1, mor ); 
     return X1; 
 end );
     

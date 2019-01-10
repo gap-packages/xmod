@@ -214,7 +214,7 @@ function( mor )
     Q := Range( mor );
     n := HigherDimension( mor ); 
     if (( n = 3 ) and HasIsPreCrossedSquareMorphism( mor ) ) then 
-        Display3dMorphism( mor ); 
+        Display3DimensionalMorphism( mor ); 
     else 
         mors := ListOfHomomorphisms( mor );
         if ( HasIsCatnMorphism( mor ) and IsCatnMorphism( mor ) ) then

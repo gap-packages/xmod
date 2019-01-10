@@ -55,7 +55,7 @@ a commutative diagram of group homomorphisms:
   \dot{\partial}_1 : S_{\{1\}} \to S_{\emptyset} 
   </Display> 
 (again we often write 
-<M>\lambda_1 = \ddot{\partial}_1,~ \lambda_2 = \ddot{\partial}_2,~ 
+<M>\kappa = \ddot{\partial}_1,~ \lambda = \ddot{\partial}_2,~ 
 \mu = \dot{\partial}_2</M> and <M>\nu = \dot{\partial}_1</M>); 
 </Item>
 <Item>
@@ -68,7 +68,7 @@ and actions of
 via <M>\dot{\partial}_2\;</M>;
 </Item>
 <Item>
-a function <M>\boxtimes : S_{\{1\}} \times S_{\{2\}} \to S_{[2]}</M>.
+a function <M>\boxtimes : S_{\{2\}} \times S_{\{1\}} \to S_{[2]}</M>.
 </Item>
 </List>
 
@@ -78,10 +78,10 @@ Here is a picture of the situation:
 \vcenter{\xymatrix{
        &   &  S_{[2]} \ar[rr]^{\ddot{\partial}_1} \ar[dd]_{\ddot{\partial}_2} 
               && S_{\{2\}} \ar[dd]^{\dot{\partial}_2} && 
-              L \ar[rr]^{\lambda_1} \ar[dd]_{\lambda_2} 
+              L \ar[rr]^{\kappa} \ar[dd]_{\lambda} 
               && M \ar[dd]^{\mu} &   \\
 \mathcal{S}  & = &  &&  & = &&  \\
-       &   &  S_{\{1\}} \ar[rr]_{\lambda_1}  
+       &   &  S_{\{1\}} \ar[rr]_{\kappa}  
               && S_{\emptyset} &&  
               N \ar[rr]_{\nu}  
               && P 
@@ -92,23 +92,24 @@ The following axioms must be satisfied for all
 <M>l \in L,\; m,m_1,m_2 \in M,\; n,n_1,n_2 \in N,\; p \in P</M>.
 <List>
 <Item>
-The homomorphisms <M>\lambda_1, \lambda_2</M> preserve the action of <M>P\;</M>.
+The homomorphisms <M>\kappa, \lambda</M> preserve the action of <M>P\;</M>.
 </Item>
 <Item>
-Each of the upper, left-hand, lower, and right-hand sides of the square, 
+Each of the upper, left-hand, right-hand and lower sides of the square, 
 <Display>
- \ddot{\mathcal{S}}_1 = (\lambda_1 : L \to N), \quad 
- \ddot{\mathcal{S}}_2 = (\lambda_2 : L \to M), \quad 
-  \dot{\mathcal{S}}_2  = (\mu : M \to P), \quad 
+ \ddot{\mathcal{S}}_1 = (\kappa : L \to N), \quad 
+ \ddot{\mathcal{S}}_2 = (\lambda : L \to M), \quad 
+  \dot{\mathcal{S}}_2  = (\mu : M \to P), \quad
   \dot{\mathcal{S}}_1  = (\nu : N \to P), 
 </Display>
 and the diagonal  
 <Display>
 \mathcal{S}_{12} = (\partial_{12} := 
-                   \mu \circ \lambda_1 = \nu \circ \lambda_2 : L \to P)
+                   \mu \circ \kappa = \nu \circ \lambda : L \to P)
 </Display>
 are crossed modules (with actions via <M>P</M>). 
-The first four of these are called the <E>up, left, down</E> and <E>right</E> 
+<P/>
+The first four of these are called the <E>up, left, right</E> and <E>down</E> 
 crossed modules of <M>\mathcal{S}</M>. 
 </Item>
 <Item>
@@ -116,27 +117,27 @@ crossed modules of <M>\mathcal{S}</M>.
 <M>\boxtimes</M> is a <E>crossed pairing</E>:
   <List>
   <Item>
-  <M>(n_1n_2 \boxtimes m)\;=\;
-     {(n_1 \boxtimes m)}^{n_2}\;(n_2 \boxtimes m)</M>,
+  <M>(m_1m_2 \boxtimes n)\;=\;
+     {(m_1 \boxtimes n)}^{m_2}\;(m_2 \boxtimes n)</M>,
   </Item>
   <Item>
-  <M>(n \boxtimes m_1m_2) \;=\; 
-     (n \boxtimes m_2)\;{(n \boxtimes m_1)}^{m_2}</M>,
+  <M>(m \boxtimes n_1n_2) \;=\; 
+     (m \boxtimes n_2)\;{(m \boxtimes n_1)}^{n_2}</M>,
   </Item>
   <Item> 
-  <M>(n \boxtimes m)^{p} \;=\; (n^p \boxtimes m^p)</M>.
+  <M>(m \boxtimes n)^{p} \;=\; (m^p \boxtimes n^p)</M>.
   </Item>
   </List>
 </Item>
 <Item>
-<M>\ddot{\partial}_1 (n \boxtimes m) \;=\; (m^{-1})^{n}\;m 
+<M>\ddot{\partial}_1 (m \boxtimes n) \;=\; (m^{-1})^{n}\;m 
 \quad \mbox{and} \quad
-\ddot{\partial}_2 (n \boxtimes m) \;=\; n^{-1}\;n^{m}</M>.
+\ddot{\partial}_2 (m \boxtimes n) \;=\; n^{-1}\;n^{m}</M>.
 </Item>
 <Item>
-<M>(n \boxtimes \ddot{\partial}_1 l) \;=\; (l^{-1})^{n}\;l
+<M>(m \boxtimes \ddot{\partial}_1 l) \;=\; (l^{-1})^{m}\;l
 \quad \mbox{and} \quad
-(\ddot{\partial}_2 l \boxtimes m) \;=\; l^{-1}\;l^m</M>.
+(\ddot{\partial}_2 l \boxtimes n) \;=\; l^{-1}\;l^n</M>.
 </Item>
 </List>
 Note that the actions of <M>M</M> on <M>N</M> and <M>N</M> on <M>M</M> 
@@ -149,7 +150,7 @@ via <M>P</M> are compatible since
 <P/>
 (A <E>precrossed square</E> is a similar structure which satisfies 
 some subset of these axioms.
-This situation needs to be clarified.) 
+This notion needs to be clarified.) 
 <P/>
 Crossed squares are the <M>k=2</M> case of a 
 crossed <M>k</M>-cube of groups, defined as follows. 
@@ -197,52 +198,22 @@ Morphisms of crossed squares have also been implemented,
 though there is still a lot to be done.
 
 <ManSection>
-   <Func Name="CrossedSquare"
-         Arg="args" />
    <Oper Name="CrossedSquareByNormalSubgroups"
-         Arg="P N M L" />
-   <Oper Name="ActorCrossedSquare" 
-         Arg="X0" />
-   <Attr Name="Transpose3dGroup" 
-         Arg="S0" />
-   <Meth Name="Name" 
-         Arg="S0" />
+         Arg="L M N P" />
 <Description>
-Here are some standard examples of crossed squares.
-<List>
-<Item>
 If <M>L, M, N</M> are normal subgroups of a group <M>P</M>, 
 and <M>[M,N] \leqslant L \leqslant M \cap N</M>, then the four inclusions 
-<M>L \to N,~ L \to M,~ M \to P,~ N \to P</M>, 
+<M>L \to M,~ L \to N,~ M \to P,~ N \to P</M>, 
 together with the actions of <M>P</M> on <M>M, N</M> 
 and <M>L</M> given by conjugation, 
 form a crossed square with crossed pairing  
 <Display>
-\boxtimes \;:\; M \times N \to L, \quad 
+\boxtimes \;:\; \{M,N\} \to L, \quad 
 (m,n) \mapsto [m,n] \,=\, m^{-1}n^{-1}mn \,=\,(n^{-1})^mn \,=\, m^{-1}m^n\,. 
 </Display>  
-This construction is implemented as <C>CrossedSquareByNormalSubgroups(P,N,M,L);</C>.
-</Item>
-<Item>
-The actor <M>\mathcal{A}(\mathcal{X}_0)</M> of a crossed module 
-<M>\mathcal{X}_0</M> has been described in Chapter 5.
-The crossed pairing is given by 
-<Display>
-\boxtimes \;:\;  R \times W \,\to\, S, \quad (r,\chi) \,\mapsto\, \chi r~.
-</Display>
-This is implemented as <C>ActorCrossedSquare(X0);</C>.
-</Item>
-<Item>
-The <E>transpose</E> of <M>\mathcal{S}</M> is the crossed square  
-<M>\tilde{\mathcal{S}}</M> obtained by interchanging <M>M</M> with <M>N</M>, 
-<M>\lambda_1</M> with <M>\lambda_2</M>, and <M>\nu</M> with <M>\mu</M>.  
-The crossed pairing is given by 
-<Display>
-\tilde{\boxtimes} \;:\; N \times M \to L, \quad 
-(n,m) \;\mapsto\; n\,\tilde{\boxtimes}\,m := (m \boxtimes n)^{-1}~.
-</Display>
-</Item>
-</List>
+This construction is implemented as 
+<C>CrossedSquareByNormalSubgroups(L,M,N,P);</C> 
+(note that the parent group come last).
 </Description>
 </ManSection>
 <P/>
@@ -258,30 +229,230 @@ gap> d10b := Subgroup( d20, [ p1^2, p12 ] );;
 gap> c5d := Subgroup( d20, [ p1^2 ] );;
 gap> SetName( d20, "d20" );  SetName( d10a, "d10a" ); 
 gap> SetName( d10b, "d10b" );  SetName( c5d, "c5d" ); 
-gap> XSconj := CrossedSquareByNormalSubgroups( d20, d10b, d10a, c5d );
-[  c5d -> d10b ]
-[   |      |   ]
-[ d10a -> d20  ]
-
-gap> Name( XSconj );
-"[c5d->d10b,d10a->d20]"
-gap> Size( XSconj );
-[ 5, 10, 10, 20 ]
-gap> IdGroup( XSconj );
-[ [ 5, 1 ], [ 10, 1 ], [ 10, 1 ], [ 20, 4 ] ]
-gap> XStrans := Transpose3dGroup( XSconj ); 
+gap> XSconj := CrossedSquareByNormalSubgroups( c5d, d10a, d10b, d20 );
 [  c5d -> d10a ]
 [   |      |   ]
 [ d10b -> d20  ]
+]]>
+</Example>
 
-gap> X20 := XModByNormalSubgroup( d20, d10a );
-[d10a->d20]
+<ManSection>
+   <Oper Name="CrossedSquareByNormalSubXMod"
+         Arg="X0 X1" />
+<Description>
+If <M>\mathcal{X}_1 = (\partial_1 : S_1 \to R_1)</M> is a normal 
+sub-crossed module of <M>\mathcal{X}_0 = (\partial_0 : S_0 \to R_0)</M> 
+then the inclusion morphism gives a crossed square with crossed pairing  
+<Display>
+\boxtimes \;:\; S_0 \times R_1 \to S_1, \quad 
+(s_0,r_1) \mapsto (s_0^{-1})^{r_1} s_0. 
+</Display>  
+<P/>
+The example constructs the same crossed square as in the previous subsection. 
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> X20 := XModByNormalSubgroup( d20, d10a );; 
+gap> X10 := XModByNormalSubgroup( d10b, c5d );; 
+gap> ok := IsNormalSub2DimensionalDomain( X20, X10 ); 
+true 
+gap> XS20 := CrossedSquareByNormalSubXMod( X20, X10 ); 
+[  c5d -> d10a ]
+[   |      |   ]
+[ d10b -> d20  ]
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="ActorCrossedSquare"
+         Arg="X0" />
+<Description>
+The actor <M>\mathcal{A}(\mathcal{X}_0)</M> of a crossed module 
+<M>\mathcal{X}_0</M> has been described in Chapter 5 
+(see <Ref Func="ActorXMod" />). 
+The crossed pairing is given by 
+<Display>
+\boxtimes \;:\;  W \times R \,\to\, S, \quad (\chi,r) \,\mapsto\, \chi r~.
+</Display>
+This is implemented as <C>ActorCrossedSquare(X0);</C>.
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
 gap> XSact := ActorCrossedSquare( X20 );
 crossed square with:
       up = Whitehead[d10a->d20]
     left = [d10a->d20]
     down = Norrie[d10a->d20]
    right = Actor[d10a->d20]
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="CrossedSquareByAutomorphismGroup"
+         Arg="G" />
+<Description>
+For <M>G</M> a group let <M>\Inn(G)</M> be its inner automorphism group 
+and <M>\Aut(G)</M> its full automorphism group. 
+Then there is a crossed square with groups <M>[G,\Inn(G),\Inn(G),\Aut(G)]</M> 
+where the upper and left boundaries are the maps <M>g \mapsto \iota_g</M>,
+where <M>\iota_g</M> is conjugation of <M>G</M> by <M>g</M>,  
+and the right and down boundaries are inclusions. 
+The crossed pairing is gived by <M>\iota_g \boxtimes \iota_h = [g,h]</M>.
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> AXS20 := CrossedSquareByAutomorphismGroup( d20 );
+[      d20 -> Inn(d20) ]
+[     |          |     ]
+[ Inn(d20) -> Aut(d20) ]
+
+gap> StructureDescription( AXS20 );
+[ "D20", "D10", "D10", "C2 x (C5 : C4)" ]
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="CrossedSquareByPullback"
+         Arg="X1 X2" />
+<Description>
+If crossed modules <M>\mathcal{X}_1 = (\nu : N \to P)</M> 
+and <M>\mathcal{X}_2 = (\mu : M \to P)</M> 
+have a common range <M>P</M>, let <M>L</M> be the pullback of 
+<M>\{\nu,\mu\}</M>. 
+Then <M>N</M> acts on <M>L</M> by <M>(n,m)^{n'} = (n^{n'},m^{\nu n'})</M>, 
+and <M>M</M> acts on <M>L</M> by <M>(n,m)^{m'} = (n^{\mu m'}, m^{m'})</M>. 
+So <M>(\pi_1 : L \to N)</M> and <M>(\pi_2 : L \to M)</M> 
+are crossed modules, where <M>\pi_1,\pi_2</M> are the two projections. 
+The crossed pairing is given by: 
+<Display>
+\boxtimes \;:\; \{M,N\} \to L, \quad 
+(m,n) \mapsto (m^{-1}m^{\nu n}, (n^{-1})^{\mu m}n) . 
+</Display>  
+<P/>
+The example uses the central extension crossed module <C>X12=(D12->S3)</C> 
+constructed in subsection (<Ref Func="XModByCentralExtension" />), 
+with pullback group <C>D12xC2</C>.  
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> XS12 := CrossedSquareByPullback( X12, X12 );; 
+gap> StructureDescription( XS12 );                  
+[ "C2 x C2 x S3", "D12", "D12", "S3" ]
+]]>
+</Example>
+
+<ManSection>
+   <Attr Name="CrossedSquareByXModSplitting"
+         Arg="X0" />
+<Description>
+For <M>\mathcal{X} = (\partial : S \to R)</M> let <M>Q</M> 
+be the image of <M>\partial</M>. 
+Then <M>\partial = \partial' \circ \iota</M> 
+where <M>\partial' : S \to Q</M> and <M>\iota</M> is the inclusion 
+of <M>Q</M> in <M>R</M>. 
+The diagonal of the square is then the <M>\mathcal{X}</M>, 
+and the crossed pairing is given by commutators. 
+<P/>
+A particular case is when <M>S</M> is an <M>R</M>-module <M>A</M> 
+and <M>\partial</M> is the zero map. 
+<Display>
+<![CDATA[
+\vcenter{\xymatrix{
+       &   &  S \ar[rr]^{\partial'} \ar[dd]_{\partial'} 
+              && Q \ar[dd]^{\iota} && 
+              A \ar[rr]^0 \ar[dd]_0
+              && 1 \ar[dd]^{\iota} &   \\
+       &   &  &&  &   &&  \\
+       &   &  Q \ar[rr]_{\iota}  
+              && R &&  
+              1 \ar[rr]_{\iota}  
+              && R 
+}}
+]]></Display>
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> k4 := Group( (1,2), (3,4) );;
+gap> AX4 := XModByAutomorphismGroup( k4 );;
+gap> X4 := Image( IsomorphismPermObject( AX4 ) );;
+gap> XS4 := CrossedSquareByXModSplitting( X4 );;
+gap> StructureDescription( XS4 );
+[ "C2 x C2", "1", "1", "S3" ]
+]]>
+</Example>
+
+<ManSection>
+   <Func Name="CrossedSquare"
+         Arg="args" />
+<Description>
+The function <C>CrossedSquare</C> may be used to call some of the 
+constructions described in the previous subsections. 
+<List>
+<Item>
+<C>CrossedSquare(X0)</C> calls <C>CrossedSquareByXModSplitting</C>. 
+</Item>
+<Item>
+<C>CrossedSquare(C0)</C> calls <C>CrossedSquareOfCat2Group</C>. 
+</Item>
+<Item>
+<C>CrossedSquare(X0,X1)</C> calls <C>CrossedSquareByPullback</C> 
+when there is a common range. 
+</Item>
+<Item>
+<C>CrossedSquare(X0,X1)</C> calls <C>CrossedSquareByNormalXMod</C> 
+when <C>X1</C> is normal in <C>X0</C> . 
+</Item>
+<Item>
+<C>CrossedSquare(L,M,N,P)</C> calls <C>CrossedSquareByNormalSubgroups</C>. 
+</Item>
+</List>
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> diag := Diagonal2DimensionalGroup( AXS20 );
+[d20->Aut(d20)]
+gap> XSdiag := CrossedSquare( diag );;      
+gap> StructureDescription( XSdiag );  
+[ "D20", "D10", "D10", "C2 x (C5 : C4)" ]
+]]>
+</Example>
+
+
+<ManSection>
+   <Attr Name="Transpose3DimensionalGroup" 
+         Arg="S0" />
+<Description>
+The <E>transpose</E> of a crossed square <M>\mathcal{S}</M> 
+is the crossed square  <M>\tilde{\mathcal{S}}</M> 
+obtained by interchanging <M>M</M> with <M>N</M>, 
+<M>\kappa</M> with <M>\lambda</M>, and <M>\nu</M> with <M>\mu</M>.  
+The crossed pairing is given by 
+<Display>
+\tilde{\boxtimes} \;:\; N \times M \to L, \quad 
+(n,m) \;\mapsto\; n\,\tilde{\boxtimes}\,m := (m \boxtimes n)^{-1}~.
+</Display>
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> XStrans := Transpose3DimensionalGroup( XSconj ); 
+[  c5d -> d10b ]
+[   |      |   ]
+[ d10a -> d20  ]
+
 ]]>
 </Example>
 
@@ -367,23 +538,22 @@ and crossed squares in particular.
          Arg="XS" />
    <Attr Name="CrossedPairing"
          Arg="XS" />
-   <Oper Name="ImageElmCrossedPairing"
-         Arg="XS pair" />
    <Attr Name="Diagonal2DimensionalGroup"
          Arg="XS" />
+   <Meth Name="Name" 
+         Arg="S0" />
 <Description>
-In this implementation the attributes used in the construction of
-a crossed square <C>XS</C> are the four crossed modules (2d-groups) 
-on the sides of the square (up; left; down and right); 
+These are the basic attributes of a crossed square <M>\mathcal{S}</M>. 
+The six objects used in the construction of <M>\mathcal{S}</M>
+are the four crossed modules (2d-groups) 
+on the sides of the square (up; left; right and down); 
 the diagonal action of <M>P</M> on <M>L</M>; 
-and the crossed pairing. 
+and the crossed pairing <M>\{M,N\} \to L</M>. 
 The diagonal crossed module <M>(L \to P)</M> is an additional attribute. 
 <P/>
-The &GAP; development team have suggested that crossed pairings should be 
-implemented as a special case of <C>BinaryMappings</C> -- a structure 
-which does not yet exist in &GAP;.
-In the meantime crossed pairings have been implemented using 
-<C>Mapping2ArgumentsByFunction</C>.
+Crossed pairings have been implemented using an operation 
+<C>Mapping2ArgumentsByFunction</C>. <Index>Mapping2ArgumentsByFunction</Index> 
+This encodes a map <M>\{M,N\} \to L</M> as a map <M>M \times N \to L</M>. 
 </Description>
 </ManSection>
 <P/>
@@ -393,17 +563,34 @@ gap> Up2DimensionalGroup( XSconj );
 [c5d->d10b]
 gap> Right2DimensionalGroup( XSact );
 Actor[d10a->d20]
-gap> xpconj := CrossedPairing( XSconj );;
-gap> ImageElmCrossedPairing( xpconj, [ p2, p12 ] );
-(1,9,7,5,3)(2,10,8,6,4)
 gap> diact := DiagonalAction( XSact );;
 gap> ImageElm( diact, (1,4)(2,3)(6,9)(7,8) );  
 ^(1,5,7,3)(2,8,6,10)
 gap> diag := Diagonal2DimensionalGroup( XSconj );
 [c5d->d20]
+gap> Name( XSconj ); 
+[c5d->d10a,d10b->d20]
 ]]>
 </Example>
 
+<ManSection>
+   <Oper Name="ImageElmCrossedPairing"
+         Arg="XS pair" />
+<Description>
+This operation returns the image when a crossed pairing 
+<M>\{M,N\} \to L</M> is applied to the pair <M>[m,n]</M> 
+with <M>m \in M,~ n \in N</M>. 
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> xp := CrossedPairing( XSconj );;                            
+gap> ImageElmCrossedPairing( xp,                                 
+>      [ (1,6)(2,5)(3,4)(7,10)(8,9), (1,5)(2,4)(6,9)(7,8) ] );
+(1,7,8,5,3)(2,9,10,6,4)
+]]>
+</Example>
 </Section>
 
 

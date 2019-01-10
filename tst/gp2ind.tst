@@ -43,6 +43,18 @@ gap> SetName( XZ8, "XZ8" );
 gap> info := CoproductInfo( XZ8 );
 rec( embeddings := [ [X8 => XZ8], [Z8 => XZ8] ], xmods := [ X8, Z8 ] )
 gap> SetInfoLevel( InfoXMod, 0 ); 
+gap> Y := CoproductXMod( [ X8, X8, Z8, Z8 ] );
+[Group( [ f1, f2, f3, f4, f5, f6, f7, f8 ] )->s4b]
+gap> StructureDescription( Y );          
+[ "C2 x C2 x C2 x C2 x C2 x C2 x C2 x C2", "S4" ]
+gap> CoproductInfo( Y );
+rec( 
+  embeddings := 
+    [ [X8 => [Group( [ f1, f2, f3, f4, f5, f6, f7, f8 ] ) -> s4b]], 
+      [X8 => [Group( [ f1, f2, f3, f4, f5, f6, f7, f8 ] ) -> s4b]], 
+      [Z8 => [Group( [ f1, f2, f3, f4, f5, f6, f7, f8 ] ) -> s4b]], 
+      [Z8 => [Group( [ f1, f2, f3, f4, f5, f6, f7, f8 ] ) -> s4b]] ], 
+  xmods := [ X8, X8, Z8, Z8 ] )
 
 ## Section 7.2.1 : Example 1
 gap> s4gens := GeneratorsOfGroup( s4 );
@@ -52,7 +64,7 @@ gap> a4gens := GeneratorsOfGroup( a4 );
 gap> s3b := Group( (5,6),(6,7) );;  SetName( s3b, "s3b" );
 gap> epi := GroupHomomorphismByImages( s4, s3b, s4gens, [(5,6),(6,7),(5,6)] );;
 gap> X4 := XModByNormalSubgroup( s4, a4 );;
-gap> indX4 := SurjectiveInducedXMod( X4, epi );
+gap> indX4 := InducedXModBySurjection( X4, epi );
 [a4/ker->s3b]
 gap> Display( indX4 );
 

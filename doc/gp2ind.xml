@@ -27,10 +27,13 @@ Need to add here a reference (or two) for coproducts.
    <Attr Name="CoproductInfo"
          Arg="X0" />
 <Description>
-This function calculates the coproduct crossed module of
-crossed modules <M>{\mathcal X}_1 = (\partial_1 : S_1 \to R)</M> 
-and <M>{\mathcal X}_2 = (\partial_2 : S_2 \to R)</M> 
-which have a common range <M>R</M>. 
+This function calculates the coproduct crossed module of two or more 
+crossed modules which have a common range <M>R</M>. 
+The standard method applies to 
+<M>{\mathcal X}_1 = (\partial_1 : S_1 \to R)</M> 
+and <M>{\mathcal X}_2 = (\partial_2 : S_2 \to R)</M>. 
+See below for the case of three or more crossed modules. 
+<P/>
 The source <M>S_2</M> of <M>{\mathcal X}_2</M> acts on <M>S_1</M> 
 via <M>\partial_2</M> and the action of <M>{\mathcal X}_1</M>, 
 so we can form a precrossed module 
@@ -74,6 +77,35 @@ gap> SetInfoLevel( InfoXMod, 0 );
 ]]>
 </Example>
 
+Given a list of more than two crossed modules with a common range <M>R</M>, 
+then an iterated coproduct is formed: 
+<Display>
+\bigcirc~\left[ \mathcal{X}_1,\mathcal{X}_2,\ldots,\mathcal{X}_n\right] 
+    ~=~ \mathcal{X}_1 \circ (\mathcal{X}_2 \circ ( \ldots 
+        (\mathcal{X}_{n-1} \circ \mathcal{X}_n) \ldots ) ). 
+</Display>
+The <C>embeddings</C> field of the <C>CoproductInfo</C> of the resulting 
+crossed module <M>\mathcal{Y}</M> contains the <M>n</M> morphisms 
+<M>\epsilon_i : \mathcal{X}_i \to \mathcal{Y} (1 \leqslant i \leqslant n)</M>. 
+<P/>
+<Example>
+<![CDATA[
+gap> Y := CoproductXMod( [ X8, X8, Z8, Z8 ] );
+[Group( [ f1, f2, f3, f4, f5, f6, f7, f8 ] )->s4b]
+gap> StructureDescription( Y );          
+[ "C2 x C2 x C2 x C2 x C2 x C2 x C2 x C2", "S4" ]
+gap> CoproductInfo( Y );
+rec( 
+  embeddings := 
+    [ [X8 => [Group( [ f1, f2, f3, f4, f5, f6, f7, f8 ] ) -> s4b]], 
+      [X8 => [Group( [ f1, f2, f3, f4, f5, f6, f7, f8 ] ) -> s4b]], 
+      [Z8 => [Group( [ f1, f2, f3, f4, f5, f6, f7, f8 ] ) -> s4b]], 
+      [Z8 => [Group( [ f1, f2, f3, f4, f5, f6, f7, f8 ] ) -> s4b]] ], 
+  xmods := [ X8, X8, Z8, Z8 ] )
+]]>
+</Example>
+
+
 </Section>
 
 
@@ -85,9 +117,9 @@ gap> SetInfoLevel( InfoXMod, 0 );
          Arg="args" />
    <Prop Name="IsInducedXMod"
          Arg="xmod" />
-   <Oper Name="SurjectiveInducedXMod"
+   <Oper Name="InducedXModBySurjection"
          Arg="xmod, hom" />
-   <Oper Name="InclusionInducedXModByCopower"
+   <Oper Name="InducedXModByCopower"
          Arg="xmod, hom, list" />
    <Attr Name="MorphismOfInducedXMod"
          Arg="xmod" />
@@ -146,7 +178,7 @@ gap> a4gens := GeneratorsOfGroup( a4 );
 gap> s3b := Group( (5,6),(6,7) );;  SetName( s3b, "s3b" );
 gap> epi := GroupHomomorphismByImages( s4, s3b, s4gens, [(5,6),(6,7),(5,6)] );;
 gap> X4 := XModByNormalSubgroup( s4, a4 );;
-gap> indX4 := SurjectiveInducedXMod( X4, epi );
+gap> indX4 := InducedXModBySurjection( X4, epi );
 [a4/ker->s3b]
 gap> Display( indX4 );
 

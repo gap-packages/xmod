@@ -19,7 +19,7 @@ function( X1, X2 )
           orb12, act12, hom12, imu, mu, sdp, proj, mgi1, mgi2, emb1, emb2, 
           emor1, emor2, gens, lens, fgens, gens1, gens2, imbdy, i, j, g, r, 
           genR, lenR, cbdy, a1, a2, alpha, imalpha, cact, imcact, caut, 
-          prexmod, peiffer, pmor, pmor1, pmor2, info, coprod; 
+          prexmod, peiffer, pmor, pmor1, pmor2, info, coprod, m; 
 
     ##  function to split a semidirect product element into two parts 
     f := function( g ) 
@@ -90,7 +90,10 @@ function( X1, X2 )
     caut := Group( imcact );
     cact := GroupHomomorphismByImages( R, caut, genR, imcact ); 
     prexmod := PreXModByBoundaryAndAction( cbdy, cact ); 
-    Info( InfoXMod, 1, "prexmod is ", IdGroup( prexmod ) ); 
+    m := Size( Source( prexmod ) ); 
+    if ( ( m <= 1000 ) and ( m <> 512 ) ) then 
+        Info( InfoXMod, 1, "prexmod is ", IdGroup( prexmod ) ); 
+    fi;
     emor1 := Make2DimensionalGroupMorphism( [ X1, prexmod, emb1, idR ] ); 
     ok := IsPreXModMorphism( emor1 ); 
     emor2 := Make2DimensionalGroupMorphism( [ X2, prexmod, emb2, idR ] ); 
@@ -99,8 +102,11 @@ function( X1, X2 )
     Info( InfoXMod, 1, "peiffer subgroup is ", 
         StructureDescription( peiffer:nice ), ", ", IdGroup( peiffer ) ); 
     coprod := XModByPeifferQuotient( prexmod ); 
-    Info( InfoXMod, 1, "the coproduct is ", 
-        StructureDescription( coprod:nice ), ", ", IdGroup( coprod ) ); 
+    m := Size( Source( coprod ) ); 
+    if ( ( m <= 1000 ) and ( m <> 512 ) ) then 
+        Info( InfoXMod, 1, "the coproduct is ", 
+            StructureDescription( coprod:nice ), ", ", IdGroup( coprod ) ); 
+    fi;
     if HasProjectionOfFactorPreXMod( coprod ) then 
         pmor := ProjectionOfFactorPreXMod( coprod ); 
         ok := IsPreXModMorphism( pmor ); 
@@ -113,6 +119,43 @@ function( X1, X2 )
     SetCoproductInfo( coprod,
         rec( embeddings := [ pmor1, pmor2 ], xmods := [ X1, X2 ] ) );
     return coprod; 
+end ); 
+
+InstallOtherMethod( CoproductXMod, "for a list of crossed modules", true, 
+    [ IsList ], 0,
+function( LX )
+
+    local n, emb, C1, C2, info, e1, e2, i, j, k; 
+
+    n := Length( LX ); 
+    if not ForAll( LX, Y -> IsXMod( Y ) ) then 
+        Error( "LX is not a list of crossed modules" ); 
+    fi; 
+    if ( n = 2 ) then 
+        return CoproductXMod( LX[1], LX[2] );
+    fi; 
+    emb := ListWithIdenticalEntries( n, 0 ); 
+    C1 := LX[n]; 
+    for i in [1..n-1] do 
+        j := n-i; 
+        C2 := CoproductXMod( LX[j], C1 ); 
+        info := CoproductInfo( C2 ); 
+        e1 := info!.embeddings[1]; 
+        e2 := info!.embeddings[2]; 
+        if ( i = 1 ) then 
+            emb[n-1] := e1; 
+            emb[n] := e2; 
+        else 
+            emb[j] := e1; 
+            for k in [j+1..n] do 
+                emb[k] := emb[k] * e2; 
+            od;
+        fi;
+        C1 := C2;
+    od;
+    info!.xmods := LX; 
+    info!.embeddings := emb;
+    return C2; 
 end ); 
 
 ##############################################################################
@@ -177,22 +220,22 @@ InstallGlobalFunction( InducedXMod, function( arg )
         IX := InducedXModFromTrivialRange( X0, iota ); 
     elif IsSurjective( iota ) then
         Info( InfoXMod, 3, "iota is surj" );
-        IX := SurjectiveInducedXMod( X0, iota );
+        IX := InducedXModBySurjection( X0, iota );
     elif IsInjective( iota ) then
         Info( InfoXMod, 3, "iota is mono" );
-        IX := InclusionInducedXModByCopower( X0, iota, T );
+        IX := InducedXModByCopower( X0, iota, T );
     else  ## split in two ##
         Info( InfoXMod, 3, "splitting into surjective and injective cases" );
         iP := ImagesSource( iota );
         ires := GeneralRestrictedMapping( iota, P, iP );
         Info( InfoXMod, 3, "iota splits: ires =", ires );
-        X1 := SurjectiveInducedXMod( X0, ires );
+        X1 := InducedXModBySurjection( X0, ires );
         if ( InfoLevel( InfoXMod ) > 1 ) then
             Print( "surjective induced xmod:\n" );
             Display( X1 );
         fi;
         inc := InclusionMappingGroups( Q, iP );
-        IX := InclusionInducedXModByCopower( X1, inc, [ ] );
+        IX := InducedXModByCopower( X1, inc, [ ] );
     fi;
     if HasName( X0 ) then
         SetName( IX, Concatenation( "i*(", Name( X0 ), ")" ) );
@@ -295,9 +338,9 @@ end );
 
 ##############################################################################
 ##
-#M  InclusionInducedXModByCopower( <xmod>, <hom>, <trans> ) . . . induced xmod
+#M  InducedXModByCopower( <xmod>, <hom>, <trans> ) . . . induced xmod
 ##
-InstallMethod( InclusionInducedXModByCopower, 
+InstallMethod( InducedXModByCopower, 
     "for an xmod, an inclusion, and a transversal", true, 
     [ IsXMod, IsGroupHomomorphism, IsList ], 0,
 function( X0, iota, trans )
@@ -345,7 +388,7 @@ function( X0, iota, trans )
     if ( oM = 1 ) then 
         return InducedXModFromTrivialSource( X0, iota ); 
     fi;
-    Info( InfoXMod, 2, "calling InclusionInducedXModByCopower" ); 
+    Info( InfoXMod, 2, "calling InducedXModByCopower" ); 
     Q := Range( iota );
     genQ := GeneratorsOfGroup( Q );
     oQ := Size( Q );
@@ -480,7 +523,7 @@ function( X0, iota, trans )
     od;
     Info( InfoXMod, 2, "qP = ", qP );
     Info( InfoXMod, 2, "qT = ", qT );
-    Info( InfoXMod, 3, "\nstarting InclusionInducedXModByCopower here" );
+    Info( InfoXMod, 3, "\nstarting InducedXModByCopower here" );
     xgM := ngN-ngM;
     ngI := ngN*indQP;
     nxI := xgM*indQP;
@@ -789,9 +832,9 @@ end );
 
 ###############################################################################
 ##
-#M  SurjectiveInducedXMod( <xmod>, <hom> ) . . induced xmod
+#M  InducedXModBySurjection( <xmod>, <hom> ) . . . induced xmod, surjective map
 ##
-InstallMethod( SurjectiveInducedXMod, "for xmod and surjective homomorphism",
+InstallMethod( InducedXModBySurjection, "for xmod and surjective homomorphism",
     true, [ IsXMod, IsGroupHomomorphism ], 0,
 function( X0, iota )
 
@@ -800,7 +843,7 @@ function( X0, iota )
           isoI, I, genI, imi, istar, acthom, imb, bdystar, i, 
           autgen, imI, imS, actstar, autstar, idI, IX, ok, mor;
 
-    Info( InfoXMod, 2, "calling SurjectiveInducedXMod" ); 
+    Info( InfoXMod, 2, "calling InducedXModBySurjection" ); 
     R := Range( X0 );
     S := Source( X0 );
     if IsBijective( iota ) then 
@@ -983,11 +1026,11 @@ end );
 
 ###############################################################################
 ##
-#M  InclusionInducedCat1Data( <cat1>, <hom>, <trans> ) . . 
+#M  InducedCat1Data( <cat1>, <hom>, <trans> ) . . 
 ##
 ##  ?? do we really want the trans ???
 ##
-InstallMethod( InclusionInducedCat1Data, "for cat1-group, homomorphism, list", 
+InstallMethod( InducedCat1Data, "for cat1-group, homomorphism, list", 
     true, [ IsCat1Group, IsGroupHomomorphism, IsList ], 0,
 function( C, iota, trans )
 
@@ -1313,7 +1356,7 @@ InstallGlobalFunction( InducedCat1Group, function( arg )
         Qinfo := IsomorphismFpInfo( Q );
     fi;
 
-    info := InclusionInducedCat1Data( C, iota );
+    info := InducedCat1Data( C, iota );
     IC := InducedCat1GroupByFreeProduct( info );
     return IC;
 end );

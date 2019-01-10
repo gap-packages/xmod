@@ -173,10 +173,10 @@ end );
 
 #############################################################################
 ##
-#F  Display3dMorphism( <mor> ) . . . . . print details of a 3d-group morphism 
+#F  Display3DimensionalMorphism( <mor> ) . . . . display a 3d-group morphism 
 ##
-InstallMethod( Display3dMorphism, "display a morphism of 3d-groups", true,
-    [ IsHigherDimensionalMapping ], 0,
+InstallMethod( Display3DimensionalMorphism, "display a morphism of 3d-groups", 
+    true, [ IsHigherDimensionalMapping ], 0,
 function( mor )
 
     local dim, upmor, downmor, P, Q;

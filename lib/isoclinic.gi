@@ -763,51 +763,51 @@ function( G )
     return XQ;
 end );
 
-InstallOtherMethod( CentralQuotient, "generic method for crossed modules", 
+InstallMethod( CentralQuotient, "generic method for crossed modules", 
     true, [ IsXMod ], 0,
-function( XM ) 
+function( lt ) 
 
-    local act, ZM, QM, ul, ur, dl, dr, nat, snat, rnat, up, dn, gdl, gdr, 
-          iul, adg, prod, proj1, proj2, map, xp, xs; 
+    local actlt, zlt, rt, L, M, N, P, nat, kappa, nu, up, dn, genN, nugenN, 
+          agenN, adg, map, xp, xs; 
 
-    act := XModAction( XM ); 
-    ZM := CentreXMod( XM ); 
-    nat := NaturalMorphismByNormalSubPreXMod( XM, ZM ); 
-    snat := SourceHom( nat );
-    rnat := RangeHom( nat ); 
-    QM := Image( nat );
-    ul := Source( XM ); 
-    dl := Range( XM );
-    ur := Source( QM ); 
-    dr := Range( QM );
-    if ( HasName( XM ) and not HasName(ZM) ) then 
-        SetName( ZM, Concatenation( "Z(", Name( XM ), ")" ) ); 
+    actlt := XModAction( lt ); 
+    zlt := CentreXMod( lt ); 
+    nat := NaturalMorphismByNormalSubPreXMod( lt, zlt ); 
+    kappa := SourceHom( nat );
+    nu := RangeHom( nat ); 
+    rt := Image( nat );
+    L := Source( lt ); 
+    N := Range( lt );
+    M := Source( rt ); 
+    P := Range( rt );
+    if ( HasName( lt ) and not HasName(zlt) ) then 
+        SetName( zlt, Concatenation( "Z(", Name( lt ), ")" ) ); 
     fi; 
-    if HasName( XM ) then 
-        if not HasName( ZM ) then 
-            SetName( ZM, Concatenation( "Z(", Name( XM ), ")" ) ); 
+    if HasName( lt ) then 
+        if not HasName( zlt ) then 
+            SetName( zlt, Concatenation( "Z(", Name( lt ), ")" ) ); 
         fi;
-        SetName( QM, Concatenation( Name(XM), "/", Name(ZM) ) ); 
+        SetName( rt, Concatenation( Name(lt), "/", Name(zlt) ) ); 
     fi; 
-    up := XModByCentralExtension( snat );
-    dn := XModByCentralExtension( rnat );
-    gdl := GeneratorsOfGroup( dl ); 
-    gdr := List( gdl, r -> ImageElm( rnat, r ) ); 
-    iul := List( gdl, r -> ImageElm( act, r ) ); 
-    adg := GroupHomomorphismByImages( dr, Range(act), gdr, iul );
-    prod := DirectProduct( dl, ur );
-    proj1 := Projection( prod, 1 );
-    proj2 := Projection( prod, 2 );
-    map := MappingByFunction( prod, ul, 
+    up := XModByCentralExtension( kappa );
+    dn := XModByCentralExtension( nu );
+    genN := GeneratorsOfGroup( N ); 
+    nugenN := List( genN, n -> ImageElm( nu, n ) ); 
+    agenN := List( genN, n -> ImageElm( actlt, n ) ); 
+    adg := GroupHomomorphismByImages( P, Range(actlt), nugenN, agenN );
+    map := Mapping2ArgumentsByFunction( [M,N], L, 
              function(c) 
-               local a,s;
-               a := ImageElm( act, ImageElm(proj1,c) ); 
-               s := PreImagesRepresentative( snat, ImageElm(proj2,c) );  
-               return ImageElm(a,s^-1)*s; 
+               local a, l;
+               a := ImageElm( actlt, c[2] ); 
+               l := PreImagesRepresentative( kappa, c[1] );  
+               return l^(-1) * ImageElm( a, l ); 
              end );
-    xp := CrossedPairingObj( [dl,ur], ul, map );
-    xs := PreCrossedSquareObj( up, XM, QM, dn, adg, xp );
-    SetIsCrossedSquare( xs, true );
+    xp := CrossedPairingObj( [M,N], L, map );
+    xs := PreCrossedSquareObj( up, lt, rt, dn, adg, xp );
+##    SetIsCrossedSquare( xs, true );
+    if not IsCrossedSquare( xs ) then 
+        Error( "xs fails to be a crossed square by central quotient" ); 
+    fi;
     return xs;
 end );
 

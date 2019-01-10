@@ -43,16 +43,20 @@ DeclareOperation( "ImageElmCrossedPairing", [ IsCrossedPairing, IsObject ] );
 
 #############################################################################
 ##
-#O  CrossedPairingByNormalSubgroups
+#O  CrossedPairingByCommutators
 #O  CrossedPairingByDerivation 
-#O  CrossedPairingByXModAction 
+#O  CrossedPairingBySingleXModAction 
 #A  PrincipalCrossedPairing
+#O  CrossedPairingByConjugators
+#O  CrossedPairingByPreImages
 ##
-DeclareOperation( "CrossedPairingByNormalSubgroups", 
+DeclareOperation( "CrossedPairingByCommutators", 
     [ IsGroup, IsGroup, IsGroup ] );
 DeclareOperation( "CrossedPairingByDerivations", [ IsXMod ] );
-DeclareOperation( "CrossedPairingByXModAction", [ IsXMod, IsXMod ] );
+DeclareOperation( "CrossedPairingBySingleXModAction", [ IsXMod, IsXMod ] );
 DeclareAttribute( "PrincipalCrossedPairing", IsXMod ); 
+DeclareOperation( "CrossedPairingByConjugators", [ IsGroup ] );
+DeclareOperation( "CrossedPairingByPreImages", [ IsXMod, IsXMod ] ); 
 
 #############################################################################
 ##
@@ -128,7 +132,10 @@ InstallTrueMethod( IsPreCrossedSquare, IsCrossedSquare );
 #O  CrossedSquareByXMods( <up>, <left>, <down>, <right>, <action>, <pairing> ) 
 #O  CrossedSquareByNormalSubgroups( <L>, <M>, <N>, <P> )
 #O  CrossedSquareByNormalSubXMod( <xmod>, <subxmod> ) 
+#O  CrossedSquareByPullback( <xmod>, <xmod> )
+#A  CrossedSquareByAutomorphismGroup( <gp> )
 #A  ActorCrossedSquare( <xmod> )
+#A  CrossedSquareByXModSplitting( <xmod> ) 
 ##
 DeclareGlobalFunction( "PreCrossedSquare" );
 DeclareGlobalFunction( "CrossedSquare" );
@@ -137,7 +144,10 @@ DeclareOperation( "CrossedSquareByXMods",
 DeclareOperation( "CrossedSquareByNormalSubgroups", 
     [ IsGroup, IsGroup, IsGroup, IsGroup ] );
 DeclareOperation( "CrossedSquareByNormalSubXMod", [ IsXMod, IsXMod ] );
+DeclareOperation( "CrossedSquareByPullback", [ IsXMod, IsXMod ] );
+DeclareAttribute( "CrossedSquareByAutomorphismGroup", IsGroup );
 DeclareAttribute( "ActorCrossedSquare", IsXMod );
+DeclareAttribute( "CrossedSquareByXModSplitting", IsXMod );
 
 #############################################################################
 ##

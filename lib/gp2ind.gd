@@ -64,28 +64,32 @@ DeclareAttribute( "MorphismOfInducedXMod", IsInducedXMod );
 #############################################################################
 ##
 #F  InducedXMod( <args> )
-#O  InclusionInducedXModByCopower( <grp>, <hom>, <trans> )
+#O  InducedXModBySurjection( <xmod>, <hom> )
+#O  InducedXModByCoproduct( <xmod>, <hom> )
+#O  InducedXModByBijection( <xmod>, <hom> )
+#O  InducedXModByCopower( <grp>, <hom>, <trans> )
 #O  InducedXModFromTrivialSource( <xmod>, <hom> )
 #O  InducedXModFromTrivialRange( <xmod>, <hom> )
-#O  SurjectiveInducedXMod( <xmod>, <hom> )
 ##
 DeclareGlobalFunction( "InducedXMod" );
-DeclareOperation( "InclusionInducedXModByCopower", 
+DeclareOperation( "InducedXModBySurjection", [ IsXMod, IsGroupHomomorphism ] );
+DeclareOperation( "InducedXModByCoproduct", [ IsXMod, IsGroupHomomorphism ] );
+DeclareOperation( "InducedXModByBijection", [ IsXMod, IsGroupHomomorphism ] );
+DeclareOperation( "InducedXModByCopower", 
     [ IsXMod, IsGroupHomomorphism, IsList ] );
 DeclareOperation( "InducedXModFromTrivialSource", 
     [ IsXMod, IsGroupHomomorphism ] );
 DeclareOperation( "InducedXModFromTrivialRange", 
     [ IsXMod, IsGroupHomomorphism ] );
-DeclareOperation( "SurjectiveInducedXMod", [ IsXMod, IsGroupHomomorphism ] );
 
 ##############################################################################
 ##
 #F  InducedCat1Group( <args> )
-#O  InclusionInducedCat1Data( <grp>, <hom>, <trans> )
+#O  InducedCat1Data( <grp>, <hom>, <trans> )
 #O  InducedCat1GroupByFreeProduct( [ <grp>, <hom> ] )  ???
 ##
 DeclareGlobalFunction( "InducedCat1Group" );
-DeclareOperation( "InclusionInducedCat1Data", 
+DeclareOperation( "InducedCat1Data", 
     [ IsCat1Group, IsGroupHomomorphism, IsList ] );
 DeclareOperation( "InducedCat1GroupByFreeProduct", [ IsList ] );
 

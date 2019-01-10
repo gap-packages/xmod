@@ -38,7 +38,7 @@ gap> c6 := Group( (11,12,13,14,15,16) );;
 gap> SetName( c6, "c6" ); 
 gap> iota := GroupHomomorphismByImages( c2, c6, 
 >                [ (1,2) ], [ (11,14)(12,15)(13,16) ] );; 
-gap> indc4c2c6 := InclusionInducedXModByCopower( X4, iota, [ ] );; 
+gap> indc4c2c6 := InducedXModByCopower( X4, iota, [ ] );; 
 gap> StructureDescription( indc4c2c6 ); 
 [ "C4 x C4 x C4", "C6" ]
 gap> Size( indc4c2c6 );
@@ -69,7 +69,7 @@ gap> SetName( s3b, "s3b" );
 gap> surj4 := GroupHomomorphismByImages( s4b, s3b, gens4b, 
 >                 [ (5,6), (6,7), (5,6) ] );; 
 gap> iota8 := iso8 * surj4;; 
-gap> ind8 := SurjectiveInducedXMod( AX8, iota8 );; 
+gap> ind8 := InducedXModBySurjection( AX8, iota8 );; 
 gap> StructureDescription( ind8 ); 
 [ "C2 x C2", "S3" ]
 gap> Size( ind8 );
@@ -82,13 +82,13 @@ gap> g := GeneratorsOfGroup( c2n )[1];;
 gap> cn := Subgroup( c2n, [g^2] );; 
 gap> SetName( cn, "cn" ); 
 gap> surj := GroupHomomorphismByImages( c2n, cn, [g], [g^2] );; 
-gap> ind1 := SurjectiveInducedXMod( X2n, surj );; 
+gap> ind1 := InducedXModBySurjection( X2n, surj );; 
 gap> ok := IsCentralExtension2DimensionalGroup( ind1 );
 true
 gap> StructureDescription( ind1 );
 [ "C10", "C5" ]
 gap> inc := GroupHomomorphismByImages( cn, c2n, [g^2], [g^2] );; 
-gap> ind2 := InclusionInducedXModByCopower( ind1, inc, [ ] );; 
+gap> ind2 := InducedXModByCopower( ind1, inc, [ ] );; 
 gap> StructureDescription( ind2 );
 [ "C10 x C10", "C10" ]
 gap> Display( ind2 );

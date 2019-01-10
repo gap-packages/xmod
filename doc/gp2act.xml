@@ -88,24 +88,25 @@ acts on the Whitehead monoid by
 and this determines the action for the actor.
 In fact the four groups <M>R, S, W, A</M>,  the homomorphisms between them, 
 and the various actions, 
-give five crossed modules forming a <E>crossed square</E>:
+give five crossed modules forming a <E>crossed square</E> 
+(see <Ref Func="ActorCrossedSquare" />). 
 <Index>crossed square</Index>
 <List>
 <Item>
 <M>\mathcal{X} = (\partial : S \to R),~</M>  
-the initial crossed module, on the left,
+the initial crossed module, at the top,
 </Item>
 <Item>
 <M>\mathcal{W}(\mathcal{X}) = (\eta : S \to W),~</M>  
-the Whitehead crossed module of <M>\mathcal{X}</M>, at the top,
+the Whitehead crossed module of <M>\mathcal{X}</M>, on the left,
 </Item>
 <Item>
 <M>\mathcal{N}(X) = (\alpha : R \to A),~</M> 
-the Norrie crossed module of <M>\mathcal{X}</M>, at the bottom, 
+the Norrie crossed module of <M>\mathcal{X}</M>, on the right, 
 </Item>
 <Item>
 <M>\Act(\mathcal{X}) = ( \Delta : W \to A),~</M> 
-the actor crossed module of <M>\mathcal{X}</M>, on the right, and 
+the actor crossed module of <M>\mathcal{X}</M>, at the bottom, and 
 </Item>
 <Item>
 <M>\mathcal{L}(\mathcal{X}) 
