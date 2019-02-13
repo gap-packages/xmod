@@ -5,7 +5,7 @@
 ##  This file implements generic methods for (pre-)crossed squares 
 ##  and (pre-)cat2-groups.
 ##
-#Y  Copyright (C) 2001-2018, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2019, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
     
 #############################################################################
@@ -1474,15 +1474,17 @@ InstallMethod( PreCat2GroupOfPreCrossedSquare, true,
 function( XS )
  
     local up, left, down, right, L, M, N, P, genL, genM, genN, genP, 
-          bdy_up, bdy_lt, bdy_dn, bdy_rt, act_up, act_lt, act_dn, act_rt, 
-          act_diag, xpair, 
+          kappa, lambda, nu, mu, 
+          act_up, act_lt, act_dn, act_rt, act_diag, xpair, 
           Cup, NxL, genNxL, e1NxL, e2NxL, Cleft, MxL, genMxL, e1MxL, e2MxL, 
           Cdown, PxM, genPxM, e1PxM, e2PxM, Cright, PxN, genPxN, e1PxN, e2PxN, 
           autgenMxL, autMxL, actPNML, autgenNxL, autNxL, actPMNL, 
           imPNML, bdyPNML, XPNML, CPNML, PNML, e1PNML, e2PNML, genPNML, 
           imPMNL, bdyPMNL, XPMNL, CPMNL, PMNL, e1PMNL, e2PMNL, genPMNL, 
           imiso, iso, inv, iminv, guess, ok, tup, hup, eup, C2PNML, 
-          tlt, hlt, elt, tdn, hdn, edn, trt, hrt, ert, tdi, hdi, edi, PC, Cdiag; 
+          tlt, hlt, elt, tdn, hdn, edn, trt, hrt, ert, tdi, hdi, edi, PC, 
+          Cdiag, imnukappa, nukappa, morCleftCright, 
+          immulambda, mulambda, morCupCdown; 
 
     Info( InfoXMod, 1, "these conversion functions are under development\n" ); 
 
@@ -1502,16 +1504,17 @@ function( XS )
     Info( InfoXMod, 4, "M = ", M );
     Info( InfoXMod, 4, "N = ", N );
     Info( InfoXMod, 4, "P = ", P );
-    bdy_up := Boundary( up );
-    bdy_lt := Boundary( left );
-    bdy_rt := Boundary( right );
-    bdy_dn := Boundary( down );
+    kappa := Boundary( up );
+    lambda := Boundary( left );
+    mu := Boundary( right );
+    nu := Boundary( down );
     act_up := XModAction( up );
     act_lt := XModAction( left );
     act_rt := XModAction( right );
     act_dn := XModAction( down );
     act_diag := DiagonalAction( XS );
     xpair := CrossedPairing( XS );
+
     Cup := Cat1GroupOfXMod( up );
     MxL := Source( Cup );
     e1MxL := Embedding( MxL, 1 );
@@ -1530,12 +1533,30 @@ function( XS )
     e2PxM := Embedding( PxM, 2 );
     genPxM := Concatenation( List( genP, p -> ImageElm( e1PxM, p ) ), 
                              List( genM, m -> ImageElm( e2PxM, m ) ) ); 
+
+    ## construct the cat1-morphism Cleft => Cright 
+    imnukappa := Concatenation( 
+        List( genN, n -> ImageElm( e1PxM, ImageElm( nu, n ) ) ), 
+        List( genL, l -> ImageElm( e2PxM, ImageElm( kappa, l ) ) ) ); 
+    nukappa := GroupHomomorphismByImages( NxL, PxM, genNxL, imnukappa ); 
+    morCleftCright := Cat1GroupMorphism( Cleft, Cright, nukappa, nu ); 
+    Display( morCleftCright ); 
+
     Cdown := Cat1GroupOfXMod( down ); 
     PxN := Source( Cdown ); 
     e1PxN := Embedding( PxN, 1 );
     e2PxN := Embedding( PxN, 2 );
     genPxN := Concatenation( List( genP, p -> ImageElm( e1PxN, p ) ), 
                              List( genN, n -> ImageElm( e2PxN, n ) ) ); 
+
+    ## construct the cat1-morphism Cup => Cdown 
+    immulambda := Concatenation( 
+        List( genM, m -> ImageElm( e1PxN, ImageElm( mu, m ) ) ), 
+        List( genL, l -> ImageElm( e2PxN, ImageElm( lambda, l ) ) ) ); 
+    mulambda := GroupHomomorphismByImages( MxL, PxN, genMxL, immulambda ); 
+    morCupCdown := Cat1GroupMorphism( Cup, Cdown, mulambda, mu ); 
+    Display( morCupCdown ); 
+
     ## construct the action of PxM on NxL using: 
     ## (n,l)^(p,m) = ( n^p, (n^p \box m).l^{pm} ) 
     autgenNxL := Concatenation( 
@@ -1558,8 +1579,8 @@ function( XS )
     SetIsGroupOfAutomorphisms( autNxL, true ); 
     actPMNL := GroupHomomorphismByImages( PxM, autNxL, genPxM, autgenNxL );
     imPMNL := Concatenation( 
-                List( genN, n -> ImageElm( e1PxM, ImageElm( bdy_dn, n ) ) ), 
-                List( genL, l -> ImageElm( e2PxM, ImageElm( bdy_up, l ) ) ) ); 
+                List( genN, n -> ImageElm( e1PxM, ImageElm( nu, n ) ) ), 
+                List( genL, l -> ImageElm( e2PxM, ImageElm( kappa, l ) ) ) ); 
     Info( InfoXMod, 2, "imPMNL = ", imPMNL ); 
     bdyPMNL := GroupHomomorphismByImages( NxL, PxM, genNxL, imPMNL );
     XPMNL := XModByBoundaryAndAction( bdyPMNL, actPMNL ); 
@@ -1595,8 +1616,8 @@ function( XS )
     SetIsGroupOfAutomorphisms( autMxL, true ); 
     actPNML := GroupHomomorphismByImages( PxN, autMxL, genPxN, autgenMxL );
     imPNML := Concatenation( 
-                List( genM, m -> ImageElm( e1PxN, ImageElm( bdy_rt, m ) ) ), 
-                List( genL, l -> ImageElm( e2PxN, ImageElm( bdy_lt, l ) ) ) ); 
+                List( genM, m -> ImageElm( e1PxN, ImageElm( mu, m ) ) ), 
+                List( genL, l -> ImageElm( e2PxN, ImageElm( lambda, l ) ) ) ); 
     bdyPNML := GroupHomomorphismByImages( MxL, PxN, genMxL, imPNML );
     XPNML := XModByBoundaryAndAction( bdyPNML, actPNML ); 
     if ( InfoLevel( InfoXMod ) > 2 ) then 
