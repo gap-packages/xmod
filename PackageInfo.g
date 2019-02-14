@@ -9,6 +9,7 @@ PackageName := "XMod",
 Subtitle := "Crossed Modules and Cat1-Groups",
 Version := "2.72dev",
 Date := "00/01/2019",
+License := "GPL-2.0-or-later",
 
 Persons := [
   rec(
