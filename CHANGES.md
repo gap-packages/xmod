@@ -1,7 +1,8 @@
 # CHANGES to the 'XMod' package
 
-## 2.72 -> 2.72dev (00/01/2019) 
+## 2.72 -> 2.72dev (16/02/2019) 
 
+ * (16/02/19) added License field in PackageInfo.g 
  * (08/12/18) added InducedXModByBijection, InducedXModByCoproduct and 
               renamed SurjectiveInducedXMod, InclusionInducedXModByCopower 
  * (06/12/18) added a CoproductXMod method for a list with more than two xmods 
