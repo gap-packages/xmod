@@ -1,6 +1,6 @@
 # CHANGES to the 'XMod' package
 
-## 2.72 -> 2.72dev (16/02/2019) 
+## 2.72 -> 2.73 (04/03/2019) 
 
  * (04/03/19) Cat2GroupOfCrossedSquare now giving results again 
               crossed pairings now consistently maps : N x M -> L 
