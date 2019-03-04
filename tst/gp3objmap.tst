@@ -56,10 +56,10 @@ gap> XS20 := CrossedSquareByNormalSubXMod( X20, X10 );
 ## Section 8.2.3
 gap> XSact := ActorCrossedSquare( X20 );
 crossed square with crossed modules:
-      up = [d10a->d20]
-    left = Whitehead[d10a->d20]
-   right = Norrie[d10a->d20]
-    down = Actor[d10a->d20]
+      up = Whitehead[d10a->d20]
+    left = [d10a->d20]
+   right = Actor[d10a->d20]
+    down = Norrie[d10a->d20]
 
 ## Section 8.2.4
 gap> AXS20 := CrossedSquareByAutomorphismGroup( d20 );
@@ -71,6 +71,11 @@ gap> StructureDescription( AXS20 );
 [ "D20", "D10", "D10", "C2 x (C5 : C4)" ]
 
 ## Section 8.2.5
+gap> dn := Down2DimensionalGroup( XSconj );;
+gap> rt := Right2DimensionalGroup( XSconj );;
+gap> XSP := CrossedSquareByPullback( dn, rt );; 
+gap> StructureDescription( XSP );                  
+[ "C5", "D10", "D10", "D20" ]
 gap> XS12 := CrossedSquareByPullback( X12, X12 );; 
 gap> StructureDescription( XS12 );                  
 [ "C2 x C2 x S3", "D12", "D12", "S3" ]
@@ -79,9 +84,17 @@ gap> StructureDescription( XS12 );
 gap> k4 := Group( (1,2), (3,4) );;
 gap> AX4 := XModByAutomorphismGroup( k4 );;
 gap> X4 := Image( IsomorphismPermObject( AX4 ) );;
-gap> XS4 := CrossedSquareByXModSplitting( X4 );;
-gap> StructureDescription( XS4 );
+gap> XSS4 := CrossedSquareByXModSplitting( X4 );;
+gap> StructureDescription( XSS4 );
 [ "C2 x C2", "1", "1", "S3" ]
+gap> XSS20 := CrossedSquareByXModSplitting( X20 );;
+gap> up20 := Up2DimensionalGroup( XSS20 );; 
+gap> Range( up20 ) = d10a; 
+true
+gap> SetName( Range( up20 ), "d10a" ); 
+gap> Name( XSS20 );;
+gap> XSS20;
+[d10a->d10a,d10a->d20]
 
 ## Section 8.2.7 
 gap> diag := Diagonal2DimensionalGroup( AXS20 );
@@ -97,19 +110,30 @@ gap> XStrans := Transpose3DimensionalGroup( XSconj );
 [ d10a -> d20  ]
 
 ## Section 8.2.9
+gap> pos7 := Position( ids, [ [12,2], [24,5] ] );;
+gap> Xn7 := nsx[pos7];;
+gap> IdGroup( Xn7 );
+[ [ 12, 2 ], [ 24, 5 ] ]
+gap> IdGroup( CentreXMod( Xn7 ) );
+[ [ 4, 1 ], [ 4, 1 ] ]
+gap> CQXn7 := CentralQuotient( Xn7 );;
+gap> StructureDescription( CQXn7 );
+[ "C12", "C3", "C4 x S3", "S3" ]
+
+## Section 8.2.11
 gap> Up2DimensionalGroup( XSconj );
 [c5d->d10a]
-gap> Down2DimensionalGroup( XSact );
+gap> Right2DimensionalGroup( XSact );
 Actor[d10a->d20]
 gap> diact := DiagonalAction( XSact );;
 gap> ImageElm( diact, (1,4)(2,3)(6,9)(7,8) );  
 ^(1,5,7,3)(2,8,6,10)
-gap> diag := Diagonal2DimensionalGroup( XSconj );
+gap> Diagonal2DimensionalGroup( XSconj );
 [c5d->d20]
 gap> Name( XSconj ); 
 "[c5d->d10a,d10b->d20]"
 
-## Section 8.3.2
+## Section 8.3.3
 gap> ad20 := GroupHomomorphismByImages( d20, d20, [p1,p2], [p1,p2^p1] );;
 gap> ad10a := GroupHomomorphismByImages( d10a, d10a, [p1^2,p2], [p1^2,p2^p1] );;
 gap> ad10b := GroupHomomorphismByImages( d10b, d10b, [p1^2,p12], [p1^2,p12^p1] );;
@@ -172,7 +196,7 @@ true
 gap> IsCat1Group( Diagonal2DimensionalGroup( C16 ) );
 false
 
-# Section 8.4.2 
+# Section 8.4.3 
 gap> xsC16 := CrossedSquareOfCat2Group( C16 );
 crossed square with crossed modules:
       up = [Group( [ (1,5)(2,6)(3,7)(4,8) ] ) -> Group( [ ( 2, 6)( 4, 8) ] )]
@@ -181,10 +205,13 @@ crossed square with crossed modules:
    right = [Group( [ ( 2, 6)( 4, 8) ] ) -> Group( () )]
     down = [Group( [ (1,2,3,4)(5,6,7,8), (), () ] ) -> Group( () )]
 
-gap> SetName( Source( Down2DimensionalGroup( XSact ) ), "c5:c4" );
-gap> SetName( Range( Down2DimensionalGroup( XSact ) ), "c5:c4" );
+gap> IdGroup( xsC16 );
+[ [ 2, 1 ], [ 2, 1 ], [ 4, 1 ], [ 1, 1 ] ]
+
+gap> SetName( Source( Right2DimensionalGroup( XSact ) ), "c5:c4" );
+gap> SetName( Range( Right2DimensionalGroup( XSact ) ), "c5:c4" );
 gap> Name( XSact );
-"[d10a->d20,c5:c4->c5:c4]"
+"[d10a->c5:c4,d20->c5:c4]"
 
 gap> C2act := Cat2GroupOfCrossedSquare( XSact );             
 cat2-group with generating (pre-)cat1-groups:

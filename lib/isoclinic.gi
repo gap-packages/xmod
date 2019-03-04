@@ -795,14 +795,14 @@ function( lt )
     nugenN := List( genN, n -> ImageElm( nu, n ) ); 
     agenN := List( genN, n -> ImageElm( actlt, n ) ); 
     adg := GroupHomomorphismByImages( P, Range(actlt), nugenN, agenN );
-    map := Mapping2ArgumentsByFunction( [M,N], L, 
+    map := Mapping2ArgumentsByFunction( [N,M], L, 
              function(c) 
                local a, l;
-               a := ImageElm( actlt, c[2] ); 
-               l := PreImagesRepresentative( kappa, c[1] );  
-               return l^(-1) * ImageElm( a, l ); 
+               a := ImageElm( actlt, c[1] ); 
+               l := PreImagesRepresentative( kappa, c[2] );  
+               return ImageElm( a, l^(-1) ) * l; 
              end );
-    xp := CrossedPairingObj( [M,N], L, map );
+    xp := CrossedPairingObj( [N,M], L, map );
     xs := PreCrossedSquareObj( up, lt, rt, dn, adg, xp );
 ##    SetIsCrossedSquare( xs, true );
     if not IsCrossedSquare( xs ) then 

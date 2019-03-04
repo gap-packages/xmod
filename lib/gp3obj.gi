@@ -60,6 +60,9 @@ function( src, rng, map )
     local obj;
 
     obj := rec();
+    if not ( Length(src)=2 ) and IsGroup(src[1]) and IsGroup(src[2]) then 
+        Error( "the first parameter should be a list of two groups" ); 
+    fi;
     ObjectifyWithAttributes( obj, CrossedPairingType,
         Source, src,
         Range, rng, 
@@ -96,12 +99,12 @@ function( N, M, L )
 
     local map, xp;
 
-    if not IsSubgroup( L, CommutatorSubgroup(M,N) ) then 
-        Error( "require CommutatorSubgroup(M,N) <= L" );
+    if not IsSubgroup( L, CommutatorSubgroup(N,M) ) then 
+        Error( "require CommutatorSubgroup(N,M) <= L" );
     fi;
-    map := Mapping2ArgumentsByFunction( [M,N], L, 
+    map := Mapping2ArgumentsByFunction( [N,M], L, 
                function(c) return Comm( c[1], c[2] ); end );
-    xp := CrossedPairingObj( [M,N], L, map );
+    xp := CrossedPairingObj( [N,M], L, map );
     return xp;
 end );
 
@@ -173,14 +176,14 @@ function( up, lt )
     N := Range( lt );
     kappa := Boundary( up ); 
     lambda := Boundary( lt );
-    map := Mapping2ArgumentsByFunction( [M,N], L, 
+    map := Mapping2ArgumentsByFunction( [N,M], L, 
                function( c ) 
-                   local l1, l2;
-                   l1 := PreImagesRepresentative( kappa, c[1] ); 
-                   l2 := PreImagesRepresentative( lambda, c[2] ); 
-                   return Comm( l1, l2 ); 
+                   local lm, ln;
+                   lm := PreImagesRepresentative( kappa, c[2] ); 
+                   ln := PreImagesRepresentative( lambda, c[1] ); 
+                   return Comm( ln, lm ); 
                end );
-    xp := CrossedPairingObj( [M,N], L, map );
+    xp := CrossedPairingObj( [N,M], L, map );
     return xp;
 end );
 
@@ -202,11 +205,11 @@ function( rt, lt )
     L := Source( lt );
     N := Range( lt ); 
     act := XModAction( rt );
-    map := Mapping2ArgumentsByFunction( [M,N], L, 
+    map := Mapping2ArgumentsByFunction( [N,M], L, 
                function( c ) 
-                   return c[1]^(-1) * ImageElm( ImageElm( act, c[2] ), c[1] );
+                   return ImageElm( ImageElm( act, c[1] ), c[2]^(-1) ) * c[2];
                end );
-    xp := CrossedPairingObj( [M,N], L, map );
+    xp := CrossedPairingObj( [N,M], L, map );
     return xp;
 end );
 
@@ -269,6 +272,7 @@ function( P )
         Info( InfoXMod, 2, "morud and/or modlr not prexmod morphisms" );
         return false;
     fi;
+    #? we have checked that P has a crossed pairing but not any properties 
     return true;
 end );
 
@@ -283,7 +287,7 @@ function( XS )
     local up, lt, rt, dn, L, M, N, P, kappa, lambda, mu, nu, 
           lambdanu, kappamu, autu, autl, actdg, dg, ok, morud, morlr, 
           genL, genM, genN, genP, actup, actlt, actrt, actdn, l, p, 
-          xp, x, y, m, n, m2, n2, am, an, apdg, aprt, apdn, mboxn;
+          xp, x, y, m, n, m2, n2, am, an, apdg, aprt, apdn, nboxm;
 
     if not ( IsPreCrossedSquareObj ( XS ) and HasDiagonalAction( XS ) 
              and HasCrossedPairing( XS ) ) then
@@ -354,26 +358,26 @@ function( XS )
     od;
     ## check the axioms for a crossed pairing 
     xp := CrossedPairing( XS ); 
-    for m in genM do 
-        for m2 in genM do 
-            for n in genN do 
-                x := ImageElmCrossedPairing( xp, [ m*m2, n ] ); 
-                am := ImageElm( actup, m2 ); 
-                y := ImageElm( am, ImageElmCrossedPairing( xp, [m,n] ) ); 
-                if not x = y * ImageElmCrossedPairing( xp, [m2,n] ) then 
-                    Error( "m1,m2,n crossed pairing axiom fails" ); 
+    for n in genN do 
+        for n2 in genN do 
+            for m in genM do 
+                x := ImageElmCrossedPairing( xp, [ n*n2, m ] ); 
+                an := ImageElm( actlt, n2 ); 
+                y := ImageElm( an, ImageElmCrossedPairing( xp, [n,m] ) ); 
+                if not x = y * ImageElmCrossedPairing( xp, [n2,m] ) then 
+                    Error( "n1,n2,m crossed pairing axiom fails" ); 
                 fi; 
             od;
        od;
     od;
-    for m in genM do 
-        for n in genN do 
-            for n2 in genN do 
-                x := ImageElmCrossedPairing( xp, [ m, n*n2 ] ); 
-                an := ImageElm( actlt, n2 ); 
-                y := ImageElm( an, ImageElmCrossedPairing( xp, [m,n] ) ); 
-                if not x = ImageElmCrossedPairing( xp, [m,n2] ) * y then 
-                    Error( "m,n,n2 crossed pairing axiom fails" ); 
+    for n in genN do 
+        for m in genM do 
+            for m2 in genM do 
+                x := ImageElmCrossedPairing( xp, [ n, m*m2 ] ); 
+                am := ImageElm( actup, m2 ); 
+                y := ImageElm( am, ImageElmCrossedPairing( xp, [n,m] ) ); 
+                if not x = ImageElmCrossedPairing( xp, [n,m2] ) * y then 
+                    Error( "n,m1,m2 crossed pairing axiom fails" ); 
                 fi; 
             od;
        od;
@@ -382,25 +386,25 @@ function( XS )
         apdg := ImageElm( actdg, p ); 
         aprt := ImageElm( actrt, p ); 
         apdn := ImageElm( actdn, p );
-        for m in genM do 
-            for n in genN do 
-                if not ImageElm( apdg, ImageElmCrossedPairing( xp, [m,n] ) ) 
+        for n in genN do 
+            for m in genM do 
+                if not ImageElm( apdg, ImageElmCrossedPairing( xp, [n,m] ) ) 
                      = ImageElmCrossedPairing( xp, 
-                           [ ImageElm( aprt, m ), ImageElm( apdn, n ) ] ) then
-                    Error( "m,n,p crossed pairing axiom fails" ); 
+                           [ ImageElm( apdn, n ), ImageElm( aprt, m ) ] ) then
+                    Error( "n,m,p crossed pairing axiom fails" ); 
                 fi; 
             od;
        od;
     od;
-    ## check that kappa,lambda correctly map (m box n) 
-    for m in genM do 
-        am := ImageElm( actdn, ImageElm( mu, m ) ); 
-        for n in genN do 
-            an := ImageElm( actrt, ImageElm( nu, n ) ); 
-            mboxn := ImageElmCrossedPairing( xp, [m,n] ); 
-            if not ImageElm( lambda, mboxn ) = ImageElm( am, n^(-1) ) * n
-               and ImageElm( kappa, mboxn ) = m^(-1) * ImageElm( an, m ) then 
-                Error( "kappa,lambda do not map mboxn correctly" ); 
+    ## check that kappa,lambda correctly map (n box m) 
+    for n in genN do 
+        an := ImageElm( actrt, ImageElm( nu, n ) ); 
+        for m in genM do 
+            am := ImageElm( actdn, ImageElm( mu, m ) ); 
+            nboxm := ImageElmCrossedPairing( xp, [n,m] ); 
+            if not ImageElm( lambda, nboxm ) = n^(-1) * ImageElm( am, n ) 
+               and ImageElm( kappa, nboxm ) = ImageElm( an, m^(-1) ) * m then 
+                Error( "kappa,lambda do not map nboxm correctly" ); 
             fi; 
         od;
     od; 
@@ -408,18 +412,17 @@ function( XS )
     for m in genM do 
         am := ImageElm( actdg, ImageElm( mu, m ) ); 
         for l in genL do 
-            if not ( ImageElmCrossedPairing( xp, [m,ImageElm(lambda,l)] ) 
-                   = ImageElm( am, l^(-1) ) * l ) then 
-                Error( "incorrect image for m box kappa(l)" ); 
+            if not ( ImageElmCrossedPairing( xp, [ImageElm(lambda,l),m] ) 
+                   = l^(-1) * ImageElm( am, l ) ) then 
             fi; 
         od;
     od;
     for n in genN do 
         an := ImageElm( actdg, ImageElm( nu, n ) ); 
         for l in genL do 
-            if not ( ImageElmCrossedPairing( xp, [ImageElm(kappa,l),n] ) 
-                   = l^(-1) * ImageElm( an, l ) ) then 
-                Error( "incorrect image for lambda(l) mox n" ); 
+            if not ( ImageElmCrossedPairing( xp, [n,ImageElm(kappa,l)] ) 
+                   = ImageElm( an, l^(-1) ) * l ) then 
+                Error( "incorrect image for (n box kappa(l))" ); 
             fi; 
         od;
     od;
@@ -565,7 +568,7 @@ function( L, M, N, P )
     diag := XModByNormalSubgroup( P, L );
     a := XModAction( diag );
     ##  define the pairing as a commutator
-    xp := CrossedPairingByCommutators( M, N, L ); 
+    xp := CrossedPairingByCommutators( N, M, L ); 
     XS := PreCrossedSquareObj( up, lt, rt, dn, a, xp );
 ##    SetIsCrossedSquare( XS, true ); 
     SetDiagonal2DimensionalGroup( XS, diag ); 
@@ -681,16 +684,16 @@ function( XN, XM )
     bdyM := Linfo!.projections[2]; 
     genLM := List( genL, l -> ImageElm( bdyM, l ) );
     ## construct the crossed pairing 
-    map := Mapping2ArgumentsByFunction( [M,N], L, 
+    map := Mapping2ArgumentsByFunction( [N,M], L, 
                function( c ) 
                    local n, m, nun, mum, n2, m2, l; 
-                   m := c[1];
-                   n := c[2]; 
+                   n := c[1];
+                   m := c[2]; 
                    nun := ImageElm( nu, n );
                    mum := ImageElm( mu, m );
-                   ## h(n,m) = ((n^-1)^(mu m)*n, m^-1*m^(nu n))
-                   n2 := ImageElm(ImageElm(actN,mum),n^(-1)) * n; 
-                   m2 := m^(-1) * ImageElm(ImageElm(actM,nun),m);
+                   ## h(n,m) = (n^{-1}.n^mum, (m^{-1})^nun.m)
+                   n2 := n^(-1) * ImageElm(ImageElm(actN,mum),n);
+                   m2 := ImageElm(ImageElm(actM,nun),m^(-1)) * m; 
                    l := ImageElm( embN, n2 ) * ImageElm( embM, m2 ); 
                    if not ( l in L ) then 
                        Error( "element l appears not to be in L" ); 
@@ -756,7 +759,8 @@ function( X0 )
     da := XModAction( LX );
     ##  define the pairing as evaluation of a derivation
     xp := CrossedPairingByDerivations( X0 );
-    XS := PreCrossedSquareObj( X0, WX, NX, AX, da, xp );
+    ## XS := PreCrossedSquareObj( X0, WX, NX, AX, da, xp );
+    XS := PreCrossedSquareObj( WX, X0, AX, NX, da, xp );
 ##    SetIsCrossedSquare( XS, true );
     if not IsCrossedSquare( XS ) then 
         Error( "XS fails to be an actor crossed square" ); 
@@ -1321,27 +1325,28 @@ end );
 ##  . . . . conjugation action for crossed square from cat2-group
 ##
 InstallMethod( ConjugationActionForCrossedSquare, 
-    "conjugation action for crossed square", true, [ IsGroup, IsGroup ], 0,
+    "conjugation action for crossed square with G acting on N", 
+    true, [ IsGroup, IsGroup ], 0,
 function( G, N )
 
-    local genrng, gensrc, autgen, g, imautgen, a, idsrc, aut, act;
+    local genG, genN, autgen, g, imautgen, a, idN, aut, act;
 
-    genrng := GeneratorsOfGroup( G );
-    gensrc := GeneratorsOfGroup( N );
+    genG := GeneratorsOfGroup( G );
+    genN := GeneratorsOfGroup( N );
     autgen := [ ];
-    for g in genrng do
-        imautgen := List( gensrc, n -> n^g );
-        a := GroupHomomorphismByImages( N, N, gensrc, imautgen );
+    for g in genG do
+        imautgen := List( genN, n -> n^g );
+        a := GroupHomomorphismByImages( N, N, genN, imautgen );
         Add( autgen, a );
     od;
-    if ( Length( genrng ) = 0 ) then
-        idsrc := IdentityMapping( N );
-        aut := Group( idsrc );
+    if ( Length( genG ) = 0 ) then
+        idN := IdentityMapping( N );
+        aut := Group( idN );
     else
         aut := Group( autgen );
     fi;
     SetIsGroupOfAutomorphisms( aut, true );
-    act := GroupHomomorphismByImages( G, aut, genrng, autgen );
+    act := GroupHomomorphismByImages( G, aut, genG, autgen );
     return act;
 end ); 
 
@@ -1392,8 +1397,8 @@ function( C2G )
  
     local n, l, i, j, k, up, down, left, right, isolar, liste1, liste2, G, 
           gensrc, x, u, d, h1, t1, h2, t2, L, M, N, P, XS, diag, liste, 
-          partial, action, aut, act, XM, bdy1, CM1, CM2, bdy2,
-          act2, CM3, bdy3, act3, CM4, bdy4, act4, xp, a;
+          partial, action, aut, actML, XM, kappa, CM1, CM2, lambda,
+          actNL, CM3, mu, actPM, CM4, nu, actPN, xp, actPL;
 
     u := GeneratingCat1Groups( C2G )[1];
     d := GeneratingCat1Groups( C2G )[2];
@@ -1433,30 +1438,30 @@ function( C2G )
     Info( InfoXMod, 4, "N = ", N );
     Info( InfoXMod, 4, "P = ", P );
     
-    bdy1 := GroupHomomorphismByFunction( L, M, x -> ImageElm(h1,x) );
-    act := ConjugationActionForCrossedSquare(M,L);
-    up := XModByBoundaryAndAction(bdy1,act);
+    kappa := GroupHomomorphismByFunction( L, M, x -> ImageElm(h1,x) );
+    actML := ConjugationActionForCrossedSquare( M, L );
+    up := XModByBoundaryAndAction( kappa, actML );
     
-    bdy2 := GroupHomomorphismByFunction( L, N, x -> ImageElm(h2,x) );
-    act2 := ConjugationActionForCrossedSquare(N,L);
-    left := XModByBoundaryAndAction(bdy2,act2);
+    lambda := GroupHomomorphismByFunction( L, N, x -> ImageElm(h2,x) );
+    actNL := ConjugationActionForCrossedSquare( N, L );
+    left := XModByBoundaryAndAction( lambda, actNL );
     
-    bdy3 := GroupHomomorphismByFunction( M, P, x -> ImageElm(h2,x) );
-    act3 := ConjugationActionForCrossedSquare(P,M);
-    right := XModByBoundaryAndAction(bdy3,act3);
+    mu := GroupHomomorphismByFunction( M, P, x -> ImageElm(h2,x) );
+    actPM := ConjugationActionForCrossedSquare( P, M );
+    right := XModByBoundaryAndAction( mu, actPM );
     
-    bdy4 := GroupHomomorphismByFunction( N, P, x -> ImageElm(h1,x) );
-    act4 := ConjugationActionForCrossedSquare(P,N);
-    down := XModByBoundaryAndAction(bdy4,act4);
+    nu := GroupHomomorphismByFunction( N, P, x -> ImageElm(h1,x) );
+    actPN := ConjugationActionForCrossedSquare( P, N );
+    down := XModByBoundaryAndAction( nu, actPN );
     
     Info( InfoXMod, 3, "   up = ", up );
     Info( InfoXMod, 3, " left = ", left );
     Info( InfoXMod, 3, "right = ", right );
     Info( InfoXMod, 3, " down = ", down );
 
-    a := ConjugationActionForCrossedSquare( P, L );
+    actPL := ConjugationActionForCrossedSquare( P, L );
     xp := CrossedPairingByCommutators( N, M, L );
-    XS := PreCrossedSquareObj( up, left, right, down, a, xp );
+    XS := PreCrossedSquareObj( up, left, right, down, actPL, xp );
 ##     SetIsCrossedSquare( XS, true ); 
     if ( HasIsCat2Group( C2G ) and IsCat2Group( C2G ) ) then 
         if not IsCrossedSquare( XS ) then 
@@ -1478,13 +1483,13 @@ function( XS )
           act_up, act_lt, act_dn, act_rt, act_diag, xpair, 
           Cup, NxL, genNxL, e1NxL, e2NxL, Cleft, MxL, genMxL, e1MxL, e2MxL, 
           Cdown, PxM, genPxM, e1PxM, e2PxM, Cright, PxN, genPxN, e1PxN, e2PxN, 
-          autgenMxL, autMxL, actPNML, autgenNxL, autNxL, actPMNL, 
-          imPNML, bdyPNML, XPNML, CPNML, PNML, e1PNML, e2PNML, genPNML, 
-          imPMNL, bdyPMNL, XPMNL, CPMNL, PMNL, e1PMNL, e2PMNL, genPMNL, 
-          imiso, iso, inv, iminv, guess, ok, tup, hup, eup, C2PNML, 
-          tlt, hlt, elt, tdn, hdn, edn, trt, hrt, ert, tdi, hdi, edi, PC, 
-          Cdiag, imnukappa, nukappa, morCleftCright, 
-          immulambda, mulambda, morCupCdown; 
+          MxLbyP, MxLbyN, autgenMxL, autMxL, actPNML, NxLbyP, NxLbyM, 
+          autgenNxL, autNxL, actPMNL, imPNML, bdyPNML, XPNML, CPNML, PNML, 
+          e1PNML, e2PNML, genPNML, imPMNL, bdyPMNL, XPMNL, CPMNL, PMNL, 
+          e1PMNL, e2PMNL, genPMNL, imiso, iso, inv, iminv, tup, hup, eup, 
+          C2PNML, tlt, hlt, elt, tdn, hdn, edn, trt, hrt, ert, tdi, hdi, edi, 
+          PC, Cdiag, imnukappa, nukappa, morCleftCright, immulambda, mulambda, 
+          morCupCdown; 
 
     Info( InfoXMod, 1, "these conversion functions are under development\n" ); 
 
@@ -1540,8 +1545,9 @@ function( XS )
         List( genL, l -> ImageElm( e2PxM, ImageElm( kappa, l ) ) ) ); 
     nukappa := GroupHomomorphismByImages( NxL, PxM, genNxL, imnukappa ); 
     morCleftCright := Cat1GroupMorphism( Cleft, Cright, nukappa, nu ); 
-    Display( morCleftCright ); 
-
+    if ( InfoLevel( InfoXMod ) > 2 ) then 
+        Display( morCleftCright ); 
+    fi;
     Cdown := Cat1GroupOfXMod( down ); 
     PxN := Source( Cdown ); 
     e1PxN := Embedding( PxN, 1 );
@@ -1555,24 +1561,25 @@ function( XS )
         List( genL, l -> ImageElm( e2PxN, ImageElm( lambda, l ) ) ) ); 
     mulambda := GroupHomomorphismByImages( MxL, PxN, genMxL, immulambda ); 
     morCupCdown := Cat1GroupMorphism( Cup, Cdown, mulambda, mu ); 
-    Display( morCupCdown ); 
-
+    if ( InfoLevel( InfoXMod ) > 2 ) then 
+        Display( morCupCdown ); 
+    fi;
     ## construct the action of PxM on NxL using: 
     ## (n,l)^(p,m) = ( n^p, (n^p \box m).l^{pm} ) 
-    autgenNxL := Concatenation( 
-        List( genP, p -> GroupHomomorphismByImages( NxL, NxL, genNxL, 
+    NxLbyP := List( genP, p -> GroupHomomorphismByImages( NxL, NxL, genNxL, 
             Concatenation( 
                 List( genN, n -> ImageElm( e1NxL, 
                                  ImageElm( ImageElm( act_dn, p ), n ) )),
                 List( genL, l -> ImageElm( e2NxL, 
-                                 ImageElm( ImageElm( act_diag, p ), l ))) ))),  
-        List( genM, m -> GroupHomomorphismByImages( NxL, NxL, genNxL, 
+                                 ImageElm( ImageElm( act_diag, p ), l ))) ))); 
+    NxLbyM := List( genM, m -> GroupHomomorphismByImages( NxL, NxL, genNxL, 
             Concatenation( 
                 List( genN, n -> ImageElm( e1NxL, n ) * 
                                  ImageElm( e2NxL, 
-                                 ImageElmCrossedPairing( xpair, [m,n] ))), 
+                                 ImageElmCrossedPairing( xpair, [n,m] ))), 
                 List( genL, l -> ImageElm( e2NxL, 
-                                 ImageElm( ImageElm( act_up, m ), l ))) ))) ); 
+                                 ImageElm( ImageElm( act_up, m ), l ))) ))); 
+    autgenNxL := Concatenation( NxLbyP, NxLbyM ); 
     Info( InfoXMod, 2, "autgenNxL = ", autgenNxL ); 
     autNxL := Group( autgenNxL ); 
     Info( InfoXMod, 2, "autNxL has size ", Size( autNxL ) );
@@ -1597,20 +1604,20 @@ function( XS )
                               List( genNxL, g -> ImageElm( e2PMNL, g ) ) ); 
     ## construct the action of PxN on MxL using the transpose action: 
     ## (m,l)^(p,n) = (m^p, (n \box m^p)^{-1}.l^{pn} ) 
-    autgenMxL := Concatenation( 
-        List( genP, p -> GroupHomomorphismByImages( MxL, MxL, genMxL, 
+    MxLbyP := List( genP, p -> GroupHomomorphismByImages( MxL, MxL, genMxL, 
             Concatenation( 
                 List( genM, m -> ImageElm( e1MxL, 
                                  ImageElm( ImageElm( act_rt, p ), m ) )),
                 List( genL, l -> ImageElm( e2MxL, 
-                                 ImageElm( ImageElm( act_diag, p ), l ))) ))),  
-        List( genN, n -> GroupHomomorphismByImages( MxL, MxL, genMxL, 
+                                 ImageElm( ImageElm( act_diag, p ), l ))) ))); 
+    MxLbyN := List( genN, n -> GroupHomomorphismByImages( MxL, MxL, genMxL, 
             Concatenation( 
                 List( genM, m -> ImageElm( e1MxL, m ) * 
                                  ImageElm( e2MxL,  
-                                 ImageElmCrossedPairing( xpair, [m,n] ) )^-1 ), 
+                                 ImageElmCrossedPairing( xpair, [n,m] )^(-1) )), 
                 List( genL, l -> ImageElm( e2MxL, 
-                                 ImageElm( ImageElm( act_lt, n ), l ))) ))) ); 
+                                 ImageElm( ImageElm( act_lt, n ), l ))) )));
+    autgenMxL := Concatenation( MxLbyP, MxLbyN ); 
     Info( InfoXMod, 2, "autgenMxL = ", autgenMxL ); 
     autMxL := Group( autgenMxL ); 
     SetIsGroupOfAutomorphisms( autMxL, true ); 
@@ -1631,7 +1638,7 @@ function( XS )
     e2PNML := Embedding( PNML, 2 );
     genPNML := Concatenation( List( genPxN, g -> ImageElm( e1PNML, g ) ), 
                               List( genMxL, g -> ImageElm( e2PNML, g ) ) ); 
-    ##  now find the isomorphism between the sources PMNL and PNML 
+    ## now find the isomorphism between the sources PMNL and PNML 
     imiso := Concatenation( 
            List( genP, p -> ImageElm( e1PNML, ImageElm( e1PxN, p ) ) ), 
            List( genM, m -> ImageElm( e2PNML, ImageElm( e1MxL, m ) ) ), 
@@ -1640,13 +1647,8 @@ function( XS )
     iso := GroupHomomorphismByImages( PMNL, PNML, genPMNL, imiso ); 
     inv := InverseGeneralMapping( iso ); 
     iminv := List( genPNML, g -> ImageElm( inv, g ) ); 
-    guess := Concatenation( 
-           List( genP, p -> ImageElm( e1PMNL, ImageElm( e1PxM, p ) ) ), 
-           List( genM, m -> ImageElm( e1PMNL, ImageElm( e2PxM, m ) ) ), 
-           List( genN, n -> ImageElm( e2PMNL, ImageElm( e1NxL, n ) ) ), 
-           List( genL, l -> ImageElm( e2PMNL, ImageElm( e2NxL, l ) ) ) ); 
-    ok := (iminv = guess); 
-    Info( InfoXMod, 2, "iminv = guess? ", ok ); 
+    Info( InfoXMod, 2, "iminv = ", iminv );
+
     ##  construct an isomorphic up cat1-group 
     tup := iso * TailMap( CPNML );
     hup := iso * HeadMap( CPNML ); 
