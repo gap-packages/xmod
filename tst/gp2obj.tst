@@ -143,11 +143,13 @@ gap> Print( KnownAttributesOfObject(X5), "\n" );
   "ExternalSetXMod", "IsomorphismPerm2DimensionalGroup" ]
 
 ## Section 2.2.1
-gap> KnownPropertiesOfObject(X5);
-[ "IsEmpty", "IsTrivial", "IsNonTrivial", "IsFinite", 
-  "CanEasilyCompareElements", "CanEasilySortElements", "IsDuplicateFree", 
-  "IsGeneratorsOfSemigroup", "IsPreXModDomain", "IsPerm2DimensionalGroup", 
-  "IsPreXMod", "IsXMod", "IsAutomorphismGroup2DimensionalGroup" ]
+gap> kpoX5 := KnownPropertiesOfObject(X5);;
+gap> ForAll( [ "IsEmpty", "IsTrivial", "IsNonTrivial", "IsFinite", 
+>  "CanEasilyCompareElements", "CanEasilySortElements", "IsDuplicateFree", 
+>  "IsGeneratorsOfSemigroup", "IsPreXModDomain", "IsPerm2DimensionalGroup", 
+>  "IsPreXMod", "IsXMod", "IsAutomorphismGroup2DimensionalGroup" ], 
+>  s -> s in kpoX5 ); 
+true
 
 ## Section 2.2.2
 gap> s4 := Group( (1,2), (2,3), (3,4) );; 
@@ -170,8 +172,8 @@ gap> X88 := XModByAutomorphismGroup( d8d8 );;
 gap> Size( X88 );
 [ 64, 2048 ]
 gap> Y88 := KernelCokernelXMod( X88 );;
-gap> StructureDescription( Y88 );
-[ "C2 x C2", "(D8 x D8) : C2" ]
+gap> IdGroup(Y88);
+[ [ 4, 2 ], [ 128, 928 ] ]
 
 ## Section 2.3.1
 gap> b1 := (11,12,13,14,15,16,17,18);;  b2 := (12,18)(13,17)(14,16);;

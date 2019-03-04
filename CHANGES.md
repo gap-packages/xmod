@@ -2,6 +2,8 @@
 
 ## 2.72 -> 2.72dev (16/02/2019) 
 
+ * (04/03/19) Cat2GroupOfCrossedSquare now giving results again 
+              crossed pairings now consistently maps : N x M -> L 
  * (16/02/19) added License field in PackageInfo.g 
  * (08/12/18) added InducedXModByBijection, InducedXModByCoproduct and 
               renamed SurjectiveInducedXMod, InclusionInducedXModByCopower 

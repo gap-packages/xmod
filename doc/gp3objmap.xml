@@ -68,7 +68,7 @@ and actions of
 via <M>\dot{\partial}_2\;</M>;
 </Item>
 <Item>
-a function <M>\boxtimes : S_{\{2\}} \times S_{\{1\}} \to S_{[2]}</M>.
+a function <M>\boxtimes : S_{\{1\}} \times S_{\{2\}} \to S_{[2]}</M>.
 </Item>
 </List>
 
@@ -81,7 +81,7 @@ Here is a picture of the situation:
               L \ar[rr]^{\kappa} \ar[dd]_{\lambda} 
               && M \ar[dd]^{\mu} &   \\
 \mathcal{S}  & = &  &&  & = &&  \\
-       &   &  S_{\{1\}} \ar[rr]_{\kappa}  
+       &   &  S_{\{1\}} \ar[rr]_{\dot{\partial}_1}  
               && S_{\emptyset} &&  
               N \ar[rr]_{\nu}  
               && P 
@@ -97,8 +97,8 @@ The homomorphisms <M>\kappa, \lambda</M> preserve the action of <M>P\;</M>.
 <Item>
 Each of the upper, left-hand, right-hand and lower sides of the square, 
 <Display>
- \ddot{\mathcal{S}}_1 = (\kappa : L \to N), \quad 
- \ddot{\mathcal{S}}_2 = (\lambda : L \to M), \quad 
+ \ddot{\mathcal{S}}_1 = (\kappa : L \to M), \quad 
+ \ddot{\mathcal{S}}_2 = (\lambda : L \to N), \quad 
   \dot{\mathcal{S}}_2  = (\mu : M \to P), \quad
   \dot{\mathcal{S}}_1  = (\nu : N \to P), 
 </Display>
@@ -117,27 +117,27 @@ crossed modules of <M>\mathcal{S}</M>.
 <M>\boxtimes</M> is a <E>crossed pairing</E>:
   <List>
   <Item>
-  <M>(m_1m_2 \boxtimes n)\;=\;
-     {(m_1 \boxtimes n)}^{m_2}\;(m_2 \boxtimes n)</M>,
+  <M>(n_1n_2 \boxtimes m)\;=\;
+     {(n_1 \boxtimes m)}^{n_2}\;(n_2 \boxtimes m)</M>,
   </Item>
   <Item>
-  <M>(m \boxtimes n_1n_2) \;=\; 
-     (m \boxtimes n_2)\;{(m \boxtimes n_1)}^{n_2}</M>,
+  <M>(n \boxtimes m_1m_2) \;=\; 
+     (n \boxtimes m_2)\;{(n \boxtimes m_1)}^{m_2}</M>,
   </Item>
   <Item> 
-  <M>(m \boxtimes n)^{p} \;=\; (m^p \boxtimes n^p)</M>.
+  <M>(n \boxtimes m)^{p} \;=\; (n^p \boxtimes m^p)</M>.
   </Item>
   </List>
 </Item>
 <Item>
-<M>\ddot{\partial}_1 (m \boxtimes n) \;=\; (m^{-1})^{n}\;m 
+<M>\ddot{\partial}_1 (n \boxtimes m) \;=\; (m^{-1})^{n}\;m 
 \quad \mbox{and} \quad
-\ddot{\partial}_2 (m \boxtimes n) \;=\; n^{-1}\;n^{m}</M>.
+\ddot{\partial}_2 (n \boxtimes m) \;=\; n^{-1}\;n^{m}</M>.
 </Item>
 <Item>
-<M>(m \boxtimes \ddot{\partial}_1 l) \;=\; (l^{-1})^{m}\;l
+<M>(n \boxtimes \ddot{\partial}_1 l) \;=\; (l^{-1})^{n}\;l
 \quad \mbox{and} \quad
-(\ddot{\partial}_2 l \boxtimes n) \;=\; l^{-1}\;l^n</M>.
+(\ddot{\partial}_2 l \boxtimes m) \;=\; l^{-1}\;l^m</M>.
 </Item>
 </List>
 Note that the actions of <M>M</M> on <M>N</M> and <M>N</M> on <M>M</M> 
@@ -208,12 +208,12 @@ together with the actions of <M>P</M> on <M>M, N</M>
 and <M>L</M> given by conjugation, 
 form a crossed square with crossed pairing  
 <Display>
-\boxtimes \;:\; \{M,N\} \to L, \quad 
-(m,n) \mapsto [m,n] \,=\, m^{-1}n^{-1}mn \,=\,(n^{-1})^mn \,=\, m^{-1}m^n\,. 
+\boxtimes \;:\; N \times M \to L, \quad 
+(n,m) \mapsto [n,m] \,=\, n^{-1}m^{-1}nm \,=\,(m^{-1})^nm \,=\, n^{-1}n^m\,. 
 </Display>  
 This construction is implemented as 
 <C>CrossedSquareByNormalSubgroups(L,M,N,P);</C> 
-(note that the parent group come last).
+(note that the parent group come last). 
 </Description>
 </ManSection>
 <P/>
@@ -244,8 +244,8 @@ If <M>\mathcal{X}_1 = (\partial_1 : S_1 \to R_1)</M> is a normal
 sub-crossed module of <M>\mathcal{X}_0 = (\partial_0 : S_0 \to R_0)</M> 
 then the inclusion morphism gives a crossed square with crossed pairing  
 <Display>
-\boxtimes \;:\; S_0 \times R_1 \to S_1, \quad 
-(s_0,r_1) \mapsto (s_0^{-1})^{r_1} s_0. 
+\boxtimes \;:\; R_1 \times S_0 \to S_1, \quad 
+(r_1,s_0) \mapsto (s_0^{-1})^{r_1} s_0. 
 </Display>  
 <P/>
 The example constructs the same crossed square as in the previous subsection. 
@@ -274,7 +274,7 @@ The actor <M>\mathcal{A}(\mathcal{X}_0)</M> of a crossed module
 (see <Ref Func="ActorXMod" />). 
 The crossed pairing is given by 
 <Display>
-\boxtimes \;:\;  W \times R \,\to\, S, \quad (\chi,r) \,\mapsto\, \chi r~.
+\boxtimes \;:\;  R \times W \,\to\, S, \quad (\chi,r) \,\mapsto\, \chi r~.
 </Display>
 This is implemented as <C>ActorCrossedSquare(X0);</C>.
 </Description>
@@ -286,8 +286,8 @@ gap> XSact := ActorCrossedSquare( X20 );
 crossed square with:
       up = Whitehead[d10a->d20]
     left = [d10a->d20]
-    down = Norrie[d10a->d20]
    right = Actor[d10a->d20]
+    down = Norrie[d10a->d20]
 ]]>
 </Example>
 
@@ -331,18 +331,23 @@ So <M>(\pi_1 : L \to N)</M> and <M>(\pi_2 : L \to M)</M>
 are crossed modules, where <M>\pi_1,\pi_2</M> are the two projections. 
 The crossed pairing is given by: 
 <Display>
-\boxtimes \;:\; \{M,N\} \to L, \quad 
-(m,n) \mapsto (m^{-1}m^{\nu n}, (n^{-1})^{\mu m}n) . 
+\boxtimes \;:\; N \times M \to L, \quad 
+(n,m) \mapsto (n^{-1}n^{\mu m}, (m^{-1})^{\nu n}m) . 
 </Display>  
 <P/>
-The example uses the central extension crossed module <C>X12=(D12->S3)</C> 
-constructed in subsection (<Ref Func="XModByCentralExtension" />), 
-with pullback group <C>D12xC2</C>.  
+The second example uses the central extension crossed module 
+<C>X12=(D12->S3)</C> constructed in subsection 
+(<Ref Func="XModByCentralExtension" />), with pullback group <C>D12xC2</C>.  
 </Description>
 </ManSection>
 <P/>
 <Example>
 <![CDATA[
+gap> dn := Down2DimensionalGroup( XSconj );;
+gap> rt := Right2DimensionalGroup( XSconj );;
+gap> XSP := CrossedSquareByPullback( dn, rt ); 
+gap> StructureDescription( XSP );                  
+[ "C5", "D10", "D10", "D20" ]
 gap> XS12 := CrossedSquareByPullback( X12, X12 );; 
 gap> StructureDescription( XS12 );                  
 [ "C2 x C2 x S3", "D12", "D12", "S3" ]
@@ -358,7 +363,7 @@ be the image of <M>\partial</M>.
 Then <M>\partial = \partial' \circ \iota</M> 
 where <M>\partial' : S \to Q</M> and <M>\iota</M> is the inclusion 
 of <M>Q</M> in <M>R</M>. 
-The diagonal of the square is then the <M>\mathcal{X}</M>, 
+The diagonal of the square is then the initial <M>\mathcal{X}</M>, 
 and the crossed pairing is given by commutators. 
 <P/>
 A particular case is when <M>S</M> is an <M>R</M>-module <M>A</M> 
@@ -385,9 +390,16 @@ and <M>\partial</M> is the zero map.
 gap> k4 := Group( (1,2), (3,4) );;
 gap> AX4 := XModByAutomorphismGroup( k4 );;
 gap> X4 := Image( IsomorphismPermObject( AX4 ) );;
-gap> XS4 := CrossedSquareByXModSplitting( X4 );;
-gap> StructureDescription( XS4 );
+gap> XSS4 := CrossedSquareByXModSplitting( X4 );;
+gap> StructureDescription( XSS4 );
 [ "C2 x C2", "1", "1", "S3" ]
+gap> XSS20 := CrossedSquareByXModSplitting( X20 );;
+gap> up20 := Up2DimensionalGroup( XSS20 );; 
+gap> Range( up20 ) = d10a; 
+true
+gap> SetName( Range( up20 ), "d10a" ); 
+gap> Name( XSS20 ); 
+"[d10a->d10a,d10a->d20]"
 ]]>
 </Example>
 
@@ -440,8 +452,8 @@ obtained by interchanging <M>M</M> with <M>N</M>,
 <M>\kappa</M> with <M>\lambda</M>, and <M>\nu</M> with <M>\mu</M>.  
 The crossed pairing is given by 
 <Display>
-\tilde{\boxtimes} \;:\; N \times M \to L, \quad 
-(n,m) \;\mapsto\; n\,\tilde{\boxtimes}\,m := (m \boxtimes n)^{-1}~.
+\tilde{\boxtimes} \;:\; M \times N \to L, \quad 
+(m,n) \;\mapsto\; m\,\tilde{\boxtimes}\,n := (n \boxtimes m)^{-1}~.
 </Display>
 </Description>
 </ManSection>
@@ -560,16 +572,16 @@ This encodes a map <M>\{M,N\} \to L</M> as a map <M>M \times N \to L</M>.
 <Example>
 <![CDATA[
 gap> Up2DimensionalGroup( XSconj );
-[c5d->d10b]
+[c5d->d10a]
 gap> Right2DimensionalGroup( XSact );
 Actor[d10a->d20]
 gap> diact := DiagonalAction( XSact );;
 gap> ImageElm( diact, (1,4)(2,3)(6,9)(7,8) );  
 ^(1,5,7,3)(2,8,6,10)
-gap> diag := Diagonal2DimensionalGroup( XSconj );
+gap> Diagonal2DimensionalGroup( XSconj );
 [c5d->d20]
 gap> Name( XSconj ); 
-[c5d->d10a,d10b->d20]
+"[c5d->d10a,d10b->d20]"
 ]]>
 </Example>
 
@@ -677,33 +689,33 @@ gap> ad20 := GroupHomomorphismByImages( d20, d20, [p1,p2], [p1,p2^p1] );;
 gap> ad10a := GroupHomomorphismByImages( d10a, d10a, [p1^2,p2], [p1^2,p2^p1] );;
 gap> ad10b := GroupHomomorphismByImages( d10b, d10b, [p1^2,p12], [p1^2,p12^p1] );;
 gap> idc5d := IdentityMapping( c5d );;
-gap> upconj := Up2DimensionalGroup( XSconj );;
-gap> ltconj := Left2DimensionalGroup( XSconj );; 
-gap> dnconj := Down2DimensionalGroup( XSconj );; 
-gap> rtconj := Right2DimensionalGroup( XSconj );; 
-gap> up := XModMorphismByGroupHomomorphisms( upconj, upconj, idc5d, ad10b );
-[[c5d->d10b] => [c5d->d10b]]
-gap> left := XModMorphismByGroupHomomorphisms( ltconj, ltconj, idc5d, ad10a );
+gap> up := Up2DimensionalGroup( XSconj );;
+gap> lt := Left2DimensionalGroup( XSconj );; 
+gap> rt := Right2DimensionalGroup( XSconj );; 
+gap> dn := Down2DimensionalGroup( XSconj );; 
+gap> mup := XModMorphismByGroupHomomorphisms( up, up, idc5d, ad10a );
 [[c5d->d10a] => [c5d->d10a]]
-gap> down := XModMorphismByGroupHomomorphisms( dnconj, dnconj, ad10a, ad20 );
+gap> mlt := XModMorphismByGroupHomomorphisms( lt, lt, idc5d, ad10b );
+[[c5d->d10b] => [c5d->d10b]]
+gap> mrt := XModMorphismByGroupHomomorphisms( rt, rt, ad10a, ad20 );
 [[d10a->d20] => [d10a->d20]]
-gap> right := XModMorphismByGroupHomomorphisms( rtconj, rtconj, ad10b, ad20 );
+gap> mdn := XModMorphismByGroupHomomorphisms( dn, dn, ad10b, ad20 );
 [[d10b->d20] => [d10b->d20]]
-gap> autoconj := CrossedSquareMorphism( XSconj, XSconj, up, left, right, down );; 
+gap> autoconj := CrossedSquareMorphism( XSconj, XSconj, [mup,mlt,mrt,mdn] );; 
 gap> ord := Order( autoconj );;
 gap> Display( autoconj );
 Morphism of crossed squares :- 
-:    Source = [c5d->d10b,d10a->d20]
-:     Range = [c5d->d10b,d10a->d20]
+: Source = [c5d->d10a,d10b->d20]
+: Range = [c5d->d10a,d10b->d20]
 :     order = 5
 :    up-left: [ [ ( 1, 3, 5, 7, 9)( 2, 4, 6, 8,10) ], 
   [ ( 1, 3, 5, 7, 9)( 2, 4, 6, 8,10) ] ]
 :   up-right: 
-[ [ ( 1, 3, 5, 7, 9)( 2, 4, 6, 8,10), ( 1,10)( 2, 9)( 3, 8)( 4, 7)( 5, 6) ], 
-  [ ( 1, 3, 5, 7, 9)( 2, 4, 6, 8,10), ( 1, 2)( 3,10)( 4, 9)( 5, 8)( 6, 7) ] ]
-:  down-left: 
 [ [ ( 1, 3, 5, 7, 9)( 2, 4, 6, 8,10), ( 2,10)( 3, 9)( 4, 8)( 5, 7) ], 
   [ ( 1, 3, 5, 7, 9)( 2, 4, 6, 8,10), ( 1, 3)( 4,10)( 5, 9)( 6, 8) ] ]
+:  down-left: 
+[ [ ( 1, 3, 5, 7, 9)( 2, 4, 6, 8,10), ( 1,10)( 2, 9)( 3, 8)( 4, 7)( 5, 6) ], 
+  [ ( 1, 3, 5, 7, 9)( 2, 4, 6, 8,10), ( 1, 2)( 3,10)( 4, 9)( 5, 8)( 6, 7) ] ]
 : down-right: 
 [ [ ( 1, 2, 3, 4, 5, 6, 7, 8, 9,10), ( 2,10)( 3, 9)( 4, 8)( 5, 7) ], 
   [ ( 1, 2, 3, 4, 5, 6, 7, 8, 9,10), ( 1, 3)( 4,10)( 5, 9)( 6, 8) ] ]
@@ -912,11 +924,14 @@ crossed square with crossed modules:
       up = [Group( [ (1,5)(2,6)(3,7)(4,8) ] ) -> Group( [ ( 2, 6)( 4, 8) ] )]
     left = [Group( [ (1,5)(2,6)(3,7)(4,8) ] ) -> Group( 
 [ (1,2,3,4)(5,6,7,8), (), () ] )]
-    down = [Group( [ (1,2,3,4)(5,6,7,8), (), () ] ) -> Group( () )]
    right = [Group( [ ( 2, 6)( 4, 8) ] ) -> Group( () )]
+    down = [Group( [ (1,2,3,4)(5,6,7,8), (), () ] ) -> Group( () )]
 
-gap> SetName( Range( Up2DimensionalGroup( XSact ) ), "c5:c4" );
-gap> SetName( Range( Down2DimensionalGroup( XSact ) ), "c5:c4" );
+gap> IdGroup( xsC16 );
+[ [ 2, 1 ], [ 2, 1 ], [ 4, 1 ], [ 1, 1 ] ]
+
+gap> SetName( Source( Right2DimensionalGroup( XSact ) ), "c5:c4" );
+gap> SetName( Range( Right2DimensionalGroup( XSact ) ), "c5:c4" );
 gap> Name( XSact );
 "[d10a->c5:c4,d20->c5:c4]"
 
