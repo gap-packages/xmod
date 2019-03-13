@@ -225,8 +225,3 @@ DeclareOperation( "IsSub2DimensionalDomain",
     [ Is2DimensionalDomain, Is2DimensionalDomain ] );
 DeclareOperation( "Sub2DimensionalDomain", 
     [ Is2DimensionalDomain, IsGroup, IsGroup ] );
-
-#############################################################################
-##
-#E  dom2dnd.gd  . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-##  

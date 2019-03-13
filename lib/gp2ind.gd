@@ -100,7 +100,3 @@ DeclareOperation( "InducedCat1GroupByFreeProduct", [ IsList ] );
 ##
 DeclareGlobalFunction( "AllInducedXMods" );
 DeclareGlobalFunction( "AllInducedCat1Groups" );
-
-##############################################################################
-##
-#E  gp2ind.gd . . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here

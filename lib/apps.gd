@@ -12,7 +12,3 @@
 ##  
 DeclareOperation( "LoopsXMod", [ IsPreXMod, IsObject ] );
 DeclareOperation( "AllLoopsXMod", [ IsPreXMod ] );
-
-#############################################################################
-##
-#E  apps.gd . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

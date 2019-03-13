@@ -1777,7 +1777,3 @@ function( s )
            Boundary( Left2DimensionalGroup(s) ), 
            Boundary( Right2DimensionalGroup(s) ) ); 
 end );
-
-#############################################################################
-##
-#E gp3obj.gi . . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here

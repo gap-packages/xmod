@@ -347,7 +347,3 @@ function( dom )
     return [ [ IdGroup( Source(u) ), IdGroup( Range(u) ) ], 
              [ IdGroup( Source(d) ), IdGroup( Range(d) ) ] ]; 
 end ); 
-
-#############################################################################
-##
-#E gpnobj.gi . . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here

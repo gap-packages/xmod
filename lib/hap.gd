@@ -22,8 +22,3 @@ DeclareAttribute( "CatOneGroupXModVersion", IsHapCatOneGroup );
 
 ## the above does not work because IsHapOneCatOneGroup does not have 
 ## IsAttributeStoringRep
-
-
-#############################################################################
-##
-#E  hap.gd  . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

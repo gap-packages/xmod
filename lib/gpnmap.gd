@@ -77,7 +77,3 @@ DeclareProperty( "IsEndomorphismHigherDimensionalDomain",
     IsHigherDimensionalMapping );
 DeclareProperty( "IsAutomorphismHigherDimensionalDomain", 
     IsHigherDimensionalMapping );
-
-#############################################################################
-##
-#E  gpnmap.gd . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

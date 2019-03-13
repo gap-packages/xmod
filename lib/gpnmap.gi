@@ -499,7 +499,3 @@ InstallMethod( IsAutomorphismHigherDimensionalDomain,
     [ IsHigherDimensionalMapping ], 0,
     map -> IsEndomorphismHigherDimensionalDomain( map ) 
            and IsBijective( map ) );
-
-##############################################################################
-##
-#E  gpnmap.gi . . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here

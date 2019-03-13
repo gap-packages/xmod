@@ -2,7 +2,7 @@
 ##
 #W  gp2obj.tst                    XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2018, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2019, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 gap> START_TEST( "XMod package: gp2obj.tst" );
@@ -389,7 +389,3 @@ gap> IdGroup( C2 );
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 
 gap> STOP_TEST( "gp2obj.tst", 10000 );
-
-#############################################################################
-##
-#E  gp2obj.tst . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

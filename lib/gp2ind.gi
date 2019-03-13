@@ -1437,7 +1437,3 @@ InstallGlobalFunction( AllInducedCat1Groups, function( args )
     Print( "Number of induced cat1-groups calculated = " );
     return num;
 end );
-
-#############################################################################
-##
-#E  gp2ind.gi . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

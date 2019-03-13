@@ -415,7 +415,3 @@ function( xwo )
     Print( "range groupoid:\n" ); 
     Display( Range( xwo ) ); 
 end ); 
-
-#############################################################################
-##
-#E  gpd2obj.gi . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

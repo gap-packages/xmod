@@ -96,8 +96,3 @@ InstallGlobalFunction( Make2DimensionalMonoid, function( arg )
     Print( " (but not yet installed)\n" ); 
     return fail; 
 end ); 
-
-#############################################################################
-##
-#E  dom2dnd.gi  . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-##  

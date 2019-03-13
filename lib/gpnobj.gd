@@ -76,7 +76,3 @@ DeclareAttribute( "FacesOfHigherDimensionalGroup",
 ##
 DeclareGlobalFunction( "PreCatnGroup" );
 DeclareGlobalFunction( "CatnGroup" );
-
-#############################################################################
-##
-#E gpnobj.gd . . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here

@@ -74,8 +74,3 @@ DeclareAttribute( "NonIntersectingEndomorphismClasses", IsGroup );
 DeclareAttribute( "ZeroEndomorphismClass", IsGroup );
 DeclareOperation( "EndomorphismImages", [ IsList ] );
 DeclareOperation( "IdempotentImages", [ IsList ] );
-
-#############################################################################
-##
-#E  cat1data.gd . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-
