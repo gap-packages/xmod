@@ -65,7 +65,3 @@ DeclareAttribute( "XModCentre", IsXMod );
 ##
 DeclareOperation( "ImageAutomorphismDerivation", 
     [ IsXModMorphism, IsDerivation ] );
-
-#############################################################################
-##
-#E  gp2act.gd . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

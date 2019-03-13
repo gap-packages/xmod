@@ -1624,7 +1624,3 @@ function( mor )
     sub := Sub2DimensionalGroup( Range(mor), imS, imR );
     return sub;
 end );
-
-##############################################################################
-##
-#E  gp2map.gi . . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here

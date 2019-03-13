@@ -108,7 +108,3 @@ DeclareOperation( "MetacyclicGroup", [ IsPosInt, IsPosInt, IsPosInt ] );
 #O  AutomorphismsFixingSubgroups( G, H ) 
 ##
 DeclareOperation( "AutomorphismsFixingSubgroups", [ IsGroup, IsList ] );
-
-#############################################################################
-##
-#E  util.gd . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

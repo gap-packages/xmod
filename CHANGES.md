@@ -1,5 +1,9 @@
 # CHANGES to the 'XMod' package
 
+## 2.73 -> 2.73dev (00/03/2019) 
+
+ * (13/03/19) added initial implementation of group groupoids (manual 2.8) 
+
 ## 2.72 -> 2.73 (04/03/2019) 
 
  * (04/03/19) Cat2GroupOfCrossedSquare now giving results again 

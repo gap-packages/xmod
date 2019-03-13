@@ -771,14 +771,16 @@ end );
 ##
 InstallMethod( PreCat1GroupOfPreXMod,
     "convert a pre-crossed module to a pre-cat1-group", true, [ IsPreXMod ], 0,
-function( XM )
+function( X0 )
 
-    local Xsrc, Xrng, Xact, Xbdy, gensrc, genrng, one, imbdy, info, G, genG,
-           t, h, f, eR, eS, imeR, imeS, projS, imt, imh, ime, imf, C;
+    local XM, Xsrc, Xrng, Xact, Xbdy, gensrc, genrng, one, imbdy, info, G, 
+          genG, t, h, f, eR, eS, imeR, imeS, projS, imt, imh, ime, imf, C;
 
-    if not ( IsPermPreXMod( XM ) or IsPcPreXMod( XM ) ) then
-        Print( "#W: should be a perm-xmod or a pc-xmod\n" );
-        return fail;
+    if not ( IsPermPreXMod( X0 ) or IsPcPreXMod( X0 ) ) then
+        Info( InfoXMod, 1, "converting to perm xmod" ); 
+        XM := Range( IsomorphismPerm2DimensionalGroup( X0 ) ); 
+    else 
+        XM := X0;
     fi;
     Xsrc := Source( XM );
     gensrc := GeneratorsOfGroup( Xsrc );
@@ -831,15 +833,18 @@ function( XM )
     fi;
     SetSourceEmbedding( XM, eR );
     C := PreCat1GroupByTailHeadEmbedding( t, h, eR );
-    if HasName( XM ) then 
-        SetName( C, Concatenation( "cat1(", Name( XM ), ")" ) ); 
+    if HasName( X0 ) then 
+        SetName( C, Concatenation( "cat1(", Name( X0 ), ")" ) ); 
     fi; 
+    if ( X0 <> XM ) then 
+        SetPreCat1GroupOfPreXMod( X0, C );
+    fi;
     return C;
 end ); 
 
 #############################################################################
 ##
-#M  IsXMod                   check that the second crossed module axiom holds
+#M  IsXMod . . . . . . . . . check that the second crossed module axiom holds
 ##
 InstallMethod( IsXMod, "generic method for pre-crossed modules",
     true, [ IsPreXMod ], 0,

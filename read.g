@@ -2,7 +2,7 @@
 ##
 #W  read.g                 The XMOD package                     Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2018, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2019, Chris Wensley et al,  
 ##
 
 ## read the actual code 
@@ -25,7 +25,8 @@ ReadPackage( "xmod", "lib/gp3map.gi" );
 ReadPackage( "xmod", "lib/gpd2obj.gi" ); 
 ReadPackage( "xmod", "lib/cat1data.gi" ); 
 ReadPackage( "xmod", "lib/apps.gi" );
+ReadPackage( "xmod", "lib/gpgpd.gi" );
 
 ## temporary Reread while waiting for Alex.H's fix to make it into GAP 4.10? 
-RereadPackage( "xmod", "lib/myghomperm.gi" ); 
+## RereadPackage( "xmod", "lib/myghomperm.gi" ); 
 

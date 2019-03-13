@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2obj.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  Copyright (C) 1996-2018, Chris Wensley et al,                      --> 
+<!--  Copyright (C) 1996-2019, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -1092,10 +1092,140 @@ gap> StructureDescription( C2 );
 ]]>
 </Example>
 
-
 </Section>
 
 
 
+<Section Label="sect-gpgpd">
+<Heading>The group groupoid associated to a cat1-group</Heading>
+
+A <E>group groupoid</E> is an algebraic object which is both 
+a groupoid and a group.  
+The category of group groupoids is equivalent to the categories of 
+precrossed modules and precat1-groups. 
+Starting with a (pre)cat1-group <M>\mathcal{C} = (e;t,h : G \to R)</M>, 
+we form the groupoid <M>\mathcal{G}</M> having the elements of 
+<M>R</M> as objects and the elements of <M>G</M> as arrows. 
+The arrow <M>g</M> has tail <M>tg</M> and head <M>hg</M>. 
+<M>\mathcal{G}</M> has one connected component for each 
+coset of <M>tG</M> in <M>R</M>. 
+<P/>
+The groupoid (partial) multiplication <M>*</M> on these arrows is defined by: 
+<Display>
+(g_1 : r_1 \to r_2) * (g_2 : r_2 \to r_3) ~=~ (g_1(er_2^{-1})g_2 : r_1 \to r_3). 
+</Display> 
+<P/>
+<ManSection>
+   <Attr Name="GroupGroupoid" 
+         Arg="precat1" /> 
+<Description>
+The operation <C>GroupGroupoid</C> implements this construction. 
+In the example we start with a crossed module <M>(C_3^2 \to S_3)</M>, 
+form the associated cat1-group <M>(S_3 \ltimes C_3^2 \Rightarrow S_3)</M>,
+and then form the group groupoid <C>gpd33</C>. 
+Since the image of the boundary of the crossed module is <M>C_3</M>, 
+with index <M>2</M> in the range, the groupoid has two connected components, 
+and the root objects are <M>\{(),(12,13)\}</M>. 
+The size of the vertex groups is <M>|\ker t \cap \ker h| = 3</M>, 
+and the generators at the root objects are 
+<M>() \to ( 4, 5, 6)( 7, 9, 8) \to ()</M> 
+and <M>(12,13) \to ( 2, 3)( 4, 6)( 7, 8) \to (12,13)</M>. 
+<P/> 
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> s3 := Group( (11,12), (12,13) );; 
+gap> c3c3 := Group( [ (14,15,16), (17,18,19) ] );; 
+gap> bdy := GroupHomomorphismByImages( c3c3, s3, 
+>        [(14,15,16),(17,18,19)], [(11,12,13),(11,12,13)] );;
+gap> a := GroupHomomorphismByImages( c3c3, c3c3, 
+>        [(14,15,16),(17,18,19)], [(14,16,15),(17,19,18)] );; 
+gap> aut := Group( [a] );; 
+gap> act := GroupHomomorphismByImages( s3, aut, [(11,12),(12,13)], [a,a] );;
+gap> X33 := XModByBoundaryAndAction( bdy, act );; 
+gap> C33 := Cat1GroupOfXMod( X33 );; 
+gap> G33 := Source( C33 );; 
+gap> gpd33 := GroupGroupoid( C33 ); 
+groupoid with 2 pieces:
+1:  single piece groupoid with rays: < Group( [ ()>-( 4, 5, 6)( 7, 9, 8)->() 
+ ] ), [ (), (11,12,13), (11,13,12) ], [ ()>-()->(), ()>-(7,8,9)->(11,12,13), 
+  ()>-(7,9,8)->(11,13,12) ] >
+2:  single piece groupoid with rays: < Group( 
+[ (12,13)>-( 2, 3)( 4, 6)( 7, 8)->(12,13) ] ), [ (12,13), (11,12), (11,13) ], 
+[ (12,13)>-(2,3)(5,6)(8,9)->(12,13), (12,13)>-(2,3)(5,6)(7,9)->(11,13), 
+  (12,13)>-(2,3)(5,6)(7,8)->(11,12) ] >
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="GroupGroupoidElement" 
+         Arg="precat1 root g" /> 
+<Description>
+Since we need to define a second multiplication on the elements of <M>G</M>, 
+we have to convert <M>g \in G</M> into a new type of object, 
+<C>GroupGroupoidElementType</C>, a record <M>e</M> with fields: 
+<List>
+<Item>
+<C>e!.precat1</C>, the precat1-group from which <M>\mathcal{G}</M> was formed; 
+</Item>
+<Item>
+<C>e!.root</C>, the root object of the component containing <M>e</M>; 
+</Item>
+<Item>
+<C>e!.element</C>, the element <M>g \in G</M>; 
+</Item>
+<Item>
+<C>e!.tail</C>, the tail object of the element <M>e</M>; 
+</Item>
+<Item>
+<C>e!.head</C>, the head object of the element <M>e</M>; 
+</Item>
+<Item>
+<C>e!.tailid</C>, the identity element at the tail object; 
+</Item>
+<Item>
+<C>e!.headid</C>, the identity element at the head object; 
+</Item>
+</List>
+In the example we pick a particular pair of elements <M>g_1,g_2 \in G</M>, 
+construct group groupoid elements <M>e_1,e_2</M> from them, 
+and show that <M>g_1*g_2</M> and <M>e_1*e_2</M> give very different results. 
+(Warning: at present iterators for object groups and homsets do not work.)
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> piece2 := Pieces( gpd33 )[2];;
+gap> obs2 := piece2!.objects; 
+[ (12,13), (11,12), (11,13) ]
+gap> RaysOfGroupoid( piece2 );
+[ (12,13)>-(2,3)(5,6)(8,9)->(12,13), (12,13)>-(2,3)(5,6)(7,9)->(11,13), 
+  (12,13)>-(2,3)(5,6)(7,8)->(11,12) ]
+gap> g1 := (1,2)(5,6)(7,9);; 
+gap> g2 := (2,3)(4,5)(7,8);;                         
+gap> g1 * g2;
+(1,3,2)(4,5,6)(7,9,8)
+gap> e1 := GroupGroupoidElement( C33, (12,13), g1 ); 
+(11,12)>-(1,2)(5,6)(7,9)->(12,13)
+gap> e2 := GroupGroupoidElement( C33, (12,13), g2 );
+(12,13)>-(2,3)(4,5)(7,8)->(11,13)
+gap> e1*e2;
+(11,12)>-(1,2)(4,5)(8,9)->(11,13)
+gap> e2^-1;
+(11,13)>-(1,3)(4,6)(7,9)->(12,13)
+gap> obgp := ObjectGroup( gpd33, (11,12) );
+<group with 1 generators>
+gap> GeneratorsOfGroup( obgp )[1];
+(11,13)>-( 1, 3)( 4, 6)( 7, 8)->(11,13)
+gap> Homset( gpd33, (11,12), (11,13) );
+<homset (11,12) -> (11,13) with head group Group( 
+[ (11,12)>-( 1, 2)( 4, 6)( 7, 8)->(11,12) ] )>
+]]>
+</Example>
+
+</Section>
 
 </Chapter>

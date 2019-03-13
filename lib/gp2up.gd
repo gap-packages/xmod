@@ -257,7 +257,3 @@ DeclareAttribute( "WhiteheadPermGroup", IsXMod );
 DeclareAttribute( "WhiteheadGroupGeneratingDerivations", IsXMod );
 DeclareAttribute( "WhiteheadGroupGeneratorPositions", IsXMod );
 DeclareAttribute( "WhiteheadTransformationMonoid", IsXMod );
-
-###############################################################################
-##
-#E  gp2up.gd  . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

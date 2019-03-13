@@ -37,8 +37,3 @@ function ( mor, phi )
              and ( SourceHom( mor ) = SourceHom( phi ) )
              and ( RangeHom( mor ) = RangeHom( phi ) ) );
 end );
-
-##############################################################################
-##
-#E  map2dnd.gi . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-##

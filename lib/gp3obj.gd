@@ -266,7 +266,3 @@ DeclareProperty( "IsIdentityCat2Group", IsCat2Group );
 ##
 DeclareAttribute( "NormalSubCrossedSquares", IsCrossedSquare ); 
 DeclareAttribute( "NormalSubCat2Groups", IsCat2Group );
-
-#############################################################################
-##
-#E gp3obj.gd . . . . . . . . . . . . . . . . . . . . . . . . . . .  ends here

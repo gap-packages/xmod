@@ -75,7 +75,3 @@ DeclareAttribute( "Cat2GroupMorphismOfCrossedSquareMorphism",
 ##
 DeclareOperation( "Display3DimensionalMorphism", 
     [ IsHigherDimensionalMapping ] );
-
-#############################################################################
-##
-#E  gp3map.gd . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

@@ -140,7 +140,3 @@ DeclareOperation( "IsomorphismPreCat1Groups",
 #A  MorphismOfPullback( <xmod> )
 ##
 DeclareAttribute( "MorphismOfPullback", IsXMod );
-
-#############################################################################
-##
-#E  gp2map.gd . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

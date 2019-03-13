@@ -43,7 +43,3 @@ function ( map, elm )
          * ImageElm( Embedding( dp, 2 ), elm[2] ); 
     return ImageElm( map, x );
 end );
-
-#############################################################################
-##
-#E map2arg.gi . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

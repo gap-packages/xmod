@@ -107,8 +107,3 @@ DeclareOperation( "SinglePiecePreXModWithObjectsNC",
 DeclareProperty( "IsPermPreXModWithObjects", Is2DimensionalDomainWithObjects ); 
 DeclareProperty( "IsPcPreXModWithObjects", Is2DimensionalDomainWithObjects ); 
 DeclareProperty( "IsFpPreXModWithObjects", Is2DimensionalDomainWithObjects ); 
-
-############################################################################## 
-## 
-#E  gpd2obj.gd . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here 
-## 

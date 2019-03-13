@@ -245,9 +245,3 @@ DeclareAttribute( "Up2DimensionalMorphism", IsHigherDimensionalMapping );
 DeclareAttribute( "Left2DimensionalMorphism", IsHigherDimensionalMapping );
 DeclareAttribute( "Down2DimensionalMorphism", IsHigherDimensionalMapping );
 DeclareAttribute( "Right2DimensionalMorphism", IsHigherDimensionalMapping );
-
-
-############################################################################## 
-## 
-#E  map2dnd.gd . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here 
-## 

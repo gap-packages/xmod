@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  history.xml           XMod documentation            Chris Wensley  -->
 <!--                                                                     -->
-<!--  Copyright (C) 1996-2018, Murat Alp and Chris Wensley,              --> 
+<!--  Copyright (C) 1996-2019, Murat Alp and Chris Wensley,              --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -110,7 +110,7 @@ and introduced a special method for conjugation crossed modules.
 <Item>
 Substantial revisons made to <Ref Oper="XModByCentralExtension"/>; 
 <Ref Oper="NorrieXMod"/>; <Ref Oper="LueXMod"/>; <Ref Oper="ActorXMod"/>; 
-and <Ref Oper="InclusionInducedXModByCopower"/>. 
+and <Ref Oper="InducedXModByCopower"/>. 
 </Item>
 <Item> 
 Version 2.010, of October 2007, was timed to coincide with the release 
@@ -188,8 +188,18 @@ At the same time, functions for cat2-groups were introduced by Alper Odabas.
 </Subsection>
 
 
-<Subsection><Heading>Latest Version</Heading>
-The latest version conmtains additional material on crossed modules of groupoids. 
+<Subsection><Heading>Version 2.63 - 2.74</Heading>
+<List>
+<Item>
+Added an implementation of crossed modules of groupoids. 
+</Item>
+<Item>
+Lots more work on crossed squares and cat2-groups. 
+</Item>
+<Item>
+Added an implementation of group groupoids. 
+</Item>
+</List> 
 </Subsection>
 </Section> 
 
@@ -261,6 +271,9 @@ The actions are standard, and the crossed pairing is
 </Item>
 <Item>
 Improve the interaction with the <Package>HAP</Package> package. 
+</Item>
+<Item>
+Implement cat1-groups with objects. 
 </Item>
 </List>
 

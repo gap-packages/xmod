@@ -2,7 +2,7 @@
 ##
 #W  init.g                 GAP package `XMod'                   Chris Wensley
 #W 
-#Y  Copyright (C) 2001-2018, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2019, Chris Wensley et al,  
 ##
 
 ##  read the function declarations
@@ -25,4 +25,4 @@ ReadPackage( "xmod", "lib/gp3map.gd" );
 ReadPackage( "xmod", "lib/gpd2obj.gd" ); 
 ReadPackage( "xmod", "lib/cat1data.gd" );
 ReadPackage( "xmod", "lib/apps.gd" );
-
+ReadPackage( "xmod", "lib/gpgpd.gd" ); 

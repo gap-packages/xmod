@@ -16,7 +16,3 @@ DeclareOperation( "Mapping2ArgumentsByFunction",
 DeclareProperty( "IsMapping2ArgumentsByFunction", IsGeneralMapping );
 DeclareOperation( "ImageElmMapping2ArgumentsByFunction", 
     [ IsMapping2ArgumentsByFunction, IsList ] );
-
-#############################################################################
-##
-#E map2arg.gd . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
