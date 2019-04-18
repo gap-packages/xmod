@@ -1,7 +1,9 @@
 # CHANGES to the 'XMod' package
 
-## 2.73 -> 2.73dev (00/03/2019) 
+## 2.73 -> 2.73dev (00/04/2019) 
 
+ * (11/04/19) corrected UnionOfPiecesOp for prexmods with objects 
+ * (09/04/19) added names and examples of crossed pairing functions to manual 
  * (13/03/19) added initial implementation of group groupoids (manual 2.8) 
 
 ## 2.72 -> 2.73 (04/03/2019) 

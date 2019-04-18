@@ -2,7 +2,7 @@
 ##
 #W  gpd2obj.gi                 GAP4 package `XMod'               Chris Wensley
 ##
-#Y  Copyright (C) 2001-2018, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2019, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 #############################################################################
@@ -30,8 +30,8 @@ InstallGlobalFunction( PreXModWithObjects, function( arg )
     if ( ( nargs = 1 ) and IsList( arg[1] ) 
          and  ForAll( arg[1], G -> IsPreXModWithObjects(G) ) ) then
         Info( InfoXMod, 2, "ByUnion" );
-        return UnionOfPieces( arg[1] );
-    # prexmod plus singler object 
+        return UnionOfPiecesOp( arg[1], arg[1][1] );
+    # prexmod plus single object 
     elif ( ( nargs = 2 ) and IsPreXMod( arg[1] ) and IsObject( arg[2] ) ) then
         Info( InfoXMod, 2, "prexmod plus single object" ); 
         return DomainWithSingleObject( arg[1], arg[2] );
@@ -205,17 +205,32 @@ end );
 #M  UnionOfPiecesOp . . for connected prexmods with objects plus one of these 
 ##
 InstallOtherMethod( UnionOfPiecesOp, "method for list of prexmods with objects",
-    true, [ IsList, IsDomainWithObjects ], 0,
-function( comps, dom )
+    true, [ IsList, Is2DimensionalGroupWithObjects ], 0,
+function( comps, c1 )
 
-    local len, pieces, L, fam, filter, xwo, i, obs, par;
+    local len, c, obs, obc, pieces, L, fam, filter, xwo, i, par;
 
     if not ForAll( comps, 
-               c -> "IsPreXModWithObjects" in CategoriesOfObject( c ) ) then 
-        TryNextMethod(); 
+        c -> "Is2DimensionalGroupWithObjects" in CategoriesOfObject( c ) ) then 
+        Error( "expecting a list of prexmods with objects" ); 
     fi; 
-    ## order pieces by first object
     len := Length( comps ); 
+    if ( len = 1 ) then 
+        Info( InfoXMod, 1, "only one component, so returning it" ); 
+        return c1; 
+    fi;
+    ## check object lists are disjoint 
+    obs := [ ]; 
+    for c in comps do 
+        obc := ObjectList( c );
+        if ( Intersection( obs, obc ) <> [ ] ) then
+            Info( InfoXMod, 1, 
+                  "constituents must have disjoint object sets" );
+            return fail;
+        fi;
+        obs := Union( obs, obc ); 
+    od;
+    ## sorting object lists by leading object 
     obs := List( comps, g -> ObjectList(g)[1] );
     L := [1..len];
     SortParallel( obs, L );
@@ -236,6 +251,20 @@ function( comps, dom )
             SetParent( xwo, par ); 
         fi; 
     fi; 
+    if ForAll( pieces, p -> HasIsXMod(p) and IsXMod(p) ) then
+        SetIsXModWithObjects( xwo, true ); 
+    fi; 
+    if ForAll( pieces, p -> HasIsPreXMod(p) and IsPreXMod(p) ) then
+        SetIsPreXModWithObjects( xwo, true ); 
+    fi; 
+    if ForAll( pieces, p -> HasIsCat2Groupoid(p) and IsCat2Groupoid(p) ) then
+        SetIsCat2Groupoid( xwo, true ); 
+    fi; 
+    if ForAll( pieces, p -> HasIsPreCat2Groupoid(p) 
+                            and IsPreCat2Groupoid(p) ) then
+        SetIsPreCat2Groupoid( xwo, true ); 
+    fi; 
+
     #? removed tests as to whether perm-, pc-, etc xmod with objects 
     return xwo; 
 end );
@@ -384,10 +413,36 @@ InstallMethod( PrintObj, "method for prexmods and precat2groups", true,
     [ Is2DimensionalGroupWithObjects ], 0,
 function ( pxwo )
 
-    Print( "precrossed module with source groupoid:\n" ); 
-    Print( Source( pxwo ), "\n" ); 
-    Print( "and range groupoid:\n" ); 
-    Print( Range( pxwo ) ); 
+    local len, pieces, i, p; 
+
+    if ( HasIsSinglePiece( pxwo ) and IsSinglePiece( pxwo ) ) then
+        Print( "single piece 2dgroup with objects:\n" );
+        Print( "  source groupoid:\n    " );
+        Print( Source( pxwo ), "\n" ); 
+        Print( "  and range groupoid:\n    " ); 
+        Print( Range( pxwo ) ); 
+        return; 
+    else 
+        pieces := Pieces( pxwo ); 
+        len := Length( pieces ); 
+        if ( HasIsHomogeneousDomainWithObjects( pxwo ) 
+             and IsHomogeneousDomainWithObjects( pxwo ) ) then
+            Print( "homogeneous 2dgroup with objects:\n" );
+        else
+            Print( "2dgroup with ", len, " pieces:\n" ); 
+        fi; 
+    fi;
+    if ForAll( pieces, function ( p )
+          return HasName( p );
+          end ) then
+        Print( pieces );
+    else
+        for i in [ 1 .. len-1 ] do
+            p := pieces[i];
+            Print( i, ":  ", p, "\n" );
+        od;
+        Print( len, ":  ", pieces[len] );
+    fi;
     return;
 end );
 
@@ -415,3 +470,4 @@ function( xwo )
     Print( "range groupoid:\n" ); 
     Display( Range( xwo ) ); 
 end ); 
+

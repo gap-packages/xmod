@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2ind.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  Copyright (C) 2001-2018, Chris Wensley et al,                      --> 
+<!--  Copyright (C) 2001-2019, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -30,19 +30,19 @@ Need to add here a reference (or two) for coproducts.
 This function calculates the coproduct crossed module of two or more 
 crossed modules which have a common range <M>R</M>. 
 The standard method applies to 
-<M>{\mathcal X}_1 = (\partial_1 : S_1 \to R)</M> 
-and <M>{\mathcal X}_2 = (\partial_2 : S_2 \to R)</M>. 
+<M>\calX_1 = (\partial_1 : S_1 \to R)</M> 
+and <M>\calX_2 = (\partial_2 : S_2 \to R)</M>. 
 See below for the case of three or more crossed modules. 
 <P/>
-The source <M>S_2</M> of <M>{\mathcal X}_2</M> acts on <M>S_1</M> 
-via <M>\partial_2</M> and the action of <M>{\mathcal X}_1</M>, 
+The source <M>S_2</M> of <M>\calX_2</M> acts on <M>S_1</M> 
+via <M>\partial_2</M> and the action of <M>\calX_1</M>, 
 so we can form a precrossed module 
 <M>(\partial' : S_1 \ltimes S_2 \to R)</M> 
 where <M>\partial'(s_1,s_2) = (\partial_1 s_1)(\partial_2 s_2)</M>. 
 The action of this precrossed module is the diagonal action 
 <M>(s_1,s_2)^r = (s_1^r,s_2^r)</M>. 
 Factoring out by the Peiffer subgroup, we obtain the coproduct 
-crossed module <M>{\mathcal X}_1 \circ {\mathcal X}_2</M>. 
+crossed module <M>\calX_1 \circ \calX_2</M>. 
 <P/>
 In the example the structure descriptions of the precrossed module, 
 the Peiffer subgroup, and the resulting coproduct are printed out 
@@ -80,13 +80,13 @@ gap> SetInfoLevel( InfoXMod, 0 );
 Given a list of more than two crossed modules with a common range <M>R</M>, 
 then an iterated coproduct is formed: 
 <Display>
-\bigcirc~\left[ \mathcal{X}_1,\mathcal{X}_2,\ldots,\mathcal{X}_n\right] 
-    ~=~ \mathcal{X}_1 \circ (\mathcal{X}_2 \circ ( \ldots 
-        (\mathcal{X}_{n-1} \circ \mathcal{X}_n) \ldots ) ). 
+\bigcirc~\left[ \calX_1,\calX_2,\ldots,\calX_n\right] 
+    ~=~ \calX_1 \circ (\calX_2 \circ ( \ldots 
+        (\calX_{n-1} \circ \calX_n) \ldots ) ). 
 </Display>
 The <C>embeddings</C> field of the <C>CoproductInfo</C> of the resulting 
-crossed module <M>\mathcal{Y}</M> contains the <M>n</M> morphisms 
-<M>\epsilon_i : \mathcal{X}_i \to \mathcal{Y} (1 \leqslant i \leqslant n)</M>. 
+crossed module <M>\calY</M> contains the <M>n</M> morphisms 
+<M>\epsilon_i : \calX_i \to \calY (1 \leqslant i \leqslant n)</M>. 
 <P/>
 <Example>
 <![CDATA[
@@ -125,13 +125,13 @@ rec(
          Arg="xmod" />
 <Description>
 A morphism of crossed modules
-<M>(\sigma, \rho) : {\mathcal X}_1 \to {\mathcal X}_2</M>
+<M>(\sigma, \rho) : \calX_1 \to \calX_2</M>
 factors uniquely through an induced crossed module
-<M>\rho_{\ast} {\mathcal X}_1 = (\delta  :  \rho_{\ast} S_1 \to R_2)</M>.
+<M>\rho_{\ast} \calX_1 = (\delta  :  \rho_{\ast} S_1 \to R_2)</M>.
 Similarly, a morphism of cat1-groups factors through an induced cat1-group.
-Calculation of induced crossed modules of <M>{\mathcal X}</M> also
+Calculation of induced crossed modules of <M>\calX</M> also
 provides an algebraic means of determining the homotopy <M>2</M>-type
-of homotopy pushouts of the classifying space of <M>{\mathcal X}</M>.
+of homotopy pushouts of the classifying space of <M>\calX</M>.
 For more background from algebraic topology see references in
 <Cite Key="BH1" />, <Cite Key="BW1" />, <Cite Key="BW2" />.
 Induced crossed modules and induced cat1-groups also provide the
@@ -139,12 +139,12 @@ building blocks for constructing pushouts in the categories
 <E>XMod</E> and <E>Cat1</E>.
 <P/>
 Data for the cases of algebraic interest is provided by a 
-crossed module  <M>{\mathcal X} = (\partial  :  S \to R)</M>
+crossed module  <M>\calX = (\partial  :  S \to R)</M>
 and a homomorphism  <M>\iota : R \to Q</M>. 
 The output from the calculation is a crossed module
-<M>\iota_{\ast}{\mathcal X} = (\delta  :  \iota_{\ast}S \to Q)</M>
+<M>\iota_{\ast}\calX = (\delta  :  \iota_{\ast}S \to Q)</M>
 together with a morphism of crossed modules
-<M>{\mathcal X} \to \iota_{\ast}{\mathcal X}</M>.
+<M>\calX \to \iota_{\ast}\calX</M>.
 When <M>\iota</M> is a surjection with kernel <M>K</M> then
 <M>\iota_{\ast}S = S/[K,S]</M> (see <Cite Key="BH1" />). 
 (For many years, up until June 2018, this manual has stated the result to be 
@@ -161,7 +161,7 @@ crossed module is constructed.
 These constructions use Tietze transformation routines in 
 the library file <C>tietze.gi</C>.
 <P/>
-As a first, surjective example, we take for <M>{\mathcal X}</M> 
+As a first, surjective example, we take for <M>\calX</M> 
 the normal inclusion crossed module of <C>a4</C> in <C>s4</C>,
 and for <M>\iota</M> the surjection from <C>s4</C> to <C>s3</C> 
 with kernel <C>k4</C>.  
@@ -199,7 +199,7 @@ gap> morX4 := MorphismOfInducedXMod( indX4 );
 ]]>
 </Example>
 
-For a second, injective example we take for <M>{\mathcal X}</M> 
+For a second, injective example we take for <M>\calX</M> 
 the automorphism crossed module <C>X8</C> of <Ref Oper="CoproductXMod"/>, 
 and for <M>\iota</M> an inclusion of <C>s4b</C> in <C>s5</C>. 
 The resulting source group is <C>SL(2,5)</C>. 

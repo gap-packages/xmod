@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  intro.xml             XMod documentation            Chris Wensley  -->
 <!--                                                                     -->
-<!--  Copyright (C) 1996-2018, Chris Wensley et al,                      --> 
+<!--  Copyright (C) 1996-2019, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -128,13 +128,13 @@ The fourth part is concerned with the equivalent notions of
 and the monoids which they form under the Whitehead multiplication.
 <P/>
 The fifth part deals with actor crossed modules and actor cat1-groups.
-For the actor crossed module <M>{\rm Act}(\mathcal{X})</M> of a
-crossed module <M>\mathcal{X}</M> we require representations
-for the Whitehead group of regular derivations of <M>\mathcal{X}</M>
-and for the group of automorphisms of <M>\mathcal{X}</M>.
-The construction also provides an inner morphism from  <M>\mathcal{X}</M>  
-to  <M>{\rm Act}(\mathcal{X})</M>  
-whose kernel is the centre of <M>\mathcal{X}</M>.
+For the actor crossed module <M>{\rm Act}(\calX)</M> of a
+crossed module <M>\calX</M> we require representations
+for the Whitehead group of regular derivations of <M>\calX</M>
+and for the group of automorphisms of <M>\calX</M>.
+The construction also provides an inner morphism from  <M>\calX</M>  
+to  <M>{\rm Act}(\calX)</M>  
+whose kernel is the centre of <M>\calX</M>.
 <P/>
 The sixth part, which remains under development, contains 
 functions to compute induced crossed modules. 

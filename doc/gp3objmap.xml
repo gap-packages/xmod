@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp3objmap.xml         XMod documentation            Chris Wensley  -->
 <!--                                                                     -->
-<!--  Copyright (C) 1996-2018, Chris Wensley et al,                      --> 
+<!--  Copyright (C) 1996-2019, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -38,7 +38,7 @@ We denote by <M>[n]</M> the set <M>\{1,2,\ldots,n\}</M>.
 We use the <M>n=2</M> version of the definition of crossed <M>n</M>-cube
 as given by Ellis and Steiner <Cite Key="ell:st"/>.
 <P/>
-A <E>crossed square</E> <M>\mathcal{S}</M> consists of the following:
+A <E>crossed square</E> <M>\calS</M> consists of the following:
 <List>
 <Item>
 groups <M>S_J</M> for each of the four subsets <M>J \subseteq [2]</M> 
@@ -80,7 +80,7 @@ Here is a picture of the situation:
               && S_{\{2\}} \ar[dd]^{\dot{\partial}_2} && 
               L \ar[rr]^{\kappa} \ar[dd]_{\lambda} 
               && M \ar[dd]^{\mu} &   \\
-\mathcal{S}  & = &  &&  & = &&  \\
+\calS  & = &  &&  & = &&  \\
        &   &  S_{\{1\}} \ar[rr]_{\dot{\partial}_1}  
               && S_{\emptyset} &&  
               N \ar[rr]_{\nu}  
@@ -97,20 +97,20 @@ The homomorphisms <M>\kappa, \lambda</M> preserve the action of <M>P\;</M>.
 <Item>
 Each of the upper, left-hand, right-hand and lower sides of the square, 
 <Display>
- \ddot{\mathcal{S}}_1 = (\kappa : L \to M), \quad 
- \ddot{\mathcal{S}}_2 = (\lambda : L \to N), \quad 
-  \dot{\mathcal{S}}_2  = (\mu : M \to P), \quad
-  \dot{\mathcal{S}}_1  = (\nu : N \to P), 
+ \ddot{\calS}_1 = (\kappa : L \to M), \quad 
+ \ddot{\calS}_2 = (\lambda : L \to N), \quad 
+  \dot{\calS}_2  = (\mu : M \to P), \quad
+  \dot{\calS}_1  = (\nu : N \to P), 
 </Display>
 and the diagonal  
 <Display>
-\mathcal{S}_{12} = (\partial_{12} := 
+\calS_{12} = (\partial_{12} := 
                    \mu \circ \kappa = \nu \circ \lambda : L \to P)
 </Display>
 are crossed modules (with actions via <M>P</M>). 
 <P/>
 The first four of these are called the <E>up, left, right</E> and <E>down</E> 
-crossed modules of <M>\mathcal{S}</M>. 
+crossed modules of <M>\calS</M>. 
 </Item>
 <Item>
 <Index>crossed pairing</Index>
@@ -200,6 +200,8 @@ though there is still a lot to be done.
 <ManSection>
    <Oper Name="CrossedSquareByNormalSubgroups"
          Arg="L M N P" />
+   <Oper Name="CrossedPairingByCommutators"
+         Arg="N M L" />
 <Description>
 If <M>L, M, N</M> are normal subgroups of a group <M>P</M>, 
 and <M>[M,N] \leqslant L \leqslant M \cap N</M>, then the four inclusions 
@@ -212,8 +214,8 @@ form a crossed square with crossed pairing
 (n,m) \mapsto [n,m] \,=\, n^{-1}m^{-1}nm \,=\,(m^{-1})^nm \,=\, n^{-1}n^m\,. 
 </Display>  
 This construction is implemented as 
-<C>CrossedSquareByNormalSubgroups(L,M,N,P);</C> 
-(note that the parent group come last). 
+<C>CrossedSquareByNormalSubgroups(L,M,N,P)</C> 
+(note that the parent group comes last). 
 </Description>
 </ManSection>
 <P/>
@@ -233,15 +235,19 @@ gap> XSconj := CrossedSquareByNormalSubgroups( c5d, d10a, d10b, d20 );
 [  c5d -> d10a ]
 [   |      |   ]
 [ d10b -> d20  ]
+gap> ImageElmCrossedPairing( xpc, [ p2, p12 ] );
+(1,9,7,5,3)(2,10,8,6,4)
 ]]>
 </Example>
 
 <ManSection>
    <Oper Name="CrossedSquareByNormalSubXMod"
          Arg="X0 X1" />
+   <Oper Name="CrossedPairingBySingleXModAction"
+         Arg="X0 X1" />
 <Description>
-If <M>\mathcal{X}_1 = (\partial_1 : S_1 \to R_1)</M> is a normal 
-sub-crossed module of <M>\mathcal{X}_0 = (\partial_0 : S_0 \to R_0)</M> 
+If <M>\calX_1 = (\partial_1 : S_1 \to R_1)</M> is a normal 
+sub-crossed module of <M>\calX_0 = (\partial_0 : S_0 \to R_0)</M> 
 then the inclusion morphism gives a crossed square with crossed pairing  
 <Display>
 \boxtimes \;:\; R_1 \times S_0 \to S_1, \quad 
@@ -262,15 +268,20 @@ gap> XS20 := CrossedSquareByNormalSubXMod( X20, X10 );
 [  c5d -> d10a ]
 [   |      |   ]
 [ d10b -> d20  ]
+gap> xp20 := CrossedPairing( XS20 );; 
+gap> ImageElmCrossedPairing( xp20, [ p1^2, p2 ] );
+(1,7,3,9,5)(2,8,4,10,6)
 ]]>
 </Example>
 
 <ManSection>
-   <Oper Name="ActorCrossedSquare"
+   <Attr Name="ActorCrossedSquare"
+         Arg="X0" />
+   <Oper Name="CrossedPairingByDerivations"
          Arg="X0" />
 <Description>
-The actor <M>\mathcal{A}(\mathcal{X}_0)</M> of a crossed module 
-<M>\mathcal{X}_0</M> has been described in Chapter 5 
+The actor <M>\calA(\calX_0)</M> of a crossed module 
+<M>\calX_0</M> has been described in Chapter 5 
 (see <Ref Func="ActorXMod" />). 
 The crossed pairing is given by 
 <Display>
@@ -288,11 +299,20 @@ crossed square with:
     left = [d10a->d20]
    right = Actor[d10a->d20]
     down = Norrie[d10a->d20]
+gap> W := Range( Up2DimensionalGroup( XSact ) ); 
+c5:c4
+gap> w1 := GeneratorsOfGroup( W )[1];
+(1,2)(3,4)(5,18)(6,17)(7,20)(8,19)(9,14)(10,13)(11,16)(12,15)
+gap> xpa := CrossedPairing( XSact );;
+gap> ImageElmCrossedPairing( xpa, [ p1, w1 ] );
+(1,9,7,5,3)(2,10,8,6,4)
 ]]>
 </Example>
 
 <ManSection>
    <Oper Name="CrossedSquareByAutomorphismGroup"
+         Arg="G" />
+   <Oper Name="CrossedPairingByConjugators"
          Arg="G" />
 <Description>
 For <M>G</M> a group let <M>\Inn(G)</M> be its inner automorphism group 
@@ -314,6 +334,12 @@ gap> AXS20 := CrossedSquareByAutomorphismGroup( d20 );
 
 gap> StructureDescription( AXS20 );
 [ "D20", "D10", "D10", "C2 x (C5 : C4)" ]
+gap> I20 := Range( Up2DimensionalGroup( AXS20 ) );;
+gap> genI20 := GeneratorsOfGroup( I20 );           
+[ ^(1,2,3,4,5,6,7,8,9,10), ^(2,10)(3,9)(4,8)(5,7) ]
+gap> xpi := CrossedPairing( AXS20 );;
+gap> ImageElmCrossedPairing( xpi, [ genI20[1], genI20[2] ] );
+(1,9,7,5,3)(2,10,8,6,4)
 ]]>
 </Example>
 
@@ -321,8 +347,8 @@ gap> StructureDescription( AXS20 );
    <Oper Name="CrossedSquareByPullback"
          Arg="X1 X2" />
 <Description>
-If crossed modules <M>\mathcal{X}_1 = (\nu : N \to P)</M> 
-and <M>\mathcal{X}_2 = (\mu : M \to P)</M> 
+If crossed modules <M>\calX_1 = (\nu : N \to P)</M> 
+and <M>\calX_2 = (\mu : M \to P)</M> 
 have a common range <M>P</M>, let <M>L</M> be the pullback of 
 <M>\{\nu,\mu\}</M>. 
 Then <M>N</M> acts on <M>L</M> by <M>(n,m)^{n'} = (n^{n'},m^{\nu n'})</M>, 
@@ -351,20 +377,25 @@ gap> StructureDescription( XSP );
 gap> XS12 := CrossedSquareByPullback( X12, X12 );; 
 gap> StructureDescription( XS12 );                  
 [ "C2 x C2 x S3", "D12", "D12", "S3" ]
+gap> xp12 := CrossedPairing( XS12 );; 
+gap> ImageElmCrossedPairing( xp12, [ (1,2,3,4,5,6), (2,6)(3,5) ] );
+(1,5,3)(2,6,4)(7,11,9)(8,12,10)
 ]]>
 </Example>
 
 <ManSection>
    <Attr Name="CrossedSquareByXModSplitting"
          Arg="X0" />
+   <Oper Name="CrossedPairingByPreImages"
+         Arg="X1 X2" />
 <Description>
-For <M>\mathcal{X} = (\partial : S \to R)</M> let <M>Q</M> 
+For <M>\calX = (\partial : S \to R)</M> let <M>Q</M> 
 be the image of <M>\partial</M>. 
 Then <M>\partial = \partial' \circ \iota</M> 
 where <M>\partial' : S \to Q</M> and <M>\iota</M> is the inclusion 
 of <M>Q</M> in <M>R</M>. 
-The diagonal of the square is then the initial <M>\mathcal{X}</M>, 
-and the crossed pairing is given by commutators. 
+The diagonal of the square is then the initial <M>\calX</M>, 
+and the crossed pairing is given by commutators of preimages. 
 <P/>
 A particular case is when <M>S</M> is an <M>R</M>-module <M>A</M> 
 and <M>\partial</M> is the zero map. 
@@ -400,6 +431,14 @@ true
 gap> SetName( Range( up20 ), "d10a" ); 
 gap> Name( XSS20 ); 
 "[d10a->d10a,d10a->d20]"
+gap> xp12 := CrossedPairing( XS12 );; 
+gap> ImageElmCrossedPairing( xp12, [ (1,2,3,4,5,6), (2,6)(3,5) ] );
+(1,5,3)(2,6,4)(7,11,9)(8,12,10)
+gap> XSS20;
+[d10a->d10a,d10a->d20]
+gap> xps := CrossedPairing( XSS20 );;
+gap> ImageElmCrossedPairing( xps, [ p1^2, p2 ] );
+(1,7,3,9,5)(2,8,4,10,6)
 ]]>
 </Example>
 
@@ -446,8 +485,8 @@ gap> StructureDescription( XSdiag );
    <Attr Name="Transpose3DimensionalGroup" 
          Arg="S0" />
 <Description>
-The <E>transpose</E> of a crossed square <M>\mathcal{S}</M> 
-is the crossed square  <M>\tilde{\mathcal{S}}</M> 
+The <E>transpose</E> of a crossed square <M>\calS</M> 
+is the crossed square  <M>\tilde{\calS}</M> 
 obtained by interchanging <M>M</M> with <M>N</M>, 
 <M>\kappa</M> with <M>\lambda</M>, and <M>\nu</M> with <M>\mu</M>.  
 The crossed pairing is given by 
@@ -474,13 +513,13 @@ gap> XStrans := Transpose3DimensionalGroup( XSconj );
           Arg="X0" Label="for crossed modules" />
 <Description>
 The central quotient of a crossed module 
-<M>\mathcal{X} = (\partial : S \to R)</M> is the crossed square where: 
+<M>\calX = (\partial : S \to R)</M> is the crossed square where: 
 <List>
 <Item>
-the left crossed module is <M>\mathcal{X}</M>; 
+the left crossed module is <M>\calX</M>; 
 </Item>
 <Item>
-the right crossed module is the quotient <M>\mathcal{X}/Z(\mathcal{X})</M> 
+the right crossed module is the quotient <M>\calX/Z(\calX)</M> 
 (see <Ref Func="CentreXMod"/>); 
 </Item>
 <Item>
@@ -489,7 +528,7 @@ onto the quotient groups;
 </Item>
 <Item>
 the crossed pairing <M>\boxtimes : (R \times F) \to S</M>, 
-where <M>F = \Fix(\mathcal{X},S,R)</M>, is the displacement element 
+where <M>F = \Fix(\calX,S,R)</M>, is the displacement element 
 <M>\boxtimes(r,Fs) = \langle r,s \rangle = (s^{-1})^rs\quad</M> 
 (see <Ref Func="Displacement"/> and section
 <Ref Sect="sect-isoclinic-xmods"/>). 
@@ -548,24 +587,19 @@ and crossed squares in particular.
          Arg="XS" />
    <Attr Name="DiagonalAction"
          Arg="XS" />
-   <Attr Name="CrossedPairing"
-         Arg="XS" />
    <Attr Name="Diagonal2DimensionalGroup"
          Arg="XS" />
    <Meth Name="Name" 
          Arg="S0" />
 <Description>
-These are the basic attributes of a crossed square <M>\mathcal{S}</M>. 
-The six objects used in the construction of <M>\mathcal{S}</M>
+These are the basic attributes of a crossed square <M>\calS</M>. 
+The six objects used in the construction of <M>\calS</M>
 are the four crossed modules (2d-groups) 
 on the sides of the square (up; left; right and down); 
 the diagonal action of <M>P</M> on <M>L</M>; 
-and the crossed pairing <M>\{M,N\} \to L</M>. 
+and the crossed pairing <M>\{M,N\} \to L</M> (see the next subsection). 
 The diagonal crossed module <M>(L \to P)</M> is an additional attribute. 
 <P/>
-Crossed pairings have been implemented using an operation 
-<C>Mapping2ArgumentsByFunction</C>. <Index>Mapping2ArgumentsByFunction</Index> 
-This encodes a map <M>\{M,N\} \to L</M> as a map <M>M \times N \to L</M>. 
 </Description>
 </ManSection>
 <P/>
@@ -586,18 +620,30 @@ gap> Name( XSconj );
 </Example>
 
 <ManSection>
+   <Attr Name="CrossedPairing"
+         Arg="XS" />
+   <Attr Name="CrossedPairingMap"
+         Arg="xpair" />
    <Oper Name="ImageElmCrossedPairing"
          Arg="XS pair" />
 <Description>
-This operation returns the image when a crossed pairing 
-<M>\{M,N\} \to L</M> is applied to the pair <M>[m,n]</M> 
-with <M>m \in M,~ n \in N</M>. 
+Crossed pairings have been implemented using an operation 
+<C>Mapping2ArgumentsByFunction</C>. 
+<Index>Mapping2ArgumentsByFunction</Index> 
+This encodes a map <M>\{M,N\} \to L</M> as a map <M>M \times N \to L</M>. 
+<P/> 
+The operation <C>ImageElmCrossedPairing</C> returns the image 
+when a crossed pairing <M>\{M,N\} \to L</M> is applied to the pair 
+<M>[m,n]</M> with <M>m \in M,~ n \in N</M>. 
 </Description>
 </ManSection>
 <P/>
 <Example>
 <![CDATA[
-gap> xp := CrossedPairing( XSconj );;                            
+gap> xp := CrossedPairing( XSconj );
+crossed pairing: Group( [ ( 1, 3, 5, 7, 9)( 2, 4, 6, 8,10), 
+  ( 1,10)( 2, 9)( 3, 8)( 4, 7)( 5, 6), (11,13,15,17,19)(12,14,16,18,20), 
+  (12,20)(13,19)(14,18)(15,17) ] ) -> c5d
 gap> ImageElmCrossedPairing( xp,                                 
 >      [ (1,6)(2,5)(3,4)(7,10)(8,9), (1,5)(2,4)(6,9)(7,8) ] );
 (1,7,8,5,3)(2,9,10,6,4)
@@ -669,11 +715,11 @@ These functions return <C>fail</C> when invalid data is supplied.
          Arg="mor" />
 <Description>
 A morphism <C>mor</C> between two pre-crossed squares 
-<M>\mathcal{S}_{1}</M> and  <M>\mathcal{S}_{2}</M> 
+<M>\calS_{1}</M> and  <M>\calS_{2}</M> 
 consists of four crossed module morphisms  
 <C>Up2DimensionalMorphism(mor)</C>, 
-mapping the <C>Up2DimensionalGroup</C> of <M>\mathcal{S}_1</M> 
-to that of <M>\mathcal{S}_2</M>, 
+mapping the <C>Up2DimensionalGroup</C> of <M>\calS_1</M> 
+to that of <M>\calS_2</M>, 
 <C>Left2DimensionalMorphism(mor)</C>, <C>Right2DimensionalMorphism(mor)</C> 
 and <C>Down2DimensionalMorphism(mor)</C>. 
 These four morphisms are required to commute with the four boundary maps
@@ -744,14 +790,13 @@ gap> KnownPropertiesOfObject( autoconj );
 
 <Index>cat2-group</Index>
 
-We shall give three definitions of cat<M>^2</M>-groups 
-and show that they are equivalent. 
+We give here three equivalent definitions of cat<M>^2</M>-groups. 
 When we come to define cat<M>^n</M>-groups we shall give a similar set of 
-three definitions. 
+definitions. 
 <P/>
 Firstly, we take the definition of a cat<M>^2</M>-group from 
 Section 5 of Brown and Loday <Cite Key="brow:lod"/>, suitably modified.
-A cat<M>^2</M>-group  <M>\mathcal{C} = (C_{[2]},C_{\{2\}},C_{\{1\}},C_{\emptyset})</M>  
+A cat<M>^2</M>-group  <M>\calC = (C_{[2]},C_{\{2\}},C_{\{1\}},C_{\emptyset})</M>  
 comprises four groups (one for each of the subsets of <M>[2]</M>) 
 and <M>15</M> homomorphisms, as shown in the following diagram:
 <Display>
@@ -762,7 +807,7 @@ and <M>15</M> homomorphisms, as shown in the following diagram:
      \ar[dddrrr] <-0.2ex>  \ar[dddrrr] <-1.0ex>_(0.55){t_{[2]},h_{[2]}}
     &&&  C_{\{2\}}  \ar[lll]^{\ddot{e}_1}
             \ar[ddd]<+1.2ex>  \ar[ddd] <+2.0ex>^{\dot{t}_2,\dot{h}_2}  \\
-\mathcal{C} \quad = \quad
+\calC \quad = \quad
  &  &&&   \\
  &  &&&   \\
  & C_{\{1\}} \ar[uuu]_{\ddot{e}_2}
@@ -776,8 +821,8 @@ The following axioms are satisfied by these homomorphisms:
 <List>
 <Item>
 the four sides of the square are cat<M>^1</M>-groups, denoted 
-<M>\ddot{\mathcal{C}}_1, \ddot{\mathcal{C}}_2, 
-\dot{\mathcal{C}}_1, \dot{\mathcal{C}}_2</M>,
+<M>\ddot{\calC}_1, \ddot{\calC}_2, 
+\dot{\calC}_1, \dot{\calC}_2</M>,
 </Item>
 <Item>
 <M>
@@ -806,7 +851,7 @@ are morphisms of cat<M>^1</M>-groups.
 <P/>
 Secondly, we give the simplest of the three definitions, 
 adapted from Ellis-Steiner <Cite Key="ell:st"/>. 
-A cat<M>^2</M>-group  <M>\mathcal{C}</M> consists of groups <M>G, R_1,R_2</M> 
+A cat<M>^2</M>-group  <M>\calC</M> consists of groups <M>G, R_1,R_2</M> 
 and six homomorphisms 
 <M>t_1,h_1 : G \to R_2,~ e_1 : R_2 \to G,~
  t_2,h_2 : G \to R_1,~ e_2 : R_1 \to G</M>,  
@@ -835,18 +880,18 @@ satisfying the following axioms for all <M>1 \leqslant i \leqslant 2</M>,
 <P/>
 Our third definition defines a cat<M>^2</M>-group as a 
 "cat<M>^1</M>-group of cat<M>^1</M>-groups". 
-A cat<M>^2</M>-group <M>\mathcal{C}</M> consists of two cat<M>^1</M>-groups 
-<M>\mathcal{C}_1 = (e_1;t_1,h_1 : G_1 \to R_1)</M> and 
-<M>\mathcal{C}_2 = (e_2;t_2,h_2 : G_2 \to R_2)</M> and cat<M>^1</M>-morphisms
+A cat<M>^2</M>-group <M>\calC</M> consists of two cat<M>^1</M>-groups 
+<M>\calC_1 = (e_1;t_1,h_1 : G_1 \to R_1)</M> and 
+<M>\calC_2 = (e_2;t_2,h_2 : G_2 \to R_2)</M> and cat<M>^1</M>-morphisms
 <M>t = (\ddot{t},\dot{t}),\; h = (\ddot{h},\dot{h}) : 
-\mathcal{C}_1 \to \mathcal{C}_2,\; 
-e = (\ddot{e},\dot{e}) : \mathcal{C}_2 \to \mathcal{C}_1</M>,  
+\calC_1 \to \calC_2,\; 
+e = (\ddot{e},\dot{e}) : \calC_2 \to \calC_1</M>,  
 subject to the following conditions: 
 <Display>
 (t \circ e) ~\mbox{and}~ (h \circ e)
-~\mbox{are the identity mapping on}~ \mathcal{C}_2, 
+~\mbox{are the identity mapping on}~ \calC_2, 
 \qquad  
-[\ker t, \ker h] = \{ 1_{\mathcal{C}_1} \},
+[\ker t, \ker h] = \{ 1_{\calC_1} \},
 </Display>
 where <M>\ker t = (\ker \ddot{t},\ \ker \dot{t})</M>, 
 and similarly for <M>\ker h</M>. 
@@ -954,7 +999,7 @@ Definition and constructions for cat<M>^n</M>-groups and their morphisms
 <Index>catn-group</Index>
 In this chapter we are interested in cat<M>^2</M>-groups, 
 but it is convenient in this section to give the more general definition. 
-There are three equivalent description of a cat<M>^n</M>-group. 
+There are three equivalent descriptions of a cat<M>^n</M>-group. 
 <P/>
 A <E>cat<M>^n</M>-group</E> consists of the following. 
 <List>
@@ -965,7 +1010,7 @@ the <E>vertices</E> of an <M>n</M>-cube.
 <Item>
 Group homomorphisms forming <M>n2^{n-1}</M> commuting cat<M>^1</M>-groups, 
 <Display>
-\mathcal{C}_{A,i} ~=~ (e_{A,i};\; t_{A,i},\; h_{A,i} \ :\  
+\calC_{A,i} ~=~ (e_{A,i};\; t_{A,i},\; h_{A,i} \ :\  
 G_A \to G_{A \setminus \{i\}}), 
 \quad\mbox{for all} \quad A \subseteq [n],~ i \in A,  
 </Display>
@@ -973,7 +1018,7 @@ the <E>edges</E> of the cube.
 </Item>
 <Item> 
 These cat<M>^1</M>-groups combine (in sets of <M>4</M>) 
-to form <M>n(n-1)2^{n-3}</M> cat<M>^2</M>-groups <M>\mathcal{C}_{A,\{i,j\}}</M> 
+to form <M>n(n-1)2^{n-3}</M> cat<M>^2</M>-groups <M>\calC_{A,\{i,j\}}</M> 
 for all <M>\{i,j\} \subseteq A \subseteq [n],~ i \neq j</M>, 
 the <E>faces</E> of the cube. 
 </Item>
@@ -987,7 +1032,7 @@ are well defined for all <M>B \subseteq A \subseteq [n]</M>.
 Secondly, we give the simplest of the three descriptions, 
 again adapted from Ellis-Steiner <Cite Key="ell:st"/>. 
 <P/>
-A cat<M>^n</M>-group  <M>\mathcal{C}</M> consists of <M>2^n</M> groups 
+A cat<M>^n</M>-group  <M>\calC</M> consists of <M>2^n</M> groups 
 <M>G_A</M>, one for each subset  <M>A</M>  of  <M>[n]</M>, 
 and <M>3n</M> homomorphisms 
 <Display>
@@ -998,7 +1043,7 @@ satisfying the following axioms for all <M>1 \leqslant i \leqslant n</M>,}
 <List>
 <Item>
 the 
-<M>\mathcal{C}_{[n],i} ~=~ (e_{[n],i};\; t_{[n],i},\; h_{[n],i} \ :\  
+<M>\calC_{[n],i} ~=~ (e_{[n],i};\; t_{[n],i},\; h_{[n],i} \ :\  
 G_{[n]} \to G_{[n] \setminus \{i\}})~</M>
 are <E>commuting</E> cat<M>^1</M>-groups, so that: 
 </Item>
@@ -1018,25 +1063,25 @@ are <E>commuting</E> cat<M>^1</M>-groups, so that:
 Our third description defines a cat<M>^n</M>-group as a 
 "cat<M>^1</M>-group of cat<M>^{(n-1)}</M>-groups". 
 <P/>
-A <E>cat<M>^n</M>-group</E> <M>\mathcal{C}</M> 
+A <E>cat<M>^n</M>-group</E> <M>\calC</M> 
 consists of two cat<M>^{(n-1)}</M>-groups: 
 <List>
 <Item>
-<M>\mathcal{A}</M> with groups <M>G_A,\; A \subseteq [n-1]</M>, 
+<M>\calA</M> with groups <M>G_A,\; A \subseteq [n-1]</M>, 
 and homomorphisms <M>\ddot{t}_{A,i}, \ddot{h}_{A,i}, \ddot{e}_{A,i}</M>,  
 </Item>
 <Item> 
-<M>\mathcal{B}</M> with groups <M>H_B,\; B \subseteq [n-1]</M>,
+<M>\calB</M> with groups <M>H_B,\; B \subseteq [n-1]</M>,
 and homomorphisms <M>\dot{t}_{B,i}, \dot{h}_{B,i}, \dot{e}_{B,i}</M>, and 
 </Item>
 <Item> 
-cat<M>^{(n-1)}</M>-morphisms <M>t,h : \mathcal{A} \to \mathcal{B}</M> 
-and <M>e : \mathcal{B} \to \mathcal{A}</M>
+cat<M>^{(n-1)}</M>-morphisms <M>t,h : \calA \to \calB</M> 
+and <M>e : \calB \to \calA</M>
 subject to the following conditions: 
 <Display>
 (t \circ e) ~\mbox{and}~ (h \circ e)  
-~\mbox{are the identity mapping on}~ \mathcal{B}, \qquad
-[\ker t, \ker h] = \{ 1_{\mathcal{A}} \}.
+~\mbox{are the identity mapping on}~ \calB, \qquad
+[\ker t, \ker h] = \{ 1_{\calA} \}.
 </Display>
 </Item>
 </List> 

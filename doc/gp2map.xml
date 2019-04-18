@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2map.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  Copyright (C) 1996-2018, Chris Wensley et al,                      --> 
+<!--  Copyright (C) 1996-2019, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -51,8 +51,8 @@ These functions return <C>fail</C> when invalid data is supplied.
          Arg="map" />
 <Description>
 A morphism between two pre-crossed modules 
-<M>\mathcal{X}_{1} = (\partial_1 : S_1 \to R_1)</M> and  
-<M>\mathcal{X}_{2} = (\partial_2 : S_2 \to R_2)</M> 
+<M>\calX_{1} = (\partial_1 : S_1 \to R_1)</M> and  
+<M>\calX_{2} = (\partial_2 : S_2 \to R_2)</M> 
 is a pair  <M>(\sigma, \rho)</M>, where 
 <M>\sigma : S_1 \to S_2</M> and <M>\rho : R_1 \to R_2</M> 
 commute with the two boundary maps
@@ -64,11 +64,11 @@ and are morphisms for the two actions:
 
 Here  <M>\sigma</M> is the <Ref Attr="SourceHom"/>  
 and  <M>\rho</M>  is the <Ref Attr="RangeHom"/>  of the morphism. 
-When <M>\mathcal{X}_{1} = \mathcal{X}_{2}</M>
+When <M>\calX_{1} = \calX_{2}</M>
 and <M>\sigma, \rho</M> are automorphisms then 
-<M>(\sigma, \rho)</M>  is an automorphism of <M>\mathcal{X}_1</M>. 
+<M>(\sigma, \rho)</M>  is an automorphism of <M>\calX_1</M>. 
 The group of automorphisms is denoted 
-by <M>{\rm Aut}(\mathcal{X}_1 )</M>. 
+by <M>{\rm Aut}(\calX_1 )</M>. 
 </Description>
 </ManSection>
 
@@ -160,12 +160,12 @@ gap> KnownAttributesOfObject( mor1 );
    <Oper Name="IsomorphismByIsomorphisms"
          Arg="D list" />
 <Description>
-When <M>{\mathcal D}</M> is a <M>2</M>-dimensional domain 
+When <M>\calD</M> is a <M>2</M>-dimensional domain 
 with source <M>S</M> and range <M>R</M> 
 and <M>\sigma : S \to S',~ \rho : R \to R'</M> are isomorphisms, 
 then <C>IsomorphismByIsomorphisms(D,[sigma,rho])</C> returns an isomorphism 
-<M>(\sigma,\rho) : {\mathcal D} \to {\mathcal D}'</M> 
-where <M>{\mathcal D}'</M> has source <M>S'</M> and range <M>R'</M>.  
+<M>(\sigma,\rho) : \calD \to \calD'</M> 
+where <M>\calD'</M> has source <M>S'</M> and range <M>R'</M>.  
 Be sure to test <C>IsBijective</C> for the two functions 
 <M>\sigma,\rho</M> before applying this operation.  
 <P/> 
@@ -200,11 +200,11 @@ gap> Zq8 := Image( mor );
    <Attr Name="MorphismOfPullback"
          Arg="xmod" Label="for a crossed module by pullback" />
 <Description>
-Let <M>\mathcal{X}_1 = (\lambda : L \to N)</M> be the pullback crossed module 
-obtained from a crossed module <M>\mathcal{X}_0 = (\mu : M \to P)</M> 
+Let <M>\calX_1 = (\lambda : L \to N)</M> be the pullback crossed module 
+obtained from a crossed module <M>\calX_0 = (\mu : M \to P)</M> 
 and a group homomorphism <M>\nu : N \to P</M>. 
 Then the associated crossed module morphism is 
-<M>(\kappa,\nu) : \mathcal{X}_1 \to \mathcal{X}_0</M> 
+<M>(\kappa,\nu) : \calX_1 \to \calX_0</M> 
 where <M>\kappa</M> is the projection from <M>L</M> to <M>M</M>. 
 </Description> 
 </ManSection> 
@@ -216,8 +216,8 @@ where <M>\kappa</M> is the projection from <M>L</M> to <M>M</M>.
 <Heading>Morphisms of pre-cat1-groups</Heading>
 
 A morphism of pre-cat1-groups from 
-<M>\mathcal{C}_1 = (e_1;t_1,h_1 : G_1 \to R_1)</M>
-to  <M>\mathcal{C}_2 = (e_2;t_2,h_2 : G_2 \to R_2)</M>  
+<M>\calC_1 = (e_1;t_1,h_1 : G_1 \to R_1)</M>
+to  <M>\calC_2 = (e_2;t_2,h_2 : G_2 \to R_2)</M>  
 is a pair  <M>(\gamma, \rho)</M>  where
 <M>\gamma : G_1 \to G_2</M>  and  <M>\rho : R_1 \to R_2</M>  
 are homomorphisms satisfying

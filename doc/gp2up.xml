@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2up.xml             XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  Copyright (C) 2001-2018, Chris Wensley et al,                      --> 
+<!--  Copyright (C) 2001-2019, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -18,7 +18,7 @@
 
 <Index>derivation, of crossed module</Index>
 <Index>Whitehead monoid</Index>
-The Whitehead monoid  <M>{\rm Der}(\mathcal{X})</M> of <M>\mathcal{X}</M> 
+The Whitehead monoid  <M>{\rm Der}(\calX)</M> of <M>\calX</M> 
 was defined in <Cite Key="W2" /> to be the monoid of all <E>derivations</E> 
 from <M>R</M> to <M>S</M>, that is the set of all maps  
 <M>\chi : R \to S</M>,  with <E>Whitehead multiplication</E>  
@@ -33,18 +33,18 @@ The zero map is the identity for this composition.
 <Index>regular derivation</Index>
 Invertible elements in the monoid are called <E>regular</E>.
 <Index>Whitehead group</Index>
-The Whitehead group of <M>\mathcal{X}</M> 
-is the group of regular derivations in <M>{\rm Der}(\mathcal{X} )</M>. 
-In the next chapter the <E>actor</E> of <M>\mathcal{X}</M> 
+The Whitehead group of <M>\calX</M> 
+is the group of regular derivations in <M>{\rm Der}(\calX )</M>. 
+In the next chapter the <E>actor</E> of <M>\calX</M> 
 is defined as a crossed module whose source and range are permutation 
 representations of the Whitehead group and the automorphism group of 
-<M>\mathcal{X}</M>.
+<M>\calX</M>.
 <P/>
 <Index>section, of cat1-group</Index>
 The construction for cat1-groups equivalent to the derivation of a
 crossed module is the <E>section</E>. 
 <Index>Whitehead multiplication</Index>
-The monoid of sections of  <M>\mathcal{C} = (e;t,h : G \to R)</M>  
+The monoid of sections of  <M>\calC = (e;t,h : G \to R)</M>  
 is the set of group homomorphisms
 <M>\xi : R \to G</M>, with Whitehead multiplication  <M>\star</M>  
 (on the <E>right</E>) satisfying:
@@ -68,9 +68,9 @@ then  <M>\partial = h \epsilon : S \to R</M> and
 \quad\mbox{which equals}\quad  
 (r, \chi r) ~\in~ R \ltimes S, 
 </Display>
-determines a section  <M>\xi</M>  of  <M>\mathcal{C}</M>  
+determines a section  <M>\xi</M>  of  <M>\calC</M>  
 in terms of the corresponding derivation  <M>\chi</M>  of
-<M>\mathcal{X}</M>, and conversely. 
+<M>\calX</M>, and conversely. 
 
 <ManSection>
    <Oper Name="DerivationByImages"
@@ -255,7 +255,7 @@ gap> [ WhiteheadOrder( chi2 ), WhiteheadOrder( xi2 ) ];
 <Heading>Whitehead Groups and Monoids</Heading>
 
 As mentioned at the beginning of this chapter, 
-the Whitehead monoid  <M>{\rm Der}(\mathcal{X})</M> of <M>\mathcal{X}</M> 
+the Whitehead monoid  <M>{\rm Der}(\calX)</M> of <M>\calX</M> 
 is the monoid of all derivations from <M>R</M> to <M>S</M>. 
 Monoids of derivations have representation 
 <C>IsMonoidOfUp2DimensionalMappingsObj</C>. 

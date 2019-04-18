@@ -25,12 +25,12 @@ and is likely to be changed very soon.
 <Index>crossed module over a groupoid</Index>
 <Index>2dimensional-domain with objects</Index>
 
-A typical example of a crossed module <M>\mathcal{X}</M> 
+A typical example of a crossed module <M>\calX</M> 
 over a groupoid has for its range a connected groupoid. 
 This is a direct product of a group with a complete graph,
 and we call the vertices of the graph the <E>objects</E> 
 of the crossed module. 
-The source of <M>\mathcal{X}</M> is a groupoid, with the same objects, 
+The source of <M>\calX</M> is a groupoid, with the same objects, 
 which is either discrete or connected.  
 The boundary morphism is constant on objects. 
 For details and other references see <Cite Key="AW2" />. 
@@ -41,8 +41,8 @@ For details and other references see <Cite Key="AW2" />.
 <Description> 
 At present the experimental operation <C>SinglePiecePreXModWithObjects</C> 
 accepts a precrossed module <C>pxmod</C>, a set of objects <C>obs</C>, 
-and a boolean <C>isdisc</C> which is <C>true</C> when the source groupoid 
-is homogeneous and discrete and <C>false</C> when the source groupoid 
+and a boolean <C>isdisc</C> which is <K>true</K> when the source groupoid 
+is homogeneous and discrete and <K>false</K> when the source groupoid 
 is connected.  
 Other operations will be added as time permits. 
 <P/> 

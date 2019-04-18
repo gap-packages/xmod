@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2act.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  Copyright (C) 1996-2018, Chris Wensley et al,                      --> 
+<!--  Copyright (C) 1996-2019, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -15,16 +15,16 @@
 <Section><Heading>Actor of a crossed module</Heading>
 <Index>actor</Index>
 
-The <E>actor</E> of <M>\mathcal{X}</M>  is a crossed module
-<M>\Act(\mathcal{X}) = 
-(\Delta : \mathcal{W}(\mathcal{X}) \to \Aut(\mathcal{X}))</M>
+The <E>actor</E> of <M>\calX</M>  is a crossed module
+<M>\Act(\calX) = 
+(\Delta : \calW(\calX) \to \Aut(\calX))</M>
 which was shown by Lue and Norrie, in <Cite Key="N2" /> 
 and <Cite Key="N1" /> to give the automorphism object 
-of a crossed module <M>\mathcal{X}</M>.
+of a crossed module <M>\calX</M>.
 In this implementation, the source of the actor is a permutation 
 representation <M>W</M> of the Whitehead group of regular derivations, 
 and the range of the actor is a permutation representation <M>A</M> 
-of the automorphism group <M>\Aut(\mathcal{X})</M> of <M>\mathcal{X}</M>.
+of the automorphism group <M>\Aut(\calX)</M> of <M>\calX</M>.
 
 <ManSection>
    <Attr Name="AutomorphismPermGroup"
@@ -34,12 +34,12 @@ of the automorphism group <M>\Aut(\mathcal{X})</M> of <M>\mathcal{X}</M>.
    <Oper Name="PermAutomorphismAsXModMorphism"
          Arg="xmod perm" />
 <Description>
-The automorphisms <M>( \sigma, \rho )</M> of <M>\mathcal{X}</M> form a group 
-<M>\Aut(\mathcal{X})</M> of crossed module isomorphisms. 
+The automorphisms <M>( \sigma, \rho )</M> of <M>\calX</M> form a group 
+<M>\Aut(\calX)</M> of crossed module isomorphisms. 
 The function <Ref Attr="AutomorphismPermGroup"/> finds a set of 
-<Ref Attr="GeneratingAutomorphisms"/> for <M>\Aut(\mathcal{X})</M>, 
+<Ref Attr="GeneratingAutomorphisms"/> for <M>\Aut(\calX)</M>, 
 and then constructs a permutation representation of this group, 
-which is used as the range of the actor crossed module of <M>\mathcal{X}</M>. 
+which is used as the range of the actor crossed module of <M>\calX</M>. 
 The individual automorphisms can be constructed from the permutation group 
 using the function <Ref Oper="PermAutomorphismAsXModMorphism"/>. 
 The example below uses the crossed module <Code>X3=[c3->s3]</Code> 
@@ -93,25 +93,25 @@ give five crossed modules forming a <E>crossed square</E>
 <Index>crossed square</Index>
 <List>
 <Item>
-<M>\mathcal{W}(\mathcal{X}) = (\eta : S \to W),~</M>  
-the Whitehead crossed module of <M>\mathcal{X}</M>, at the top, 
+<M>\calW(\calX) = (\eta : S \to W),~</M>  
+the Whitehead crossed module of <M>\calX</M>, at the top, 
 </Item>
 <Item>
-<M>\mathcal{X} = (\partial : S \to R),~</M>  
+<M>\calX = (\partial : S \to R),~</M>  
 the initial crossed module, on the left, 
 </Item>
 <Item>
-<M>\Act(\mathcal{X}) = ( \Delta : W \to A),~</M> 
-the actor crossed module of <M>\mathcal{X}</M>, on the right, 
+<M>\Act(\calX) = ( \Delta : W \to A),~</M> 
+the actor crossed module of <M>\calX</M>, on the right, 
 </Item>
 <Item>
-<M>\mathcal{N}(X) = (\alpha : R \to A),~</M> 
-the Norrie crossed module of <M>\mathcal{X}</M>, on the bottom, and 
+<M>\calN(X) = (\alpha : R \to A),~</M> 
+the Norrie crossed module of <M>\calX</M>, on the bottom, and 
 </Item>
 <Item>
-<M>\mathcal{L}(\mathcal{X}) 
+<M>\calL(\calX) 
    = (\Delta\circ\eta = \alpha\circ\partial : S \to A),~</M> 
-the Lue crossed module of <M>\mathcal{X}</M>, 
+the Lue crossed module of <M>\calX</M>, 
 along the top-left to bottom-right diagonal. 
 </Item>
 </List>
@@ -201,14 +201,14 @@ Crossed module InnerActor[c3->s3] :-
 <Description>
 Pairs of boundaries or identity mappings
 provide six morphisms of crossed modules.
-In particular, the boundaries of <M>\mathcal{W}(\mathcal{X})</M> 
-and <M>\mathcal{N}(\mathcal{X})</M> 
-form the <E>inner morphism</E> of <M>\mathcal{X}</M>, 
+In particular, the boundaries of <M>\calW(\calX)</M> 
+and <M>\calN(\calX)</M> 
+form the <E>inner morphism</E> of <M>\calX</M>, 
 mapping source elements to principal derivations
 and range elements to inner automorphisms.  
-The image of <M>\mathcal{X}</M> under this morphism is the 
-<E>inner actor</E> of <M>\mathcal{X}</M>, 
-while the kernel is the <E>centre</E> of <M>\mathcal{X}</M>.
+The image of <M>\calX</M> under this morphism is the 
+<E>inner actor</E> of <M>\calX</M>, 
+while the kernel is the <E>centre</E> of <M>\calX</M>.
 In the example which follows, the inner morphism of
 <Code>X3=(c3->s3)</Code>, from Chapter <Ref Chap="chap-gp2up" />,
 is an inclusion of crossed modules. 

@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  apps.xml              XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  Copyright (C) 2001-2018, Chris Wensley et al,                      --> 
+<!--  Copyright (C) 2001-2019, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -29,8 +29,8 @@ The relevant theorem in that paper is as follows.
 <P/>
 <B>Theorem 2.1</B> 
 <E>
-Let  <M>\mathcal{M} = (\partial : M \to P)</M> be a crossed module of groups 
-and let  <M>X = B\mathcal{M}</M> be the classifying space of <M>\mathcal{M}</M>. 
+Let  <M>\calM = (\partial : M \to P)</M> be a crossed module of groups 
+and let  <M>X = B\calM</M> be the classifying space of <M>\calM</M>. 
 Then the components of <M>LX</M>, the free loop space on <M>X</M>, 
 are determined by equivalence classes of elements <M>a \in P</M> 
 where <M>a,a'</M> are equivalent if and only if there are elements 
@@ -40,7 +40,7 @@ where <M>a,a'</M> are equivalent if and only if there are elements
 <E>
 Further the homotopy <M>2</M>-type of a component of <M>LX</M> 
 given by <M>a \in P</M> is determined by the crossed module of groups 
-<M>L\mathcal{M}[a] = (\partial_a : M \to P(a))</M> where: 
+<M>L\calM[a] = (\partial_a : M \to P(a))</M> where: 
 </E>
 <List>
 <Item><E>
@@ -79,7 +79,7 @@ is the morphism <M>m \mapsto m^{-1}m^a</M>.
          Arg="M" />
 <Description>
 The operation <C>LoopsXMod(M,a)</C> calculates the crossed module 
-<M>L\mathcal{M}[a]</M> described in the theorem. 
+<M>L\calM[a]</M> described in the theorem. 
 <P/> 
 The operation <C>AllLoopsXMod(M)</C> returns a list of crossed modules, 
 one for each equivalence class of elements <M>p \in P</M>. 

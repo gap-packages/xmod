@@ -42,6 +42,8 @@ gap> XSconj := CrossedSquareByNormalSubgroups( c5d, d10a, d10b, d20 );
 [  c5d -> d10a ]
 [   |      |   ]
 [ d10b -> d20  ]
+gap> ImageElmCrossedPairing( xpc, [ p2, p12 ] );
+(1,9,7,5,3)(2,10,8,6,4)
 
 ## Section 8.2.2
 gap> X20 := XModByNormalSubgroup( d20, d10a );; 
@@ -52,6 +54,9 @@ gap> XS20 := CrossedSquareByNormalSubXMod( X20, X10 );
 [  c5d -> d10a ]
 [   |      |   ]
 [ d10b -> d20  ]
+gap> xp20 := CrossedPairing( XS20 );; 
+gap> ImageElmCrossedPairing( xp20, [ p1^2, p2 ] );
+(1,7,3,9,5)(2,8,4,10,6)
 
 ## Section 8.2.3
 gap> XSact := ActorCrossedSquare( X20 );
@@ -69,6 +74,12 @@ gap> AXS20 := CrossedSquareByAutomorphismGroup( d20 );
 
 gap> StructureDescription( AXS20 );
 [ "D20", "D10", "D10", "C2 x (C5 : C4)" ]
+gap> I20 := Range( Up2DimensionalGroup( AXS20 ) );;
+gap> genI20 := GeneratorsOfGroup( I20 );           
+[ ^(1,2,3,4,5,6,7,8,9,10), ^(2,10)(3,9)(4,8)(5,7) ]
+gap> xpi := CrossedPairing( AXS20 );;
+gap> ImageElmCrossedPairing( xpi, [ genI20[1], genI20[2] ] );
+(1,9,7,5,3)(2,10,8,6,4)
 
 ## Section 8.2.5
 gap> dn := Down2DimensionalGroup( XSconj );;
@@ -79,6 +90,9 @@ gap> StructureDescription( XSP );
 gap> XS12 := CrossedSquareByPullback( X12, X12 );; 
 gap> StructureDescription( XS12 );                  
 [ "C2 x C2 x S3", "D12", "D12", "S3" ]
+gap> xp12 := CrossedPairing( XS12 );; 
+gap> ImageElmCrossedPairing( xp12, [ (1,2,3,4,5,6), (2,6)(3,5) ] );
+(1,5,3)(2,6,4)(7,11,9)(8,12,10)
 
 ## Section 8.2.6
 gap> k4 := Group( (1,2), (3,4) );;
@@ -95,6 +109,9 @@ gap> SetName( Range( up20 ), "d10a" );
 gap> Name( XSS20 );;
 gap> XSS20;
 [d10a->d10a,d10a->d20]
+gap> xps := CrossedPairing( XSS20 );;
+gap> ImageElmCrossedPairing( xps, [ p1^2, p2 ] );
+(1,7,3,9,5)(2,8,4,10,6)
 
 ## Section 8.2.7 
 gap> diag := Diagonal2DimensionalGroup( AXS20 );
@@ -132,6 +149,15 @@ gap> Diagonal2DimensionalGroup( XSconj );
 [c5d->d20]
 gap> Name( XSconj ); 
 "[c5d->d10a,d10b->d20]"
+
+## Section 8.2.12
+gap> xp := CrossedPairing( XSconj );
+crossed pairing: Group( [ ( 1, 3, 5, 7, 9)( 2, 4, 6, 8,10), 
+  ( 1,10)( 2, 9)( 3, 8)( 4, 7)( 5, 6), (11,13,15,17,19)(12,14,16,18,20), 
+  (12,20)(13,19)(14,18)(15,17) ] ) -> c5d
+gap> ImageElmCrossedPairing( xp,
+>        [ (1,6)(2,5)(3,4)(7,10)(8,9), (1,5)(2,4)(6,9)(7,8) ] );
+(1,7,8,5,3)(2,9,10,6,4)
 
 ## Section 8.3.3
 gap> ad20 := GroupHomomorphismByImages( d20, d20, [p1,p2], [p1,p2^p1] );;

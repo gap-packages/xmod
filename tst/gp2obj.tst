@@ -187,6 +187,8 @@ gap> aut16 := Group( [ aut1, aut2 ] );;
 gap> act16 := GroupHomomorphismByImages( sk4, aut16, [b1^4,b2], [aut1,aut2] );;
 gap> P16 := PreXModByBoundaryAndAction( bdy16, act16 );
 [d16->sk4]
+gap> IsXMod( P16 );
+false
 
 ## Section 2.3.2
 gap> P := PeifferSubgroup( P16 );

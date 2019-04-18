@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  isoclinic.xml          XMod documentation            Alper Odabas  -->
 <!--                                                       & Enver Uslu  -->
-<!--  Copyright (C) 2015-2018, Chris Wensley et al                       --> 
+<!--  Copyright (C) 2015-2019, Chris Wensley et al                       --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
 
@@ -36,9 +36,9 @@ of prime power order, see for example James, Newman and O'Brien,
    <Oper Name="NaturalMorphismByNormalSubPreXMod"
          Arg="X1 X2" />
 <Description>
-When <M>\mathcal{X}_2 = (\partial_2 : S_2 \to R_2)</M> 
+When <M>\calX_2 = (\partial_2 : S_2 \to R_2)</M> 
 is a normal sub-precrossed module of 
-<M>\mathcal{X}_1 = (\partial_1 : S_1 \to R_1)</M>, 
+<M>\calX_1 = (\partial_1 : S_1 \to R_1)</M>, 
 then the quotient precrossed module is 
 <M>(\partial : S_2/S_1 \to R_2/R_1)</M>
 with the induced boundary and action maps. 
@@ -117,10 +117,10 @@ and satisfy identities
 In a similar way, when a group <M>R</M> acts on a group <M>S</M>, 
 the <E>displacement</E> of <M>s \in S</M> by <M>r \in R</M> 
 is defined to be <M>\langle r,s \rangle := (s^{-1})^rs \in S</M>. 
-When <M>\mathcal{X} = (\partial : S \to R)</M> is a pre-crossed module, 
+When <M>\calX = (\partial : S \to R)</M> is a pre-crossed module, 
 the first crossed module axiom requires 
 <M>\partial\langle r,s \rangle = [r,\partial s]</M>. 
-When <M>\alpha</M> is the action of <M>\mathcal{X}</M>, 
+When <M>\alpha</M> is the action of <M>\calX</M>, 
 the <Ref Oper="Displacement"/> function may be used to calculate 
 <M>\langle r,s \rangle</M>. 
 Displacements satisfy the following identities, 
@@ -134,13 +134,13 @@ where <M>s,t \in S,~ p,q,r \in R</M>:
 The operation <Ref Oper="DisplacementGroup"/> applied to <C>X0,Q,T</C> 
 is the subgroup of <C>S</C> consisting of all the displacements 
 <M>\langle r,s \rangle, r \in Q \leqslant R, s \in T \leqslant S</M>.  
-The <Ref Attr="DisplacementSubgroup"/> of <M>\mathcal{X}</M> is the subgroup 
-<M>\Disp(\mathcal{X})</M> of <M>S</M> 
+The <Ref Attr="DisplacementSubgroup"/> of <M>\calX</M> is the subgroup 
+<M>\Disp(\calX)</M> of <M>S</M> 
 given by <C>DisplacementGroup(X0,R,S)</C>. 
 The identities imply  
 <M>\langle r,s \rangle^t = 
    \langle r,st^{r^{-1}} \rangle \langle r^{-1},t \rangle</M>, 
-so <M>\Disp(\mathcal{X})</M> is normal in <M>S</M>. 
+so <M>\Disp(\calX)</M> is normal in <M>S</M>. 
 </Description>
 </ManSection>
 <P/>
@@ -178,15 +178,15 @@ Group([ (1,5,9)(2,6,10)(3,7,11)(4,8,12) ])
    <Oper Name="CrossActionSubgroup"
          Arg="X X1 X2" />
 <Description>
-When <M>\mathcal{X}_1 = (N \to Q), \mathcal{X}_2 = (M \to P)</M> 
-are two normal subcrossed modules of <M>\mathcal{X} = (\partial : S \to R)</M>, 
+When <M>\calX_1 = (N \to Q), \calX_2 = (M \to P)</M> 
+are two normal subcrossed modules of <M>\calX = (\partial : S \to R)</M>, 
 the displacements <M>\langle p,n \rangle</M> and <M>\langle q,m \rangle</M> 
 all map by <M>\partial</M> into <M>[Q,P]</M>. 
 These displacements form a normal subgroup of <M>S</M>, 
 called the <C>CrossActionSubgroup</C>. 
-The <C>CommutatorSubXMod</C> <M>[\mathcal{X}_1,\mathcal{X}_2]</M> 
+The <C>CommutatorSubXMod</C> <M>[\calX_1,\calX_2]</M> 
 has this subgroup as source and <M>[P,Q]</M> as range, 
-and is normal in <M>\mathcal{X}</M>. 
+and is normal in <M>\calX</M>. 
 </Description>
 </ManSection>
 <P/>
@@ -207,8 +207,8 @@ true
    <Attr Name="DerivedSubXMod"
          Arg="X0" />
 <Description>
-The <C>DerivedSubXMod</C> of <M>\mathcal{X}</M> is the normal subcrossed module 
-<M>[\mathcal{X},\mathcal{X}] = (\partial' : \Disp(\mathcal{X}) \to [R,R])</M> 
+The <C>DerivedSubXMod</C> of <M>\calX</M> is the normal subcrossed module 
+<M>[\calX,\calX] = (\partial' : \Disp(\calX) \to [R,R])</M> 
 where <M>\partial'</M> is the restriction of <M>\partial</M> 
 (see page 66 of Norrie's thesis <Cite Key="N2" />). 
 </Description>
@@ -229,13 +229,13 @@ gap> IdGroup( DXn4 );
          Arg="X0 T Q" />
 <Description>
 The <C>FixedPointSubgroupXMod(X,T,Q)</C> 
-for <M>\mathcal{X}=(\partial : S \to R)</M> is the subgroup 
-<M>\Fix(\mathcal{X},T,Q)</M> 
+for <M>\calX=(\partial : S \to R)</M> is the subgroup 
+<M>\Fix(\calX,T,Q)</M> 
 of elements <M>t \in T \leqslant S</M> individually fixed 
 under the action of <M>Q \leqslant R</M>. 
 <P/>
-The <C>StabilizerSubgroupXMod(X,T,Q)</C> for <M>\mathcal{X}</M> 
-is the subgroup <M>\Stab(\mathcal{X},T,Q)</M> of <M>Q \leqslant R</M> 
+The <C>StabilizerSubgroupXMod(X,T,Q)</C> for <M>\calX</M> 
+is the subgroup <M>\Stab(\calX,T,Q)</M> of <M>Q \leqslant R</M> 
 whose elements act trivially on the whole of <M>T \leqslant S</M> 
 (see page 19 of Norrie's thesis <Cite Key="N2" />). 
 </Description>
@@ -259,21 +259,21 @@ gap> IdGroup( stab );
    <Oper Name="Normalizer"
          Arg="X Y" />
 <Description>
-The <E>centre</E> <M>Z(\mathcal{X})</M>   
-of <M>\mathcal{X} = (\partial : S \to R)</M> 
-has as source the fixed point subgroup <M>\Fix(\mathcal{X},S,R)</M>. 
+The <E>centre</E> <M>Z(\calX)</M>   
+of <M>\calX = (\partial : S \to R)</M> 
+has as source the fixed point subgroup <M>\Fix(\calX,S,R)</M>. 
 The range is the intersection of the centre <M>Z(R)</M>
 with the stabilizer subgroup. 
 <P/> 
-When <M>\mathcal{Y} = (T \to Q)</M> is a subcrossed module of 
-<M>\mathcal{X} = (\partial : S \to R)</M>, the <E>centralizer</E> 
-<M>C_{\mathcal{X}}(\mathcal{Y})</M> of <M>\mathcal{Y}</M> 
-has as source the fixed point subgroup <M>\Fix(\mathcal{X},S,Q)</M>. 
+When <M>\calY = (T \to Q)</M> is a subcrossed module of 
+<M>\calX = (\partial : S \to R)</M>, the <E>centralizer</E> 
+<M>C_{\calX}(\calY)</M> of <M>\calY</M> 
+has as source the fixed point subgroup <M>\Fix(\calX,S,Q)</M>. 
 The range is the intersection of the centralizer <M>C_R(Q)</M> 
-with <M>\Stab(\mathcal{X},T,R)</M>. 
+with <M>\Stab(\calX,T,R)</M>. 
 <P/>
-The <E>normalizer</E> <M>N_{\mathcal{X}}(\mathcal{Y})</M> 
-of <M>\mathcal{Y}</M> has as source the subgroup of <M>S</M> 
+The <E>normalizer</E> <M>N_{\calX}(\calY)</M> 
+of <M>\calY</M> has as source the subgroup of <M>S</M> 
 consisting of the displacements <M>\langle s,q \rangle</M> 
 which lie in <M>S</M>. 
 </Description>
@@ -306,8 +306,8 @@ with the natural homomorphism as the boundary map.
 This is a special case of <Ref Oper="XModByCentralExtension"/>. 
 <P/>
 Similarly, the central quotient of a crossed module 
-<M>\mathcal{X}</M> is the crossed square 
-<M>(\mathcal{X} \Rightarrow \mathcal{X}/Z(\mathcal{X}))</M> 
+<M>\calX</M> is the crossed square 
+<M>(\calX \Rightarrow \calX/Z(\calX))</M> 
 (see section <Ref Sect="sect-xsq-constructions"/>). 
 </Description>
 </ManSection>
@@ -364,45 +364,45 @@ gap> [ IsFaithful2DimensionalGroup(Xn4), IsFaithful2DimensionalGroup(X24) ];
    <Attr Name="NilpotencyClass2DimensionalGroup"
          Arg="X0" />
 <Description>
-Let <M>\mathcal{Y}</M> be a subcrossed module of <M>\mathcal{X}</M>. 
-A <E> series of length</E> <M>n</M> from <M>\mathcal{X}</M> 
-to <M>\mathcal{Y}</M> has the form 
+Let <M>\calY</M> be a subcrossed module of <M>\calX</M>. 
+A <E> series of length</E> <M>n</M> from <M>\calX</M> 
+to <M>\calY</M> has the form 
 <Display>
-\mathcal{X} ~=~ \mathcal{X}_0 ~\unrhd~ \mathcal{X}_1 ~\unrhd~ \cdots 
-                ~\unrhd~ \mathcal{X}_i ~\unrhd~ \cdots 
-                ~\unrhd~ \mathcal{X}_n ~=~ \mathcal{Y} 
+\calX ~=~ \calX_0 ~\unrhd~ \calX_1 ~\unrhd~ \cdots 
+                ~\unrhd~ \calX_i ~\unrhd~ \cdots 
+                ~\unrhd~ \calX_n ~=~ \calY 
                 \quad (1 \leqslant i \leqslant n). 
 </Display> 
-The quotients <M>\mathcal{F}_i = \mathcal{X}_i / \mathcal{X}_{i-1}</M> 
+The quotients <M>\calF_i = \calX_i / \calX_{i-1}</M> 
 are the <E>factors</E> of the series. 
 <P/>
-A factor <M>\mathcal{F}_i</M> is <E>central</E> if 
-<M>\mathcal{X}_{i-1} \unlhd \mathcal{X}</M> and 
-<M>\mathcal{F}_i</M> is a subcrossed module of the centre of 
-<M>\mathcal{X} / \mathcal{X}_{i-1}</M>.  
+A factor <M>\calF_i</M> is <E>central</E> if 
+<M>\calX_{i-1} \unlhd \calX</M> and 
+<M>\calF_i</M> is a subcrossed module of the centre of 
+<M>\calX / \calX_{i-1}</M>.  
 <P/>
 A series is <E>central</E> if all its factors are central. 
 <P/>
-<M>\mathcal{X}</M> is <E>soluble</E> if it has a series 
+<M>\calX</M> is <E>soluble</E> if it has a series 
 all of whose factors are abelian. 
 <P/>
-<M>\mathcal{X}</M> is <E>nilpotent</E> is it has a series 
-all of whose factors are central factors of <M>\mathcal{X}</M>. 
+<M>\calX</M> is <E>nilpotent</E> is it has a series 
+all of whose factors are central factors of <M>\calX</M>. 
 <P/>
-The <E>lower central series</E> of <M>\mathcal{X}</M> 
+The <E>lower central series</E> of <M>\calX</M> 
 is the sequence (see <Cite Key="N2" />, p.77): 
 <Display>
-\mathcal{X} ~=~ \Gamma_1(\mathcal{X}) ~\unrhd~ \Gamma_2(\mathcal{X}) 
+\calX ~=~ \Gamma_1(\calX) ~\unrhd~ \Gamma_2(\calX) 
               ~\unrhd~ \cdots 
 \qquad \mbox{where} \qquad  
-\Gamma_j(\mathcal{X}) ~=~ [ \Gamma_{j-1}(\mathcal{X}), \mathcal{X}].
+\Gamma_j(\calX) ~=~ [ \Gamma_{j-1}(\calX), \calX].
 </Display> 
-If <M>\mathcal{X}</M> is nilpotent, then its lower central series 
+If <M>\calX</M> is nilpotent, then its lower central series 
 is its most rapidly descending central series. 
 <P/>
-The least integer <M>c</M> such that  <M>\Gamma_{c+1}(\mathcal{X})</M> 
+The least integer <M>c</M> such that  <M>\Gamma_{c+1}(\calX)</M> 
 is the trivial crossed module is the <E>nilpotency class</E> 
-of <M>\mathcal{X}</M>.
+of <M>\calX</M>.
 </Description>
 </ManSection>
 <P/>
@@ -464,7 +464,7 @@ gap> Collected( size36 );
          Arg="list" />
 <Description>
 The function <C>IsomorphismXMods</C> computes an isomorphism 
-<M>\mu : \mathcal{X}_1 \to \mathcal{X}_2</M>, 
+<M>\mu : \calX_1 \to \calX_2</M>, 
 provided one exists, or else returns <C>fail</C>. 
 In the example below we see that the <M>17</M> crossed modules 
 of size <C>[6,6]</C> in <C>x66</C> (see the previous subsection) 
@@ -618,21 +618,21 @@ gap> IsoclinicRank( G );
    <Oper Name="AreIsoclinicDomains"
          Arg="X0 Y0" Label="for crossed modules of groups" />
 <Description>
-Let <M>\mathcal{X},\mathcal{Y}</M> be crossed modules with central quotients 
-<M>Q(\mathcal{X})</M> and <M> Q(\mathcal{Y})</M>,  
-and derived subcrossed modules <M>[\mathcal{X},\mathcal{X}]</M> 
-and <M>[\mathcal{Y},\mathcal{Y}]</M> respectively. 
-Let <M>c_\mathcal{X} : Q(\mathcal{X}) \times Q(\mathcal{X}) 
-                    \to [\mathcal{X},\mathcal{X}]</M> 
-and <M>c_\mathcal{Y} : Q(\mathcal{Y}) \times Q(\mathcal{Y}) 
-                    \to [\mathcal{Y},\mathcal{Y}]</M> 
+Let <M>\calX,\calY</M> be crossed modules with central quotients 
+<M>Q(\calX)</M> and <M> Q(\calY)</M>,  
+and derived subcrossed modules <M>[\calX,\calX]</M> 
+and <M>[\calY,\calY]</M> respectively. 
+Let <M>c_\calX : Q(\calX) \times Q(\calX) 
+                    \to [\calX,\calX]</M> 
+and <M>c_\calY : Q(\calY) \times Q(\calY) 
+                    \to [\calY,\calY]</M> 
 be the two commutator maps.  
-An <E>isoclinism</E> <M>\mathcal{X} \sim \mathcal{Y}</M> 
+An <E>isoclinism</E> <M>\calX \sim \calY</M> 
 is a pair of bijective morphisms 
-<M>(\eta,\xi)</M> where <M>\eta : Q(\mathcal{X}) \to Q(\mathcal{Y})</M> 
-and <M>\xi : [\mathcal{X},\mathcal{X}] \to [\mathcal{Y},\mathcal{Y}]</M> 
+<M>(\eta,\xi)</M> where <M>\eta : Q(\calX) \to Q(\calY)</M> 
+and <M>\xi : [\calX,\calX] \to [\calY,\calY]</M> 
 such that
-<M>c_\mathcal{X} * \xi = (\eta \times \eta) * c_\mathcal{Y}</M>. 
+<M>c_\calX * \xi = (\eta \times \eta) * c_\calY</M>. 
 Isoclinism is an equivalence relation, and all abelian crossed modules 
 are isoclinic to the trivial crossed module. 
 <P/>
@@ -668,8 +668,8 @@ gap> Display( ism89 );
    <Attr Name="IsoclinicStemDomain"
          Arg="X0" Label="for crossed modules of groups" />
 <Description>
-A crossed module <M>\mathcal{X}</M> is a <E>stem crossed module</E> 
-if <M>Z(\mathcal{X}) \leq [\mathcal{X},\mathcal{X}]</M>. 
+A crossed module <M>\calX</M> is a <E>stem crossed module</E> 
+if <M>Z(\calX) \leq [\calX,\calX]</M>. 
 Every crossed module is isoclinic to a stem crossed module, 
 but distinct stem crossed modules may be isoclinic. 
 <P/>

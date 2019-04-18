@@ -76,7 +76,7 @@ InstallMethod( PrintObj, "method for a crossed pairing", true,
 function( h )
     local map; 
     map := CrossedPairingMap( h );
-    Print( "crossed pairing: ", Source(map), " -> ", Range(map), "\n" ); 
+    Print( "crossed pairing: ", Source(map), " -> ", Range(map) ); 
 end ); 
 
 #############################################################################
@@ -224,80 +224,19 @@ end );
 ##
 InstallMethod( IsPreCrossedSquare, "generic method for a pre-crossed square",
     true, [ IsHigherDimensionalGroup ], 0,
-function( P )
-
-    local u, d, l, r, ul, dl, ur, dr, bu, bd, bl, br, blbd, bubr,
-          autu, autl, act, diag, ok, morud, morlr;
-
-    if not ( IsPreCrossedSquareObj ( P ) and HasDiagonalAction( P ) 
-             and HasCrossedPairing( P ) ) then
-        return false;
-    fi;
-    u := Up2DimensionalGroup( P );
-    l := Left2DimensionalGroup( P );
-    r := Right2DimensionalGroup( P );
-    d := Down2DimensionalGroup( P );
-    act := DiagonalAction( P );
-    ul := Source( u );
-    ur := Range( u );
-    dl := Source( d );
-    dr := Range( d );
-    if not ( ( ul = Source(l) ) and ( dl = Range(l) ) and
-             ( ur = Source(r) ) and ( dr = Range(r) ) ) then
-        Info( InfoXMod, 2, "Incompatible source/range" );
-        return false;
-    fi;
-    ## construct the boundary of the diagonal
-    bl := Boundary( l );
-    bd := Boundary( d );
-    blbd := bl * bd;
-    bu := Boundary( u );
-    br := Boundary( r );
-    bubr := bu * br;
-    if not ( blbd = bubr ) then
-        Info( InfoXMod, 2, "Boundaries in square do not commute" );
-        return false;
-    fi;
-    ## check the action of the diagonal? 
-    diag := PreXModByBoundaryAndAction( blbd, act );
-    ok := IsPreXMod( diag );
-    if not ok then
-        Info( InfoXMod, 2, "diagonal not a pre-crossed module" );
-        return false;
-    fi;
-    #? compatible actions to be checked?
-    morud := PreXModMorphism( u, d, bl, br );
-    morlr := PreXModMorphism( l, r, bu, bd );
-    if not ( IsPreXModMorphism( morud ) and IsPreXModMorphism( morlr ) ) then
-        Info( InfoXMod, 2, "morud and/or modlr not prexmod morphisms" );
-        return false;
-    fi;
-    #? we have checked that P has a crossed pairing but not any properties 
-    return true;
-end );
-
-#############################################################################
-##
-#M  IsCrossedSquare . . . . . . . . check all the axioms for a crossed square
-##
-InstallMethod( IsCrossedSquare, "generic method for a crossed square",
-    true, [ IsHigherDimensionalGroup ], 0,
-function( XS )
+function( PXS )
 
     local up, lt, rt, dn, L, M, N, P, kappa, lambda, mu, nu, 
-          lambdanu, kappamu, autu, autl, actdg, dg, ok, morud, morlr, 
-          genL, genM, genN, genP, actup, actlt, actrt, actdn, l, p, 
-          xp, x, y, m, n, m2, n2, am, an, apdg, aprt, apdn, nboxm;
+          lambdanu, kappamu, actdg, dg, ok, morupdn, morltrt;
 
-    if not ( IsPreCrossedSquareObj ( XS ) and HasDiagonalAction( XS ) 
-             and HasCrossedPairing( XS ) ) then
+    if not ( IsPreCrossedSquareObj ( PXS ) and HasDiagonalAction( PXS ) ) then
         return false;
     fi;
-    up := Up2DimensionalGroup( XS );
-    lt := Left2DimensionalGroup( XS );
-    rt := Right2DimensionalGroup( XS );
-    dn := Down2DimensionalGroup( XS );
-    actdg := DiagonalAction( XS );
+    up := Up2DimensionalGroup( PXS );
+    lt := Left2DimensionalGroup( PXS );
+    rt := Right2DimensionalGroup( PXS );
+    dn := Down2DimensionalGroup( PXS );
+    actdg := DiagonalAction( PXS );
     L := Source( up );
     M := Range( up );
     N := Source( dn );
@@ -326,12 +265,45 @@ function( XS )
         return false;
     fi;
     #? compatible actions to be checked?
-    morud := PreXModMorphism( up, dn, lambda, mu );
-    morlr := PreXModMorphism( lt, rt, kappa, nu );
-    if not ( IsPreXModMorphism( morud ) and IsPreXModMorphism( morlr ) ) then
-        Info( InfoXMod, 2, "morud and/or morlr not prexmod morphisms" );
+    morupdn := PreXModMorphism( up, dn, lambda, mu );
+    morltrt := PreXModMorphism( lt, rt, kappa, nu );
+    if not ( IsPreXModMorphism(morupdn) and IsPreXModMorphism(morltrt) ) then
+        Info( InfoXMod, 2, "morupdn and/or modltrt not prexmod morphisms" );
         return false;
     fi;
+    return true;
+end );
+
+#############################################################################
+##
+#M  IsCrossedSquare . . . . . . . . check all the axioms for a crossed square
+##
+InstallMethod( IsCrossedSquare, "generic method for a crossed square",
+    true, [ IsHigherDimensionalGroup ], 0,
+function( XS )
+
+    local up, lt, rt, dn, L, M, N, P, kappa, lambda, mu, nu, 
+          lambdanu, kappamu, autu, autl, actdg, dg, ok, morud, morlr, 
+          genL, genM, genN, genP, actup, actlt, actrt, actdn, l, p, 
+          xp, x, y, m, n, m2, n2, am, an, apdg, aprt, apdn, nboxm;
+
+    if not ( IsPreCrossedSquare( XS ) and HasDiagonalAction( XS ) 
+             and HasCrossedPairing( XS ) ) then
+        return false;
+    fi;
+    up := Up2DimensionalGroup( XS );
+    lt := Left2DimensionalGroup( XS );
+    rt := Right2DimensionalGroup( XS );
+    dn := Down2DimensionalGroup( XS );
+    actdg := DiagonalAction( XS );
+    L := Source( up );
+    M := Range( up );
+    N := Source( dn );
+    P := Range( dn );
+    lambda := Boundary( lt );
+    nu := Boundary( dn );
+    kappa := Boundary( up );
+    mu := Boundary( rt );
     genL := GeneratorsOfGroup( L ); 
     genM := GeneratorsOfGroup( M ); 
     genN := GeneratorsOfGroup( N ); 
@@ -426,7 +398,6 @@ function( XS )
             fi; 
         od;
     od;
-##    Print( "SUCCESS\n" );
     return true;
 end );
 
@@ -614,7 +585,6 @@ function( rt, lt )
     diag := SubXMod( rt, L, P );
     act := XModAction( diag );
     XS := PreCrossedSquareObj( up, lt, rt, dn, act, xp );
-##    SetIsCrossedSquare( XS, true );
     if not IsCrossedSquare( XS ) then 
         Error( "XS fails to be a crossed square by normal subxmod" ); 
     fi; 
