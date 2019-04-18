@@ -42,6 +42,7 @@ gap> XSconj := CrossedSquareByNormalSubgroups( c5d, d10a, d10b, d20 );
 [  c5d -> d10a ]
 [   |      |   ]
 [ d10b -> d20  ]
+gap> xpc := CrossedPairing( XSconj );;
 gap> ImageElmCrossedPairing( xpc, [ p2, p12 ] );
 (1,9,7,5,3)(2,10,8,6,4)
 

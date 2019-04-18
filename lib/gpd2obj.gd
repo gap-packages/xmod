@@ -45,15 +45,15 @@ BindGlobal( "Family2DimensionalGroupWithObjects",
 ##
 #P  IsPreXModWithObjects( <PM> ) . . . . . . . . for a 2d-domain with objects 
 #P  IsXModWithObjects( <PM> )  . . . . . . . . . for a 2d-domain with objects
-#P  IsPreCat2Groupoid( <PM> )  . . . . . . . . . for a 2d-domain with objects 
-#P  IsCat2Groupoid( <PM> ) . . . . . . . . . . . for a 2d-domain with objects
+#P  IsPreCat1Groupoid( <PM> )  . . . . . . . . . for a 2d-domain with objects 
+#P  IsCat1Groupoid( <PM> ) . . . . . . . . . . . for a 2d-domain with objects
 ##
 DeclareProperty( "IsPreXModWithObjects", 
     IsPreXMod and Is2DimensionalDomainWithObjects );
 DeclareProperty( "IsXModWithObjects", IsPreXModWithObjects ); 
-DeclareProperty( "IsPreCat2Groupoid",   #? another condition?? 
+DeclareProperty( "IsPreCat1Groupoid",   #? another condition?? 
     Is2DimensionalDomainWithObjects );
-DeclareProperty( "IsCat2Groupoid", IsPreCat2Groupoid ); 
+DeclareProperty( "IsCat1Groupoid", IsPreCat1Groupoid ); 
 
 #############################################################################
 ##

@@ -257,12 +257,12 @@ function( comps, c1 )
     if ForAll( pieces, p -> HasIsPreXMod(p) and IsPreXMod(p) ) then
         SetIsPreXModWithObjects( xwo, true ); 
     fi; 
-    if ForAll( pieces, p -> HasIsCat2Groupoid(p) and IsCat2Groupoid(p) ) then
-        SetIsCat2Groupoid( xwo, true ); 
+    if ForAll( pieces, p -> HasIsCat1Groupoid(p) and IsCat1Groupoid(p) ) then
+        SetIsCat1Groupoid( xwo, true ); 
     fi; 
-    if ForAll( pieces, p -> HasIsPreCat2Groupoid(p) 
-                            and IsPreCat2Groupoid(p) ) then
-        SetIsPreCat2Groupoid( xwo, true ); 
+    if ForAll( pieces, p -> HasIsPreCat1Groupoid(p) 
+                            and IsPreCat1Groupoid(p) ) then
+        SetIsPreCat1Groupoid( xwo, true ); 
     fi; 
 
     #? removed tests as to whether perm-, pc-, etc xmod with objects 
@@ -413,10 +413,23 @@ InstallMethod( PrintObj, "method for prexmods and precat2groups", true,
     [ Is2DimensionalGroupWithObjects ], 0,
 function ( pxwo )
 
-    local len, pieces, i, p; 
+    local len, pieces, i, p, type; 
 
+    if ( HasIsXModWithObjects( pxwo ) and IsXModWithObjects( pxwo ) ) then 
+        type := "crossed module with objects"; 
+    elif ( HasIsPreXModWithObjects( pxwo ) 
+           and IsPreXModWithObjects( pxwo ) ) then 
+        type := "precrossed module with objects"; 
+    elif ( HasIsCat1Groupoid( pxwo ) and IsCat1Groupoid( pxwo ) ) then 
+        type := "cat1-groupoid"; 
+    elif ( HasIsPreCat1Groupoid( pxwo ) 
+           and IsPreCat1Groupoid( pxwo ) ) then 
+        type := "pre-cat1-groupoid"; 
+    else 
+        type := "2dgroup with objects"; 
+    fi;
     if ( HasIsSinglePiece( pxwo ) and IsSinglePiece( pxwo ) ) then
-        Print( "single piece 2dgroup with objects:\n" );
+        Print( "single piece ", type, "\n" );
         Print( "  source groupoid:\n    " );
         Print( Source( pxwo ), "\n" ); 
         Print( "  and range groupoid:\n    " ); 

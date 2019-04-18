@@ -2,7 +2,7 @@
 ##
 #W  gpd2obj.tst                   XMOD test file                Chris Wensley
 ##
-#Y  Copyright (C) 2001-2018, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2019, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 gap> START_TEST( "XMod package: gpd2obj.tst" );
@@ -20,17 +20,19 @@ gap> a4 := Subgroup( s4, [ (1,2,3), (2,3,4) ] );;
 gap> SetName( a4, "a4" );
 gap> X4 := XModByNormalSubgroup( s4, a4 );; 
 gap> DX4 := SinglePiecePreXModWithObjects( X4, [-9,-8,-7], true );
-precrossed module with source groupoid:
-homogeneous, discrete groupoid: < a4, [ -9, -8, -7 ] >
-and range groupoid:
-single piece groupoid: < s4, [ -9, -8, -7 ] >
+single piece crossed module with objects
+  source groupoid:
+    homogeneous, discrete groupoid: < a4, [ -9, -8, -7 ] >
+  and range groupoid:
+    single piece groupoid: < s4, [ -9, -8, -7 ] >
 gap> Da4 := Source( DX4 );; 
 gap> Ds4 := Range( DX4 );;
 gap> CX4 := SinglePiecePreXModWithObjects( X4, [-9,-8,-7], false );
-precrossed module with source groupoid:
-single piece groupoid: < a4, [ -9, -8, -7 ] >
-and range groupoid:
-single piece groupoid: < s4, [ -9, -8, -7 ] >
+single piece crossed module with objects
+  source groupoid:
+    single piece groupoid: < a4, [ -9, -8, -7 ] >
+  and range groupoid:
+    single piece groupoid: < s4, [ -9, -8, -7 ] >
 gap> Ca4 := Source( CX4 );; 
 gap> Cs4 := Range( CX4 );;
 
