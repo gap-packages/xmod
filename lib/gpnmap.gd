@@ -5,18 +5,18 @@
 ##  This file declares functions for n-dimensional-mappings: 
 ##  (pre-)catn-groups. 
 ##
-#Y  Copyright (C) 2001-2018, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2019, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 ###############################  nd MAPPINGS  ################################ 
 
 #############################################################################
 ##
-#P  IsPreCatnMorphism( <map> ) 
-#P  IsCatnMorphism( <map> ) 
+#P  IsPreCatnGroupMorphism( <map> ) 
+#P  IsCatnGroupMorphism( <map> ) 
 ##  
-DeclareProperty( "IsPreCatnMorphism", IsHigherDimensionalGroupMorphism );
-DeclareProperty( "IsCatnMorphism", IsHigherDimensionalGroupMorphism );
+DeclareProperty( "IsPreCatnGroupMorphism", IsHigherDimensionalGroupMorphism );
+DeclareProperty( "IsCatnGroupMorphism", IsHigherDimensionalGroupMorphism );
 
 #############################################################################
 ##
@@ -40,15 +40,13 @@ DeclareGlobalFunction( "HigherDimensionalMagmaMorphism" );
 DeclareAttribute( "KernelHigherDimensionalMapping", 
     IsHigherDimensionalGroupMorphism );
 
-# -----------------------
-
 #############################################################################
 ##
-#F  PreCatnMorphism( <args> )
-#O  PreCatnMorphismByMorphisms( [list] )
+#F  PreCatnGroupMorphism( <args> )
+#O  PreCatnGroupMorphismByMorphisms( [list] )
 ##
-DeclareGlobalFunction( "PreCatnMorphism" );
-DeclareOperation( "PreCatnMorphismByMorphisms", 
+DeclareGlobalFunction( "PreCatnGroupMorphism" );
+DeclareOperation( "PreCatnGroupMorphismByMorphisms", 
     [ IsPreCatnGroup, IsPreCatnGroup, IsList ] );
 
 #############################################################################
@@ -61,11 +59,11 @@ DeclareOperation( "MakeHigherDimensionalGroupMorphism",
 
 #############################################################################
 ##
-#F  CatnMorphism( <args> )
-#O  CatnMorphismByMorphisms( <src>, <rng>, <up>, <dn> )
+#F  CatnGroupMorphism( <args> )
+#O  CatnGroupMorphismByMorphisms( <src>, <rng>, <up>, <dn> )
 ##
-DeclareGlobalFunction( "CatnMorphism" );
-DeclareOperation( "CatnMorphismByMorphisms", 
+DeclareGlobalFunction( "CatnGroupMorphism" );
+DeclareOperation( "CatnGroupMorphismByMorphisms", 
     [ IsCatnGroup, IsCatnGroup, IsList ] );
 
 #############################################################################

@@ -1,7 +1,9 @@
 # CHANGES to the 'XMod' package
 
-## 2.73 -> 2.73dev (00/04/2019) 
+## 2.73 -> 2.73dev (00/05/2019) 
 
+ * (10/05/19) added in new functions from Alper for AllCat2Groups (up to iso) 
+ * (18/04/19) reorganised all .tst files into /tst/manual/ and /tst/extra/
  * (11/04/19) corrected UnionOfPiecesOp for prexmods with objects 
  * (09/04/19) added names and examples of crossed pairing functions to manual 
  * (13/03/19) added initial implementation of group groupoids (manual 2.8) 

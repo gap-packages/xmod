@@ -2,7 +2,7 @@
 ##
 ##  gp3obj.gd                 GAP4 package `XMod'                Chris Wensley
 ##                                                                Alper Odabas
-#Y  Copyright (C) 2001-2018, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2019, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file declares generic methods for (pre-)crossed squares and
@@ -176,7 +176,7 @@ InstallTrueMethod( IsPreCat2Group, IsCat2Group );
 ##
 #F  PreCat2Group( <arg> ) 
 #F  Cat2Group( <arg> }
-#O  DetermineRightDownCat1Groups( <first>, <second> )
+#O  DetermineRightDownCat1Groups( <up>, <left> )
 #O  PreCat2GroupByPreCat1Groups( <up>, <left>, <right>, <down> )
 ##
 DeclareGlobalFunction( "PreCat2Group" );
@@ -185,6 +185,20 @@ DeclareOperation( "DetermineRightDownCat1Groups",
     [ IsPreCat1Group, IsPreCat1Group ] );
 DeclareOperation( "PreCat2GroupByPreCat1Groups", 
     [ IsPreCat1Group, IsPreCat1Group, IsPreCat1Group, IsPreCat1Group ] );
+
+#############################################################################
+##
+##  functions for the paper "Computing 3-Dimensional Groups ..." 
+## 
+#O  AllCat2Groups( <G> ) 
+#O  AllCat2GroupsUpToIsomorphism( <G> ) 
+#O  TableRowForCat1Groups( <G> ) 
+#O  TableRowForCat2Groups( <G> ) 
+## 
+DeclareOperation( "AllCat2Groups", [ IsGroup ] ); 
+DeclareOperation( "AllCat2GroupsUpToIsomorphism", [ IsGroup ] ); 
+DeclareOperation( "TableRowForCat1Groups", [ IsGroup ] ); 
+DeclareOperation( "TableRowForCat2Groups", [ IsGroup ] ); 
 
 #############################################################################
 ## 
@@ -208,11 +222,11 @@ DeclareAttribute( "PreCat2GroupOfPreCrossedSquare", IsPreCrossedSquare );
 DeclareAttribute( "CrossedSquareOfCat2Group", IsCat2Group );
 DeclareAttribute( "Cat2GroupOfCrossedSquare", IsCrossedSquare );
 
-########################################################## 
-##                                                      ##
-##  NONE OF THE FOLLOWING HAVE BEEN IMPLEMENTED SO FAR  ## 
-##                                                      ## 
-########################################################## 
+######################################################################## 
+##                                                                    ##
+##  NONE OF THE FOLLOWING SUB-FUNCTIONS HAVE BEEN IMPLEMENTED SO FAR  ## 
+##                                                                    ## 
+######################################################################## 
 
 #############################################################################
 ##

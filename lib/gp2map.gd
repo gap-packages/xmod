@@ -131,9 +131,11 @@ DeclareAttribute( "SmallerDegreePermPreXMod", IsPreXMod );
 #############################################################################
 ##
 #O  IsomorphismPreCat1Groups( <precat1>, <precat1> )
+#O  IsomorphismCat1Groups( <cat1>, <cat1> )
 ##
 DeclareOperation( "IsomorphismPreCat1Groups", 
     [ IsPreCat1Group, IsPreCat1Group ] );
+DeclareOperation( "IsomorphismCat1Groups", [ IsCat1Group, IsCat1Group ] );
 
 #############################################################################
 ##

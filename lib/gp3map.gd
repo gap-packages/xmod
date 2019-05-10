@@ -5,7 +5,7 @@
 ##  This file declares functions for 3dimensional-mappings: 
 ##  (pre-)crossed squares and (pre-)cat2-groups. 
 ##
-#Y  Copyright (C) 2001-2018, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2019, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 #############################################################################
@@ -75,3 +75,25 @@ DeclareAttribute( "Cat2GroupMorphismOfCrossedSquareMorphism",
 ##
 DeclareOperation( "Display3DimensionalMorphism", 
     [ IsHigherDimensionalMapping ] );
+
+#############################################################################
+##
+#O  IsomorphismPreCat2GroupsNoTranspose( <precat2>, <precat2> )
+#O  IsomorphismCat2GroupsNoTranspose( <cat2>, <cat2> )
+#O  IsomorphismPreCat2Groups( <precat2>, <precat2> )
+#O  IsomorphismCat2Groups( <cat2>, <cat2> )
+##
+DeclareOperation( "IsomorphismPreCat2GroupsNoTranspose", 
+    [ IsPreCat2Group, IsPreCat2Group ] );
+DeclareOperation( "IsomorphismCat2GroupsNoTranspose", 
+    [ IsCat2Group, IsCat2Group ] );
+DeclareOperation( "IsomorphismPreCat2Groups", 
+    [ IsPreCat2Group, IsPreCat2Group ] );
+DeclareOperation( "IsomorphismCat2Groups", 
+    [ IsCat2Group, IsCat2Group ] );
+
+#############################################################################
+##
+#O  AllCat2GroupMorphisms( <cat2>, <cat2> ) 
+## 
+DeclareOperation( "AllCat2GroupMorphisms", [ IsCat2Group, IsCat2Group ] ); 

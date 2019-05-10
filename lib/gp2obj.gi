@@ -2,7 +2,7 @@
 ##
 #W  gp2obj.gi                 GAP4 package `XMod'               Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2018, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2019, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 ##  This file contains generic methods for (pre-)crossed modules and
@@ -2350,15 +2350,16 @@ end );
 ##############################################################################
 ##
 #M  AllCat1Groups . . . . . . . list of cat1-group structures on a given group
+#M  AllCat1GroupsUpToIsomorphism . . . iso class reps of cat1-group structures
 ##
-InstallMethod( AllCat1Groups, "cat1-group structures on a given group",
-    true, [ IsGroup ], 0,
+InstallMethod( AllCat1Groups, "all cat1-group structures on a group", true, 
+    [ IsGroup ], 0,
 function( gp )
 
     local L, homs, idem, num, i, j, C, ok; 
 
-    homs := AllHomomorphisms( gp, gp );
-    idem := Filtered( homs, i -> CompositionMapping(i,i) = i );
+    homs := AllEndomorphisms( gp );
+    idem := Filtered( homs, h -> CompositionMapping( h, h ) = h );
     num := Length( idem ); 
     L := [ ]; 
     for i in [1..num] do 
@@ -2375,11 +2376,48 @@ function( gp )
     return L;
 end );
 
+InstallMethod( AllCat1GroupsUpToIsomorphism, "iso class reps of cat1-groups", 
+    true, [ IsGroup ], 0,
+function( gp )
+
+    local homs, idem, idnum, L, numL, i, j, k, C, ok, found, iso;
+
+    homs := AllEndomorphisms( gp );
+    idem := Filtered( homs, h -> CompositionMapping( h, h ) = h );
+    idnum := Length( idem ); 
+    L := [ ]; 
+    numL := 0; 
+    for i in [1..idnum] do 
+        for j in [1..idnum] do 
+            C := PreCat1GroupByEndomorphisms( idem[i], idem[j] );
+            if ( C <> fail ) then 
+                ok := IsCat1Group( C ); 
+                if ok then 
+                    k := 0; 
+                    found := false; 
+                    while ( not found ) and ( k < numL ) do 
+                        k := k+1; 
+                        iso := IsomorphismCat1Groups( C, L[k] ); 
+                        if ( iso <> fail ) then 
+                             found := true; 
+                        fi; 
+                    od; 
+                    if not found then 
+                        Add( L, C ); 
+                        numL := numL + 1;
+                    fi;
+                fi; 
+            fi; 
+        od; 
+    od;
+    return L;
+end );
+
 #############################################################################
 ##
-#M  DirectProductInfo( <obj> ) . . . . . . . . . . . . . . . . . for 2d-objects
-#M  Coproduct2dInfo( <obj> ) . . . . . . . . . . . . . . . . . . for 2d-objects
-#M  DirectProductOp(  ) . . . . . . .  (bdy1 x bdy2) : (S1 x S2) --> (R1 x R2)
+#M  DirectProductInfo( <obj> ) . . . . . . . . . . . . . . . . for 2d-objects
+#M  Coproduct2dInfo( <obj> ) . . . . . . . . . . . . . . . . . for 2d-objects
+#M  DirectProductOp(  )  . . . . . .  (bdy1 x bdy2) : (S1 x S2) --> (R1 x R2)
 ##
 InstallOtherMethod( DirectProductInfo, "generic method for 2d-objects", true, 
     [ Is2DimensionalDomain ], 0,
@@ -2765,4 +2803,24 @@ function( XM )
         od;
     od;
     return norm;
+end );
+
+##############################################################################
+##
+#M  AllIsomorphismsGroups . . . . . . . . . . . . . . . . . . . for two groups
+##
+##  here temporarily until AllIsomorphisms appears in the library or in Utils 
+## 
+InstallMethod( AllIsomorphismsGroups, "for two groups", true, 
+    [ IsGroup, IsGroup ], 0,
+function( G, H )
+
+    local iso, autos;
+
+    iso := IsomorphismGroups( G, H ); 
+    if (iso = fail ) then 
+        return [ ];
+    fi;
+    autos := AllAutomorphisms( G ); 
+    return List( autos, a -> a*iso ); 
 end );

@@ -5,7 +5,7 @@
 ##  This file installs methods for 2DimensionalMappings 
 ##  for crossed modules and cat1-groups. 
 ##
-#Y  Copyright (C) 2001-2018, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2019, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 ##############################################################################
@@ -89,7 +89,7 @@ end );
 #M  Make2DimensionalGroupMorphism( <list> ) . . . . . . . . . . . 2d-group map 
 ##
 InstallMethod( Make2DimensionalGroupMorphism,
-    "for list [2d-group, 2d-group, homomorphism, homomorphism ]", true,
+    "for list [ 2d-group, 2d-group, homomorphism, homomorphism ]", true,
     [ IsList ], 0,
 function( L )
 
@@ -1070,13 +1070,13 @@ end );
 ###############################################################################
 ##
 #M  IsomorphismPreCat1Groups . . isomorphism between a pair of pre-cat1-groups 
+#M  IsomorphismCat1Groups  . . . isomorphism between a pair of cat1-groups 
 ##
 InstallMethod( IsomorphismPreCat1Groups, "generic method for 2 pre-cat1-groups", 
     true, [ IsPreCat1Group, IsPreCat1Group ], 0,
 function( C1, C2 )
 
-    local t1, h1, e1, t2, h2, e2, G1, G2, R1, R2, A, phi, psi, 
-          alpha, gamma, rho;
+    local t1, h1, e1, t2, h2, e2, G1, G2, R1, R2, phi, psi, alpha, gamma, rho;
 
     G1 := Source( C1 ); 
     G2 := Source( C2 ); 
@@ -1104,18 +1104,34 @@ function( C1, C2 )
     h2 := HeadMap( C2 );
     e1 := RangeEmbedding( C1 ); 
     e2 := RangeEmbedding( C2 ); 
-    A := AutomorphismGroup( G1 ); 
-    for alpha in A do 
+    for alpha in AutomorphismGroup( G1 ) do 
         gamma := alpha * phi; 
         rho := e1 * gamma * t2; 
         if ( ( e1*gamma = rho*e2 ) and 
              ( gamma*h2 = h1*rho ) and 
              ( gamma*t2 = t1*rho ) ) then 
-            return PreCat1GroupMorphismByGroupHomomorphisms( C1, C2, gamma, rho ); 
+            return PreCat1GroupMorphismByGroupHomomorphisms(C1,C2,gamma,rho); 
         fi; 
     od;
     return fail;
 end );          
+
+InstallMethod( IsomorphismCat1Groups, "generic method for 2 cat1-groups", 
+    true, [ IsCat1Group, IsCat1Group ], 0,
+function( C1, C2 )
+
+    local iso, ok; 
+
+    iso := IsomorphismPreCat1Groups( C1, C2 ); 
+    if ( iso = fail ) then 
+        return fail; 
+    fi;
+    ok := IsCat1GroupMorphism( iso );
+    if not ok then 
+        Error( "found a pre-cat1 morphism which is not a cat1-morphism" ); 
+    fi; 
+    return iso;
+end );
 
 #############################################################################
 ##

@@ -5,7 +5,7 @@
 ##  This file implements functions for 3Dimensional Mappings for 
 ##  (pre-)crossed squares and (pre-)cat2-groups. 
 ##
-#Y  Copyright (C) 2001-2018, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2019, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 #############################################################################
@@ -82,7 +82,7 @@ function( mor )
     local PC, QC, upmor, dnmor, ok, d1, d2, u1, u2, G1, G2, P1, P2, p1, q1, 
           comp1, G11, G12, P11, P12, p2, q2, comp2;
 
-    if not ( IsPreCatnMorphism( mor ) and ( HigherDimension = 2 ) ) then
+    if not ( IsPreCatnGroupMorphism( mor ) and ( HigherDimension = 2 ) ) then
         return true;
     else
         return false;
@@ -525,4 +525,158 @@ function( obj, sub )
     else
         return fail;
     fi;
+end );
+
+###############################################################################
+##
+#M  IsomorphismPreCat2GroupsNoTranspose . . . . iso between two pre-cat2-groups 
+#M  IsomorphismCat2GroupsNoTranspose  . . . . . . . iso between two cat2-groups 
+#M  IsomorphismPreCat2Groups  . . . . . . . . . iso between two pre-cat2-groups 
+#M  IsomorphismCat2Groups . . . . . . . . . . . . . iso between two cat2-groups 
+## 
+## this seems to be an inefficient algorithm, but will do for now 
+##
+InstallMethod( IsomorphismCat2GroupsNoTranspose, "for two cat2-groups", true, 
+    [ IsCat2Group, IsCat2Group ], 0,
+function( C1, C2 ) 
+
+    local u1, d1, u2, d2, G1, R1, Q1, P1, G2, R2, Q2, P2, 
+          m1_ler, m2_ler, alp, ph, mor1, ispre1, ispre2, gm, mor2, up, dn, mor; 
+
+    u1 := Up2DimensionalGroup( C1 );
+    d1 := Down2DimensionalGroup( C1 );
+    u2 := Up2DimensionalGroup( C2 );
+    d2 := Down2DimensionalGroup( C2 );
+    G1 := Source( u1 );
+    R1 := Range( u1 );
+    Q1 := Source( d1 );
+    P1 := Range( d1 );
+    G2 := Source( u2 );
+    R2 := Range( u2 );
+    Q2 := Source( d2 );
+    P2 := Range( d2 );
+    if IsomorphismGroups( G1, G2 ) = fail  then
+        Info( InfoXMod, 2, "G1 !~ G2" );
+        return fail;
+    fi;
+    if IsomorphismGroups( R1, R2 ) = fail  then
+        Info( InfoXMod, 2, "R1 !~ R2" );
+        return fail;
+    fi;
+    if IsomorphismGroups( Q1, Q2 ) = fail  then
+        Info( InfoXMod, 2, "Q1 !~ Q2" );
+        return fail;
+    fi;
+    if IsomorphismGroups( P1, P2 ) = fail  then
+        Info( InfoXMod, 2, "P1 !~ P2" );
+        return fail;
+    fi;
+    m1_ler := [ ]; 
+    m2_ler := [ ]; 
+    for alp in AllIsomorphismsGroups( G1, G2 ) do
+        for ph in AllIsomorphismsGroups( R1, R2 ) do
+            mor1 := Make2DimensionalGroupMorphism( [ u1, u2, alp, ph ] );
+            ispre1 := ( not( mor1 = fail ) and IsPreCat1GroupMorphism( mor1 ) );
+            if ispre1 then
+                Add( m1_ler, PreCat1GroupMorphism( u1, u2, alp, ph ) );
+            fi;
+        od;
+    od; 
+    for alp in AllIsomorphismsGroups( Q1, Q2 ) do
+        for gm in AllIsomorphismsGroups( P1, P2 ) do
+            mor2 := Make2DimensionalGroupMorphism( [ d1, d2, alp, gm ] );
+            ispre2 := ( not( mor2 = fail ) and IsPreCat1GroupMorphism( mor2 ) );
+            if ispre2 then 
+                Add( m2_ler, PreCat1GroupMorphism( d1, d2, alp, gm));
+            fi;
+        od;
+    od;    
+    m1_ler := Filtered( m1_ler, IsCat1GroupMorphism );
+    m2_ler := Filtered( m2_ler, IsCat1GroupMorphism );
+    for up in m1_ler do
+        for dn in m2_ler do 
+            mor := MakeHigherDimensionalGroupMorphism( C1, C2, [up,dn] );
+            if IsCat2GroupMorphism( mor ) then
+                return mor;
+            fi;
+        od;
+    od; 
+    return fail; 
+end );
+
+InstallMethod( IsomorphismCat2Groups, "for two cat2-groups", true, 
+    [ IsCat2Group, IsCat2Group ], 0,
+function( C1, C2 ) 
+
+    local iso, TC2; 
+
+    iso := IsomorphismCat2GroupsNoTranspose( C1, C2 ); 
+    if ( iso = fail ) then 
+        TC2 := Transpose3DimensionalGroup( C2 ); 
+        iso := IsomorphismCat2GroupsNoTranspose( C1, TC2 ); 
+    fi; 
+    return iso; 
+end ); 
+
+###############################################################################
+##
+#M  AllCat2GroupMorphisms  . . . . . . morphisms from one cat2-group to another 
+##
+InstallMethod( AllCat2GroupMorphisms, "for two cat2-groups", true, 
+    [ IsCat2Group, IsCat2Group ], 0,
+function( C2G1, C2G2 ) 
+
+    local sonuc, G1, R1, Q1, P1, b2, a2, b1, a1, G2, R2, Q2, P2, 
+          alpha1, phi1, gamma1, m1_ler, m2_ler, m3_ler, m1, alp, ph, gm, 
+          u1, u2, d1, d2, up, dn, mor1, ispre1, mor2, ispre2, mor;
+
+    sonuc := true; 
+    u1 := Up2DimensionalGroup( C2G1 );
+    d1 := Down2DimensionalGroup( C2G1 );
+    u2 := Up2DimensionalGroup( C2G2 );
+    d2 := Down2DimensionalGroup( C2G2 );
+    G1 := Source( u1 );
+    R1 := Range( u1 );
+    Q1 := Source( d1 );
+    P1 := Range( d1 );
+    G2 := Source( u2 );
+    R2 := Range( u2 );
+    Q2 := Source( d2 );
+    P2 := Range( d2 );
+    alpha1 := AllHomomorphisms( G1, G2 );    
+    phi1 := AllHomomorphisms( R1, R2 );    
+    m1_ler := [];    
+    m2_ler := [];
+    for alp in alpha1 do
+        for ph in phi1 do
+            mor1 := Make2DimensionalGroupMorphism( [ u1, u2, alp, ph ] );
+            ispre1 := ( not( mor1 = fail ) and IsPreCat1GroupMorphism( mor1 ) );
+            if ispre1 then
+                Add( m1_ler, PreCat1GroupMorphism( u1, u2, alp, ph ) );
+            fi;
+        od;
+    od;    
+    alpha1 := AllHomomorphisms( Q1, Q2 );
+    gamma1 := AllHomomorphisms( P1, P2 );
+    for alp in alpha1 do
+        for gm in gamma1 do
+            mor2 := Make2DimensionalGroupMorphism( [ d1, d2, alp, gm ] );
+            ispre2 := ( not( mor2 = fail ) and IsPreCat1GroupMorphism( mor2 ) );
+            if ispre2 then 
+                Add( m2_ler, PreCat1GroupMorphism( d1, d2, alp, gm ) );
+            fi;
+        od;
+    od;    
+    m1_ler := Filtered( m1_ler, IsCat1GroupMorphism );
+    m2_ler := Filtered( m2_ler, IsCat1GroupMorphism );
+    m3_ler := [];     
+    for up in m1_ler do
+        for dn in m2_ler do 
+            mor := MakeHigherDimensionalGroupMorphism( C2G1, C2G2, [up,dn] );
+            if IsCat2GroupMorphism( mor ) then
+                Add( m3_ler, mor);            
+            fi;
+        od;
+    od;    
+    return m3_ler;
 end );

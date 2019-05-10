@@ -5,7 +5,7 @@
 ##  This file implements functions for Higher Dimensional Mappings for 
 ##  (pre-)catn-groups. 
 ##
-#Y  Copyright (C) 2001-2018, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2019, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 ##############################################################################
@@ -21,24 +21,25 @@ function( src, rng, mors )
     
     dim := HigherDimension( src );
     if ( dim <> HigherDimension( rng ) ) then 
-        Print( "Source and Range must have the same dimension\n" );
+        Info( InfoXMod, 1, "Source and Range must have the same dimension" );
         return fail;
     fi;
     n := Length( mors ); 
     if ( HasIsPreCat2Group(src) and IsPreCat2Group(src) ) then 
         if ( dim-1  <> n ) then
-            Print( "third argument should have length ", dim-1, "\n" );
+            Info( InfoXMod, 1, "third argument should have length ", dim-1 );
             return fail;
         fi; 
     elif ( HasIsPreCrossedSquare(src) and IsPreCrossedSquare(src) ) then  
         ## morphism of (pre)crossed squares 
         if ( dim  <> n-1 ) then
-            Print( "third argument should have length ", dim+1, "\n" );
+            Info( InfoXMod, 1, "third argument should have length ", dim+1 );
             return fail; 
         fi;
     fi;
     if ForAny( mors, x -> not Is2DimensionalGroupMorphism(x) ) then 
-        Print( "Entries in list mors must be pre-cat1-group morphisms\n" );
+        Info( InfoXMod, 1, 
+              "Entries in list mors must be pre-cat1-group morphisms" );
         return fail;
     fi;
     mor := rec();
@@ -56,12 +57,11 @@ function( src, rng, mors )
     return mor; 
 end );
 
-
 #############################################################################
 ##
-#M  IsPreCatnMorphism . . . . . . .  check the axioms for a pre-catn morphism
+#M  IsPreCatnGroupMorphism . . . . . check the axioms for a pre-catn morphism
 ##
-InstallMethod( IsPreCatnMorphism,
+InstallMethod( IsPreCatnGroupMorphism,
     "generic method for pre-catn homomorphisms", true, 
     [ IsHigherDimensionalGroupMorphism ], 0,
 function( mor )
@@ -87,11 +87,13 @@ function( mor )
     srchoms := List( 2dmor, x -> SourceHom(x) ); 
     for x in [1..Length(2dmor)] do 
         if ( Source( rnghoms[x] ) <> rangePC[x] ) then 
-            Print( x, "a : ", Source(rnghoms[x]), " <> ", rangePC[x], "\n" );  
+            Info( InfoXMod, 1, x, "a : ", Source(rnghoms[x]), 
+                  " <> ", rangePC[x], "\n" );  
             return false;
         fi;    
         if ( Range( rnghoms[x] ) <> rangeQC[x] ) then 
-            Print( x, "b : ", Source(rnghoms[x]), " <> ", rangePC[x], "\n" );  
+            Info( InfoXMod, 1, x, "b : ", Source(rnghoms[x]), 
+                  " <> ", rangePC[x], "\n" );  
             return false;
         fi;    
     od;
@@ -122,17 +124,17 @@ end );
 
 #############################################################################
 ##
-#M  IsCatnMorphism
+#M  IsCatnGroupMorphism
 ##
-InstallMethod( IsCatnMorphism, "generic method for higher dimensional mappings", true,
-   [ IsHigherDimensionalGroupMorphism ], 0,
+InstallMethod( IsCatnGroupMorphism, "generic method for higher dim mappings", 
+    true, [ IsHigherDimensionalGroupMorphism ], 0,
 function( mor )
     local ispre;
-    ispre := IsPreCatnMorphism( mor );
+    ispre := IsPreCatnGroupMorphism( mor );
     if not ispre then
         return false;
     else
-        return ( IsCatnGroup( Source( mor ) ) and IsCatnGroup(  Range( mor ) ) );
+        return ( IsCatnGroup( Source(mor) ) and IsCatnGroup( Range(mor) ) );
     fi;
 end );
 
@@ -154,7 +156,7 @@ function ( mor, phi )
     
     if ( ( n1 <> n2 ) or ( mors1 <> mors2  ) ) then
         return false;
-    elif ( IsPreCatnMorphism( mor ) and IsPreCatnMorphism( phi ) 
+    elif ( IsPreCatnGroupMorphism( mor ) and IsPreCatnGroupMorphism( phi ) 
            and (Source(mor) = Source(phi)) and (Range(mor) = Range(phi)) ) then
         return true;
     fi;
@@ -217,7 +219,7 @@ function( mor )
         Display3DimensionalMorphism( mor ); 
     else 
         mors := ListOfHomomorphisms( mor );
-        if ( HasIsCatnMorphism( mor ) and IsCatnMorphism( mor ) ) then
+        if ( HasIsCatnGroupMorphism( mor ) and IsCatnGroupMorphism( mor ) ) then
             Print( "Morphism of cat",n-1,"-groups :- \n" );
         else
             Print( "Morphism of pre-cat",n-1,"-groups :- \n" );
@@ -261,33 +263,33 @@ function( obj )
         return CrossedSquareMorphismByXModMorphisms( obj, obj, idmaps ); 
     else 
         idmaps := List( GeneratingCat1Groups( obj ), C -> IdentityMapping(C) ); 
-        return PreCatnMorphismByMorphisms( obj, obj, idmaps ); 
+        return PreCatnGroupMorphismByMorphisms( obj, obj, idmaps ); 
     fi;
 end );
 
 ##############################################################################
 ##
-#F  CatnMorphism( [list] ) . . catn morphism
+#F  CatnGroupMorphism( [list] ) . . catn morphism
 ##
-InstallGlobalFunction( CatnMorphism, function( arg )
+InstallGlobalFunction( CatnGroupMorphism, function( arg )
 
     local nargs;
     nargs := Length( arg );
 
     if ( ( nargs = 3 ) and IsCatnGroup( arg[1]) 
          and IsCatnGroup( arg[2] ) and IsList( arg[3] ) ) then
-        return  CatnMorphismByMorphisms( arg[1], arg[2], arg[3] );
+        return  CatnGroupMorphismByMorphisms( arg[1], arg[2], arg[3] );
     fi;
     # alternatives not allowed
-    Info( InfoXMod, 2, "usage: CatnMorphism( src, rng, list of maps );" );
+    Info( InfoXMod, 2, "usage: CatnGroupMorphism( src, rng, list of maps );" );
     return fail;
 end );
 
 ###############################################################################
 ##
-#M  PreCatnMorphismByMorphisms( <src>, <rng>, <list of maps> ) 
+#M  PreCatnGroupMorphismByMorphisms( <src>, <rng>, <list of maps> ) 
 ##
-InstallMethod( PreCatnMorphismByMorphisms,
+InstallMethod( PreCatnGroupMorphismByMorphisms,
     "method for a higher dimensional mapping", true,
     [ IsPreCatnGroup, IsPreCatnGroup, IsList ], 0,
 function( src, rng, L )
@@ -299,12 +301,12 @@ function( src, rng, L )
         Error( "src and rng have different dimensions" ); 
     fi; 
     if ( Length(L) <> dim ) then 
-        Print( "L should contain ", dim, " morphisms\n" );
+        Info( InfoXMod, 1, "L should contain ", dim, " morphisms" );
         return fail;        
     fi;
     mor := MakeHigherDimensionalGroupMorphism( src, rng, L );
-        if not IsPreCatnMorphism( mor ) then
-        Info( InfoXMod, 2, "not a morphism of pre-catn-groups" );
+        if not IsPreCatnGroupMorphism( mor ) then
+            Info( InfoXMod, 2, "not a morphism of pre-catn-groups" );
         return fail;
     fi;
     return mor;
@@ -312,15 +314,15 @@ end );
 
 ##############################################################################
 ##
-#M  CatnMorphismByMorphisms . . . . . . . . . for a higher dimensional mapping
+#M  CatnGroupMorphismByMorphisms . . . . . . . . . for a higher dimensional mapping
 ##
-InstallMethod( CatnMorphismByMorphisms, "method for a nd-mapping", true, 
+InstallMethod( CatnGroupMorphismByMorphisms, "method for a nd-mapping", true, 
     [ IsCatnGroup, IsCatnGroup, IsList], 0,
 function( src, rng, L )
 
     local mor, ok;
-    mor := PreCatnMorphismByMorphisms( src, rng, L );
-    ok := IsCatnMorphism( mor );
+    mor := PreCatnGroupMorphismByMorphisms( src, rng, L );
+    ok := IsCatnGroupMorphism( mor );
     if not ok then
         return fail;
     fi;
@@ -357,18 +359,18 @@ function( m2, m1 )
     list := [ Source( m1 ), Range( m2 ) ];
     Append( list, comps );
     comp := MakeHigherDimensionalMapping( list );
-    if ( IsPreCatnMorphism( m1 ) and IsPreCatnMorphism( m2 ) ) then
-        SetIsPreCatnMorphism( comp, true );
+    if ( IsPreCatnGroupMorphism( m1 ) and IsPreCatnGroupMorphism( m2 ) ) then
+        SetIsPreCatnGroupMorphism( comp, true );
     fi;
-    if ( IsCatnMorphism( m1 ) and IsCatnMorphism( m2 ) ) then
-        SetIsCatnMorphism( comp, true );
+    if ( IsCatnGroupMorphism( m1 ) and IsCatnGroupMorphism( m2 ) ) then
+        SetIsCatnGroupMorphism( comp, true );
     fi;
     return comp;
 end );
 
 ##############################################################################
 ##
-#M  Order . . . . . . . . . . . . . . . . . . . for a higher dimensional mapping
+#M  Order . . . . . . . . . . . . . . . . . . for a higher dimensional mapping
 ##
 InstallOtherMethod( Order, "method for a higher dimensional mapping", true, 
     [ IsHigherDimensionalMapping ], 0,
@@ -404,7 +406,7 @@ end );
 
 ##############################################################################
 ##
-#M  IsSurjective( map ) . . . . . . . . . . . . . . for a higher dimensional mapping
+#M  IsSurjective( map ) . . . . . . . . . . . for a higher dimensional mapping
 ##
 InstallOtherMethod( IsSurjective, "method for a higher dimensional mapping", 
     true, [ IsHigherDimensionalMapping ], 0,
@@ -487,7 +489,7 @@ function( map )
     local ok, 2d_maps;
     
     2d_maps := ListOfHomomorphisms( map );
-    ok := ForAll( 2d_maps, f -> IsEndomorphism2DimensionalDomain(f) );
+    ok := ForAll( 2d_maps, f -> IsEndomorphism2DimensionalDomain( f ) );
     if not ok then
         return false;
     fi;    
@@ -497,5 +499,4 @@ end );
 InstallMethod( IsAutomorphismHigherDimensionalDomain, 
     "method for a higher dimensional mapping", true, 
     [ IsHigherDimensionalMapping ], 0,
-    map -> IsEndomorphismHigherDimensionalDomain( map ) 
-           and IsBijective( map ) );
+    map -> IsEndomorphismHigherDimensionalDomain(map) and IsBijective(map) );

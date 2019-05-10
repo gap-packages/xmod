@@ -2,7 +2,7 @@
 ##
 #W  gp2obj.gd                  GAP4 package `XMod'               Chris Wensley
 #W                                                                 & Murat Alp
-#Y  Copyright (C) 2001-2018, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2019, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 #############################################################################
@@ -322,6 +322,7 @@ DeclareOperation( "PermCat1Select", [ IsInt, IsInt, IsInt ] );
 DeclareOperation( "Cat1GroupByPeifferQuotient", [ IsPreCat1Group ] );
 DeclareOperation( "DiagonalCat1Group", [ IsList ] ); 
 DeclareOperation( "AllCat1Groups", [ IsGroup ] ); 
+DeclareOperation( "AllCat1GroupsUpToIsomorphism", [ IsGroup ] ); 
 
 #############################################################################
 ##
@@ -339,6 +340,10 @@ DeclareAttribute( "Coproduct2dInfo", Is2DimensionalDomain, "mutable" );
 DeclareAttribute( "NormalSubXMods", IsXMod );
 DeclareAttribute( "NormalSubCat1Groups", IsCat1Group );
 
-#############################################################################
-##
-#E  gp2obj.gd . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+############################################################################# 
+## 
+#O  AllIsomorphismsGroups( <G> <H> )
+## 
+##  here temporarily until AllIsomorphisms appears in the library or in Utils 
+## 
+DeclareOperation( "AllIsomorphismsGroups", [ IsGroup, IsGroup ] ); 
