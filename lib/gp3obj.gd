@@ -154,7 +154,7 @@ DeclareAttribute( "CrossedSquareByXModSplitting", IsXMod );
 #R  IsPreCat2GroupObj ( <obj> ) 
 #T  PreCat2GroupObjType 
 #O  PreCat2GroupObj( <cat1gp>, <cat1gp> ) 
-##  A pre-cat2-group is a square of commjuting pre-cat1-groups 
+##  A pre-cat2-group is a square of commuting pre-cat1-groups 
 ##
 DeclareRepresentation( "IsPreCat2GroupObj", 
     IsHigherDimensionalGroup and IsAttributeStoringRep,
