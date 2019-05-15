@@ -2350,31 +2350,108 @@ end );
 ##############################################################################
 ##
 #M  AllCat1Groups . . . . . . . list of cat1-group structures on a given group
+#O  AllCat1GroupsIterator( <gp> ) . . . . . . . iterator for the previous list
+#F  NextIterator_AllCat1Groups( <iter> ) 
+#F  IsDoneIterator_AllCat1Groups( <iter> ) 
+#F  ShallowCopy_AllCat1Groups( <iter> ) 
+#A  AllCat1GroupsNumber( <gp> ) . . . . . . . . .  number of these cat1-groups
 #M  AllCat1GroupsUpToIsomorphism . . . iso class reps of cat1-group structures
 ##
-InstallMethod( AllCat1Groups, "all cat1-group structures on a group", true, 
-    [ IsGroup ], 0,
-function( gp )
 
-    local L, homs, idem, num, i, j, C, ok; 
-
-    homs := AllEndomorphisms( gp );
-    idem := Filtered( homs, h -> CompositionMapping( h, h ) = h );
-    num := Length( idem ); 
-    L := [ ]; 
-    for i in [1..num] do 
-        for j in [1..num] do 
-            C := PreCat1GroupByEndomorphisms( idem[i], idem[j] );
-            if not ( C = fail ) then 
-                ok := IsCat1Group( C ); 
-                if ok then 
-                    Add( L, C );  
-                fi; 
+BindGlobal( "NextIterator_AllCat1Groups", function ( iter ) 
+    local C, t, h, ok; 
+    if ( iter!.tail = 0 ) then 
+        t := NextIterator( iter!.tailIterator ); 
+        iter!.tail := t; 
+    else 
+        t := iter!.tail; 
+    fi;
+    if not IsDoneIterator( iter ) then 
+        ok := false; 
+        while not ok do 
+            if IsDoneIterator( iter!.headIterator ) then 
+                iter!.headIterator := ShallowCopy( iter!.idemIterator ); 
+                t := NextIterator( iter!.tailIterator ); 
+                iter!.tail := t;
+            fi; 
+            h := NextIterator( iter!.headIterator );  
+            C := PreCat1GroupByEndomorphisms( t, h ); 
+            if ( not ( C = fail ) and IsCat1Group( C ) ) then 
+                ok := true; 
             fi; 
         od; 
+        return C; 
+    fi;
+    Error( "iterator is exhausted" ); 
+end ); 
+
+BindGlobal( "IsDoneIterator_AllCat1Groups", 
+    iter -> ( IsDoneIterator( iter!.tailIterator ) 
+              and IsDoneIterator( iter!.headIterator ) ) 
+); 
+
+BindGlobal( "ShallowCopy_AllCat1Groups", 
+    iter -> rec( group := iter!.group, 
+                  tail := iter!.tail,
+                  idem := iter!.idem, 
+          idemIterator := ShallowCopy( iter!.idemIterator ), 
+          tailIterator := ShallowCopy( iter!.tailIterator ),
+          headIterator := ShallowCopy( iter!.headIterator )
+    )  
+); 
+
+BindGlobal( "DoAllCat1GroupsIterator", 
+function( G )
+
+    local idem, h, idemiter, iter;
+
+    ## any checks needed? 
+    idem := [ ]; 
+    for h in AllEndomorphisms( G ) do 
+        if ( CompositionMapping( h, h ) = h ) then 
+            Add( idem, h ); 
+        fi; 
     od;
-    return L;
+    idemiter := IteratorList( idem );
+    iter := IteratorByFunctions( 
+        rec(     group := G, 
+                  tail := 0, 
+                  idem := idem,
+          idemIterator := idemiter, 
+          tailIterator := ShallowCopy( idemiter ), 
+          headIterator := ShallowCopy( idemiter ),  
+          NextIterator := NextIterator_AllCat1Groups, 
+        IsDoneIterator := IsDoneIterator_AllCat1Groups, 
+           ShallowCopy := ShallowCopy_AllCat1Groups ) ); 
+    return iter;
 end );
+
+InstallMethod( AllCat1GroupsIterator, "...", [ IsGroup ], 0, 
+    G -> DoAllCat1GroupsIterator( G ) ); 
+
+InstallMethod( AllCat1Groups, "for a group", [ IsGroup ], 0, 
+function( G ) 
+
+    local L, C; 
+
+    L := [ ];
+    for C in AllCat1GroupsIterator( G ) do 
+       Add( L, C ); 
+    od;
+    return L; 
+end ); 
+
+InstallMethod( AllCat1GroupsNumber, "for a group", [ IsGroup ], 0, 
+function( G ) 
+
+    local n, C; 
+
+    n := 0;
+    for C in AllCat1GroupsIterator( G ) do 
+        n := n+1; 
+    od;
+    return n; 
+end ); 
 
 InstallMethod( AllCat1GroupsUpToIsomorphism, "iso class reps of cat1-groups", 
     true, [ IsGroup ], 0,
@@ -2387,28 +2464,20 @@ function( gp )
     idnum := Length( idem ); 
     L := [ ]; 
     numL := 0; 
-    for i in [1..idnum] do 
-        for j in [1..idnum] do 
-            C := PreCat1GroupByEndomorphisms( idem[i], idem[j] );
-            if ( C <> fail ) then 
-                ok := IsCat1Group( C ); 
-                if ok then 
-                    k := 0; 
-                    found := false; 
-                    while ( not found ) and ( k < numL ) do 
-                        k := k+1; 
-                        iso := IsomorphismCat1Groups( C, L[k] ); 
-                        if ( iso <> fail ) then 
-                             found := true; 
-                        fi; 
-                    od; 
-                    if not found then 
-                        Add( L, C ); 
-                        numL := numL + 1;
-                    fi;
-                fi; 
+    for C in AllCat1GroupsIterator( gp ) do 
+        k := 0; 
+        found := false; 
+        while ( not found ) and ( k < numL ) do 
+            k := k+1; 
+            iso := IsomorphismCat1Groups( C, L[k] ); 
+            if ( iso <> fail ) then 
+                 found := true; 
             fi; 
         od; 
+        if not found then 
+            Add( L, C ); 
+            numL := numL + 1;
+        fi;
     od;
     return L;
 end );

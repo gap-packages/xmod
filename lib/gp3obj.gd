@@ -191,11 +191,14 @@ DeclareOperation( "PreCat2GroupByPreCat1Groups",
 ##  functions for the paper "Computing 3-Dimensional Groups ..." 
 ## 
 #O  AllCat2Groups( <G> ) 
+#O  AllCat2GroupsIterator( <gp> )
+#A  AllCat2GroupsNumber( <gp> )
 #O  AllCat2GroupsUpToIsomorphism( <G> ) 
 #O  TableRowForCat1Groups( <G> ) 
 #O  TableRowForCat2Groups( <G> ) 
 ## 
 DeclareOperation( "AllCat2Groups", [ IsGroup ] ); 
+DeclareOperation( "AllCat2GroupsIterator", [ IsGroup ] ); DeclareAttribute( "AllCat2GroupsNumber", IsGroup ); 
 DeclareOperation( "AllCat2GroupsUpToIsomorphism", [ IsGroup ] ); 
 DeclareOperation( "TableRowForCat1Groups", [ IsGroup ] ); 
 DeclareOperation( "TableRowForCat2Groups", [ IsGroup ] ); 

@@ -1309,69 +1309,130 @@ end );
 
 ##############################################################################
 ##
-#M  AllCat2Groups . . . . . . . . . . . . . cat2-groups structures on a group
-## 
-InstallMethod( AllCat2Groups, "for a group", true, [ IsGroup ], 0,
+#M  AllCat2Groups . . . . . . . list of cat2-group structures on a given group
+#O  AllCat2GroupsIterator( <gp> ) . . . . . . . iterator for the previous list
+#F  NextIterator_AllCat2Groups( <iter> ) 
+#F  IsDoneIterator_AllCat2Groups( <iter> ) 
+#F  ShallowCopy_AllCat2Groups( <iter> ) 
+#A  AllCat2GroupsNumber( <gp> ) . . . . . . . . .  number of these cat2-groups
+#M  AllCat2GroupsUpToIsomorphism . . . iso class reps of cat2-group structures
+##
+##############################################################################
+##
+#F  NextIterator_AllCat2Groups( <iter> ) 
+#F  IsDoneIterator_AllCat2Groups( <iter> ) 
+#F  ShallowCopy_AllCat2Groups( <iter> ) 
+##
+BindGlobal( "NextIterator_AllCat2Groups", function ( iter ) 
+    local C, up, lt, rtdn, ok; 
+    if ( iter!.up = 0 ) then 
+        up := NextIterator( iter!.upIterator ); 
+        iter!.up := up; 
+    else 
+        up := iter!.up; 
+    fi;
+    if not IsDoneIterator( iter ) then 
+        ok := false; 
+        while not ok do 
+            if IsDoneIterator( iter!.leftIterator ) then 
+                iter!.leftIterator := ShallowCopy( iter!.cat1Iterator ); 
+                up := NextIterator( iter!.upIterator ); 
+                iter!.up := up;
+            fi; 
+            lt := NextIterator( iter!.leftIterator );  
+            rtdn := DetermineRightDownCat1Groups( up, lt ); 
+            C := PreCat2GroupByPreCat1Groups( up, lt, rtdn[1], rtdn[2] ); 
+            if ( not ( C = fail ) and IsCat2Group( C ) ) then 
+                ok := true;  
+            fi; 
+        od; 
+        return C; 
+    fi;
+    Error( "iterator is exhausted" ); 
+end ); 
+
+BindGlobal( "IsDoneIterator_AllCat2Groups", 
+    iter -> ( IsDoneIterator( iter!.upIterator ) 
+              and IsDoneIterator( iter!.leftIterator ) ) 
+); 
+
+BindGlobal( "ShallowCopy_AllCat2Groups", 
+    iter -> rec( group := iter!.group, 
+                    up := iter!.up,
+          cat1Iterator := ShallowCopy( iter!.cat1Iterator ), 
+            upIterator := ShallowCopy( iter!.upIterator ),
+          leftIterator := ShallowCopy( iter!.leftIterator ) 
+    )  
+); 
+
+BindGlobal( "DoAllCat2GroupsIterator", 
 function( G )
 
-    local L, allcat1, Cup, Clt, rtdn, C2; 
+    local cat1iter, iter;
 
-    L := [];
-    allcat1 := AllCat1Groups( G );
-    for Cup in allcat1 do
-        for Clt in allcat1 do 
-            rtdn := DetermineRightDownCat1Groups( Cup, Clt ); 
-            if ( rtdn <> fail ) then 
-                C2 := PreCat2GroupByPreCat1Groups( Cup, Clt, rtdn[1], rtdn[2] ); 
-                if ( C2 <> fail ) then 
-                    if not ( C2 in L  ) then
-                        Add( L, C2 );
-                    fi;
-                fi;
-            fi;                
-        od;    
-    od;
-Print( "# pre-cat2-groups = ", Length(L), "\n" ); 
-    L := Filtered( L, IsCat2Group );    
-Print( "# cat2-groups = ", Length(L), "\n" ); 
-    return L;
+    ## any checks needed? 
+    cat1iter := AllCat1GroupsIterator( G );
+    iter := IteratorByFunctions( 
+        rec(     group := G, 
+                    up := 0, 
+          cat1Iterator := cat1iter, 
+            upIterator := ShallowCopy( cat1iter ), 
+          leftIterator := ShallowCopy( cat1iter ),  
+          NextIterator := NextIterator_AllCat2Groups, 
+        IsDoneIterator := IsDoneIterator_AllCat2Groups, 
+           ShallowCopy := ShallowCopy_AllCat2Groups ) ); 
+    return iter;
 end );
 
-InstallMethod( AllCat2GroupsUpToIsomorphism, "for a group", true, 
-    [ IsGroup ], 0,
+InstallMethod( AllCat2GroupsIterator, "...", [ IsGroup ], 0, 
+    G -> DoAllCat2GroupsIterator( G ) ); 
+
+InstallMethod( AllCat2Groups, "for a group", [ IsGroup ], 0, 
+function( G ) 
+
+    local L, C; 
+
+    L := [ ];
+    for C in AllCat2GroupsIterator( G ) do 
+       Add( L, C ); 
+    od;
+    return L; 
+end ); 
+
+InstallMethod( AllCat2GroupsNumber, "for a group", [ IsGroup ], 0, 
+function( G ) 
+
+    local n, C; 
+
+    n := 0;
+    for C in AllCat2GroupsIterator( G ) do 
+        n := n+1; 
+    od;
+    return n; 
+end ); 
+
+InstallMethod( AllCat2GroupsUpToIsomorphism, "iso class reps of cat2-groups", 
+    true, [ IsGroup ], 0,
 function( G )
 
-    local L, numL, allcat1, isocat1, Cup, Clt, rtdn, C, ok, k, found, iso; 
+    local L, numL, C, k, found, iso; 
 
     L := [ ];
     numL := 0; 
-    allcat1 := AllCat1Groups( G );
-    isocat1 := AllCat1GroupsUpToIsomorphism( G );
-    for Cup in isocat1 do
-        for Clt in allcat1 do 
-            rtdn := DetermineRightDownCat1Groups( Cup, Clt ); 
-            if ( rtdn <> fail ) then 
-                C := PreCat2GroupByPreCat1Groups( Cup, Clt, rtdn[1], rtdn[2] ); 
-                if ( C <> fail ) then 
-                    ok := IsCat2Group( C );
-                    if ok then 
-                        k := 0; 
-                        found := false; 
-                        while ( not found ) and ( k < numL ) do 
-                            k := k+1; 
-                            iso := IsomorphismCat2Groups( C, L[k] );
-                            if ( iso <> fail ) then 
-                                found := true; 
-                            fi; 
-                        od; 
-                        if not found then 
-                            Add( L, C ); 
-                            numL := numL + 1;
-                        fi;
-                    fi; 
-                fi; 
+    for C in AllCat2GroupsIterator( G ) do 
+        k := 0; 
+        found := false; 
+        while ( not found ) and ( k < numL ) do 
+            k := k+1; 
+            iso := IsomorphismCat2Groups( C, L[k] );
+            if ( iso <> fail ) then 
+                 found := true; 
             fi; 
         od; 
+        if not found then 
+            Add( L, C ); 
+            numL := numL + 1;
+        fi; 
     od;
     return L; 
 end ); 

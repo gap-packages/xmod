@@ -2,6 +2,7 @@
 
 ## 2.73 -> 2.73dev (00/05/2019) 
 
+ * (15/05/19) new AllCat{1,2}GroupsIterator, AllCat{1,2}GroupsNumber 
  * (10/05/19) added in new functions from Alper for AllCat2Groups (up to iso) 
  * (18/04/19) reorganised all .tst files into /tst/manual/ and /tst/extra/
  * (11/04/19) corrected UnionOfPiecesOp for prexmods with objects 
