@@ -143,6 +143,8 @@ DeclareOperation( "CrossedSquareByXMods",
   [ IsXMod, IsXMod, IsXMod, IsXMod, IsGroupHomomorphism, IsCrossedPairing ] );
 DeclareOperation( "CrossedSquareByNormalSubgroups", 
     [ IsGroup, IsGroup, IsGroup, IsGroup ] );
+DeclareOperation( "CrossedSquareByNormalSubgroups", 
+    [ IsGroup, IsGroup, IsGroup ] );
 DeclareOperation( "CrossedSquareByNormalSubXMod", [ IsXMod, IsXMod ] );
 DeclareOperation( "CrossedSquareByPullback", [ IsXMod, IsXMod ] );
 DeclareAttribute( "CrossedSquareByAutomorphismGroup", IsGroup );

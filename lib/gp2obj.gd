@@ -317,6 +317,8 @@ DeclareAttribute( "SourceEmbedding", IsPreXMod );
 ##
 DeclareGlobalFunction( "Cat1Group" );
 DeclareOperation( "Cat1Select", [ IsInt, IsInt, IsInt ] );
+DeclareOperation( "Cat1Select", [ IsInt, IsInt ] );
+DeclareOperation( "Cat1Select", [ IsInt ] );
 DeclareOperation( "PermCat1Select", [ IsInt, IsInt, IsInt ] );
 DeclareOperation( "Cat1GroupByPeifferQuotient", [ IsPreCat1Group ] );
 DeclareOperation( "DiagonalCat1Group", [ IsList ] ); 

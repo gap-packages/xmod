@@ -549,7 +549,7 @@ function( L, M, N, P )
     return XS;
 end );
 
-InstallOtherMethod( CrossedSquareByNormalSubgroups, 
+InstallMethod( CrossedSquareByNormalSubgroups, 
     "conjugation crossed square", true, [ IsGroup, IsGroup, IsGroup ], 0,
 function( M, N, P )
 

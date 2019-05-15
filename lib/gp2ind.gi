@@ -121,7 +121,7 @@ function( X1, X2 )
     return coprod; 
 end ); 
 
-InstallOtherMethod( CoproductXMod, "for a list of crossed modules", true, 
+InstallMethod( CoproductXMod, "for a list of crossed modules", true, 
     [ IsList ], 0,
 function( LX )
 

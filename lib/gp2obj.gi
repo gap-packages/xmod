@@ -1847,13 +1847,13 @@ end );
 ##
 #F  Cat1Select( <size>, <gpnum>, <num> )     cat1-group from data in CAT1_LIST
 ##
-InstallOtherMethod( Cat1Select, "construct a cat1-group using data in file", 
+InstallMethod( Cat1Select, "construct a cat1-group using data in file", 
     true, [ IsInt ], 0,
 function( size )
     return Cat1Select( size, 0, 0 );
 end );
 
-InstallOtherMethod( Cat1Select, "construct a cat1-group using data in file", 
+InstallMethod( Cat1Select, "construct a cat1-group using data in file", 
     true, [ IsInt, IsInt ], 0,
 function( size, gpnum )
     return Cat1Select( size, gpnum, 0 );

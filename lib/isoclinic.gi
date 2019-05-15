@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.gi               GAP4 package `XMod'                Alper Odabas
 #W                                                                & Enver Uslu
-#Y  Copyright (C) 2001-2018, Chris Wensley et al 
+#Y  Copyright (C) 2001-2019, Chris Wensley et al 
 #Y   
 ##  This file contains generic methods for finding isoclinism classes 
 ##  of crossed modules. 
@@ -833,9 +833,9 @@ function( D1, D2 )
     fi; 
 end );
 
-#############################################################################
+##############################################################################
 ##
-#M Isoclinism . . . 
+#M Isoclinism . . . . . . . . . . . . . . . . . . . . . . . . . . . for groups
 ## 
 InstallMethod( Isoclinism, "generic method for two groups", true, 
     [ IsGroup, IsGroup ], 0,
@@ -945,13 +945,13 @@ end );
 ##
 #M IsStemDomain . check that the centre xmod is a subxmod of the derived xmod
 ## 
-InstallOtherMethod( IsStemDomain, "generic method for crossed modules", true, 
+InstallMethod( IsStemDomain, "generic method for crossed modules", true, 
     [ IsXMod ], 0,
 function(X0)
     return IsSubXMod( DerivedSubXMod(X0), CentreXMod(X0) );
 end );
 
-InstallOtherMethod( Isoclinism, "generic method for crossed modules", true, 
+InstallMethod( Isoclinism, "generic method for crossed modules", true, 
     [ IsXMod, IsXMod ], 0,
 function( X1, X2 )
 
@@ -1144,7 +1144,7 @@ function(G)
     return Tau( Size(KG) ) + Tau( Size(QG) ) - 2;
 end );
 
-InstallOtherMethod( IsoclinicRank, "generic method for crossed modules", true, 
+InstallMethod( IsoclinicRank, "generic method for crossed modules", true, 
     [ Is2DimensionalGroup ], 0,
 function( XM )
 
@@ -1181,7 +1181,7 @@ function(G)
     return Tau( Size(QG) ) - 1;
 end );
 
-InstallOtherMethod( IsoclinicMiddleLength, 
+InstallMethod( IsoclinicMiddleLength, 
     "generic method for crossed modules", true, [ Is2DimensionalGroup ], 0,
 function( XM )
 
