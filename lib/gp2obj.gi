@@ -2413,7 +2413,7 @@ function( G )
         fi; 
     od;
     len := Length( idem );
-    pos := Position( idem, IdentityMapping( d12 ) ); 
+    pos := Position( idem, IdentityMapping( G ) ); 
     idem[pos] := idem[len]; 
     idem[len] := IdentityMapping ( G );
     idemiter := IteratorList( idem );
