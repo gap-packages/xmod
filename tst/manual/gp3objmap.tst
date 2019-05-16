@@ -247,6 +247,22 @@ cat2-group with generating (pre-)cat1-groups:
 gap> Size( C2act );
 [ 80000, 400, 400, 20 ]
 
+# Section 8.5.1
+gap> d12 := DihedralGroup( IsPermGroup, 12 );  SetName( d12, "d12" );
+Group([ (1,2,3,4,5,6), (2,6)(3,5) ])
+gap> AllCat2GroupsNumber( d12 );
+124
+gap> iso2 := AllCat2GroupsUpToIsomorphism( d12 );;
+gap> Length( iso2 );
+12
+gap> List( iso2, C -> StructureDescription( C ) );
+[ [ "D12", "C2", "C2", "C2" ], [ "D12", "C2", "C2", "1" ], 
+  [ "D12", "C2", "S3", "C2" ], [ "D12", "C2", "C2 x C2", "C2" ], 
+  [ "D12", "C2", "C2 x C2", "1" ], [ "D12", "C2", "D12", "C2" ], 
+  [ "D12", "S3", "S3", "S3" ], [ "D12", "S3", "C2 x C2", "C2" ], 
+  [ "D12", "S3", "D12", "S3" ], [ "D12", "C2 x C2", "C2 x C2", "C2 x C2" ], 
+  [ "D12", "C2 x C2", "D12", "C2 x C2" ], [ "D12", "D12", "D12", "D12" ] ]
+
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 
 gap> STOP_TEST( "gp3objmap.tst", 10000 );

@@ -992,6 +992,61 @@ gap> Size( C2act );
 
 </Section>
 
+
+<Section Label="sect-allcat2">
+<Heading>Enumerating cat2-groups with a given source</Heading>
+
+This section mirrors that for cat1-groups (<Ref Sect="sect-allcat1" />). 
+As the size of a group <M>G</M> increases, the number of cat2-groups with 
+source <M>G</M> increases rapidly.  However, one is usually only interested 
+in the isomorphisms classes of cat2-groups with source <M>G</M>. 
+Therefore an iterator <C>AllCat2GroupsIterator</C> is provided, 
+which runs through the various cat2-groups. 
+
+<ManSection>
+   <Oper Name="AllCat2GroupsIterator"
+         Arg="G" />
+   <Attr Name="AllCat2GroupsNumber"
+         Arg="G" />
+   <Oper Name="AllCat2GroupsUpToIsomorphism"
+         Arg="G" />
+   <Oper Name="AllCat2Groups"
+         Arg="G" />
+<Description>
+The iterator <C>AllCat2GroupsIterator(G)</C> iterates through all the 
+cat2-groups with source <C>G</C>. 
+The attribute <C>AllCat2GroupsNumber(G)</C> runs this iterator to count the 
+number <M>n</M> of these cat2-groups. 
+The operation <C>AllCat1Groups(G)</C> returns a list containing these <M>n</M> 
+cat2-groups.  Since these lists can get very long, this operation should only 
+be used for simple cases. 
+The operation <C>AllCat2GroupsUpToIsomorphism(G)</C> returns representatives 
+of the isomorphism classes of these subgroups. 
+</Description> 
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> d12 := DihedralGroup( IsPermGroup, 12 );  SetName( d12, "d12" );
+Group([ (1,2,3,4,5,6), (2,6)(3,5) ])
+gap> AllCat2GroupsNumber( d12 );
+124
+gap> iso2 := AllCat2GroupsUpToIsomorphism( d12 );;
+gap> Length( iso2 );
+12
+gap> List( iso2, C -> StructureDescription( C ) );
+[ [ "D12", "C2", "C2", "C2" ], [ "D12", "C2", "C2", "1" ], 
+  [ "D12", "C2", "S3", "C2" ], [ "D12", "C2", "C2 x C2", "C2" ], 
+  [ "D12", "C2", "C2 x C2", "1" ], [ "D12", "C2", "D12", "C2" ], 
+  [ "D12", "S3", "S3", "S3" ], [ "D12", "S3", "C2 x C2", "C2" ], 
+  [ "D12", "S3", "D12", "S3" ], [ "D12", "C2 x C2", "C2 x C2", "C2 x C2" ], 
+  [ "D12", "C2 x C2", "D12", "C2 x C2" ], [ "D12", "D12", "D12", "D12" ] ]
+]]>
+</Example>
+
+</Section> 
+
+
 <Section Label="sect-catn-definitions">
 <Heading>
 Definition and constructions for cat<M>^n</M>-groups and their morphisms 

@@ -1317,12 +1317,6 @@ end );
 #A  AllCat2GroupsNumber( <gp> ) . . . . . . . . .  number of these cat2-groups
 #M  AllCat2GroupsUpToIsomorphism . . . iso class reps of cat2-group structures
 ##
-##############################################################################
-##
-#F  NextIterator_AllCat2Groups( <iter> ) 
-#F  IsDoneIterator_AllCat2Groups( <iter> ) 
-#F  ShallowCopy_AllCat2Groups( <iter> ) 
-##
 BindGlobal( "NextIterator_AllCat2Groups", function ( iter ) 
     local C, up, lt, rtdn, ok; 
     if ( iter!.up = 0 ) then 
@@ -1333,18 +1327,23 @@ BindGlobal( "NextIterator_AllCat2Groups", function ( iter )
     fi;
     if not IsDoneIterator( iter ) then 
         ok := false; 
-        while not ok do 
+        while ( not ok ) do 
             if IsDoneIterator( iter!.leftIterator ) then 
                 iter!.leftIterator := ShallowCopy( iter!.cat1Iterator ); 
                 up := NextIterator( iter!.upIterator ); 
                 iter!.up := up;
             fi; 
             lt := NextIterator( iter!.leftIterator );  
-            rtdn := DetermineRightDownCat1Groups( up, lt ); 
-            C := PreCat2GroupByPreCat1Groups( up, lt, rtdn[1], rtdn[2] ); 
-            if ( not ( C = fail ) and IsCat2Group( C ) ) then 
-                ok := true;  
-            fi; 
+            if ( ( up = fail ) or ( lt = fail ) ) then 
+            else 
+                rtdn := DetermineRightDownCat1Groups( up, lt ); 
+                if ( rtdn <> fail ) then 
+                    C := PreCat2GroupByPreCat1Groups( up,lt,rtdn[1],rtdn[2] ); 
+                    if ( not ( C = fail ) and IsCat2Group( C ) ) then 
+                        ok := true;  
+                    fi; 
+                fi;
+            fi;
         od; 
         return C; 
     fi;
@@ -1394,7 +1393,7 @@ function( G )
 
     L := [ ];
     for C in AllCat2GroupsIterator( G ) do 
-       Add( L, C ); 
+        Add( L, C ); 
     od;
     return L; 
 end ); 
@@ -1431,8 +1430,8 @@ function( G )
         od; 
         if not found then 
             Add( L, C ); 
-            numL := numL + 1;
-        fi; 
+            numL := numL + 1; 
+        fi;
     od;
     return L; 
 end ); 

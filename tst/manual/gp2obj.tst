@@ -280,6 +280,40 @@ Cat1-group [s4s4=>s4d] :-
 : kernel embedding maps generators of kernel to:
   [ (5,6,7,8), (7,8) ]
 
+## Section 2.4.4
+gap> R4 := ReverseCat1Group( C4 );
+[s4s4=>s4d]
+gap> Boundary( R4 );
+[ (3,4), (2,3), (1,2,3,4) ] -> [ (11,12), (10,11), (9,10,11,12) ]
+gap> TailMap( R4 ) = HeadMap( C4 ); 
+true
+
+## Section 2.4.5
+gap> s4:=Group( (1,2,3), (3,4) );;  SetName( s4, "s4" ); 
+gap> k4 := Subgroup( s4, [ (1,2)(3,4), (1,3)(2,4) ] );;
+gap> h := GroupHomomorphismByImages( s4, s4, [(1,2,3),(3,4)], [(),(3,4)] );;
+gap> c2 := Image( h );;  SetName( c2, "c2" );
+gap> C := PreCat1Group( h, h );
+[s4=>c2]
+gap> P := PeifferSubgroupPreCat1Group( C );;
+gap> P = k4;
+true
+gap> C2 := Cat1GroupByPeifferQuotient( C );
+[Group( [ f1, f2 ] )=>c2]
+gap> StructureDescription( C2 );
+[ "S3", "C2" ]
+gap> XC := PreXModOfPreCat1Group( C );;
+gap> StructureDescription( XC );  
+[ "A4", "C2" ]
+gap> XC2 := XModByPeifferQuotient( XC );;
+gap> StructureDescription( XC2 );
+[ "C3", "C2" ]
+gap> CXC2 := Cat1GroupOfXMod( XC2 );;
+gap> StructureDescription( CXC2 );
+[ "S3", "C2" ]
+gap> IsomorphismCat1Groups( C2, CXC2 );
+[[..] => [(..|X..)=>c2]]
+
 ## Section 2.5.1
 gap> G2 := SmallGroup( 288, 956 );  SetName( G2, "G2" );
 <pc group of size 288 with 7 generators>
@@ -345,6 +379,17 @@ gap> StructureDescription( X2 );
 [ "D24", "D12" ]
 
 ## Section 2.6.1
+gap> d12 := DihedralGroup( IsPermGroup, 12 );  SetName( d12, "d12" );
+Group([ (1,2,3,4,5,6), (2,6)(3,5) ])
+gap> AllCat1GroupsNumber( d12 );
+12
+gap> iso1 := AllCat1GroupsUpToIsomorphism( d12 );;
+gap> Length( iso1 );
+4
+gap> iso1[4];
+[d12=>d12]
+
+## Section 2.7.1
 gap> L18 := Cat1Select( 18 ); 
 Usage:  Cat1Select( size, gpnum, num );
 [ "D18", "C18", "C3 x S3", "(C3 x C3) : C2", "C6 x C3" ]
@@ -370,7 +415,7 @@ gap> PC18 := Image( iso18 );
 gap> X18 := XModOfCat1Group( PC18 ); 
 [Group( [ (4,5,6) ] )->Group( [ (2,3)(5,6), (), (1,2,3) ] )]
 
-## Section 2.6.2 
+## Section 2.7.2 
 gap> gp := SmallGroup( 102, 2 ); 
 <pc group of size 102 with 3 generators>
 gap> StructureDescription( gp ); 

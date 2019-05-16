@@ -1168,8 +1168,8 @@ end );
 ##
 #M  PeifferSubgroupPreCat1Group . . . . commutator of kernels of tail and head
 ##
-InstallMethod( PeifferSubgroupPreCat1Group, "generic method for pre-cat1-groups",
-               true, [ IsPreCat1Group ], 0,
+InstallMethod( PeifferSubgroupPreCat1Group, 
+    "generic method for pre-cat1-groups", true, [ IsPreCat1Group ], 0,
 function( PCG )
 
     local src, kerh, kert, Pf;
@@ -1793,7 +1793,7 @@ end );
 
 #############################################################################
 ##
-#M  IsIdentityCat1
+#M  IsIdentityPreCat1Group
 #M  IsEndomorphismPreCat1Group 
 ##
 InstallMethod( IsEndomorphismPreCat1Group, "test a pre-cat1-group", true, 
@@ -1802,7 +1802,8 @@ function( obj )
     return IsSubgroup( Source(obj), Range(obj) ); 
 end );
 
-InstallMethod( IsIdentityCat1Group, "test a cat1-group", true, [ IsCat1Group ], 0,
+InstallMethod( IsIdentityPreCat1Group, "test a pre-cat1-group", true, 
+    [ IsPreCat1Group ], 0,
 function( C1G )
     return ( ( TailMap( C1G ) = IdentityMapping( Source( C1G ) ) ) and
              ( HeadMap( C1G ) = IdentityMapping( Source( C1G ) ) ) );
@@ -2179,7 +2180,7 @@ function( C1G )
     gensrc := GeneratorsOfGroup( Csrc );
     genrng := GeneratorsOfGroup( Crng );
     genker := GeneratorsOfGroup( kert );
-    if IsIdentityCat1Group( C1G ) then
+    if IsIdentityPreCat1Group( C1G ) then
         # X has trivial source and action
         aut := Group( IdentityMapping( kert ) );
         SetName( aut, "triv_aut" );
@@ -2357,7 +2358,6 @@ end );
 #A  AllCat1GroupsNumber( <gp> ) . . . . . . . . .  number of these cat1-groups
 #M  AllCat1GroupsUpToIsomorphism . . . iso class reps of cat1-group structures
 ##
-
 BindGlobal( "NextIterator_AllCat1Groups", function ( iter ) 
     local C, t, h, ok; 
     if ( iter!.tail = 0 ) then 
@@ -2368,7 +2368,7 @@ BindGlobal( "NextIterator_AllCat1Groups", function ( iter )
     fi;
     if not IsDoneIterator( iter ) then 
         ok := false; 
-        while not ok do 
+        while ( not ok ) do 
             if IsDoneIterator( iter!.headIterator ) then 
                 iter!.headIterator := ShallowCopy( iter!.idemIterator ); 
                 t := NextIterator( iter!.tailIterator ); 
@@ -2382,7 +2382,7 @@ BindGlobal( "NextIterator_AllCat1Groups", function ( iter )
         od; 
         return C; 
     fi;
-    Error( "iterator is exhausted" ); 
+    Error( "iterator is exhausted" );
 end ); 
 
 BindGlobal( "IsDoneIterator_AllCat1Groups", 
@@ -2403,7 +2403,7 @@ BindGlobal( "ShallowCopy_AllCat1Groups",
 BindGlobal( "DoAllCat1GroupsIterator", 
 function( G )
 
-    local idem, h, idemiter, iter;
+    local idem, h, len, pos, idemiter, iter;
 
     ## any checks needed? 
     idem := [ ]; 
@@ -2412,6 +2412,10 @@ function( G )
             Add( idem, h ); 
         fi; 
     od;
+    len := Length( idem );
+    pos := Position( idem, IdentityMapping( d12 ) ); 
+    idem[pos] := idem[len]; 
+    idem[len] := IdentityMapping ( G );
     idemiter := IteratorList( idem );
     iter := IteratorByFunctions( 
         rec(     group := G, 

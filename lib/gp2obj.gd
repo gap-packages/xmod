@@ -238,7 +238,7 @@ DeclareOperation( "SubCat1Group", [ IsCat1Group, IsGroup, IsGroup ] );
 #A  TrivialSubXMod( <obj> )
 #A  TrivialSubPreCat1Group( <obj> )
 #A  TrivialSubCat1Group( <obj> )
-#P  IsIdentityCat1Group( <obj> )
+#P  IsIdentityPreCat1Group( <obj> )
 #P  IsEndomorphismPreCat1Group( <obj> )
 ##
 DeclareOperation( "TrivialSub2DimensionalGroup", [ Is2DimensionalGroup ] );
@@ -246,7 +246,7 @@ DeclareAttribute( "TrivialSubPreXMod", IsPreXMod );
 DeclareAttribute( "TrivialSubXMod", IsXMod );
 DeclareAttribute( "TrivialSubPreCat1Group", IsPreCat1Group );
 DeclareAttribute( "TrivialSubCat1Group", IsCat1Group );
-DeclareProperty( "IsIdentityCat1Group", IsCat1Group );
+DeclareProperty( "IsIdentityPreCat1Group", IsPreCat1Group );
 DeclareProperty( "IsEndomorphismPreCat1Group", IsPreCat1Group ); 
 
 #############################################################################
@@ -275,7 +275,6 @@ DeclareSynonym( "PreCat1ByTailHeadEmbedding", PreCat1Obj );
 #O  PreCat1GroupByTailHeadEmbedding( <t>, <h>, <e> )
 #O  PreCat1GroupByEndomorphisms( <tail>, <head> )
 #A  EndomorphismPreCat1Group( <PCG> ) 
-#O  PreCat1GroupByNormalSubgroup( <G>, <N> )
 #A  ReverseCat1Group( <PCG> )
 ##
 DeclareGlobalFunction( "PreCat1Group" );
@@ -284,7 +283,6 @@ DeclareOperation( "PreCat1GroupByTailHeadEmbedding",
 DeclareOperation( "PreCat1GroupByEndomorphisms",
     [ IsGroupHomomorphism, IsGroupHomomorphism ] );
 DeclareAttribute( "EndomorphismPreCat1Group", IsPreCat1Group ); 
-DeclareOperation( "PreCat1GroupByNormalSubgroup", [ IsGroup, IsGroup ] );
 DeclareAttribute( "ReverseCat1Group", IsPreCat1Group );
 
 #############################################################################

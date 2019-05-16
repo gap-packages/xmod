@@ -758,14 +758,10 @@ gap> StructureDescription( C18 );
 <ManSection>
    <Oper Name="DiagonalCat1Group" 
          Arg="gen1" />
-   <Oper Name="PreCat1GroupByNormalSubgroup"
-         Arg="G N" />
-   <Oper Name="Cat1GroupByPeifferQuotient"
-         Arg="P" />
-   <Attr Name="ReverseCat1Group"
-         Arg="C0" />
 <Description>
-These are some more constructors for cat1-groups. 
+<B>[Needs revising!]</B>
+<P/>
+The next three subsections contain some more constructors for cat1-groups. 
 The following listing shows an example of a permutation cat1-group 
 of size <M>[576,24]</M> with source group <M>S_4 \times S_4</M>, 
 range group a third <M>S_4</M>, and <M>t \neq h</M>. 
@@ -806,6 +802,66 @@ Cat1-group [s4s4=>s4d] :-
   [ ( 9,10,11,12), (11,12) ]
 : kernel embedding maps generators of kernel to:
   [ (5,6,7,8), (7,8) ]
+]]>
+</Example>
+
+<ManSection>
+   <Attr Name="ReverseCat1Group"
+         Arg="C0" />
+<Description> 
+The <E>reverse</E> of a cat1-group <M>C</M> 
+has the same source, range and embedding, 
+but has the tail and head maps interchanged.
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> R4 := ReverseCat1Group( C4 );
+[s4s4=>s4d]
+gap> Boundary( R4 );
+[ (3,4), (2,3), (1,2,3,4) ] -> [ (11,12), (10,11), (9,10,11,12) ]
+gap> TailMap( R4 ) = HeadMap( C4 ); 
+true
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="Cat1GroupByPeifferQuotient"
+         Arg="P" />
+<Description>
+If <M>C = (e;t,h : G \to R)</M> is a pre-cat1-group, 
+its Peiffer subgroup is <M>P = [\ker t,\ker h]</M> 
+and the associated cat1-group <M>C_2</M> has source <M>G/P</M>. 
+In the example, <M>t=h : s4 \to c2</M> with <M>\ker t = \ker h = a4</M> 
+and <M>P = [a4,a4]=k4</M>, so that <M>G/P = s4/k4 \cong s3</M>. 
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> s4:=Group( (1,2,3), (3,4) );;  SetName( s4, "s4" ); 
+gap> h := GroupHomomorphismByImages( s4, s4, [(1,2,3),(3,4)], [(),(3,4)] );;
+gap> c2 := Image( h );;  SetName( c2, "c2" );
+gap> C := PreCat1Group( h, h );
+[s4=>c2]
+gap> P := PeifferSubgroupPreCat1Group( C );
+Group([ (1,3)(2,4), (1,2)(3,4) ])
+gap> C2 := Cat1GroupByPeifferQuotient( C );
+[Group( [ f1, f2 ] )=>c2]
+gap> StructureDescription( C2 );
+[ "S3", "C2" ]
+gap> XC := PreXModOfPreCat1Group( C );;
+gap> StructureDescription( XC );  
+[ "A4", "C2" ]
+gap> XC2 := XModByPeifferQuotient( XC );;
+gap> StructureDescription( XC2 );
+[ "C3", "C2" ]
+gap> CXC2 := Cat1GroupOfXMod( XC2 );;
+gap> StructureDescription( CXC2 );
+[ "S3", "C2" ]
+gap> IsomorphismCat1Groups( C2, CXC2 );
+[[..] => [(..|X..)=>c2]]
 ]]>
 </Example>
 
@@ -931,6 +987,54 @@ gap> StructureDescription(X2);
 ]]>
 </Example>
 </Section>
+
+
+<Section Label="sect-allcat1">
+<Heading>Enumerating cat1-groups with a given source</Heading>
+
+As the size of a group <M>G</M> increases, the number of cat1-groups with 
+source <M>G</M> increases rapidly.  However, one is usually only interested 
+in the isomorphisms classes of cat1-groups with source <M>G</M>. 
+Therefore an iterator <C>AllCat1GroupsIterator</C> is provided, 
+which runs through the various cat1-groups. 
+
+<ManSection>
+   <Oper Name="AllCat1GroupsIterator"
+         Arg="G" />
+   <Attr Name="AllCat1GroupsNumber"
+         Arg="G" />
+   <Oper Name="AllCat1GroupsUpToIsomorphism"
+         Arg="G" />
+   <Oper Name="AllCat1Groups"
+         Arg="G" />
+<Description>
+The iterator <C>AllCat1GroupsIterator(G)</C> iterates through all the 
+cat1-groups with source <C>G</C>. 
+The attribute <C>AllCat1GroupsNumber(G)</C> runs this iterator to count the 
+number <M>n</M> of these cat1-groups. 
+The operation <C>AllCat1Groups(G)</C> returns a list containing these <M>n</M> 
+cat1-groups.  Since these lists can get very long, this operation should only 
+be used for simple cases. 
+The operation <C>AllCat1GroupsUpToIsomorphism(G)</C> returns representatives 
+of the isomorphism classes of these subgroups. 
+</Description> 
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> d12 := DihedralGroup( IsPermGroup, 12 );  SetName( d12, "d12" );
+Group([ (1,2,3,4,5,6), (2,6)(3,5) ])
+gap> AllCat1GroupsNumber( d12 );
+12
+gap> iso1 := AllCat1GroupsUpToIsomorphism( d12 );
+[ [d12=>Group( [ (2,6)(3,5), (2,6)(3,5) ] )], 
+  [d12=>Group( [ (2,6)(3,5), (1,3)(4,6) ] )], 
+  [d12=>Group( [ (1,5)(2,4), (1,2)(3,6)(4,5) ] )], [d12=>d12] ]
+]]>
+</Example>
+
+</Section> 
+
 
 
 <Section Label="sect-cat1select">
