@@ -123,6 +123,7 @@ DeclareOperation( "PreCrossedSquareObj",
 ##
 DeclareProperty( "IsPreCrossedSquare", IsHigherDimensionalGroup );
 DeclareProperty( "IsCrossedSquare", IsHigherDimensionalGroup );
+InstallTrueMethod( IsHigherDimensionalGroup, IsPreCrossedSquare );
 InstallTrueMethod( IsPreCrossedSquare, IsCrossedSquare );
 
 #############################################################################

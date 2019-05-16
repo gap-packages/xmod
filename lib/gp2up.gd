@@ -58,6 +58,8 @@ DeclareAttribute( "UpImagePositions", IsUp2DimensionalMapping );
 DeclareProperty( "IsDerivation", IsUp2DimensionalMapping );
 DeclareProperty( "IsSection", IsUp2DimensionalMapping );
 
+InstallTrueMethod( IsUp2DimensionalMapping, IsDerivation );
+InstallTrueMethod( IsUp2DimensionalMapping, IsSection );
 
 ##############################################################################
 ##                               Derivations                                ##
@@ -118,6 +120,8 @@ DeclareOperation( "WhiteheadOrder", [ IsUp2DimensionalMapping ] );
 #P  IsRegularDerivation                   so an element of the Whitehead group
 ##
 DeclareProperty( "IsRegularDerivation", IsDerivation );
+
+InstallTrueMethod( IsDerivation, IsRegularDerivation );
 
 ##############################################################################
 ##

@@ -14,6 +14,8 @@
 ##
 DeclareProperty( "IsPreXModDomain", Is2DimensionalDomain );
 DeclareProperty( "IsPreCat1Domain", Is2DimensionalDomain );
+InstallTrueMethod( Is2DimensionalDomain, IsPreXModDomain );
+InstallTrueMethod( Is2DimensionalDomain, IsPreCat1Domain );
 
 #############################################################################
 ##
@@ -36,6 +38,10 @@ DeclareRepresentation( "IsPreCat1Obj", Is2DimensionalGroup and
 DeclareProperty( "IsPerm2DimensionalGroup", Is2DimensionalGroup );
 DeclareProperty( "IsFp2DimensionalGroup", Is2DimensionalGroup );
 DeclareProperty( "IsPc2DimensionalGroup", Is2DimensionalGroup );
+
+InstallTrueMethod( Is2DimensionalGroup, IsPerm2DimensionalGroup );
+InstallTrueMethod( Is2DimensionalGroup, IsFp2DimensionalGroup );
+InstallTrueMethod( Is2DimensionalGroup, IsPc2DimensionalGroup );
 
 #############################################################################
 ##
@@ -73,6 +79,7 @@ BindGlobal( "PcPreCat1ObjType",
 #P  IsPcPreXMod( <PM> )
 ##
 DeclareProperty( "IsPreXMod", Is2DimensionalGroup );
+InstallTrueMethod( Is2DimensionalGroup, IsPreXMod );
 DeclareSynonym( "IsPermPreXMod", IsPreXMod and IsPerm2DimensionalGroup );
 DeclareSynonym( "IsFpPreXMod", IsPreXMod and IsFp2DimensionalGroup );
 DeclareSynonym( "IsPcPreXMod", IsPreXMod and IsPc2DimensionalGroup );
@@ -85,6 +92,7 @@ DeclareSynonym( "IsPcPreXMod", IsPreXMod and IsPc2DimensionalGroup );
 #P  IsPcXMod( <XM> )
 ##
 DeclareProperty( "IsXMod", IsPreXMod ); 
+InstallTrueMethod( IsPreXMod, IsXMod );
 DeclareSynonym( "IsPermXMod", IsXMod and IsPerm2DimensionalGroup );
 DeclareSynonym( "IsFpXMod", IsXMod and IsFp2DimensionalGroup );
 DeclareSynonym( "IsPcXMod", IsXMod and IsPc2DimensionalGroup );
@@ -97,6 +105,7 @@ DeclareSynonym( "IsPcXMod", IsXMod and IsPc2DimensionalGroup );
 #P  IsPcPreCat1Group( <PCG> )
 ##
 DeclareProperty( "IsPreCat1Group", Is2DimensionalGroup );
+InstallTrueMethod( Is2DimensionalGroup, IsPreCat1Group );
 DeclareSynonym( "IsPermPreCat1Group", 
     IsPreCat1Group and IsPerm2DimensionalGroup );
 DeclareSynonym( "IsFpPreCat1Group", IsPreCat1Group and IsFp2DimensionalGroup );
@@ -110,6 +119,7 @@ DeclareSynonym( "IsPcPreCat1Group", IsPreCat1Group and IsPc2DimensionalGroup );
 #P  IsPcCat1Group( <CG> )
 ##
 DeclareProperty( "IsCat1Group", IsPreCat1Group );
+InstallTrueMethod( IsPreCat1Group, IsCat1Group );
 DeclareSynonym( "IsPermCat1Group", IsCat1Group and IsPerm2DimensionalGroup );
 DeclareSynonym( "IsFpCat1Group", IsCat1Group and IsFp2DimensionalGroup );
 DeclareSynonym( "IsPcCat1Group", IsCat1Group and IsPc2DimensionalGroup );
