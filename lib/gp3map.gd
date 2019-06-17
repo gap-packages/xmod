@@ -79,12 +79,12 @@ DeclareOperation( "Display3DimensionalMorphism",
 #############################################################################
 ##
 #O  IsomorphismPreCat2GroupsNoTranspose( <precat2>, <precat2> )
-#O  IsomorphismCat2GroupsNoTranspose( <cat2>, <cat2> )
+#O  IsomorphismCat2GroupsNoTranspose( <cat2>, <cat2> )     ?? is this needed ??
 #O  IsomorphismPreCat2Groups( <precat2>, <precat2> )
 #O  IsomorphismCat2Groups( <cat2>, <cat2> )
 ##
 DeclareOperation( "IsomorphismPreCat2GroupsNoTranspose", 
-    [ IsPreCat2Group, IsPreCat2Group ] );
+    [ IsPreCat2Group, IsPreCat2Group ] ); 
 DeclareOperation( "IsomorphismCat2GroupsNoTranspose", 
     [ IsCat2Group, IsCat2Group ] );
 DeclareOperation( "IsomorphismPreCat2Groups", 

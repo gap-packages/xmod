@@ -17,11 +17,10 @@ InstallMethod( IsPreCrossedSquareMorphism,
     [ IsHigherDimensionalGroupMorphism ], 0,
 function( mor )
 
-    local PS, QS, homs, upmor, ltmor, dnmor, rtmor, ok;
+    local PS, QS, upmor, ltmor, dnmor, rtmor, ok;
 
     PS := Source( mor );
     QS := Range( mor );
-    homs := ListOfHomomorphisms( mor ); 
     if not ( IsPreCrossedSquare( PS ) and IsPreCrossedSquare( QS ) ) then
         return false;
     fi;
@@ -455,7 +454,7 @@ end );
 #M  PreCat2GroupMorphismByPreCat1GroupMorphisms( <src>, <rng>, <list of mors> ) 
 ##
 InstallMethod( PreCat2GroupMorphismByPreCat1GroupMorphisms,
-    "for two pre-cat2 and two pre-cat1 morphisms,", true,
+    "for two pre-cat2-groups and two pre-cat1-group morphisms,", true,
     [ IsPreCat2Group, IsPreCat2Group, IsList ], 0,
 function( src, rng, list )
 
@@ -534,75 +533,124 @@ end );
 #M  IsomorphismPreCat2Groups  . . . . . . . . . iso between two pre-cat2-groups 
 #M  IsomorphismCat2Groups . . . . . . . . . . . . . iso between two cat2-groups 
 ## 
-## this seems to be an inefficient algorithm, but will do for now 
-##
-InstallMethod( IsomorphismCat2GroupsNoTranspose, "for two cat2-groups", true, 
-    [ IsCat2Group, IsCat2Group ], 0,
-function( C1, C2 ) 
+InstallMethod( IsomorphismPreCat2GroupsNoTranspose, "for 2 pre-cat2-groups", 
+    true, [ IsPreCat2Group, IsPreCat2Group ], 0,
+function( D1, D2 )
 
-    local u1, d1, u2, d2, G1, R1, Q1, P1, G2, R2, Q2, P2, 
-          m1_ler, m2_ler, alp, ph, mor1, ispre1, ispre2, gm, mor2, up, dn, mor; 
+    local up1, lt1, dn1, rt1, up2, lt2, dn2, rt2, 
+          G1, R1, Q1, P1, G2, R2, Q2, P2, 
+          t11, h11, e11, t22, h22, e22, 
+          tau11, theta11, eps11, tau22, theta22, eps22, 
+          t1, h1, e1, t2, h2, e2, 
+          tau1, theta1, eps1, tau2, theta2, eps2, 
+          phi, alpha, gamma, rho, sigma, pi, isoup, isolt, isort, isodn;
 
-    u1 := Up2DimensionalGroup( C1 );
-    d1 := Down2DimensionalGroup( C1 );
-    u2 := Up2DimensionalGroup( C2 );
-    d2 := Down2DimensionalGroup( C2 );
-    G1 := Source( u1 );
-    R1 := Range( u1 );
-    Q1 := Source( d1 );
-    P1 := Range( d1 );
-    G2 := Source( u2 );
-    R2 := Range( u2 );
-    Q2 := Source( d2 );
-    P2 := Range( d2 );
-    if IsomorphismGroups( G1, G2 ) = fail  then
+    up1 := Up2DimensionalGroup( D1 );
+    lt1 := Left2DimensionalGroup( D1 ); 
+    dn1 := Down2DimensionalGroup( D1 );
+    rt1 := Right2DimensionalGroup( D1 );
+    up2 := Up2DimensionalGroup( D2 );
+    lt2 := Left2DimensionalGroup( D2 ); 
+    dn2 := Down2DimensionalGroup( D2 );
+    rt2 := Right2DimensionalGroup( D2 );
+    G1 := Source( up1 ); 
+    G2 := Source( up2 ); 
+    if not ( G1 = G2 ) then
+        phi := IsomorphismGroups( G1, G2 );
+    else
+        phi := IdentityMapping( G1 );
+    fi;
+    if ( phi = fail ) then
         Info( InfoXMod, 2, "G1 !~ G2" );
         return fail;
     fi;
-    if IsomorphismGroups( R1, R2 ) = fail  then
+    R1 := Range( up1 );
+    R2 := Range( up2 );
+    if IsomorphismGroups( R1, R2 ) = fail then
         Info( InfoXMod, 2, "R1 !~ R2" );
         return fail;
-    fi;
+    fi; 
+    Q1 := Source( dn1 );
+    Q2 := Source( dn2 );
     if IsomorphismGroups( Q1, Q2 ) = fail  then
         Info( InfoXMod, 2, "Q1 !~ Q2" );
         return fail;
     fi;
+    P1 := Range( dn1 );
+    P2 := Range( dn2 );
     if IsomorphismGroups( P1, P2 ) = fail  then
         Info( InfoXMod, 2, "P1 !~ P2" );
         return fail;
     fi;
-    m1_ler := [ ]; 
-    m2_ler := [ ]; 
-    for alp in AllIsomorphismsGroups( G1, G2 ) do
-        for ph in AllIsomorphismsGroups( R1, R2 ) do
-            mor1 := Make2DimensionalGroupMorphism( [ u1, u2, alp, ph ] );
-            ispre1 := ( not( mor1 = fail ) and IsPreCat1GroupMorphism( mor1 ) );
-            if ispre1 then
-                Add( m1_ler, PreCat1GroupMorphism( u1, u2, alp, ph ) );
-            fi;
-        od;
-    od; 
-    for alp in AllIsomorphismsGroups( Q1, Q2 ) do
-        for gm in AllIsomorphismsGroups( P1, P2 ) do
-            mor2 := Make2DimensionalGroupMorphism( [ d1, d2, alp, gm ] );
-            ispre2 := ( not( mor2 = fail ) and IsPreCat1GroupMorphism( mor2 ) );
-            if ispre2 then 
-                Add( m2_ler, PreCat1GroupMorphism( d1, d2, alp, gm));
-            fi;
-        od;
-    od;    
-    m1_ler := Filtered( m1_ler, IsCat1GroupMorphism );
-    m2_ler := Filtered( m2_ler, IsCat1GroupMorphism );
-    for up in m1_ler do
-        for dn in m2_ler do 
-            mor := MakeHigherDimensionalGroupMorphism( C1, C2, [up,dn] );
-            if IsCat2GroupMorphism( mor ) then
-                return mor;
-            fi;
-        od;
-    od; 
-    return fail; 
-end );
+    t11 := TailMap( up1 );
+    h11 := HeadMap( up1 );
+    t22 := TailMap( up2 );
+    h22 := HeadMap( up2 );
+    e11 := RangeEmbedding( up1 ); 
+    e22 := RangeEmbedding( up2 ); 
+    tau11 := TailMap( lt1 );
+    theta11 := HeadMap( lt1 );
+    tau22 := TailMap( lt2 );
+    theta22 := HeadMap( lt2 );
+    eps11 := RangeEmbedding( lt1 ); 
+    eps22 := RangeEmbedding( lt2 ); 
+    for alpha in AutomorphismGroup( G1 ) do 
+        gamma := alpha * phi; 
+        rho := e11 * gamma * t22; 
+        if ( ( e11*gamma = rho*e22 ) and 
+             ( gamma*h22 = h11*rho ) and 
+             ( gamma*t22 = t11*rho ) ) then 
+            isoup := PreCat1GroupMorphismByGroupHomomorphisms
+                        ( up1, up2, gamma, rho ); 
+        else  
+            isoup := fail; 
+        fi; 
+        sigma := eps11 * gamma * tau22; 
+        if ( ( eps11*gamma = sigma*eps22 ) and 
+             ( gamma*theta22 = theta11*sigma ) and 
+             ( gamma*tau22 = tau11*sigma ) ) then 
+            isolt := PreCat1GroupMorphismByGroupHomomorphisms
+                        ( lt1, lt2, gamma, sigma ); 
+        else 
+            isolt := fail; 
+        fi; 
+        if not ( ( isoup = fail ) or ( isolt = fail ) ) then 
+            if ( SourceHom( isoup ) <> SourceHom( isolt ) ) then 
+                Error( "SourceHoms do not agree" ); 
+            fi; 
+            ## calculate pi : P1 -> P2 
+            e1 := RangeEmbedding( dn1 );
+            t2 := TailMap( dn2 ); 
+            pi := e1*sigma*t2; 
+            eps1 := RangeEmbedding( rt1 );
+            tau2 := TailMap( rt2 ); 
+            if not ( pi = eps1*rho*tau2 ) then 
+                Error( "e1*sigma*t2 <> eps1*rho*tau2" ); 
+            fi; 
+            isort := PreCat1GroupMorphismByGroupHomomorphisms
+                        ( rt1, rt2, rho, pi ); 
+            isodn := PreCat1GroupMorphismByGroupHomomorphisms
+                        ( dn1, dn2, sigma, pi ); 
+            return PreCat2GroupMorphismByPreCat1GroupMorphisms 
+                       ( D1, D2, [ isoup, isolt, isort, isodn ] ); 
+        fi;
+    od;
+    return fail;
+end );          
+
+InstallMethod( IsomorphismPreCat2Groups, "for two pre-cat2-groups", true, 
+    [ IsPreCat2Group, IsPreCat2Group ], 0,
+function( C1, C2 ) 
+
+    local iso, TC2; 
+
+    iso := IsomorphismPreCat2GroupsNoTranspose( C1, C2 ); 
+    if ( iso = fail ) then 
+        TC2 := Transpose3DimensionalGroup( C2 ); 
+        iso := IsomorphismPreCat2GroupsNoTranspose( C1, TC2 ); 
+    fi; 
+    return iso; 
+end ); 
 
 InstallMethod( IsomorphismCat2Groups, "for two cat2-groups", true, 
     [ IsCat2Group, IsCat2Group ], 0,
@@ -610,12 +658,14 @@ function( C1, C2 )
 
     local iso, TC2; 
 
-    iso := IsomorphismCat2GroupsNoTranspose( C1, C2 ); 
+    iso := IsomorphismPreCat2Groups( C1, C2 ); 
     if ( iso = fail ) then 
-        TC2 := Transpose3DimensionalGroup( C2 ); 
-        iso := IsomorphismCat2GroupsNoTranspose( C1, TC2 ); 
+        return fail; 
+    elif IsCat2GroupMorphism( iso ) then 
+        return iso;  
+    else 
+        return fail; 
     fi; 
-    return iso; 
 end ); 
 
 ###############################################################################

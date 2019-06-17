@@ -541,7 +541,8 @@ function( L, M, N, P )
     ##  define the pairing as a commutator
     xp := CrossedPairingByCommutators( N, M, L ); 
     XS := PreCrossedSquareObj( up, lt, rt, dn, a, xp );
-##    SetIsCrossedSquare( XS, true ); 
+##    SetIsCrossedSquare( XS, true );
+##    SetIs3DimensionalGroup( XS, true ); 
     SetDiagonal2DimensionalGroup( XS, diag ); 
     if not IsCrossedSquare( XS ) then 
         Error( "XS fails to be a crossed square by normal subgroups" ); 
@@ -962,12 +963,27 @@ InstallMethod( ViewObj, "method for a 3d-group", true, [ IsPreCrossedSquare ],
 InstallMethod( Display, "method for a pre-cat2-group", true, 
     [ IsPreCat2Group ], 0,
 function( g3d )
-    Print( "cat2-group with cat1-groups:\n" ); 
-    Print( "   up = ", Up2DimensionalGroup( g3d ), "\n" ); 
-    Print( " left = ", Left2DimensionalGroup( g3d ), "\n" ); 
-    Print( "right = ", Right2DimensionalGroup( g3d ), "\n" ); 
-    Print( " down = ", Down2DimensionalGroup( g3d ), "\n" ); 
-    Print( " diag = ", Diagonal2DimensionalGroup( g3d ), "\n" ); 
+
+    local up, lt, rt, dn; 
+
+    up := Up2DimensionalGroup( g3d ); 
+    lt := Left2DimensionalGroup( g3d ); 
+    rt := Right2DimensionalGroup( g3d ); 
+    dn := Down2DimensionalGroup( g3d ); 
+    Print( "cat2-group with groups: ", 
+           [ Source(up), Range(up), Range(lt), Range(dn) ], "\n" );
+    Print( "   up tail/head: ", 
+           MappingGeneratorsImages( TailMap( up ) ),  
+           MappingGeneratorsImages( HeadMap( up ) ), "\n" );  
+    Print( " left tail/head: ", 
+           MappingGeneratorsImages( TailMap( lt ) ),  
+           MappingGeneratorsImages( HeadMap( lt ) ), "\n" );  
+    Print( "right tail/head: ", 
+           MappingGeneratorsImages( TailMap( rt ) ),  
+           MappingGeneratorsImages( HeadMap( rt ) ), "\n" );  
+    Print( " down tail/head: ", 
+           MappingGeneratorsImages( TailMap( dn ) ),  
+           MappingGeneratorsImages( HeadMap( dn ) ), "\n" );  
 end );
 
 InstallMethod( Display, "method for a pre-crossed square", true, 
@@ -1125,7 +1141,11 @@ InstallGlobalFunction( PreCat2Group, function( arg )
                 C1lt := Range( isoC1 ); 
             fi; 
         fi; 
-        dr := DetermineRightDownCat1Groups( C1up, C1lt );
+        dr := DetermineRightDownCat1Groups( C1up, C1lt ); 
+        if ( dr = fail ) then 
+            Info( InfoXMod, 2, "failure with RightDownCat1Groups" ); 
+            return fail; 
+        fi;
         C2G := PreCat2GroupByPreCat1Groups( C1up, C1lt, dr[1], dr[2] ); 
         if ( C2G = fail ) then 
             return fail;   ## qError( "C2G fails to be a PreCat2Group" ); 
@@ -1154,7 +1174,7 @@ InstallGlobalFunction( Cat2Group, function( arg )
         Print( "            or: (Pre)Cat2Group( XS );\n" );
         return fail; 
     fi;
-    ok := IsCat2Group( C2G ); 
+    ok := not ( C2G = fail ) and IsCat2Group( C2G ); 
     if ok then 
         return C2G; 
     else 
@@ -1194,7 +1214,8 @@ function( up, left )
          and ( ddh1*dde1*ddh2*dde2 = ddh2*dde2*ddh1*dde1 ) 
          and ( ddt1*dde1*ddh2*dde2 = ddh2*dde2*ddt1*dde1 ) 
          and ( ddh1*dde1*ddt2*dde2 = ddt2*dde2*ddh1*dde1 ) )  then 
-        Info( InfoXMod, 1, "1-maps do not commute with the 2-maps" ); 
+        Info( InfoXMod, 1, "1-maps do not commute with 2-maps" ); 
+        return fail; 
     fi; 
     Info( InfoXMod, 2, "yes : 1-maps do commute with the 2-maps" ); 
     ## more checks? 
@@ -1309,6 +1330,151 @@ end );
 
 ##############################################################################
 ##
+#M  AllCat2GroupsWithImagesIterator . . . cat2-groups with given up,left range
+#M  DoAllCat2GroupsWithImagesIterator 
+#M  AllCat2GroupsWithImages . . . cat2-groups with specified range for up,left
+#M  AllCat2GroupsWithImagesNumber . . . number of cat2-groups with specified up,left
+#M  AllCat2GroupsWithImagesUpToIsomorphism . . . iso class reps of cat2-groups
+##
+BindGlobal( "NextIterator_AllCat2GroupsWithImages", function ( iter ) 
+
+    local ok, pair, C; 
+
+    ok := false; 
+    while ( not ok ) and ( not IsDoneIterator( iter ) ) do 
+        pair := NextIterator( iter!.pairsIterator ); 
+        if ( fail in pair ) then 
+            return fail; 
+        fi; 
+        C := Cat2Group( pair[1], pair[2] ); 
+        if ( not ( C = fail ) and IsCat2Group( C ) ) then 
+            return C; 
+        fi; 
+    od; 
+    return fail;
+end ); 
+
+BindGlobal( "IsDoneIterator_AllCat2GroupsWithImages", 
+    iter -> IsDoneIterator( iter!.pairsIterator ) 
+); 
+
+BindGlobal( "ShallowCopy_AllCat2GroupsWithImages", 
+    iter -> rec(      group := iter!.group, 
+              pairsIterator := ShallowCopy( iter!.pairsIterator ) 
+    )  
+); 
+
+InstallGlobalFunction( "DoAllCat2GroupsWithImagesIterator", 
+function( G, R, Q )
+
+    local iterGR, iterGQ, pairs, pairsIterator, 
+          upIterator, ltIterator, leftIterator, iter;
+
+    upIterator := AllCat1GroupsWithImageIterator( G, R ); 
+    if ( R = Q ) then 
+        pairsIterator := UnorderedPairsIterator( upIterator ); 
+    else 
+           ltIterator := AllCat1GroupsWithImageIterator( G, Q ); 
+        pairsIterator := CartesianIterator( upIterator, ltIterator ); 
+    fi;
+    iter := IteratorByFunctions( 
+        rec(      group := G, 
+          pairsIterator := ShallowCopy( pairsIterator ),
+           NextIterator := NextIterator_AllCat2GroupsWithImages, 
+         IsDoneIterator := IsDoneIterator_AllCat2GroupsWithImages, 
+            ShallowCopy := ShallowCopy_AllCat2GroupsWithImages ) ); 
+    return iter;
+end );
+
+InstallMethod( AllCat2GroupsWithImagesIterator, 
+    "for a group and two subgroups", [ IsGroup, IsGroup, IsGroup ], 0, 
+function ( G, R, Q ) 
+    if not ( IsSubgroup( G, R ) and IsSubgroup( G, Q ) ) then 
+        Error( "R,Q are not subgroups of G" ); 
+    fi; 
+    return DoAllCat2GroupsWithImagesIterator( G, R, Q ); 
+end ); 
+
+InstallMethod( AllCat2GroupsWithImages, 
+    "for a group and two subgroups", [ IsGroup, IsGroup, IsGroup ], 0, 
+function ( G, R, Q ) 
+
+    local L0, C; 
+
+    if not ( IsSubgroup( G, R ) and IsSubgroup( G, Q ) ) then 
+        Error( "R,Q are not subgroups of G" ); 
+    fi; 
+    L0 := [ ]; 
+    for C in AllCat2GroupsWithImagesIterator( G, R, Q ) do 
+        if not ( C = fail ) then 
+            Add( L0, C ); 
+        fi; 
+    od;
+    return L0; 
+end ); 
+
+InstallMethod( AllCat2GroupsWithImagesNumber, 
+    "for a group and two subgroups", [ IsGroup, IsGroup, IsGroup ], 0, 
+function ( G, R, Q ) 
+
+    local num, C; 
+
+    if not ( IsSubgroup( G, R ) and IsSubgroup( G, Q ) ) then 
+        Error( "R,Q are not subgroups of G" ); 
+    fi; 
+    num := 0;
+    for C in AllCat2GroupsWithImagesIterator( G, R, Q ) do 
+        if not ( C = fail ) then 
+            num := num+1;
+        fi; 
+    od;
+    return num; 
+end ); 
+
+InstallMethod( AllCat2GroupsWithImagesUpToIsomorphism, 
+    "for a group and two subgroups", [ IsGroup, IsGroup, IsGroup ], 0, 
+function ( G, R, Q ) 
+
+    local L0, len0, num, GRiter, upiter, up, GQiter, leftiter, left, 
+          C, j, found, iso; 
+
+    if not ( IsSubgroup( G, R ) and IsSubgroup( G, Q ) ) then 
+        Error( "R,Q are not subgroups of G" ); 
+    fi; 
+    L0 := [ ]; 
+    len0 := 0; 
+    num := 0; 
+    GRiter := AllCat1GroupsWithImageIterator( G, R ); 
+    GQiter := AllCat1GroupsWithImageIterator( G, Q ); 
+    upiter := ShallowCopy( GRiter );
+    for up in upiter do 
+        leftiter := ShallowCopy( GQiter );
+        for left in leftiter do 
+            C := Cat2Group( up, left ); 
+            if ( not ( C = fail ) and IsCat2Group( C ) ) then 
+                num := num+1; 
+                j := 0; 
+                found := false; 
+                while ( not found ) and ( j < len0 ) do 
+                    j := j+1; 
+                    iso := IsomorphismPreCat2Groups( C, L0[j] );
+                    if not ( iso = fail ) then 
+                        found := true; 
+                    fi; 
+                od; 
+                if not found then 
+                    Add( L0, C ); 
+                    len0 := len0+1; 
+                fi; 
+            fi; 
+        od; 
+    od; 
+    Info( InfoXMod, 1, "cat2-groups: ", num, " found, ", len0, " classes" ); 
+    return L0; 
+end ); 
+
+##############################################################################
+##
 #M  AllCat2Groups . . . . . . . list of cat2-group structures on a given group
 #O  AllCat2GroupsIterator( <gp> ) . . . . . . . iterator for the previous list
 #F  NextIterator_AllCat2Groups( <iter> ) 
@@ -1318,72 +1484,47 @@ end );
 #M  AllCat2GroupsUpToIsomorphism . . . iso class reps of cat2-group structures
 ##
 BindGlobal( "NextIterator_AllCat2Groups", function ( iter ) 
-    local C, up, lt, rtdn, ok; 
-    if ( iter!.up = 0 ) then 
-        up := NextIterator( iter!.upIterator ); 
-        iter!.up := up; 
-    else 
-        up := iter!.up; 
-    fi;
-    if not IsDoneIterator( iter ) then 
-        ok := false; 
-        while ( not ok ) do 
-            if IsDoneIterator( iter!.leftIterator ) then 
-                iter!.leftIterator := ShallowCopy( iter!.cat1Iterator ); 
-                up := NextIterator( iter!.upIterator ); 
-                iter!.up := up;
-            fi; 
-            lt := NextIterator( iter!.leftIterator );  
-            if ( ( up = fail ) or ( lt = fail ) ) then 
-            else 
-                rtdn := DetermineRightDownCat1Groups( up, lt ); 
-                if ( rtdn <> fail ) then 
-                    C := PreCat2GroupByPreCat1Groups( up,lt,rtdn[1],rtdn[2] ); 
-                    if ( not ( C = fail ) and IsCat2Group( C ) ) then 
-                        ok := true;  
-                    fi; 
-                fi;
-            fi;
-        od; 
-        return C; 
-    fi;
-    Error( "iterator is exhausted" ); 
+    local pair; 
+    if IsDoneIterator( iter!.imagesIterator ) then 
+        pair := NextIterator( iter!.pairsIterator ); 
+        iter!.imagesIterator := 
+            AllCat2GroupsWithImagesIterator( iter!.group, pair[1], pair[2] ); 
+    fi; 
+    return NextIterator( iter!.imagesIterator ); 
 end ); 
 
 BindGlobal( "IsDoneIterator_AllCat2Groups", 
-    iter -> ( IsDoneIterator( iter!.upIterator ) 
-              and IsDoneIterator( iter!.leftIterator ) ) 
+    iter -> ( IsDoneIterator( iter!.pairsIterator ) 
+              and IsDoneIterator( iter!.imagesIterator ) ) 
 ); 
 
 BindGlobal( "ShallowCopy_AllCat2Groups", 
     iter -> rec( group := iter!.group, 
-                    up := iter!.up,
-          cat1Iterator := ShallowCopy( iter!.cat1Iterator ), 
-            upIterator := ShallowCopy( iter!.upIterator ),
-          leftIterator := ShallowCopy( iter!.leftIterator ) 
+         pairsIterator := ShallowCopy( iter!.pairsIterator ), 
+        imagesIterator := ShallowCopy( iter!.imagesIterator ) 
     )  
 ); 
 
 BindGlobal( "DoAllCat2GroupsIterator", 
 function( G )
 
-    local cat1iter, iter;
+    local subsIterator, pairsIterator, imagesIterator, iter;
 
-    ## any checks needed? 
-    cat1iter := AllCat1GroupsIterator( G );
+    subsIterator := AllSubgroupsIterator( G ); 
+    pairsIterator := UnorderedPairsIterator( subsIterator ); 
+    imagesIterator := IteratorList( [ ] );
     iter := IteratorByFunctions( 
         rec(     group := G, 
-                    up := 0, 
-          cat1Iterator := cat1iter, 
-            upIterator := ShallowCopy( cat1iter ), 
-          leftIterator := ShallowCopy( cat1iter ),  
+          subsIterator := ShallowCopy( subsIterator ), 
+         pairsIterator := ShallowCopy( pairsIterator ),  
+        imagesIterator := ShallowCopy( imagesIterator ), 
           NextIterator := NextIterator_AllCat2Groups, 
         IsDoneIterator := IsDoneIterator_AllCat2Groups, 
            ShallowCopy := ShallowCopy_AllCat2Groups ) ); 
     return iter;
 end );
 
-InstallMethod( AllCat2GroupsIterator, "...", [ IsGroup ], 0, 
+InstallMethod( AllCat2GroupsIterator, "for a group", [ IsGroup ], 0, 
     G -> DoAllCat2GroupsIterator( G ) ); 
 
 InstallMethod( AllCat2Groups, "for a group", [ IsGroup ], 0, 
@@ -1393,7 +1534,9 @@ function( G )
 
     L := [ ];
     for C in AllCat2GroupsIterator( G ) do 
-        Add( L, C ); 
+        if not ( C = fail ) then 
+            Add( L, C ); 
+        fi; 
     od;
     return L; 
 end ); 
@@ -1405,7 +1548,9 @@ function( G )
 
     n := 0;
     for C in AllCat2GroupsIterator( G ) do 
-        n := n+1; 
+        if not ( C = fail ) then 
+            n := n+1; 
+        fi;
     od;
     return n; 
 end ); 
@@ -1419,18 +1564,20 @@ function( G )
     L := [ ];
     numL := 0; 
     for C in AllCat2GroupsIterator( G ) do 
-        k := 0; 
-        found := false; 
-        while ( not found ) and ( k < numL ) do 
-            k := k+1; 
-            iso := IsomorphismCat2Groups( C, L[k] );
-            if ( iso <> fail ) then 
-                 found := true; 
-            fi; 
-        od; 
-        if not found then 
-            Add( L, C ); 
-            numL := numL + 1; 
+        if not ( C = fail ) then 
+            k := 0; 
+            found := false; 
+            while ( not found ) and ( k < numL ) do 
+                k := k+1; 
+                iso := IsomorphismCat2Groups( C, L[k] );
+                if ( iso <> fail ) then 
+                     found := true; 
+                fi; 
+            od; 
+            if not found then 
+                Add( L, C ); 
+                numL := numL + 1; 
+            fi;
         fi;
     od;
     return L; 
@@ -1977,4 +2124,15 @@ function( s )
            Up2DimensionalGroup(s), Down2DimensionalGroup(s), 
            Boundary( Left2DimensionalGroup(s) ), 
            Boundary( Right2DimensionalGroup(s) ) ); 
+end );
+
+##############################################################################
+##
+#M  IsSymmetric3DimensionalGroup . . . . check whether a 3d-group is symmetric
+##
+InstallMethod( IsSymmetric3DimensionalGroup, 
+    "generic method for 3d-groups", true, [ IsHigherDimensionalGroup ], 0,
+function( XS )
+    return Is3DimensionalGroup( XS ) and 
+           ( Up2DimensionalGroup( XS ) = Left2DimensionalGroup( XS ) );
 end );

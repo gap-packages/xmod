@@ -1085,7 +1085,8 @@ function( C1, C2 )
     else
         phi := IdentityMapping( G1 );
     fi;
-    if ( phi = fail ) then
+    if ( phi = fail ) then 
+        Info( InfoXMod, 2, "G1,G2 not isomorphic" ); 
         return fail;
     fi;
     R1 := Range( C1 );
@@ -1096,6 +1097,7 @@ function( C1, C2 )
         psi := IdentityMapping( R1 );
     fi;
     if ( psi = fail ) then
+        Info( InfoXMod, 2, "R1,R2 not isomorphic" ); 
         return fail;
     fi; 
     t1 := TailMap( C1 );
@@ -1113,6 +1115,7 @@ function( C1, C2 )
             return PreCat1GroupMorphismByGroupHomomorphisms(C1,C2,gamma,rho); 
         fi; 
     od;
+    Info( InfoXMod, 2, "no isomorphism found" ); 
     return fail;
 end );          
 
@@ -1198,11 +1201,11 @@ end );
 
 ##############################################################################
 ##
-#M  PreCat1GroupMorphismByGroupHomomorphisms( <P>, <Q>, <hsrc>, <hrng> ) . make pre-cat1 morphism
+#M  PreCat1GroupMorphismByGroupHomomorphisms( <P>, <Q>, <hsrc>, <hrng> ) 
 ##
 InstallMethod( PreCat1GroupMorphismByGroupHomomorphisms,
     "for pre-cat1-group, pre-cat1-group, homomorphism, homomorphism,", true,
-    [ IsPreCat1Group, IsPreCat1Group, IsGroupHomomorphism, IsGroupHomomorphism ], 0,
+    [IsPreCat1Group,IsPreCat1Group,IsGroupHomomorphism,IsGroupHomomorphism], 0,
 function( src, rng, srchom, rnghom )
 
     local filter, fam, mor, ok, nsrc, nrng, name;

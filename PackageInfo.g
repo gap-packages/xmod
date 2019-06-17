@@ -8,7 +8,7 @@ SetPackageInfo( rec(
 PackageName := "XMod",
 Subtitle := "Crossed Modules and Cat1-Groups",
 Version := "2.73dev",
-Date := "15/05/2019", # dd/mm/yyyy format
+Date := "21/05/2019", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -20,14 +20,14 @@ Persons := [
     Email         := "c.d.wensley@bangor.ac.uk",
     WWWHome       := "http://pages.bangor.ac.uk/~mas023/",
     PostalAddress := Concatenation( [
-                       "Dr. C.D. Wensley\n",
-                       "School of Computer Science\n",
-                       "Bangor University\n",
-                       "Dean Street\n",
-                       "Bangor\n",
-                       "Gwynedd LL57 1UT\n",
-                       "UK"] ),
-    Place         := "Bangor",
+                      "Dr. C.D. Wensley\n",
+                      "School of Computer Science and Electronic Engineering\n",
+                      "Bangor University\n",
+                      "Dean Street\n",
+                      "Bangor\n",
+                      "Gwynedd LL57 1UT\n",
+                      "UK"] ),
+    Place         := "Llanfairfechan",
     Institution   := "Bangor University"
   ),
   rec(
@@ -106,12 +106,13 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">=4.10.0",
-  NeededOtherPackages := [ ["Utils", ">= 0.61"], 
-                           ["groupoids", ">= 1.65"], 
+  NeededOtherPackages := [ ["Utils", ">= 0.63"], 
+                           ["groupoids", ">= 1.66"], 
                            ["Hap", ">= 1.15"],
                            ["autpgrp", ">= 1.10"], 
                            ["SmallGrp", ">= 1.3" ] ], 
-  SuggestedOtherPackages := [ ["GAPDoc", ">= 1.6.2"] ],
+  SuggestedOtherPackages := [ ["AutoDoc", ">=2019.02.22"], 
+                              ["GAPDoc", ">= 1.6.2"] ],
   ExternalConditions := [ ]
 ),
 
@@ -189,7 +190,7 @@ AutoDoc := rec(
             "<P/>\n", 
             "Bug reports, suggestions and comments are, of course, welcome. ", 
             "Please submit an issue at ", 
-            "<URL>http://github.com/gap-packages/xmod/issues/</URL> ", 
+            "<URL>https://github.com/gap-packages/xmod/issues/</URL> ", 
             "or send an email to the first author at ", 
             "<Email>c.d.wensley@bangor.ac.uk</Email>. \n", 
             "<P/>\n"

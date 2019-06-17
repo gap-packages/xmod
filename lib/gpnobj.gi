@@ -47,7 +47,7 @@ function( P )
         return false;
     fi;
     L := GeneratingCat1Groups( P );
-    n := HigherDimension( P )-1;
+    n := HigherDimension( P ) - 1;
     PL := [ ];
     for i in [1..n] do 
         if not ( IsPerm2DimensionalGroup( L[i] ) ) then
@@ -120,9 +120,9 @@ end );
 
 ##############################################################################
 ##
-#M  PreCatnObj ( <up>, <down> ) . . . . . . . . . . . . make a pre-catn object
+#M  PreCatnObj ( <cat1-groups> ) . . . . . . . . . . . make a pre-catn object
 ##
-InstallMethod( PreCatnObj, "for precatn", true, [ IsList ], 0,
+InstallMethod( PreCatnObj, "for list of cat1-groups", true, [ IsList ], 0,
 function( L )
 
     local G1, PC, ok, name, n;
@@ -219,29 +219,23 @@ end );
 
 ##############################################################################
 ##
-#M  VerticesOfHigherDimensionalGroup( obj ) . . for a higher-dimensional group 
+#M  GroupsOfHigherDimensionalGroup( obj ) . . . for a higher-dimensional group 
 ##
-InstallMethod( VerticesOfHigherDimensionalGroup, "method for dimension 2", 
+InstallMethod( GroupsOfHigherDimensionalGroup, "method for dimensions 2,3", 
     true, [ IsHigherDimensionalGroup ], 0,
 function ( obj )
 
-    local dim, L, gens; 
+    local dim, L, gens, up, dn; 
 
     dim := HigherDimension( obj ); 
     if ( dim = 2 ) then 
         return [ Source( obj ), Range( obj ) ]; 
     elif ( dim = 3 ) then 
-        if IsCatnGroup( obj ) then 
-            gens := GeneratingCat1Groups( obj ); 
-            return [ Source( gens[1] ), Range( gens[1] ), 
-                     Range( gens[2] ), Range( gens[3] ) ]; 
-        else  ## obj is a crossed square 
-            Print( "VerticesOfHigherDimensionalGroup ", 
-                   "not yet implemented for crossed squares\n" ); 
-            return fail; 
-        fi; 
+        up := Up2DimensionalGroup( obj ); 
+        dn := Down2DimensionalGroup( obj );
+        return [ Source(up), Range(up), Source(dn), Range(dn) ]; 
     else  ## dimension >= 4 
-        Print( "VerticesOfHigherDimensionalGroup ", 
+        Print( "GroupsOfHigherDimensionalGroup ", 
                "not yet implemented for dimension >= 4\n" ); 
         return fail; 
     fi; 
@@ -346,4 +340,16 @@ function( dom )
     d := Down2DimensionalGroup( dom ); 
     return [ [ IdGroup( Source(u) ), IdGroup( Range(u) ) ], 
              [ IdGroup( Source(d) ), IdGroup( Range(d) ) ] ]; 
+end ); 
+
+#############################################################################
+##
+#M  IsPermHigherDimensionalgroup  . . . . . . for a higher-dimensional domain
+##
+InstallOtherMethod( IsPermHigherDimensionalGroup, "method for a nd-domain", 
+    true, [ IsHigherDimensionalDomain ], 0, 
+function( dom )
+    return IsHigherDimensionalGroup( dom ) 
+           and ForAll( GroupsOfHigherDimensionalGroup( dom ),
+                       V -> IsPermGroup( V ) ); 
 end ); 

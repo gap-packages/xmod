@@ -23,7 +23,7 @@ DeclareProperty( "IsCatnGroupMorphism", IsHigherDimensionalGroupMorphism );
 #A  2DimensionalGroupMorphisms( <mor> )
 #O  MakeHigherDimensionalMapping( <src>, <rng>, <list of maps> )
 ##
-DeclareAttribute( "ListOfHomomorphisms", IsHigherDimensionalMapping );
+DeclareAttribute( "ListOf2DimensionalMappings", IsHigherDimensionalMapping );
 DeclareOperation( "MakeHigherDimensionalMapping",
     [ IsHigherDimensionalGroup, IsHigherDimensionalGroup, IsList ] );
 
@@ -51,7 +51,7 @@ DeclareOperation( "PreCatnGroupMorphismByMorphisms",
 
 #############################################################################
 ##
-#O  MakeHigherDimensionalGroupMorphism( [list])
+#O  MakeHigherDimensionalGroupMorphism( [hd-group,hdgroup,list] )
 ##
 ##
 DeclareOperation( "MakeHigherDimensionalGroupMorphism", 

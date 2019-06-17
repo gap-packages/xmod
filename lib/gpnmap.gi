@@ -26,8 +26,8 @@ function( src, rng, mors )
     fi;
     n := Length( mors ); 
     if ( HasIsPreCat2Group(src) and IsPreCat2Group(src) ) then 
-        if ( dim-1  <> n ) then
-            Info( InfoXMod, 1, "third argument should have length ", dim-1 );
+        if ( 2^(dim-1) <> n ) then
+            Info( InfoXMod, 1, "3rd argument should have length ", 2^(dim-1) );
             return fail;
         fi; 
     elif ( HasIsPreCrossedSquare(src) and IsPreCrossedSquare(src) ) then  
@@ -46,7 +46,7 @@ function( src, rng, mors )
     ObjectifyWithAttributes( mor, TypeHigherDimensionalGroupMorphism,
         Source, src,
         Range, rng,
-        ListOfHomomorphisms, mors,
+        ListOf2DimensionalMappings, mors,
         HigherDimension, dim );
     if ( HasIsPreCrossedSquare( src ) and IsPreCrossedSquare( src ) ) then 
         SetUp2DimensionalMorphism( mor, mors[1] );
@@ -66,17 +66,20 @@ InstallMethod( IsPreCatnGroupMorphism,
     [ IsHigherDimensionalGroupMorphism ], 0,
 function( mor )
 
-    local PC, QC, upmor, dnmor, ok, 2dmor, genPC, genQC, rangePC, rangeQC, x,
-           rnghoms, srchoms, G1, G2, P1, P2, p, q, comp, perm2dmor, i;
+    local PC, QC, upmor, dnmor, ok, 2dmor, genPC, genQC, rangePC, rangeQC, 
+          x, rnghoms, srchoms, G1, G2, P1, P2, p, q, comp, perm2dmor, i, 
+          gamma, rho, sigma, pi;
 
     PC := Source( mor );
     QC := Range( mor );
     if not ( IsHigherDimensionalGroup( PC ) 
              and IsHigherDimensionalGroup( QC ) ) then
+        Info( InfoXMod, 1, "PC and/or QC not HigherDimensionalGroups" );
         return false;
     fi;
-    2dmor := ListOfHomomorphisms( mor );
+    2dmor := ListOf2DimensionalMappings( mor );
     if ForAny( 2dmor, x -> not Is2DimensionalGroupMorphism(x) ) then 
+        Info( InfoXMod, 1, "Is2DimensionalGroupMorphism(x) fails for ", x );
         return false;
     fi;
     genPC := GeneratingCat1Groups( PC ); 
@@ -85,15 +88,15 @@ function( mor )
     rangeQC := List( genQC, x -> Range(x) );
     rnghoms := List( 2dmor, x -> RangeHom(x) );
     srchoms := List( 2dmor, x -> SourceHom(x) ); 
-    for x in [1..Length(2dmor)] do 
+    for x in [1..Length(genPC)] do 
         if ( Source( rnghoms[x] ) <> rangePC[x] ) then 
             Info( InfoXMod, 1, x, "a : ", Source(rnghoms[x]), 
-                  " <> ", rangePC[x], "\n" );  
+                  " <> ", rangePC[x] );  
             return false;
         fi;    
         if ( Range( rnghoms[x] ) <> rangeQC[x] ) then 
             Info( InfoXMod, 1, x, "b : ", Source(rnghoms[x]), 
-                  " <> ", rangePC[x], "\n" );  
+                  " <> ", rangePC[x] );  
             return false;
         fi;    
     od;
@@ -102,22 +105,45 @@ function( mor )
     # Print("Problem of equality of morphism \n");
     # construct perm 2d-morphisms
     
-    perm2dmor := [];
+    if not ( IsPermHigherDimensionalGroup( PC ) and 
+             IsPermHigherDimensionalGroup( QC ) ) then 
+        Error( "only implemented for permutation groups so far" ); 
+    fi; 
+##    perm 2dmor := [ ]; 
+##    for i in [1..Length(2dmor)] do
+##        G1 := Source( SourceHom( 2dmor[i] ) );
+##        G2 := Range( SourceHom( 2dmor[i] ) );
+##        P1 := ImagesSource( IsomorphismPermGroup( G1 ) );
+##        P2 := ImagesSource( IsomorphismPermGroup( G2 ) );
+##        p := IsomorphismGroups( P1, G1 );
+##        q := IsomorphismGroups( G2, P2 );
+##        comp := p * SourceHom( 2dmor[i] ) * q;    
+##        Add( perm2dmor, comp, i );
+##    od;
     
-    for i in [1..Length(2dmor)] do
-        G1 := Source( SourceHom( 2dmor[i] ) );
-        G2 := Range( SourceHom( 2dmor[i] ) );
-        P1 := ImagesSource( IsomorphismPermGroup( G1 ) );
-        P2 := ImagesSource( IsomorphismPermGroup( G2 ) );
-        p := IsomorphismGroups( P1, G1 );
-        q := IsomorphismGroups( G2, P2 );
-        comp := p * SourceHom( 2dmor[i] ) * q;    
-        Add(perm2dmor,comp,i);
-    od;
-    
-    # check that equality of srchoms
-    if ForAny(perm2dmor, x ->  perm2dmor[1] <> x ) then 
-        return false;
+    # check that equality of vertex homomorphisms 
+    if ( Length( 2dmor ) > 4 ) then 
+        Error( "not yet implemented for dimension >=3" ); 
+    fi; 
+    gamma := SourceHom( 2dmor[1] ); 
+    if not ( gamma = SourceHom( 2dmor[2] ) ) then 
+        Info( InfoXMod, 2, "unequal gammas" ); 
+        return false; 
+    fi; 
+    rho := RangeHom( 2dmor[1] ); 
+    if not ( rho = SourceHom( 2dmor[3] ) ) then 
+        Info( InfoXMod, 2, "unequal rhos" ); 
+        return false; 
+    fi; 
+    sigma := RangeHom( 2dmor[2] ); 
+    if not ( sigma = SourceHom( 2dmor[4] ) ) then 
+        Info( InfoXMod, 2, "unequal sigmas" ); 
+        return false; 
+    fi; 
+    pi := RangeHom( 2dmor[3] ); 
+    if not ( pi = RangeHom( 2dmor[4] ) ) then 
+        Info( InfoXMod, 2, "unequal pis" ); 
+        return false; 
     fi; 
     return true;
 end );
@@ -151,8 +177,8 @@ function ( mor, phi )
     
     n1 := HigherDimension( mor );
     n2 := HigherDimension( phi );
-    mors1 := ListOfHomomorphisms( mor );
-    mors2 := ListOfHomomorphisms( phi );        
+    mors1 := ListOf2DimensionalMappings( mor );
+    mors2 := ListOf2DimensionalMappings( phi );        
     
     if ( ( n1 <> n2 ) or ( mors1 <> mors2  ) ) then
         return false;
@@ -172,7 +198,7 @@ function( map )
     
     local mors, imors;
     
-    mors := ListOfHomomorphisms( map );
+    mors := ListOf2DimensionalMappings( map );
     imors := List( mors, f -> MappingGeneratorsImages(f) );
     return imors;
 end );
@@ -218,7 +244,7 @@ function( mor )
     if (( n = 3 ) and HasIsPreCrossedSquareMorphism( mor ) ) then 
         Display3DimensionalMorphism( mor ); 
     else 
-        mors := ListOfHomomorphisms( mor );
+        mors := ListOf2DimensionalMappings( mor );
         if ( HasIsCatnGroupMorphism( mor ) and IsCatnGroupMorphism( mor ) ) then
             Print( "Morphism of cat",n-1,"-groups :- \n" );
         else
@@ -342,8 +368,8 @@ function( m2, m1 )
     
     n1 := HigherDimension( m1 );
     n2 := HigherDimension( m2 );
-    mors1 := ListOfHomomorphisms( m1 );
-    mors2 := ListOfHomomorphisms( m2 );    
+    mors1 := ListOf2DimensionalMappings( m1 );
+    mors2 := ListOf2DimensionalMappings( m2 );    
 
     if not ( Range( m1 ) = Source( m2 ) ) then
         Info( InfoXMod, 2, "Range(m1) <> Source(m2)" );
@@ -378,7 +404,7 @@ function( mor )
 
     local ok, 2d_maps;
 
-    2d_maps := ListOfHomomorphisms(mor);
+    2d_maps := ListOf2DimensionalMappings(mor);
     if not ( IsAutomorphismHigherDimensionalDomain(mor) ) then
        Info( InfoXMod, 2, "Parameter is not an automorphism" );
        return fail;
@@ -396,7 +422,7 @@ function( map )
 
     local ok, 2d_maps;
     
-    2d_maps := ListOfHomomorphisms( map ); 
+    2d_maps := ListOf2DimensionalMappings( map ); 
     ok := ForAll( 2d_maps, f -> IsInjective(f) );
     if not ok then
         return false;
@@ -414,7 +440,7 @@ function( map )
 
     local ok, 2d_maps;
     
-    2d_maps := ListOfHomomorphisms( map );    
+    2d_maps := ListOf2DimensionalMappings( map );    
     ok := ForAll( 2d_maps, f -> IsSurjective(f) );
     if not ok then
         return false;
@@ -432,7 +458,7 @@ function( map )
 
     local ok, 2d_maps;
     
-    2d_maps := ListOfHomomorphisms( map );    
+    2d_maps := ListOf2DimensionalMappings( map );    
     ok := ForAll( 2d_maps, f -> IsSingleValued(f) );
     if not ok then
         return false;
@@ -450,7 +476,7 @@ function( map )
 
     local ok, 2d_maps;
     
-    2d_maps := ListOfHomomorphisms( map );    
+    2d_maps := ListOf2DimensionalMappings( map );    
     ok := ForAll( 2d_maps, f -> IsTotal(f) );
     if not ok then
         return false;
@@ -468,7 +494,7 @@ function( map )
 
     local ok, 2d_maps;
     
-    2d_maps := ListOfHomomorphisms( map );    
+    2d_maps := ListOf2DimensionalMappings( map );    
     ok := ForAll( 2d_maps, f -> IsBijective(f) );
     if not ok then
         return false;
@@ -488,7 +514,7 @@ function( map )
 
     local ok, 2d_maps;
     
-    2d_maps := ListOfHomomorphisms( map );
+    2d_maps := ListOf2DimensionalMappings( map );
     ok := ForAll( 2d_maps, f -> IsEndomorphism2DimensionalDomain( f ) );
     if not ok then
         return false;
