@@ -1343,6 +1343,7 @@ BindGlobal( "NextIterator_AllCat2GroupsWithImages", function ( iter )
     ok := false; 
     while ( not ok ) and ( not IsDoneIterator( iter ) ) do 
         pair := NextIterator( iter!.pairsIterator ); 
+        Info( InfoXMod, 1, pair ); 
         if ( fail in pair ) then 
             return fail; 
         fi; 
