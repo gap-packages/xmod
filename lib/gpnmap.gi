@@ -278,15 +278,22 @@ InstallOtherMethod( IdentityMapping, "for higher dimensional object", true,
     [ IsHigherDimensionalGroup ], 0,
 function( obj )
 
-    local idmaps;
+    local dim, idmaps;
     
     ## this works for catn-groups but should be extended to n-cubes 
-    if ( HasIsCrossedSquare( obj ) and IsCrossedSquare( obj ) ) then 
+    dim := HigherDimension( obj ); 
+    if ( dim = 3 ) then 
         idmaps := [ IdentityMapping( Up2DimensionalGroup( obj ) ), 
                     IdentityMapping( Left2DimensionalGroup( obj ) ), 
                     IdentityMapping( Right2DimensionalGroup( obj ) ), 
                     IdentityMapping( Down2DimensionalGroup( obj ) ) ]; 
-        return CrossedSquareMorphismByXModMorphisms( obj, obj, idmaps ); 
+        if ( HasIsCrossedSquare( obj ) and IsCrossedSquare( obj ) ) then 
+            return CrossedSquareMorphismByXModMorphisms( obj, obj, idmaps ); 
+        elif ( HasIsCat2Group( obj ) and IsCat2Group( obj ) ) then 
+            return PreCat2GroupMorphismByPreCat1GroupMorphisms(obj,obj,idmaps); 
+        else 
+            Error( "should never get here" ); 
+        fi; 
     else 
         idmaps := List( GeneratingCat1Groups( obj ), C -> IdentityMapping(C) ); 
         return PreCatnGroupMorphismByMorphisms( obj, obj, idmaps ); 

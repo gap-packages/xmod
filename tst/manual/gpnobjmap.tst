@@ -2,7 +2,7 @@
 ##
 #W  gpnobjmap.tst                 XMOD test file                Chris Wensley
 ##                                                               Alper Odabas
-#Y  Copyright (C) 2001-2018, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2019, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 gap> START_TEST( "XMod package: gpnobjmap.tst" );
@@ -167,31 +167,31 @@ true
 ## gap> IsCat2Group( CCconj );
 ## true
 
-gap> idCC233 := IdentityMapping( CC233 );
-<mapping: cat3-group with generating (pre-)cat1-groups:
-1 : [Group( [ f1, f2 ] ) => Group( [ f1, <identity> of ... ] )]
-2 : [Group( [ f1, f2 ] ) => Group( [ f1, f2 ] )]
-3 : [Group( [ f1, f2 ] ) => Group( [ f1, f2 ] )] -> cat
-3-group with generating (pre-)cat1-groups:
-1 : [Group( [ f1, f2 ] ) => Group( [ f1, <identity> of ... ] )]
-2 : [Group( [ f1, f2 ] ) => Group( [ f1, f2 ] )]
-3 : [Group( [ f1, f2 ] ) => Group( [ f1, f2 ] )] >
-gap> Display( idCC233 );
-Morphism of pre-cat3-groups :- 
-: Source has cat3-group with generating (pre-)cat1-groups:
-1 : [Group( [ f1, f2 ] ) => Group( [ f1, <identity> of ... ] )]
-2 : [Group( [ f1, f2 ] ) => Group( [ f1, f2 ] )]
-3 : [Group( [ f1, f2 ] ) => Group( [ f1, f2 ] )]
-: Range has cat3-group with generating (pre-)cat1-groups:
-1 : [Group( [ f1, f2 ] ) => Group( [ f1, <identity> of ... ] )]
-2 : [Group( [ f1, f2 ] ) => Group( [ f1, f2 ] )]
-3 : [Group( [ f1, f2 ] ) => Group( [ f1, f2 ] )]
-: MappingGeneratorsImages for the source homomorphisms:
-1 : [ [ f1, f2 ], [ f1, f2 ] ]
-2 : [ [ f1, f2 ], [ f1, f2 ] ]
-3 : [ [ f1, f2 ], [ f1, f2 ] ]
-gap> IsBijective( idCC233 );
-true
+## gap> idCC233 := IdentityMapping( CC233 );
+## <mapping: cat3-group with generating (pre-)cat1-groups:
+## 1 : [Group( [ f1, f2 ] ) => Group( [ f1, <identity> of ... ] )]
+## 2 : [Group( [ f1, f2 ] ) => Group( [ f1, f2 ] )]
+## 3 : [Group( [ f1, f2 ] ) => Group( [ f1, f2 ] )] -> cat
+## 3-group with generating (pre-)cat1-groups:
+## 1 : [Group( [ f1, f2 ] ) => Group( [ f1, <identity> of ... ] )]
+## 2 : [Group( [ f1, f2 ] ) => Group( [ f1, f2 ] )]
+## 3 : [Group( [ f1, f2 ] ) => Group( [ f1, f2 ] )] >
+## gap> Display( idCC233 );
+## Morphism of pre-cat3-groups :- 
+## : Source has cat3-group with generating (pre-)cat1-groups:
+## 1 : [Group( [ f1, f2 ] ) => Group( [ f1, <identity> of ... ] )]
+## 2 : [Group( [ f1, f2 ] ) => Group( [ f1, f2 ] )]
+## 3 : [Group( [ f1, f2 ] ) => Group( [ f1, f2 ] )]
+## : Range has cat3-group with generating (pre-)cat1-groups:
+## 1 : [Group( [ f1, f2 ] ) => Group( [ f1, <identity> of ... ] )]
+## 2 : [Group( [ f1, f2 ] ) => Group( [ f1, f2 ] )]
+## 3 : [Group( [ f1, f2 ] ) => Group( [ f1, f2 ] )]
+## : MappingGeneratorsImages for the source homomorphisms:
+## 1 : [ [ f1, f2 ], [ f1, f2 ] ]
+## 2 : [ [ f1, f2 ], [ f1, f2 ] ]
+## 3 : [ [ f1, f2 ], [ f1, f2 ] ]
+## gap> IsBijective( idCC233 );
+## true
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 

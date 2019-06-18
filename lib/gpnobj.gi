@@ -350,6 +350,6 @@ InstallOtherMethod( IsPermHigherDimensionalGroup, "method for a nd-domain",
     true, [ IsHigherDimensionalDomain ], 0, 
 function( dom )
     return IsHigherDimensionalGroup( dom ) 
-           and ForAll( GroupsOfHigherDimensionalGroup( dom ),
-                       V -> IsPermGroup( V ) ); 
+           and ForAll( GeneratingCat1Groups( dom ),
+                       V -> IsPerm2DimensionalGroup( V ) ); 
 end ); 

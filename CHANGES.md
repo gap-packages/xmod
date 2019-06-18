@@ -1,6 +1,6 @@
 # CHANGES to the 'XMod' package
 
-## 2.73 -> 2.73dev (17/06/2019) 
+## 2.73 -> 2.73dev (18/06/2019) 
 
  * (17/06/19) revised AllCat{1,2}... functions using iterators in Utils 0.64
  * (10/06/19) complete rewrite of IsomorphismCat2Groups 
