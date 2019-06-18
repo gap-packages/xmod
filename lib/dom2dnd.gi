@@ -10,9 +10,9 @@
 
 ############################################################################# 
 ## 
-#M  KindOf2DimensionalDomain( <m2d> ) 
+#M  KindOfHigherDimensionalDomain( <m2d> ) 
 ##
-InstallMethod( KindOf2DimensionalDomain, "for list of 2Dimensional-domains", 
+InstallMethod( KindOfHigherDimensionalDomain, "for list of 2Dimensional-domains", 
     true, [ IsList ], 0, 
 function( pieces ) 
 

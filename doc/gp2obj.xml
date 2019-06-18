@@ -993,10 +993,50 @@ gap> StructureDescription(X2);
 <Heading>Enumerating cat1-groups with a given source</Heading>
 
 As the size of a group <M>G</M> increases, the number of cat1-groups with 
-source <M>G</M> increases rapidly.  However, one is usually only interested 
-in the isomorphisms classes of cat1-groups with source <M>G</M>. 
-Therefore an iterator <C>AllCat1GroupsIterator</C> is provided, 
+source <M>G</M> increases rapidly.  
+However, one is usually only interested in the isomorphism classes 
+of cat1-groups with source <M>G</M>. 
+An iterator <C>AllCat1GroupsIterator</C> is provided, 
 which runs through the various cat1-groups. 
+This iterator finds, for each subgroup <M>R</M> of <M>G</M>, 
+the cat1-groups with range <M>R</M>. 
+It does this by running through the <C>AllSubgroupsIterator(G)</C> 
+provided by the <Package>Utils</Package> package, 
+and then using the iterator <C>AllCat1GroupsWithImageIterator(G,R)</C>. 
+
+<ManSection>
+   <Oper Name="AllCat1GroupsWithImageIterator"
+         Arg="G R" />
+   <Attr Name="AllCat1GroupsWithImageNumber"
+         Arg="G R" />
+   <Oper Name="AllCat1GroupsWithImageUpToIsomorphism"
+         Arg="G R" />
+   <Oper Name="AllCat1GroupsWithImage"
+         Arg="G R" />
+<Description>
+The iterator <C>AllCat1GroupsWithImageIterator(G,R)</C> 
+iterates through all the cat1-groups with source <C>G</C> and range <M>R</M>. 
+The attribute <C>AllCat1GroupsWithImageNumber(G)</C> runs through this iterator to count the number <M>n_R</M> of these cat1-groups. 
+The operation <C>AllCat1GroupsWithImage(G)</C> returns a list containing 
+these <M>n_R</M> cat1-groups.  
+Since these lists can get very long, this operation should only 
+be used for simple cases. 
+The operation <C>AllCat1GroupsWithImageUpToIsomorphism(G)</C> 
+returns representatives of the isomorphism classes of these cat1-groups. 
+</Description> 
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> d12 := DihedralGroup( IsPermGroup, 12 );  SetName( d12, "d12" );
+Group([ (1,2,3,4,5,6), (2,6)(3,5) ])
+gap> c2 := Subgroup( d12, [ (1,6)(2,5)(3,4) ] );; 
+gap> AllCat1GroupsWithImageNumber( d12, c2 );
+1
+gap> L12 := AllCat1GroupsWithImage( d12, c2 );
+[ [d12=>Group( [ (), (1,6)(2,5)(3,4) ] )] ]
+]]>
+</Example>
 
 <ManSection>
    <Oper Name="AllCat1GroupsIterator"
@@ -1022,14 +1062,14 @@ of the isomorphism classes of these subgroups.
 <P/>
 <Example>
 <![CDATA[
-gap> d12 := DihedralGroup( IsPermGroup, 12 );  SetName( d12, "d12" );
-Group([ (1,2,3,4,5,6), (2,6)(3,5) ])
+gap> iter := AllCat1GroupsIterator( d12 );;
 gap> AllCat1GroupsNumber( d12 );
 12
-gap> iso1 := AllCat1GroupsUpToIsomorphism( d12 );
-[ [d12=>Group( [ (2,6)(3,5), (2,6)(3,5) ] )], 
-  [d12=>Group( [ (2,6)(3,5), (1,3)(4,6) ] )], 
-  [d12=>Group( [ (1,5)(2,4), (1,2)(3,6)(4,5) ] )], [d12=>d12] ]
+gap> iso12 := AllCat1GroupsUpToIsomorphism( d12 );
+[ [d12=>Group( [ (), (2,6)(3,5) ] )], 
+  [d12=>Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )], 
+  [d12=>Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )], 
+  [d12=>Group( [ (1,2,3,4,5,6), (2,6)(3,5) ] )] ]
 ]]>
 </Example>
 

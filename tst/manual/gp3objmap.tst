@@ -152,6 +152,10 @@ gap> Name( XSconj );
 "[c5d->d10a,d10b->d20]"
 
 ## Section 8.2.12
+
+
+
+## Section 8.2.13
 gap> xp := CrossedPairing( XSconj );
 crossed pairing: Group( [ ( 1, 3, 5, 7, 9)( 2, 4, 6, 8,10), 
   ( 1,10)( 2, 9)( 3, 8)( 4, 7)( 5, 6), (11,13,15,17,19)(12,14,16,18,20), 
@@ -250,18 +254,27 @@ gap> Size( C2act );
 # Section 8.5.1
 gap> d12 := DihedralGroup( IsPermGroup, 12 );  SetName( d12, "d12" );
 Group([ (1,2,3,4,5,6), (2,6)(3,5) ])
+gap> c2 := Subgroup( d12, [ (1,3)(4,6) ] );; 
+gap> s3 := Subgroup( d12, [ (1,3)(4,6), (1,5)(2,4) ] );; 
+gap> AllCat2GroupsWithImagesNumber( d12, c2, s3 );
+1
+gap> AllCat2GroupsWithImages( d12, c2, s3 );      
+[ cat2-group with generating (pre-)cat1-groups:
+    1 : [d12 => Group( [ (), (1,3)(4,6) ] )]
+    2 : [d12 => Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )] ]
+
+# Section 8.5.2
 gap> AllCat2GroupsNumber( d12 );
-124
+41
 gap> iso2 := AllCat2GroupsUpToIsomorphism( d12 );;
 gap> Length( iso2 );
-12
+10
 gap> List( iso2, C -> StructureDescription( C ) );
-[ [ "D12", "C2", "C2", "C2" ], [ "D12", "C2", "C2", "1" ], 
-  [ "D12", "C2", "S3", "C2" ], [ "D12", "C2", "C2 x C2", "C2" ], 
-  [ "D12", "C2", "C2 x C2", "1" ], [ "D12", "C2", "D12", "C2" ], 
-  [ "D12", "S3", "S3", "S3" ], [ "D12", "S3", "C2 x C2", "C2" ], 
-  [ "D12", "S3", "D12", "S3" ], [ "D12", "C2 x C2", "C2 x C2", "C2 x C2" ], 
-  [ "D12", "C2 x C2", "D12", "C2 x C2" ], [ "D12", "D12", "D12", "D12" ] ]
+[ [ "D12", "C2", "C2", "C2" ], [ "D12", "C2", "C2 x C2", "C2" ], 
+  [ "D12", "C2 x C2", "C2 x C2", "C2 x C2" ], [ "D12", "C2", "S3", "C2" ], 
+  [ "D12", "C2 x C2", "S3", "C2" ], [ "D12", "S3", "S3", "S3" ], 
+  [ "D12", "C2", "D12", "C2" ], [ "D12", "C2 x C2", "D12", "C2 x C2" ], 
+  [ "D12", "S3", "D12", "S3" ], [ "D12", "D12", "D12", "D12" ] ]
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 

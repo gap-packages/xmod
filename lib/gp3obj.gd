@@ -76,6 +76,8 @@ DeclareProperty( "IsAutomorphismGroup3DimensionalGroup",
     IsHigherDimensionalGroup );
 DeclareProperty( "IsAbelian3DimensionalGroup", 
     IsHigherDimensionalGroup );
+DeclareProperty( "IsSymmetric3DimensionalGroup", 
+    IsHigherDimensionalGroup );
 
 #############################################################################
 ##
@@ -192,6 +194,26 @@ DeclareOperation( "PreCat2GroupByPreCat1Groups",
 #############################################################################
 ##
 ##  functions for the paper "Computing 3-Dimensional Groups ..." 
+## 
+#O  AllCat2GroupsWithImages( <G> <R> <Q> ) 
+#O  AllCat2GroupsWithImagesIterator( <G> <R> <Q> ) 
+#F  DoAllCat2GroupsWithImagesIterator
+#O  AllCat2GroupsWithImagesNumber( <G> <R> <Q> ) 
+#O  AllCat2GroupsWithImagesUpToIsomorphism( <G> <R> <Q> ) 
+## 
+DeclareOperation( "AllCat2GroupsWithImages", 
+    [ IsGroup, IsGroup, IsGroup ] ); 
+DeclareOperation( "AllCat2GroupsWithImagesIterator", 
+    [ IsGroup, IsGroup, IsGroup ] ); 
+DeclareGlobalFunction( "DoAllCat2GroupsWithImagesIterator" ); 
+DeclareOperation( "AllCat2GroupsWithImagesNumber", 
+    [ IsGroup, IsGroup, IsGroup ] ); 
+DeclareOperation( "AllCat2GroupsWithImagesUpToIsomorphism", 
+    [ IsGroup, IsGroup, IsGroup ] ); 
+
+#############################################################################
+##
+##  more functions for the paper "Computing 3-Dimensional Groups ..." 
 ## 
 #O  AllCat2Groups( <G> ) 
 #O  AllCat2GroupsIterator( <gp> )

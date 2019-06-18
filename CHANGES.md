@@ -1,7 +1,9 @@
 # CHANGES to the 'XMod' package
 
-## 2.73 -> 2.73dev (00/05/2019) 
+## 2.73 -> 2.73dev (18/06/2019) 
 
+ * (17/06/19) revised AllCat{1,2}... functions using iterators in Utils 0.64
+ * (10/06/19) complete rewrite of IsomorphismCat2Groups 
  * (15/05/19) new AllCat{1,2}GroupsIterator, AllCat{1,2}GroupsNumber 
  * (10/05/19) added in new functions from Alper for AllCat2Groups (up to iso) 
  * (18/04/19) reorganised all .tst files into /tst/manual/ and /tst/extra/

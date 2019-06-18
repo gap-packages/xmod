@@ -381,13 +381,21 @@ gap> StructureDescription( X2 );
 ## Section 2.6.1
 gap> d12 := DihedralGroup( IsPermGroup, 12 );  SetName( d12, "d12" );
 Group([ (1,2,3,4,5,6), (2,6)(3,5) ])
+gap> c2 := Subgroup( d12, [ (1,6)(2,5)(3,4) ] );; 
+gap> AllCat1GroupsWithImageNumber( d12, c2 );
+1
+gap> L12 := AllCat1GroupsWithImage( d12, c2 );
+[ [d12=>Group( [ (), (1,6)(2,5)(3,4) ] )] ]
+
+## Section 2.6.2
+gap> iter := AllCat1GroupsIterator( d12 );;
 gap> AllCat1GroupsNumber( d12 );
 12
-gap> iso1 := AllCat1GroupsUpToIsomorphism( d12 );;
-gap> Length( iso1 );
-4
-gap> iso1[4];
-[d12=>d12]
+gap> iso12 := AllCat1GroupsUpToIsomorphism( d12 );
+[ [d12=>Group( [ (), (2,6)(3,5) ] )], 
+  [d12=>Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )], 
+  [d12=>Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )], 
+  [d12=>Group( [ (1,2,3,4,5,6), (2,6)(3,5) ] )] ]
 
 ## Section 2.7.1
 gap> L18 := Cat1Select( 18 ); 

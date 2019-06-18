@@ -2350,6 +2350,124 @@ end );
 
 ##############################################################################
 ##
+#M  AllCat1GroupsWithImage  . . . . . . cat1-group structures with given range
+#O  AllCat1GroupsWithImageIterator( <gp> )  . . iterator for the previous list
+#F  NextIterator_AllCat1GroupsWithImage( <iter> ) 
+#F  IsDoneIterator_AllCat1GroupsWithImage( <iter> ) 
+#F  ShallowCopy_AllCat1GroupsWithImage( <iter> ) 
+#M  AllCat1GroupsWithImageUpToIsomorphism  . . . . . iso class reps for G => R
+##
+BindGlobal( "NextIterator_AllCat1GroupsWithImage", function ( iter ) 
+
+    local C, post, pair, t, posh, h, ok; 
+
+    ok := false; 
+    while ( not ok ) and ( not IsDoneIterator( iter!.pairsIterator ) ) do 
+        pair := NextIterator( iter!.pairsIterator ); 
+        ## could attempt to be clever and not calculate t every time 
+        t := GroupHomomorphismByImages( iter!.group, iter!.group, 
+                                        iter!.gens, iter!.images[ pair[1] ] ); 
+        h := GroupHomomorphismByImages( iter!.group, iter!.group, 
+                                        iter!.gens, iter!.images[ pair[2] ] ); 
+        C := PreCat1GroupByEndomorphisms( t, h ); 
+        if ( not ( C = fail ) and IsCat1Group( C ) ) then 
+            ok := true; 
+            return C; 
+        fi; 
+        if IsDoneIterator( iter!.pairsIterator ) then 
+            return fail; 
+        fi; 
+    od; 
+end ); 
+
+BindGlobal( "IsDoneIterator_AllCat1GroupsWithImage", 
+    iter -> IsDoneIterator( iter!.pairsIterator )  
+); 
+
+BindGlobal( "ShallowCopy_AllCat1GroupsWithImage", 
+    iter -> rec( group := iter!.group, 
+                  gens := iter!.gens, 
+                images := iter!.images, 
+         pairsIterator := ShallowCopy( iter!.pairsIterator ) 
+    )  
+); 
+
+InstallGlobalFunction( "DoAllCat1GroupsWithImageIterator", 
+function( G, R )
+
+    local data, genG, images, found, len, i, lenIterator, pairsIterator, iter;
+
+    data := IdempotentEndomorphismsData( G ); 
+    genG := data.gens; 
+    images := data.images; 
+    found := false; 
+    len := Length( images ); 
+    i := 0;
+    while ( not found ) and ( i < len ) do 
+        i := i+1; 
+        if ( R = Subgroup( G, images[i][1] ) ) then 
+            found := true; 
+            images := images[i]; 
+        fi; 
+    od; 
+    if not found then 
+        ## there are no idempotent endomorphisms with image R 
+        return IteratorList( [ ] ); 
+    fi; 
+    lenIterator := IteratorList( [1..Length(images)] );
+    pairsIterator := CartesianIterator( lenIterator, lenIterator ); 
+    iter := IteratorByFunctions( 
+        rec(     group := G, 
+                  gens := genG, 
+                images := images,
+         pairsIterator := ShallowCopy( pairsIterator ),
+          NextIterator := NextIterator_AllCat1GroupsWithImage, 
+        IsDoneIterator := IsDoneIterator_AllCat1GroupsWithImage, 
+           ShallowCopy := ShallowCopy_AllCat1GroupsWithImage ) ); 
+    return iter;
+end );
+
+InstallMethod( AllCat1GroupsWithImageIterator, "for a group and a subgroup", 
+    [ IsGroup, IsGroup ], 0, 
+function( G, R )
+    if not IsSubgroup( G, R ) then 
+        Error( "R is not a subgroup of G" ); 
+    fi; 
+    return DoAllCat1GroupsWithImageIterator( G, R ); 
+end ); 
+
+InstallMethod( AllCat1GroupsWithImage, "for a group and a subgroup", 
+    [ IsGroup, IsGroup ], 0, 
+function( G, R ) 
+
+    local L, C; 
+
+    L := [ ];
+    for C in AllCat1GroupsWithImageIterator( G, R ) do 
+        if not ( C = fail ) then 
+           Add( L, C ); 
+        fi;
+    od;
+    return L; 
+end ); 
+
+InstallMethod( AllCat1GroupsWithImageNumber, "for a group and a subgroup", 
+    [ IsGroup, IsGroup ], 0, 
+function( G, R ) 
+
+    local n, C; 
+
+    n := 0;
+    for C in AllCat1GroupsWithImageIterator( G, R ) do 
+        if not ( C = fail ) then 
+            n := n+1; 
+        fi; 
+    od;
+    return n; 
+end ); 
+
+##############################################################################
+##
 #M  AllCat1Groups . . . . . . . list of cat1-group structures on a given group
 #O  AllCat1GroupsIterator( <gp> ) . . . . . . . iterator for the previous list
 #F  NextIterator_AllCat1Groups( <iter> ) 
@@ -2359,78 +2477,49 @@ end );
 #M  AllCat1GroupsUpToIsomorphism . . . iso class reps of cat1-group structures
 ##
 BindGlobal( "NextIterator_AllCat1Groups", function ( iter ) 
-    local C, t, h, ok; 
-    if ( iter!.tail = 0 ) then 
-        t := NextIterator( iter!.tailIterator ); 
-        iter!.tail := t; 
-    else 
-        t := iter!.tail; 
-    fi;
-    if not IsDoneIterator( iter ) then 
-        ok := false; 
-        while ( not ok ) do 
-            if IsDoneIterator( iter!.headIterator ) then 
-                iter!.headIterator := ShallowCopy( iter!.idemIterator ); 
-                t := NextIterator( iter!.tailIterator ); 
-                iter!.tail := t;
-            fi; 
-            h := NextIterator( iter!.headIterator );  
-            C := PreCat1GroupByEndomorphisms( t, h ); 
-            if ( not ( C = fail ) and IsCat1Group( C ) ) then 
-                ok := true; 
-            fi; 
-        od; 
-        return C; 
-    fi;
-    Error( "iterator is exhausted" );
+    local R, C; 
+    if IsDoneIterator( iter!.imagesIterator ) then 
+        R := NextIterator( iter!.subsIterator ); 
+        iter!.imagesIterator := 
+            AllCat1GroupsWithImageIterator( iter!.group, R ); 
+        ## but this iterator might be empty, so: 
+        if IsDoneIterator( iter!.imagesIterator ) then 
+            return fail; 
+        fi; 
+    fi; 
+    return NextIterator( iter!.imagesIterator ); 
 end ); 
 
 BindGlobal( "IsDoneIterator_AllCat1Groups", 
-    iter -> ( IsDoneIterator( iter!.tailIterator ) 
-              and IsDoneIterator( iter!.headIterator ) ) 
+    iter -> ( IsDoneIterator( iter!.subsIterator ) 
+              and IsDoneIterator( iter!.imagesIterator ) ) 
 ); 
 
 BindGlobal( "ShallowCopy_AllCat1Groups", 
     iter -> rec( group := iter!.group, 
-                  tail := iter!.tail,
-                  idem := iter!.idem, 
-          idemIterator := ShallowCopy( iter!.idemIterator ), 
-          tailIterator := ShallowCopy( iter!.tailIterator ),
-          headIterator := ShallowCopy( iter!.headIterator )
+          subsIterator := ShallowCopy( iter!.subsIterator ),
+        imagesIterator := ShallowCopy( iter!.imagesIterator )
     )  
 ); 
 
-BindGlobal( "DoAllCat1GroupsIterator", 
+InstallGlobalFunction( "DoAllCat1GroupsIterator", 
 function( G )
 
-    local idem, h, len, pos, idemiter, iter;
+    local subsIterator, imagesIterator, iter;
 
-    ## any checks needed? 
-    idem := [ ]; 
-    for h in AllEndomorphisms( G ) do 
-        if ( CompositionMapping( h, h ) = h ) then 
-            Add( idem, h ); 
-        fi; 
-    od;
-    len := Length( idem );
-    pos := Position( idem, IdentityMapping( G ) ); 
-    idem[pos] := idem[len]; 
-    idem[len] := IdentityMapping ( G );
-    idemiter := IteratorList( idem );
+    subsIterator := AllSubgroupsIterator( G ); 
+    imagesIterator := IteratorList( [ ] );
     iter := IteratorByFunctions( 
         rec(     group := G, 
-                  tail := 0, 
-                  idem := idem,
-          idemIterator := idemiter, 
-          tailIterator := ShallowCopy( idemiter ), 
-          headIterator := ShallowCopy( idemiter ),  
+          subsIterator := ShallowCopy( subsIterator ), 
+        imagesIterator := ShallowCopy( imagesIterator ), 
           NextIterator := NextIterator_AllCat1Groups, 
         IsDoneIterator := IsDoneIterator_AllCat1Groups, 
            ShallowCopy := ShallowCopy_AllCat1Groups ) ); 
     return iter;
 end );
 
-InstallMethod( AllCat1GroupsIterator, "...", [ IsGroup ], 0, 
+InstallMethod( AllCat1GroupsIterator, "for a group", [ IsGroup ], 0, 
     G -> DoAllCat1GroupsIterator( G ) ); 
 
 InstallMethod( AllCat1Groups, "for a group", [ IsGroup ], 0, 
@@ -2440,7 +2529,9 @@ function( G )
 
     L := [ ];
     for C in AllCat1GroupsIterator( G ) do 
-       Add( L, C ); 
+       if not ( C = fail ) then 
+           Add( L, C ); 
+        fi; 
     od;
     return L; 
 end ); 
@@ -2452,7 +2543,9 @@ function( G )
 
     n := 0;
     for C in AllCat1GroupsIterator( G ) do 
-        n := n+1; 
+        if not ( C = fail ) then 
+            n := n+1; 
+        fi; 
     od;
     return n; 
 end ); 
@@ -2461,26 +2554,25 @@ InstallMethod( AllCat1GroupsUpToIsomorphism, "iso class reps of cat1-groups",
     true, [ IsGroup ], 0,
 function( gp )
 
-    local homs, idem, idnum, L, numL, i, j, k, C, ok, found, iso;
+    local L, numL, i, j, k, C, ok, found, iso;
 
-    homs := AllEndomorphisms( gp );
-    idem := Filtered( homs, h -> CompositionMapping( h, h ) = h );
-    idnum := Length( idem ); 
     L := [ ]; 
     numL := 0; 
     for C in AllCat1GroupsIterator( gp ) do 
-        k := 0; 
-        found := false; 
-        while ( not found ) and ( k < numL ) do 
-            k := k+1; 
-            iso := IsomorphismCat1Groups( C, L[k] ); 
-            if ( iso <> fail ) then 
-                 found := true; 
-            fi; 
-        od; 
-        if not found then 
-            Add( L, C ); 
-            numL := numL + 1;
+        if not ( C = fail ) then 
+            k := 0; 
+            found := false; 
+            while ( not found ) and ( k < numL ) do 
+                k := k+1; 
+                iso := IsomorphismCat1Groups( C, L[k] ); 
+                if ( iso <> fail ) then 
+                     found := true; 
+                fi; 
+            od; 
+            if not found then 
+                Add( L, C ); 
+                numL := numL + 1;
+            fi;
         fi;
     od;
     return L;
@@ -2876,24 +2968,4 @@ function( XM )
         od;
     od;
     return norm;
-end );
-
-##############################################################################
-##
-#M  AllIsomorphismsGroups . . . . . . . . . . . . . . . . . . . for two groups
-##
-##  here temporarily until AllIsomorphisms appears in the library or in Utils 
-## 
-InstallMethod( AllIsomorphismsGroups, "for two groups", true, 
-    [ IsGroup, IsGroup ], 0,
-function( G, H )
-
-    local iso, autos;
-
-    iso := IsomorphismGroups( G, H ); 
-    if (iso = fail ) then 
-        return [ ];
-    fi;
-    autos := AllAutomorphisms( G ); 
-    return List( autos, a -> a*iso ); 
 end );

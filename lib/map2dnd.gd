@@ -183,7 +183,7 @@ BindGlobal( "GeneralHigherDimensionalMappingFamily",
                CanEasilySortElements, CanEasilySortElements ) ); 
 DeclareRepresentation( "IsHigherDimensionalMappingRep", 
     IsHigherDimensionalMapping and IsAttributeStoringRep,
-    [ "Source", "Range", "ListOfHomomorphisms", "HigherDimension" ] );
+    [ "Source", "Range", "ListOf2DimensionalMappings", "HigherDimension" ] );
 
 ############################################################################## 
 ## 
@@ -237,7 +237,6 @@ DeclareProperty( "IsCat2GroupMorphism", IsHigherDimensionalGroupMorphism );
 #A  Left2DimensionalMorphism( <mor> )
 #A  Down2DimensionalMorphism( <mor> )
 #A  Right2DimensionalMorphism( <mor> )
-#O  Make3DimensionalMapping( <src>, <rng>, <srchom>, <rnghom> )
 ##
 ##  A pre-crossed square or pre-cat2-group morphism contains 4 group homs
 ##

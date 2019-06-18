@@ -55,14 +55,14 @@ BindGlobal( "PcPreCatnObjType",
 #O  PreCatnObj ( <arg> ) 
 #A  GeneratingCat1Groups( <P> ) 
 #A  HigherDimension ( <P> ) 
-#A  VerticesOfHigherDimensonalGroup( <obj> ) 
+#A  GroupsOfHigherDimensonalGroup( <obj> ) 
 #A  EdgesesOfHigherDimensonalGroup( <obj> ) 
 #A  FacesOfHigherDimensonalGroup( <obj> ) 
 ##
 DeclareOperation( "PreCatnObj", [ IsList ] );
 DeclareAttribute( "GeneratingCat1Groups", IsHigherDimensionalGroup );
 DeclareAttribute( "HigherDimension", IsHigherDimensionalGroup );
-DeclareAttribute( "VerticesOfHigherDimensionalGroup", 
+DeclareAttribute( "GroupsOfHigherDimensionalGroup", 
     IsHigherDimensionalGroup ); 
 DeclareAttribute( "EdgesOfHigherDimensionalGroup", 
     IsHigherDimensionalGroup ); 

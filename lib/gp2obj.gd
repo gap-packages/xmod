@@ -333,14 +333,31 @@ DeclareOperation( "DiagonalCat1Group", [ IsList ] );
 
 #############################################################################
 ##
+#O  AllCat1GroupsWithImage( <gp>, <subgp> )
+#O  AllCat1GroupsWithImageIterator( <gp>, <subgp> )
+#O  AllCat1GroupsWithImageNumber( <gp>, <subgp> )
+#F  DoAllCat1GroupsWithImageIterator
+#O  AllCat1GroupsWithImageUpToIsomorphism( <gp> )
+##
+DeclareOperation( "AllCat1GroupsWithImage", [ IsGroup, IsGroup ] ); 
+DeclareOperation( "AllCat1GroupsWithImageIterator", [ IsGroup, IsGroup ] ); 
+DeclareOperation( "AllCat1GroupsWithImageNumber", [ IsGroup, IsGroup ] ); 
+DeclareGlobalFunction( "DoAllCat1GroupsWithImageIterator" ); 
+DeclareOperation( "AllCat1GroupsWithImageUpToIsomorphism", [ IsGroup ] ); 
+
+#############################################################################
+##
 #O  AllCat1Groups( <gp> )
 #O  AllCat1GroupsIterator( <gp> )
+#F  DoAllCat1GroupsIterator 
 #A  AllCat1GroupsNumber( <gp> )
 #O  AllCat1GroupsUpToIsomorphism( <gp> )
 ##
 DeclareOperation( "AllCat1Groups", [ IsGroup ] ); 
-DeclareOperation( "AllCat1GroupsIterator", [ IsGroup ] ); DeclareAttribute( "AllCat1GroupsNumber", IsGroup ); 
+DeclareOperation( "AllCat1GroupsIterator", [ IsGroup ] ); DeclareGlobalFunction( "DoAllCat1GroupsIterator" ); 
+DeclareAttribute( "AllCat1GroupsNumber", IsGroup ); 
 DeclareOperation( "AllCat1GroupsUpToIsomorphism", [ IsGroup ] ); 
+
 
 #############################################################################
 ##
@@ -357,11 +374,3 @@ DeclareAttribute( "Coproduct2dInfo", Is2DimensionalDomain, "mutable" );
 ##
 DeclareAttribute( "NormalSubXMods", IsXMod );
 DeclareAttribute( "NormalSubCat1Groups", IsCat1Group );
-
-############################################################################# 
-## 
-#O  AllIsomorphismsGroups( <G> <H> )
-## 
-##  here temporarily until AllIsomorphisms appears in the library or in Utils 
-## 
-DeclareOperation( "AllIsomorphismsGroups", [ IsGroup, IsGroup ] ); 
