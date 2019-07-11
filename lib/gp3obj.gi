@@ -1214,7 +1214,7 @@ function( up, left )
          and ( ddh1*dde1*ddh2*dde2 = ddh2*dde2*ddh1*dde1 ) 
          and ( ddt1*dde1*ddh2*dde2 = ddh2*dde2*ddt1*dde1 ) 
          and ( ddh1*dde1*ddt2*dde2 = ddt2*dde2*ddh1*dde1 ) )  then 
-        Info( InfoXMod, 1, "1-maps do not commute with 2-maps" ); 
+        Info( InfoXMod, 2, "1-maps do not commute with 2-maps" ); 
         return fail; 
     fi; 
     Info( InfoXMod, 2, "yes : 1-maps do commute with the 2-maps" ); 
@@ -1333,7 +1333,7 @@ end );
 #M  AllCat2GroupsWithImagesIterator . . . cat2-groups with given up,left range
 #M  DoAllCat2GroupsWithImagesIterator 
 #M  AllCat2GroupsWithImages . . . cat2-groups with specified range for up,left
-#M  AllCat2GroupsWithImagesNumber . . . number of cat2-groups with specified up,left
+#M  AllCat2GroupsWithImagesNumber . . . . # cat2-groups with specified up,left
 #M  AllCat2GroupsWithImagesUpToIsomorphism . . . iso class reps of cat2-groups
 ##
 BindGlobal( "NextIterator_AllCat2GroupsWithImages", function ( iter ) 
@@ -1466,6 +1466,10 @@ function ( G, R, Q )
                 if not found then 
                     Add( L0, C ); 
                     len0 := len0+1; 
+                    if ( InfoLevel( InfoXMod ) > 0 ) then 
+                        Display( C ); 
+                        Print( "-------------------------------------\n" ); 
+                    fi; 
                 fi; 
             fi; 
         od; 
@@ -1485,13 +1489,18 @@ end );
 #M  AllCat2GroupsUpToIsomorphism . . . iso class reps of cat2-group structures
 ##
 BindGlobal( "NextIterator_AllCat2Groups", function ( iter ) 
-    local pair; 
+    local pair, next; 
     if IsDoneIterator( iter!.imagesIterator ) then 
         pair := NextIterator( iter!.pairsIterator ); 
+## Print( iter!.count, ", ", pair, "\n" );
         iter!.imagesIterator := 
             AllCat2GroupsWithImagesIterator( iter!.group, pair[1], pair[2] ); 
     fi; 
-    return NextIterator( iter!.imagesIterator ); 
+    next := NextIterator( iter!.imagesIterator ); 
+    if ( next <> fail ) then 
+        iter!.count := iter!.count + 1;
+    fi;
+    return next;   
 end ); 
 
 BindGlobal( "IsDoneIterator_AllCat2Groups", 
@@ -1501,6 +1510,7 @@ BindGlobal( "IsDoneIterator_AllCat2Groups",
 
 BindGlobal( "ShallowCopy_AllCat2Groups", 
     iter -> rec( group := iter!.group, 
+                 count := iter!.count, 
          pairsIterator := ShallowCopy( iter!.pairsIterator ), 
         imagesIterator := ShallowCopy( iter!.imagesIterator ) 
     )  
@@ -1516,6 +1526,7 @@ function( G )
     imagesIterator := IteratorList( [ ] );
     iter := IteratorByFunctions( 
         rec(     group := G, 
+                 count := 0, 
           subsIterator := ShallowCopy( subsIterator ), 
          pairsIterator := ShallowCopy( pairsIterator ),  
         imagesIterator := ShallowCopy( imagesIterator ), 

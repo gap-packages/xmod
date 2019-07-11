@@ -13,7 +13,7 @@
 #M  MakeHigherDimensionalGroupMorphism( [ <src>, <rng>, <list of maps> ) 
 ##
 InstallMethod( MakeHigherDimensionalGroupMorphism,
-    "for two higher dimensional objects and list of 2dim-morphisms", true, 
+    "for two higher dimensional objects and list of 2d-morphisms", true, 
     [ IsHigherDimensionalGroup, IsHigherDimensionalGroup, IsList ], 0,
 function( src, rng, mors )
 
@@ -46,13 +46,15 @@ function( src, rng, mors )
     ObjectifyWithAttributes( mor, TypeHigherDimensionalGroupMorphism,
         Source, src,
         Range, rng,
-        ListOf2DimensionalMappings, mors,
         HigherDimension, dim );
-    if ( HasIsPreCrossedSquare( src ) and IsPreCrossedSquare( src ) ) then 
+    if ( HasIsPreCrossedSquare( src ) and IsPreCrossedSquare( src ) ) 
+        or ( HasIsPreCat2Group( src ) and IsPreCat2Group( src ) ) then 
         SetUp2DimensionalMorphism( mor, mors[1] );
         SetLeft2DimensionalMorphism( mor, mors[2] );
         SetRight2DimensionalMorphism( mor, mors[3] );
         SetDown2DimensionalMorphism( mor, mors[4] ); 
+    else 
+        SetListOf2DimensionalMappings( mor, mors ); 
     fi; 
     return mor; 
 end );
@@ -66,17 +68,25 @@ InstallMethod( IsPreCatnGroupMorphism,
     [ IsHigherDimensionalGroupMorphism ], 0,
 function( mor )
 
-    local PC, QC, upmor, dnmor, ok, 2dmor, genPC, genQC, rangePC, rangeQC, 
+    local PC, QC, dim, upmor, dnmor, ok, 2dmor, genPC, genQC, rangePC, rangeQC, 
           x, rnghoms, srchoms, G1, G2, P1, P2, p, q, comp, perm2dmor, i, 
           gamma, rho, sigma, pi;
 
     PC := Source( mor );
     QC := Range( mor );
-    if not ( IsHigherDimensionalGroup( PC ) 
-             and IsHigherDimensionalGroup( QC ) ) then
-        Info( InfoXMod, 1, "PC and/or QC not HigherDimensionalGroups" );
+    dim := HigherDimension( PC ); 
+    if not ( dim = HigherDimension( QC ) ) then
+        Info( InfoXMod, 1, "PC, QC do not have the same dimension" );
         return false;
-    fi;
+    fi; 
+    if ( dim = 3 ) then 
+        if ( HasIsPreCat2Group( PC ) and IsPreCat2Group( PC ) ) then 
+            return IsPreCat2GroupMorphism( mor ); 
+        else 
+            return IsPreCrossedSquareMorphism( mor ); 
+        fi; 
+    fi; 
+    Error( "should never get here - method not yet implemented" );
     2dmor := ListOf2DimensionalMappings( mor );
     if ForAny( 2dmor, x -> not Is2DimensionalGroupMorphism(x) ) then 
         Info( InfoXMod, 1, "Is2DimensionalGroupMorphism(x) fails for ", x );
@@ -409,9 +419,16 @@ InstallOtherMethod( Order, "method for a higher dimensional mapping", true,
     [ IsHigherDimensionalMapping ], 0,
 function( mor )
 
-    local ok, 2d_maps;
+    local dim, ok, 2d_maps;
 
-    2d_maps := ListOf2DimensionalMappings(mor);
+    dim := HigherDimension( mor );
+    if ( dim = 3 ) then 
+        2d_maps := 
+            [ Up2DimensionalMorphism(mor), Left2DimensionalMorphism(mor), 
+              Right2DimensionalMorphism(mor), Down2DimensionalMorphism(mor) ]; 
+    else 
+        2d_maps := ListOf2DimensionalMappings(mor); 
+    fi; 
     if not ( IsAutomorphismHigherDimensionalDomain(mor) ) then
        Info( InfoXMod, 2, "Parameter is not an automorphism" );
        return fail;
@@ -427,9 +444,16 @@ InstallOtherMethod( IsInjective, "method for a higher dimensional mapping",
     true, [ IsHigherDimensionalMapping ], 0,
 function( map )
 
-    local ok, 2d_maps;
+    local dim, ok, 2d_maps;
     
-    2d_maps := ListOf2DimensionalMappings( map ); 
+    dim := HigherDimension( map );
+    if ( dim = 3 ) then 
+        2d_maps := 
+            [ Up2DimensionalMorphism(map), Left2DimensionalMorphism(map), 
+              Right2DimensionalMorphism(map), Down2DimensionalMorphism(map) ]; 
+    else 
+        2d_maps := ListOf2DimensionalMappings(map); 
+    fi; 
     ok := ForAll( 2d_maps, f -> IsInjective(f) );
     if not ok then
         return false;
@@ -445,9 +469,16 @@ InstallOtherMethod( IsSurjective, "method for a higher dimensional mapping",
     true, [ IsHigherDimensionalMapping ], 0,
 function( map )
 
-    local ok, 2d_maps;
+    local dim, ok, 2d_maps;
     
-    2d_maps := ListOf2DimensionalMappings( map );    
+    dim := HigherDimension( map );
+    if ( dim = 3 ) then 
+        2d_maps := 
+            [ Up2DimensionalMorphism(map), Left2DimensionalMorphism(map), 
+              Right2DimensionalMorphism(map), Down2DimensionalMorphism(map) ]; 
+    else 
+        2d_maps := ListOf2DimensionalMappings(map); 
+    fi; 
     ok := ForAll( 2d_maps, f -> IsSurjective(f) );
     if not ok then
         return false;
@@ -463,9 +494,16 @@ InstallOtherMethod( IsSingleValued, "method for a higher dimensional mapping",
     true, [ IsHigherDimensionalMapping ], 0,
 function( map )
 
-    local ok, 2d_maps;
+    local dim, ok, 2d_maps;
     
-    2d_maps := ListOf2DimensionalMappings( map );    
+    dim := HigherDimension( map );
+    if ( dim = 3 ) then 
+        2d_maps := 
+            [ Up2DimensionalMorphism(map), Left2DimensionalMorphism(map), 
+              Right2DimensionalMorphism(map), Down2DimensionalMorphism(map) ]; 
+    else 
+        2d_maps := ListOf2DimensionalMappings(map); 
+    fi; 
     ok := ForAll( 2d_maps, f -> IsSingleValued(f) );
     if not ok then
         return false;
@@ -481,9 +519,16 @@ InstallOtherMethod( IsTotal, "method for a higher dimensional mapping", true,
     [ IsHigherDimensionalMapping ], 0,
 function( map )
 
-    local ok, 2d_maps;
+    local dim, ok, 2d_maps;
     
-    2d_maps := ListOf2DimensionalMappings( map );    
+    dim := HigherDimension( map );
+    if ( dim = 3 ) then 
+        2d_maps := 
+            [ Up2DimensionalMorphism(map), Left2DimensionalMorphism(map), 
+              Right2DimensionalMorphism(map), Down2DimensionalMorphism(map) ]; 
+    else 
+        2d_maps := ListOf2DimensionalMappings(map); 
+    fi; 
     ok := ForAll( 2d_maps, f -> IsTotal(f) );
     if not ok then
         return false;
@@ -499,9 +544,16 @@ InstallOtherMethod( IsBijective, "method for a higher dimensional mapping",
     true, [ IsHigherDimensionalMapping ], 0,
 function( map )
 
-    local ok, 2d_maps;
+    local dim, ok, 2d_maps;
     
-    2d_maps := ListOf2DimensionalMappings( map );    
+    dim := HigherDimension( map );
+    if ( dim = 3 ) then 
+        2d_maps := 
+            [ Up2DimensionalMorphism(map), Left2DimensionalMorphism(map), 
+              Right2DimensionalMorphism(map), Down2DimensionalMorphism(map) ]; 
+    else 
+        2d_maps := ListOf2DimensionalMappings(map); 
+    fi; 
     ok := ForAll( 2d_maps, f -> IsBijective(f) );
     if not ok then
         return false;
@@ -519,9 +571,16 @@ InstallMethod( IsEndomorphismHigherDimensionalDomain,
     [ IsHigherDimensionalMapping ], 0,
 function( map )
 
-    local ok, 2d_maps;
+    local dim, ok, 2d_maps;
     
-    2d_maps := ListOf2DimensionalMappings( map );
+    dim := HigherDimension( map );
+    if ( dim = 3 ) then 
+        2d_maps := 
+            [ Up2DimensionalMorphism(map), Left2DimensionalMorphism(map), 
+              Right2DimensionalMorphism(map), Down2DimensionalMorphism(map) ]; 
+    else 
+        2d_maps := ListOf2DimensionalMappings(map); 
+    fi; 
     ok := ForAll( 2d_maps, f -> IsEndomorphism2DimensionalDomain( f ) );
     if not ok then
         return false;

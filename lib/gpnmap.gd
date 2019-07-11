@@ -51,7 +51,7 @@ DeclareOperation( "PreCatnGroupMorphismByMorphisms",
 
 #############################################################################
 ##
-#O  MakeHigherDimensionalGroupMorphism( [hd-group,hdgroup,list] )
+#O  MakeHigherDimensionalGroupMorphism( [hd-group,hd-group,list] )
 ##
 ##
 DeclareOperation( "MakeHigherDimensionalGroupMorphism", 

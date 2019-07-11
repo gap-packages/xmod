@@ -71,21 +71,52 @@ end );
 
 #############################################################################
 ##
-#M  IsPreCat2GroupMorphism      check the axioms for a pre-cat2 
+#M  IsPreCat2GroupMorphism . . check the axioms for a pre-cat2-group morphism
 ##
 InstallMethod( IsPreCat2GroupMorphism,
-    "generic method for pre-cat2 homomorphisms", true, 
+    "generic method for homomorphisms of pre-cat2-groups", true, 
     [ IsHigherDimensionalGroupMorphism ], 0,
 function( mor )
 
-    local PC, QC, upmor, dnmor, ok, d1, d2, u1, u2, G1, G2, P1, P2, p1, q1, 
-          comp1, G11, G12, P11, P12, p2, q2, comp2;
+    local PC, QC, upmor, ltmor, rtmor, dnmor, genPC, upP, ltP, genQC, upQ, ltQ;
 
-    if not ( IsPreCatnGroupMorphism( mor ) and ( HigherDimension = 2 ) ) then
-        return true;
-    else
-        return false;
-    fi;
+    PC := Source( mor );
+    QC := Range( mor );
+    upmor := Up2DimensionalMorphism( mor ); 
+    ltmor := Left2DimensionalMorphism( mor ); 
+    rtmor := Right2DimensionalMorphism( mor ); 
+    dnmor := Down2DimensionalMorphism( mor ); 
+    genPC := GeneratingCat1Groups( PC ); 
+    upP := genPC[1]; 
+    ltP := genPC[2]; 
+    genQC := GeneratingCat1Groups( QC ); 
+    upQ := genQC[1]; 
+    ltQ := genQC[2];     
+    if not ( Source( upmor ) = upP ) and ( Range( upmor ) = upQ ) then 
+        Error( "seems to be a problem with upmor" ); 
+    fi; 
+    if not ( Source( ltmor ) = ltP ) and ( Range( ltmor ) = ltQ ) then 
+        Error( "seems to be a problem with ltmor" ); 
+    fi; 
+    # check equality of vertex homomorphisms 
+    if not ( SourceHom(upmor) = SourceHom(ltmor) ) then 
+        Info( InfoXMod, 2, "SourceHom(upmor) <> SourceHom(ltmor)" ); 
+        return false; 
+    fi; 
+    if not ( RangeHom(upmor) = SourceHom(rtmor) ) then 
+        Info( InfoXMod, 2, "RangeHom(upmor) <> SourceHom(rtmor)" ); 
+        return false; 
+    fi; 
+    if not ( RangeHom(ltmor) = SourceHom(dnmor) ) then 
+        Info( InfoXMod, 2, "RangeHom(ltmor) <> SourceHom(dnmor)" ); 
+        return false; 
+    fi; 
+    if not ( RangeHom(rtmor) = RangeHom(dnmor) ) then 
+        Info( InfoXMod, 2, "RangeHom(rtmor) <> RangeHom(dnmor)" ); 
+        return false; 
+    fi; 
+    #? are there any more checks that should be done? 
+    return true;
 end );
 
 #############################################################################
