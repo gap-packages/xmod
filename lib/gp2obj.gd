@@ -374,3 +374,11 @@ DeclareAttribute( "Coproduct2dInfo", Is2DimensionalDomain, "mutable" );
 ##
 DeclareAttribute( "NormalSubXMods", IsXMod );
 DeclareAttribute( "NormalSubCat1Groups", IsCat1Group );
+
+#############################################################################
+##
+#A  CatnGroupNumbers( <G> )
+#A  InitCatnGroupNumbers( <G> )
+##
+DeclareAttribute( "CatnGroupNumbers", IsGroup, "mutable" );
+DeclareOperation( "InitCatnGroupNumbers", [ IsGroup ] );

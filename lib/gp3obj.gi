@@ -1544,37 +1544,43 @@ function( G )
 
     local L, C; 
 
+    InitCatnGroupNumbers( G ); 
     L := [ ];
     for C in AllCat2GroupsIterator( G ) do 
         if not ( C = fail ) then 
             Add( L, C ); 
         fi; 
     od;
+    if not IsBound( CatnGroupNumbers( G ).cat2 ) then 
+        CatnGroupNumbers( G ).cat2 := Length( L ); 
+    fi; 
     return L; 
 end ); 
 
 InstallMethod( AllCat2GroupsNumber, "for a group", [ IsGroup ], 0, 
 function( G ) 
 
-    local n, C; 
+    local n, C, all; 
 
-    n := 0;
-    for C in AllCat2GroupsIterator( G ) do 
-        if not ( C = fail ) then 
-            n := n+1; 
-        fi;
-    od;
-    return n; 
+    InitCatnGroupNumbers( G ); 
+    if IsBound( CatnGroupNumbers( G ).cat2 ) then 
+        return CatnGroupNumbers( G ).cat2; 
+    fi; 
+    ## not already known, so perform the calculation 
+    all := AllCat2Groups( G ); 
+    return CatnGroupNumbers( G ).cat2;  
 end ); 
 
 InstallMethod( AllCat2GroupsUpToIsomorphism, "iso class reps of cat2-groups", 
     true, [ IsGroup ], 0,
 function( G )
 
-    local L, numL, C, k, found, iso; 
+    local L, numL, symm, C, k, found, iso, genC; 
 
+    InitCatnGroupNumbers( G ); 
     L := [ ];
     numL := 0; 
+    symm := 0; 
     for C in AllCat2GroupsIterator( G ) do 
         if not ( C = fail ) then 
             k := 0; 
@@ -1589,9 +1595,17 @@ function( G )
             if not found then 
                 Add( L, C ); 
                 numL := numL + 1; 
+                genC := GeneratingCat1Groups( C ); 
+                if ( genC[1] = genC[2] ) then 
+                    symm := symm + 1; 
+                fi; 
             fi;
         fi;
     od;
+    if not IsBound( CatnGroupNumbers( G ).iso2 ) then 
+        CatnGroupNumbers( G ).iso2 := numL; 
+        CatnGroupNumbers( G ).symm := symm; 
+    fi; 
     return L; 
 end ); 
 

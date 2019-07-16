@@ -9,17 +9,17 @@ gap> START_TEST( "XMod package: induced.tst" );
 gap> saved_infolevel_xmod := InfoLevel( InfoXMod );; 
 gap> SetInfoLevel( InfoXMod, 0 );;
 gap> 
-gap> c4 := Group( (5,6,7,8) );; 
-gap> SetName( c4, "c4" );
-gap> AX4 := XModByAutomorphismGroup( c4 );; 
+gap> c4a := Group( (5,6,7,8) );; 
+gap> SetName( c4a, "c4a" );
+gap> AX4 := XModByAutomorphismGroup( c4a );; 
 gap> isoX4 := IsomorphismPerm2DimensionalGroup( AX4 );; 
 gap> X4 := Range( isoX4 );; 
 gap> Display( X4 ); 
 
-Crossed module [c4->PAut(c4)] :- 
-: Source group c4 has generators:
+Crossed module [c4a->PAut(c4a)] :- 
+: Source group c4a has generators:
   [ (5,6,7,8) ]
-: Range group PAut(c4) has generators:
+: Range group PAut(c4a) has generators:
   [ (1,2) ]
 : Boundary homomorphism maps source generators to:
   [ () ]
@@ -32,7 +32,7 @@ gap> SetName( c2, "c2" );
 gap> c2dash := Group( (3,4) );;
 gap> dash := GroupHomomorphismByImages( c2, c2dash, [(1,2)], [(3,4)] );;
 gap> X4dash := InducedXMod( X4, dash );
-i*([c4->PAut(c4)])
+i*([c4a->PAut(c4a)])
 
 gap> c6 := Group( (11,12,13,14,15,16) );; 
 gap> SetName( c6, "c6" ); 
@@ -45,7 +45,7 @@ gap> Size( indc4c2c6 );
 [ 64, 6 ]
 gap> Display( indc4c2c6 );
 
-Crossed module i*([c4->PAut(c4)]) :- 
+Crossed module i*([c4a->PAut(c4a)]) :- 
 : Source group has generators:
   [ ( 1, 2, 3, 4), ( 5, 6, 7, 8), ( 9,10,11,12) ]
 : Range group c6 has generators:
@@ -109,16 +109,16 @@ Crossed module i*([c2n/ker->cn]) :-
 
 gap> c5 := Group( (1,2,3,4,5) );; 
 gap> SetName( c5, "c5" );
-gap> c4 := Group( (4,5,6,7) );; 
-gap> SetName( c4, "c4" ); 
-gap> bdy54 := GroupHomomorphismByImages( c5, c4, [ (1,2,3,4,5) ], [ () ] );; 
+gap> c4b := Group( (4,5,6,7) );; 
+gap> SetName( c4b, "c4b" ); 
+gap> bdy54 := GroupHomomorphismByImages( c5, c4b, [ (1,2,3,4,5) ], [ () ] );; 
 gap> X54 := XModByTrivialAction( bdy54 );; 
 gap> Display( X54 ); 
 
-Crossed module [c5->c4] :- 
+Crossed module [c5->c4b] :- 
 : Source group c5 has generators:
   [ (1,2,3,4,5) ]
-: Range group c4 has generators:
+: Range group c4b has generators:
   [ (4,5,6,7) ]
 : Boundary homomorphism maps source generators to:
   [ () ]
@@ -126,7 +126,7 @@ Crossed module [c5->c4] :-
 
 gap> c2 := Group( (8,9) );; 
 gap> SetName( c2, "c2" ); 
-gap> surj := GroupHomomorphismByImages( c4, c2, [ (4,5,6,7) ], [ (8,9) ] );; 
+gap> surj := GroupHomomorphismByImages( c4b, c2, [ (4,5,6,7) ], [ (8,9) ] );; 
 gap> K := Kernel( surj );; 
 gap> SetName( K, "ker(surj)" ); 
 gap> D := DisplacementGroup( X54, K, c5 );; 
@@ -136,7 +136,7 @@ true
 gap> ind2 := InducedXMod( X54, surj );; 
 gap> Display( ind2 );
 
-Crossed module i*([c5->c4]) :- 
+Crossed module i*([c5->c4b]) :- 
 : Source group c5/ker has generators:
   [ (1,5,4,3,2) ]
 : Range group c2 has generators:
@@ -152,7 +152,7 @@ gap> monoc6 := GroupHomomorphismByImages( c2, c6, [(8,9)], [(1,4)(2,5)(3,6)] );;
 gap> indc6 := InducedXMod( ind2, monoc6 );; 
 gap> Display( indc6 ); 
 
-Crossed module i*(i*([c5->c4])) :- 
+Crossed module i*(i*([c5->c4b])) :- 
 : Source group has generators:
   [ ( 1, 2, 3, 4, 5), ( 6, 7, 8, 9,10), (11,12,13,14,15) ]
 : Range group c6 has generators:
@@ -170,7 +170,7 @@ gap> monos3 := GroupHomomorphismByImages( c2, s3, [ (8,9) ], [ (11,13) ] );;
 gap> inds3 := InducedXMod( ind2, monos3 );; 
 gap> Display( inds3 ); 
 
-Crossed module i*(i*([c5->c4])) :- 
+Crossed module i*(i*([c5->c4b])) :- 
 : Source group has generators:
   [ ( 1, 2, 3, 4, 5), ( 6, 7, 8, 9,10), (11,12,13,14,15) ]
 : Range group s3 has generators:
@@ -229,21 +229,21 @@ gap> d16 := Group( b1, b2 );;
 gap> SetName( d16, "d16" ); 
 gap> d8 := Subgroup( d16, [ b1^2, b2 ] );  SetName( d8, "d8" ); 
 Group([ (11,13,15,17)(12,14,16,18), (12,18)(13,17)(14,16) ])
-gap> c4 := Subgroup( d8, [ b1^2 ] );  SetName( c4, "c4" ); 
+gap> c4c := Subgroup( d8, [ b1^2 ] );  SetName( c4c, "c4c" ); 
 Group([ (11,13,15,17)(12,14,16,18) ])
 gap> Y16 := XModByNormalSubgroup( d16, d8 );                   
 [d8->d16]
-gap> Y8 := SubXMod( Y16, c4, d8 );            
-[c4->d8]
+gap> Y8 := SubXMod( Y16, c4c, d8 );            
+[c4c->d8]
 gap> inc8 := InclusionMorphism2DimensionalDomains( Y16, Y8 ); 
-[[c4->d8] => [d8->d16]]
+[[c4c->d8] => [d8->d16]]
 gap> incd8 := RangeHom( inc8 );;
 gap> indY8 := InducedXMod( Y8, incd8 );
-i*([c4->d8])
+i*([c4c->d8])
 gap> StructureDescription( indY8 );
 [ "C4 x C4", "D16" ]
 gap> morY8 := MorphismOfInducedXMod( indY8 );
-[[c4->d8] => i*([c4->d8])]
+[[c4c->d8] => i*([c4c->d8])]
 gap> s4 := Group( (1,2), (2,3), (3,4) );; 
 gap> s3c := Subgroup( s4, [ (2,3), (3,4) ] );;  
 gap> SetName( s3c, "s3c" );

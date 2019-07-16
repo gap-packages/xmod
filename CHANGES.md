@@ -1,7 +1,8 @@
 # CHANGES to the 'XMod' package
 
-## 2.73 -> 2.73dev (11/07/2019) 
+## 2.73 -> 2.73dev (16/07/2019) 
 
+ * (16/07/19) added attribute record CatnGroupNumbers for a group 
  * (11/07/19) added new method for IsPreCat2GroupMorphism 
  * (17/06/19) revised AllCat{1,2}... functions using iterators in utils-0.64
  * (10/06/19) complete rewrite of IsomorphismCat2Groups 

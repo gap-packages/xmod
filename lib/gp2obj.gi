@@ -2525,29 +2525,38 @@ InstallMethod( AllCat1GroupsIterator, "for a group", [ IsGroup ], 0,
 InstallMethod( AllCat1Groups, "for a group", [ IsGroup ], 0, 
 function( G ) 
 
-    local L, C; 
+    local L, C, images, lens; 
 
+    InitCatnGroupNumbers( G ); 
     L := [ ];
     for C in AllCat1GroupsIterator( G ) do 
        if not ( C = fail ) then 
            Add( L, C ); 
         fi; 
     od;
+    if not IsBound( CatnGroupNumbers( G ).idem ) then 
+        images := IdempotentEndomorphismsData( G ).images; 
+        lens := List( images, L -> Length( L ) ); 
+        CatnGroupNumbers( G ).idem := Sum( lens ); 
+    fi; 
+    if not IsBound( CatnGroupNumbers( G ).cat1 ) then 
+        CatnGroupNumbers( G ).cat1 := Length( L ); 
+    fi; 
     return L; 
 end ); 
 
 InstallMethod( AllCat1GroupsNumber, "for a group", [ IsGroup ], 0, 
 function( G ) 
 
-    local n, C; 
+    local n, C, all; 
 
-    n := 0;
-    for C in AllCat1GroupsIterator( G ) do 
-        if not ( C = fail ) then 
-            n := n+1; 
-        fi; 
-    od;
-    return n; 
+    InitCatnGroupNumbers( G ); 
+    if IsBound( CatnGroupNumbers( G ).cat1 ) then 
+        return CatnGroupNumbers( G ).cat1; 
+    fi; 
+    ## not already known, so perform the calculation 
+    all := AllCat1Groups( G );
+    return CatnGroupNumbers( G ).cat1; 
 end ); 
 
 InstallMethod( AllCat1GroupsUpToIsomorphism, "iso class reps of cat1-groups", 
@@ -2556,6 +2565,7 @@ function( gp )
 
     local L, numL, i, j, k, C, ok, found, iso;
 
+    InitCatnGroupNumbers( gp ); 
     L := [ ]; 
     numL := 0; 
     for C in AllCat1GroupsIterator( gp ) do 
@@ -2574,7 +2584,10 @@ function( gp )
                 numL := numL + 1;
             fi;
         fi;
-    od;
+    od; 
+    if not IsBound( CatnGroupNumbers( gp ).iso1 ) then 
+        CatnGroupNumbers( gp ).iso1 := numL; 
+    fi; 
     return L;
 end );
 
@@ -2969,3 +2982,18 @@ function( XM )
     od;
     return norm;
 end );
+
+##############################################################################
+##
+#M  InitCatnGroupNumbers . . . . . . . . . . . . . . . . . . . . . for a group 
+##
+InstallMethod( InitCatnGroupNumbers, "for a group", true, [ IsGroup ], 0,
+function( G )
+
+    if not HasCatnGroupNumbers( G ) then 
+        SetCatnGroupNumbers( G, rec() ); 
+    fi; 
+    if not HasCatnGroupNumbers( G ) then 
+        Error( "CatnGroupNumbers not set" ); 
+    fi; 
+end ); 
