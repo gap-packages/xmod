@@ -397,6 +397,10 @@ gap> iso12 := AllCat1GroupsUpToIsomorphism( d12 );
   [d12=>Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )], 
   [d12=>Group( [ (1,2,3,4,5,6), (2,6)(3,5) ] )] ]
 
+## Section 2.6.3
+gap> CatnGroupNumbers( d12 );
+rec( cat1 := 12, idem := 21, iso1 := 4 )
+
 ## Section 2.7.1
 gap> L18 := Cat1Select( 18 ); 
 Usage:  Cat1Select( size, gpnum, num );

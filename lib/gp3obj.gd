@@ -225,6 +225,7 @@ DeclareOperation( "AllCat2GroupsWithImagesUpToIsomorphism",
 DeclareOperation( "AllCat2Groups", [ IsGroup ] ); 
 DeclareOperation( "AllCat2GroupsIterator", [ IsGroup ] ); DeclareAttribute( "AllCat2GroupsNumber", IsGroup ); 
 DeclareOperation( "AllCat2GroupsUpToIsomorphism", [ IsGroup ] ); 
+DeclareOperation( "AllCat2GroupFamilies", [ IsGroup ] ); 
 DeclareOperation( "TableRowForCat1Groups", [ IsGroup ] ); 
 DeclareOperation( "TableRowForCat2Groups", [ IsGroup ] ); 
 

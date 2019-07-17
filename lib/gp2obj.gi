@@ -2561,15 +2561,17 @@ end );
 
 InstallMethod( AllCat1GroupsUpToIsomorphism, "iso class reps of cat1-groups", 
     true, [ IsGroup ], 0,
-function( gp )
+function( G )
 
-    local L, numL, i, j, k, C, ok, found, iso;
+    local L, numL, i, k, C, ok, found, iso, images, lens;
 
-    InitCatnGroupNumbers( gp ); 
+    InitCatnGroupNumbers( G ); 
     L := [ ]; 
+    i := 0; 
     numL := 0; 
-    for C in AllCat1GroupsIterator( gp ) do 
+    for C in AllCat1GroupsIterator( G ) do 
         if not ( C = fail ) then 
+            i := i+1; 
             k := 0; 
             found := false; 
             while ( not found ) and ( k < numL ) do 
@@ -2585,8 +2587,16 @@ function( gp )
             fi;
         fi;
     od; 
-    if not IsBound( CatnGroupNumbers( gp ).iso1 ) then 
-        CatnGroupNumbers( gp ).iso1 := numL; 
+    if not IsBound( CatnGroupNumbers( G ).idem ) then 
+        images := IdempotentEndomorphismsData( G ).images; 
+        lens := List( images, L -> Length( L ) ); 
+        CatnGroupNumbers( G ).idem := Sum( lens ); 
+    fi; 
+    if not IsBound( CatnGroupNumbers( G ).cat1 ) then 
+        CatnGroupNumbers( G ).cat1 := i; 
+    fi; 
+    if not IsBound( CatnGroupNumbers( G ).iso1 ) then 
+        CatnGroupNumbers( G ).iso1 := numL; 
     fi; 
     return L;
 end );

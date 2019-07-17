@@ -1073,6 +1073,29 @@ gap> iso12 := AllCat1GroupsUpToIsomorphism( d12 );
 ]]>
 </Example>
 
+<ManSection>
+   <Attr Name="CatnGroupNumbers"
+         Arg="G" />
+   <Oper Name="InitCatnGroupNumbers"
+         Arg="G" />
+<Description>
+The attribute <C>CatnGroupNumbers</C> for a group <M>G</M> 
+is a mutable record which stores numbers of cat1-groups, cat2-groups, etc. 
+as they are calculated. 
+The field <C>CatnGroupNumbers(G).idem</C> is the number of idempotent 
+endomorphisms of <M>G</M>. 
+Similarly, <C>CatnGroupNumbers(G).cat1</C> is the number of cat1-groups 
+on <M>G</M>, while <C>CatnGroupNumbers(G).iso1</C> is the number of 
+isomorphism classes of these cat1-groups. 
+</Description> 
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> CatnGroupNumbers( d12 );
+rec( cat1 := 12, idem := 21, iso1 := 4 )
+]]>
+</Example>
 </Section> 
 
 

@@ -1036,7 +1036,7 @@ and then using the iterator <C>AllCat2GroupsWithImagesIterator(G,R,Q)</C>.
          Arg="G R Q" />
    <Oper Name="AllCat2GroupsWithImagesUpToIsomorphism"
          Arg="G R Q" />
-   <Oper Name="AllCat2GroupsWiothImages"
+   <Oper Name="AllCat2GroupsWithImages"
          Arg="G R Q" />
 <Description>
 The iterator <C>AllCat2GroupsIterator(G)</C> iterates through all the 
@@ -1071,9 +1071,11 @@ gap> AllCat2GroupsWithImages( d12, c2, s3 );
          Arg="G" />
    <Attr Name="AllCat2GroupsNumber"
          Arg="G" />
+   <Oper Name="AllCat2Groups"
+         Arg="G" />
    <Oper Name="AllCat2GroupsUpToIsomorphism"
          Arg="G" />
-   <Oper Name="AllCat2Groups"
+   <Oper Name="AllCat2GroupFamilies"
          Arg="G" />
 <Description>
 The iterator <C>AllCat2GroupsIterator(G)</C> iterates through all the 
@@ -1085,6 +1087,13 @@ cat2-groups.  Since these lists can get very long, this operation should only
 be used for simple cases. 
 The operation <C>AllCat2GroupsUpToIsomorphism(G)</C> returns representatives 
 of the isomorphism classes of these subgroups. 
+The operation <C>AllCat2GroupFamilies(G)</C> returns a list of lists. 
+The <M>k</M>-th list contains the positions of the cat2-groups in 
+<C>AllCat2Groups(G)</C> which are isomorphic to the <M>k</M>-th representative. 
+So, for <C>d12</C>, the <M>41</M> cat2-groups form <M>10</M> classes, 
+and the sizes of these classes are <C>[6,6,3,6,6,2,6,3,2,1]</C>. 
+Four of these classes contain symmetric cat2-groups. 
+The record <Ref Attr="CatnGroupNumbers"/> is extended to include these values. 
 </Description> 
 </ManSection>
 <P/>
@@ -1092,15 +1101,22 @@ of the isomorphism classes of these subgroups.
 <![CDATA[
 gap> AllCat2GroupsNumber( d12 );
 41
-gap> iso2 := AllCat2GroupsUpToIsomorphism( d12 );;
-gap> Length( iso2 );
+gap> reps2 := AllCat2GroupsUpToIsomorphism( d12 );;
+gap> Length( reps2 );
 10
-gap> List( iso2, C -> StructureDescription( C ) );
+gap> List( reps2, C -> StructureDescription( C ) );
 [ [ "D12", "C2", "C2", "C2" ], [ "D12", "C2", "C2 x C2", "C2" ], 
   [ "D12", "C2 x C2", "C2 x C2", "C2 x C2" ], [ "D12", "C2", "S3", "C2" ], 
   [ "D12", "C2 x C2", "S3", "C2" ], [ "D12", "S3", "S3", "S3" ], 
   [ "D12", "C2", "D12", "C2" ], [ "D12", "C2 x C2", "D12", "C2 x C2" ], 
   [ "D12", "S3", "D12", "S3" ], [ "D12", "D12", "D12", "D12" ] ]
+gap> fams := AllCat2GroupFamilies( d12 );
+[ [ 1, 2, 3, 4, 5, 6 ], [ 7, 8, 10, 11, 13, 14 ], [ 9, 12, 15 ], 
+  [ 16, 17, 18, 23, 24, 25 ], [ 19, 20, 21, 26, 27, 28 ], [ 22, 29 ], 
+  [ 30, 31, 32, 33, 34, 35 ], [ 36, 37, 38 ], [ 39, 40 ], [ 41 ] ]
+gap> CatnGroupNumbers( d12 );
+rec( cat1 := 12, cat2 := 41, idem := 21, iso1 := 4, iso2 := 10, symm := 4, 
+  symmpos := [ 1, 9, 22, 41 ] )
 ]]>
 </Example>
 

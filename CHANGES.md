@@ -2,6 +2,7 @@
 
 ## 2.73 -> 2.73dev (16/07/2019) 
 
+ * (17/07/19) added operation AllCat2GroupFamilies and updated the manual 
  * (16/07/19) added attribute record CatnGroupNumbers for a group 
  * (11/07/19) added new method for IsPreCat2GroupMorphism 
  * (17/06/19) revised AllCat{1,2}... functions using iterators in utils-0.64

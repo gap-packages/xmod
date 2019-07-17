@@ -266,15 +266,22 @@ gap> AllCat2GroupsWithImages( d12, c2, s3 );
 # Section 8.5.2
 gap> AllCat2GroupsNumber( d12 );
 41
-gap> iso2 := AllCat2GroupsUpToIsomorphism( d12 );;
-gap> Length( iso2 );
+gap> reps2 := AllCat2GroupsUpToIsomorphism( d12 );;
+gap> Length( reps2 );
 10
-gap> List( iso2, C -> StructureDescription( C ) );
+gap> List( reps2, C -> StructureDescription( C ) );
 [ [ "D12", "C2", "C2", "C2" ], [ "D12", "C2", "C2 x C2", "C2" ], 
   [ "D12", "C2 x C2", "C2 x C2", "C2 x C2" ], [ "D12", "C2", "S3", "C2" ], 
   [ "D12", "C2 x C2", "S3", "C2" ], [ "D12", "S3", "S3", "S3" ], 
   [ "D12", "C2", "D12", "C2" ], [ "D12", "C2 x C2", "D12", "C2 x C2" ], 
   [ "D12", "S3", "D12", "S3" ], [ "D12", "D12", "D12", "D12" ] ]
+gap> fams := AllCat2GroupFamilies( d12 );
+[ [ 1, 2, 3, 4, 5, 6 ], [ 7, 8, 10, 11, 13, 14 ], [ 9, 12, 15 ], 
+  [ 16, 17, 18, 23, 24, 25 ], [ 19, 20, 21, 26, 27, 28 ], [ 22, 29 ], 
+  [ 30, 31, 32, 33, 34, 35 ], [ 36, 37, 38 ], [ 39, 40 ], [ 41 ] ]
+gap> CatnGroupNumbers( d12 );
+rec( cat1 := 12, cat2 := 41, idem := 21, iso1 := 4, iso2 := 10, symm := 4, 
+  symmpos := [ 1, 9, 22, 41 ] )
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 
