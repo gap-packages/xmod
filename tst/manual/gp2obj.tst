@@ -399,7 +399,7 @@ gap> iso12 := AllCat1GroupsUpToIsomorphism( d12 );
 
 ## Section 2.6.3
 gap> CatnGroupNumbers( d12 );
-rec( cat1 := 12, idem := 21, iso1 := 4 )
+rec( cat1 := 12, idem := 21, iso1 := 4, lists := true )
 
 ## Section 2.7.1
 gap> L18 := Cat1Select( 18 ); 

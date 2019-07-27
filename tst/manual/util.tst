@@ -2,7 +2,7 @@
 ##
 #W  util.tst                      XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2016, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2019, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 gap> START_TEST( "XMod package: util.tst" );
@@ -78,7 +78,3 @@ Crossed module [k4a->s3a] :-
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> STOP_TEST( "util.tst", 10000 );
-
-#############################################################################
-##
-#E  util.tst . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

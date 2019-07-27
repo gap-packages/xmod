@@ -35,7 +35,3 @@ false
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> STOP_TEST( "apps.tst", 10000 );
-
-##############################################################################
-##
-#E  apps.tst . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

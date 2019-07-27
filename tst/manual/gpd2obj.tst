@@ -74,7 +74,3 @@ gap> ims := ImageElmXModAction( CX4, s, r );
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 
 gap> STOP_TEST( "gpd2obj.tst", 10000 );
-
-#############################################################################
-##
-#E  gpd2obj.tst . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

@@ -156,7 +156,3 @@ gap> ZX3 := XModCentre( X3 );
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 
 gap> STOP_TEST( "gp2act.tst", 10000 );
-
-#############################################################################
-##
-#E  gp2act.tst . . . . . . . . . . . . . . . . . . . . . . . . . . ends here

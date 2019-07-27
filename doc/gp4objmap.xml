@@ -1,0 +1,83 @@
+<!-- ------------------------------------------------------------------- -->
+<!--                                                                     -->
+<!--  gp4objmap.xml         XMod documentation            Chris Wensley  -->
+<!--                                                                     -->
+<!--  Copyright (C) 1996-2019, Chris Wensley et al,                      --> 
+<!--  School of Computer Science, Bangor University, U.K.                --> 
+<!--                                                                     -->
+<!-- ------------------------------------------------------------------- -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Chapter Label="chap-obj3">
+
+<Heading>Crossed cubes and Cat<M>^3</M>-groups</Heading>
+
+<Index>4d-group</Index>
+<Index>4d-domain</Index>
+The term <E>4d-group</E> refers to a set of equivalent categories 
+of which the most common are the categories of 
+<E>crossed cubes</E> and <E>cat<M>^3</M>-groups</E>. 
+A <E>4d-mapping</E> is a function between two 4d-groups which preserves 
+all the structure.
+<P/>
+The material in this chapter should be considered very experimental. 
+
+<Section Label="sect-cat3-definition">
+<Heading>Definition of a (pre-)cat<M>^3</M>-group</Heading>
+
+<ManSection>
+   <Attr Name="Up3DimensionalGroup"
+         Arg="XS" />
+   <Attr Name="Left3DimensionalGroup"
+         Arg="XS" />
+   <Attr Name="Right3DimensionalGroup"
+         Arg="XS" />
+   <Attr Name="Down3DimensionalGroup"
+         Arg="XS" />
+   <Attr Name="Front3DimensionalGroup"
+         Arg="XS" />
+   <Attr Name="Back3DimensionalGroup"
+         Arg="XS" />
+<Description>
+These are the basic attributes of a cat<M>^3</M>-group. 
+<P/>
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> 1+1;;
+]]>
+</Example>
+
+</Section>
+
+
+<Section Label="sect-cat3-functions">
+<Heading>Functions for (pre-)cat<M>^3</M>-groups</Heading>
+
+<ManSection Label="cat3-group">
+   <Func Name="Cat3Group"
+         Arg="args" />
+   <Func Name="PreCat3Group"
+         Arg="args" />
+   <Prop Name="IsCat3Group"
+         Arg="C" />
+   <Oper Name="PreCat3GroupByPreCat2Groups"
+         Arg="L" />
+<Description>
+The global functions <C>Cat3Group</C> and <C>PreCat3Group</C> 
+are normally called with a single argument, a list of cat2-groups. 
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> 1+1;;
+]]>
+</Example>
+
+</Section> 
+
+</Chapter>

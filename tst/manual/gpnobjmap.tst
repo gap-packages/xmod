@@ -196,7 +196,3 @@ true
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 
 gap> STOP_TEST( "gpnobjmap.tst", 10000 );
-
-#############################################################################
-##
-#E  gpnobjmap.tst . . . . . . . . . . . . . . . . . . . . . . . . . ends here

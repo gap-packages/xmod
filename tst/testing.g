@@ -11,9 +11,9 @@ pkgname := "xmod";
 pkgdir := DirectoriesPackageLibrary( pkgname, "tst/manual" ); 
 ## testing manual examples 
 testmanual := 
-    [ "gp2obj.tst", "gp2map.tst",    "gp2up.tst",     "gp2act.tst", 
-      "gp2ind.tst", "isoclinic.tst", "gp3objmap.tst", "gpd2obj.tst", 
-      "util.tst",   "gpnobjmap.tst", "apps.tst" ];
+    [ "gp2obj.tst",  "gp2map.tst",    "gp2up.tst",     "gp2act.tst", 
+      "gp2ind.tst",  "isoclinic.tst", "gp3objmap.tst", "gp4objmap.tst", 
+      "gpd2obj.tst", "util.tst",      "gpnobjmap.tst", "apps.tst" ];
 testresult := true;
 for ff in testmanual do
     fn := Filename( pkgdir, ff );
