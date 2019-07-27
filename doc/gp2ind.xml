@@ -148,7 +148,7 @@ together with a morphism of crossed modules
 When <M>\iota</M> is a surjection with kernel <M>K</M> then
 <M>\iota_{\ast}S = S/[K,S]</M> (see <Cite Key="BH1" />). 
 (For many years, up until June 2018, this manual has stated the result to be 
-<M>[K,S]</M>, though the correct quotient has been calculated.) 
+<M>[K,S]</M>, though the correct quotient had been calculated.) 
 When <M>\iota</M> is an inclusion the induced crossed module may be
 calculated using a copower construction <Cite Key="BW1" /> or,
 in the case when <M>R</M> is normal in <M>Q</M>, 

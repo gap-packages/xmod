@@ -3002,6 +3002,7 @@ function( G )
 
     if not HasCatnGroupNumbers( G ) then 
         SetCatnGroupNumbers( G, rec() ); 
+        CatnGroupNumbers( G ).lists := true; 
     fi; 
     if not HasCatnGroupNumbers( G ) then 
         Error( "CatnGroupNumbers not set" ); 

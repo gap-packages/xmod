@@ -1542,17 +1542,30 @@ InstallMethod( AllCat2GroupsIterator, "for a group", [ IsGroup ], 0,
 InstallMethod( AllCat2Groups, "for a group", [ IsGroup ], 0, 
 function( G ) 
 
-    local L, C; 
+    local L, lists, pairs, all1, C, genC; 
 
     InitCatnGroupNumbers( G ); 
-    L := [ ];
+    L := [ ]; 
+    lists := CatnGroupNumbers( G ).lists; 
+    if lists then 
+        all1 := AllCat1Groups( G ); 
+        pairs := [ ];
+    fi; 
     for C in AllCat2GroupsIterator( G ) do 
         if not ( C = fail ) then 
             Add( L, C ); 
+            if lists then 
+                genC := GeneratingCat1Groups( C ); 
+                Add( pairs, 
+                    [ Position( all1, genC[1] ), Position( all1, genC[2] ) ] );
+            fi; 
         fi; 
     od;
     if not IsBound( CatnGroupNumbers( G ).cat2 ) then 
         CatnGroupNumbers( G ).cat2 := Length( L ); 
+    fi; 
+    if lists then 
+        CatnGroupNumbers( G ).pairs := pairs; 
     fi; 
     return L; 
 end ); 
@@ -1575,11 +1588,17 @@ InstallMethod( AllCat2GroupsUpToIsomorphism, "iso class reps of cat2-groups",
     true, [ IsGroup ], 0,
 function( G )
 
-    local all, L, numL, posL, symm, symmpos, i, C, k, found, iso, genC; 
+    local all1, iso1, lists, fams, L, numL, posL, symm, symmpos, i, C, k, 
+          found, iso, genC; 
 
     InitCatnGroupNumbers( G ); 
     if not IsBound( CatnGroupNumbers( G ).iso1 ) then 
-        all := AllCat1GroupsUpToIsomorphism( G ); 
+        iso1 := AllCat1GroupsUpToIsomorphism( G ); 
+    fi; 
+    all1 := AllCat1Groups( G ); 
+    lists := CatnGroupNumbers( G ).lists; 
+    if lists then 
+        fams := [ ]; 
     fi; 
     L := [ ];
     numL := 0; 
@@ -1589,6 +1608,7 @@ function( G )
     i := 0;
     for C in AllCat2GroupsIterator( G ) do 
         if not ( C = fail ) then 
+            genC := GeneratingCat1Groups( C ); 
             i := i+1; 
             k := 0; 
             found := false; 
@@ -1597,16 +1617,23 @@ function( G )
                 iso := IsomorphismCat2Groups( C, L[k] );
                 if ( iso <> fail ) then 
                      found := true; 
+                     if lists then 
+                         Add( fams[k], [ Position( all1, genC[1] ), 
+                                         Position( all1, genC[2] ) ] ); 
+                     fi; 
                 fi; 
             od; 
             if not found then 
                 Add( L, C ); 
                 Add( posL, i );
                 numL := numL + 1; 
-                genC := GeneratingCat1Groups( C ); 
                 if ( genC[1] = genC[2] ) then 
                     symm := symm + 1;
-                    Add( symmpos, i ); 
+                    Add( symmpos, numL ); 
+                fi; 
+                if lists then 
+                    Add( fams, 
+                      [ [ Position(all1,genC[1]), Position(all1,genC[2]) ] ] );
                 fi; 
             fi;
         fi;
@@ -1620,6 +1647,9 @@ function( G )
         CatnGroupNumbers( G ).symmpos := symmpos; 
     fi; 
     Info( InfoXMod, 1, "reps found at positions ", posL ); 
+    if lists then 
+        CatnGroupNumbers( G ).fams := fams; 
+    fi; 
     return L; 
 end ); 
 

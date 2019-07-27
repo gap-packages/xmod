@@ -2,7 +2,7 @@
 ##
 #W  induced.tst                 GAP4 package `XMod'              Chris Wensley
 ##  
-#Y  Copyright (C) 2001-2018, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2019, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 
 gap> START_TEST( "XMod package: induced.tst" );
@@ -43,7 +43,16 @@ gap> StructureDescription( indc4c2c6 );
 [ "C4 x C4 x C4", "C6" ]
 gap> Size( indc4c2c6 );
 [ 64, 6 ]
-gap> Display( indc4c2c6 );
+gap> indsrc := Source( indc4c2c6 );; 
+gap> gensrc := GeneratorsOfGroup( indsrc );; 
+gap> genc4c4c4 := [ (1,2,3,4), (5,6,7,8), (9,10,11,12) ];; 
+gap> c4c4c4 := Group( genc4c4c4 );; 
+gap> isosrc := GroupHomomorphismByImages( indsrc, c4c4c4, gensrc, genc4c4c4 );; 
+gap> idindrng := IdentityMapping( Range( indc4c2c6 ) );; 
+gap> isoind := IsomorphismByIsomorphisms( indc4c2c6, [ isosrc, idindrng ] );; 
+gap> indc4c2c6i := Range( isoind );;
+gap> SetName( indc4c2c6i, Name( indc4c2c6 ) );
+gap> Display( indc4c2c6i );
 
 Crossed module i*([c4a->PAut(c4a)]) :- 
 : Source group has generators:
@@ -91,7 +100,16 @@ gap> inc := GroupHomomorphismByImages( cn, c2n, [g^2], [g^2] );;
 gap> ind2 := InducedXModByCopower( ind1, inc, [ ] );; 
 gap> StructureDescription( ind2 );
 [ "C10 x C10", "C10" ]
-gap> Display( ind2 );
+gap> indsrc2 := Source( ind2 );; 
+gap> gensrc2 := GeneratorsOfGroup( indsrc2 );; 
+gap> genc10c10 := [ (1,2)(5,6,7,8,9), (3,4)(10,11,12,13,14) ];; 
+gap> c10c10 := Group( genc10c10 );; 
+gap> isosrc2 := GroupHomomorphismByImages( indsrc2,c10c10,gensrc2,genc10c10 );; 
+gap> idindrng2 := IdentityMapping( Range( ind2 ) );; 
+gap> isoind2 := IsomorphismByIsomorphisms( ind2, [ isosrc2, idindrng2 ] );; 
+gap> ind2i := Range( isoind2 );;
+gap> SetName( ind2i, Name( ind2 ) );
+gap> Display( ind2i );
 
 Crossed module i*([c2n/ker->cn]) :- 
 : Source group has generators:
@@ -150,7 +168,18 @@ gap> c6 := Group( c );;
 gap> SetName( c6, "c6" );
 gap> monoc6 := GroupHomomorphismByImages( c2, c6, [(8,9)], [(1,4)(2,5)(3,6)] );; 
 gap> indc6 := InducedXMod( ind2, monoc6 );; 
-gap> Display( indc6 ); 
+gap> StructureDescription( indc6 );
+[ "C5 x C5 x C5", "C6" ]
+gap> indsrc6 := Source( indc6 );; 
+gap> gensrc6 := GeneratorsOfGroup( indsrc6 );; 
+gap> genc5c5c5 := [ (1,2,3,4,5), (6,7,8,9,10), (11,12,13,14,15) ];; 
+gap> c5c5c5 := Group( genc5c5c5 );; 
+gap> isosrc6 := GroupHomomorphismByImages( indsrc6,c5c5c5,gensrc6,genc5c5c5 );; 
+gap> idindrng6 := IdentityMapping( Range( indc6 ) );; 
+gap> isoind6 := IsomorphismByIsomorphisms( indc6, [ isosrc6, idindrng6 ] );; 
+gap> indc6i := Range( isoind6 );;
+gap> SetName( indc6i, Name( indc6 ) );
+gap> Display( indc6i ); 
 
 Crossed module i*(i*([c5->c4b])) :- 
 : Source group has generators:
@@ -168,7 +197,16 @@ gap> s3 := Group( (11,12),(12,13) );;
 gap> SetName( s3, "s3" ); 
 gap> monos3 := GroupHomomorphismByImages( c2, s3, [ (8,9) ], [ (11,13) ] );; 
 gap> inds3 := InducedXMod( ind2, monos3 );; 
-gap> Display( inds3 ); 
+gap> StructureDescription( inds3 );
+[ "C5 x C5 x C5", "S3" ]
+gap> indsrc3 := Source( inds3 );; 
+gap> gensrc3 := GeneratorsOfGroup( indsrc3 );; 
+gap> isosrc3 := GroupHomomorphismByImages( indsrc3,c5c5c5,gensrc3,genc5c5c5 );; 
+gap> idindrng3 := IdentityMapping( Range( inds3 ) );; 
+gap> isoind3 := IsomorphismByIsomorphisms( inds3, [ isosrc3, idindrng3 ] );; 
+gap> inds3i := Range( isoind3 );;
+gap> SetName( inds3i, Name( inds3 ) );
+gap> Display( inds3i ); 
 
 Crossed module i*(i*([c5->c4b])) :- 
 : Source group has generators:
