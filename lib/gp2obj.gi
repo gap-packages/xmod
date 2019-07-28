@@ -2527,7 +2527,7 @@ function( G )
 
     local L, C, images, lens; 
 
-    InitCatnGroupNumbers( G ); 
+    InitCatnGroupRecords( G ); 
     L := [ ];
     for C in AllCat1GroupsIterator( G ) do 
        if not ( C = fail ) then 
@@ -2550,7 +2550,7 @@ function( G )
 
     local n, C, all; 
 
-    InitCatnGroupNumbers( G ); 
+    InitCatnGroupRecords( G ); 
     if IsBound( CatnGroupNumbers( G ).cat1 ) then 
         return CatnGroupNumbers( G ).cat1; 
     fi; 
@@ -2565,7 +2565,7 @@ function( G )
 
     local L, numL, i, k, C, ok, found, iso, images, lens;
 
-    InitCatnGroupNumbers( G ); 
+    InitCatnGroupRecords( G ); 
     L := [ ]; 
     i := 0; 
     numL := 0; 
@@ -2995,16 +2995,22 @@ end );
 
 ##############################################################################
 ##
-#M  InitCatnGroupNumbers . . . . . . . . . . . . . . . . . . . . . for a group 
+#M  InitCatnGroupRecords . . . . . . . . . . . . . . . . . . . . . for a group 
 ##
-InstallMethod( InitCatnGroupNumbers, "for a group", true, [ IsGroup ], 0,
+InstallMethod( InitCatnGroupRecords, "for a group", true, [ IsGroup ], 0,
 function( G )
 
     if not HasCatnGroupNumbers( G ) then 
         SetCatnGroupNumbers( G, rec() ); 
-        CatnGroupNumbers( G ).lists := true; 
     fi; 
     if not HasCatnGroupNumbers( G ) then 
         Error( "CatnGroupNumbers not set" ); 
+    fi; 
+    if not HasCatnGroupLists( G ) then 
+        SetCatnGroupLists( G, rec() ); 
+        CatnGroupLists( G ).omit := false; 
+    fi; 
+    if not HasCatnGroupLists( G ) then 
+        Error( "CatnGroupLists not set" ); 
     fi; 
 end ); 

@@ -378,7 +378,9 @@ DeclareAttribute( "NormalSubCat1Groups", IsCat1Group );
 #############################################################################
 ##
 #A  CatnGroupNumbers( <G> )
-#A  InitCatnGroupNumbers( <G> )
+#A  CatnGroupLists( <G> )
+#A  InitCatnGroupRecords( <G> )
 ##
 DeclareAttribute( "CatnGroupNumbers", IsGroup, "mutable" );
-DeclareOperation( "InitCatnGroupNumbers", [ IsGroup ] );
+DeclareAttribute( "CatnGroupLists", IsGroup, "mutable" );
+DeclareOperation( "InitCatnGroupRecords", [ IsGroup ] );

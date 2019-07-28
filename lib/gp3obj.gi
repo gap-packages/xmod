@@ -1542,19 +1542,19 @@ InstallMethod( AllCat2GroupsIterator, "for a group", [ IsGroup ], 0,
 InstallMethod( AllCat2Groups, "for a group", [ IsGroup ], 0, 
 function( G ) 
 
-    local L, lists, pairs, all1, C, genC; 
+    local L, omit, pairs, all1, C, genC; 
 
-    InitCatnGroupNumbers( G ); 
+    InitCatnGroupRecords( G ); 
     L := [ ]; 
-    lists := CatnGroupNumbers( G ).lists; 
-    if lists then 
+    omit := CatnGroupLists( G ).omit; 
+    if not omit then 
         all1 := AllCat1Groups( G ); 
         pairs := [ ];
     fi; 
     for C in AllCat2GroupsIterator( G ) do 
         if not ( C = fail ) then 
             Add( L, C ); 
-            if lists then 
+            if not omit then 
                 genC := GeneratingCat1Groups( C ); 
                 Add( pairs, 
                     [ Position( all1, genC[1] ), Position( all1, genC[2] ) ] );
@@ -1564,8 +1564,8 @@ function( G )
     if not IsBound( CatnGroupNumbers( G ).cat2 ) then 
         CatnGroupNumbers( G ).cat2 := Length( L ); 
     fi; 
-    if lists then 
-        CatnGroupNumbers( G ).pairs := pairs; 
+    if not omit then 
+        CatnGroupLists( G ).pairs := pairs; 
     fi; 
     return L; 
 end ); 
@@ -1575,7 +1575,7 @@ function( G )
 
     local n, C, all; 
 
-    InitCatnGroupNumbers( G ); 
+    InitCatnGroupRecords( G ); 
     if IsBound( CatnGroupNumbers( G ).cat2 ) then 
         return CatnGroupNumbers( G ).cat2; 
     fi; 
@@ -1588,17 +1588,17 @@ InstallMethod( AllCat2GroupsUpToIsomorphism, "iso class reps of cat2-groups",
     true, [ IsGroup ], 0,
 function( G )
 
-    local all1, iso1, lists, fams, L, numL, posL, symm, symmpos, i, C, k, 
+    local all1, iso1, omit, classes, L, numL, posL, symm, symmpos, i, C, k, 
           found, iso, genC; 
 
-    InitCatnGroupNumbers( G ); 
+    InitCatnGroupRecords( G ); 
     if not IsBound( CatnGroupNumbers( G ).iso1 ) then 
         iso1 := AllCat1GroupsUpToIsomorphism( G ); 
     fi; 
     all1 := AllCat1Groups( G ); 
-    lists := CatnGroupNumbers( G ).lists; 
-    if lists then 
-        fams := [ ]; 
+    omit := CatnGroupLists( G ).omit; 
+    if not omit then 
+        classes := [ ]; 
     fi; 
     L := [ ];
     numL := 0; 
@@ -1617,9 +1617,9 @@ function( G )
                 iso := IsomorphismCat2Groups( C, L[k] );
                 if ( iso <> fail ) then 
                      found := true; 
-                     if lists then 
-                         Add( fams[k], [ Position( all1, genC[1] ), 
-                                         Position( all1, genC[2] ) ] ); 
+                     if not omit then 
+                         Add( classes[k], [ Position( all1, genC[1] ), 
+                                            Position( all1, genC[2] ) ] ); 
                      fi; 
                 fi; 
             od; 
@@ -1631,8 +1631,8 @@ function( G )
                     symm := symm + 1;
                     Add( symmpos, numL ); 
                 fi; 
-                if lists then 
-                    Add( fams, 
+                if not omit then 
+                    Add( classes, 
                       [ [ Position(all1,genC[1]), Position(all1,genC[2]) ] ] );
                 fi; 
             fi;
@@ -1647,8 +1647,8 @@ function( G )
         CatnGroupNumbers( G ).symmpos := symmpos; 
     fi; 
     Info( InfoXMod, 1, "reps found at positions ", posL ); 
-    if lists then 
-        CatnGroupNumbers( G ).fams := fams; 
+    if not omit then 
+        CatnGroupLists( G ).classes := classes; 
     fi; 
     return L; 
 end ); 
@@ -1657,14 +1657,14 @@ InstallMethod( AllCat2GroupFamilies, "gives lists of isomorphic cat2-groups",
     true, [ IsGroup ], 0,
 function( G )
 
-    local reps, cat2, iso2, fams, i, C, k, found, iso; 
+    local reps, cat2, iso2, classes, i, C, k, found, iso; 
 
     reps := AllCat2GroupsUpToIsomorphism( G ); 
     cat2 := CatnGroupNumbers( G ).cat2; 
     iso2 := CatnGroupNumbers( G ).iso2; 
-    fams := ListWithIdenticalEntries( iso2, 0 ); 
+    classes := ListWithIdenticalEntries( iso2, 0 ); 
     for k in [1..iso2] do 
-        fams[k] := [ ]; 
+        classes[k] := [ ]; 
     od;
     i := 0;
     for C in AllCat2GroupsIterator( G ) do 
@@ -1677,12 +1677,12 @@ function( G )
                 iso := IsomorphismCat2Groups( C, reps[k] ); 
                 if ( iso <> fail ) then 
                     found := true; 
-                    Add( fams[k], i ); 
+                    Add( classes[k], i ); 
                 fi;
             od;
         fi;
     od;
-    return fams; 
+    return classes; 
 end ); 
 
 ##############################################################################

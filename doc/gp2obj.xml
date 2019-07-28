@@ -1076,7 +1076,9 @@ gap> iso12 := AllCat1GroupsUpToIsomorphism( d12 );
 <ManSection>
    <Attr Name="CatnGroupNumbers"
          Arg="G" />
-   <Oper Name="InitCatnGroupNumbers"
+   <Attr Name="CatnGroupLists"
+         Arg="G" />
+   <Oper Name="InitCatnGroupRecords"
          Arg="G" />
 <Description>
 The attribute <C>CatnGroupNumbers</C> for a group <M>G</M> 
@@ -1087,6 +1089,8 @@ endomorphisms of <M>G</M>.
 Similarly, <C>CatnGroupNumbers(G).cat1</C> is the number of cat1-groups 
 on <M>G</M>, while <C>CatnGroupNumbers(G).iso1</C> is the number of 
 isomorphism classes of these cat1-groups. 
+The attribute <C>CatnGroupLists</C> is used for storing results 
+of cat2-group calculations. 
 </Description> 
 </ManSection>
 <P/>
