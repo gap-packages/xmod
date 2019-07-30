@@ -15,12 +15,18 @@ gap> SetInfoLevel( InfoGroupoids, 0 );;
 #### 4.1.1 
 gap> d24 := DihedralGroup( IsPermGroup, 24 );; 
 gap> SetName( d24, "d24" );
-gap> Y24 := XModByAutomorphismGroup( d24 );; 
+gap> Y24 := XModByAutomorphismGroup( d24 ); 
+[d24->Aut(d24)]
 gap> Size( Y24 );
 [ 24, 48 ]
-gap> X24 := Image( IsomorphismPerm2DimensionalGroup( Y24 ) );
-[d24->Group( [ ( 2, 4), ( 1, 2, 3, 4)( 5, 8)( 6, 9)( 7,10), ( 6,10)( 7, 9), 
-  ( 5, 9, 7)( 6,10, 8) ] )]
+gap> X24i := Image( IsomorphismPerm2DimensionalGroup( Y24 ) );;
+gap> R24i := Range( X24i );; 
+gap> genR24 := [ (2,4), (1,2,3,4), (6,7), (5,6,7) ];; 
+gap> rhom24 := GroupHomomorphismByImages( R24i, Group( genR24 ) );; 
+gap> shom24 := IdentityMapping( d24 );; 
+gap> iso24 := IsomorphismByIsomorphisms( X24i, [ shom24, rhom24 ] );; 
+gap> X24 := Range( iso24 );;
+gap> SetName( X24, Name( X24i ) );
 gap> nsx := NormalSubXMods( X24 );; 
 gap> Length( nsx );
 40
@@ -59,13 +65,13 @@ gap> L := List( genRn4, g -> ( Order(g) = 2 ) and
 gap> pos := Position( L, true );;
 gap> s := Sn4.1;  r := genRn4[pos]; 
 (1,3,5,7,9,11)(2,4,6,8,10,12)
-(6,10)(7,9)
+(6,7)
 gap> act := XModAction( Xn4 );; 
 gap> d := Displacement( act, r, s );
 (1,5,9)(2,6,10)(3,7,11)(4,8,12)
 gap> Image( bn4, d ) = Comm( r, Image( bn4, s ) );  
 true
-gap> Qn4 := Subgroup( Rn4, [ (6,10)(7,9), (1,3), (2,4) ] );;   
+gap> Qn4 := Subgroup( Rn4, [ (6,7), (1,3), (2,4) ] );;   
 gap> Tn4 := Subgroup( Sn4, [ (1,3,5,7,9,11)(2,4,6,8,10,12) ] );;
 gap> DisplacementGroup( Xn4, Qn4, Tn4 );                        
 Group([ (1,5,9)(2,6,10)(3,7,11)(4,8,12) ])
