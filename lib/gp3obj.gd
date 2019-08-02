@@ -163,7 +163,7 @@ DeclareAttribute( "CrossedSquareByXModSplitting", IsXMod );
 ##
 DeclareRepresentation( "IsPreCat2GroupObj", 
     IsHigherDimensionalGroup and IsAttributeStoringRep,
-    [ "up2d", "left2d", "down2d", "right2d" ] );
+    [ "up2d", "left2d", "right2d", "down2d" ] );
 BindGlobal( "PreCat2GroupObjType", 
             NewType( FamilyHigherDimensionalGroup, IsPreCat2GroupObj ) ); 
 DeclareOperation( "PreCat2GroupObj", [ IsList] );

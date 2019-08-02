@@ -11,9 +11,9 @@ gap> SetInfoLevel( InfoXMod, 0 );;
 gap> saved_infolevel_groupoids := InfoLevel( InfoGroupoids );; 
 gap> SetInfoLevel( InfoGroupoids, 0 );;
 
-## Chapter 9
+## Chapter 10
 
-## Subsection 9.1.1 
+## Subsection 10.1.1 
 gap> s4 := Group( (1,2,3,4), (3,4) );; 
 gap> SetName( s4, "s4" );
 gap> a4 := Subgroup( s4, [ (1,2,3), (2,3,4) ] );;
@@ -36,7 +36,7 @@ single piece crossed module with objects
 gap> Ca4 := Source( CX4 );; 
 gap> Cs4 := Range( CX4 );;
 
-## Subsection 9.1.2 
+## Subsection 10.1.2 
 gap> IsXModWithObjects( DX4 ); 
 true
 gap> KnownPropertiesOfObject( DX4 ); 
@@ -45,7 +45,7 @@ gap> KnownPropertiesOfObject( DX4 );
   "IsDirectProductWithCompleteDigraphDomain", "IsPreXModWithObjects", 
   "IsXModWithObjects" ]
 
-## Subsection 9.1.3 
+## Subsection 10.1.3 
 gap> IsPermPreXModWithObjects( CX4 );
 true
 gap> IsPcPreXModWithObjects( CX4 );  
@@ -53,7 +53,7 @@ false
 gap> IsFpPreXModWithObjects( CX4 );
 false
 
-## Subsection 9.1.4 
+## Subsection 10.1.4 
 gap> Set( KnownAttributesOfObject( CX4 ) );
 [ "Boundary", "ObjectList", "Range", "Root2dGroup", "Source", "XModAction" ]
 gap> Root2dGroup( CX4 ); 

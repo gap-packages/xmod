@@ -1,8 +1,8 @@
 # CHANGES to the 'XMod' package
 
-## 2.73 -> 2.73dev (31/07/2019) 
+## 2.73 -> 2.73dev (02/08/2019) 
 
- * (31/07/19) modified induced.tst and isoclinic.tst to avoid gapdev diffs 
+ * (30/07/19) modified induced.tst and isoclinic.tst to avoid gapdev diffs 
  * (26/07/19) added .pairs and .fams to CatnGroupLists record 
  * (17/07/19) modified .travis.yml in line with Max' changes in Utils 
  * (17/07/19) added operation AllCat2GroupFamilies and updated the manual 

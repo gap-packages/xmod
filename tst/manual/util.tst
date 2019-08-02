@@ -23,9 +23,9 @@ gap> Y8 := SubXMod( Y16, c4, d8 );;
 gap> inc8 := InclusionMorphism2DimensionalDomains( Y16, Y8 );; 
 gap> incd8 := RangeHom( inc8 );;
 
-## Chapter 10
+## Chapter 12
 
-## Section 10.1.1
+## Section 12.1.1
 gap> incd8;
 [ (11,13,15,17)(12,14,16,18), (12,18)(13,17)(14,16) ] -> 
 [ (11,13,15,17)(12,14,16,18), (12,18)(13,17)(14,16) ]
@@ -40,7 +40,7 @@ Group([ (11,13,15,17)(12,14,16,18), (12,18)(13,17)(14,16) ])
 gap> MappingToOne( c4, imd8 );
 [ (11,13,15,17)(12,14,16,18) ] -> [ () ]
 
-## Section 10.1.2
+## Section 12.1.2
 ##  cannot use GeneratorsOfGroup( innd8 ) here 
 ##  because the answer varies from one run to another 
 gap> autd8 := AutomorphismGroup( d8 );;
@@ -50,7 +50,7 @@ true
 gap> IsGroupOfAutomorphisms( innd8 );
 true
 
-## Section 10.2.1
+## Section 12.2.1
 gap> x := (6,7)(8,9);;  y := (6,8)(7,9);;  z := (6,9)(7,8);;
 gap> k4a := Group( x, y );;  SetName( k4a, "k4a" );
 gap> gens3a := [ (1,2), (2,3) ];;

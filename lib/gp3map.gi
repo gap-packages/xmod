@@ -27,8 +27,8 @@ function( mor )
     ### (1) check that the morphisms commute
     upmor := Up2DimensionalMorphism( mor );
     ltmor := Left2DimensionalMorphism( mor );
-    dnmor := Down2DimensionalMorphism( mor );
     rtmor := Right2DimensionalMorphism( mor );
+    dnmor := Down2DimensionalMorphism( mor );
     ok := ( ( SourceHom( upmor ) = SourceHom( ltmor ) ) and
             ( RangeHom( upmor ) = SourceHom( rtmor ) ) and
             ( RangeHom( ltmor ) = SourceHom( dnmor ) ) and
@@ -363,12 +363,12 @@ function( xs1, xs2, list )
     fi; 
     up1 := Up2DimensionalGroup( xs1 ); 
     lt1 := Left2DimensionalGroup( xs1 ); 
-    dn1 := Down2DimensionalGroup( xs1 ); 
     rt1 := Right2DimensionalGroup( xs1 ); 
+    dn1 := Down2DimensionalGroup( xs1 ); 
     up2 := Up2DimensionalGroup( xs2 ); 
     lt2 := Left2DimensionalGroup( xs2 ); 
-    dn2 := Down2DimensionalGroup( xs2 ); 
     rt2 := Right2DimensionalGroup( xs2 ); 
+    dn2 := Down2DimensionalGroup( xs2 ); 
     L1 := Source( up1 ); 
     M1 := Range( up1 );
     N1 := Source( dn1 );
@@ -578,12 +578,12 @@ function( D1, D2 )
 
     up1 := Up2DimensionalGroup( D1 );
     lt1 := Left2DimensionalGroup( D1 ); 
-    dn1 := Down2DimensionalGroup( D1 );
     rt1 := Right2DimensionalGroup( D1 );
+    dn1 := Down2DimensionalGroup( D1 );
     up2 := Up2DimensionalGroup( D2 );
     lt2 := Left2DimensionalGroup( D2 ); 
-    dn2 := Down2DimensionalGroup( D2 );
     rt2 := Right2DimensionalGroup( D2 );
+    dn2 := Down2DimensionalGroup( D2 );
     G1 := Source( up1 ); 
     G2 := Source( up2 ); 
     if not ( G1 = G2 ) then

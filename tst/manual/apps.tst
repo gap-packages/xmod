@@ -2,13 +2,16 @@
 ##
 #W  apps.tst                    GAP4 package `XMod'              Chris Wensley
 ##  
-#Y  Copyright (C) 2001-2018, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2019, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 
 gap> START_TEST( "XMod package: apps.tst" );
 gap> saved_infolevel_xmod := InfoLevel( InfoXMod );; 
 gap> SetInfoLevel( InfoXMod, 0 );;
 
+## Chapter 11
+
+## Subsection 11.1.1 
 gap> k8 := Group( (3,4), (5,6), (7,8) );; 
 gap> SetName( k8, "k8" ); 
 gap> Y8 := XModByAutomorphismGroup( k8 );; 
