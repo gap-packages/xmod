@@ -22,7 +22,7 @@ gap> SetName( d12, "d12" );
 gap> all1 := AllCat1Groups( d12 );; 
 gap> C68 := Cat2Group( all1[6], all1[8] );; 
 gap> C116 := Cat2Group( all1[11], all1[6] );;
-gap> C3Ga := PreCat3Group( C68, C116 );
+gap> C3Ga := Cat3Group( C68, C116 );
 cat3-group with generating (pre-)cat1-groups:
 1 : [d12 => Group( [ (), (1,6)(2,5)(3,4) ] )]
 2 : [d12 => Group( [ (1,4)(2,5)(3,6), (1,3)(4,6) ] )]
