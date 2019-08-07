@@ -10,30 +10,30 @@
 
 #############################################################################
 ##
+#A  Front3DimensionalGroup( <PS> ) 
 #A  Up3DimensionalGroup( <PS> ) 
-#A  Down3DimensionalGroup ( <PS> ) 
 #A  Left3DimensionalGroup( <PS> ) 
 #A  Right3DimensionalGroup( <PS> ) 
-#A  Front3DimensionalGroup( <PS> ) 
+#A  Down3DimensionalGroup ( <PS> ) 
 #A  Back3DimensionalGroup( <PS> )
 ##
+DeclareAttribute( "Front3DimensionalGroup", IsHigherDimensionalGroup );
 DeclareAttribute( "Up3DimensionalGroup", IsHigherDimensionalGroup );
 DeclareAttribute( "Left3DimensionalGroup", IsHigherDimensionalGroup );
-DeclareAttribute( "Down3DimensionalGroup", IsHigherDimensionalGroup );
 DeclareAttribute( "Right3DimensionalGroup", IsHigherDimensionalGroup );
-DeclareAttribute( "Front3DimensionalGroup", IsHigherDimensionalGroup );
-DeclareAttribute( "back3DimensionalGroup", IsHigherDimensionalGroup );
+DeclareAttribute( "Down3DimensionalGroup", IsHigherDimensionalGroup );
+DeclareAttribute( "Back3DimensionalGroup", IsHigherDimensionalGroup );
 
 #############################################################################
 ##
 #R  IsPreCat3GroupObj ( <obj> ) 
 #T  PreCat3GroupObjType 
-#O  PreCat3GroupObj( <cat1gp>, <cat1gp> ) 
+#O  PreCat3GroupObj( <cat2gp>, <cat2 gp> ) 
 ##  A pre-cat3-group is a cube of commuting pre-cat1-groups 
 ##
 DeclareRepresentation( "IsPreCat3GroupObj", 
     IsHigherDimensionalGroup and IsAttributeStoringRep,
-    [ "up3d", "left3d", "right3d", "down3d", "front3d", "back3d" ] );
+    [ "front3d", "up3d", "left3d", "right3d", "down3d", "back3d" ] );
 BindGlobal( "PreCat3GroupObjType", 
             NewType( FamilyHigherDimensionalGroup, IsPreCat3GroupObj ) ); 
 DeclareOperation( "PreCat3GroupObj", [ IsList] );
@@ -51,14 +51,13 @@ InstallTrueMethod( IsPreCat3Group, IsCat3Group );
 ##
 #F  PreCat3Group( <arg> ) 
 #F  Cat3Group( <arg> }
-#O  DetermineRightDownBackCat2Groups( <front>, <up>, <left> )
+#O  DetermineRemainingCat2Groups( <front>, <up> )
 #O  PreCat3GroupByPreCat2Groups( <front>,<up>,<left>,<right>,<down>,<back> )
 ##
 DeclareGlobalFunction( "PreCat3Group" );
 DeclareGlobalFunction( "Cat3Group" );
-DeclareOperation( "DetermineRightDownBackCat2Groups", 
-    [ IsPreCat2Group, IsPreCat2Group, IsPreCat2Group ] );
+DeclareOperation( "DetermineRemainingCat2Groups", 
+    [ IsPreCat2Group, IsPreCat2Group ] );
 DeclareOperation( "PreCat3GroupByPreCat2Groups", 
     [ IsPreCat2Group, IsPreCat2Group, IsPreCat2Group, 
-      IsPreCat2Group, IsPreCat2Group, IsPreCat1Group ] );
-
+      IsPreCat2Group, IsPreCat2Group, IsPreCat2Group ] );

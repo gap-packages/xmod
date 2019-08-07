@@ -11,15 +11,34 @@ gap> SetInfoLevel( InfoXMod, 0 );;
 gap> saved_infolevel_groupoids := InfoLevel( InfoGroupoids );; 
 gap> SetInfoLevel( InfoGroupoids, 0 );;
 
-## make independent of ????  
-gap> 1+1;
-2
+## make independent of gp3objmap.tst   
+gap> gen12 := [ (1,2,3,4,5,6), (2,6)(3,5) ];;
+gap> d12 := Group( gen12 );; 
+gap> SetName( d12, "d12" );                
 
 ## Chapter 9
 
 ## Section 9.1.1
+gap> all1 := AllCat1Groups( d12 );; 
+gap> C68 := Cat2Group( all1[6], all1[8] );; 
+gap> C116 := Cat2Group( all1[11], all1[6] );;
+gap> C3Ga := PreCat3Group( C68, C116 );
+cat3-group with generating (pre-)cat1-groups:
+1 : [d12 => Group( [ (), (1,6)(2,5)(3,4) ] )]
+2 : [d12 => Group( [ (1,4)(2,5)(3,6), (1,3)(4,6) ] )]
+3 : [d12 => Group( [ (1,5,3)(2,6,4), (1,4)(2,3)(5,6) ] )]
+gap> C3Gb := Cat3Group( all1[6], all1[8], all1[11] );
+cat3-group with generating (pre-)cat1-groups:
+1 : [d12 => Group( [ (), (1,6)(2,5)(3,4) ] )]
+2 : [d12 => Group( [ (1,4)(2,5)(3,6), (1,3)(4,6) ] )]
+3 : [d12 => Group( [ (1,5,3)(2,6,4), (1,4)(2,3)(5,6) ] )]
+gap> C3Ga = C3Gb;
+true
 
 ## Section 9.1.2
+gap> C811 := Cat2Group( all1[8], all1[11] );;
+gap> Left3DimensionalGroup( C3Ga ) = C811;
+true
 
 ## Section 9.1.3
 

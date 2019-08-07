@@ -1144,7 +1144,7 @@ InstallGlobalFunction( PreCat2Group, function( arg )
         fi;
         C2G := PreCat2GroupByPreCat1Groups( C1up, C1lt, dr[1], dr[2] ); 
         if ( C2G = fail ) then 
-            return fail;   ## qError( "C2G fails to be a PreCat2Group" ); 
+            return fail;   ## Error( "C2G fails to be a PreCat2Group" ); 
         fi;
     fi;
     ok := IsPreCat2Group( C2G );

@@ -1,7 +1,8 @@
 # CHANGES to the 'XMod' package
 
-## 2.73 -> 2.73dev (02/08/2019) 
+## 2.73 -> 2.73dev (07/08/2019) 
 
+ * (07/08/19) functions for cat3-groups in gp4obj.g{d,i} 
  * (30/07/19) modified induced.tst and isoclinic.tst to avoid gapdev diffs 
  * (26/07/19) added .pairs and .fams to CatnGroupLists record 
  * (17/07/19) modified .travis.yml in line with Max' changes in Utils 

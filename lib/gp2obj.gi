@@ -1782,7 +1782,7 @@ function( C1G )
     kerh := Kernel( h );
     kerth := CommutatorSubgroup( kert, kerh );
     if not ( Size( kerth ) = 1 ) then
-        Info( InfoXMod, 1, "condition  [kert,kerh] = 1  is not satisfied");
+        Info( InfoXMod, 1, "condition  [kert,kerh] = 1  is not satisfied"); 
         return false;
     fi;
     if not ( ( Source( f ) = kerC ) and ( Range( f ) = Csrc ) ) then

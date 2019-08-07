@@ -166,7 +166,7 @@ DeclareRepresentation( "IsPreCat2GroupObj",
     [ "up2d", "left2d", "right2d", "down2d" ] );
 BindGlobal( "PreCat2GroupObjType", 
             NewType( FamilyHigherDimensionalGroup, IsPreCat2GroupObj ) ); 
-DeclareOperation( "PreCat2GroupObj", [ IsList] );
+DeclareOperation( "PreCat2GroupObj", [ IsList ] );
 
 #############################################################################
 ##
