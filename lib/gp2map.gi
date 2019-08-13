@@ -25,14 +25,14 @@ function( L )
     ok := ( Length(L) = 4 ); 
     if not ok then 
         Info( InfoXMod, 2, "require list with 2 2dgroups and 2 group homs" ); 
-        return fail; 
+        return false; 
     fi;
     src := L[1];  rng := L[2];  shom := L[3];  rhom := L[4]; 
     ok := ( Is2DimensionalGroup( src ) and Is2DimensionalGroup( rng ) 
             and IsGroupHomomorphism( shom) and IsGroupHomomorphism( rhom ) ); 
     if not ok then 
         Info( InfoXMod, 2, "require two 2dgroups and two group homs" ); 
-        return fail; 
+        return false; 
     fi;
     ok := ( ( Source( src ) = Source( shom ) ) 
             and (  Range( src ) = Source( rhom ) ) 
@@ -227,7 +227,7 @@ end );
 
 #############################################################################
 ##
-#M  IsPreCat1GroupMorphism . . . . . . . . . check diagram of group homs commutes 
+#M  IsPreCat1GroupMorphism . . . . . . . check diagram of group homs commutes 
 ##
 InstallMethod( IsPreCat1GroupMorphism, "generic method for morphisms of 2d-groups", 
     true, [ Is2DimensionalGroupMorphism ], 0,
@@ -356,7 +356,8 @@ function( mor2, mor1 )
     comp := Make2DimensionalGroupMorphism( 
                 [ Source(mor1), Range(mor2), srchom, rnghom ]);
     if IsPreCat1Group( Source( mor1 ) ) then
-        if ( IsPreCat1GroupMorphism( mor1 ) and IsPreCat1GroupMorphism( mor2 ) ) then
+        if ( IsPreCat1GroupMorphism( mor1 ) 
+             and IsPreCat1GroupMorphism( mor2 ) ) then
             SetIsPreCat1GroupMorphism( comp, true );
         fi;
         if ( IsCat1GroupMorphism( mor1 ) and IsCat1GroupMorphism( mor2 ) ) then
@@ -494,7 +495,7 @@ end );
 
 ###############################################################################
 ##
-#F  PreCat1GroupMorphism( <src>,<rng>,<srchom>,<rnghom> )    pre-cat1-group morphism
+#F  PreCat1GroupMorphism( <src>,<rng>,<srchom>,<rnghom> ) pre-cat1-grp morphism
 ##
 ##  (need to extend to other sets of parameters)
 ##
@@ -507,10 +508,12 @@ InstallGlobalFunction( PreCat1GroupMorphism, function( arg )
     if ( ( nargs = 4 ) and IsPreCat1Group( arg[1] ) and IsPreCat1Group( arg[2])
                        and IsGroupHomomorphism( arg[3] )
                        and IsGroupHomomorphism( arg[4] ) ) then
-        return PreCat1GroupMorphismByGroupHomomorphisms( arg[1], arg[2], arg[3], arg[4] );
+        return PreCat1GroupMorphismByGroupHomomorphisms( 
+                   arg[1], arg[2], arg[3], arg[4] );
     fi;
     # alternatives not allowed
-    Info( InfoXMod, 2, "usage: PreCat1GroupMorphism( src, rng, srchom, rnghom );" );
+    Info( InfoXMod, 2, 
+          "usage: PreCat1GroupMorphism( src, rng, srchom, rnghom );" );
     return fail;
 end );
 
@@ -1211,8 +1214,8 @@ function( src, rng, srchom, rnghom )
     local filter, fam, mor, ok, nsrc, nrng, name;
 
     mor := Make2DimensionalGroupMorphism( [ src, rng, srchom, rnghom ] ); 
-    if not IsPreCat1GroupMorphism( mor ) then
-        Info( InfoXMod, 2, "not a morphism of pre-cat1 groups.\n" );
+    if not ( ( mor <> fail ) and IsPreCat1GroupMorphism( mor ) ) then
+        Info( InfoXMod, 2, "not a morphism of pre-cat1 groups\n" );
         return fail;
     fi;
     if ( HasName( Source(src) ) and HasName( Range(src) ) ) then
@@ -1242,7 +1245,7 @@ function( src, rng, srchom, rnghom )
     local mor, ok;
 
     mor := PreCat1GroupMorphismByGroupHomomorphisms( src, rng, srchom, rnghom );
-    ok := IsCat1GroupMorphism( mor );
+    ok := not ( mor = fail ) and IsCat1GroupMorphism( mor );
     if not ok then
         return fail;
     fi;

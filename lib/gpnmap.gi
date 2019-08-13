@@ -357,7 +357,7 @@ end );
 
 ##############################################################################
 ##
-#M  CatnGroupMorphismByMorphisms . . . . . . . . . for a higher dimensional mapping
+#M  CatnGroupMorphismByMorphisms . . . . . . for a higher dimensional mapping
 ##
 InstallMethod( CatnGroupMorphismByMorphisms, "method for a nd-mapping", true, 
     [ IsCatnGroup, IsCatnGroup, IsList], 0,

@@ -22,7 +22,7 @@ function( L )
         Error( "there should be 6 pre-cat2-groups in the list L" ); 
     fi; 
     PC := rec();
-    ObjectifyWithAttributes( PC, PreCat2GroupObjType, 
+    ObjectifyWithAttributes( PC, PreCat3GroupObjType, 
       Front3DimensionalGroup, L[1], 
       Up3DimensionalGroup, L[2], 
       Left3DimensionalGroup, L[3],
@@ -168,7 +168,7 @@ InstallGlobalFunction( PreCat3Group, function( arg )
     C1uf := Up2DimensionalGroup( C2f ); 
     C1uf2 := Left2DimensionalGroup( C2u ); 
     ## if the two cat1-groups are unequal but isomorphic then make 
-    ## an isomorphic copy of .... 
+    ## an isomorphic copy of .... ??? 
     if not ( C1uf = C1uf2 ) then 
         ## iso := IsomorphismGroups( S2, S1 ); 
         Error( "C1uf <> C1uf2" ); 

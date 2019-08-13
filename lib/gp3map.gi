@@ -482,22 +482,71 @@ end );
 
 ###############################################################################
 ##
-#M  PreCat2GroupMorphismByPreCat1GroupMorphisms( <src>, <rng>, <list of mors> ) 
+#F  PreCat2GroupMorphism( <src>,<rng>,<upmor>,<ltmor> ) pre-cat2-grp morphism
+##
+InstallGlobalFunction( PreCat2GroupMorphism, function( arg )
+
+    local nargs;
+
+    nargs := Length( arg );
+    # two pre-cat2-groups and two pre-cat1-group morphisms
+    if ( ( nargs = 4 ) and IsPreCat2Group( arg[1] ) and IsPreCat2Group( arg[2])
+                       and IsPreCat1GroupMorphism( arg[3] )
+                       and IsPreCat1GroupMorphism( arg[4] ) ) then
+        return PreCat2GroupMorphismByPreCat1GroupMorphisms( 
+                   arg[1], arg[2], arg[3], arg[4] );
+    fi;
+    # alternatives not allowed
+    Info( InfoXMod, 2, 
+          "usage: PreCat2GroupMorphism( src, rng, upmor, ltmor );" );
+    return fail;
+end );
+
+###############################################################################
+##
+#M  PreCat2GroupMorphismByPreCat1GroupMorphisms( <src>, <rng>, <upm>, <ltm> ) 
 ##
 InstallMethod( PreCat2GroupMorphismByPreCat1GroupMorphisms,
     "for two pre-cat2-groups and two pre-cat1-group morphisms,", true,
-    [ IsPreCat2Group, IsPreCat2Group, IsList ], 0,
-function( src, rng, list )
+    [ IsPreCat2Group, IsPreCat2Group, IsPreCat1GroupMorphism, 
+      IsPreCat1GroupMorphism ], 0,
+function( C1, C2, upmor, ltmor )
 
-    local mor, ok;
+    local homG, homR, homQ, dn1, edn1, P1, dn2, tdn2, P2, genP1, imP1, 
+          rt1, ert1, rt2, trt2, L, homP, dnmor, rtmor, mor, ok;
 
-    if not ( Length( list ) = 4 ) and 
-           ForAll( list, m-> IsPreCat2GroupMorphism(m) ) then 
-        Error( "third argument should be a list of 4 pre-cat2-morphisms" );
-    fi;
-    mor := MakeHigherDimensionalGroupMorphism( src, rng, list );
+    homG := SourceHom( upmor ); 
+    homR := RangeHom( upmor );
+    if not ( SourceHom( ltmor ) = homG ) then 
+        return fail; 
+    fi; 
+    homQ := RangeHom( ltmor ); 
+    dn1 := Down2DimensionalGroup( C1 ); 
+    edn1 := RangeEmbedding( dn1 );
+    P1 := Range( dn1 ); 
+    dn2 := Down2DimensionalGroup( C2 ); 
+    tdn2 := TailMap( dn2 ); 
+    P2 := Range( dn2 ); 
+    genP1 := GeneratorsOfGroup( P1 ); 
+    imP1 := List( genP1, 
+                p -> ImageElm( tdn2, ImageElm( homQ, ImageElm( edn1, p ) ) ) ); 
+    ## do some checks 
+    rt1 := Right2DimensionalGroup( C1 ); 
+    ert1 := RangeEmbedding( rt1 );
+    rt2 := Right2DimensionalGroup( C2 ); 
+    trt2 := TailMap( rt2 ); 
+    L := List( genP1, 
+             p -> ImageElm( trt2, ImageElm( homR, ImageElm( ert1, p ) ) ) ); 
+    if not ( L = imP1 ) then 
+        Error( "image lists for homP do not agree" ); 
+    fi; 
+    homP := GroupHomomorphismByImages( P1, P2, genP1, imP1 ); 
+    dnmor := Cat1GroupMorphismByGroupHomomorphisms( dn1, dn2, homQ, homP ); 
+    rtmor := Cat1GroupMorphismByGroupHomomorphisms( rt1, rt2, homR, homP ); 
+    mor := MakeHigherDimensionalGroupMorphism( C1, C2, 
+               [ upmor, ltmor, rtmor, dnmor ] );
     if not IsPreCat2GroupMorphism( mor ) then
-        Info( InfoXMod, 2, "not a morphism of pre-cat2.\n" );
+        Info( InfoXMod, 1, "not a morphism of pre-cat2-groups.\n" );
         return fail;
     fi;
     ok := IsCat2GroupMorphism( mor );
@@ -663,7 +712,7 @@ function( D1, D2 )
             isodn := PreCat1GroupMorphismByGroupHomomorphisms
                         ( dn1, dn2, sigma, pi ); 
             return PreCat2GroupMorphismByPreCat1GroupMorphisms 
-                       ( D1, D2, [ isoup, isolt, isort, isodn ] ); 
+                       ( D1, D2, isoup, isolt ); 
         fi;
     od;
     return fail;
@@ -707,57 +756,61 @@ InstallMethod( AllCat2GroupMorphisms, "for two cat2-groups", true,
     [ IsCat2Group, IsCat2Group ], 0,
 function( C2G1, C2G2 ) 
 
-    local sonuc, G1, R1, Q1, P1, b2, a2, b1, a1, G2, R2, Q2, P2, 
-          alpha1, phi1, gamma1, m1_ler, m2_ler, m3_ler, m1, alp, ph, gm, 
-          u1, u2, d1, d2, up, dn, mor1, ispre1, mor2, ispre2, mor;
+    local sonuc, up1, lt1, rt1, dn1, up2, lt2, rt2, dn2, G1, R1, Q1, P1, 
+          G2, R2, Q2, P2, homG, homR, uphoms, gamma, rho, morup, homQ, 
+          lthoms, xi, morlt, L, up, lt, mor2;
 
     sonuc := true; 
-    u1 := Up2DimensionalGroup( C2G1 );
-    d1 := Down2DimensionalGroup( C2G1 );
-    u2 := Up2DimensionalGroup( C2G2 );
-    d2 := Down2DimensionalGroup( C2G2 );
-    G1 := Source( u1 );
-    R1 := Range( u1 );
-    Q1 := Source( d1 );
-    P1 := Range( d1 );
-    G2 := Source( u2 );
-    R2 := Range( u2 );
-    Q2 := Source( d2 );
-    P2 := Range( d2 );
-    alpha1 := AllHomomorphisms( G1, G2 );    
-    phi1 := AllHomomorphisms( R1, R2 );    
-    m1_ler := [];    
-    m2_ler := [];
-    for alp in alpha1 do
-        for ph in phi1 do
-            mor1 := Make2DimensionalGroupMorphism( [ u1, u2, alp, ph ] );
-            ispre1 := ( not( mor1 = fail ) and IsPreCat1GroupMorphism( mor1 ) );
-            if ispre1 then
-                Add( m1_ler, PreCat1GroupMorphism( u1, u2, alp, ph ) );
+    up1 := Up2DimensionalGroup( C2G1 );
+    lt1 := Left2DimensionalGroup( C2G1 );
+    rt1 := Right2DimensionalGroup( C2G1 );
+    dn1 := Down2DimensionalGroup( C2G1 );
+    up2 := Up2DimensionalGroup( C2G2 );
+    lt2 := Left2DimensionalGroup( C2G2 );
+    rt2 := Right2DimensionalGroup( C2G2 );
+    dn2 := Down2DimensionalGroup( C2G2);
+    G1 := Source( up1 );
+    R1 := Range( up1 );
+    Q1 := Range( lt1 );
+    P1 := Range( dn1 );
+    G2 := Source( up2 );
+    R2 := Range( up2 );
+    Q2 := Range( lt2 );
+    P2 := Range( dn2 );
+    homG := AllHomomorphisms( G1, G2 );    
+    homR := AllHomomorphisms( R1, R2 );    
+    uphoms := [];    
+    for gamma in homG do
+        for rho in homR do
+            morup := Cat1GroupMorphismByGroupHomomorphisms( 
+                        up1, up2, gamma, rho );
+            if ( not( morup = fail ) and IsPreCat1GroupMorphism( morup ) ) then
+                Add( uphoms, morup );
             fi;
         od;
     od;    
-    alpha1 := AllHomomorphisms( Q1, Q2 );
-    gamma1 := AllHomomorphisms( P1, P2 );
-    for alp in alpha1 do
-        for gm in gamma1 do
-            mor2 := Make2DimensionalGroupMorphism( [ d1, d2, alp, gm ] );
-            ispre2 := ( not( mor2 = fail ) and IsPreCat1GroupMorphism( mor2 ) );
-            if ispre2 then 
-                Add( m2_ler, PreCat1GroupMorphism( d1, d2, alp, gm ) );
+    homQ := AllHomomorphisms( P1, P2 );
+    lthoms := [];
+    for gamma in homG do
+        for xi in homQ do
+            morlt := Cat1GroupMorphismByGroupHomomorphisms( 
+                         lt1, lt2, gamma, xi );
+            if ( not( morlt = fail ) and IsPreCat1GroupMorphism( morlt ) ) then
+                Add( lthoms, PreCat1GroupMorphism( lt1, lt2, gamma, xi ) );
             fi;
         od;
     od;    
-    m1_ler := Filtered( m1_ler, IsCat1GroupMorphism );
-    m2_ler := Filtered( m2_ler, IsCat1GroupMorphism );
-    m3_ler := [];     
-    for up in m1_ler do
-        for dn in m2_ler do 
-            mor := MakeHigherDimensionalGroupMorphism( C2G1, C2G2, [up,dn] );
-            if IsCat2GroupMorphism( mor ) then
-                Add( m3_ler, mor);            
+    uphoms := Filtered( uphoms, IsCat1GroupMorphism );
+    lthoms := Filtered( lthoms, IsCat1GroupMorphism );
+    L := []; 
+    for up in uphoms do
+        for lt in lthoms do 
+            mor2 := PreCat2GroupMorphismByPreCat1GroupMorphisms( 
+                       C2G1, C2G2, up, lt );
+            if ( not ( mor2 = fail ) and IsCat2GroupMorphism( mor2 ) ) then
+                Add( L, mor2);  
             fi;
         od;
     od;    
-    return m3_ler;
+    return L;
 end );

@@ -12,6 +12,7 @@
 ##
 #O  PreCrossedSquareMorphismByPreXModMorphisms( <src>, <rng>, <list> )
 #O  PreCrossedSquareMorphismByGroupHomomorphisms( <src>, <rng>, <list> )
+#F  PreCat2GroupMorphism( <args> )
 #O  PreCat2GroupMorphismByPreCat1GroupMorphisms( <src>, <rng>, <list> )
 #O  PreCat2GroupMorphismByGroupHomomorphisms( <src>, <rng>, <list> )
 ##
@@ -22,7 +23,8 @@ DeclareOperation( "PreCrossedSquareMorphismByGroupHomomorphisms",
     [ IsPreCrossedSquare, IsPreCrossedSquare, IsList ] );
 DeclareGlobalFunction( "PreCat2GroupMorphism" );
 DeclareOperation( "PreCat2GroupMorphismByPreCat1GroupMorphisms",
-    [ IsPreCat2Group, IsPreCat2Group, IsList ] );
+    [ IsPreCat2Group, IsPreCat2Group, IsPreCat1GroupMorphism, 
+      IsPreCat1GroupMorphism ] );
 DeclareOperation( "PreCat2GroupMorphismByGroupHomomorphisms",
     [ IsPreCat2Group, IsPreCat2Group, IsList ] );
 
