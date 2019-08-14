@@ -2,7 +2,7 @@
 ##
 #W  gp2map.gd                   GAP4 package `XMod'              Chris Wensley
 #W                                                                 & Murat Alp
-#Y  Copyright (C) 2001-2018, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2019, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 ##  This file contains implementations of 2DimensionalMappings 
@@ -142,3 +142,9 @@ DeclareOperation( "IsomorphismCat1Groups", [ IsCat1Group, IsCat1Group ] );
 #A  MorphismOfPullback( <xmod> )
 ##
 DeclareAttribute( "MorphismOfPullback", IsXMod );
+
+#############################################################################
+##
+#O  AllCat1GroupMorphisms( <cat1>, <cat1> ) 
+## 
+DeclareOperation( "AllCat1GroupMorphisms", [ IsCat1Group, IsCat1Group ] ); 

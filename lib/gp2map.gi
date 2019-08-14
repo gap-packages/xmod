@@ -1646,3 +1646,32 @@ function( mor )
     sub := Sub2DimensionalGroup( Range(mor), imS, imR );
     return sub;
 end );
+
+###############################################################################
+##
+#M  AllCat1GroupMorphisms  . . . . . . morphisms from one cat1-group to another 
+##
+InstallMethod( AllCat1GroupMorphisms, "for two cat1-groups", true, 
+    [ IsCat1Group, IsCat1Group ], 0,
+function( C1G1, C1G2 ) 
+
+    local G1, R1, G2, R2, homG, homR, mors, gamma, rho, mor; 
+
+    G1 := Source( C1G1 );
+    R1 := Range( C1G1 );
+    G2 := Source( C1G2 );
+    R2 := Range( C1G2 );
+    homG := AllHomomorphisms( G1, G2 );    
+    homR := AllHomomorphisms( R1, R2 );    
+    mors := [ ];    
+    for gamma in homG do
+        for rho in homR do
+            mor := PreCat1GroupMorphismByGroupHomomorphisms( 
+                        C1G1, C1G2, gamma, rho );
+            if ( not( mor = fail ) and IsCat1GroupMorphism( mor ) ) then
+                Add( mors, mor );
+            fi;
+        od;
+    od;    
+    return mors; 
+end );

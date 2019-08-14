@@ -756,52 +756,14 @@ InstallMethod( AllCat2GroupMorphisms, "for two cat2-groups", true,
     [ IsCat2Group, IsCat2Group ], 0,
 function( C2G1, C2G2 ) 
 
-    local sonuc, up1, lt1, rt1, dn1, up2, lt2, rt2, dn2, G1, R1, Q1, P1, 
-          G2, R2, Q2, P2, homG, homR, uphoms, gamma, rho, morup, homQ, 
-          lthoms, xi, morlt, L, up, lt, mor2;
+    local up1, lt1, up2, lt2, uphoms, lthoms, L, up, lt, mor2;
 
-    sonuc := true; 
     up1 := Up2DimensionalGroup( C2G1 );
     lt1 := Left2DimensionalGroup( C2G1 );
-    rt1 := Right2DimensionalGroup( C2G1 );
-    dn1 := Down2DimensionalGroup( C2G1 );
     up2 := Up2DimensionalGroup( C2G2 );
     lt2 := Left2DimensionalGroup( C2G2 );
-    rt2 := Right2DimensionalGroup( C2G2 );
-    dn2 := Down2DimensionalGroup( C2G2);
-    G1 := Source( up1 );
-    R1 := Range( up1 );
-    Q1 := Range( lt1 );
-    P1 := Range( dn1 );
-    G2 := Source( up2 );
-    R2 := Range( up2 );
-    Q2 := Range( lt2 );
-    P2 := Range( dn2 );
-    homG := AllHomomorphisms( G1, G2 );    
-    homR := AllHomomorphisms( R1, R2 );    
-    uphoms := [];    
-    for gamma in homG do
-        for rho in homR do
-            morup := Cat1GroupMorphismByGroupHomomorphisms( 
-                        up1, up2, gamma, rho );
-            if ( not( morup = fail ) and IsPreCat1GroupMorphism( morup ) ) then
-                Add( uphoms, morup );
-            fi;
-        od;
-    od;    
-    homQ := AllHomomorphisms( P1, P2 );
-    lthoms := [];
-    for gamma in homG do
-        for xi in homQ do
-            morlt := Cat1GroupMorphismByGroupHomomorphisms( 
-                         lt1, lt2, gamma, xi );
-            if ( not( morlt = fail ) and IsPreCat1GroupMorphism( morlt ) ) then
-                Add( lthoms, PreCat1GroupMorphism( lt1, lt2, gamma, xi ) );
-            fi;
-        od;
-    od;    
-    uphoms := Filtered( uphoms, IsCat1GroupMorphism );
-    lthoms := Filtered( lthoms, IsCat1GroupMorphism );
+    uphoms := AllCat1GroupMorphisms( up1, up2 ); 
+    lthoms := AllCat1GroupMorphisms( lt1, lt2 ); 
     L := []; 
     for up in uphoms do
         for lt in lthoms do 
