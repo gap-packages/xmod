@@ -61,3 +61,16 @@ DeclareOperation( "DetermineRemainingCat2Groups",
 DeclareOperation( "PreCat3GroupByPreCat2Groups", 
     [ IsPreCat2Group, IsPreCat2Group, IsPreCat2Group, 
       IsPreCat2Group, IsPreCat2Group, IsPreCat2Group ] );
+
+#############################################################################
+##
+#O  AllCat3Groups( <G> ) 
+#O  AllCat3GroupsIterator( <gp> )
+#A  AllCat3GroupsNumber( <gp> )
+#O  AllCat3GroupsUpToIsomorphism( <G> ) 
+#O  AllCat3GroupTriples( <G> ) 
+## 
+DeclareOperation( "AllCat3Groups", [ IsGroup ] ); 
+DeclareOperation( "AllCat3GroupsIterator", [ IsGroup ] ); DeclareAttribute( "AllCat3GroupsNumber", IsGroup ); 
+DeclareOperation( "AllCat3GroupsUpToIsomorphism", [ IsGroup ] ); 
+DeclareOperation( "AllCat3GroupTriples", [ IsGroup ] ); 

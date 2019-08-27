@@ -20,6 +20,7 @@ AutoDoc( rec(
             \newcommand{\calB}{\mathcal{B}}
             \newcommand{\calC}{\mathcal{C}}
             \newcommand{\calD}{\mathcal{D}}
+            \newcommand{\calE}{\mathcal{E}}
             \newcommand{\calF}{\mathcal{F}}
             \newcommand{\calG}{\mathcal{G}}
             \newcommand{\calL}{\mathcal{L}}

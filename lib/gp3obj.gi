@@ -1364,8 +1364,7 @@ BindGlobal( "ShallowCopy_AllCat2GroupsWithImages",
 InstallGlobalFunction( "DoAllCat2GroupsWithImagesIterator", 
 function( G, R, Q )
 
-    local iterGR, iterGQ, pairs, pairsIterator, 
-          upIterator, ltIterator, leftIterator, iter;
+    local upIterator, pairsIterator, ltIterator, iter;
 
     upIterator := AllCat1GroupsWithImageIterator( G, R ); 
     if ( R = Q ) then 
@@ -1561,7 +1560,8 @@ function( G )
         CatnGroupNumbers( G ).cat2 := Length( L ); 
     fi; 
     if not omit then 
-        CatnGroupLists( G ).pairs := pairs; 
+        Sort( pairs ); 
+        CatnGroupLists( G ).cat2pairs := pairs; 
     fi; 
     return L; 
 end ); 
@@ -1644,7 +1644,8 @@ function( G )
     fi; 
     Info( InfoXMod, 1, "reps found at positions ", posL ); 
     if not omit then 
-        CatnGroupLists( G ).classes := classes; 
+        Sort( classes ); 
+        CatnGroupLists( G ).cat2classes := classes; 
     fi; 
     return L; 
 end ); 
@@ -1784,40 +1785,6 @@ function( G, N )
     SetIsGroupOfAutomorphisms( aut, true );
     act := GroupHomomorphismByImages( G, aut, genG, autgen );
     return act;
-end ); 
-
-##############################################################################
-## 
-#?  this function should be got rid of a.s.a.p. 
-##
-#M  ElementsRelationsForSemidirectProduct 
-##
-InstallMethod( ElementsRelationsForSemidirectProduct, "elements relation",
-    true, [ IsGroup ], 0,
-function( GxH  )
-
-    local info, G, H, elG, embG, embH, elH, g, h, im, list1, list2, genGxH;
-
-    if not HasSemidirectProductInfo( GxH ) then 
-        Error( "group is not a semidirect product" ); 
-    fi; 
-    info := SemidirectProductInfo( GxH ); 
-    G := info!.groups[1]; 
-    H := info!.groups[2];
-    elG := Elements( G );
-    elH := Elements( H );
-    list1 := [ ];
-    list2 := [ ];
-    embG := info!.embeddings[1];
-    embH := info!.embeddings[2];
-    for g in elG do
-        for h in elH do
-            im := ImageElm( embG, g) * ImageElm( embH, h );
-            Add( list1, [g,h] );
-            Add( list2, im );
-        od;
-    od;
-    return [ list1, list2 ];
 end ); 
 
 #############################################################################
