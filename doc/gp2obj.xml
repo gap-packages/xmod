@@ -11,13 +11,13 @@
 
 <Chapter Label="chap-gp2obj">
 
-<Heading>2d-groups : crossed modules and cat1-groups</Heading>
+<Heading>2d-groups : crossed modules and cat<M>^1</M>-groups</Heading>
 
 <Index>2d-domain</Index>
 <Index>2d-group</Index>
 The term <E>2d-group</E> refers to a set of equivalent categories 
 of which the most common are the categories of 
-<E>crossed modules</E>; <E>cat1-groups</E>; and <E>group-groupoids</E>, 
+<E>crossed modules</E>; <E>cat<M>^1</M>-groups</E>; and <E>group-groupoids</E>, 
 all of which involve a pair of groups. 
 
 <Section Label="sect-constructions">
@@ -416,7 +416,7 @@ starting with <C>IsPreXMod</C> and <C>IsXMod</C>.
          Arg="X0" />
 <Description>
 A structure which has <C>IsPerm2DimensionalGroup</C> is a precrossed module 
-or a pre-cat1-group (see section <Ref Sect="sect-cat1" />) 
+or a pre-cat<M>^1</M>-group (see section <Ref Sect="sect-cat1" />) 
 whose source and range are both permutation groups. 
 The properties <C>IsPc2DimensionalGroup</C>, <C>IsFp2DimensionalGroup</C> 
 are defined similarly. 
@@ -615,14 +615,14 @@ Group([ (1,2), (3,4) ])
 
 
 <Section Label="sect-cat1">
-<Heading>Cat1-groups and pre-cat1-groups</Heading>
-<Index>cat1-group</Index>
+<Heading>Cat<M>^1</M>-groups and pre-cat<M>^1</M>-groups</Heading>
+<Index>cat<M>^1</M>-group</Index>
 
 In <Cite Key="L1" />, Loday reformulated the notion of a 
-crossed module as a cat1-group, 
+crossed module as a cat<M>^1</M>-group, 
 namely a group <M>G</M> with a pair of endomorphisms <M>t,h : G \to G</M>
 having  a common image <M>R</M> and satisfying certain axioms.
-We find it computationally convenient to define a cat1-group 
+We find it computationally convenient to define a cat<M>^1</M>-group 
 <M>\calC = (e;t,h : G \to R )</M>  as having source group  <M>G</M>,
 range group <M>R</M>,  and three homomorphisms:  two surjections  
 <M>t,h : G \to R</M>  and an embedding  <M>e : R \to G</M>  satisfying:
@@ -713,7 +713,7 @@ gap> C18 := Cat1Group( t1, h1, e1 );
    <Attr Name="Size"
          Arg="C" Label="for cat1-groups" />
 <Description> 
-These are the attributes of a cat1-group <M>\calC</M> 
+These are the attributes of a cat<M>^1</M>-group <M>\calC</M> 
 in this implementation.
 <P/>
 The maps  <M>t,h</M>  are often referred to as the 
@@ -761,8 +761,9 @@ gap> StructureDescription( C18 );
 <Description>
 <B>[Needs revising!]</B>
 <P/>
-The next three subsections contain some more constructors for cat1-groups. 
-The following listing shows an example of a permutation cat1-group 
+The next three subsections contain some more constructors for 
+cat<M>^1</M>-groups. 
+The following listing shows an example of a permutation cat<M>^1</M>-group 
 of size <M>[576,24]</M> with source group <M>S_4 \times S_4</M>, 
 range group a third <M>S_4</M>, and <M>t \neq h</M>. 
 A similar example may be reproduced using the command 
@@ -809,7 +810,7 @@ Cat1-group [s4s4=>s4d] :-
    <Attr Name="ReverseCat1Group"
          Arg="C0" />
 <Description> 
-The <E>reverse</E> of a cat1-group <M>C</M> 
+The <E>reverse</E> of a cat<M>^1</M>-group <M>C</M> 
 has the same source, range and embedding, 
 but has the tail and head maps interchanged.
 </Description>
@@ -830,9 +831,9 @@ true
    <Oper Name="Cat1GroupByPeifferQuotient"
          Arg="P" />
 <Description>
-If <M>C = (e;t,h : G \to R)</M> is a pre-cat1-group, 
+If <M>C = (e;t,h : G \to R)</M> is a pre-cat<M>^1</M>-group, 
 its Peiffer subgroup is <M>P = [\ker t,\ker h]</M> 
-and the associated cat1-group <M>C_2</M> has source <M>G/P</M>. 
+and the associated cat<M>^1</M>-group <M>C_2</M> has source <M>G/P</M>. 
 In the example, <M>t=h : s4 \to c2</M> with <M>\ker t = \ker h = a4</M> 
 and <M>P = [a4,a4]=k4</M>, so that <M>G/P = s4/k4 \cong s3</M>. 
 </Description>
@@ -868,10 +869,13 @@ gap> IsomorphismCat1Groups( C2, CXC2 );
 </Section> 
 
 <Section Label="sect-properties-cat1">
-<Heading>Properties of cat1-groups and pre-cat1-groups</Heading>
+<Heading>
+Properties of cat<M>^1</M>-groups and pre-cat<M>^1</M>-groups 
+</Heading>
 
 Many of the properties listed in section <Ref Sect="sect-properties-xmod"/> 
-apply to pre-cat1-groups and to cat1-groups since these are also 2d-groups. 
+apply to pre-cat<M>^1</M>-groups and to cat<M>^1</M>-groups 
+since these are also 2d-groups. 
 There are also more specific properties. 
 
 <ManSection>
@@ -892,7 +896,7 @@ are identity mappings.
 is a subgroup of the source. 
 When this is not the case, replacing <M>t,h,e</M> by <M>t*e,h*e</M> 
 and the inclusion mapping of the image of <M>e</M> gives an isomorphic 
-cat1-group for which <C>IsEndomorphismPreCat1Group</C> is true. 
+cat<M>^1</M>-group for which <C>IsEndomorphismPreCat1Group</C> is true. 
 </Description>
 </ManSection>
 <P/>
@@ -938,8 +942,9 @@ gap> EC4 := EndomorphismPreCat1Group( C4 );
    <Attr Name="PreXModOfPreCat1Group"
          Arg="P0" />
 <Description>
-The category of crossed modules is equivalent to the category of cat1-groups,
-and the functors between these two categories may be described as follows.
+The category of crossed modules is equivalent to the category of 
+cat<M>^1</M>-groups, and the functors between these two categories 
+may be described as follows.
 
 Starting with the crossed module 
 <M>\calX = (\partial : S \to R)</M> the group <M>G</M> is defined 
@@ -953,7 +958,7 @@ The structural morphisms are given by
 <Display>
 t(r,s) = r, \quad h(r,s) = r (\partial s), \quad er = (r,1).
 </Display>
-On the other hand, starting with a cat1-group 
+On the other hand, starting with a cat<M>^1</M>-group 
 <M> \calC = (e;t,h : G \to R)</M>,  we define 
 <M> S = \ker t</M>, the range <M>R</M> is unchanged, and 
 <M> \partial = h\!\mid_S </M>.
@@ -990,16 +995,16 @@ gap> StructureDescription(X2);
 
 
 <Section Label="sect-allcat1">
-<Heading>Enumerating cat1-groups with a given source</Heading>
+<Heading>Enumerating cat<M>^1</M>-groups with a given source</Heading>
 
-As the size of a group <M>G</M> increases, the number of cat1-groups with 
-source <M>G</M> increases rapidly.  
+As the size of a group <M>G</M> increases, the number of cat<M>^1</M>-groups 
+with source <M>G</M> increases rapidly.  
 However, one is usually only interested in the isomorphism classes 
-of cat1-groups with source <M>G</M>. 
+of cat<M>^1</M>-groups with source <M>G</M>. 
 An iterator <C>AllCat1GroupsIterator</C> is provided, 
-which runs through the various cat1-groups. 
+which runs through the various cat<M>^1</M>-groups. 
 This iterator finds, for each subgroup <M>R</M> of <M>G</M>, 
-the cat1-groups with range <M>R</M>. 
+the cat<M>^1</M>-groups with range <M>R</M>. 
 It does this by running through the <C>AllSubgroupsIterator(G)</C> 
 provided by the <Package>Utils</Package> package, 
 and then using the iterator <C>AllCat1GroupsWithImageIterator(G,R)</C>. 
@@ -1015,14 +1020,15 @@ and then using the iterator <C>AllCat1GroupsWithImageIterator(G,R)</C>.
          Arg="G R" />
 <Description>
 The iterator <C>AllCat1GroupsWithImageIterator(G,R)</C> 
-iterates through all the cat1-groups with source <C>G</C> and range <M>R</M>. 
-The attribute <C>AllCat1GroupsWithImageNumber(G)</C> runs through this iterator to count the number <M>n_R</M> of these cat1-groups. 
+iterates through all the cat<M>^1</M>-groups with source <C>G</C> 
+and range <M>R</M>. 
+The attribute <C>AllCat1GroupsWithImageNumber(G)</C> runs through this iterator to count the number <M>n_R</M> of these cat<M>^1</M>-groups. 
 The operation <C>AllCat1GroupsWithImage(G)</C> returns a list containing 
-these <M>n_R</M> cat1-groups.  
+these <M>n_R</M> cat<M>^1</M>-groups.  
 Since these lists can get very long, this operation should only 
 be used for simple cases. 
-The operation <C>AllCat1GroupsWithImageUpToIsomorphism(G)</C> 
-returns representatives of the isomorphism classes of these cat1-groups. 
+The operation <C>AllCat1GroupsWithImageUpToIsomorphism(G)</C> returns 
+representatives of the isomorphism classes of these cat<M>^1</M>-groups. 
 </Description> 
 </ManSection>
 <P/>
@@ -1049,11 +1055,12 @@ gap> L12 := AllCat1GroupsWithImage( d12, c2 );
          Arg="G" />
 <Description>
 The iterator <C>AllCat1GroupsIterator(G)</C> iterates through all the 
-cat1-groups with source <C>G</C>. 
+cat<M>^1</M>-groups with source <C>G</C>. 
 The attribute <C>AllCat1GroupsNumber(G)</C> runs this iterator to count the 
-number <M>n</M> of these cat1-groups. 
+number <M>n</M> of these cat<M>^1</M>-groups. 
 The operation <C>AllCat1Groups(G)</C> returns a list containing these <M>n</M> 
-cat1-groups.  Since these lists can get very long, this operation should only 
+cat<M>^1</M>-groups.  
+Since these lists can get very long, this operation should only 
 be used for simple cases. 
 The operation <C>AllCat1GroupsUpToIsomorphism(G)</C> returns representatives 
 of the isomorphism classes of these subgroups. 
@@ -1082,15 +1089,15 @@ gap> iso12 := AllCat1GroupsUpToIsomorphism( d12 );
          Arg="G" />
 <Description>
 The attribute <C>CatnGroupNumbers</C> for a group <M>G</M> 
-is a mutable record which stores numbers of cat1-groups, cat2-groups, etc. 
-as they are calculated. 
+is a mutable record which stores numbers of cat<M>^1</M>-groups, 
+cat<M>^2</M>-groups, etc. as they are calculated. 
 The field <C>CatnGroupNumbers(G).idem</C> is the number of idempotent 
 endomorphisms of <M>G</M>. 
-Similarly, <C>CatnGroupNumbers(G).cat1</C> is the number of cat1-groups 
+Similarly, <C>CatnGroupNumbers(G).cat1</C> is the number of cat<M>^1</M>-groups 
 on <M>G</M>, while <C>CatnGroupNumbers(G).iso1</C> is the number of 
-isomorphism classes of these cat1-groups. 
+isomorphism classes of these cat<M>^1</M>-groups. 
 The attribute <C>CatnGroupLists</C> is used for storing results 
-of cat2-group calculations. 
+of cat<M>^2</M>-group calculations. 
 </Description> 
 </ManSection>
 <P/>
@@ -1105,12 +1112,12 @@ rec( cat1 := 12, idem := 21, iso1 := 4 )
 
 
 <Section Label="sect-cat1select">
-<Heading>Selection of a small cat1-group</Heading>
-<Index>selection of a small cat1-group</Index>
+<Heading>Selection of a small cat<M>^1</M>-group</Heading>
+<Index>selection of a small cat<M>^1</M>-group</Index>
 
-The <C>Cat1Group</C> function may also be used to select a cat1-group 
+The <C>Cat1Group</C> function may also be used to select a cat<M>^1</M>-group 
 from a data file.
-All cat1-structures on groups of size up to <M>70</M> 
+All cat<M>^1</M>-structures on groups of size up to <M>70</M> 
 (ordered according to the &GAP; 4 numbering of small groups) 
 are stored in a list in file <F>cat1data.g</F>.
 Global variables <C>CAT1&uscore;LIST&uscore;MAX&uscore;SIZE := 70</C> and
@@ -1124,9 +1131,9 @@ only when this function is called.
 <Description>
 The function <C>Cat1Select</C> may be used in three ways. 
 <C>Cat1Select( size )</C> returns the names of the groups with this size, 
-while <C>Cat1Select( size, gpnum )</C> prints a list of cat1-structures 
+while <C>Cat1Select( size, gpnum )</C> prints a list of cat<M>^1</M>-structures 
 for this chosen group. 
-<C>Cat1Select( size, gpnum, num )</C> returns the chosen cat1-group.
+<C>Cat1Select( size, gpnum, num )</C> returns the chosen cat<M>^1</M>-group.
 <P/>
 The example below is the first case in which <M>t \neq h</M>
 and the associated conjugation crossed module
@@ -1203,7 +1210,7 @@ Crossed module:-
 <Description>
 For a group <M>G</M> of size greater than <M>70</M> which is reasonably 
 straightforward this function may be used to construct a list of all 
-cat1-group structures on <M>G</M>. 
+cat<M>^1</M>-group structures on <M>G</M>. 
 The operation also attempts to write output to a file in the folder 
 <F>xmod/lib</F>. 
 (Other operations in the file <F>cat1data.gi</F> have been used to deal 
@@ -1235,7 +1242,7 @@ gap> all := AllCat1DataGroupsBasic( gp );
 
 
 <Section Label="sect-extra-fns">
-<Heading>More functions for crossed modules and cat1-groups</Heading>
+<Heading>More functions for crossed modules and cat<M>^1</M>-groups</Heading>
 
 Chapter <Ref Chap="chap-isclnc" /> contains functions for quotient 
 crossed modules; centre of a crossed module; 
@@ -1268,13 +1275,13 @@ gap> StructureDescription( C2 );
 
 
 <Section Label="sect-gpgpd">
-<Heading>The group groupoid associated to a cat1-group</Heading>
+<Heading>The group groupoid associated to a cat<M>^1</M>-group</Heading>
 
 A <E>group groupoid</E> is an algebraic object which is both 
 a groupoid and a group.  
 The category of group groupoids is equivalent to the categories of 
-precrossed modules and precat1-groups. 
-Starting with a (pre)cat1-group <M>\calC = (e;t,h : G \to R)</M>, 
+precrossed modules and precat<M>^1</M>-groups. 
+Starting with a (pre)cat<M>^1</M>-group <M>\calC = (e;t,h : G \to R)</M>, 
 we form the groupoid <M>\calG</M> having the elements of 
 <M>R</M> as objects and the elements of <M>G</M> as arrows. 
 The arrow <M>g</M> has tail <M>tg</M> and head <M>hg</M>. 
@@ -1292,7 +1299,8 @@ The groupoid (partial) multiplication <M>*</M> on these arrows is defined by:
 <Description>
 The operation <C>GroupGroupoid</C> implements this construction. 
 In the example we start with a crossed module <M>(C_3^2 \to S_3)</M>, 
-form the associated cat1-group <M>(S_3 \ltimes C_3^2 \Rightarrow S_3)</M>,
+form the associated cat<M>^1</M>-group 
+<M>(S_3 \ltimes C_3^2 \Rightarrow S_3)</M>,
 and then form the group groupoid <C>gpd33</C>. 
 Since the image of the boundary of the crossed module is <M>C_3</M>, 
 with index <M>2</M> in the range, the groupoid has two connected components, 
@@ -1339,7 +1347,7 @@ we have to convert <M>g \in G</M> into a new type of object,
 <C>GroupGroupoidElementType</C>, a record <M>e</M> with fields: 
 <List>
 <Item>
-<C>e!.precat1</C>, the precat1-group from which <M>\calG</M> was formed; 
+<C>e!.precat1</C>, the precat<M>^1</M>-group from which <M>\calG</M> was formed; 
 </Item>
 <Item>
 <C>e!.root</C>, the root object of the component containing <M>e</M>; 

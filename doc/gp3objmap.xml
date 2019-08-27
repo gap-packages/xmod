@@ -807,7 +807,7 @@ gap> KnownPropertiesOfObject( autoconj );
 <Heading>Definitions and constructions for cat<M>^2</M>-groups and their morphisms 
 </Heading>
 
-<Index>cat2-group</Index>
+<Index>cat<M>^2</M>-group</Index>
 
 We give here three equivalent definitions of cat<M>^2</M>-groups. 
 When we come to define cat<M>^n</M>-groups we shall give a similar set of 
@@ -839,9 +839,8 @@ and <M>15</M> homomorphisms, as shown in the following diagram:
 The following axioms are satisfied by these homomorphisms: 
 <List>
 <Item>
-the four sides of the square are cat<M>^1</M>-groups, denoted 
-<M>\ddot{\calC}_1, \ddot{\calC}_2, 
-\dot{\calC}_1, \dot{\calC}_2</M>,
+the four sides of the square (up, left, right, down) are cat<M>^1</M>-groups, 
+denoted <M>\ddot{\calC}_1, \ddot{\calC}_2, \dot{\calC}_1, \dot{\calC}_2</M>; 
 </Item>
 <Item>
 <M>
@@ -850,7 +849,7 @@ the four sides of the square are cat<M>^1</M>-groups, denoted
  \dot{e}_1\circ\dot{t}_2 = \ddot{t}_2\circ\ddot{e}_1, ~
  \dot{e}_2\circ\dot{t}_1 = \ddot{t}_1\circ\ddot{e}_2, ~
  \dot{e}_1\circ\dot{h}_2 = \ddot{h}_2\circ\ddot{e}_1, ~
- \dot{e}_2\circ\dot{h}_1 = \ddot{h}_1\circ\ddot{e}_2,
+ \dot{e}_2\circ\dot{h}_1 = \ddot{h}_1\circ\ddot{e}_2; 
  </M>
 </Item>
 <Item>
@@ -926,7 +925,7 @@ and similarly for <M>\ker h</M>.
          Arg="L" />
 <Description>
 The global functions <C>Cat2Group</C> and <C>PreCat2Group</C> 
-are normally called with a single argument, a list of cat1-groups. 
+are normally called with a single argument, a list of cat<M>^1</M>-groups. 
 </Description>
 </ManSection>
 <P/>
@@ -975,8 +974,9 @@ false
 <Description>
 <E>These functions are very experimental!</E> 
 <P/>
-These functions provide the conversion from crossed square to cat2-group, 
-and conversely.  (They are the 3-dimensional equivalents of 
+These functions provide the conversion from crossed square to 
+cat<M>^2</M>-group, and conversely.  
+(They are the 3-dimensional equivalents of 
 <Ref Oper="Cat1GroupOfXMod"/> and <Ref Oper="XModOfCat1Group"/>.) 
 </Description>
 </ManSection>
@@ -1012,18 +1012,18 @@ gap> Size( C2act );
 
 
 <Section Label="sect-allcat2">
-<Heading>Enumerating cat2-groups with a given source</Heading>
+<Heading>Enumerating cat<M>^2</M>-groups with a given source</Heading>
 
-This section mirrors that for cat1-groups (<Ref Sect="sect-allcat1" />). 
-As the size of a group <M>G</M> increases, the number of cat2-groups with 
-source <M>G</M> increases rapidly.  
+This section mirrors that for cat<M>^1</M>-groups (<Ref Sect="sect-allcat1" />). 
+As the size of a group <M>G</M> increases, 
+the number of cat<M>^2</M>-groups with source <M>G</M> increases rapidly.  
 However, one is usually only interested in the isomorphism classes 
-of cat2-groups with source <M>G</M>. 
+of cat<M>^2</M>-groups with source <M>G</M>. 
 An iterator <C>AllCat2GroupsIterator</C> is provided, 
-which runs through the various cat2-groups. 
+which runs through the various cat<M>^2</M>-groups. 
 This iterator finds, for each unordered pair of subgroups <M>R,Q</M> of 
-<M>G</M>, the cat2-groups whose <C>Up2DimensionalGroup</C> has range <M>R</M>, 
-and whose <C>Left2DimensionalGroup</C> has range <M>Q</M>. 
+<M>G</M>, the cat<M>^2</M>-groups whose <C>Up2DimensionalGroup</C> 
+has range <M>R</M>, and whose <C>Left2DimensionalGroup</C> has range <M>Q</M>. 
 It does this by running through 
 <C>UnoderedPairsIterator(AllSubgroupsIterator(G))</C> 
 provided by the <Package>Utils</Package> package, 
@@ -1040,14 +1040,15 @@ and then using the iterator <C>AllCat2GroupsWithImagesIterator(G,R,Q)</C>.
          Arg="G R Q" />
 <Description>
 The iterator <C>AllCat2GroupsIterator(G)</C> iterates through all the 
-cat2-groups with source <C>G</C>. 
+cat<M>^2</M>-groups with source <C>G</C>. 
 The attribute <C>AllCat2GroupsNumber(G)</C> runs through this iterator 
-to count the number <M>n</M> of these cat2-groups. 
-The operation <C>AllCat1Groups(G)</C> returns a list containing these <M>n</M> 
-cat2-groups.  Since these lists can get very long, this operation should only 
-be used for simple cases. 
+to count the number <M>n</M> of these cat<M>^2</M>-groups. 
+The operation <C>AllCat1Groups(G)</C> returns a list containing these 
+<M>n</M> cat<M>^2</M>-groups.  
+Since these lists can get very long, this operation should only be used 
+for simple cases. 
 The operation <C>AllCat2GroupsUpToIsomorphism(G)</C> returns representatives 
-of the isomorphism classes of these cat2-groups. 
+of the isomorphism classes of these cat<M>^2</M>-groups. 
 </Description> 
 </ManSection>
 <P/>
@@ -1079,22 +1080,26 @@ gap> AllCat2GroupsWithImages( d12, c2, s3 );
          Arg="G" />
 <Description>
 The iterator <C>AllCat2GroupsIterator(G)</C> iterates through all the 
-cat2-groups with source <C>G</C>. 
+cat<M>^2</M>-groups with source <C>G</C>. 
 The attribute <C>AllCat2GroupsNumber(G)</C> runs this iterator to count the 
-number <M>n</M> of these cat2-groups. 
+number <M>n</M> of these cat<M>^2</M>-groups. 
 The operation <C>AllCat1Groups(G)</C> returns a list containing these <M>n</M> 
 cat2-groups.  Since these lists can get very long, this operation should only 
 be used for simple cases. 
 The operation <C>AllCat2GroupsUpToIsomorphism(G)</C> returns representatives 
 of the isomorphism classes of these subgroups. 
 The operation <C>AllCat2GroupFamilies(G)</C> returns a list of lists. 
-The <M>k</M>-th list contains the positions of the cat2-groups in 
+The <M>k</M>-th list contains the positions of the cat<M>^2</M>-groups in 
 <C>AllCat2Groups(G)</C> which are isomorphic to the <M>k</M>-th representative. 
-So, for <C>d12</C>, the <M>41</M> cat2-groups form <M>10</M> classes, 
+So, for <C>d12</C>, the <M>41</M> cat<M>^2</M>-groups form <M>10</M> classes, 
 and the sizes of these classes are <C>[6,6,3,6,6,2,6,3,2,1]</C>. 
-Four of these classes contain symmetric cat2-groups. 
-The record <Ref Attr="CatnGroupLists"/> is useded to include these values 
-provided that <C>CatnGroupLists(G).omit</C> is not set to <C>true</C>.  
+Four of these classes contain symmetric cat<M>^2</M>-groups. 
+Provided that <C>CatnGroupLists(G).omit</C> is not set to <C>true</C>,  
+<E>sorted</E> lists of generating pairs, and of the classes they belong to, 
+are added to the record <Ref Attr="CatnGroupLists"/>.  
+For example <C>[5,7]</C> in these lists for <C>d12</C> indicates that there is 
+a cat<M>^2</M>-group generated by the fifth and seventh cat<M>^1</M>-groups 
+and that this is in the second class whose representative is <C>[1,7]</C>. 
 </Description> 
 </ManSection>
 <P/>
@@ -1120,122 +1125,25 @@ rec( cat1 := 12, cat2 := 41, idem := 21, iso1 := 4, iso2 := 10, symm := 4,
   symmpos := [ 1, 9, 22, 41 ] )
 gap> CatnGroupLists( d12 );
 rec( 
-  classes := [ [ [ 1, 1 ], [ 2, 2 ], [ 3, 3 ], [ 4, 4 ], [ 5, 5 ], [ 6, 6 ] ],
+  cat2classes := 
+    [ [ [ 1, 1 ], [ 2, 2 ], [ 3, 3 ], [ 4, 4 ], [ 5, 5 ], [ 6, 6 ] ], 
       [ [ 1, 7 ], [ 5, 7 ], [ 2, 8 ], [ 6, 8 ], [ 3, 9 ], [ 4, 9 ] ], 
-      [ [ 7, 7 ], [ 8, 8 ], [ 9, 9 ] ], 
       [ [ 1, 10 ], [ 2, 10 ], [ 3, 10 ], [ 4, 11 ], [ 5, 11 ], [ 6, 11 ] ], 
-      [ [ 7, 10 ], [ 8, 10 ], [ 9, 10 ], [ 7, 11 ], [ 8, 11 ], [ 9, 11 ] ], 
-      [ [ 10, 10 ], [ 11, 11 ] ], 
       [ [ 1, 12 ], [ 2, 12 ], [ 3, 12 ], [ 4, 12 ], [ 5, 12 ], [ 6, 12 ] ], 
-      [ [ 7, 12 ], [ 8, 12 ], [ 9, 12 ] ], [ [ 10, 12 ], [ 11, 12 ] ], 
-      [ [ 12, 12 ] ] ], omit := false, 
-  pairs := [ [ 1, 1 ], [ 2, 2 ], [ 3, 3 ], [ 4, 4 ], [ 5, 5 ], [ 6, 6 ], 
-      [ 1, 7 ], [ 5, 7 ], [ 7, 7 ], [ 2, 8 ], [ 6, 8 ], [ 8, 8 ], [ 3, 9 ], 
-      [ 4, 9 ], [ 9, 9 ], [ 1, 10 ], [ 2, 10 ], [ 3, 10 ], [ 7, 10 ], 
-      [ 8, 10 ], [ 9, 10 ], [ 10, 10 ], [ 4, 11 ], [ 5, 11 ], [ 6, 11 ], 
-      [ 7, 11 ], [ 8, 11 ], [ 9, 11 ], [ 11, 11 ], [ 1, 12 ], [ 2, 12 ], 
-      [ 3, 12 ], [ 4, 12 ], [ 5, 12 ], [ 6, 12 ], [ 7, 12 ], [ 8, 12 ], 
-      [ 9, 12 ], [ 10, 12 ], [ 11, 12 ], [ 12, 12 ] ] )
+      [ [ 7, 7 ], [ 8, 8 ], [ 9, 9 ] ], 
+      [ [ 7, 10 ], [ 8, 10 ], [ 9, 10 ], [ 7, 11 ], [ 8, 11 ], [ 9, 11 ] ], 
+      [ [ 7, 12 ], [ 8, 12 ], [ 9, 12 ] ], [ [ 10, 10 ], [ 11, 11 ] ], 
+      [ [ 10, 12 ], [ 11, 12 ] ], [ [ 12, 12 ] ] ], 
+  cat2pairs := [ [ 1, 1 ], [ 1, 7 ], [ 1, 10 ], [ 1, 12 ], [ 2, 2 ], 
+      [ 2, 8 ], [ 2, 10 ], [ 2, 12 ], [ 3, 3 ], [ 3, 9 ], [ 3, 10 ], 
+      [ 3, 12 ], [ 4, 4 ], [ 4, 9 ], [ 4, 11 ], [ 4, 12 ], [ 5, 5 ], 
+      [ 5, 7 ], [ 5, 11 ], [ 5, 12 ], [ 6, 6 ], [ 6, 8 ], [ 6, 11 ], 
+      [ 6, 12 ], [ 7, 7 ], [ 7, 10 ], [ 7, 11 ], [ 7, 12 ], [ 8, 8 ], 
+      [ 8, 10 ], [ 8, 11 ], [ 8, 12 ], [ 9, 9 ], [ 9, 10 ], [ 9, 11 ], 
+      [ 9, 12 ], [ 10, 10 ], [ 10, 12 ], [ 11, 11 ], [ 11, 12 ], [ 12, 12 ] ],
+  omit := false )
 ]]>
 </Example>
-
-</Section> 
-
-
-<Section Label="sect-catn-definitions">
-<Heading>
-Definition and constructions for cat<M>^n</M>-groups and their morphisms 
-</Heading>
-
-<Index>catn-group</Index>
-In this chapter we are interested in cat<M>^2</M>-groups, 
-but it is convenient in this section to give the more general definition. 
-There are three equivalent descriptions of a cat<M>^n</M>-group. 
-<P/>
-A <E>cat<M>^n</M>-group</E> consists of the following. 
-<List>
-<Item>
-<M>2^n</M> groups  <M>G_A</M>, one for each subset <M>A</M> of <M>[n]</M>, 
-the <E>vertices</E> of an <M>n</M>-cube. 
-</Item>
-<Item>
-Group homomorphisms forming <M>n2^{n-1}</M> commuting cat<M>^1</M>-groups, 
-<Display>
-\calC_{A,i} ~=~ (e_{A,i};\; t_{A,i},\; h_{A,i} \ :\  
-G_A \to G_{A \setminus \{i\}}), 
-\quad\mbox{for all} \quad A \subseteq [n],~ i \in A,  
-</Display>
-the <E>edges</E> of the cube. 
-</Item>
-<Item> 
-These cat<M>^1</M>-groups combine (in sets of <M>4</M>) 
-to form <M>n(n-1)2^{n-3}</M> cat<M>^2</M>-groups <M>\calC_{A,\{i,j\}}</M> 
-for all <M>\{i,j\} \subseteq A \subseteq [n],~ i \neq j</M>, 
-the <E>faces</E> of the cube. 
-</Item>
-</List>
-Note that, since the <M>t_{A,i}, h_{A,i}</M> and <M>e_{A,i}</M> commute, 
-composite homomorphisms
-<M>t_{A,B}, h_{A,B} : G_A \to G_{A \setminus B}</M> and 
-<M>e_{A,B} : G_{A \setminus B} \to G_A</M> 
-are well defined for all <M>B \subseteq A \subseteq [n]</M>.  
-<P/>
-Secondly, we give the simplest of the three descriptions, 
-again adapted from Ellis-Steiner <Cite Key="ell:st"/>. 
-<P/>
-A cat<M>^n</M>-group  <M>\calC</M> consists of <M>2^n</M> groups 
-<M>G_A</M>, one for each subset  <M>A</M>  of  <M>[n]</M>, 
-and <M>3n</M> homomorphisms 
-<Display>
-t_{[n],i}, h_{[n],i} : G_{[n]} \to G_{[n] \setminus \{i\}},~ 
- e_{[n],i} : G_{[n] \setminus \{i\}} \to G_{[n]}, 
-</Display>
-satisfying the following axioms for all <M>1 \leqslant i \leqslant n</M>,}  
-<List>
-<Item>
-the 
-<M>\calC_{[n],i} ~=~ (e_{[n],i};\; t_{[n],i},\; h_{[n],i} \ :\  
-G_{[n]} \to G_{[n] \setminus \{i\}})~</M>
-are <E>commuting</E> cat<M>^1</M>-groups, so that: 
-</Item>
-<Item> 
-<M>
-(e_1 \circ t_1) \circ (e_2 \circ t_2) = (e_2 \circ t_2) \circ (e_1 \circ t_1), \quad
-(e_1 \circ h_1) \circ (e_2 \circ h_2) = (e_2 \circ h_2) \circ (e_1 \circ h_1), 
-</M>
-</Item>
-<Item> 
-<M>
-(e_1 \circ t_1) \circ (e_2 \circ h_2) = (e_2 \circ h_2) \circ (e_1 \circ t_1), \quad 
-(e_2 \circ t_2) \circ (e_1 \circ h_1) = (e_1 \circ h_1) \circ (e_2 \circ t_2). 
-</M>
-</Item>
-</List>
-Our third description defines a cat<M>^n</M>-group as a 
-"cat<M>^1</M>-group of cat<M>^{(n-1)}</M>-groups". 
-<P/>
-A <E>cat<M>^n</M>-group</E> <M>\calC</M> 
-consists of two cat<M>^{(n-1)}</M>-groups: 
-<List>
-<Item>
-<M>\calA</M> with groups <M>G_A,\; A \subseteq [n-1]</M>, 
-and homomorphisms <M>\ddot{t}_{A,i}, \ddot{h}_{A,i}, \ddot{e}_{A,i}</M>,  
-</Item>
-<Item> 
-<M>\calB</M> with groups <M>H_B,\; B \subseteq [n-1]</M>,
-and homomorphisms <M>\dot{t}_{B,i}, \dot{h}_{B,i}, \dot{e}_{B,i}</M>, and 
-</Item>
-<Item> 
-cat<M>^{(n-1)}</M>-morphisms <M>t,h : \calA \to \calB</M> 
-and <M>e : \calB \to \calA</M>
-subject to the following conditions: 
-<Display>
-(t \circ e) ~\mbox{and}~ (h \circ e)  
-~\mbox{are the identity mapping on}~ \calB, \qquad
-[\ker t, \ker h] = \{ 1_{\calA} \}.
-</Display>
-</Item>
-</List> 
 
 </Section> 
 

@@ -230,14 +230,6 @@ DeclareOperation( "TableRowForCat1Groups", [ IsGroup ] );
 DeclareOperation( "TableRowForCat2Groups", [ IsGroup ] ); 
 
 #############################################################################
-## 
-#?  this function should be got rid of a.s.a.p. 
-##
-#A  ElementsRelationsForSemidirectProduct( <G> ) 
-##
-DeclareAttribute( "ElementsRelationsForSemidirectProduct", IsGroup );
-
-#############################################################################
 ##
 #O  ConjugationActionForCrossedSquare( <G>, <N> )
 #A  PreCrossedSquareOfPreCat2Group( <PCG> ) 

@@ -63,20 +63,20 @@ end );
 ## 
 InstallMethod( DetermineRemainingCat2Groups, "for front, up pre-cat2-groups", 
     true, [ IsPreCat2Group, IsPreCat2Group ], 0,
-function( front, up )
+function( front, left )
 
-    local Cfu, Cfl, Cul, left, Cur, Cfr, right, Cfd, Clr, down, 
+    local Cfl, Cfu, Cll, up, Cur, Cfr, right, Cfd, Clr, down, 
           Clb, Cub, back, Crd, G, R, Q, H, N, P, M, L; 
 
-    Cfu := Up2DimensionalGroup( front ); 
-    if not ( Cfu = Left2DimensionalGroup( up ) ) then 
-        Error( "front-up mis-match" ); 
-    fi; 
     Cfl := Left2DimensionalGroup( front ); 
-    Cul := Up2DimensionalGroup( up ); 
-    left := Cat2Group( Cfl, Cul ); 
-    if ( left = fail ) then 
-        Info( InfoXMod, 1, "left fails to be a cat2-group" ); 
+    if not ( Cfl = Up2DimensionalGroup( left ) ) then 
+        Error( "front-left mis-match" ); 
+    fi; 
+    Cfu := Up2DimensionalGroup( front ); 
+    Cll := Left2DimensionalGroup( left ); 
+    up := Cat2Group( Cll, Cfu ); 
+    if ( up = fail ) then 
+        Info( InfoXMod, 1, "up fails to be a cat2-group" ); 
         return fail; 
     fi; 
     Cur := Down2DimensionalGroup( up ); 
@@ -100,7 +100,7 @@ function( front, up )
         Info( InfoXMod, 1, "back fails to be a cat2-group" ); 
         return fail; 
     fi; 
-    return [ left, right, down, back ]; 
+    return [ up, right, down, back ]; 
 end ); 
 
 ##############################################################################
@@ -138,12 +138,12 @@ end );
 
 #############################################################################
 ##
-#F  (Pre)Cat3Group( C2front, C2up )      cat3-group from two (pre)cat2-groups
+#F  (Pre)Cat3Group( C2front, C2left )    cat3-group from two (pre)cat2-groups
 #F  (Pre)Cat3Group( XS )                 cat3-group from (pre)crossed cube
 ##
 InstallGlobalFunction( PreCat3Group, function( arg )
 
-    local nargs, C2f, C2u, C1uf, C1uf2, lrdb, C3G, ok;
+    local nargs, C2f, C2l, C1fl, C1fl2, urdb, C3G, ok;
 
     nargs := Length( arg );
     if ( ( nargs < 1 ) or ( nargs > 3 ) ) then
@@ -157,29 +157,29 @@ InstallGlobalFunction( PreCat3Group, function( arg )
         ## C3G := PreCat3GroupOfPreCrossedcube( arg[1] );
     elif ( nargs = 3 ) then 
         C2f := Cat2Group( arg[1], arg[2] ); 
-        C2u := Cat2Group( arg[3], arg[1] ); 
+        C2l := Cat2Group( arg[2], arg[3] ); 
     else 
         C2f := arg[1]; 
-        C2u := arg[2]; 
+        C2l := arg[2]; 
     fi; 
-    if not IsPreCat2Group( C2f ) and IsPreCat2Group( C2u ) then 
-        Error( "C2f and C2u are not both pre-cat2-groups" ); 
+    if not IsPreCat2Group( C2f ) and IsPreCat2Group( C2l ) then 
+        Error( "C2f and C2l are not both pre-cat2-groups" ); 
     fi; 
-    C1uf := Up2DimensionalGroup( C2f ); 
-    C1uf2 := Left2DimensionalGroup( C2u ); 
+    C1fl := Left2DimensionalGroup( C2f ); 
+    C1fl2 := Up2DimensionalGroup( C2l ); 
     ## if the two cat1-groups are unequal but isomorphic then make 
     ## an isomorphic copy of .... ??? 
-    if not ( C1uf = C1uf2 ) then 
+    if not ( C1fl = C1fl2 ) then 
         ## iso := IsomorphismGroups( S2, S1 ); 
-        Error( "C1uf <> C1uf2" ); 
+        Error( "C1fl <> C1fl2" ); 
     fi; 
-    lrdb := DetermineRemainingCat2Groups( C2f, C2u ); 
-    if ( lrdb = fail ) then 
+    urdb := DetermineRemainingCat2Groups( C2f, C2l ); 
+    if ( urdb = fail ) then 
         Info( InfoXMod, 2, "failure with RemainingCat2Groups" ); 
         return fail; 
     fi;
     C3G := PreCat3GroupByPreCat2Groups( 
-               C2f, C2u, lrdb[1], lrdb[2], lrdb[3], lrdb[4] ); 
+               C2f, urdb[1], C2l, urdb[2], urdb[3], urdb[4] ); 
     if ( C3G = fail ) then 
         return fail;   ## Error( "C3G fails to be a PreCat3Group" ); 
     fi;
@@ -215,3 +215,74 @@ InstallGlobalFunction( Cat3Group, function( arg )
     fi; 
 end ); 
 
+InstallMethod( AllCat3GroupTriples, "for a group", [ IsGroup ], 0,
+function( G )
+
+    local all1, all2, pairs, T, t, n, i, j, k, front, left, up, a, b, c, pos; 
+
+    InitCatnGroupRecords( G ); 
+    if IsBound( CatnGroupLists( G ).cat3triples ) then 
+        return CatnGroupLists( G ).cat3triples; 
+    fi; 
+    all1 := AllCat1Groups( G ); 
+    all2 := AllCat2Groups( G ); 
+    pairs := CatnGroupLists( G ).cat2pairs; 
+    T := [ ];
+    t := 0; 
+    n := Length( pairs ); 
+    for i in [1..n] do 
+        front := pairs[i]; 
+        a := front[1]; 
+        b := front[2]; 
+        for j in [i..n] do 
+            left := pairs[j]; 
+            if ( left[1] = b ) then 
+                c := left[2]; 
+                up := [ c, a ]; 
+                pos := Position( pairs, up ); 
+                if ( pos = fail ) then 
+                    pos := Position( pairs, [ a, c ] ); 
+                fi; 
+                if ( pos <> fail ) then 
+                    Add( T, [ a, b, c ] ); 
+                    t := t+1; 
+                fi; 
+            fi; 
+        od; 
+    od; 
+    CatnGroupNumbers( G ).cat3 := Length( T ); 
+    CatnGroupLists( G ).cat3triples := T; 
+    return T; 
+end ); 
+
+InstallMethod( AllCat3GroupsNumber, "for a group", [ IsGroup ], 0, 
+function( G ) 
+
+    local n, C, triples; 
+
+    InitCatnGroupRecords( G ); 
+    if IsBound( CatnGroupNumbers( G ).cat3 ) then 
+        return CatnGroupNumbers( G ).cat3; 
+    fi; 
+    ## not already known, so perform the calculation 
+    triples := AllCat3GroupTriples( G ); 
+    return Length( triples ); 
+end ); 
+
+InstallMethod( AllCat3Groups, "for a group", [ IsGroup ], 0, 
+function( G ) 
+
+    local all1, triples, n, L, i, t, C; 
+
+    InitCatnGroupRecords( G ); 
+    all1 := AllCat1Groups( G ); 
+    triples := AllCat3GroupTriples( G ); 
+    n := Length( triples ); 
+    L := [ ]; 
+    for i in [1..n] do
+        t := triples[i]; 
+        C := Cat3Group( all1[t[1]], all1[t[2]], all1[t[3]] );
+        Add( L, C ); 
+    od;
+    return L; 
+end ); 
