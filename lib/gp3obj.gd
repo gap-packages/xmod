@@ -172,10 +172,12 @@ DeclareOperation( "PreCat2GroupObj", [ IsList ] );
 ##
 #P  IsPreCat2Group( <PCG> ) 
 #P  IsCat2Group( <C1G> ) 
+#P  IsPreCatnGroupByEndomorphisms( <obj> )
 ##
 DeclareProperty( "IsPreCat2Group", IsHigherDimensionalGroup );
 DeclareProperty( "IsCat2Group", IsHigherDimensionalGroup );
 InstallTrueMethod( IsPreCat2Group, IsCat2Group );
+DeclareProperty( "IsPreCatnGroupByEndomorphisms", IsHigherDimensionalGroup ); 
 
 #############################################################################
 ##

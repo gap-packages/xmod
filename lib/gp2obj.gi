@@ -700,7 +700,7 @@ function( t, h, e )
     if not ok then
         Error( "not a pre-cat1-group" );
     fi;
-    ok := IsEndomorphismPreCat1Group( C1G ); 
+    ok := IsPreCat1GroupByEndomorphisms( C1G ); 
     ok := IsCat1Group( C1G );
     ## check the types 
     if ( IsPermGroup( src ) and IsPermGroup( rng ) ) then 
@@ -1794,19 +1794,19 @@ end );
 #############################################################################
 ##
 #M  IsIdentityPreCat1Group
-#M  IsEndomorphismPreCat1Group 
+#M  IsPreCat1GroupByEndomorphisms 
 ##
-InstallMethod( IsEndomorphismPreCat1Group, "test a pre-cat1-group", true, 
-    [ IsPreCat1Group ], 0,
-function( obj )
-    return IsSubgroup( Source(obj), Range(obj) ); 
-end );
-
 InstallMethod( IsIdentityPreCat1Group, "test a pre-cat1-group", true, 
     [ IsPreCat1Group ], 0,
 function( C1G )
     return ( ( TailMap( C1G ) = IdentityMapping( Source( C1G ) ) ) and
              ( HeadMap( C1G ) = IdentityMapping( Source( C1G ) ) ) );
+end );
+
+InstallMethod( IsPreCat1GroupByEndomorphisms, "test a pre-cat1-group", true, 
+    [ IsPreCat1Group ], 0,
+function( obj )
+    return IsSubgroup( Source(obj), Range(obj) ); 
 end );
 
 #############################################################################
@@ -2142,7 +2142,7 @@ function( C1G )
 
     local e, t, h;
 
-    if IsEndomorphismPreCat1Group( C1G ) then 
+    if IsPreCatnGroupByEndomorphisms( C1G ) then 
         return C1G; 
     fi; 
     e := RangeEmbedding( C1G ); 

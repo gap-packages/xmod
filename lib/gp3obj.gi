@@ -1039,6 +1039,7 @@ end );
 ##
 #M  IsPreCat2Group . . . . . . . . . . .  check that this is a pre-cat2-group
 #M  IsCat2Group . . . . . . . . . . . . check that the object is a cat2-group
+#M  IsPreCat1GroupByEndomorphisms . . .  check that all t,h are endomorphisms
 ##
 InstallMethod( IsPreCat2Group, "generic method for a pre-cat2-group",
     true, [ IsHigherDimensionalGroup ], 0,
@@ -1062,6 +1063,13 @@ function( P )
         and IsCat1Group( Down2DimensionalGroup( P ) )  
         and IsCat1Group( Right2DimensionalGroup( P ) );  
 end ); 
+
+InstallMethod( IsPreCatnGroupByEndomorphisms, "test a pre-cat2-group", true, 
+    [ IsHigherDimensionalGroup and IsPreCat2Group ], 0,
+function( obj )
+    return ForAll( GeneratingCat1Groups(obj), 
+                   C -> IsSubgroup( Source(C), Range(C) ) ); 
+end );
 
 ##############################################################################
 ##

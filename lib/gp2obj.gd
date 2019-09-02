@@ -249,7 +249,7 @@ DeclareOperation( "SubCat1Group", [ IsCat1Group, IsGroup, IsGroup ] );
 #A  TrivialSubPreCat1Group( <obj> )
 #A  TrivialSubCat1Group( <obj> )
 #P  IsIdentityPreCat1Group( <obj> )
-#P  IsEndomorphismPreCat1Group( <obj> )
+#P  IsPreCat1GroupByEndomorphisms( <obj> )
 ##
 DeclareOperation( "TrivialSub2DimensionalGroup", [ Is2DimensionalGroup ] );
 DeclareAttribute( "TrivialSubPreXMod", IsPreXMod );
@@ -257,7 +257,7 @@ DeclareAttribute( "TrivialSubXMod", IsXMod );
 DeclareAttribute( "TrivialSubPreCat1Group", IsPreCat1Group );
 DeclareAttribute( "TrivialSubCat1Group", IsCat1Group );
 DeclareProperty( "IsIdentityPreCat1Group", IsPreCat1Group );
-DeclareProperty( "IsEndomorphismPreCat1Group", IsPreCat1Group ); 
+DeclareProperty( "IsPreCat1GroupByEndomorphisms", IsPreCat1Group ); 
 
 #############################################################################
 ##
