@@ -20,7 +20,8 @@ function( obj )
     return ( IsPermGroup( Up2DimensionalGroup(obj) ) 
              and IsPermGroup( Left2DimensionalGroup(obj) ) 
              and IsPermGroup( Right2DimensionalGroup(obj) ) 
-             and IsPermGroup( Down2DimensionalGroup(obj) ) );
+             and IsPermGroup( Down2DimensionalGroup(obj) ) 
+             and IsPermGroup( Diagonal2DimensionalGroup(obj) ) );
 end );
 
 InstallMethod( IsFp3DimensionalGroup, "generic method for 3d-group objects",
@@ -29,7 +30,8 @@ function( obj )
     return ( IsFpGroup( Up2DimensionalGroup(obj) ) 
              and IsFpGroup( Left2DimensionalGroup(obj) ) 
              and IsFpGroup( Right2DimensionalGroup(obj) ) 
-             and IsFpGroup( Down2DimensionalGroup(obj) ) );
+             and IsFpGroup( Down2DimensionalGroup(obj) ) 
+             and IsFpGroup( Diagonal2DimensionalGroup(obj) ) );
 end );
 
 InstallMethod( IsPc3DimensionalGroup, "generic method for 3d-group obj ects",
@@ -38,7 +40,8 @@ function( obj )
     return ( IsPcGroup( Up2DimensionalGroup(obj) ) 
              and IsPcGroup( Left2DimensionalGroup(obj) ) 
              and IsPcGroup( Right2DimensionalGroup(obj) ) 
-             and IsPcGroup( Down2DimensionalGroup(obj) ) );
+             and IsPcGroup( Down2DimensionalGroup(obj) ) 
+             and IsPcGroup( Diagonal2DimensionalGroup(obj) ) );
 end );
 
 ##############################################################################
@@ -869,7 +872,9 @@ function ( dom1, dom2 )
             ( Up2DimensionalGroup(dom1) = Up2DimensionalGroup(dom2) )
         and ( Left2DimensionalGroup(dom1) = Left2DimensionalGroup(dom2) ) 
         and ( Right2DimensionalGroup(dom1) = Right2DimensionalGroup(dom2) ) 
-        and ( Down2DimensionalGroup(dom1) = Down2DimensionalGroup(dom2) ) ); 
+        and ( Down2DimensionalGroup(dom1) = Down2DimensionalGroup(dom2) ) 
+        and ( Diagonal2DimensionalGroup(dom1) 
+              = Diagonal2DimensionalGroup(dom2) ) ); 
     fi;
 end );
 
@@ -1056,12 +1061,18 @@ end );
 
 InstallMethod( IsCat2Group, "generic method for a cat2-group",
     true, [ IsHigherDimensionalGroup ], 0,
-function( P )
-    return ( HigherDimension( P ) = 3 ) 
+function( P ) 
+    local ok; 
+    ok := ( HigherDimension( P ) = 3 ) 
         and IsCat1Group( Up2DimensionalGroup( P ) )  
         and IsCat1Group( Left2DimensionalGroup( P ) )  
-        and IsCat1Group( Down2DimensionalGroup( P ) )  
-        and IsCat1Group( Right2DimensionalGroup( P ) );  
+        and IsCat1Group( Right2DimensionalGroup( P ) )  
+        and IsCat1Group( Down2DimensionalGroup( P ) ) 
+        and IsPreCat1Group( Diagonal2DimensionalGroup( P ) ); 
+    if ( ok and not IsCat1Group( Diagonal2DimensionalGroup( P ) ) ) then 
+        Error( "expecting the diagonal to be a cat1-group" ); 
+    fi; 
+    return ok; 
 end ); 
 
 InstallMethod( IsPreCatnGroupByEndomorphisms, "test a pre-cat2-group", true, 
@@ -1073,29 +1084,24 @@ end );
 
 ##############################################################################
 ##
-#M  PreCat2GroupObj( [<up>,<left>,<right>,<down>(,<diag>)] ) 
+#M  PreCat2GroupObj( [<up>,<left>,<right>,<down>,<diag>] ) 
 ##
 InstallMethod( PreCat2GroupObj, "for a list of pre-cat1-groups", true,
     [ IsList ], 0,
 function( L )
 
-    local len, d, PC, ok;
+    local PC, ok;
 
-    len := Length( L ); 
-    if not ( len in [4,5] ) then 
-        Error( "there should be 4 or 5 pre-cat1-groups in the list L" ); 
+    if not ( Length( L ) = 5 ) then 
+        Error( "there should be 5 pre-cat1-groups in the list L" ); 
     fi; 
-    if ( len = 4 ) then 
-        Error( "add code here to construct the diagonal d" ); 
-    fi;
-    d := L[5]; 
     PC := rec();
     ObjectifyWithAttributes( PC, PreCat2GroupObjType, 
       Up2DimensionalGroup, L[1], 
       Left2DimensionalGroup, L[2],
       Right2DimensionalGroup, L[3],
       Down2DimensionalGroup, L[4],
-      Diagonal2DimensionalGroup, d, 
+      Diagonal2DimensionalGroup, L[5], 
       GeneratingCat1Groups, [ L[1], L[2] ],
       HigherDimension, 3, 
       IsHigherDimensionalGroup, true, 
@@ -1107,53 +1113,48 @@ end );
 
 #############################################################################
 ##
-#F  (Pre)Cat2Group( C1up, C1lt )         cat2-group from two (pre)cat1-groups
+#F  (Pre)Cat2Group( [ up, lt (,diag) )   cat2-group from 2/3 (pre)cat1-groups
 #F  (Pre)Cat2Group( XS )                 cat2-group from (pre)crossed square
 ##
 InstallGlobalFunction( PreCat2Group, function( arg )
 
-    local nargs, C1up, C1lt, C2G, S1, S2, iso, idR2, isoC1, dr, ok;
+    local nargs, up, left, diag, C2G, G1, G2, G3, isoG, genG, 
+          imt, t12, imh, h12, e12, idQ, isoleft, drd, ok; 
 
-    nargs := Length( arg );
-    if ( ( nargs < 1 ) or ( nargs > 2 ) ) then
-        Print( "standard usage: (Pre)Cat2Group( cat1, cat1 );\n" );
+    nargs := Length( arg ); 
+    if not ( nargs in [1,2] ) then
+        Print( "standard usage: (Pre)Cat2Group( up, left );\n" );
         Print( "            or: (Pre)Cat2Group( XS );\n" );
         return fail;
     fi; 
     if ( nargs = 1 ) then 
-        if not IsPreCrossedSquare( arg[1] ) then 
-            Error( "argument is not a pre-crossed square" ); 
-        fi; 
         C2G := PreCat2GroupOfPreCrossedSquare( arg[1] );
     else 
-        C1up := arg[1]; 
-        C1lt := arg[2];
-        if not IsPreCat1Group( C1up ) and IsPreCat1Group( C1lt ) then 
-            Error( "the two arguments are not pre-cat1-groups" ); 
-        fi; 
-        S1 := Source( C1up ); 
-        S2 := Source( C1lt ); 
+        up := arg[1]; 
+        left := arg[2];
+        G1 := Source( up ); 
+        G2 := Source( left );         
         ## if the two sources are unequal but isomorphic then make 
-        ## an isomorphic copy of C1lt with the same source as C1up
-        if not ( S1 = S2 ) then 
-            iso := IsomorphismGroups( S2, S1 ); 
-            if ( iso = fail ) then 
-                Error( "the two arguments are not pre-cat1-groups" ); 
+        ## an isomorphic copy of left with the same source as up
+        if not ( G1 = G2 ) then 
+            isoG := IsomorphismGroups( G2, G1 ); 
+            if ( isoG = fail ) then 
+                Error( "the two arguments do now have the same source" ); 
             else 
-                idR2 := IdentityMapping( Range( C1lt ) ); 
-                isoC1 := IsomorphismByIsomorphisms( C1lt, [ iso, idR2 ] );
-                C1lt := Range( isoC1 ); 
+                idQ := IdentityMapping( Range( left ) ); 
+                isoleft := IsomorphismByIsomorphisms( left, [ isoG, idQ ] );
+                left := Range( isoleft ); 
             fi; 
         fi; 
-        dr := DetermineRightDownCat1Groups( C1up, C1lt ); 
-        if ( dr = fail ) then 
-            Info( InfoXMod, 2, "failure with RightDownCat1Groups" ); 
+        drd := DetermineRemainingCat1Groups( up, left ); 
+        if ( drd = fail ) then 
+            Info( InfoXMod, 2, "failure determining remaining cat1-groups" ); 
             return fail; 
         fi;
-        C2G := PreCat2GroupByPreCat1Groups( C1up, C1lt, dr[1], dr[2] ); 
+        C2G := PreCat2GroupByPreCat1Groups( up, left, drd[1], drd[2], drd[3] ); 
         if ( C2G = fail ) then 
             return fail;   ## Error( "C2G fails to be a PreCat2Group" ); 
-        fi;
+        fi; 
     fi;
     ok := IsPreCat2Group( C2G );
     if ok then 
@@ -1166,18 +1167,9 @@ end );
 
 InstallGlobalFunction( Cat2Group, function( arg )
 
-    local nargs, arg2, C2G, ok; 
+    local C2G, ok; 
 
-    nargs := Length( arg );
-    if ( nargs = 1 ) then 
-        C2G := PreCat2Group( arg[1] ); 
-    elif ( nargs = 2 ) then 
-        C2G := PreCat2Group( arg[1], arg[2] ); 
-    else 
-        Print( "standard usage: (Pre)Cat2Group( cat1, cat1 );\n" );
-        Print( "            or: (Pre)Cat2Group( XS );\n" );
-        return fail; 
-    fi;
+    C2G := PreCat2Group( arg[1], arg[2] ); 
     ok := not ( C2G = fail ) and IsCat2Group( C2G ); 
     if ok then 
         return C2G; 
@@ -1188,147 +1180,128 @@ end );
 
 ##############################################################################
 ##
-#M  DetermineRightDownCat1Groups . . . . . . . . . . . for two pre-cat1-groups
+#M  DetermineRemainingCat1Groups . . . . . . . . . . . . for 2 pre-cat1-groups
 ## 
-InstallMethod( DetermineRightDownCat1Groups, "for up, left pre-cat1-groups", 
+InstallMethod( DetermineRemainingCat1Groups, "for up, left pre-cat1-groups", 
     true, [ IsPreCat1Group, IsPreCat1Group ], 0,
 function( up, left )
 
-    local G, genG, Q, R, genQ, genR, ddt1, ddh1, dde1, ddt2, ddh2, dde2, 
-          tau1, tau2, im, dt1, dh1, de1, dt2, dh2, de2,  
-          P, genP, isoP, invP, down, right, dt0, dh0, de0, diag, PC2, ok; 
+    local G, genG, Q, genQ, R, genR, tu, hu, eu, tl, hl, el, tea, hea, 
+          P, genP, diag, imtd, td, imhd, hd, imed, ed, down, 
+          imtr, tr, imhr, hr, imer, er, right; 
 
     G := Source( up ); 
-    genG := GeneratorsOfGroup( G ); 
-    Q := Range( up ); 
-    genQ := GeneratorsOfGroup( Q ); 
     if not ( G = Source( left ) ) then 
-        Print( "the two cat1-groups should have the same source\n" ); 
+        Print( "the two pre-cat1-groups should have the same source\n" ); 
     fi; 
-    R := Range( left );
-    genR := GeneratorsOfGroup( R );
-    ddt1 := TailMap( up ); 
-    ddh1 := HeadMap( up ); 
-    dde1 := RangeEmbedding( up ); 
-    ddt2 := TailMap( left ); 
-    ddh2 := HeadMap( left ); 
-    dde2 := RangeEmbedding( left ); 
+    genG := GeneratorsOfGroup( G ); 
+    R := Range( up ); 
+    genR := GeneratorsOfGroup( R ); 
+    Q := Range( left );
+    genQ := GeneratorsOfGroup( Q );
+    tu := TailMap( up ); 
+    hu := HeadMap( up ); 
+    eu := RangeEmbedding( up ); 
+    tl := TailMap( left ); 
+    hl := HeadMap( left ); 
+    el := RangeEmbedding( left ); 
     ## check that the 1-maps commute with the 2-maps 
-    if not ( ( ddt1*dde1*ddt2*dde2 = ddt2*dde2*ddt1*dde1 ) 
-         and ( ddh1*dde1*ddh2*dde2 = ddh2*dde2*ddh1*dde1 ) 
-         and ( ddt1*dde1*ddh2*dde2 = ddh2*dde2*ddt1*dde1 ) 
-         and ( ddh1*dde1*ddt2*dde2 = ddt2*dde2*ddh1*dde1 ) )  then 
+    tea := tu*eu*tl*el; 
+    hea := hu*eu*hl*el; 
+    if not ( ( tea = tl*el*tu*eu ) 
+         and ( hea = hl*el*hu*eu ) 
+         and ( tu*eu*hl*el = hl*el*tu*eu ) 
+         and ( hu*eu*tl*el = tl*el*hu*eu ) )  then 
         Info( InfoXMod, 2, "1-maps do not commute with 2-maps" ); 
         return fail; 
     fi; 
     Info( InfoXMod, 2, "yes : 1-maps do commute with the 2-maps" ); 
     ## more checks? 
-    im := List( genG, g -> ImageElm( ddt1 * dde1, g ) ); 
-    tau1 := GroupHomomorphismByImages( G, G, genG, im ); 
-    im := List( genG, g -> ImageElm( ddt2 * dde2, g ) ); 
-    tau2 := GroupHomomorphismByImages( G, G, genG, im ); 
-    P := Intersection( ImagesSource( tau1 ), ImagesSource( tau2 ) ); 
-    genP := GeneratorsOfGroup( P ); 
-    if ( genP = [ ] ) then 
-        dt1 := MappingToOne( R, P ); 
-        dh1 := MappingToOne( R, P ); 
-        de1 := MappingToOne( P, R ); 
-        dt2 := MappingToOne( Q, P ); 
-        dh2 := MappingToOne( Q, P ); 
-        de2 := MappingToOne( P, Q ); 
-    else 
-        im := List( genR, g -> ImageElm( dde2 * tau1, g ) ); 
-        if not ForAll( im, p -> p in P ) then 
-            return fail; 
-        fi; 
-        dt1 := GroupHomomorphismByImages( R, P, genR, im ); 
-        if not ForAll( im, p -> p in P ) then 
-            return fail; 
-        fi; 
-        im := List( genR, g -> ImageElm( dde2 * ddh1 * dde1, g ) ); 
-        if not ForAll( im, p -> p in P ) then 
-            return fail; 
-        fi; 
-        dh1 := GroupHomomorphismByImages( R, P, genR, im ); 
-        im := List( genP, g -> ImageElm( ddt2, g ) ); 
-        de1 := GroupHomomorphismByImages( P, R, genP, im ); 
-        im := List( genQ, g -> ImageElm( dde1 * tau2, g ) ); 
-        if not ForAll( im, p -> p in P ) then 
-            return fail; 
-        fi; 
-        dt2 := GroupHomomorphismByImages( Q, P, genQ, im ); 
-        im := List( genQ, g -> ImageElm( dde1 * ddh2 * dde2, g ) ); 
-        if not ForAll( im, p -> p in P ) then 
-            return fail; 
-        fi; 
-        dh2 := GroupHomomorphismByImages( Q, P, genQ, im ); 
-        im := List( genP, g -> ImageElm( ddt1, g ) ); 
-        de2 := GroupHomomorphismByImages( P, Q, genP, im ); 
+    ## determine the group P 
+    P := Image( tea ); 
+    if not ( Image( hea ) = P ) then 
+        Error( "t*e*a and h*e*a do not have the same range" ); 
     fi; 
-    down := PreCat1GroupByTailHeadEmbedding( dt1, dh1, de1 ); 
-    Info( InfoXMod, 2, "cat1-group down constructed" ); 
-    right := PreCat1GroupByTailHeadEmbedding( dt2, dh2, de2 );
-    Info( InfoXMod, 2, "cat1-group right constructed" ); 
-    if ( ( right = fail ) or ( down = fail) ) then 
-        Print( "right or down fail to be cat1-groups\n" ); 
+    genP := GeneratorsOfGroup( P ); 
+    diag := PreCat1GroupByEndomorphisms( tea, hea ); 
+    if ( diag = fail ) then 
+        Print( "diag fails to be a cat1-group\n" ); 
         return fail; 
     fi; 
-    return [ right, down ]; 
+    ## now construct down 
+    imtd := List( genQ, q -> ImageElm( el * tea, q ) ); 
+    td := GroupHomomorphismByImages( Q, P, genQ, imtd ); 
+    imhd := List( genQ, q -> ImageElm( el * hea, q ) ); 
+    hd := GroupHomomorphismByImages( Q, P, genQ, imhd ); 
+    imed := List( genP, p -> ImageElm( tl, p ) ); 
+    ed := GroupHomomorphismByImages( P, Q, genP, imed ); 
+    down := PreCat1GroupByTailHeadEmbedding( td, hd, ed ); 
+    ## now construct right 
+    imtr := List( genR, r -> ImageElm( eu * tea, r ) ); 
+    tr := GroupHomomorphismByImages( R, P, genR, imtr ); 
+    imhr := List( genR, r -> ImageElm( eu * hea, r ) ); 
+    hr := GroupHomomorphismByImages( R, P, genR, imhr ); 
+    imer := List( genP, p -> ImageElm( tu, p ) ); 
+    er := GroupHomomorphismByImages( P, R, genP, imer ); 
+    right := PreCat1GroupByTailHeadEmbedding( tr, hr, er ); 
+    if ( ( right = fail ) or ( down = fail) ) then 
+        Info( InfoXMod, 2, "right or down fail to be cat1-groups" ); 
+        return fail; 
+    fi; 
+    return [ right, down, diag ]; 
 end ); 
 
 ##############################################################################
 ##
-#M  PreCat2GroupByPreCat1Groups . . . . . . . . . . . for four pre-cat1-groups
+#M  PreCat2GroupByPreCat1Groups . . . . . . . . . . . for five pre-cat1-groups
 ## 
-InstallMethod( PreCat2GroupByPreCat1Groups, "for four pre-cat1-groups", true,
-    [ IsPreCat1Group, IsPreCat1Group, IsPreCat1Group, IsPreCat1Group ], 0,
-function( up, left, right, down )
+InstallMethod( PreCat2GroupByPreCat1Groups, "for four pre-cat1-groups", 
+    true, [ IsPreCat1Group, IsPreCat1Group, IsPreCat1Group, 
+            IsPreCat1Group, IsPreCat1Group ], 0,
+function( up, left, right, down, diag )
 
-    local G, genG, Q, R, P, genP, ddt1, ddh1, dde1, ddt2, ddh2, dde2, 
-          dt1, dh1, de1, dt2, dh2, de2, imt21, imt12, imh21, imh12, 
-          ime21, ime12, dt21, dh21, de21, diag, PC2, ok;
+    local G, R, Q, P, genG, tu, hu, tl, hl, tr, hr, td, hd, ta, ha,   
+          imtld, imtur, imhld, imhur, dtld, dtur, dhld, dhur, PC2, ok;
 
     G := Source( up ); 
     genG := GeneratorsOfGroup( G ); 
-    Q := Range( up ); 
-    R := Range( left );
-    P := Range( down ); 
-    if not ( ( G = Source( left ) ) and ( Q = Source( right ) ) 
-             and ( R = Source( down ) ) and ( P = Range( right ) ) ) then 
+    R := Range( up ); 
+    Q := Range( left );
+    P := Range( diag ); 
+    if not ( ( G = Source( left ) ) and ( G = Source( diag ) ) 
+             and ( R = Source( right ) ) and ( P = Range( right ) ) 
+             and ( Q = Source( down ) ) and ( P = Range( down ) ) ) then 
         Info( InfoXMod, 2, "sources and/or ranges do not agree" ); 
         return fail; 
     fi; 
-    genP := GeneratorsOfGroup( P ); 
-    ddt1 := TailMap( up ); 
-    ddh1 := HeadMap( up ); 
-    dde1 := RangeEmbedding( up ); 
-    ddt2 := TailMap( left ); 
-    ddh2 := HeadMap( left ); 
-    dde2 := RangeEmbedding( left ); 
-    dt2 := TailMap( right ); 
-    dh2 := HeadMap( right ); 
-    de2 := RangeEmbedding( right ); 
-    dt1 := TailMap( down ); 
-    dh1 := HeadMap( down ); 
-    de1 := RangeEmbedding( down ); 
+    tu := TailMap( up ); 
+    hu := HeadMap( up ); 
+    tl := TailMap( left ); 
+    hl := HeadMap( left ); 
+    tr := TailMap( right ); 
+    hr := HeadMap( right ); 
+    td := TailMap( down ); 
+    hd := HeadMap( down ); 
+    ta := TailMap( diag ); 
+    ha := HeadMap( diag ); 
 
-    imt21 := List( genG, g -> ImageElm( dt1, ImageElm( ddt2, g ) ) ); 
-    dt21 := GroupHomomorphismByImages( G, P, genG, imt21 ); 
-    imt12 := List( genG, g -> ImageElm( dt2, ImageElm( ddt1, g ) ) ); 
-    imh21 := List( genG, g -> ImageElm( dh1, ImageElm( ddh2, g ) ) ); 
-    dh21 := GroupHomomorphismByImages( G, P, genG, imh21 ); 
-    imh12 := List( genG, g -> ImageElm( dh2, ImageElm( ddh1, g ) ) ); 
-    ime21 := List( genP, g -> ImageElm( dde2, ImageElm( de1, g ) ) ); 
-    de21 := GroupHomomorphismByImages( P, G, genP, ime21 ); 
-    ime12 := List( genP, g -> ImageElm( dde1, ImageElm( de2, g ) ) ); 
-    if not ( ( imt12=imt21 ) and ( imh12=imh21 ) and ( ime12=ime21 ) ) then 
-        Info( InfoXMod, 2, "tail/head/embedding maps do not all commute" ); 
+    imtld := List( genG, g -> ImageElm( td, ImageElm( tl, g ) ) ); 
+    dtld := GroupHomomorphismByImages( G, P, genG, imtld ); 
+    imtur := List( genG, g -> ImageElm( tr, ImageElm( tu, g ) ) ); 
+    dtur := GroupHomomorphismByImages( G, P, genG, imtur ); 
+    imhld := List( genG, g -> ImageElm( hd, ImageElm( hl, g ) ) ); 
+    dhld := GroupHomomorphismByImages( G, P, genG, imhld ); 
+    imhur := List( genG, g -> ImageElm( hr, ImageElm( hu, g ) ) ); 
+    dhur := GroupHomomorphismByImages( G, P, genG, imhur ); 
+    if not ( ( dtld = ta ) and ( dtur= ta ) 
+             and ( dhld = ha ) and ( dhur = ha ) ) then 
+        Info( InfoXMod, 2, "tail and head maps are inconsistent" ); 
         return fail; 
     fi; 
-    diag := PreCat1GroupByTailHeadEmbedding( dt21, dh21, de21 ); 
     PC2 := PreCat2GroupObj( [ up, left, right, down, diag ] );
     SetIsPreCat2Group( PC2, true );
-    ok := IsCat2Group( PC2 );
+    ok := IsCat2Group( PC2 ); 
+    ok := IsPreCatnGroupByEndomorphisms( PC2 ); 
     return PC2;
 end ); 
 
@@ -1592,8 +1565,8 @@ InstallMethod( AllCat2GroupsUpToIsomorphism, "iso class reps of cat2-groups",
     true, [ IsGroup ], 0,
 function( G )
 
-    local all1, iso1, omit, classes, L, numL, posL, symm, symmpos, i, C, k, 
-          found, iso, genC; 
+    local all1, iso1, omit, classes, L, numL, posL, symmnum, symmpos, 
+          i, C, k, found, iso, genC; 
 
     InitCatnGroupRecords( G ); 
     if not IsBound( CatnGroupNumbers( G ).iso1 ) then 
@@ -1607,8 +1580,8 @@ function( G )
     L := [ ];
     numL := 0; 
     posL := [ ]; 
-    symm := 0; 
-    symmpos := []; 
+    symmnum := 0; 
+    symmpos := [ ];
     i := 0;
     for C in AllCat2GroupsIterator( G ) do 
         if not ( C = fail ) then 
@@ -1632,7 +1605,7 @@ function( G )
                 Add( posL, i );
                 numL := numL + 1; 
                 if ( genC[1] = genC[2] ) then 
-                    symm := symm + 1;
+                    symmnum := symmnum + 1;
                     Add( symmpos, numL ); 
                 fi; 
                 if not omit then 
@@ -1647,13 +1620,13 @@ function( G )
     fi; 
     if not IsBound( CatnGroupNumbers( G ).iso2 ) then 
         CatnGroupNumbers( G ).iso2 := numL; 
-        CatnGroupNumbers( G ).symm := symm; 
-        CatnGroupNumbers( G ).symmpos := symmpos; 
+        CatnGroupNumbers( G ).symm2 := symmnum; 
     fi; 
     Info( InfoXMod, 1, "reps found at positions ", posL ); 
     if not omit then 
         Sort( classes ); 
         CatnGroupLists( G ).cat2classes := classes; 
+        CatnGroupLists( G ).symmpos := symmpos; 
     fi; 
     return L; 
 end ); 
@@ -2076,9 +2049,8 @@ function( XS )
     if not ( edi = ert * eup ) then 
         Error( "edn * elt <> ert * eup" );  
     fi; 
-    PC := PreCat2GroupByPreCat1Groups( CPMNL, C2PNML, Cright, Cdown );
     Cdiag := PreCat1GroupByTailHeadEmbedding( tdi, hdi, edi ); 
-    SetDiagonal2DimensionalGroup( PC, Cdiag ); 
+    PC := PreCat2GroupByPreCat1Groups( CPMNL, C2PNML, Cright, Cdown, Cdiag );
     return PC; 
 end ); 
 
@@ -2158,10 +2130,11 @@ InstallMethod( Transpose3DimensionalGroup, "transposed cat2-group", true,
     [ IsCat2Group ], 0,
 function( C2G )
     return PreCat2GroupByPreCat1Groups( 
-               Left2DimensionalGroup( C2G ), 
                Up2DimensionalGroup( C2G ), 
+               Left2DimensionalGroup( C2G ), 
+               Right2DimensionalGroup( C2G ), 
                Down2DimensionalGroup( C2G ), 
-               Right2DimensionalGroup( C2G ) );
+               Diagonal2DimensionalGroup( C2G ) );
 end );
 
 ##############################################################################
@@ -2194,6 +2167,7 @@ end );
 InstallMethod( IsSymmetric3DimensionalGroup, 
     "generic method for 3d-groups", true, [ IsHigherDimensionalGroup ], 0,
 function( XS )
-    return Is3DimensionalGroup( XS ) and 
-           ( Up2DimensionalGroup( XS ) = Left2DimensionalGroup( XS ) );
+    return Is3DimensionalGroup( XS ) 
+           and ( Up2DimensionalGroup( XS ) = Left2DimensionalGroup( XS ) ) 
+           and ( Right2DimensionalGroup( XS ) = Down2DimensionalGroup( XS ) );
 end );
