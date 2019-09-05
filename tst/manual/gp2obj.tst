@@ -354,7 +354,7 @@ Cat1-group [G2=>d12] :-
   [ f1, f4, f5, f7 ]
 
 ## Section 2.5.1
-gap> IsEndomorphismPreCat1Group( C2 ); 
+gap> IsPreCat1GroupByEndomorphisms( C2 ); 
 false
 
 ## Section 2.5.2

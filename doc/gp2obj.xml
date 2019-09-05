@@ -885,18 +885,18 @@ There are also more specific properties.
          Arg="C0" />
    <Prop Name="IsIdentityCat1Group"
          Arg="C0" />
-   <Prop Name="IsEndomorphismPreCat1Group"
+   <Prop Name="IsPreCat1GroupByEndomorphisms"
          Arg="C0" />
    <Attr Name="EndomorphismPreCat1Group" 
          Arg="C0" /> 
 <Description>
 <C>IsIdentityCat1Group(C0)</C> is true when the head and tail maps of <C>C0</C> 
 are identity mappings. 
-<C>IsEndomorphismPreCat1Group(C0)</C> is true when the range of <C>C0</C> 
+<C>IsPreCat1GroupByEndomorphisms(C0)</C> is true when the range of <C>C0</C> 
 is a subgroup of the source. 
 When this is not the case, replacing <M>t,h,e</M> by <M>t*e,h*e</M> 
 and the inclusion mapping of the image of <M>e</M> gives an isomorphic 
-cat<M>^1</M>-group for which <C>IsEndomorphismPreCat1Group</C> is true. 
+cat<M>^1</M>-group for which <C>IsPreCat1GroupByEndomorphisms</C> is true. 
 </Description>
 </ManSection>
 <P/>
@@ -922,8 +922,8 @@ true
 gap> KnownPropertiesOfObject( C2 );
 [ "CanEasilyCompareElements", "CanEasilySortElements", "IsDuplicateFree", 
   "IsGeneratorsOfSemigroup", "IsPreCat1Domain", "IsPerm2DimensionalGroup", 
-  "IsPreCat1Group", "IsCat1Group", "IsEndomorphismPreCat1Group" ]
-gap> IsEndomorphismPreCat1Group( C2 );
+  "IsPreCat1Group", "IsCat1Group", "IsPreCat1GroupByEndomorphisms" ]
+gap> IsPreCat1GroupByEndomorphisms( C2 );
 false
 gap> EC4 := EndomorphismPreCat1Group( C4 );
 [s4s4=>Group( [ (1,2,3,4)(5,6,7,8), (3,4)(7,8), (), () ] )]

@@ -8,7 +8,7 @@ SetPackageInfo( rec(
 PackageName := "XMod",
 Subtitle := "Crossed Modules and Cat1-Groups",
 Version := "2.73dev",
-Date := "27/08/2019", # dd/mm/yyyy format
+Date := "05/09/2019", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -121,7 +121,7 @@ AvailabilityTest := ReturnTrue,
 BannerString := Concatenation( 
   "Loading XMod ", String( ~.Version ), 
   " (methods for crossed modules and cat1-groups)\n",
-  "by Chris Wensley (http://pages.bangor.ac.uk/~mas023/),", 
+  "by Chris Wensley (http://pages.bangor.ac.uk/~mas023/),\n", 
   " with contributions from:\n", 
   "    Murat Alp (muratalp@nigde.edu.tr),\n", 
   "    Alper Odabas (aodabas@ogu.edu.tr),\n", 

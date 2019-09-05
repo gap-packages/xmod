@@ -287,8 +287,7 @@ gap> fams := AllCat2GroupFamilies( d12 );
   [ 16, 17, 18, 23, 24, 25 ], [ 19, 20, 21, 26, 27, 28 ], [ 22, 29 ], 
   [ 30, 31, 32, 33, 34, 35 ], [ 36, 37, 38 ], [ 39, 40 ], [ 41 ] ]
 gap> CatnGroupNumbers( d12 );
-rec( cat1 := 12, cat2 := 41, idem := 21, iso1 := 4, iso2 := 10, symm := 4, 
-  symmpos := [ 1, 3, 6, 10 ] )
+rec( cat1 := 12, cat2 := 41, idem := 21, iso1 := 4, iso2 := 10, symm2 := 4 )
 gap> CatnGroupLists( d12 );
 rec( 
   cat2classes := 
@@ -307,7 +306,7 @@ rec(
       [ 6, 12 ], [ 7, 7 ], [ 7, 10 ], [ 7, 11 ], [ 7, 12 ], [ 8, 8 ], 
       [ 8, 10 ], [ 8, 11 ], [ 8, 12 ], [ 9, 9 ], [ 9, 10 ], [ 9, 11 ], 
       [ 9, 12 ], [ 10, 10 ], [ 10, 12 ], [ 11, 11 ], [ 11, 12 ], [ 12, 12 ] ],
-  omit := false )
+  omit := false, symmpos := [ 1, 3, 6, 10 ] )
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 

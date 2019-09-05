@@ -848,7 +848,7 @@ function( PCG )
         rhom := IdentityMapping( Prng );
     else
         Prgen := GeneratorsOfGroup( Prng ); 
-        if IsEndomorphismPreCat1Group( PCG ) then 
+        if IsPreCat1GroupByEndomorphisms( PCG ) then 
             rhom := RestrictedMapping( shom, Prng ); 
         else 
             rhom := IsomorphismPermGroup( Prng );

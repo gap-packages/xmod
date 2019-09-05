@@ -163,7 +163,7 @@ DeclareAttribute( "CrossedSquareByXModSplitting", IsXMod );
 ##
 DeclareRepresentation( "IsPreCat2GroupObj", 
     IsHigherDimensionalGroup and IsAttributeStoringRep,
-    [ "up2d", "left2d", "right2d", "down2d" ] );
+    [ "up", "left", "right", "down", "diag" ] );
 BindGlobal( "PreCat2GroupObjType", 
             NewType( FamilyHigherDimensionalGroup, IsPreCat2GroupObj ) ); 
 DeclareOperation( "PreCat2GroupObj", [ IsList ] );
@@ -172,24 +172,26 @@ DeclareOperation( "PreCat2GroupObj", [ IsList ] );
 ##
 #P  IsPreCat2Group( <PCG> ) 
 #P  IsCat2Group( <C1G> ) 
+#P  IsPreCatnGroupByEndomorphisms( <obj> )
 ##
 DeclareProperty( "IsPreCat2Group", IsHigherDimensionalGroup );
 DeclareProperty( "IsCat2Group", IsHigherDimensionalGroup );
 InstallTrueMethod( IsPreCat2Group, IsCat2Group );
+DeclareProperty( "IsPreCatnGroupByEndomorphisms", IsHigherDimensionalGroup ); 
 
 #############################################################################
 ##
 #F  PreCat2Group( <arg> ) 
 #F  Cat2Group( <arg> }
-#O  DetermineRightDownCat1Groups( <up>, <left> )
-#O  PreCat2GroupByPreCat1Groups( <up>, <left>, <right>, <down> )
+#O  DetermineRemainingCat1Groups( <up>, <left>, <diag> )
+#O  PreCat2GroupByPreCat1Groups( <up>, <left>, <right>, <down>, <diag> )
 ##
 DeclareGlobalFunction( "PreCat2Group" );
 DeclareGlobalFunction( "Cat2Group" );
-DeclareOperation( "DetermineRightDownCat1Groups", 
+DeclareOperation( "DetermineRemainingCat1Groups", 
     [ IsPreCat1Group, IsPreCat1Group ] );
-DeclareOperation( "PreCat2GroupByPreCat1Groups", 
-    [ IsPreCat1Group, IsPreCat1Group, IsPreCat1Group, IsPreCat1Group ] );
+DeclareOperation( "PreCat2GroupByPreCat1Groups", [ IsPreCat1Group, 
+    IsPreCat1Group, IsPreCat1Group, IsPreCat1Group, IsPreCat1Group ] );
 
 #############################################################################
 ##

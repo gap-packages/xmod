@@ -26,6 +26,12 @@ gap> cxs24 := PreCat2GroupOfPreCrossedSquare( xs24 );
 cat2-group with generating (pre-)cat1-groups:
 1 : [((d24 |X d12a) |X (d12b |X c6))=>(d24 |X d12a)]
 2 : [((d24 |X d12a) |X (d12b |X c6))=>(d24 |X d12b)]
+gap> IsCat2Group( cxs24 );
+true
+gap> diag := Diagonal2DimensionalGroup( cxs24 );
+[((d24 |X d12a) |X (d12b |X c6))=>d24]
+gap> IsCat1Group( diag );
+false
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> STOP_TEST( "d24.tst", 10000 );
