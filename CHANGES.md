@@ -1,6 +1,6 @@
 # CHANGES to the 'XMod' package
 
-## 2.73 -> 2.73dev (03/09/2019) 
+## 2.73 -> 2.73dev (05/09/2019) 
 
  * (03/09/19) major revision: PreCat2Group and DetermineRemainingCat1Groups
  * (02/09/19) replaced IsEndomorphismCat1Group by IsCat1GroupByEndomorphisms

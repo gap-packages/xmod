@@ -1069,9 +1069,6 @@ function( P )
         and IsCat1Group( Right2DimensionalGroup( P ) )  
         and IsCat1Group( Down2DimensionalGroup( P ) ) 
         and IsPreCat1Group( Diagonal2DimensionalGroup( P ) ); 
-    if ( ok and not IsCat1Group( Diagonal2DimensionalGroup( P ) ) ) then 
-        Error( "expecting the diagonal to be a cat1-group" ); 
-    fi; 
     return ok; 
 end ); 
 
@@ -1566,7 +1563,7 @@ InstallMethod( AllCat2GroupsUpToIsomorphism, "iso class reps of cat2-groups",
 function( G )
 
     local all1, iso1, omit, classes, L, numL, posL, symmnum, symmpos, 
-          i, C, k, found, iso, genC; 
+          prediag, prediagpos, i, C, k, found, iso, genC; 
 
     InitCatnGroupRecords( G ); 
     if not IsBound( CatnGroupNumbers( G ).iso1 ) then 
@@ -1581,7 +1578,9 @@ function( G )
     numL := 0; 
     posL := [ ]; 
     symmnum := 0; 
-    symmpos := [ ];
+    symmpos := [ ]; 
+    prediag := 0; 
+    prediagpos := [ ]; 
     i := 0;
     for C in AllCat2GroupsIterator( G ) do 
         if not ( C = fail ) then 
@@ -1608,6 +1607,10 @@ function( G )
                     symmnum := symmnum + 1;
                     Add( symmpos, numL ); 
                 fi; 
+                if not IsCat1Group( Diagonal2DimensionalGroup( C ) ) then 
+                    prediag := prediag + 1; 
+                    Add( prediagpos, numL );
+                fi; 
                 if not omit then 
                     Add( classes, 
                       [ [ Position(all1,genC[1]), Position(all1,genC[2]) ] ] );
@@ -1621,12 +1624,18 @@ function( G )
     if not IsBound( CatnGroupNumbers( G ).iso2 ) then 
         CatnGroupNumbers( G ).iso2 := numL; 
         CatnGroupNumbers( G ).symm2 := symmnum; 
+        if ( prediag > 0 ) then 
+            CatnGroupNumbers( G ).prediag2 := prediag; 
+        fi; 
     fi; 
     Info( InfoXMod, 1, "reps found at positions ", posL ); 
     if not omit then 
         Sort( classes ); 
         CatnGroupLists( G ).cat2classes := classes; 
         CatnGroupLists( G ).symmpos := symmpos; 
+        if ( prediag > 0 ) then 
+            CatnGroupLists( G ).prediagpos := prediagpos; 
+        fi; 
     fi; 
     return L; 
 end ); 
