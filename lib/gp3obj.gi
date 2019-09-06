@@ -1563,7 +1563,7 @@ InstallMethod( AllCat2GroupsUpToIsomorphism, "iso class reps of cat2-groups",
 function( G )
 
     local all1, iso1, omit, classes, L, numL, posL, symmnum, symmpos, 
-          prediag, prediagpos, i, C, k, found, iso, genC; 
+          prediag, prediagpos, i, C, k, found, iso, genC, perm; 
 
     InitCatnGroupRecords( G ); 
     if not IsBound( CatnGroupNumbers( G ).iso1 ) then 
@@ -1617,9 +1617,12 @@ function( G )
                 fi; 
             fi;
         fi;
-    od;
+    od; 
     if not IsBound( CatnGroupNumbers( G ).cat2 ) then 
         CatnGroupNumbers( G ).cat2 := i; 
+    fi; 
+    if not IsBound( CatnGroupLists( G ).allcat2pos ) then 
+        CatnGroupLists( G ).allcat2pos := posL; 
     fi; 
     if not IsBound( CatnGroupNumbers( G ).iso2 ) then 
         CatnGroupNumbers( G ).iso2 := numL; 
@@ -1630,8 +1633,11 @@ function( G )
     fi; 
     Info( InfoXMod, 1, "reps found at positions ", posL ); 
     if not omit then 
-        Sort( classes ); 
+        perm := Sortex( classes ); 
+        L := Permuted( L, perm ); 
         CatnGroupLists( G ).cat2classes := classes; 
+        symmpos := List( symmpos, i -> i^perm ); 
+        prediagpos := List( prediagpos, i -> i^perm ); 
         CatnGroupLists( G ).symmpos := symmpos; 
         if ( prediag > 0 ) then 
             CatnGroupLists( G ).prediagpos := prediagpos; 
