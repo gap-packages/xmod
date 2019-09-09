@@ -92,7 +92,10 @@ gap> ImageElmCrossedPairing( xpi, [ genI20[1], genI20[2] ] );
 ## Section 8.2.5
 gap> dn := Down2DimensionalGroup( XSconj );;
 gap> rt := Right2DimensionalGroup( XSconj );;
-gap> XSP := CrossedSquareByPullback( dn, rt );; 
+gap> XSP := CrossedSquareByPullback( dn, rt ); 
+[ (d10b x_d20 d10a) -> d10a ]
+[         |             |   ]
+[              d10b -> d20  ]
 gap> StructureDescription( XSP );                  
 [ "C5", "D10", "D10", "D20" ]
 gap> XS12 := CrossedSquareByPullback( X12, X12 );; 
@@ -150,13 +153,15 @@ gap> Up2DimensionalGroup( XSconj );
 [c5d->d10a]
 gap> Right2DimensionalGroup( XSact );
 Actor[d10a->d20]
-gap> diact := DiagonalAction( XSact );;
-gap> ImageElm( diact, (1,4)(2,3)(6,9)(7,8) );  
-^(1,5,7,3)(2,8,6,10)
-gap> Diagonal2DimensionalGroup( XSconj );
-[c5d->d20]
 gap> Name( XSconj ); 
 "[c5d->d10a,d10b->d20]"
+gap> cross1 := CrossDiagonalActions( XSconj )[1];; 
+gap> gensa := GeneratorsOfGroup( d10a );;
+gap> gensb := GeneratorsOfGroup( d10b );;
+gap> act1 := ImageElm( cross1, gensb[1] );;
+gap> gensa[2]; ImageElm( act1, gensa[2] );
+(2,10)(3,9)(4,8)(5,7)
+(1,5)(2,4)(6,10)(7,9)
 
 ## Section 8.2.12
 

@@ -10,9 +10,9 @@
     
 #############################################################################
 ##
-#M  IsPerm3DimensionalGroup . . . . check whether the 4 sides are perm groups
-#M  IsFp3DimensionalGroup . . . . . check whether the 4 sides are fp groups
-#M  IsPc3DimensionalGroup . . . . . check whether the 4 sides are pc groups
+#M  IsPerm3DimensionalGroup . .  check whether the 4 sides are perm 2d-groups
+#M  IsFp3DimensionalGroup . . . .  check whether the 4 sides are fp 2d-groups
+#M  IsPc3DimensionalGroup . . . .  check whether the 4 sides are pc 2d-groups
 ##
 InstallMethod( IsPerm3DimensionalGroup, "generic method for 3d-group objects",
     true, [ IsHigherDimensionalGroup ], 0,
@@ -229,44 +229,52 @@ InstallMethod( IsPreCrossedSquare, "generic method for a pre-crossed square",
     true, [ IsHigherDimensionalGroup ], 0,
 function( PXS )
 
-    local up, lt, rt, dn, L, M, N, P, kappa, lambda, mu, nu, 
-          lambdanu, kappamu, actdg, dg, ok, morupdn, morltrt;
+    local up, lt, rt, dn, dg, L, M, N, P, kappa, lambda, mu, nu, delta, 
+          lambdanu, kappamu, ok, actrt, rngactrt, actdn, rngactdn, 
+          genN, genM, imactNM, actNM, imactMN, actMN, morupdn, morltrt;
 
-    if not ( IsPreCrossedSquareObj ( PXS ) and HasDiagonalAction( PXS ) ) then
+    if not IsPreCrossedSquareObj( PXS ) then
         return false;
     fi;
     up := Up2DimensionalGroup( PXS );
     lt := Left2DimensionalGroup( PXS );
     rt := Right2DimensionalGroup( PXS );
     dn := Down2DimensionalGroup( PXS );
-    actdg := DiagonalAction( PXS );
+    dg := Diagonal2DimensionalGroup( PXS );
     L := Source( up );
     M := Range( up );
     N := Source( dn );
     P := Range( dn );
     if not ( ( L = Source(lt) ) and ( N = Range(lt) ) and
+             ( L = Source(dg) ) and ( P = Range(dg) ) and 
              ( M = Source(rt) ) and ( P = Range(rt) ) ) then
         Info( InfoXMod, 2, "Incompatible source/range" );
         return false;
     fi;
-    ## construct the boundary of the diagonal
+    ## checks for the diagonal 
+    delta := Boundary( dg ); 
     lambda := Boundary( lt );
     nu := Boundary( dn );
     lambdanu := lambda * nu;
     kappa := Boundary( up );
     mu := Boundary( rt );
     kappamu := kappa * mu;
-    if not ( lambdanu = kappamu ) then
-        Info( InfoXMod, 2, "Boundaries in square do not commute" );
+    if not ( lambdanu = delta ) and ( kappamu = delta ) then
+        Info( InfoXMod, 2, "boundaries in square do not commute" );
         return false;
     fi;
-    ## check the action of the diagonal? 
-    dg := PreXModByBoundaryAndAction( lambdanu, actdg );
-    ok := IsPreXMod( dg );
-    if not ok then
-        Info( InfoXMod, 2, "diagonal not a pre-crossed module" );
-        return false;
-    fi;
+    # construct the cross-diagonal actions 
+    actrt := XModAction( rt ); 
+    rngactrt := Range( actrt ); 
+    actdn := XModAction( dn ); 
+    rngactdn := Range( actdn );
+    genM := GeneratorsOfGroup( M ); 
+    genN := GeneratorsOfGroup( N ); 
+    imactNM := List( genN, n -> ImageElm( actrt, ImageElm( nu, n ) ) ); 
+    actNM := GroupHomomorphismByImages( N, rngactrt, genN, imactNM ); 
+    imactMN := List( genM, m -> ImageElm( actdn, ImageElm( mu, m ) ) ); 
+    actMN := GroupHomomorphismByImages( M, rngactdn, genM, imactMN ); 
+    SetCrossDiagonalActions( PXS, [ actNM, actMN ] ); 
     #? compatible actions to be checked?
     morupdn := PreXModMorphism( up, dn, lambda, mu );
     morltrt := PreXModMorphism( lt, rt, kappa, nu );
@@ -277,7 +285,7 @@ function( PXS )
     return true;
 end );
 
-#############################################################################
+############################################################################# 
 ##
 #M  IsCrossedSquare . . . . . . . . check all the axioms for a crossed square
 ##
@@ -290,15 +298,14 @@ function( XS )
           genL, genM, genN, genP, actup, actlt, actrt, actdn, l, p, 
           xp, x, y, m, n, m2, n2, am, an, apdg, aprt, apdn, nboxm;
 
-    if not ( IsPreCrossedSquare( XS ) and HasDiagonalAction( XS ) 
-             and HasCrossedPairing( XS ) ) then
+    if not ( IsPreCrossedSquare( XS ) and HasCrossedPairing( XS ) ) then
         return false;
     fi;
     up := Up2DimensionalGroup( XS );
     lt := Left2DimensionalGroup( XS );
     rt := Right2DimensionalGroup( XS );
     dn := Down2DimensionalGroup( XS );
-    actdg := DiagonalAction( XS );
+    dg := Diagonal2DimensionalGroup( XS );
     L := Source( up );
     M := Range( up );
     N := Source( dn );
@@ -315,6 +322,7 @@ function( XS )
     actlt := XModAction( lt );
     actrt := XModAction( rt );
     actdn := XModAction( dn ); 
+    actdg := XModAction( dg ); 
     ## check that kappa,lambda preserve the action of P 
     for p in genP do 
         apdg := ImageElm( actdg, p );
@@ -411,7 +419,7 @@ end );
 ##
 InstallMethod( PreCrossedSquareObj, "for prexmods, action and pairing", true,
     [ IsPreXMod, IsPreXMod, IsPreXMod, IsPreXMod, IsObject, IsObject ], 0,
-function( up, lt, rt, dn, act, xp )
+function( up, lt, rt, dn, dg, xp )
 
     local PS;
 
@@ -422,7 +430,7 @@ function( up, lt, rt, dn, act, xp )
       Left2DimensionalGroup, lt,
       Right2DimensionalGroup, rt,
       Down2DimensionalGroup, dn,
-      DiagonalAction, act,
+      Diagonal2DimensionalGroup, dg,
       CrossedPairing, xp,
       IsHigherDimensionalGroup, true );
     if not IsPreCrossedSquare( PS ) then
@@ -520,7 +528,7 @@ InstallMethod( CrossedSquareByNormalSubgroups, "conjugation crossed square",
     true, [ IsGroup, IsGroup, IsGroup, IsGroup ], 0,
 function( L, M, N, P )
 
-    local XS, up, lt, rt,dn, a, xp, diag;
+    local XS, up, lt, rt, dn, dg, xp, diag;
 
     if IsSubgroup( L, P ) and ( L <> P ) then 
         Error( "require ordering L <= M,N <= P" ); 
@@ -539,14 +547,13 @@ function( L, M, N, P )
     lt := XModByNormalSubgroup( N, L );
     rt := XModByNormalSubgroup( P, M );
     dn := XModByNormalSubgroup( P, N );
-    diag := XModByNormalSubgroup( P, L );
-    a := XModAction( diag );
+    dg := XModByNormalSubgroup( P, L );
     ##  define the pairing as a commutator
     xp := CrossedPairingByCommutators( N, M, L ); 
-    XS := PreCrossedSquareObj( up, lt, rt, dn, a, xp );
+    XS := PreCrossedSquareObj( up, lt, rt, dn, dg, xp );
 ##    SetIsCrossedSquare( XS, true );
 ##    SetIs3DimensionalGroup( XS, true ); 
-    SetDiagonal2DimensionalGroup( XS, diag ); 
+    SetDiagonal2DimensionalGroup( XS, dg ); 
     if not IsCrossedSquare( XS ) then 
         Error( "XS fails to be a crossed square by normal subgroups" ); 
     fi;
@@ -574,7 +581,7 @@ InstallMethod( CrossedSquareByNormalSubXMod, "for an xmod and normal subxmod",
     true, [ IsXMod, IsXMod ], 0,
 function( rt, lt )
 
-    local M, L, up, P, N, dn, xp, act1, diag, act, XS;
+    local M, L, up, P, N, dn, xp, dg, XS;
 
     if not IsNormalSub2DimensionalDomain( rt, lt ) then 
         return fail; 
@@ -586,9 +593,8 @@ function( rt, lt )
     N := Range( lt );
     dn := XModByNormalSubgroup( P, N ); 
     xp := CrossedPairingBySingleXModAction( rt, lt ); 
-    diag := SubXMod( rt, L, P );
-    act := XModAction( diag );
-    XS := PreCrossedSquareObj( up, lt, rt, dn, act, xp );
+    dg := SubXMod( rt, L, P );
+    XS := PreCrossedSquareObj( up, lt, rt, dn, dg, xp );
     if not IsCrossedSquare( XS ) then 
         Error( "XS fails to be a crossed square by normal subxmod" ); 
     fi; 
@@ -602,16 +608,15 @@ end );
 InstallMethod( CrossedSquareByXModSplitting, "for an xmod", true, [ IsXMod ], 0,
 function( X0 )
 
-    local S, R, bdy, Q, up, dn, act, xp, XS;
+    local S, R, bdy, Q, up, dn, xp, XS;
 
     S := Source( X0 ); 
     R := Range( X0 ); 
     Q := ImagesSource( Boundary( X0 ) ); 
     up := SubXMod( X0, S, Q ); 
     dn := XModByNormalSubgroup( R, Q ); 
-    act := XModAction( X0 ); 
     xp := CrossedPairingByPreImages( up, up ); 
-    XS := PreCrossedSquareObj( up, up, dn, dn, act, xp );
+    XS := PreCrossedSquareObj( up, up, dn, dn, X0, xp );
 ##    SetIsCrossedSquare( XS, true );
     if not IsCrossedSquare( XS ) then 
         Error( "XS fails to be a crossed square by xmod splitting" ); 
@@ -625,23 +630,24 @@ end );
 ##
 InstallMethod( CrossedSquareByPullback, "for 2 xmods with a common range", 
     true, [ IsXMod, IsXMod ], 0,
-function( XN, XM )
+function( dn, rt )
 
     local M, N, P, actM, actN, mu, nu, L, genL, lenL, Linfo, dp, dpinfo, 
-          embM, embN, bdyM, bdyN, map, xp, autL, genLN, genLM, genLNP, 
+          embM, embN, kappa, lambda, map, xp, autL, genLN, genLM, genLNP, 
           genLMP, genP, lenP, imactPL, i, g, ima, a, actPL, genN, lenN, 
-          imactNL, actNL, left, genM, lenM, imactML, actML, up, XS;
+          imactNL, actNL, lt, genM, lenM, imactML, actML, up, 
+          imdelta, delta, dg, XS;
 
-    M := Source( XM ); 
-    N := Source( XN );
-    P := Range( XM ); 
-    if not ( Range( XN ) = P ) then 
+    M := Source( rt ); 
+    N := Source( dn );
+    P := Range( rt ); 
+    if not ( Range( dn ) = P ) then 
         Error( "the two xmods should have a common range" ); 
     fi;
-    actM := XModAction( XM );
-    actN := XModAction( XN );
-    mu := Boundary( XM );
-    nu := Boundary( XN );
+    actM := XModAction( rt );
+    actN := XModAction( dn );
+    mu := Boundary( rt );
+    nu := Boundary( dn );
     L := Pullback( nu, mu ); 
     genL := GeneratorsOfGroup( L ); 
     lenL := Length( genL );
@@ -653,10 +659,10 @@ function( XN, XM )
     dpinfo := DirectProductInfo( dp ); 
     embN := Embedding( dp, 1 ); 
     embM := Embedding( dp, 2 ); 
-    bdyN := Linfo!.projections[1]; 
-    genLN := List( genL, l -> ImageElm( bdyN, l ) );
-    bdyM := Linfo!.projections[2]; 
-    genLM := List( genL, l -> ImageElm( bdyM, l ) );
+    lambda := Linfo!.projections[1]; 
+    genLN := List( genL, l -> ImageElm( lambda, l ) );
+    kappa := Linfo!.projections[2]; 
+    genLM := List( genL, l -> ImageElm( kappa, l ) );
     ## construct the crossed pairing 
     map := Mapping2ArgumentsByFunction( [N,M], L, 
                function( c ) 
@@ -689,6 +695,9 @@ function( XN, XM )
         imactPL[i] := a; 
     od; 
     actPL := GroupHomomorphismByImages( P, autL, genP, imactPL );
+    imdelta := List( genL, l -> ImageElm( nu, ImageElm( lambda, l ) ) ); 
+    delta := GroupHomomorphismByImages( L, P, genL, imdelta ); 
+    dg := XModByBoundaryAndAction( delta, actPL ); 
     genN := GeneratorsOfGroup( N );
     lenN := Length( genN ); 
     imactNL := ListWithIdenticalEntries( lenN, 0 ); 
@@ -698,7 +707,7 @@ function( XN, XM )
         imactNL[i] := a;
     od;
     actNL := GroupHomomorphismByImages( N, autL, genN, imactNL ); 
-    left := XMod( bdyN, actNL ); 
+    lt := XMod( lambda, actNL ); 
     genM := GeneratorsOfGroup( M );
     lenM := Length( genM ); 
     imactML := ListWithIdenticalEntries( lenM, 0 ); 
@@ -708,8 +717,8 @@ function( XN, XM )
         imactML[i] := a;
     od;
     actML := GroupHomomorphismByImages( M, autL, genM, imactML ); 
-    up := XMod( bdyM, actML ); 
-    XS := PreCrossedSquareObj( up, left, XM, XN, actPL, xp );
+    up := XMod( kappa, actML ); 
+    XS := PreCrossedSquareObj( up, lt, rt, dn, dg, xp );
 ##    SetIsCrossedSquare( XS, true );
     if not IsCrossedSquare( XS ) then 
         Error( "XS fails to be a crossed square by pullback" ); 
@@ -724,17 +733,16 @@ end );
 InstallMethod( ActorCrossedSquare, "actor crossed square", true, [ IsXMod ], 0,
 function( X0 )
 
-    local XS, WX, LX, NX, AX, xp, da;
+    local XS, WX, LX, NX, AX, xp;
 
     AX := ActorXMod( X0 );
     WX := WhiteheadXMod( X0 );
     NX := NorrieXMod( X0 );
     LX := LueXMod( X0 );
-    da := XModAction( LX );
     ##  define the pairing as evaluation of a derivation
     xp := CrossedPairingByDerivations( X0 );
     ## XS := PreCrossedSquareObj( X0, WX, NX, AX, da, xp );
-    XS := PreCrossedSquareObj( WX, X0, AX, NX, da, xp );
+    XS := PreCrossedSquareObj( WX, X0, AX, NX, LX, xp );
 ##    SetIsCrossedSquare( XS, true );
     if not IsCrossedSquare( XS ) then 
         Error( "XS fails to be an actor crossed square" ); 
@@ -750,7 +758,7 @@ InstallMethod( CrossedSquareByAutomorphismGroup, "G -> Inn(G) -> Aut(G)",
     true, [ IsGroup ], 0,
 function( G )
 
-    local genG, innG, up, autG, lt, act, xp, XS;
+    local genG, innG, up, autG, lt, dg, xp, XS;
 
     genG := GeneratorsOfGroup( G ); 
     innG := InnerAutomorphismsByNormalSubgroup( G, G );
@@ -766,11 +774,11 @@ function( G )
     if not IsSubgroup( autG, innG ) then 
         Error( "innG is not a subgroup of autG" ); 
     fi;
+    dg := XModByAutomorphismGroup( G ); 
     lt := XModByNormalSubgroup( autG, innG );
-    act := IdentityMapping( autG );
     ##  define the pairing 
     xp := CrossedPairingByConjugators( innG );
-    XS := PreCrossedSquareObj( up, up, lt, lt, act, xp );
+    XS := PreCrossedSquareObj( up, up, lt, lt, dg, xp );
 ##    SetIsCrossedSquare( XS, true );
     if not IsCrossedSquare( XS ) then 
         Error( "XS fails to be a crossed square by automorphism group" ); 
@@ -1794,10 +1802,11 @@ InstallMethod( PreCrossedSquareOfPreCat2Group, true,
     [ IsPreCat2Group ], 0,
 function( C2G )
  
-    local n, l, i, j, k, up, down, left, right, isolar, liste1, liste2, G, 
-          gensrc, x, C1, C2, h1, t1, h2, t2, L, M, N, P, XS, diag, liste, 
-          partial, action, aut, actML, XM, kappa, CM1, CM2, lambda,
-          actNL, CM3, mu, actPM, CM4, nu, actPN, xp, actPL;
+    local n, l, i, j, k, up, down, left, right, isolar, liste1, liste2, 
+          G, gensrc, x, C1, C2, h1, t1, h2, t2, L, M, N, P, XS, 
+          diag, genL, imdelta, delta, liste, partial, action, aut, actML, 
+          XM, kappa, CM1, CM2, lambda, actNL, CM3, mu, actPM, CM4, nu, actPN, 
+          xp, actPL;
 
     C1 := GeneratingCat1Groups( C2G )[1];
     C2 := GeneratingCat1Groups( C2G )[2];
@@ -1846,9 +1855,13 @@ function( C2G )
     Info( InfoXMod, 3, " left = ", left );
     Info( InfoXMod, 3, "right = ", right );
     Info( InfoXMod, 3, " down = ", down );
-    actPL := ConjugationActionForCrossedSquare( P, L );
+    actPL := ConjugationActionForCrossedSquare( P, L ); 
+    genL := GeneratorsOfGroup( L ); 
+    imdelta := List( genL, l -> ImageElm( nu, ImageElm( lambda, l ) ) ); 
+    delta := GroupHomomorphismByImages( L, P, genL, imdelta ); 
+    diag := XModByBoundaryAndAction( delta, actPL ); 
     xp := CrossedPairingByCommutators( N, M, L );
-    XS := PreCrossedSquareObj( up, left, right, down, actPL, xp );
+    XS := PreCrossedSquareObj( up, left, right, down, diag, xp );
 ##     SetIsCrossedSquare( XS, true ); 
     if ( HasIsCat2Group( C2G ) and IsCat2Group( C2G ) ) then 
         if not IsCrossedSquare( XS ) then 
@@ -1865,9 +1878,9 @@ InstallMethod( PreCat2GroupOfPreCrossedSquare, true,
     [ IsPreCrossedSquare ], 0,
 function( XS )
  
-    local up, left, right, down, L, M, N, P, genL, genM, genN, genP, 
+    local up, left, right, down, diag, L, M, N, P, genL, genM, genN, genP, 
           kappa, lambda, nu, mu, 
-          act_up, act_lt, act_dn, act_rt, act_diag, xpair, 
+          act_up, act_lt, act_dn, act_rt, act_dg, xpair, 
           Cup, NxL, genNxL, e1NxL, e2NxL, Cleft, MxL, genMxL, e1MxL, e2MxL, 
           Cdown, PxM, genPxM, e1PxM, e2PxM, Cright, PxN, genPxN, e1PxN, e2PxN, 
           MxLbyP, MxLbyN, autgenMxL, autMxL, actPNML, NxLbyP, NxLbyM, 
@@ -1884,6 +1897,7 @@ function( XS )
     left := Left2DimensionalGroup( XS );
     right := Right2DimensionalGroup( XS );
     down := Down2DimensionalGroup( XS );
+    diag := Diagonal2DimensionalGroup( XS );
     L := Source( up );
     M := Range( up );
     N := Source( down );
@@ -1904,7 +1918,7 @@ function( XS )
     act_lt := XModAction( left );
     act_rt := XModAction( right );
     act_dn := XModAction( down );
-    act_diag := DiagonalAction( XS );
+    act_dg := XModAction( diag );
     xpair := CrossedPairing( XS );
 
     Cup := Cat1GroupOfXMod( up );
@@ -1958,7 +1972,7 @@ function( XS )
                 List( genN, n -> ImageElm( e1NxL, 
                                  ImageElm( ImageElm( act_dn, p ), n ) )),
                 List( genL, l -> ImageElm( e2NxL, 
-                                 ImageElm( ImageElm( act_diag, p ), l ))) ))); 
+                                 ImageElm( ImageElm( act_dg, p ), l ))) ))); 
     NxLbyM := List( genM, m -> GroupHomomorphismByImages( NxL, NxL, genNxL, 
             Concatenation( 
                 List( genN, n -> ImageElm( e1NxL, n ) * 
@@ -1996,7 +2010,7 @@ function( XS )
                 List( genM, m -> ImageElm( e1MxL, 
                                  ImageElm( ImageElm( act_rt, p ), m ) )),
                 List( genL, l -> ImageElm( e2MxL, 
-                                 ImageElm( ImageElm( act_diag, p ), l ))) ))); 
+                                 ImageElm( ImageElm( act_dg, p ), l ))) ))); 
     MxLbyN := List( genN, n -> GroupHomomorphismByImages( MxL, MxL, genMxL, 
             Concatenation( 
                 List( genM, m -> ImageElm( e1MxL, m ) * 
@@ -2097,27 +2111,6 @@ end );
     
 ##############################################################################
 ##
-#M  Diagonal2DimensionalGroup . . . . . . . . . . . . . . for a crossed square
-## 
-InstallMethod( Diagonal2DimensionalGroup, "for a precrossed square", true,
-    [ IsPreCrossedSquare ], 0,
-function( s )
-
-    local ur, dl, act, diag; 
-
-    ur := Boundary( Up2DimensionalGroup( s ) ) 
-          * Boundary( Right2DimensionalGroup( s ) ); 
-    dl := Boundary( Left2DimensionalGroup( s ) ) 
-          * Boundary( Down2DimensionalGroup( s ) ); 
-    if not ( ur = dl ) then 
-        Error( "diagonal boundary is not well-defined" );
-    fi;
-    act := DiagonalAction( s );
-    return XModByBoundaryAndAction( ur, act );  
-end );
-
-##############################################################################
-##
 #M  Transpose3DimensionalGroup . . transpose of a crossed square or cat2-group 
 ##
 InstallMethod( Transpose3DimensionalGroup, "transposed crossed square", true, 
@@ -2136,7 +2129,7 @@ function( XS )
     xpT := CrossedPairingObj( NxM, L, map );
     XT := PreCrossedSquareObj( Left2DimensionalGroup(XS), 
               Up2DimensionalGroup(XS), Down2DimensionalGroup(XS), 
-              Right2DimensionalGroup(XS), DiagonalAction(XS), xpT );
+           Right2DimensionalGroup(XS), Diagonal2DimensionalGroup(XS), xpT );
 ##    SetIsCrossedSquare( XT, true );
     return XT;
 end );    

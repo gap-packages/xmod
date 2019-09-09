@@ -767,13 +767,14 @@ InstallMethod( CentralQuotient, "generic method for crossed modules",
     true, [ IsXMod ], 0,
 function( lt ) 
 
-    local actlt, zlt, rt, L, M, N, P, nat, kappa, nu, up, dn, genN, nugenN, 
-          agenN, adg, map, xp, xs; 
+    local actlt, zlt, rt, L, M, N, P, nat, kappa, lambda, nu, up, dn, genL, 
+          genN, nugenN, agenN, adg, imdelta, delta, dg, map, xp, xs; 
 
     actlt := XModAction( lt ); 
     zlt := CentreXMod( lt ); 
     nat := NaturalMorphismByNormalSubPreXMod( lt, zlt ); 
     kappa := SourceHom( nat );
+    lambda := Boundary( lt ); 
     nu := RangeHom( nat ); 
     rt := Image( nat );
     L := Source( lt ); 
@@ -791,10 +792,14 @@ function( lt )
     fi; 
     up := XModByCentralExtension( kappa );
     dn := XModByCentralExtension( nu );
+    genL := GeneratorsOfGroup( L ); 
     genN := GeneratorsOfGroup( N ); 
     nugenN := List( genN, n -> ImageElm( nu, n ) ); 
     agenN := List( genN, n -> ImageElm( actlt, n ) ); 
-    adg := GroupHomomorphismByImages( P, Range(actlt), nugenN, agenN );
+    adg := GroupHomomorphismByImages( P, Range(actlt), nugenN, agenN ); 
+    imdelta := List( genL, l ->ImageElm( nu, ImageElm( lambda, l ) ) ); 
+    delta := GroupHomomorphismByImages( L, P, genL, imdelta ); 
+    dg := XModByBoundaryAndAction( delta, adg );
     map := Mapping2ArgumentsByFunction( [N,M], L, 
              function(c) 
                local a, l;
@@ -803,7 +808,7 @@ function( lt )
                return ImageElm( a, l^(-1) ) * l; 
              end );
     xp := CrossedPairingObj( [N,M], L, map );
-    xs := PreCrossedSquareObj( up, lt, rt, dn, adg, xp );
+    xs := PreCrossedSquareObj( up, lt, rt, dn, dg, xp );
 ##    SetIsCrossedSquare( xs, true );
     if not IsCrossedSquare( xs ) then 
         Error( "xs fails to be a crossed square by central quotient" ); 
