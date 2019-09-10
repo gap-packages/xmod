@@ -1,7 +1,8 @@
 # CHANGES to the 'XMod' package
 
-## 2.73 -> 2.73dev (09/09/2019) 
+## 2.73 -> 2.73dev (10/09/2019) 
 
+ * (10/09/19) added methods for (Pre)CrossedSquareBy(Pre)XMods 
  * (09/09/19) revised CrossedSquare consructors to use diag, not the action
  * (06/09/19) added allcat2pos to CatnGroupLists(G) 
  * (03/09/19) major revision: PreCat2Group and DetermineRemainingCat1Groups

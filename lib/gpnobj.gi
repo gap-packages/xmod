@@ -290,7 +290,7 @@ function( gnd )
     else 
         n := HigherDimension(gnd)-1; 
         L := GeneratingCat1Groups( gnd ); 
-        Print( "cat", n, "-group with generating (pre-)cat1-groups:\n" );
+        Print( "(pre-)cat", n, "-group with generating (pre-)cat1-groups:\n" );
         for i in [1..n] do 
             Print( i, " : ", L[i] ); 
             if ( i < n ) then 
@@ -316,7 +316,7 @@ function( gnd )
     n := HigherDimension( gnd ) - 1;
     if IsPreCatnGroup( gnd ) then 
         L := GeneratingCat1Groups( gnd );
-        Print( "cat", n, "-group with generating (pre-)cat1-groups:\n" ); 
+        Print( "(pre-)cat", n, "-group with generating (pre-)cat1-groups:\n" ); 
         for i in [1..n] do 
             Print( i, " : " ); 
             Display( L[i] );

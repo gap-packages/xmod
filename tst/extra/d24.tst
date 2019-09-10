@@ -23,13 +23,15 @@ gap> xs24 := CrossedSquareByNormalSubgroups( c6, d12a, d12b, d24 );
 [   |      |  ]
 [ d12b -> d24 ]
 gap> cxs24 := PreCat2GroupOfPreCrossedSquare( xs24 ); 
-cat2-group with generating (pre-)cat1-groups:
+(pre-)cat2-group with generating (pre-)cat1-groups:
 1 : [((d24 |X d12a) |X (d12b |X c6))=>(d24 |X d12a)]
 2 : [((d24 |X d12a) |X (d12b |X c6))=>(d24 |X d12b)]
 gap> IsCat2Group( cxs24 );
-true
+false
 gap> diag := Diagonal2DimensionalGroup( cxs24 );
 [((d24 |X d12a) |X (d12b |X c6))=>d24]
+
+## this result is surely worrying! 
 gap> IsCat1Group( diag );
 false
 

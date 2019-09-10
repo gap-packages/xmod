@@ -289,7 +289,7 @@ end );
 ##
 #M  IsCrossedSquare . . . . . . . . check all the axioms for a crossed square
 ##
-InstallMethod( IsCrossedSquare, "generic method for a crossed square",
+InstallMethod( IsCrossedSquare, "generic method for a crossed square", 
     true, [ IsHigherDimensionalGroup ], 0,
 function( XS )
 
@@ -310,10 +310,10 @@ function( XS )
     M := Range( up );
     N := Source( dn );
     P := Range( dn );
-    lambda := Boundary( lt );
-    nu := Boundary( dn );
     kappa := Boundary( up );
+    lambda := Boundary( lt );
     mu := Boundary( rt );
+    nu := Boundary( dn );
     genL := GeneratorsOfGroup( L ); 
     genM := GeneratorsOfGroup( M ); 
     genN := GeneratorsOfGroup( N ); 
@@ -331,11 +331,13 @@ function( XS )
         for l in genL do 
             if not ( ImageElm( kappa, ImageElm( apdg, l ) ) 
                      = ImageElm( aprt, ImageElm( kappa, l ) ) ) then 
-                Error( "action of P on up is not preserved" );
+                Info( InfoXMod, 2,  "action of P on up is not preserved" );
+                return false; 
             fi;
             if not ( ImageElm( lambda, ImageElm( apdg, l ) ) 
                      = ImageElm( apdn, ImageElm( lambda, l ) ) ) then 
-                Error( "action of P on lt is not preserved" );
+                Info( InfoXMod, 2, "action of P on lt is not preserved" ); 
+                return false; 
             fi;
         od;
     od;
@@ -348,7 +350,8 @@ function( XS )
                 an := ImageElm( actlt, n2 ); 
                 y := ImageElm( an, ImageElmCrossedPairing( xp, [n,m] ) ); 
                 if not x = y * ImageElmCrossedPairing( xp, [n2,m] ) then 
-                    Error( "n1,n2,m crossed pairing axiom fails" ); 
+                    Info( InfoXMod, 2, "n1,n2,m crossed pairing axiom fails" ); 
+                    return false; 
                 fi; 
             od;
        od;
@@ -360,7 +363,8 @@ function( XS )
                 am := ImageElm( actup, m2 ); 
                 y := ImageElm( am, ImageElmCrossedPairing( xp, [n,m] ) ); 
                 if not x = ImageElmCrossedPairing( xp, [n,m2] ) * y then 
-                    Error( "n,m1,m2 crossed pairing axiom fails" ); 
+                    Info( InfoXMod, 2, "n,m1,m2 crossed pairing axiom fails" ); 
+                    return false; 
                 fi; 
             od;
        od;
@@ -374,7 +378,8 @@ function( XS )
                 if not ImageElm( apdg, ImageElmCrossedPairing( xp, [n,m] ) ) 
                      = ImageElmCrossedPairing( xp, 
                            [ ImageElm( apdn, n ), ImageElm( aprt, m ) ] ) then
-                    Error( "n,m,p crossed pairing axiom fails" ); 
+                    Info( InfoXMod, 2, "n,m,p crossed pairing axiom fails" ); 
+                    return false; 
                 fi; 
             od;
        od;
@@ -387,25 +392,31 @@ function( XS )
             nboxm := ImageElmCrossedPairing( xp, [n,m] ); 
             if not ImageElm( lambda, nboxm ) = n^(-1) * ImageElm( am, n ) 
                and ImageElm( kappa, nboxm ) = ImageElm( an, m^(-1) ) * m then 
-                Error( "kappa,lambda do not map nboxm correctly" ); 
+                Info( InfoXMod, 2,  "kappa,lambda do not map nboxm correctly" ); 
+                return false; 
             fi; 
         od;
     od; 
     ## check crossed pairing on images of kappa,lambda 
     for m in genM do 
-        am := ImageElm( actdg, ImageElm( mu, m ) ); 
+        ## am := ImageElm( actdg, ImageElm( mu, m ) ); 
+        am := ImageElm( actup, m );
         for l in genL do 
             if not ( ImageElmCrossedPairing( xp, [ImageElm(lambda,l),m] ) 
                    = l^(-1) * ImageElm( am, l ) ) then 
+                Info( InfoXMod, 2, "incorrect image for (lambda(l) box n)" ); 
+                return false; 
             fi; 
         od;
     od;
     for n in genN do 
-        an := ImageElm( actdg, ImageElm( nu, n ) ); 
+        ## an := ImageElm( actdg, ImageElm( nu, n ) ); 
+        an := ImageElm( actlt, n );  
         for l in genL do 
             if not ( ImageElmCrossedPairing( xp, [n,ImageElm(kappa,l)] ) 
                    = ImageElm( an, l^(-1) ) * l ) then 
-                Error( "incorrect image for (n box kappa(l))" ); 
+                Info( InfoXMod, 2, "incorrect image for (n box kappa(l))" ); 
+                return false; 
             fi; 
         od;
     od;
@@ -414,7 +425,7 @@ end );
 
 ##############################################################################
 ##
-#M  PreCrossedSquareObj ( <up>, <left>, <right>, <down>, <act>, <pair> ) 
+#M  PreCrossedSquareObj ( <up>, <left>, <right>, <down>, <diag>, <pair> ) 
 ##                                               . . . make a PreCrossedSquare
 ##
 InstallMethod( PreCrossedSquareObj, "for prexmods, action and pairing", true,
@@ -509,15 +520,54 @@ end );
 
 ##############################################################################
 ##
-#M  CrossedSquareByXMods . . . . crossed square from 4 xmods + action & xpair
+#M  PreCrossedSquareByPreXMods . . pre-crossed square from 5 pre-xmods + xpair
+#M  CrossedSquareByXMods . . . . . . . . . crossed square from 5 xmods + xpair
 ##
-InstallMethod( CrossedSquareByXMods, "default crossed square", true, 
-    [ IsXMod, IsXMod, IsXMod, IsXMod, IsGroupHomomorphism, IsCrossedPairing ], 
+InstallMethod( PreCrossedSquareByPreXMods, "default pre-crossed square", true, 
+    [ IsPreXMod, IsPreXMod, IsPreXMod, IsPreXMod, IsPreXMod, IsCrossedPairing ],  
     0,
-function( up, left, right, down, action, xpair )
+function( up, left, right, down, diag, xp )
 
-    Error( "this operation is not yet implemented" ); 
-    return fail;
+    local L, M, N, P, kappa, lambda, mu, nu, delta, PXS; 
+
+    L := Source( up );
+    M := Range( up );
+    N := Source( down ); 
+    P := Range( down ); 
+    kappa := Boundary( up ); 
+    lambda := Boundary( left );
+    mu := Boundary( right ); 
+    nu := Boundary( down ); 
+    delta := Boundary( diag ); 
+    ## checks 
+    if not ( ( L = Source( left ) ) and ( N = Range( left ) ) 
+         and ( M = Source( right ) ) and ( P = Range( right ) ) 
+         and ( L = Source( diag ) ) and ( P = Range( diag ) ) ) then 
+        Error( "sources and ranges not matching" ); 
+    fi; 
+    if not ( ( L = Range( xp ) ) and ( [N,M] = Source( xp ) ) ) then 
+        Error( "incorrect source/range for crossed pairing" ); 
+    fi;
+    
+    PXS := PreCrossedSquareObj( up, left, right, down, diag, xp );
+    if not IsPreCrossedSquare( PXS ) then 
+        Error( "PXS fails to be a crossed square" ); 
+    fi; 
+    return PXS;
+end );
+
+InstallMethod( CrossedSquareByXMods, "default crossed square", true, 
+    [ IsXMod, IsXMod, IsXMod, IsXMod, IsXMod, IsCrossedPairing ], 0,
+function( up, left, right, down, diag, xp )
+
+    local XS; 
+
+    XS := PreCrossedSquareByPreXMods( up, left, right, down, diag, xp );
+    if not IsCrossedSquare( XS ) then 
+        Info( InfoXMod, 1, "XS fails to be a crossed square" ); 
+        return fail; 
+    fi; 
+    return XS;
 end );
 
 ##############################################################################
@@ -1068,7 +1118,7 @@ function( P )
 end );
 
 InstallMethod( IsCat2Group, "generic method for a cat2-group",
-    true, [ IsHigherDimensionalGroup ], 0,
+    true, [ IsHigherDimensionalGroup ], 0, 
 function( P ) 
     local ok; 
     ok := ( HigherDimension( P ) = 3 ) 
@@ -1076,7 +1126,7 @@ function( P )
         and IsCat1Group( Left2DimensionalGroup( P ) )  
         and IsCat1Group( Right2DimensionalGroup( P ) )  
         and IsCat1Group( Down2DimensionalGroup( P ) ) 
-        and IsPreCat1Group( Diagonal2DimensionalGroup( P ) ); 
+        and IsCat1Group( Diagonal2DimensionalGroup( P ) ); 
     return ok; 
 end ); 
 
@@ -1473,7 +1523,6 @@ BindGlobal( "NextIterator_AllCat2Groups", function ( iter )
     local pair, next; 
     if IsDoneIterator( iter!.imagesIterator ) then 
         pair := NextIterator( iter!.pairsIterator ); 
-## Print( iter!.count, ", ", pair, "\n" );
         iter!.imagesIterator := 
             AllCat2GroupsWithImagesIterator( iter!.group, pair[1], pair[2] ); 
     fi; 

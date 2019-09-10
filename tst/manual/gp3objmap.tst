@@ -35,6 +35,36 @@ gap> X12 := XModByCentralExtension( pr12 );;
 ## Chapter 8
 
 ## Section 8.2.1
+gap> b := (2,4);; c := (1,2)(3,4);; p := (1,2,3,4);; 
+gap> d8 := Group( b, c );; 
+gap> SetName( d8, "d8" );; 
+gap> L := Subgroup( d8, [p^2] );; 
+gap> M := Subgroup( d8, [b] );; 
+gap> N := Subgroup( d8, [c] );; 
+gap> P := TrivialSubgroup( d8 );; 
+gap> kappa := GroupHomomorphismByImages( L, M, [p^2], [b] );; 
+gap> lambda := GroupHomomorphismByImages( L, N, [p^2], [c] );; 
+gap> delta := GroupHomomorphismByImages( L, P, [p^2], [()] );; 
+gap> mu := GroupHomomorphismByImages( M, P, [b], [()] );; 
+gap> nu := GroupHomomorphismByImages( N, P, [c], [()] );; 
+gap> up := XModByTrivialAction( kappa );; 
+gap> left := XModByTrivialAction( lambda );; 
+gap> diag := XModByTrivialAction( delta );; 
+gap> right := XModByTrivialAction( mu );; 
+gap> down := XModByTrivialAction( nu );; 
+gap> xp := CrossedPairingByCommutators( N, M, L );; 
+gap> Print( "xp([c,b]) = ", ImageElmCrossedPairing( xp, [c,b] ), "\n" ); 
+xp([c,b]) = (1,3)(2,4)
+gap> PXS := PreCrossedSquareByPreXMods( up, left, right, down, diag, xp ); 
+pre-crossed square with pre-crossed modules:
+      up = [Group( [ (1,3)(2,4) ] ) -> Group( [ (2,4) ] )]
+    left = [Group( [ (1,3)(2,4) ] ) -> Group( [ (1,2)(3,4) ] )]
+   right = [Group( [ (2,4) ] ) -> Group( () )]
+    down = [Group( [ (1,2)(3,4) ] ) -> Group( () )]
+gap> IsCrossedSquare( PXS ); 
+false
+
+## Section 8.2.2
 gap> d20 := DihedralGroup( IsPermGroup, 20 );;
 gap> gend20 := GeneratorsOfGroup( d20 ); 
 [ (1,2,3,4,5,6,7,8,9,10), (2,10)(3,9)(4,8)(5,7) ]
@@ -53,7 +83,7 @@ gap> xpc := CrossedPairing( XSconj );;
 gap> ImageElmCrossedPairing( xpc, [ p2, p12 ] );
 (1,9,7,5,3)(2,10,8,6,4)
 
-## Section 8.2.2
+## Section 8.2.3
 gap> X20 := XModByNormalSubgroup( d20, d10a );; 
 gap> X10 := XModByNormalSubgroup( d10b, c5d );; 
 gap> ok := IsNormalSub2DimensionalDomain( X20, X10 ); 
@@ -66,7 +96,7 @@ gap> xp20 := CrossedPairing( XS20 );;
 gap> ImageElmCrossedPairing( xp20, [ p1^2, p2 ] );
 (1,7,3,9,5)(2,8,4,10,6)
 
-## Section 8.2.3
+## Section 8.2.4
 gap> XSact := ActorCrossedSquare( X20 );
 crossed square with crossed modules:
       up = Whitehead[d10a->d20]
@@ -74,7 +104,7 @@ crossed square with crossed modules:
    right = Actor[d10a->d20]
     down = Norrie[d10a->d20]
 
-## Section 8.2.4
+## Section 8.2.5
 gap> AXS20 := CrossedSquareByAutomorphismGroup( d20 );
 [      d20 -> Inn(d20) ]
 [     |          |     ]
@@ -89,7 +119,7 @@ gap> xpi := CrossedPairing( AXS20 );;
 gap> ImageElmCrossedPairing( xpi, [ genI20[1], genI20[2] ] );
 (1,9,7,5,3)(2,10,8,6,4)
 
-## Section 8.2.5
+## Section 8.2.6
 gap> dn := Down2DimensionalGroup( XSconj );;
 gap> rt := Right2DimensionalGroup( XSconj );;
 gap> XSP := CrossedSquareByPullback( dn, rt ); 
@@ -105,7 +135,7 @@ gap> xp12 := CrossedPairing( XS12 );;
 gap> ImageElmCrossedPairing( xp12, [ (1,2,3,4,5,6), (2,6)(3,5) ] );
 (1,5,3)(2,6,4)(7,11,9)(8,12,10)
 
-## Section 8.2.6
+## Section 8.2.7
 gap> k4 := Group( (1,2), (3,4) );;
 gap> AX4 := XModByAutomorphismGroup( k4 );;
 gap> X4 := Image( IsomorphismPermObject( AX4 ) );;
@@ -124,20 +154,20 @@ gap> xps := CrossedPairing( XSS20 );;
 gap> ImageElmCrossedPairing( xps, [ p1^2, p2 ] );
 (1,7,3,9,5)(2,8,4,10,6)
 
-## Section 8.2.7 
+## Section 8.2.8
 gap> diag := Diagonal2DimensionalGroup( AXS20 );
 [d20->Aut(d20)]
 gap> XSdiag := CrossedSquare( diag );;      
 gap> StructureDescription( XSdiag );  
 [ "D20", "D10", "D10", "C2 x (C5 : C4)" ]
 
-## Section 8.2.8
+## Section 8.2.9
 gap> XStrans := Transpose3DimensionalGroup( XSconj ); 
 [  c5d -> d10b ]
 [   |      |   ]
 [ d10a -> d20  ]
 
-## Section 8.2.9
+## Section 8.2.10
 gap> pos7 := Position( ids, [ [12,2], [24,5] ] );;
 gap> Xn7 := nsx[pos7];;
 gap> IdGroup( Xn7 );
@@ -148,7 +178,7 @@ gap> CQXn7 := CentralQuotient( Xn7 );;
 gap> StructureDescription( CQXn7 );
 [ "C12", "C3", "C4 x S3", "S3" ]
 
-## Section 8.2.11
+## Section 8.2.12
 gap> Up2DimensionalGroup( XSconj );
 [c5d->d10a]
 gap> Right2DimensionalGroup( XSact );
@@ -163,11 +193,7 @@ gap> gensa[2]; ImageElm( act1, gensa[2] );
 (2,10)(3,9)(4,8)(5,7)
 (1,5)(2,4)(6,10)(7,9)
 
-## Section 8.2.12
-
-
-
-## Section 8.2.13
+## Section 8.2.14
 gap> xp := CrossedPairing( XSconj );
 crossed pairing: Group( [ ( 1, 3, 5, 7, 9)( 2, 4, 6, 8,10), 
   ( 1,10)( 2, 9)( 3, 8)( 4, 7)( 5, 6), (11,13,15,17,19)(12,14,16,18,20), 
@@ -221,35 +247,31 @@ gap> KnownPropertiesOfObject( autoconj );
   "IsAutomorphismHigherDimensionalDomain" ]
 
 # Section 8.4.1 
-gap> a := (1,2,3,4)(5,6,7,8);;
-gap> b := (1,5)(2,6)(3,7)(4,8);; 
-gap> c := (2,6)(4,8);;
-gap> G16 := Group( a, b, c );; 
-gap> SetName( G16, "c4c2:c2" );
-gap> t1a := GroupHomomorphismByImages( G16, G16, [a,b,c], [(),(),c] );; 
-gap> C1a := PreCat1GroupByEndomorphisms( t1a, t1a );;
-gap> t1b := GroupHomomorphismByImages( G16, G16, [a,b,c], [a,(),()] );; 
-gap> C1b := PreCat1GroupByEndomorphisms( t1b, t1b );;
-gap> C16 := Cat2Group( C1a, C1b );
-cat2-group with generating (pre-)cat1-groups:
-1 : [c4c2:c2 => Group( [ (), (), (2,6)(4,8) ] )]
-2 : [c4c2:c2 => Group( [ (1,2,3,4)(5,6,7,8), (), () ] )]
-gap> IsCat2Group( C16 );
+gap> a := (1,2,3,4,5,6);;
+gap> b := (2,6)(3,5);; 
+gap> d12 := Group( a, b );; 
+gap> SetName( d12, "d12" );
+gap> t1 := GroupHomomorphismByImages( d12, d12, [a,b], [a^3,b] );; 
+gap> C11 := PreCat1GroupByEndomorphisms( t1, t1 );;
+gap> t2 := GroupHomomorphismByImages( d12, d12, [a,b], [a^4,b] );; 
+gap> C12 := PreCat1GroupByEndomorphisms( t2, t2 );;
+gap> C2 := Cat2Group( C11, C12 );
+(pre-)cat2-group with generating (pre-)cat1-groups:
+1 : [d12 => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )]
+2 : [d12 => Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )]
+gap> IsCat2Group( C2 );
 true
-gap> IsCat1Group( Diagonal2DimensionalGroup( C16 ) );
-false
 
 # Section 8.4.3 
-gap> xsC16 := CrossedSquareOfCat2Group( C16 );
+gap> xsC2 := CrossedSquareOfCat2Group( C2 );
 crossed square with crossed modules:
-      up = [Group( [ (1,5)(2,6)(3,7)(4,8) ] ) -> Group( [ ( 2, 6)( 4, 8) ] )]
-    left = [Group( [ (1,5)(2,6)(3,7)(4,8) ] ) -> Group( 
-[ (1,2,3,4)(5,6,7,8), (), () ] )]
-   right = [Group( [ ( 2, 6)( 4, 8) ] ) -> Group( () )]
-    down = [Group( [ (1,2,3,4)(5,6,7,8), (), () ] ) -> Group( () )]
+      up = [Group( () ) -> Group( [ (1,4)(2,5)(3,6) ] )]
+    left = [Group( () ) -> Group( [ (1,3,5)(2,4,6) ] )]
+   right = [Group( [ (1,4)(2,5)(3,6) ] ) -> Group( [ (2,6)(3,5) ] )]
+    down = [Group( [ (1,3,5)(2,4,6) ] ) -> Group( [ (2,6)(3,5) ] )]
 
-gap> IdGroup( xsC16 );
-[ [ 2, 1 ], [ 2, 1 ], [ 4, 1 ], [ 1, 1 ] ]
+gap> IdGroup( xsC2 );
+[ [ 1, 1 ], [ 2, 1 ], [ 3, 1 ], [ 2, 1 ] ]
 
 gap> SetName( Source( Right2DimensionalGroup( XSact ) ), "c5:c4" );
 gap> SetName( Range( Right2DimensionalGroup( XSact ) ), "c5:c4" );
@@ -257,21 +279,19 @@ gap> Name( XSact );
 "[d10a->c5:c4,d20->c5:c4]"
 
 gap> C2act := Cat2GroupOfCrossedSquare( XSact );             
-cat2-group with generating (pre-)cat1-groups:
+(pre-)cat2-group with generating (pre-)cat1-groups:
 1 : [((c5:c4 |X c5:c4) |X (d20 |X d10a))=>(c5:c4 |X c5:c4)]
 2 : [((c5:c4 |X c5:c4) |X (d20 |X d10a))=>(c5:c4 |X d20)]
 gap> Size( C2act );
 [ 80000, 400, 400, 20 ]
 
 # Section 8.5.1
-gap> d12 := DihedralGroup( IsPermGroup, 12 );  SetName( d12, "d12" );
-Group([ (1,2,3,4,5,6), (2,6)(3,5) ])
 gap> c2 := Subgroup( d12, [ (1,3)(4,6) ] );; 
 gap> s3 := Subgroup( d12, [ (1,3)(4,6), (1,5)(2,4) ] );; 
 gap> AllCat2GroupsWithImagesNumber( d12, c2, s3 );
 1
 gap> AllCat2GroupsWithImages( d12, c2, s3 );      
-[ cat2-group with generating (pre-)cat1-groups:
+[ (pre-)cat2-group with generating (pre-)cat1-groups:
     1 : [d12 => Group( [ (), (1,3)(4,6) ] )]
     2 : [d12 => Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )] ]
 

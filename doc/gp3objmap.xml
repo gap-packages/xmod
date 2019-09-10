@@ -109,7 +109,7 @@ and the diagonal
 </Display>
 are crossed modules (with actions via <M>P</M>). 
 <P/>
-The first four of these are called the <E>up, left, right</E> and <E>down</E> 
+These will be called the <E>up, left, right, down</E> and <E>diagonal</E> 
 crossed modules of <M>\calS</M>. 
 </Item>
 <Item>
@@ -195,7 +195,52 @@ with conversion between the two types of structure.
 Some standard constructions of crossed squares are listed below. 
 At present, a limited number of constructions is implemented.
 Morphisms of crossed squares have also been implemented, 
-though there is still a lot to be done.
+though there is still a great deal to be done.
+
+<ManSection>
+   <Oper Name="CrossedSquareByXMods"
+         Arg="up, left, right, down, diag, pairing" />
+   <Oper Name="PreCrossedSquareByPreXMods"
+         Arg="up, left, right, down, diag, pairing" />
+<Description>
+If <E>up,left,right,down,diag</E> are five (pre-)crossed modules 
+whose sources and ranges agree, as above, then we just have to add 
+a crossed pairing to complete the data for a (pre-)crossed square. 
+<P/> 
+We take as our example a simple, but significant case. 
+We start with five crossed modules formed from subgroups of 
+<M>D_8</M> with generators <M>[(1,2,3,4),(3,4)</M>. 
+The result os a pre-crossed square which is <E>not</E> a crossed square. 
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> b := (2,4);; c := (1,2)(3,4);; p := (1,2,3,4);; 
+gap> d8 := Group( b, c );; 
+gap> SetName( d8, "d8" );; 
+gap> L := Subgroup( d8, [p^2] );; 
+gap> M := Subgroup( d8, [b] );; 
+gap> N := Subgroup( d8, [c] );; 
+gap> P := TrivialSubgroup( d8 );; 
+gap> kappa := GroupHomomorphismByImages( L, M, [p^2], [b] );; 
+gap> lambda := GroupHomomorphismByImages( L, N, [p^2], [c] );; 
+gap> delta := GroupHomomorphismByImages( L, P, [p^2], [()] );; 
+gap> mu := GroupHomomorphismByImages( M, P, [b], [()] );; 
+gap> nu := GroupHomomorphismByImages( N, P, [c], [()] );; 
+gap> up := XModByTrivialAction( kappa );; 
+gap> left := XModByTrivialAction( lambda );; 
+gap> diag := XModByTrivialAction( delta );; 
+gap> right := XModByTrivialAction( mu );; 
+gap> down := XModByTrivialAction( nu );; 
+gap> xp := CrossedPairingByCommutators( N, M, L );; 
+gap> Print( "xp([c,b]) = ", ImageElmCrossedPairing( xp, [c,b] ), "\n" ); 
+xp([c,b]) = (1,3)(2,4)
+gap> PXS := PreCrossedSquareByPreXMods( up, left, right, down, diag, xp ); 
+Display( PXS );
+Print( "PXS is a crossed square? ", IsCrossedSquare( PXS ), "\n\n" ); 
+]]>
+</Example>
 
 <ManSection>
    <Oper Name="CrossedSquareByNormalSubgroups"
@@ -936,23 +981,20 @@ are normally called with a single argument, a list of cat<M>^1</M>-groups.
 <P/>
 <Example>
 <![CDATA[
-gap> a := (1,2,3,4)(5,6,7,8);;
-gap> b := (1,5)(2,6)(3,7)(4,8);; 
-gap> c := (2,6)(4,8);;
-gap> G16 := Group( a, b, c );; 
-gap> SetName( G16, "c4c2:c2" );
-gap> t1a := GroupHomomorphismByImages( G16, G16, [a,b,c], [(),(),c] );; 
-gap> C1a := PreCat1GroupByEndomorphisms( t1a, t1a );;
-gap> t1b := GroupHomomorphismByImages( G16, G16, [a,b,c], [a,(),()] );; 
-gap> C1b := PreCat1GroupByEndomorphisms( t1b, t1b );;
-gap> C16 := Cat2Group( C1a, C1b );
-cat2-group with generating (pre-)cat1-groups:
-1 : [c4c2:c2 => Group( [ (), (), (2,6)(4,8) ] )]
-2 : [c4c2:c2 => Group( [ (1,2,3,4)(5,6,7,8), (), () ] )]
-gap> IsCat2Group( C16 );
+gap> a := (1,2,3,4,5,6);;
+gap> b := (2,6)(3,5);; 
+gap> d12 := Group( a, b );; 
+gap> SetName( d12, "d12" );
+gap> t1 := GroupHomomorphismByImages( d12, d12, [a,b], [a^3,b] );; 
+gap> C11 := PreCat1GroupByEndomorphisms( t1, t1 );;
+gap> t2 := GroupHomomorphismByImages( d12, d12, [a,b], [a^4,b] );; 
+gap> C12 := PreCat1GroupByEndomorphisms( t2, t2 );;
+gap> C2 := Cat2Group( C11, C12 );
+(pre-)cat2-group with generating (pre-)cat1-groups:
+1 : [d12 => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )]
+2 : [d12 => Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )]
+gap> IsCat2Group( C2 );
 true
-gap> IsCat1Group( Diagonal2DimensionalGroup( C16 ) );
-false
 ]]>
 </Example>
 
@@ -988,16 +1030,15 @@ cat<M>^2</M>-group, and conversely.
 <P/>
 <Example>
 <![CDATA[
-gap> xsC16 := CrossedSquareOfCat2Group( C16 );
+gap> xsC2 := CrossedSquareOfCat2Group( C2 );
 crossed square with crossed modules:
-      up = [Group( [ (1,5)(2,6)(3,7)(4,8) ] ) -> Group( [ ( 2, 6)( 4, 8) ] )]
-    left = [Group( [ (1,5)(2,6)(3,7)(4,8) ] ) -> Group( 
-[ (1,2,3,4)(5,6,7,8), (), () ] )]
-   right = [Group( [ ( 2, 6)( 4, 8) ] ) -> Group( () )]
-    down = [Group( [ (1,2,3,4)(5,6,7,8), (), () ] ) -> Group( () )]
+      up = [Group( () ) -> Group( [ (1,4)(2,5)(3,6) ] )]
+    left = [Group( () ) -> Group( [ (1,3,5)(2,4,6) ] )]
+   right = [Group( [ (1,4)(2,5)(3,6) ] ) -> Group( [ (2,6)(3,5) ] )]
+    down = [Group( [ (1,3,5)(2,4,6) ] ) -> Group( [ (2,6)(3,5) ] )]
 
 gap> IdGroup( xsC16 );
-[ [ 2, 1 ], [ 2, 1 ], [ 4, 1 ], [ 1, 1 ] ]
+[ [ 1, 1 ], [ 2, 1 ], [ 3, 1 ], [ 2, 1 ] ]
 
 gap> SetName( Source( Right2DimensionalGroup( XSact ) ), "c5:c4" );
 gap> SetName( Range( Right2DimensionalGroup( XSact ) ), "c5:c4" );
@@ -1005,7 +1046,7 @@ gap> Name( XSact );
 "[d10a->c5:c4,d20->c5:c4]"
 
 gap> C2act := Cat2GroupOfCrossedSquare( XSact );             
-cat2-group with generating (pre-)cat1-groups:
+(pre-)cat2-group with generating (pre-)cat1-groups:
 1 : [((c5:c4 |X c5:c4) |X (d20 |X d10a))=>(c5:c4 |X c5:c4)]
 2 : [((c5:c4 |X c5:c4) |X (d20 |X d10a))=>(c5:c4 |X d20)]
 gap> Size( C2act );
@@ -1059,14 +1100,12 @@ of the isomorphism classes of these cat<M>^2</M>-groups.
 <P/>
 <Example>
 <![CDATA[
-gap> d12 := DihedralGroup( IsPermGroup, 12 );  SetName( d12, "d12" );
-Group([ (1,2,3,4,5,6), (2,6)(3,5) ])
 gap> c2 := Subgroup( d12, [ (1,3)(4,6) ] );; 
 gap> s3 := Subgroup( d12, [ (1,3)(4,6), (1,5)(2,4) ] );; 
 gap> AllCat2GroupsWithImagesNumber( d12, c2, s3 );
 1
 gap> AllCat2GroupsWithImages( d12, c2, s3 );      
-[ cat2-group with generating (pre-)cat1-groups:
+[ (pre-)cat2-group with generating (pre-)cat1-groups:
     1 : [d12 => Group( [ (), (1,3)(4,6) ] )]
     2 : [d12 => Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )] ]
 ]]>

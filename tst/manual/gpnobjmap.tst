@@ -23,7 +23,7 @@ gap> pc1 := PreCat1GroupByEndomorphisms( idem[1], idem[1] );
 gap> pc2 := PreCat1GroupByEndomorphisms( idem[2], idem[2] );
 [Group( [ f1, f2 ] )=>Group( [ f1, <identity> of ... ] )]
 gap> CC12 := CatnGroup( [ pc1, pc2 ] );
-cat2-group with generating (pre-)cat1-groups:
+(pre-)cat2-group with generating (pre-)cat1-groups:
 1 : [Group( [ f1, f2 ] )=>Group( [ <identity> of ..., <identity> of ... ] )]
 2 : [Group( [ f1, f2 ] )=>Group( [ f1, <identity> of ... ] )]
 gap> HigherDimension( CC12 );
@@ -32,7 +32,7 @@ gap> HigherDimension( CC12 );
 gap> pc3 := PreCat1GroupByEndomorphisms( idem[5], idem[5] );
 [Group( [ f1, f2 ] )=>Group( [ f1, f2 ] )]
 gap> CC233 := CatnGroup( [pc2, pc3, pc3] );
-cat3-group with generating (pre-)cat1-groups:
+(pre-)cat3-group with generating (pre-)cat1-groups:
 1 : [Group( [ f1, f2 ] )=>Group( [ f1, <identity> of ... ] )]
 2 : [Group( [ f1, f2 ] )=>Group( [ f1, f2 ] )]
 3 : [Group( [ f1, f2 ] )=>Group( [ f1, f2 ] )]
@@ -44,7 +44,7 @@ true
 
 gap> CC5 := CatnGroup( [ Cat1Group(8,2,1), Cat1Group(8,2,2),
 >          Cat1Group(8,2,4), Cat1Group(8,2,6), Cat1Group(8,2,6) ] );
-cat5-group with generating (pre-)cat1-groups:
+(pre-)cat5-group with generating (pre-)cat1-groups:
 1 : [C4 x C2=>Group( [ <identity> of ..., <identity> of ..., <identity> of ... ] )]
 2 : [C4 x C2=>Group( [ <identity> of ..., f2 ] )]
 3 : [C4 x C2=>Group( [ f1, <identity> of ... ] )]
@@ -52,7 +52,7 @@ cat5-group with generating (pre-)cat1-groups:
 5 : [C4 x C2=>C4 x C2]
 
 gap> Display( CC5 );
-cat5-group with generating (pre-)cat1-groups:
+(pre-)cat5-group with generating (pre-)cat1-groups:
 1 : 
 Cat1-group :- 
 : Source group C4 x C2 has generators:
@@ -147,7 +147,7 @@ Cat1-group [C4 x C2=>C4 x C2] :-
 : associated crossed module is [triv->C4 x C2]
 
 gap> CC6 := Cat2Group( Cat1Group(6,2,2), Cat1Group(6,2,3) );
-cat2-group with generating (pre-)cat1-groups:
+(pre-)cat2-group with generating (pre-)cat1-groups:
 1 : [C6=>Group( [ f1 ] )]
 2 : [C6=>Group( [ f2 ] )]
 

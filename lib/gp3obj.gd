@@ -132,7 +132,8 @@ InstallTrueMethod( IsPreCrossedSquare, IsCrossedSquare );
 ##
 #F  PreCrossedSquare( <args> ) 
 #F  CrossedSquare( <args> ) 
-#O  CrossedSquareByXMods( <up>, <left>, <down>, <right>, <action>, <pairing> ) 
+#O  PreCrossedSquareByPreXMods( <up>, <left>, <down>, <right>, <diag>, <xpair> ) 
+#O  CrossedSquareByXMods( <up>, <left>, <down>, <right>, <diag>, <xpair> ) 
 #O  CrossedSquareByNormalSubgroups( <L>, <M>, <N>, <P> )
 #O  CrossedSquareByNormalSubXMod( <xmod>, <subxmod> ) 
 #O  CrossedSquareByPullback( <xmod>, <xmod> )
@@ -142,8 +143,10 @@ InstallTrueMethod( IsPreCrossedSquare, IsCrossedSquare );
 ##
 DeclareGlobalFunction( "PreCrossedSquare" );
 DeclareGlobalFunction( "CrossedSquare" );
+DeclareOperation( "PreCrossedSquareByPreXMods", 
+  [ IsPreXMod, IsPreXMod, IsPreXMod, IsPreXMod, IsPreXMod, IsCrossedPairing ] );
 DeclareOperation( "CrossedSquareByXMods", 
-  [ IsXMod, IsXMod, IsXMod, IsXMod, IsGroupHomomorphism, IsCrossedPairing ] );
+  [ IsXMod, IsXMod, IsXMod, IsXMod, IsXMod, IsCrossedPairing ] );
 DeclareOperation( "CrossedSquareByNormalSubgroups", 
     [ IsGroup, IsGroup, IsGroup, IsGroup ] );
 DeclareOperation( "CrossedSquareByNormalSubgroups", 
