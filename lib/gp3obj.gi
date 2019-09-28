@@ -450,23 +450,49 @@ function( up, lt, rt, dn, dg, xp )
     return PS;
 end );
 
-#############################################################################
+###############################################################################
 ##
-#F  PreCrossedSquare( <arg> ) 
-## 
+#F  PreCrossedSquare( <up>, <lt>, <rt>, <dn>, <dg>, <xp> ) 5 prexmods + pairing
+#F  PreCrossedSquare( <PC2> )  . . . . . . . . . . . . . . for a pre-cat2-group
+##
 InstallGlobalFunction( PreCrossedSquare, function( arg )
 
-    Print( "no specific methods for precrossed squares yet implemented\n" ); 
-    return fail; 
+    local nargs, PXS, ok;
+
+    nargs := Length( arg );
+    ok := true; 
+    if ( nargs = 1 ) then
+        if ( HasIsPreCat2Group( arg[1] ) and IsPreCat2Group( arg[1] ) ) then 
+            Info( InfoXMod, 1, "pre-crossed square of a pre-cat2-group" ); 
+            PXS := PreCrossedSquareOfPreCat2Group( arg[1] );
+        else 
+            ok := false; 
+        fi;
+    elif ( nargs = 6  ) then
+        PXS := PreCrossedSquareByPreXMods(
+                   arg[1], arg[2], arg[3], arg[4], arg[5], arg[6] );
+    else  
+        ok := false; 
+    fi; 
+    if not ok then 
+        Print( "standard usage for the function PreCrossedSquare:\n" );  
+        Print( "    PreCrossedSquare( <up>, <lt>, <rt>, <dn>, <dg>, <xp> );\n" ); 
+        Print( "             for 5 pre-crossed modules and a crossed pairing\n" );
+        Print( "or: PreCrossedSquare( <PC2G> );  for a pre-cat2-group> );\n" );
+        return fail;
+    fi;
+    return PXS;
 end );
+
 
 #############################################################################
 ##
-#F  CrossedSquare( <L>, <M>, <N>, <P> ) . . . . . . by normal subgroups
-#F  CrossedSquare( <X0> ) . . . . . . . . . . . . . actor crossed square
-#F  CrossedSquare( <X0>, <X1> ) . . . . . . . . . . by pullback 
-#F  CrossedSquare( <X0>, <X1> ) . . . . . . . . . . by normal subxmod
-#F  CrossedSquare( <C0> ) . . . . . . . . . . . . . for a cat2-group
+#F  CrossedSquare( <up>, <lt>, <rt>, <dn>, <dg>, <xp> ) 5 xmods and a pairing
+#F  CrossedSquare( <L>, <M>, <N>, <P> ) . . . . . . . . by normal subgroups
+#F  CrossedSquare( <X0> ) . . . . . . . . . . . . . . . actor crossed square
+#F  CrossedSquare( <X0>, <X1> ) . . . . . . . . . . . . by pullback 
+#F  CrossedSquare( <X0>, <X1> ) . . . . . . . . . . . . by normal subxmod
+#F  CrossedSquare( <C2G> )  . . . . . . . . . . . . . . for a cat2-group
 ##
 InstallGlobalFunction( CrossedSquare, function( arg )
 
@@ -508,11 +534,14 @@ InstallGlobalFunction( CrossedSquare, function( arg )
     fi; 
     if not ok then 
         Print( "standard usage for the function CrossedSquare:\n" );  
-        Print( "    CrossedSquare( <L>, <M>, <N>, <P> );  normal subgroups\n" );
+        Print( "    CrossedSquare( <up>, <lt>, <rt>, <dn>, <dg>, <xp> );\n" ); 
+        Print( "             for 5 crossed modules and a crossed pairing\n" );
+        Print( "or: CrossedSquare( <L>, <M>, <N>, <P> );  " ); 
+        Print( "for 3 normal subgroups of P\n" );
         Print( "or: CrossedSquare( <X0>, <X1> );  for a pullback\n" );
-        Print( "or: CrossedSquare( <X0>, <X1> );  for normal subxmod\n" );
+        Print( "or: CrossedSquare( <X0>, <X1> );  for a normal subxmod\n" );
         Print( "or: CrossedSquare( <X0> );  for splitting an xmod\n" );
-        Print( "or: CrossedSquare( <C0> );  for a cat2-group> );\n" );
+        Print( "or: CrossedSquare( <C2G> );  for a cat2-group> );\n" );
         return fail;
     fi;
     return XS;
@@ -580,14 +609,11 @@ function( L, M, N, P )
 
     local XS, up, lt, rt, dn, dg, xp, diag;
 
-    if IsSubgroup( L, P ) and ( L <> P ) then 
-        Error( "require ordering L <= M,N <= P" ); 
-    fi;
     if not ( IsNormal( P, M ) and IsNormal( P, N ) and IsNormal( L, P ) ) then
         Error( "M,N,L fail to be normal subgroups of P" ); 
     fi;
     if not ( IsNormal( M, L ) and IsNormal( N, L ) ) then
-        Error( "L fails to be a normal subgroup of M and of N" ); 
+        Error( "L fails to be a normal subgroup of both M and N" ); 
     fi;
     if not ( IsSubgroup( Intersection(M,N), L ) 
          and IsSubgroup( L, CommutatorSubgroup(M,N) ) ) then 
