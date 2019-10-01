@@ -201,6 +201,23 @@ crossed pairing: Group( [ ( 1, 3, 5, 7, 9)( 2, 4, 6, 8,10),
 gap> ImageElmCrossedPairing( xp,
 >        [ (1,6)(2,5)(3,4)(7,10)(8,9), (1,5)(2,4)(6,9)(7,8) ] );
 (1,7,8,5,3)(2,9,10,6,4)
+gap> F := FreeGroup(1);;
+gap> x := GeneratorsOfGroup(F)[1];;
+gap> z := GroupHomomorphismByImages( F, F, [x], [x^0] );;
+gap> id := GroupHomomorphismByImages( F, F, [x], [x] );;
+gap> map := Mapping2ArgumentsByFunction( [F,F], F, function(c) 
+>           return x^(ExponentSumWord(c[1],x)*ExponentSumWord(c[2],x)); end );; 
+gap> h := CrossedPairingObj( [F,F], F, map );;
+gap> ImageElmCrossedPairing( h, [x^3,x^4] );
+f1^12
+gap> A := AutomorphismGroup( F );;
+gap> a := GeneratorsOfGroup(A)[1];;
+gap> act := GroupHomomorphismByImages( F, A, [x], [a^2] );;
+gap> X0 := XModByBoundaryAndAction( z, act );;
+gap> X1 := XModByBoundaryAndAction( id, act );;
+gap> XSF := PreCrossedSquareByPreXMods( X0, X0, X1, X1, X0, h );; 
+gap> IsCrossedSquare( XSF ); 
+true
 
 ## Section 8.3.3
 gap> ad20 := GroupHomomorphismByImages( d20, d20, [p1,p2], [p1,p2^p1] );;

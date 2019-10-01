@@ -296,7 +296,7 @@ function( XS )
     local up, lt, rt, dn, L, M, N, P, kappa, lambda, mu, nu, 
           lambdanu, kappamu, autu, autl, actdg, dg, ok, morud, morlr, 
           genL, genM, genN, genP, actup, actlt, actrt, actdn, l, p, 
-          xp, x, y, m, n, m2, n2, am, an, apdg, aprt, apdn, nboxm;
+          xp, x, y, z, m, n, m2, n2, am, an, apdg, aprt, apdn, nboxm;
 
     if not ( IsPreCrossedSquare( XS ) and HasCrossedPairing( XS ) ) then
         return false;
@@ -349,7 +349,8 @@ function( XS )
                 x := ImageElmCrossedPairing( xp, [ n*n2, m ] ); 
                 an := ImageElm( actlt, n2 ); 
                 y := ImageElm( an, ImageElmCrossedPairing( xp, [n,m] ) ); 
-                if not x = y * ImageElmCrossedPairing( xp, [n2,m] ) then 
+                z := ImageElmCrossedPairing( xp, [n2,m] ); 
+                if not x = y * z then 
                     Info( InfoXMod, 2, "n1,n2,m crossed pairing axiom fails" ); 
                     return false; 
                 fi; 
@@ -442,11 +443,12 @@ function( up, lt, rt, dn, dg, xp )
       Right2DimensionalGroup, rt,
       Down2DimensionalGroup, dn,
       Diagonal2DimensionalGroup, dg,
-      CrossedPairing, xp,
+      CrossedPairing, xp, 
+      HigherDimension, 3, 
       IsHigherDimensionalGroup, true );
     if not IsPreCrossedSquare( PS ) then
         Info( InfoXMod, 1, "Warning: not a pre-crossed square." );
-    fi;
+    fi; 
     return PS;
 end );
 
@@ -2250,7 +2252,8 @@ end );
 InstallMethod( IsSymmetric3DimensionalGroup, 
     "generic method for 3d-groups", true, [ IsHigherDimensionalGroup ], 0,
 function( XS )
-    return Is3DimensionalGroup( XS ) 
+    return IsHigherDimensionalGroup( XS ) 
+           and HigherDimension( XS ) = 3 
            and ( Up2DimensionalGroup( XS ) = Left2DimensionalGroup( XS ) ) 
            and ( Right2DimensionalGroup( XS ) = Down2DimensionalGroup( XS ) );
 end );

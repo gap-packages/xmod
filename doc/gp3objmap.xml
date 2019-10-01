@@ -700,10 +700,11 @@ its <C>Left2DimensionalGroup</C>.
          Arg="xpair" />
    <Oper Name="ImageElmCrossedPairing"
          Arg="XS pair" />
+   <Oper Name="Mapping2ArgumentsByFunction"
+         Arg="MxN, L, map" />
 <Description>
 Crossed pairings have been implemented using an operation 
 <C>Mapping2ArgumentsByFunction</C>. 
-<Index>Mapping2ArgumentsByFunction</Index> 
 This encodes a map <M>\{M,N\} \to L</M> as a map <M>M \times N \to L</M>. 
 <P/> 
 The operation <C>ImageElmCrossedPairing</C> returns the image 
@@ -712,6 +713,7 @@ when a crossed pairing <M>\{M,N\} \to L</M> is applied to the pair
 </Description>
 </ManSection>
 <P/>
+The first example shows the crossed pairing in the crossed square <C>XSconj</C>. 
 <Example>
 <![CDATA[
 gap> xp := CrossedPairing( XSconj );
@@ -721,6 +723,29 @@ crossed pairing: Group( [ ( 1, 3, 5, 7, 9)( 2, 4, 6, 8,10),
 gap> ImageElmCrossedPairing( xp,                                 
 >      [ (1,6)(2,5)(3,4)(7,10)(8,9), (1,5)(2,4)(6,9)(7,8) ] );
 (1,7,8,5,3)(2,9,10,6,4)
+]]>
+</Example>
+
+The second example shows how to construct a crossed pairing.
+<Example>
+<![CDATA[
+gap> F := FreeGroup(1);;
+gap> x := GeneratorsOfGroup(F)[1];;
+gap> z := GroupHomomorphismByImages( F, F, [x], [x^0] );;
+gap> id := GroupHomomorphismByImages( F, F, [x], [x] );;
+gap> map := Mapping2ArgumentsByFunction( [F,F], F, function(c) 
+>           return x^(ExponentSumWord(c[1],x)*ExponentSumWord(c[2],x)); end );; 
+gap> h := CrossedPairingObj( [F,F], F, map );;
+gap> ImageElmCrossedPairing( h, [x^3,x^4] );
+f1^12
+gap> A := AutomorphismGroup( F );;
+gap> a := GeneratorsOfGroup(A)[1];;
+gap> act := GroupHomomorphismByImages( F, A, [x], [a^2] );;
+gap> X0 := XModByBoundaryAndAction( z, act );;
+gap> X1 := XModByBoundaryAndAction( id, act );;
+gap> XSF := PreCrossedSquareByPreXMods( X0, X0, X1, X1, X0, h );; 
+gap> IsCrossedSquare( XSF ); 
+true
 ]]>
 </Example>
 </Section>
