@@ -23,7 +23,7 @@ gap> a := GroupHomomorphismByImages( c3c3, c3c3,
 gap> aut := Group( [a] );; 
 gap> act := GroupHomomorphismByImages( s3, aut, [(11,12),(12,13)], [a,a] );;
 gap> X33 := XModByBoundaryAndAction( bdy, act );; 
-gap> C33 := Cat1GroupOfXMod( X33 );; 
+gap> C33 := Cat1GroupOfXMod( X33 ).precat1;; 
 gap> G33 := Source( C33 );; 
 gap> gpd33 := GroupGroupoid( C33 ); 
 groupoid with 2 pieces:

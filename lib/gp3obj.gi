@@ -1998,19 +1998,19 @@ function( XS )
     act_dg := XModAction( diag );
     xpair := CrossedPairing( XS );
 
-    Cup := Cat1GroupOfXMod( up );
+    Cup := Cat1GroupOfXMod( up ).precat1;
     MxL := Source( Cup );
     e1MxL := Embedding( MxL, 1 );
     e2MxL := Embedding( MxL, 2 );
     genMxL := Concatenation( List( genM, m -> ImageElm( e1MxL, m ) ), 
                              List( genL, l -> ImageElm( e2MxL, l ) ) ); 
-    Cleft := Cat1GroupOfXMod( left );
+    Cleft := Cat1GroupOfXMod( left ).precat1;
     NxL := Source( Cleft );
     e1NxL := Embedding( NxL, 1 );
     e2NxL := Embedding( NxL, 2 );
     genNxL := Concatenation( List( genN, n -> ImageElm( e1NxL, n ) ), 
                              List( genL, l -> ImageElm( e2NxL, l ) ) ); 
-    Cright := Cat1GroupOfXMod( right ); 
+    Cright := Cat1GroupOfXMod( right ).precat1; 
     PxM := Source( Cright ); 
     e1PxM := Embedding( PxM, 1 );
     e2PxM := Embedding( PxM, 2 );
@@ -2026,7 +2026,7 @@ function( XS )
     if ( InfoLevel( InfoXMod ) > 2 ) then 
         Display( morCleftCright ); 
     fi;
-    Cdown := Cat1GroupOfXMod( down ); 
+    Cdown := Cat1GroupOfXMod( down ).precat1; 
     PxN := Source( Cdown ); 
     e1PxN := Embedding( PxN, 1 );
     e2PxN := Embedding( PxN, 2 );
@@ -2073,7 +2073,7 @@ function( XS )
         Print( "crossed module XPMNL:\n" );
         Display( XPMNL );
     fi; 
-    CPMNL := Cat1GroupOfXMod( XPMNL ); 
+    CPMNL := Cat1GroupOfXMod( XPMNL ).precat1; 
     Info( InfoXMod, 2, "cat1-group CPMNL: ", StructureDescription(CPMNL) );
     PMNL := Source( CPMNL );
     e1PMNL := Embedding( PMNL, 1 );
@@ -2109,7 +2109,7 @@ function( XS )
         Print( "crossed module XPNML:\n" );
         Display( XPNML );
     fi;
-    CPNML := Cat1GroupOfXMod( XPNML ); 
+    CPNML := Cat1GroupOfXMod( XPNML ).precat1; 
     Info( InfoXMod, 2, "cat1-group CPNML: ", StructureDescription(CPNML) );
     PNML := Source( CPNML );
     e1PNML := Embedding( PNML, 1 );

@@ -474,7 +474,8 @@ function( g2d )
         fi;
     fi; 
     if ( HasIsXMod( g2d ) and IsXMod( g2d ) and HasCat1GroupOfXMod( g2d ) ) then
-        Print( ": associated cat1-group is ", Cat1GroupOfXMod( g2d ), "\n" );
+        Print( ": associated cat1-group is ", 
+               Cat1GroupOfXMod( g2d ), "\n" );
     elif ( HasIsCat1Group( g2d ) and IsCat1Group( g2d ) 
            and HasXModOfCat1Group( g2d ) ) then
         Print( ": associated crossed module is ", 
@@ -773,13 +774,18 @@ InstallMethod( PreCat1GroupOfPreXMod,
     "convert a pre-crossed module to a pre-cat1-group", true, [ IsPreXMod ], 0,
 function( X0 )
 
-    local XM, Xsrc, Xrng, Xact, Xbdy, gensrc, genrng, one, imbdy, info, G, 
-          genG, t, h, f, eR, eS, imeR, imeS, projS, imt, imh, ime, imf, C;
+    local S0, R0, iso, XM, Xsrc, Xrng, Xact, Xbdy, gensrc, genrng, one, 
+          imbdy, info, G, genG, t, h, f, eR, eS, imeR, imeS, projS, imt, 
+          imh, ime, imf, C, mgis, embs, embr, pcrec;
 
+    S0 := Source( X0 ); 
+    R0 := Range( X0 ); 
     if not ( IsPermPreXMod( X0 ) or IsPcPreXMod( X0 ) ) then
         Info( InfoXMod, 1, "converting to perm xmod" ); 
-        XM := Range( IsomorphismPerm2DimensionalGroup( X0 ) ); 
+        iso := IsomorphismPerm2DimensionalGroup( X0 ); 
+        XM := Range( iso ); 
     else 
+        iso := IdentityMapping( X0 );
         XM := X0;
     fi;
     Xsrc := Source( XM );
@@ -806,6 +812,8 @@ function( X0 )
         h := GroupHomomorphismByImages( G, Xrng, genG, imh );
         eR := Embedding( G, 1 );
         eR := AsGroupGeneralMappingByImages( eR );
+        eS := Embedding( G, 2 );
+        eS := AsGroupGeneralMappingByImages( eS );
     else
         Info( InfoXMod, 2, "Using semidirect product: ", Xrng, " |X ", Xsrc );
         G := SemidirectProduct( Xrng, Xact, Xsrc );
@@ -831,15 +839,22 @@ function( X0 )
             i -> imt[i] * ImageElm( Xbdy, projS[i] ) ); 
         h := GroupHomomorphismByImages( G, Xrng, genG, imh );
     fi;
-    SetSourceEmbedding( XM, eR );
     C := PreCat1GroupByTailHeadEmbedding( t, h, eR );
+    SetSourceEmbedding( XM, eR ); 
     if HasName( X0 ) then 
         SetName( C, Concatenation( "cat1(", Name( X0 ), ")" ) ); 
     fi; 
+    mgis := MappingGeneratorsImages( SourceHom( iso ) * eS ); 
+    embs := GroupHomomorphismByImages( S0, G, mgis[1], mgis[2] ); 
+    embr := RangeHom( iso ); 
     if ( X0 <> XM ) then 
         SetPreCat1GroupOfPreXMod( X0, C );
     fi;
-    return C;
+    pcrec := rec( precat1 := C );
+    if HasIsXMod( X0 ) and IsXMod( X0 ) then 
+        pcrec.iscat1 := true; 
+    fi;
+    return pcrec; 
 end ); 
 
 #############################################################################
@@ -1117,16 +1132,16 @@ end );
 ##
 #M  Cat1GroupOfXMod
 ##
-InstallMethod( Cat1GroupOfXMod, "generic method for crossed modules",
-    true, [ IsXMod ], 0,
+InstallMethod( Cat1GroupOfXMod, "generic method for crossed modules", 
+    true, [ IsXMod ], 0, 
 function( X1 )
 
-    local C1;
-    C1 := PreCat1GroupOfPreXMod( X1 );
-    SetIsCat1Group( C1, true );
+    local PC1, C1;
+    PC1 := PreCat1GroupOfPreXMod( X1 ); 
+    C1 := PC1.precat1;
     SetXModOfCat1Group( C1, X1 );
-    SetCat1GroupOfXMod( X1, C1 );
-    return C1;
+    ## SetCat1GroupOfXMod( X1, PC1 );
+    return PC1;
 end );
 
 ##############################################################################

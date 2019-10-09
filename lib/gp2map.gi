@@ -1504,7 +1504,7 @@ function( phi )
     return mor;
 end );
 
-InstallMethod( Cat1GroupMorphismOfXModMorphism, "for a pre-crossed module morphism",
+InstallMethod( Cat1GroupMorphismOfXModMorphism, "for an xmod morphism",
     true, [ IsXModMorphism ], 0,
 function( mor )
 
@@ -1514,8 +1514,8 @@ function( mor )
 
     X1 := Source( mor );
     X2 := Range( mor );
-    C1 := Cat1GroupOfXMod( X1 );
-    C2 := Cat1GroupOfXMod( X2 );
+    C1 := Cat1GroupOfXMod( X1 ).precat1;
+    C2 := Cat1GroupOfXMod( X2 ).precat1;
     smor := SourceHom( mor );
     rmor := RangeHom( mor );
     e2 := RangeEmbedding( C2 );
@@ -1528,7 +1528,7 @@ function( mor )
     C2rng := Range( C2 );
     if not ( HasDirectProductInfo( C2src ) or
              HasSemidirectProductInfo( C2src ) ) then
-        Info( InfoXMod, 2, "<C2src> must be a direct semidirect product" );
+        Info( InfoXMod, 2, "<C2src> must be a semidirect product" );
         return fail;
     fi;
     ek2 := SemidirectProductInfo( C2src )!.embeddings[2]; 

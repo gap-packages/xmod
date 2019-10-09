@@ -308,7 +308,7 @@ gap> StructureDescription( XC );
 gap> XC2 := XModByPeifferQuotient( XC );;
 gap> StructureDescription( XC2 );
 [ "C3", "C2" ]
-gap> CXC2 := Cat1GroupOfXMod( XC2 );;
+gap> CXC2 := Cat1GroupOfXMod( XC2 ).precat1;;
 gap> StructureDescription( CXC2 );
 [ "S3", "C2" ]
 gap> IsomorphismCat1Groups( C2, CXC2 );

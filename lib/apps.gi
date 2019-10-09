@@ -2,7 +2,7 @@
 ##
 #W  apps.gi                    GAP4 package `XMod'               Chris Wensley
 ##
-#Y  Copyright (C) 2001-2018, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2019, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 ##############################################################################
@@ -45,7 +45,7 @@ function( X0, a )
     nPa := Length( elPa );
     Info( InfoXMod, 2, "elPa has length ", nPa );
     Info( InfoXMod, 3, "with elements ", elPa );
-    C0 := Cat1GroupOfXMod( X0 ); 
+    C0 := Cat1GroupOfXMod( X0 ).precat1; 
     G0 := Source( C0 ); 
     e1 := Embedding( G0, 1 ); 
     e2 := Embedding( G0, 2 );
