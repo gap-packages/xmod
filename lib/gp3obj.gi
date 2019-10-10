@@ -1130,7 +1130,6 @@ end );
 ##
 #M  IsPreCat2Group . . . . . . . . . . .  check that this is a pre-cat2-group
 #M  IsCat2Group . . . . . . . . . . . . check that the object is a cat2-group
-#M  IsPreCat1GroupByEndomorphisms . . .  check that all t,h are endomorphisms
 ##
 InstallMethod( IsPreCat2Group, "generic method for a pre-cat2-group",
     true, [ IsHigherDimensionalGroup ], 0,
@@ -1157,13 +1156,6 @@ function( P )
         and IsCat1Group( Diagonal2DimensionalGroup( P ) ); 
     return ok; 
 end ); 
-
-InstallMethod( IsPreCatnGroupByEndomorphisms, "test a pre-cat2-group", true, 
-    [ IsHigherDimensionalGroup and IsPreCat2Group ], 0,
-function( obj )
-    return ForAll( GeneratingCat1Groups(obj), 
-                   C -> IsSubgroup( Source(C), Range(C) ) ); 
-end );
 
 ##############################################################################
 ##
@@ -1998,19 +1990,19 @@ function( XS )
     act_dg := XModAction( diag );
     xpair := CrossedPairing( XS );
 
-    Cup := Cat1GroupOfXMod( up ).precat1;
+    Cup := Cat1GroupOfXMod( up );
     MxL := Source( Cup );
     e1MxL := Embedding( MxL, 1 );
     e2MxL := Embedding( MxL, 2 );
     genMxL := Concatenation( List( genM, m -> ImageElm( e1MxL, m ) ), 
                              List( genL, l -> ImageElm( e2MxL, l ) ) ); 
-    Cleft := Cat1GroupOfXMod( left ).precat1;
+    Cleft := Cat1GroupOfXMod( left );
     NxL := Source( Cleft );
     e1NxL := Embedding( NxL, 1 );
     e2NxL := Embedding( NxL, 2 );
     genNxL := Concatenation( List( genN, n -> ImageElm( e1NxL, n ) ), 
                              List( genL, l -> ImageElm( e2NxL, l ) ) ); 
-    Cright := Cat1GroupOfXMod( right ).precat1; 
+    Cright := Cat1GroupOfXMod( right ); 
     PxM := Source( Cright ); 
     e1PxM := Embedding( PxM, 1 );
     e2PxM := Embedding( PxM, 2 );
@@ -2026,7 +2018,7 @@ function( XS )
     if ( InfoLevel( InfoXMod ) > 2 ) then 
         Display( morCleftCright ); 
     fi;
-    Cdown := Cat1GroupOfXMod( down ).precat1; 
+    Cdown := Cat1GroupOfXMod( down ); 
     PxN := Source( Cdown ); 
     e1PxN := Embedding( PxN, 1 );
     e2PxN := Embedding( PxN, 2 );
@@ -2073,7 +2065,7 @@ function( XS )
         Print( "crossed module XPMNL:\n" );
         Display( XPMNL );
     fi; 
-    CPMNL := Cat1GroupOfXMod( XPMNL ).precat1; 
+    CPMNL := Cat1GroupOfXMod( XPMNL ); 
     Info( InfoXMod, 2, "cat1-group CPMNL: ", StructureDescription(CPMNL) );
     PMNL := Source( CPMNL );
     e1PMNL := Embedding( PMNL, 1 );
@@ -2109,7 +2101,7 @@ function( XS )
         Print( "crossed module XPNML:\n" );
         Display( XPNML );
     fi;
-    CPNML := Cat1GroupOfXMod( XPNML ).precat1; 
+    CPNML := Cat1GroupOfXMod( XPNML ); 
     Info( InfoXMod, 2, "cat1-group CPNML: ", StructureDescription(CPNML) );
     PNML := Source( CPNML );
     e1PNML := Embedding( PNML, 1 );

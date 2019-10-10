@@ -45,7 +45,7 @@ function( X0, a )
     nPa := Length( elPa );
     Info( InfoXMod, 2, "elPa has length ", nPa );
     Info( InfoXMod, 3, "with elements ", elPa );
-    C0 := Cat1GroupOfXMod( X0 ).precat1; 
+    C0 := PreCat1GroupOfPreXMod( X0 ).precat1; 
     G0 := Source( C0 ); 
     e1 := Embedding( G0, 1 ); 
     e2 := Embedding( G0, 2 );

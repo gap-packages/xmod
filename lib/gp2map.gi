@@ -378,18 +378,20 @@ end );
 ##############################################################################
 ##
 #M  InverseGeneralMapping . . . . . . . . . . . . . for a 2Dimensional-mapping
-##
-#?  (29/06/12) only works if mor is _already_ known to be bijective, 
-#?             so perhaps move IsBijective into the code ?? 
 ## 
 InstallOtherMethod( InverseGeneralMapping, "generic method for 2d-mapping",
-    true, [ Is2DimensionalMapping and IsBijective ], 0, 
+    true, [ Is2DimensionalMapping ], 0, 
 function( mor )
 
-    local inv, ok;
+    local sinv, rinv, inv, ok;
 
-    inv := Make2DimensionalGroupMorphism( 
-        [ Range(mor), Source(mor), SourceHom(mor)^(-1), RangeHom(mor)^(-1) ] );
+    if not IsBijective( mor ) then 
+        Info( InfoXMod, 1, "mor is not bijective" ); 
+        return fail; 
+    fi; 
+    sinv := InverseGeneralMapping( SourceHom( mor ) ); 
+    rinv := InverseGeneralMapping( RangeHom( mor ) ); 
+    inv := Make2DimensionalGroupMorphism( [Range(mor),Source(mor),sinv,rinv] );
     if IsPreXModMorphism( mor ) then 
         SetIsPreXModMorphism( inv, true );
         if IsXModMorphism( mor ) then 
@@ -880,7 +882,6 @@ function( PM )
     local shom, rhom, Psrc, Psgen, Qsrc, Qsgen, Prng, Prgen, Qrng, Qrgen, 
           QM, iso;
 
-Print("here\n");
     if IsPcPreXMod( PM ) then
         return IdentityMapping( PM );
     fi;
@@ -897,7 +898,6 @@ Print("here\n");
         Qsgen := List( Psgen, s -> ImageElm( shom, s ) );
         shom := GroupHomomorphismByImages( Psrc, Qsrc, Psgen, Qsgen );
     fi;
-Print("here\n");
     Prng := Range( PM ); 
     if ( HasIsNormalSubgroup2DimensionalGroup(PM) 
              and IsNormalSubgroup2DimensionalGroup(PM) ) then 
@@ -1360,9 +1360,9 @@ InstallOtherMethod( IsBijective,
 
 ##############################################################################
 ##
-#M  IsEndomorphism2DimensionalDomain( map ) . . . . . . . . . for a 2Dimensional-mapping
+#M  IsEndomorphism2DimensionalDomain( map ) . . . . for a 2Dimensional-mapping
 #?  temporary fix 08/01/04  ---  need to check correctness
-#M  IsAutomorphism2DimensionalDomain( map ) . . . . . . . . . for a 2Dimensional-mapping
+#M  IsAutomorphism2DimensionalDomain( map ) . . . . for a 2Dimensional-mapping
 ##
 InstallMethod( IsEndomorphism2DimensionalDomain, 
     "method for a 2d-mapping", true, [ Is2DimensionalMapping ], 0,
@@ -1504,64 +1504,45 @@ function( phi )
     return mor;
 end );
 
-InstallMethod( Cat1GroupMorphismOfXModMorphism, "for an xmod morphism",
+InstallMethod( Cat1GroupMorphismOfXModMorphism, "for an xmod morphism", 
     true, [ IsXModMorphism ], 0,
 function( mor )
 
-    local X1, X2, C1, C2, act2, C1src, C1rng, C2src, C2rng, C2s2p, 
-          genC1src, genC1rng, genX1src, genX1rng, imrmor, imgen, m, images,
-          sphi, rphi, phi, smor, rmor, e2, ek2, g, ig, eg, pg, esrc, erng;
+    local X1, X2, rec1, rec2, C1, C2, G1, G2, smor, rmor, semb1, remb1, 
+          semb2, remb2, isemb1, iremb1, geneS1, geneR1, genG1, imeS1, imeR1, 
+          imsphi, sphi, phi;
 
     X1 := Source( mor );
     X2 := Range( mor );
-    C1 := Cat1GroupOfXMod( X1 ).precat1;
-    C2 := Cat1GroupOfXMod( X2 ).precat1;
+    rec1 := PreCat1GroupOfPreXMod( X1 );
+    rec2 := PreCat1GroupOfPreXMod( X2 );
+    C1 := rec1.precat1; 
+    C2 := rec2.precat1; 
+    G1 := Source( C1 ); 
+    G2 := Source( C2 ); 
     smor := SourceHom( mor );
-    rmor := RangeHom( mor );
-    e2 := RangeEmbedding( C2 );
-    ## (15/10/13) for correct ek2 see 11 lines below
-    ## ek2 := KernelEmbedding( C2 );
-    act2 := XModAction( X2 );
-    C1src := Source( C1 );
-    C1rng := Range( C1 );
-    C2src := Source( C2 );
-    C2rng := Range( C2 );
-    if not ( HasDirectProductInfo( C2src ) or
-             HasSemidirectProductInfo( C2src ) ) then
-        Info( InfoXMod, 2, "<C2src> must be a semidirect product" );
-        return fail;
-    fi;
-    ek2 := SemidirectProductInfo( C2src )!.embeddings[2]; 
-    genC1src := GeneratorsOfGroup( C1src );
-    genC1rng := GeneratorsOfGroup( C1rng );
-    genX1src := GeneratorsOfGroup( Source( X1 ) );
-    genX1rng := GeneratorsOfGroup( Range( X1 ) );
-    imrmor := List( genX1rng, r -> ImageElm( rmor, r ) );
-    rphi := GroupHomomorphismByImages( C1rng, C2rng, genC1rng, imrmor ); 
-    if not IsGroupHomomorphism( rphi ) then
-        Info( InfoXMod, 2, "<rphi> not a homomorphism" );
-        return fail;
-    fi;
-    images := [ ];
-    for g in genX1rng do
-        ig := ImageElm( rmor, g );
-        eg := ImageElm( e2, ig );
-        Add( images, eg );
-    od;
-    for g in genX1src do
-        ig := ImageElm( smor, g );
-        eg := ImageElm( ek2, ig );
-        Add( images, eg );
-    od;
-    sphi := GroupHomomorphismByImages( C1src, C2src, genC1src, images );
-    if not IsGroupHomomorphism( sphi ) then
-        Info( InfoXMod, 2, "<sphi> not a homomorphism" );
-        return fail;
-    fi;
-    phi := Cat1GroupMorphismByGroupHomomorphisms( C1, C2, sphi, rphi );
+    rmor := RangeHom( mor ); 
+    semb1 := rec1.xmodSourceEmbeddingIsomorphism; 
+    remb1 := rec1.xmodRangeEmbeddingIsomorphism; 
+    semb2 := rec2.xmodSourceEmbeddingIsomorphism; 
+    remb2 := rec2.xmodRangeEmbeddingIsomorphism; 
+    isemb1 := RestrictedInverseGeneralMapping( semb1 );
+    iremb1 := RestrictedInverseGeneralMapping( remb1 );
+    geneS1 := GeneratorsOfGroup( rec1.xmodSourceEmbedding ); 
+    geneR1 := GeneratorsOfGroup( rec1.xmodRangeEmbedding ); 
+    genG1 := Concatenation( geneR1, geneS1 ); 
+    imeS1 := List( geneS1, s -> ImageElm( semb2, 
+                                ImageElm( smor, 
+                                ImageElm( isemb1, s ) ) ) ); 
+    imeR1 := List( geneR1, r -> ImageElm( remb2, 
+                                ImageElm( rmor, 
+                                ImageElm( iremb1, r ) ) ) ); 
+    imsphi := Concatenation( imeR1, imeS1 );
+    sphi := GroupHomomorphismByImages( G1, G2, genG1, imsphi ); 
+    phi := Cat1GroupMorphismByGroupHomomorphisms( C1, C2, sphi, rmor );
     SetCat1GroupMorphismOfXModMorphism( mor, phi );
     SetXModMorphismOfCat1GroupMorphism( phi, mor );
-    return phi;
+    return phi; 
 end );
 
 ##############################################################################

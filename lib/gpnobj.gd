@@ -36,6 +36,12 @@ DeclareProperty( "IsPcHigherDimensionalGroup", IsHigherDimensionalGroup );
 
 #############################################################################
 ##
+#P  IsPreCatnGroupByEndomorphisms( <obj> )
+##
+DeclareProperty( "IsPreCatnGroupByEndomorphisms", IsHigherDimensionalGroup ); 
+
+#############################################################################
+##
 #T  PreCatnObjType . . . . . . . . . . . . . . . . . . . type for catn-groups
 #T  PermPreCatnObjType . . . . . .  . . . . . . . . type for perm catn-groups
 #T  PcPreCatnObjType . . . . . . . . . . . . . . . .  type for pc catn-groups

@@ -858,7 +858,7 @@ gap> StructureDescription( XC );
 gap> XC2 := XModByPeifferQuotient( XC );;
 gap> StructureDescription( XC2 );
 [ "C3", "C2" ]
-gap> CXC2 := Cat1GroupOfXMod( XC2 ).precat1;;
+gap> CXC2 := Cat1GroupOfXMod( XC2 );;
 gap> StructureDescription( CXC2 );
 [ "S3", "C2" ]
 gap> IsomorphismCat1Groups( C2, CXC2 );
@@ -970,29 +970,23 @@ of a pre-crossed modute <M>X = (\partial : S \to R)</M>
 returns a record with fields 
 <List>
 <Item>
-<C>.precat1</C>, the pre-cat1-group <M>C = (e;t,h: G \to R')</M> of <M>X</M>, 
+<C>.precat1</C>, the pre-cat1-group <M>C = (e;t,h: G \to R)</M> of <M>X</M>, 
 where <M>G = R \ltimes S</M>; 
 </Item>
 <Item>
 <C>.iscat1</C>, true if <M>C</M> is a cat1-group; 
 </Item>
 <Item>
-<C>.rangeEmbeddingRange</C>, the image <M>R'</M> of <M>R</M>; 
+<C>.xmodSourceEmbedding</C>, the image <M>S'</M> of <M>S</M> in <M>G</M>; 
 </Item>
 <Item>
-<C>.rangeEmbeddingRangeIsomorphism</C>, the isomorphism <M>R \to R'</M>; 
+<C>.xmodSourceEmbeddingIsomorphism</C>, the isomorphism <M>S \to S'</M>; 
 </Item>
 <Item>
-<C>.sourceEmbedding</C>, the image <M>S'</M> of <M>S</M> in <M>G</M>; 
+<C>.xmodRangeEmbedding</C>, the image <M>R'</M> of <M>R</M> in <M>G</M>; 
 </Item>
 <Item>
-<C>.sourceEmbeddingIsomorphism</C>, the isomorphism <M>S \to S'</M>; 
-</Item>
-<Item>
-<C>.rangeEmbeddingSource</C>, the image <M>R''</M> of <M>R</M> in <M>G</M>; 
-</Item>
-<Item>
-<C>.rangeEmbeddingSourceIsomorphism</C>, the isomorphism <M>R \to R''</M>; 
+<C>.xmodRangeEmbeddingIsomorphism</C>, the isomorphism <M>R \to R'</M>; 
 </Item>
 </List>
 <P/>
@@ -1194,7 +1188,7 @@ Using small generating set [ f1, f2, f2*f3 ] for source of homs.
 (4)  [ [ f1, f2, f2*f3 ],  tail = head = identity mapping ]
 4
 gap> ## select the third of these cat1-structures 
-gap> C18 := Cat1Group( 18, 4, 3 );
+gap> C18 := Cat1Select( 18, 4, 3 );
 [(C3 x C3) : C2=>Group( [ f1, <identity> of ..., f3 ] )]
 gap> ## convert from a pc-cat1-group to a permutation cat1-group
 gap> iso18 := IsomorphismPermObject( C18 );;
@@ -1303,7 +1297,6 @@ gap> StructureDescription( C2 );
 </Example>
 
 </Section>
-
 
 
 <Section Label="sect-gpgpd">
