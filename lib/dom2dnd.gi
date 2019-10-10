@@ -12,7 +12,7 @@
 ## 
 #M  KindOfHigherDimensionalDomain( <m2d> ) 
 ##
-InstallMethod( KindOfHigherDimensionalDomain, "for list of 2Dimensional-domains", 
+InstallMethod( KindOfHigherDimensionalDomain, "for list of 2dim-domains", 
     true, [ IsList ], 0, 
 function( pieces ) 
 

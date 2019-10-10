@@ -265,7 +265,6 @@ DeclareProperty( "IsPreCat1GroupByEndomorphisms", IsPreCat1Group );
 #A  HeadMap( <PCG> )
 #A  TailMap( <PCG> )
 #A  RangeEmbedding( <PCG> )
-#A  SourceEmbedding( <PCG> )
 #A  KernelEmbedding( <C> )
 ##
 DeclareOperation( "PreCat1Obj",
@@ -273,7 +272,6 @@ DeclareOperation( "PreCat1Obj",
 DeclareAttribute( "HeadMap", IsPreCat1Group );
 DeclareAttribute( "TailMap", IsPreCat1Group );
 DeclareAttribute( "RangeEmbedding", IsPreCat1Group );
-DeclareAttribute( "SourceEmbedding", IsPreCat1Group );
 DeclareAttribute( "KernelEmbedding", IsPreCat1Group );
 
 ##  temporary measure to keep XModAlg working:
@@ -297,6 +295,12 @@ DeclareAttribute( "ReverseCat1Group", IsPreCat1Group );
 
 #############################################################################
 ##
+#P  IsPreCat1GroupByEndomorphisms( <PCG> )
+##
+DeclareProperty( "IsPreCat1GroupByEndomorphisms", IsPreCat1Group ); 
+
+#############################################################################
+##
 #A  PreXModOfPreCat1Group( <PCG> )
 #A  PreCat1GroupOfPreXMod( <PM> )
 #A  XModOfCat1Group( <C1G> )
@@ -306,14 +310,6 @@ DeclareAttribute( "PreXModOfPreCat1Group", IsPreCat1Group );
 DeclareAttribute( "PreCat1GroupOfPreXMod", IsPreXMod );
 DeclareAttribute( "XModOfCat1Group", IsCat1Group );
 DeclareAttribute( "Cat1GroupOfXMod", IsXMod );
-
-#############################################################################
-##
-#A  SourceEmbedding( <XM> )
-##
-##  homomorphism from Source(XM) to Source(Cat1GroupOfXMod(XM))
-##
-DeclareAttribute( "SourceEmbedding", IsPreXMod );
 
 #############################################################################
 ##

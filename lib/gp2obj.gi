@@ -474,7 +474,8 @@ function( g2d )
         fi;
     fi; 
     if ( HasIsXMod( g2d ) and IsXMod( g2d ) and HasCat1GroupOfXMod( g2d ) ) then
-        Print( ": associated cat1-group is ", Cat1GroupOfXMod( g2d ), "\n" );
+        Print( ": associated cat1-group is ", 
+               Cat1GroupOfXMod( g2d ), "\n" );
     elif ( HasIsCat1Group( g2d ) and IsCat1Group( g2d ) 
            and HasXModOfCat1Group( g2d ) ) then
         Print( ": associated crossed module is ", 
@@ -629,41 +630,6 @@ end );
 
 ##############################################################################
 ##
-#M  SourceEmbedding . . . . . . . . . . . . . . . . . . . for a pre-cat1-group
-##
-InstallMethod( SourceEmbedding, "for a pre-cat1-group", true,
-    [ IsPreCat1Group ], 0,
-function( C1G )
-
-    local G, spi, dpi, info, emb, pxm, mgi, sc, sx, src, rng; 
-
-    G := Source( C1G ); 
-    spi := HasSemidirectProductInfo( G ); 
-    dpi := HasDirectProductInfo( G );
-    if spi then 
-        info := SemidirectProductInfo( G ); 
-        emb := info!.embeddings[2]; 
-    elif dpi then 
-        info := DirectProductInfo( G ); 
-        emb := info!.embeddings[2];
-    else 
-        pxm := PreXModOfPreCat1Group( C1G ); 
-        sc := Source( C1G );
-        sx := Source( pxm );
-        if IsSubgroup( sc, sx ) then 
-            emb := InclusionMappingGroups( sc, sx ); 
-        else 
-            Error( "case still to be implemented" ); 
-        fi;
-    fi; 
-    src := Source( emb ); 
-    rng := Image( emb ); 
-    mgi := MappingGeneratorsImages( emb );
-    return GroupHomomorphismByImages( src, rng, mgi[1], mgi[2] ); 
-end );
-
-##############################################################################
-##
 #M  PreCat1Obj . . . . . . . . . . . . . . . . . . . . . make a pre-cat1-group
 ##
 InstallMethod( PreCat1Obj, "for tail, head, embedding", true,
@@ -773,73 +739,73 @@ InstallMethod( PreCat1GroupOfPreXMod,
     "convert a pre-crossed module to a pre-cat1-group", true, [ IsPreXMod ], 0,
 function( X0 )
 
-    local XM, Xsrc, Xrng, Xact, Xbdy, gensrc, genrng, one, imbdy, info, G, 
-          genG, t, h, f, eR, eS, imeR, imeS, projS, imt, imh, ime, imf, C;
+    local S0, genS0, R0, genR0, iso, Xact, Xbdy, one, imbdy, info, G, genG, 
+          t, h, f, eR, eS, imeR, imeS, projS, imt, imh, ime, imf, C, pcrec;
 
-    if not ( IsPermPreXMod( X0 ) or IsPcPreXMod( X0 ) ) then
-        Info( InfoXMod, 1, "converting to perm xmod" ); 
-        XM := Range( IsomorphismPerm2DimensionalGroup( X0 ) ); 
-    else 
-        XM := X0;
-    fi;
-    Xsrc := Source( XM );
-    gensrc := GeneratorsOfGroup( Xsrc );
-    Xrng := Range( XM );
-    genrng := GeneratorsOfGroup( Xrng );
-    one := One( Xrng );
-    Xact := XModAction( XM );
-    Xbdy := Boundary( XM );
-    if IsTrivialAction2DimensionalGroup( XM ) then
-        Info( InfoXMod, 2, "Using direct product: ", Xrng, " x ", Xsrc );
-        G := DirectProduct( Xrng, Xsrc );
+    S0 := Source( X0 ); 
+    genS0 := GeneratorsOfGroup( S0 ); 
+    R0 := Range( X0 ); 
+    genR0 := GeneratorsOfGroup( R0 ); 
+    genS0 := GeneratorsOfGroup( S0 );
+    genR0 := GeneratorsOfGroup( R0 );
+    one := One( R0 );
+    Xact := XModAction( X0 );
+    Xbdy := Boundary( X0 );
+    if IsTrivialAction2DimensionalGroup( X0 ) then
+        Info( InfoXMod, 2, "Using direct product: ", R0, " x ", S0 );
+        G := DirectProduct( R0, S0 );
         info := DirectProductInfo( G );
-        if ( HasName( Xsrc ) and HasName( Xrng ) ) then
-            SetName( G, Concatenation( Name( Xrng ), "x", Name( Xsrc ) ) );
+        if ( HasName( S0 ) and HasName( R0 ) ) then
+            SetName( G, Concatenation( Name( R0 ), "x", Name( S0 ) ) );
         fi;
         genG := GeneratorsOfGroup( G );
-        gensrc := GeneratorsOfGroup( Xsrc );
-        genrng := GeneratorsOfGroup( Xrng );
-        imbdy := List( gensrc, s -> ImageElm( Xbdy, s ) );
-        imt := Concatenation( genrng, List( gensrc, s -> one ) );
-        imh := Concatenation( genrng, imbdy );
-        t := GroupHomomorphismByImages( G, Xrng, genG, imt );
-        h := GroupHomomorphismByImages( G, Xrng, genG, imh );
+        imbdy := List( genS0, s -> ImageElm( Xbdy, s ) );
+        imt := Concatenation( genR0, List( genS0, s -> one ) );
+        imh := Concatenation( genR0, imbdy );
+        t := GroupHomomorphismByImages( G, R0, genG, imt );
+        h := GroupHomomorphismByImages( G, R0, genG, imh );
         eR := Embedding( G, 1 );
         eR := AsGroupGeneralMappingByImages( eR );
+        eS := Embedding( G, 2 );
+        eS := AsGroupGeneralMappingByImages( eS );
     else
-        Info( InfoXMod, 2, "Using semidirect product: ", Xrng, " |X ", Xsrc );
-        G := SemidirectProduct( Xrng, Xact, Xsrc );
+        Info( InfoXMod, 2, "Using semidirect product: ", R0, " |X ", S0 );
+        G := SemidirectProduct( R0, Xact, S0 );
         info := SemidirectProductInfo( G );
-        if ( HasName( Xsrc ) and HasName( Xrng ) ) then
+        if ( HasName( S0 ) and HasName( R0 ) ) then
              SetName( G, 
-                 Concatenation( "(", Name(Xrng), " |X ", Name(Xsrc), ")" ) );
+                 Concatenation( "(", Name(R0), " |X ", Name(S0), ")" ) );
         else
              SetName( G, "(..|X..)" );
         fi;
         genG := GeneratorsOfGroup( G );
         eR := Embedding( G, 1 );
-        imeR := List( genrng, r -> ImageElm( eR, r ) );
+        imeR := List( genR0, r -> ImageElm( eR, r ) );
         eS := Embedding( G, 2 );
-        imeS := List( gensrc, s -> ImageElm( eS, s ) );
+        imeS := List( genS0, s -> ImageElm( eS, s ) );
         t := Projection( G );
         imt := List( genG, g -> ImageElm( t, g ) );
-        t := GroupHomomorphismByImages( G, Xrng, genG, imt );
+        t := GroupHomomorphismByImages( G, R0, genG, imt );
         projS := List( imt, r -> ImageElm( eR, r^-1 ) );
         projS := List( [ 1..Length( genG ) ], i -> projS[i] * genG[i] );
         projS := List( projS, x -> PreImagesRepresentative( eS, x ) );
         imh := List( [ 1..Length( genG ) ],
             i -> imt[i] * ImageElm( Xbdy, projS[i] ) ); 
-        h := GroupHomomorphismByImages( G, Xrng, genG, imh );
+        h := GroupHomomorphismByImages( G, R0, genG, imh );
     fi;
-    SetSourceEmbedding( XM, eR );
     C := PreCat1GroupByTailHeadEmbedding( t, h, eR );
     if HasName( X0 ) then 
         SetName( C, Concatenation( "cat1(", Name( X0 ), ")" ) ); 
     fi; 
-    if ( X0 <> XM ) then 
-        SetPreCat1GroupOfPreXMod( X0, C );
+    pcrec := rec( precat1 := C, 
+                  xmodRangeEmbedding := Image( eR ), 
+                  xmodRangeEmbeddingIsomorphism := eR, 
+                  xmodSourceEmbedding := Image( eS ),
+                  xmodSourceEmbeddingIsomorphism := eS );
+    if HasIsXMod( X0 ) and IsXMod( X0 ) then 
+        pcrec.iscat1 := true; 
     fi;
-    return C;
+    return pcrec; 
 end ); 
 
 #############################################################################
@@ -1117,15 +1083,15 @@ end );
 ##
 #M  Cat1GroupOfXMod
 ##
-InstallMethod( Cat1GroupOfXMod, "generic method for crossed modules",
-    true, [ IsXMod ], 0,
+InstallMethod( Cat1GroupOfXMod, "generic method for crossed modules", 
+    true, [ IsXMod ], 0, 
 function( X1 )
 
-    local C1;
-    C1 := PreCat1GroupOfPreXMod( X1 );
-    SetIsCat1Group( C1, true );
+    local PC1, C1;
+
+    PC1 := PreCat1GroupOfPreXMod( X1 ); 
+    C1 := PC1.precat1;
     SetXModOfCat1Group( C1, X1 );
-    SetCat1GroupOfXMod( X1, C1 );
     return C1;
 end );
 
@@ -2105,9 +2071,16 @@ end );
 
 #############################################################################
 ##
+#M  IsPreCat1GroupByEndomorphisms( <pcg> ) 
 #M  PreCat1GroupByEndomorphisms( <et>, <eh> ) 
 #M  EndomorphismPreCat1Group( <pcg> )
 ##
+InstallMethod( IsPreCat1GroupByEndomorphisms, "tail & head are endomorphisms", 
+    true, [ IsPreCat1Group ], 0,
+function( C1G )
+    return IsSubgroup( Source( C1G ), Range( C1G ) ); 
+end );
+
 InstallMethod( PreCat1GroupByEndomorphisms,
     "cat1-group from tail and head endomorphisms", true, 
     [ IsGroupHomomorphism, IsGroupHomomorphism ], 0,
@@ -2142,7 +2115,7 @@ function( C1G )
 
     local e, t, h;
 
-    if IsPreCatnGroupByEndomorphisms( C1G ) then 
+    if IsPreCat1GroupByEndomorphisms( C1G ) then 
         return C1G; 
     fi; 
     e := RangeEmbedding( C1G ); 
@@ -2159,12 +2132,8 @@ InstallMethod( PreXModOfPreCat1Group, true, [ IsPreCat1Group ], 0,
 function( C1G )
  
     local Csrc, Crng, gensrc, genrng, genker, bdy, kert, innaut, autgen,
-           imautgen, idkert, a, aut, act, phi, j, r, PM, Cek, Cer, name;
+           imautgen, idkert, a, aut, act, phi, j, r, PM, Cek, Cer, name; 
 
-    if not ( IsPermPreCat1Group( C1G ) or IsPcPreCat1Group( C1G ) ) then
-        Print( "#W: should be a perm-cat1- or a pc-cat1-group\n" );
-        return fail;
-    fi;
     Csrc := Source( C1G );
     Crng := Range( C1G );
     bdy := Boundary( C1G );
@@ -2174,9 +2143,6 @@ function( C1G )
     if ( Size( kert ) = 1 ) then 
         SetName( kert, "triv" ); 
     fi; 
-    #?  if ( ( not HasName( kert ) ) and HasName( C1G ) ) then
-    ##      SetName( kert, Concatenation( "ker(", Name( C1G ), ")" ) );
-    ##  fi; 
     gensrc := GeneratorsOfGroup( Csrc );
     genrng := GeneratorsOfGroup( Crng );
     genker := GeneratorsOfGroup( kert );
@@ -2218,6 +2184,12 @@ function( C1G )
     elif HasName( C1G ) then 
         SetName( PM, Concatenation( "xmod(", Name( C1G ), ")" ) ); 
     fi; 
+    SetPreCat1GroupOfPreXMod( PM, rec( 
+        precat1 := C1G, 
+        xmodSourceEmbedding := kert, 
+        xmodSourceEmbedddingIsomorphism := Cek, 
+        xmodRangeEmbedding := Image( Cer ), 
+        xmodRangeEmbeddingIsomorphism := Cer ) ); 
     return PM;
 end );
 

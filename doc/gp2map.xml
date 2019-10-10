@@ -112,7 +112,7 @@ and the <Ref Attr="RangeHom"/> have the required property.
 These are the constructors for morphisms of pre-crossed and crossed modules.
 <P/>
 In the following example we construct a simple automorphism of 
-the crossed module  <C>X1</C>  constructed in the previous chapter.
+the crossed module  <C>X5</C>  constructed in the previous chapter.
 </Description>
 </ManSection>
 <P/>
@@ -120,13 +120,13 @@ the crossed module  <C>X1</C>  constructed in the previous chapter.
 <Index>order of a 2d-automorphism</Index>
 <Example>
 <![CDATA[
-gap> sigma1 := GroupHomomorphismByImages( c5, c5, [ (5,6,7,8,9) ]
+gap> sigma5 := GroupHomomorphismByImages( c5, c5, [ (5,6,7,8,9) ]
         [ (5,9,8,7,6) ] );;
-gap> rho1 := IdentityMapping( Range( X1 ) );
+gap> rho5 := IdentityMapping( Range( X1 ) );
 IdentityMapping( PAut(c5) )
-gap> mor1 := XModMorphism( X1, X1, sigma1, rho1 );
+gap> mor5 := XModMorphism( X5, X5, sigma5, rho5 );
 [[c5->Aut(c5))] => [c5->Aut(c5))]] 
-gap> Display( mor1 );
+gap> Display( mor5 );
 Morphism of crossed modules :- 
 : Source = [c5->Aut(c5)] with generating sets:
   [ (5,6,7,8,9) ]
@@ -136,18 +136,18 @@ Morphism of crossed modules :-
   [ (5,9,8,7,6) ]
 : Range Homomorphism maps range generators to:
   [ GroupHomomorphismByImages( c5, c5, [ (5,6,7,8,9) ], [ (5,7,9,6,8) ] ) ]
-gap> IsAutomorphism2DimensionalDomain( mor1 );
+gap> IsAutomorphism2DimensionalDomain( mor5 );
 true 
-gap> Order( mor1 );
+gap> Order( mor5 );
 2
-gap> RepresentationsOfObject( mor1 );
+gap> RepresentationsOfObject( mor5 );
 [ "IsComponentObjectRep", "IsAttributeStoringRep", "Is2DimensionalMappingRep" ]
-gap> KnownPropertiesOfObject( mor1 );
+gap> KnownPropertiesOfObject( mor5 );
 [ "CanEasilyCompareElements", "CanEasilySortElements", "IsTotal", 
   "IsSingleValued", "IsInjective", "IsSurjective", "RespectsMultiplication", 
   "IsPreXModMorphism", "IsXModMorphism", "IsEndomorphism2DimensionalDomain", 
   "IsAutomorphism2DimensionalDomain" ]
-gap> KnownAttributesOfObject( mor1 );
+gap> KnownAttributesOfObject( mor5 );
 [ "Name", "Order", "Range", "Source", "SourceHom", "RangeHom" ]
 ]]>
 </Example>

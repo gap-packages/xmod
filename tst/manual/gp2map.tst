@@ -15,7 +15,7 @@ gap> SetInfoLevel( InfoGroupoids, 0 );;
 ##  make this test independent of gp2obj.tst
 gap> c5 := Group( (5,6,7,8,9) );;
 gap> SetName( c5, "c5" );
-gap> X1 := XModByAutomorphismGroup( c5 );;
+gap> X5 := XModByAutomorphismGroup( c5 );;
 gap> G2 := SmallGroup( 288, 956 );;  
 gap> SetName( G2, "G2" );
 gap> d12 := DihedralGroup( 12 );;  
@@ -35,11 +35,11 @@ gap> X2 := XModOfCat1Group( C2 );;
 ## Chapter 3
 
 ## Section 3.2.3
-gap> sigma1 := GroupHomomorphismByImages(c5,c5,[(5,6,7,8,9)],[(5,9,8,7,6)] );;
-gap> rho1 := IdentityMapping( Range(X1) );;
-gap> mor1 := XModMorphism( X1, X1, sigma1, rho1 );
+gap> sigma5 := GroupHomomorphismByImages(c5,c5,[(5,6,7,8,9)],[(5,9,8,7,6)] );;
+gap> rho5 := IdentityMapping( Range(X5) );;
+gap> mor5 := XModMorphism( X5, X5, sigma5, rho5 );
 [[c5->Aut(c5)] => [c5->Aut(c5)]]
-gap> Display( mor1 );
+gap> Display( mor5 );
 Morphism of crossed modules :- 
 : Source = [c5->Aut(c5)] with generating sets:
   [ (5,6,7,8,9) ]
@@ -49,18 +49,18 @@ Morphism of crossed modules :-
   [ (5,9,8,7,6) ]
 : Range Homomorphism maps range generators to:
   [ GroupHomomorphismByImages( c5, c5, [ (5,6,7,8,9) ], [ (5,7,9,6,8) ] ) ]
-gap> IsAutomorphism2DimensionalDomain(mor1);
+gap> IsAutomorphism2DimensionalDomain( mor5 );
 true
-gap> Order(mor1);
+gap> Order( mor5 );
 2
-gap> RepresentationsOfObject(mor1);
+gap> RepresentationsOfObject( mor5 );
 [ "IsComponentObjectRep", "IsAttributeStoringRep", "Is2DimensionalMappingRep" ]
-gap> KnownPropertiesOfObject(mor1);
+gap> KnownPropertiesOfObject( mor5 );
 [ "CanEasilyCompareElements", "CanEasilySortElements", "IsTotal", 
   "IsSingleValued", "IsInjective", "IsSurjective", "RespectsMultiplication", 
   "IsPreXModMorphism", "IsXModMorphism", "IsEndomorphism2DimensionalDomain", 
   "IsAutomorphism2DimensionalDomain" ]
-gap> KnownAttributesOfObject(mor1);
+gap> KnownAttributesOfObject( mor5 );
 [ "Name", "Order", "Range", "Source", "SourceHom", "RangeHom" ]
 
 ## Section 3.3.1

@@ -12,6 +12,8 @@
 ##
 #M  HigherDimension . . . . . . .  for a higher dimensional domain or mapping
 ##
+## #? this does not work because G is not a HigherDimensionalGroup 
+##
 ## InstallMethod( HigherDimension, "generic method for a 2dim-group", true, 
 ##     [ Is2DimensionalDomain ], 0,
 ## function( G )
@@ -116,6 +118,19 @@ function( P )
         return false;
     fi;
     return true;
+end );
+
+#############################################################################
+##
+#M  IsPreCatnGroupByEndomorphisms . . .  check that all t,h are endomorphisms
+##
+#?  maybe we should have GeneratingPreCat1Groups? 
+##
+InstallMethod( IsPreCatnGroupByEndomorphisms, "test a pre-catn-group", true, 
+    [ IsHigherDimensionalGroup and IsPreCatnGroup ], 0,
+function( obj )
+    return ForAll( GeneratingCat1Groups(obj), 
+                   C -> IsSubgroup( Source(C), Range(C) ) ); 
 end );
 
 ##############################################################################

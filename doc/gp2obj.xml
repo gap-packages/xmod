@@ -964,6 +964,32 @@ On the other hand, starting with a cat<M>^1</M>-group
 <M> \partial = h\!\mid_S </M>.
 The action of  <M>R</M>  on  <M>S</M>  is conjugation in  <M>G</M>  via the embedding
 of  <M>R</M>  in  <M>G</M>.
+<P/>
+As from version 2.74, the attribute <C>PreCat1GroupOfPreXMod</C> 
+of a pre-crossed modute <M>X = (\partial : S \to R)</M> 
+returns a record with fields 
+<List>
+<Item>
+<C>.precat1</C>, the pre-cat1-group <M>C = (e;t,h: G \to R)</M> of <M>X</M>, 
+where <M>G = R \ltimes S</M>; 
+</Item>
+<Item>
+<C>.iscat1</C>, true if <M>C</M> is a cat1-group; 
+</Item>
+<Item>
+<C>.xmodSourceEmbedding</C>, the image <M>S'</M> of <M>S</M> in <M>G</M>; 
+</Item>
+<Item>
+<C>.xmodSourceEmbeddingIsomorphism</C>, the isomorphism <M>S \to S'</M>; 
+</Item>
+<Item>
+<C>.xmodRangeEmbedding</C>, the image <M>R'</M> of <M>R</M> in <M>G</M>; 
+</Item>
+<Item>
+<C>.xmodRangeEmbeddingIsomorphism</C>, the isomorphism <M>R \to R'</M>; 
+</Item>
+</List>
+<P/>
 </Description>
 </ManSection>
 <P/>
@@ -1162,7 +1188,7 @@ Using small generating set [ f1, f2, f2*f3 ] for source of homs.
 (4)  [ [ f1, f2, f2*f3 ],  tail = head = identity mapping ]
 4
 gap> ## select the third of these cat1-structures 
-gap> C18 := Cat1Group( 18, 4, 3 );
+gap> C18 := Cat1Select( 18, 4, 3 );
 [(C3 x C3) : C2=>Group( [ f1, <identity> of ..., f3 ] )]
 gap> ## convert from a pc-cat1-group to a permutation cat1-group
 gap> iso18 := IsomorphismPermObject( C18 );;
@@ -1273,7 +1299,6 @@ gap> StructureDescription( C2 );
 </Section>
 
 
-
 <Section Label="sect-gpgpd">
 <Heading>The group groupoid associated to a cat<M>^1</M>-group</Heading>
 
@@ -1324,7 +1349,7 @@ gap> a := GroupHomomorphismByImages( c3c3, c3c3,
 gap> aut := Group( [a] );; 
 gap> act := GroupHomomorphismByImages( s3, aut, [(11,12),(12,13)], [a,a] );;
 gap> X33 := XModByBoundaryAndAction( bdy, act );; 
-gap> C33 := Cat1GroupOfXMod( X33 );; 
+gap> C33 := Cat1GroupOfXMod( X33 ).precat1;; 
 gap> G33 := Source( C33 );; 
 gap> gpd33 := GroupGroupoid( C33 ); 
 groupoid with 2 pieces:
