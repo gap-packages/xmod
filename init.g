@@ -27,3 +27,4 @@ ReadPackage( "xmod", "lib/gp4obj.gd" );
 ReadPackage( "xmod", "lib/cat1data.gd" );
 ReadPackage( "xmod", "lib/apps.gd" );
 ReadPackage( "xmod", "lib/gpgpd.gd" ); 
+ReadPackage( "xmod", "lib/natp.gd" ); 

@@ -1,5 +1,9 @@
 # CHANGES to the 'XMod' package
 
+## 2.74 -> 2.74dev (21/10/2019) 
+
+ * (21/10/19) started files natp.g{d,i} 
+
 ## 2.73 -> 2.74 (11/10/2019) 
 
  * (09/10/19) Cat1GroupOfXMod now a record storing embeddings of S,R in G 
