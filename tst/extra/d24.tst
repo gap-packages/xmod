@@ -27,11 +27,10 @@ gap> cxs24 := PreCat2GroupOfPreCrossedSquare( xs24 );
 1 : [((d24 |X d12a) |X (d12b |X c6))=>(d24 |X d12a)]
 2 : [((d24 |X d12a) |X (d12b |X c6))=>(d24 |X d12b)]
 gap> IsCat2Group( cxs24 );
-false
+true
 gap> diag := Diagonal2DimensionalGroup( cxs24 );
 [((d24 |X d12a) |X (d12b |X c6))=>d24]
-
-## this result is surely worrying! 
+## another example of a cat2-group whose diagonal is only a pre-cat1-group 
 gap> IsCat1Group( diag );
 false
 
