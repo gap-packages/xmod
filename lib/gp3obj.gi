@@ -1153,7 +1153,7 @@ function( P )
         and IsCat1Group( Left2DimensionalGroup( P ) )  
         and IsCat1Group( Right2DimensionalGroup( P ) )  
         and IsCat1Group( Down2DimensionalGroup( P ) ) 
-        and IsCat1Group( Diagonal2DimensionalGroup( P ) ); 
+        and IsPreCat1Group( Diagonal2DimensionalGroup( P ) ); 
     return ok; 
 end ); 
 
@@ -2163,7 +2163,7 @@ function( C2 )
         Error( "XS fails to be the crossed square of a cat2-group" ); 
     fi; 
     SetCrossedSquareOfCat2Group( C2, XS );
-    SetCat2GroupOfCrossedSquare( XS, C2 );
+##    SetCat2GroupOfCrossedSquare( XS, C2 );
     return XS;
 end );
 

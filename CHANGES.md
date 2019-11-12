@@ -1,8 +1,8 @@
 # CHANGES to the 'XMod' package
 
-## 2.74 -> 2.74dev (08/11/2019) 
+## 2.74 -> 2.75 (12/11/2019) 
 
- * (08/11/19) 
+ * (12/11/19) reverted need for a cat2-group to have a diagonal cat1-group
 
 ## 2.73 -> 2.74 (11/10/2019) 
 
