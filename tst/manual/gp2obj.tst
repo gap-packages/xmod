@@ -140,14 +140,14 @@ gap> Print( RepresentationsOfObject(X5), "\n" );
 [ "IsComponentObjectRep", "IsAttributeStoringRep", "IsPreXModObj" ]
 gap> Print( KnownAttributesOfObject(X5), "\n" );
 [ "Name", "Size", "Range", "Source", "IdGroup", "Boundary", "XModAction", 
-  "ExternalSetXMod", "IsomorphismPerm2DimensionalGroup" ]
+  "ExternalSetXMod" ]
 
 ## Section 2.2.1
 gap> kpoX5 := KnownPropertiesOfObject(X5);;
 gap> ForAll( [ "IsEmpty", "IsTrivial", "IsNonTrivial", "IsFinite", 
 >  "CanEasilyCompareElements", "CanEasilySortElements", "IsDuplicateFree", 
->  "IsGeneratorsOfSemigroup", "IsPreXModDomain", "IsPerm2DimensionalGroup", 
->  "IsPreXMod", "IsXMod", "IsAutomorphismGroup2DimensionalGroup" ], 
+>  "IsGeneratorsOfSemigroup", "IsPreXModDomain", "IsPreXMod", "IsXMod", 
+>  "IsAutomorphismGroup2DimensionalGroup" ], 
 >  s -> s in kpoX5 ); 
 true
 

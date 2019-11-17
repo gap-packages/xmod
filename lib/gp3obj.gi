@@ -1055,26 +1055,54 @@ InstallMethod( Display, "method for a pre-cat2-group", true,
     [ IsPreCat2Group ], 0,
 function( g3d )
 
-    local up, lt, rt, dn; 
+    local up, tup, hup, lt, tlt, hlt, rt, trt, hrt, dn, tdn, hdn; 
 
     up := Up2DimensionalGroup( g3d ); 
+    tup := TailMap( up );
+    hup := HeadMap( up ); 
     lt := Left2DimensionalGroup( g3d ); 
+    tlt := TailMap( lt );
+    hlt := HeadMap( lt ); 
     rt := Right2DimensionalGroup( g3d ); 
+    trt := TailMap( rt );
+    hrt := HeadMap( rt ); 
     dn := Down2DimensionalGroup( g3d ); 
+    tdn := TailMap( dn );
+    hdn := HeadMap( dn ); 
     Print( "cat2-group with groups: ", 
            [ Source(up), Range(up), Range(lt), Range(dn) ], "\n" );
-    Print( "   up tail/head: ", 
-           MappingGeneratorsImages( TailMap( up ) ),  
-           MappingGeneratorsImages( HeadMap( up ) ), "\n" );  
-    Print( " left tail/head: ", 
-           MappingGeneratorsImages( TailMap( lt ) ),  
-           MappingGeneratorsImages( HeadMap( lt ) ), "\n" );  
-    Print( "right tail/head: ", 
-           MappingGeneratorsImages( TailMap( rt ) ),  
-           MappingGeneratorsImages( HeadMap( rt ) ), "\n" );  
-    Print( " down tail/head: ", 
-           MappingGeneratorsImages( TailMap( dn ) ),  
-           MappingGeneratorsImages( HeadMap( dn ) ), "\n" );  
+    if ( tup = hup ) then 
+        Print( "   up tail=head: ", 
+           MappingGeneratorsImages( tup ), "\n" );  
+    else 
+        Print( "   up tail/head: ", 
+           MappingGeneratorsImages( tup ),  
+           MappingGeneratorsImages( hup ), "\n" );  
+    fi; 
+    if ( tlt = hlt ) then 
+        Print( " left tail=head: ", 
+           MappingGeneratorsImages( tlt ), "\n" );  
+    else 
+        Print( " left tail/head: ", 
+           MappingGeneratorsImages( tlt ),  
+           MappingGeneratorsImages( hlt ), "\n" );  
+    fi;
+    if ( trt = hrt ) then 
+        Print( " left tail=head: ", 
+           MappingGeneratorsImages( trt ), "\n" );  
+    else 
+        Print( "right tail/head: ", 
+           MappingGeneratorsImages( trt ),  
+           MappingGeneratorsImages( hrt ), "\n" ); 
+    fi; 
+    if ( tdn = hdn ) then 
+        Print( " left tail=head: ", 
+           MappingGeneratorsImages( tdn ), "\n" );  
+    else 
+        Print( " down tail/head: ", 
+           MappingGeneratorsImages( tdn ),  
+           MappingGeneratorsImages( hdn ), "\n" ); 
+    fi; 
 end );
 
 InstallMethod( Display, "method for a pre-crossed square", true, 
@@ -1330,7 +1358,7 @@ end );
 ##
 #M  PreCat2GroupByPreCat1Groups . . . . . . . . . . . for five pre-cat1-groups
 ## 
-InstallMethod( PreCat2GroupByPreCat1Groups, "for four pre-cat1-groups", 
+InstallMethod( PreCat2GroupByPreCat1Groups, "for five pre-cat1-groups", 
     true, [ IsPreCat1Group, IsPreCat1Group, IsPreCat1Group, 
             IsPreCat1Group, IsPreCat1Group ], 0,
 function( up, left, right, down, diag )
@@ -1375,6 +1403,8 @@ function( up, left, right, down, diag )
     fi; 
     PC2 := PreCat2GroupObj( [ up, left, right, down, diag ] );
     SetIsPreCat2Group( PC2, true );
+    SetIsPreCatnGroup( PC2, true ); 
+    SetHigherDimension( PC2, 3 ); 
     ok := IsCat2Group( PC2 ); 
     ok := IsPreCatnGroupByEndomorphisms( PC2 ); 
     return PC2;
@@ -2207,10 +2237,10 @@ InstallMethod( Transpose3DimensionalGroup, "transposed cat2-group", true,
     [ IsCat2Group ], 0,
 function( C2G )
     return PreCat2GroupByPreCat1Groups( 
-               Up2DimensionalGroup( C2G ), 
                Left2DimensionalGroup( C2G ), 
-               Right2DimensionalGroup( C2G ), 
+               Up2DimensionalGroup( C2G ), 
                Down2DimensionalGroup( C2G ), 
+               Right2DimensionalGroup( C2G ), 
                Diagonal2DimensionalGroup( C2G ) );
 end );
 
