@@ -990,7 +990,8 @@ InstallMethod( XModByGroupOfAutomorphisms, "automorphism crossed module",
     true, [ IsGroup, IsGroup ], 0,
 function( G, A )
 
-    local genA, autG, innG, abelian, genG, oneA, imbdy, g, ima, a, bdy, XM, iso;
+    local genA, autG, innG, abelian, genG, oneA, imbdy, g, ima, a, bdy, act, 
+          iso1, A1, bdy1, act1, iso2, iso12, bdy2, act2, XM;
 
     if not IsGroupOfAutomorphisms( A ) then 
         Error( "A is not a group of automorphisms" ); 
@@ -1018,16 +1019,11 @@ function( G, A )
         od;
     fi;  
     bdy := GroupHomomorphismByImages( G, A, genG, imbdy ); 
-    XM := PreXModObj( bdy, IdentityMapping( A ) );
+    XM := PreXModObj( bdy, IdentityMapping( A ) ); 
     SetIsAutomorphismGroup2DimensionalGroup( XM, true );
     if not IsXMod( XM ) then
         Error( "this boundary and action only defines a pre-crossed module" );
     fi; 
-    if IsPermGroup( G ) then 
-        iso := IsomorphismPerm2DimensionalGroup( XM ); 
-    elif IsPcGroup( G ) then 
-        iso := IsomorphismPc2DimensionalGroup( XM ); 
-    fi;
     return XM;
 end );
 

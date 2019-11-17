@@ -10,6 +10,13 @@
 
 #############################################################################
 ##
+#O  GroupsOfHigherDimensionalGroup( <obj> ) 
+##  These are the vertices of the n-cube 
+##
+DeclareAttribute( "GroupsOfHigherDimensionalGroup", IsHigherDimensionalGroup );
+
+#############################################################################
+##
 #R  IsPreCatnObj( <obj> ) 
 ##  A pre-catn-group is an n-cube of pre-cat1 groups
 ##
@@ -38,7 +45,7 @@ DeclareProperty( "IsPcHigherDimensionalGroup", IsHigherDimensionalGroup );
 ##
 #P  IsPreCatnGroupByEndomorphisms( <obj> )
 ##
-DeclareProperty( "IsPreCatnGroupByEndomorphisms", IsHigherDimensionalGroup ); 
+DeclareProperty( "IsPreCatnGroupByEndomorphisms", IsPreCatnGroup ); 
 
 #############################################################################
 ##

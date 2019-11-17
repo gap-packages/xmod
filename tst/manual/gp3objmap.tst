@@ -269,17 +269,43 @@ gap> b := (2,6)(3,5);;
 gap> d12 := Group( a, b );; 
 gap> SetName( d12, "d12" );
 gap> t1 := GroupHomomorphismByImages( d12, d12, [a,b], [a^3,b] );; 
-gap> C11 := PreCat1GroupByEndomorphisms( t1, t1 );;
+gap> up := PreCat1GroupByEndomorphisms( t1, t1 );;
 gap> t2 := GroupHomomorphismByImages( d12, d12, [a,b], [a^4,b] );; 
-gap> C12 := PreCat1GroupByEndomorphisms( t2, t2 );;
-gap> C2 := Cat2Group( C11, C12 );
+gap> left := PreCat1GroupByEndomorphisms( t2, t2 );;
+gap> C2 := Cat2Group( up, left );
 (pre-)cat2-group with generating (pre-)cat1-groups:
 1 : [d12 => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )]
 2 : [d12 => Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )]
 gap> IsCat2Group( C2 );
 true
+gap> genk4 := [ (1,4)(2,5)(3,6), (2,6)(3,5) ];;
+gap> k4 := Subgroup( d12, genk4 );; 
+gap> gens3 := [ (1,3,5)(2,4,6), (2,6)(3,5) ];; 
+gap> s3 := Subgroup( d12, gens3 );; 
+gap> P := Group( (7,8) );; 
+gap> t3 := GroupHomomorphismByImages( k4, P, genk4, [(),(7,8)] );; 
+gap> e3 := GroupHomomorphismByImages( P, k4, [(7,8)], [(2,6)(3,5)] );; 
+gap> right := PreCat1GroupByTailHeadEmbedding( t3, t3, e3 );;
+gap> t4 := GroupHomomorphismByImages( s3, P, gens3, [(),(7,8)] );; 
+gap> e4 := GroupHomomorphismByImages( P, s3, [(7,8)], [(2,6)(3,5)] );; 
+gap> down := PreCat1GroupByTailHeadEmbedding( t4, t4, e4 );;
+gap> t0 := t1 * t3;; 
+gap> e0 := GroupHomomorphismByImages( P, d12, [(7,8)], [(2,6)(3,5)] );; 
+gap> diag := PreCat1GroupByTailHeadEmbedding( t0, t0, e0 );;
+gap> PC2 := PreCat2GroupByPreCat1Groups( up, left, right, down, diag ); 
+(pre-)cat2-group with generating (pre-)cat1-groups:
+1 : [d12 => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )]
+2 : [d12 => Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )]
+gap> IsPreCatnGroupByEndomorphisms(PC2);
+false
 
-# Section 8.4.3 
+# Section 8.4.2
+gap> TC2 := Transpose3DimensionalGroup( C2 );
+(pre-)cat2-group with generating (pre-)cat1-groups:
+1 : [d12 => Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )]
+2 : [d12 => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )]
+
+# Section 8.4.4 
 gap> xsC2 := CrossedSquareOfCat2Group( C2 );
 crossed square with crossed modules:
       up = [Group( () ) -> Group( [ (1,4)(2,5)(3,6) ] )]

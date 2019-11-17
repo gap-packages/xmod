@@ -37,6 +37,28 @@ end );
 
 #############################################################################
 ##
+#M  GroupsOfHigherDimensionalGroup . . . . . . for a higher-dimensional group
+##
+InstallOtherMethod( GroupsOfHigherDimensionalGroup, "method for an n-group", 
+    true, [ IsHigherDimensionalGroup ], 0, 
+function( G )
+
+    local dim, u, d;
+
+    dim := HigherDimension( G ); 
+    if ( dim = 2 ) then 
+        return [ Source(G), Range(G) ]; 
+    elif ( dim = 3 ) then 
+        u := Up2DimensionalGroup( G ); 
+        d := Down2DimensionalGroup( G ); 
+        return [ Source(u), Range(u), Source(d), Range(d) ]; 
+    else 
+        Error( "only implemented for dim=2 or dim=3 so far" ); 
+    fi; 
+end ); 
+
+#############################################################################
+##
 #M  IsPreCatnGroup . . . . . . . .  check that the object is a pre-catn-group
 ##
 InstallMethod( IsPreCatnGroup, "generic method for a pre-catn-group",
@@ -127,10 +149,36 @@ end );
 #?  maybe we should have GeneratingPreCat1Groups? 
 ##
 InstallMethod( IsPreCatnGroupByEndomorphisms, "test a pre-catn-group", true, 
-    [ IsHigherDimensionalGroup and IsPreCatnGroup ], 0,
-function( obj )
-    return ForAll( GeneratingCat1Groups(obj), 
-                   C -> IsSubgroup( Source(C), Range(C) ) ); 
+    [ IsPreCatnGroup ], 0,
+function( obj ) 
+
+    local gps, G, dim, tup, tlt, trt, tdn, genM, genN; 
+
+    gps := GroupsOfHigherDimensionalGroup( obj ); 
+    G := gps[1]; 
+    if not ForAll( gps, H -> IsSubgroup( G, H ) ) then 
+        return false; 
+    fi; 
+    dim := HigherDimension( obj ); 
+    if ( dim = 2 ) then 
+        return true; 
+    elif ( dim = 3 ) then 
+        tup := TailMap( Up2DimensionalGroup( obj ) ); 
+        tlt := TailMap( Left2DimensionalGroup( obj ) ); 
+        trt := TailMap( Right2DimensionalGroup( obj ) ); 
+        tdn := TailMap( Down2DimensionalGroup( obj ) ); 
+        genM := GeneratorsOfGroup( gps[2] ); 
+        if not ForAll( genM, m -> ImageElm(tlt,m) = ImageElm(trt,m) ) then 
+            return false; 
+        fi; 
+        genN := GeneratorsOfGroup( gps[3] ); 
+        if not ForAll( genN, n -> ImageElm(tup,n) = ImageElm(tdn,n) ) then 
+            return false; 
+        fi; 
+        return true; 
+    else 
+        Error( "not implemented for dim >= 4" ); 
+    fi;
 end );
 
 ##############################################################################

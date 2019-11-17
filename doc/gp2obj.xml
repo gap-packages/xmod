@@ -373,7 +373,7 @@ gap> RepresentationsOfObject( X5 );
 [ "IsComponentObjectRep", "IsAttributeStoringRep", "IsPreXModObj" ]
 gap> KnownAttributesOfObject( X5);
 [ "Name", "Size", "Range", "Source", "IdGroup", "Boundary", "XModAction", 
-  "ExternalSetXMod", "IsomorphismPerm2DimensionalGroup" ]
+  "ExternalSetXMod" ]
 ]]>
 </Example>
 
@@ -437,8 +437,8 @@ listed in section <Ref Sect="sect-constructions" />:
 gap> KnownPropertiesOfObject( X5 );
 [ "IsEmpty", "IsTrivial", "IsNonTrivial", "IsFinite", 
   "CanEasilyCompareElements", "CanEasilySortElements", "IsDuplicateFree", 
-  "IsGeneratorsOfSemigroup", "IsPreXModDomain", "IsPerm2DimensionalGroup", 
-  "IsPreXMod", "IsXMod", "IsAutomorphismGroup2DimensionalGroup" ]
+  "IsGeneratorsOfSemigroup", "IsPreXModDomain", "IsPreXMod", "IsXMod", 
+  "IsAutomorphismGroup2DimensionalGroup" ]
 ]]>
 </Example>
 

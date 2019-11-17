@@ -22,6 +22,16 @@ gap> d12 := DihedralGroup( 12 );;
 gap> SetName( d12, "d12" );
 gap> a1 := d12.1;;  a2 := d12.2;;  a3 := d12.3;;  a0 := One( d12 );;
 gap> gensG2 := GeneratorsOfGroup( G2 );;
+gap> g18gens := [ (1,2,3), (4,5,6), (2,3)(5,6) ];;
+gap> g18 := Group( g18gens );; 
+gap> SetName( g18, "g18" );
+gap> s3agens := [ (7,8,9), (8,9) ];;
+gap> s3a := Group( s3agens );; 
+gap> SetName( s3a, "s3a" );
+gap> t1 := GroupHomomorphismByImages(g18,s3a,g18gens,[(7,8,9),(),(8,9)]);;
+gap> h1 := GroupHomomorphismByImages(g18,s3a,g18gens,[(7,8,9),(7,8,9),(8,9)]);;
+gap> e1 := GroupHomomorphismByImages(s3a,g18,s3agens,[(1,2,3),(2,3)(5,6)]);;
+gap> C18 := Cat1Group( t1, h1, e1 );;
 gap> t2 := GroupHomomorphismByImages( G2, d12, gensG2,
 >           [ a0, a1*a3, a2*a3, a0, a0, a3, a0 ] );;
 gap> h2 := GroupHomomorphismByImages( G2, d12, gensG2,
@@ -63,9 +73,46 @@ gap> KnownPropertiesOfObject( mor5 );
 gap> KnownAttributesOfObject( mor5 );
 [ "Name", "Order", "Range", "Source", "SourceHom", "RangeHom" ]
 
+## Section 3.2.4
+gap> q8 := SmallGroup(8,4);;   ## quaternion group 
+gap> Xq8 := XModByAutomorphismGroup( q8 );
+[Group( [ f1, f2, f3 ] )->Group( [ Pcgs([ f1, f2, f3 ]) -> [ f1*f2, f2, f3 ], 
+  Pcgs([ f1, f2, f3 ]) -> [ f2, f1*f2, f3 ], 
+  Pcgs([ f1, f2, f3 ]) -> [ f1*f3, f2, f3 ], 
+  Pcgs([ f1, f2, f3 ]) -> [ f1, f2*f3, f3 ] ] )]
+gap> iso := IsomorphismPerm2DimensionalGroup( Xq8 );;
+gap> Yq8 := Image( iso );;
+gap> s4 := SymmetricGroup(4);; 
+gap> isos4 := IsomorphismGroups( Range(Yq8), s4 );;
+gap> id := IdentityMapping( Source( Yq8 ) );; 
+gap> IsBijective( id );;  IsBijective( isos4 );;
+gap> mor := IsomorphismByIsomorphisms( Yq8, [id,isos4] );;
+gap> Zq8 := Image( mor );;
+
 ## Section 3.3.1
+gap> t3 := GroupHomomorphismByImages(g18,s3a,g18gens,[(),(7,8,9),(8,9)]);;     
+gap> e3 := GroupHomomorphismByImages(s3a,g18,s3agens,[(4,5,6),(2,3)(5,6)]);;   
+gap> C3 := Cat1Group( t3, h1, e3 );; 
+gap> imgamma := [ (4,5,6), (1,2,3), (2,3)(5,6) ];; 
+gap> gamma := GroupHomomorphismByImages( g18, g18, g18gens, imgamma );;
+gap> rho := IdentityMapping( s3a );; 
+gap> mor := Cat1GroupMorphism( C18, C3, gamma, rho );;
+gap> Display( mor );;
+Morphism of cat1-groups :- 
+: Source = [g18=>s3a] with generating sets:
+  [ (1,2,3), (4,5,6), (2,3)(5,6) ]
+  [ (7,8,9), (8,9) ]
+:  Range = [g18=>s3a] with generating sets:
+  [ (1,2,3), (4,5,6), (2,3)(5,6) ]
+  [ (7,8,9), (8,9) ]
+: Source Homomorphism maps source generators to:
+  [ (4,5,6), (1,2,3), (2,3)(5,6) ]
+: Range Homomorphism maps range generators to:
+  [ (7,8,9), (8,9) ]
+
+## Section 3.3.2
 gap> iso2 := IsomorphismPerm2DimensionalGroup( C2 );
-[[G2=>d12] => [..]]
+   [[G2=>d12] => [..]]
 
 ## Section 3.4.1
 gap> H2 := Subgroup(G2, [G2.3,G2.4,G2.6,G2.7] );  SetName( H2, "H2" );
