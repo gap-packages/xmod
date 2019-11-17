@@ -2,7 +2,7 @@
 
 ## 2.74 -> 2.77 (17/11/2019) 
 
- * (17/11/19) fixed XModByGroupOfAutomorphisms 
+ * (17/11/19) fixed XModByGroupOfAutomorphisms and updated manual
  * (16/11/19) corrected Transpose3DimensionalGroup for cat2-groups 
  * (12/11/19) reverted need for a cat2-group to have a diagonal cat1-group
 
