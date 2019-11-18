@@ -1,5 +1,7 @@
 # CHANGES to the 'XMod' package
 
+## 2.77 -> 2.77dev (18/11/2019) 
+
 ## 2.74 -> 2.77 (17/11/2019) 
 
  * (17/11/19) fixed XModByGroupOfAutomorphisms and updated manual
