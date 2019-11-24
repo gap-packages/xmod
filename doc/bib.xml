@@ -129,7 +129,7 @@
 <entry id="brow:lod"><article>
   <author>
     <name><first>R.</first><last>Brown</last></name>
-    <name><first>J. -L.</first><last>Loday</last></name>
+    <name><first>J.-L.</first><last>Loday</last></name>
   </author>  
   <title>Van Kampen theorems for diagram of spaces</title>
   <journal>Topology</journal>
@@ -179,7 +179,7 @@ with applications to homotopy <M>2</M>-types</title>
 
 <entry id="E1"><phdthesis>
   <author>
-    <name><first>G.</first><last>Ellis</last></name>
+    <name><first>G.~J.</first><last>Ellis</last></name>
   </author>  
   <title>Crossed modules and their higher dimensional analogues</title>
   <school>University of Wales, Bangor</school>
@@ -188,7 +188,7 @@ with applications to homotopy <M>2</M>-types</title>
 
 <entry id="ell:st"><article>
   <author>
-    <name><first>G.</first><last>Ellis</last></name>
+    <name><first>G.~J.</first><last>Ellis</last></name>
     <name><first>R.</first><last>Steiner</last></name>
   </author>  
   <title>Higher dimensional crossed modules 
@@ -239,7 +239,7 @@ with applications to homotopy <M>2</M>-types</title>
 
 <entry id="L1"><article>
   <author>
-    <name><first>J. L.</first><last>Loday</last></name>
+    <name><first>J.-L.</first><last>Loday</last></name>
   </author>  
   <title>Spaces with finitely many non-trivial homotopy groups</title>
   <journal>J. App. Algebra</journal>

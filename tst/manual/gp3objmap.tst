@@ -2,7 +2,7 @@
 ##
 #W  gp3objmap.tst                 XMOD test file                Chris Wensley
 ##
-#Y  Copyright (C) 2001-2019, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2020, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 gap> START_TEST( "XMod package: gp3objmap.tst" );
@@ -296,7 +296,7 @@ gap> PC2 := PreCat2GroupByPreCat1Groups( up, left, right, down, diag );
 (pre-)cat2-group with generating (pre-)cat1-groups:
 1 : [d12 => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )]
 2 : [d12 => Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )]
-gap> IsPreCatnGroupByEndomorphisms(PC2);
+gap> IsPreCatnGroupByEndomorphisms( PC2 );
 false
 
 # Section 8.4.2
@@ -355,7 +355,8 @@ gap> fams := AllCat2GroupFamilies( d12 );
   [ 30, 31, 32, 33, 34, 35 ], [ 9, 12, 15 ], [ 19, 20, 21, 26, 27, 28 ], 
   [ 36, 37, 38 ], [ 22, 29 ], [ 39, 40 ], [ 41 ] ]
 gap> CatnGroupNumbers( d12 );
-rec( cat1 := 12, cat2 := 41, idem := 21, iso1 := 4, iso2 := 10, symm2 := 4 )
+rec( cat1 := 12, cat2 := 41, idem := 21, iso1 := 4, iso2 := 10, 
+  isopredg := 0, predg := 0, siso2 := 4, symm2 := 12 )
 gap> CatnGroupLists( d12 );
 rec( allcat2pos := [ 1, 7, 9, 16, 19, 22, 30, 36, 39, 41 ],
   cat2classes := 
@@ -374,7 +375,7 @@ rec( allcat2pos := [ 1, 7, 9, 16, 19, 22, 30, 36, 39, 41 ],
       [ 6, 12 ], [ 7, 7 ], [ 7, 10 ], [ 7, 11 ], [ 7, 12 ], [ 8, 8 ], 
       [ 8, 10 ], [ 8, 11 ], [ 8, 12 ], [ 9, 9 ], [ 9, 10 ], [ 9, 11 ], 
       [ 9, 12 ], [ 10, 10 ], [ 10, 12 ], [ 11, 11 ], [ 11, 12 ], [ 12, 12 ] ],
-  omit := false, symmpos := [ 1, 5, 8, 10 ] )
+  omit := false, pisopos := [  ], sisopos := [ 1, 5, 8, 10 ] )
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 

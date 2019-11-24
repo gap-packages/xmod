@@ -2,7 +2,7 @@
 ##
 #W  init.g                 GAP package `XMod'                   Chris Wensley
 #W 
-#Y  Copyright (C) 2001-2019, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2020, Chris Wensley et al,  
 ##
 
 ##  read the function declarations

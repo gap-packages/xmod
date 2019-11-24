@@ -5,14 +5,14 @@
 ##  This file implements generic methods for (pre-)crossed cubes 
 ##  and (pre-)cat3-groups.
 ##
-#Y  Copyright (C) 2001-2019, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2020, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
     
 ##############################################################################
 ##
 #M  PreCat3GroupObj( [<front>,<up>,<left>,<right>,<down>,<back>] ) 
 ##
-InstallMethod( PreCat3GroupObj, "for a list of pre-cat1-groups", true,
+InstallMethod( PreCat3GroupObj, "for a list of pre-cat2-groups", true,
     [ IsList ], 0,
 function( L )
 
@@ -156,8 +156,8 @@ InstallGlobalFunction( PreCat3Group, function( arg )
             Error( "argument is not a pre-crossed cube" ); 
         ## C3G := PreCat3GroupOfPreCrossedcube( arg[1] );
     elif ( nargs = 3 ) then 
-        C2f := Cat2Group( arg[1], arg[2] ); 
-        C2l := Cat2Group( arg[2], arg[3] ); 
+        C2f := PreCat2Group( arg[1], arg[2] ); 
+        C2l := PreCat2Group( arg[2], arg[3] ); 
     else 
         C2f := arg[1]; 
         C2l := arg[2]; 

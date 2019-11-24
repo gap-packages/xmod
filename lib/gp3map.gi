@@ -5,7 +5,7 @@
 ##  This file implements functions for 3Dimensional Mappings for 
 ##  (pre-)crossed squares and (pre-)cat2-groups. 
 ##
-#Y  Copyright (C) 2001-2019, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2020, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 #############################################################################
@@ -747,6 +747,30 @@ function( C1, C2 )
         return fail; 
     fi; 
 end ); 
+
+##############################################################################
+##
+#M  IdentityMapping( <obj> )
+##
+InstallOtherMethod( IdentityMapping, "for 3-dimensional object", true,
+    [ IsHigherDimensionalGroup and Is3DimensionalDomain ], 0,
+function( C )
+
+    local genpc, up, left, idup, idleft, idC; 
+    
+    ## this works for cat2-groups but should be extended to crossed squares 
+    if not IsPreCat2Group( C ) then 
+        Info( InfoXMod, 1, "not yet implemented for crossed squares" ); 
+        return fail; 
+    fi; 
+    genpc := GeneratingCat1Groups( C ); 
+    up := genpc[1]; 
+    idup := IdentityMapping( up ); 
+    left := genpc[2]; 
+    idleft := IdentityMapping( left ); 
+    idC := PreCat2GroupMorphismByPreCat1GroupMorphisms( C, C, idup, idleft ); 
+    return idC; 
+end );
 
 ###############################################################################
 ##

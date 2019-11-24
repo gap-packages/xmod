@@ -2,7 +2,7 @@
 ##
 #W  gp2obj.gd                  GAP4 package `XMod'               Chris Wensley
 #W                                                                 & Murat Alp
-#Y  Copyright (C) 2001-2019, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2020, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 #############################################################################

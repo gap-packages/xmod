@@ -1,6 +1,10 @@
 # CHANGES to the 'XMod' package
 
-## 2.77 -> 2.77dev (18/11/2019) 
+## 2.77 -> 2.77dev (15/01/2020) 
+
+ * (14/01/20) fixed IdentityMapping for cat2-groups and catn-groups  
+ * (10/01/20) revised CatnGroupNumbers fields for crossed squares & cat2-groups 
+ * (24/11/19) added DirectProduct for cat1-groups (& revised for xmods) 
 
 ## 2.74 -> 2.77 (17/11/2019) 
 

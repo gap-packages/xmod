@@ -2,7 +2,7 @@
 ##
 ##  gp3obj.gd                 GAP4 package `XMod'                Chris Wensley
 ##                                                                Alper Odabas
-#Y  Copyright (C) 2001-2019, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2020, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file declares generic methods for (pre-)crossed squares and
@@ -165,7 +165,7 @@ DeclareAttribute( "CrossedSquareByXModSplitting", IsXMod );
 ##  A pre-cat2-group is a square of commuting pre-cat1-groups 
 ##
 DeclareRepresentation( "IsPreCat2GroupObj", 
-    IsHigherDimensionalGroup and IsAttributeStoringRep,
+    IsHigherDimensionalGroup and Is3DimensionalDomain and IsAttributeStoringRep,
     [ "up", "left", "right", "down", "diag" ] );
 BindGlobal( "PreCat2GroupObjType", 
             NewType( FamilyHigherDimensionalGroup, IsPreCat2GroupObj ) ); 
@@ -228,6 +228,7 @@ DeclareOperation( "AllCat2GroupsWithImagesUpToIsomorphism",
 DeclareOperation( "AllCat2Groups", [ IsGroup ] ); 
 DeclareOperation( "AllCat2GroupsIterator", [ IsGroup ] ); DeclareAttribute( "AllCat2GroupsNumber", IsGroup ); 
 DeclareOperation( "AllCat2GroupsUpToIsomorphism", [ IsGroup ] ); 
+DeclareAttribute( "SymmetricCat2GroupsUpToIsomorphismNumber", IsGroup ); 
 DeclareOperation( "AllCat2GroupFamilies", [ IsGroup ] ); 
 DeclareOperation( "TableRowForCat1Groups", [ IsGroup ] ); 
 DeclareOperation( "TableRowForCat2Groups", [ IsGroup ] ); 

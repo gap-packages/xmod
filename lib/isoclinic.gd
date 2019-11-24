@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.gd              GAP4 package `XMod'                Alper Odabas
 #W                                                               & Enver Uslu
-#Y  Copyright (C) 2001-2019, Chris Wensley et al 
+#Y  Copyright (C) 2001-2020, Chris Wensley et al 
 
 #############################################################################
 ##

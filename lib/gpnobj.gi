@@ -4,7 +4,7 @@
 ##                                                                Alper Odabas
 ##  This file implements generic methods for (pre-)catn-groups.
 ##
-#Y  Copyright (C) 2001-2019, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2020, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 
@@ -43,7 +43,7 @@ InstallOtherMethod( GroupsOfHigherDimensionalGroup, "method for an n-group",
     true, [ IsHigherDimensionalGroup ], 0, 
 function( G )
 
-    local dim, u, d;
+    local dim, u, d, f, b;
 
     dim := HigherDimension( G ); 
     if ( dim = 2 ) then 
@@ -52,8 +52,13 @@ function( G )
         u := Up2DimensionalGroup( G ); 
         d := Down2DimensionalGroup( G ); 
         return [ Source(u), Range(u), Source(d), Range(d) ]; 
+    elif ( dim = 4 ) then 
+        f := Front3DimensionalGroup( G ); 
+        b := Back3DimensionalGroup( G ); 
+        return Concatenation( GroupsOfHigherDimensionalGroup( f ), 
+                              GroupsOfHigherDimensionalGroup( b ) );  
     else 
-        Error( "only implemented for dim=2 or dim=3 so far" ); 
+        Error( "only implemented for dim in [2,3,4] so far" ); 
     fi; 
 end ); 
 
@@ -199,16 +204,22 @@ function( L )
         Error( "the cat1-groups fail to have isomorphic sources" ); 
     fi;
     n := Length( L );
-    PC := rec();
-    ObjectifyWithAttributes( PC, PreCatnObjType, 
-        GeneratingCat1Groups, L, 
-        HigherDimension, n+1, 
-        IsHigherDimensionalGroup, true );
-    if not IsPreCatnGroup( PC ) then
-        Info( InfoXMod, 1, "Warning: not a pre-catn-group" ); 
-        PC := fail; 
+    if ( n = 2 ) then 
+        return PreCat2Group( L[1], L[2] ); 
+    elif ( n = 3 ) then 
+        return PreCat3Group( L[1], L[2], L[3] ); 
+    else 
+        PC := rec();
+        ObjectifyWithAttributes( PC, PreCatnObjType, 
+            GeneratingCat1Groups, L, 
+            HigherDimension, n+1, 
+            IsHigherDimensionalGroup, true );
+        if not IsPreCatnGroup( PC ) then
+            Info( InfoXMod, 1, "Warning: not a pre-catn-group" ); 
+            PC := fail; 
+        fi;
+        return PC; 
     fi;
-    return PC;
 end );
 
 #############################################################################
@@ -278,30 +289,6 @@ InstallGlobalFunction( CatnGroup, function( arg )
         Print( usage1 ); 
     fi;
     return fail;
-end );
-
-##############################################################################
-##
-#M  GroupsOfHigherDimensionalGroup( obj ) . . . for a higher-dimensional group 
-##
-InstallMethod( GroupsOfHigherDimensionalGroup, "method for dimensions 2,3", 
-    true, [ IsHigherDimensionalGroup ], 0,
-function ( obj )
-
-    local dim, L, gens, up, dn; 
-
-    dim := HigherDimension( obj ); 
-    if ( dim = 2 ) then 
-        return [ Source( obj ), Range( obj ) ]; 
-    elif ( dim = 3 ) then 
-        up := Up2DimensionalGroup( obj ); 
-        dn := Down2DimensionalGroup( obj );
-        return [ Source(up), Range(up), Source(dn), Range(dn) ]; 
-    else  ## dimension >= 4 
-        Print( "GroupsOfHigherDimensionalGroup ", 
-               "not yet implemented for dimension >= 4\n" ); 
-        return fail; 
-    fi; 
 end );
 
 ##############################################################################
