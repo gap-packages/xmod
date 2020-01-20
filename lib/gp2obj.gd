@@ -348,12 +348,13 @@ DeclareOperation( "AllCat1GroupsWithImageUpToIsomorphism", [ IsGroup ] );
 #F  DoAllCat1GroupsIterator 
 #A  AllCat1GroupsNumber( <gp> )
 #O  AllCat1GroupsUpToIsomorphism( <gp> )
+#O  AllCat1GroupFamilies( <gp> )
 ##
 DeclareOperation( "AllCat1Groups", [ IsGroup ] ); 
 DeclareOperation( "AllCat1GroupsIterator", [ IsGroup ] ); DeclareGlobalFunction( "DoAllCat1GroupsIterator" ); 
 DeclareAttribute( "AllCat1GroupsNumber", IsGroup ); 
 DeclareOperation( "AllCat1GroupsUpToIsomorphism", [ IsGroup ] ); 
-
+DeclareOperation( "AllCat1GroupFamilies", [ IsGroup ] ); 
 
 #############################################################################
 ##

@@ -2569,6 +2569,38 @@ function( G )
     return L;
 end );
 
+InstallMethod( AllCat1GroupFamilies, "gives lists of isomorphic cat1-groups", 
+    true, [ IsGroup ], 0,
+function( G )
+
+    local reps, cat1, iso1, classes, i, C, k, found, iso; 
+
+    reps := AllCat1GroupsUpToIsomorphism( G ); 
+    cat1 := CatnGroupNumbers( G ).cat1; 
+    iso1 := CatnGroupNumbers( G ).iso1; 
+    classes := ListWithIdenticalEntries( iso1, 0 ); 
+    for k in [1..iso1] do 
+        classes[k] := [ ]; 
+    od; 
+    i := 0;
+    for C in AllCat1GroupsIterator( G ) do 
+        if not ( C = fail ) then 
+            i := i+1; 
+            k := 0; 
+            found := false; 
+            while ( not found ) do 
+                k := k+1; 
+                iso := IsomorphismCat1Groups( C, reps[k] ); 
+                if ( iso <> fail ) then 
+                    found := true; 
+                    Add( classes[k], i ); 
+                fi;
+            od;
+        fi;
+    od;
+    return classes; 
+end ); 
+
 #############################################################################
 ##
 #M  DirectProductInfo( <obj> ) . . . . . . . . . . . . . . . . for 2d-objects

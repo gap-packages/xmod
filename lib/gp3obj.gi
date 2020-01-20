@@ -1798,7 +1798,7 @@ function( G )
     classes := ListWithIdenticalEntries( iso2, 0 ); 
     for k in [1..iso2] do 
         classes[k] := [ ]; 
-    od;
+    od; 
     i := 0;
     for C in AllCat2GroupsIterator( G ) do 
         if not ( C = fail ) then 
