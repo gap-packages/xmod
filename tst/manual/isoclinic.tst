@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.tst                 XMOD test file                 Alper Odabas
 #W                                                               & Enver Uslu
-#Y  Copyright (C) 2001-2019, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2020, Chris Wensley et al, 
 ##
 gap> START_TEST( "XMod package: isoclinic.tst" );
 gap> saved_infolevel_xmod := InfoLevel( InfoXMod );; 

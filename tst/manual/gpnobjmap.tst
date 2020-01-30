@@ -2,7 +2,7 @@
 ##
 #W  gpnobjmap.tst                 XMOD test file                Chris Wensley
 ##                                                               Alper Odabas
-#Y  Copyright (C) 2001-2019, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2020, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 gap> START_TEST( "XMod package: gpnobjmap.tst" );
