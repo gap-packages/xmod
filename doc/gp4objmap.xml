@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp4objmap.xml         XMod documentation            Chris Wensley  -->
 <!--                                                                     -->
-<!--  Copyright (C) 1996-2019, Chris Wensley et al,                      --> 
+<!--  Copyright (C) 1996-2020, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -180,8 +180,6 @@ and <M>k</M>-th cat<M>^1</M>-group on <M>G</M>.
          Arg="G" />
    <Oper Name="AllCat3Groups"
          Arg="G" />
-   <Oper Name="AllCat3GroupsUpToIsomorphism"
-         Arg="G" />
 <Description>
 The list of triples returned by the operation <C>AllCat3GroupTriples</C> 
 is saved as <C>CatnGroupLists(G).cat3triples</C>. 
@@ -308,6 +306,35 @@ subject to the following conditions:
 </Item>
 </List> 
 
+
+<ManSection>
+   <Oper Name="PreCatnGroup"
+         Arg="L" />
+   <Oper Name="CatnGroup"
+         Arg="L" />
+<Description>
+The operation <C>(Pre)CatnGroup</C> expects as input a list of 
+cat<M>^1</M>-groups. 
+<P/> 
+</Description> 
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> PCn := PreCatnGroup( [ all1[5], all1[7], all1[11], all1[12] ] );
+(pre-)cat4-group with generating (pre-)cat1-groups:
+1 : [d12 => Group( [ (), (1,4)(2,3)(5,6) ] )]
+2 : [d12 => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )]
+3 : [d12 => Group( [ (1,5,3)(2,6,4), (1,4)(2,3)(5,6) ] )]
+4 : [d12 => Group( [ (1,2,3,4,5,6), (2,6)(3,5) ] )]
+gap> IsCatnGroup( PCn );                                             
+true
+gap> HigherDimension( PCn );
+5
+]]>
+</Example>
+
 </Section> 
+
 
 </Chapter>

@@ -2,28 +2,11 @@
 ##
 #W  dom2dnd.gi                 GAP4 package `XMod'               Chris Wensley
 ##
-#Y  Copyright (C) 2001-2018, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2020, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 
 ###########################  DOMAIN WITH OBJECTS  ########################### 
-
-############################################################################# 
-## 
-#M  KindOfHigherDimensionalDomain( <m2d> ) 
-##
-InstallMethod( KindOfHigherDimensionalDomain, "for list of 2dim-domains", 
-    true, [ IsList ], 0, 
-function( pieces ) 
-
-    local type; 
-
-    #? this does not do anything yet! 
-    ## type:  1=gpd, 2=mon, 3=sgp, 4=mgm, 5=dom 
-    type := 0; 
-    return type; 
-end );
-
 
 ################################  MAGMAS  ################################### 
 

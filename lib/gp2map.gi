@@ -5,7 +5,7 @@
 ##  This file installs methods for 2DimensionalMappings 
 ##  for crossed modules and cat1-groups. 
 ##
-#Y  Copyright (C) 2001-2019, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2020, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 ##############################################################################
@@ -1104,9 +1104,17 @@ function( C1, C2 )
         return fail;
     fi; 
     t1 := TailMap( C1 );
-    h1 := HeadMap( C1 );
     t2 := TailMap( C2 );
+    if not ( Image( phi, Kernel( t1 ) ) = Kernel( t2 ) ) then 
+        Info( InfoXMod, 1, "t1 and t2 do not have the same kernel" ); 
+        return fail; 
+    fi;
+    h1 := HeadMap( C1 );
     h2 := HeadMap( C2 );
+    if not ( Image( phi, Kernel( h1 ) ) = Kernel( h2 ) ) then 
+        Info( InfoXMod, 1, "h1 and h2 do not have the same kernel" ); 
+        return fail; 
+    fi;
     e1 := RangeEmbedding( C1 ); 
     e2 := RangeEmbedding( C2 ); 
     for alpha in AutomorphismGroup( G1 ) do 

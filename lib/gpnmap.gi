@@ -5,7 +5,7 @@
 ##  This file implements functions for Higher Dimensional Mappings for 
 ##  (pre-)catn-groups. 
 ##
-#Y  Copyright (C) 2001-2019, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2020, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 ##############################################################################
@@ -68,9 +68,9 @@ InstallMethod( IsPreCatnGroupMorphism,
     [ IsHigherDimensionalGroupMorphism ], 0,
 function( mor )
 
-    local PC, QC, dim, upmor, dnmor, ok, 2dmor, genPC, genQC, rangePC, rangeQC, 
-          x, rnghoms, srchoms, G1, G2, P1, P2, p, q, comp, perm2dmor, i, 
-          gamma, rho, sigma, pi;
+    local PC, QC, dim, upmor, dnmor, ok, 2dmor, genPC, genQC, srcPC, rngPC, 
+          srcQC, rngQC, rangeQC, x, rnghoms, srchoms, G1, G2, P1, P2, p, q, 
+          comp, perm2dmor, i, gamma, rho, sigma, pi;
 
     PC := Source( mor );
     QC := Range( mor );
@@ -86,7 +86,6 @@ function( mor )
             return IsPreCrossedSquareMorphism( mor ); 
         fi; 
     fi; 
-    Error( "should never get here - method not yet implemented" );
     2dmor := ListOf2DimensionalMappings( mor );
     if ForAny( 2dmor, x -> not Is2DimensionalGroupMorphism(x) ) then 
         Info( InfoXMod, 1, "Is2DimensionalGroupMorphism(x) fails for ", x );
@@ -94,67 +93,43 @@ function( mor )
     fi;
     genPC := GeneratingCat1Groups( PC ); 
     genQC := GeneratingCat1Groups( QC ); 
-    rangePC := List( genPC, x -> Range(x) );
-    rangeQC := List( genQC, x -> Range(x) );
+    srcPC := List( genPC, x -> Source(x) );
+    srcQC := List( genQC, x -> Source(x) );
+    rngPC := List( genPC, x -> Range(x) );
+    rngQC := List( genQC, x -> Range(x) );
     rnghoms := List( 2dmor, x -> RangeHom(x) );
     srchoms := List( 2dmor, x -> SourceHom(x) ); 
     for x in [1..Length(genPC)] do 
-        if ( Source( rnghoms[x] ) <> rangePC[x] ) then 
+        if ( Source( srchoms[x] ) <> srcPC[x] ) then 
             Info( InfoXMod, 1, x, "a : ", Source(rnghoms[x]), 
-                  " <> ", rangePC[x] );  
+                  " <> ", srcPC[x] );  
             return false;
         fi;    
-        if ( Range( rnghoms[x] ) <> rangeQC[x] ) then 
+        if ( Range( srchoms[x] ) <> srcQC[x] ) then 
+            Info( InfoXMod, 1, x, "b : ", Range(srchoms[x]), 
+                  " <> ", srcQC[x] );  
+            return false;
+        fi;    
+        if ( Source( rnghoms[x] ) <> rngPC[x] ) then 
+            Info( InfoXMod, 1, x, "a : ", Source(rnghoms[x]), 
+                  " <> ", rngPC[x] );  
+            return false;
+        fi;    
+        if ( Range( rnghoms[x] ) <> rngQC[x] ) then 
             Info( InfoXMod, 1, x, "b : ", Source(rnghoms[x]), 
-                  " <> ", rangePC[x] );  
+                  " <> ", rngQC[x] );  
             return false;
         fi;    
-    od;
-    
-    # The cause of the wrong result : SmallGroup(n,m) <> SmallGroup(n,m) 
-    # Print("Problem of equality of morphism \n");
-    # construct perm 2d-morphisms
-    
-    if not ( IsPermHigherDimensionalGroup( PC ) and 
-             IsPermHigherDimensionalGroup( QC ) ) then 
-        Error( "only implemented for permutation groups so far" ); 
-    fi; 
-##    perm 2dmor := [ ]; 
-##    for i in [1..Length(2dmor)] do
-##        G1 := Source( SourceHom( 2dmor[i] ) );
-##        G2 := Range( SourceHom( 2dmor[i] ) );
-##        P1 := ImagesSource( IsomorphismPermGroup( G1 ) );
-##        P2 := ImagesSource( IsomorphismPermGroup( G2 ) );
-##        p := IsomorphismGroups( P1, G1 );
-##        q := IsomorphismGroups( G2, P2 );
-##        comp := p * SourceHom( 2dmor[i] ) * q;    
-##        Add( perm2dmor, comp, i );
-##    od;
-    
-    # check that equality of vertex homomorphisms 
-    if ( Length( 2dmor ) > 4 ) then 
-        Error( "not yet implemented for dimension >=3" ); 
-    fi; 
+    od;    
+    # check equality of source homomorphisms 
     gamma := SourceHom( 2dmor[1] ); 
-    if not ( gamma = SourceHom( 2dmor[2] ) ) then 
-        Info( InfoXMod, 2, "unequal gammas" ); 
-        return false; 
-    fi; 
-    rho := RangeHom( 2dmor[1] ); 
-    if not ( rho = SourceHom( 2dmor[3] ) ) then 
-        Info( InfoXMod, 2, "unequal rhos" ); 
-        return false; 
-    fi; 
-    sigma := RangeHom( 2dmor[2] ); 
-    if not ( sigma = SourceHom( 2dmor[4] ) ) then 
-        Info( InfoXMod, 2, "unequal sigmas" ); 
-        return false; 
-    fi; 
-    pi := RangeHom( 2dmor[3] ); 
-    if not ( pi = RangeHom( 2dmor[4] ) ) then 
-        Info( InfoXMod, 2, "unequal pis" ); 
-        return false; 
-    fi; 
+    for i in [2..dim-1] do 
+        if not ( gamma = SourceHom( 2dmor[i] ) ) then 
+            Info( InfoXMod, 2, "unequal source homs" ); 
+            return false; 
+        fi; 
+    od; 
+    Print( "WARNING: further checks are needed here\n" ); 
     return true;
 end );
 
@@ -292,18 +267,8 @@ function( obj )
     
     ## this works for catn-groups but should be extended to n-cubes 
     dim := HigherDimension( obj ); 
-    if ( dim = 3 ) then 
-        idmaps := [ IdentityMapping( Up2DimensionalGroup( obj ) ), 
-                    IdentityMapping( Left2DimensionalGroup( obj ) ), 
-                    IdentityMapping( Right2DimensionalGroup( obj ) ), 
-                    IdentityMapping( Down2DimensionalGroup( obj ) ) ]; 
-        if ( HasIsCrossedSquare( obj ) and IsCrossedSquare( obj ) ) then 
-            return CrossedSquareMorphismByXModMorphisms( obj, obj, idmaps ); 
-        elif ( HasIsCat2Group( obj ) and IsCat2Group( obj ) ) then 
-            return PreCat2GroupMorphismByPreCat1GroupMorphisms(obj,obj,idmaps); 
-        else 
-            Error( "should never get here" ); 
-        fi; 
+    if ( dim < 4 ) then 
+        Error( "should be using method for low dimensions" ); 
     else 
         idmaps := List( GeneratingCat1Groups( obj ), C -> IdentityMapping(C) ); 
         return PreCatnGroupMorphismByMorphisms( obj, obj, idmaps ); 

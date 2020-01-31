@@ -2,7 +2,7 @@
 ##
 #W  gp2obj.tst                    XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2019, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2020, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 gap> START_TEST( "XMod package: gp2obj.tst" );
@@ -70,16 +70,17 @@ gap> gen12 := [ (1,2,3,4,5,6), (2,6)(3,5) ];;
 gap> d12 := Group( gen12 );;                  
 gap> gen6 := [ (7,8,9), (8,9) ];;
 gap> s3 := Group( gen6 );;
+gap> SetName( d12, "d12" );  SetName( s3, "s3" ); 
 gap> pr12 := GroupHomomorphismByImages( d12, s3, gen12, gen6 );;
 gap> Kernel( pr12 ) = Centre( d12 );
 true
 gap> X12 := XModByCentralExtension( pr12 );;
 gap> Display( X12 );                         
 
-Crossed module :- 
-: Source group has generators:
+Crossed module [d12->s3] :- 
+: Source group d12 has generators:
   [ (1,2,3,4,5,6), (2,6)(3,5) ]
-: Range group has generators:
+: Range group s3 has generators:
   [ (7,8,9), (8,9) ]
 : Boundary homomorphism maps source generators to:
   [ (7,8,9), (8,9) ]
@@ -95,27 +96,32 @@ gap> theta := GroupHomomorphismByImages( s4, s3, gens4, [(7,8),(8,9),(7,8)] );;
 gap> X1 := XModByPullback( X12, theta );; 
 gap> StructureDescription( Source( X1 ) );
 "C2 x S4"
-gap> info := PullbackInfo( Source( X1 ) );;
-gap> info!.directProduct;
+gap> SetName( s4, "s4" );  SetName( Source( X1 ), "c2s4" ); 
+gap> infoX1 := PullbackInfo( Source( X1 ) );;
+gap> infoX1!.directProduct;
 Group([ (1,2,3,4,5,6), (2,6)(3,5), (7,8), (8,9), (9,10) ])
-gap> info!.projections[1];
+gap> infoX1!.projections[1];
 [ (7,8)(9,10), (7,9)(8,10), (2,6)(3,5)(8,9), (1,5,3)(2,6,4)(8,10,9), 
   (1,6,5,4,3,2)(8,9,10) ] -> [ (), (), (2,6)(3,5), (1,5,3)(2,6,4), 
   (1,6,5,4,3,2) ]
-gap> info!.projections[2];
+gap> infoX1!.projections[2];
 [ (7,8)(9,10), (7,9)(8,10), (2,6)(3,5)(8,9), (1,5,3)(2,6,4)(8,10,9), 
   (1,6,5,4,3,2)(8,9,10) ] -> [ (11,12)(13,14), (11,13)(12,14), (12,13), 
   (12,14,13), (12,13,14) ]
 
 ## Section 2.1.8
-gap> DirectProductOp( [X8a,X8b], X8a );
-[<-1>x<i>->q8xq8]
+gap> X8ab := DirectProduct( X8a, X8b );
+[[<-1>->q8]x[<i>->q8]]
+gap> infoX8ab := DirectProductInfo( X8ab );
+rec( embeddings := [ [[<-1>->q8] => [..]], [[<i>->q8] => [..]] ], 
+  objects := [ [<-1>->q8], [<i>->q8] ], 
+  projections := [ [[..] => [<-1>->q8]], [[..] => [<i>->q8]] ] )
 
 ## Section 2.1.9
 gap> Source( X12 );   
-Group([ (1,2,3,4,5,6), (2,6)(3,5) ])
+d12
 gap> Range( X12 );    
-Group([ (7,8,9), (8,9) ])
+s3
 gap> Boundary( X12 ); 
 [ (1,2,3,4,5,6), (2,6)(3,5) ] -> [ (7,8,9), (8,9) ]
 gap> XModAction( X12 );
@@ -314,27 +320,47 @@ gap> StructureDescription( CXC2 );
 gap> IsomorphismCat1Groups( C2, CXC2 );
 [[..] => [(..|X..)=>c2]]
 
+## Section 2.4.5
+gap> C418 := DirectProduct( C4, C18 ); 
+[(s4s4xg18)=>(s4dxs3a)]
+gap> infoC418 := DirectProductInfo( C418 );
+rec( 
+  embeddings := [ [[s4s4=>s4d] => [(s4s4xg18)=>(s4dxs3a)]], 
+      [[g18=>s3a] => [(s4s4xg18)=>(s4dxs3a)]] ], 
+  objects := [ [s4s4=>s4d], [g18=>s3a] ], 
+  projections := [ [[(s4s4xg18)=>(s4dxs3a)] => [s4s4=>s4d]], 
+      [[(s4s4xg18)=>(s4dxs3a)] => [g18=>s3a]] ] )
+gap> t418 := TailMap( C418 );
+[ (1,2,3,4), (3,4), (5,6,7,8), (7,8), (9,10,11), (12,13,14), (10,11)(13,14) 
+ ] -> [ (1,2,3,4), (3,4), (), (), (5,6,7), (), (6,7) ]
+gap> h418 := HeadMap( C418 );
+[ (1,2,3,4), (3,4), (5,6,7,8), (7,8), (9,10,11), (12,13,14), (10,11)(13,14) 
+ ] -> [ (), (), (1,2,3,4), (3,4), (5,6,7), (5,6,7), (6,7) ]
+gap> e418 := RangeEmbedding( C418 );
+[ (1,2,3,4), (3,4), (5,6,7), (6,7) ] -> [ (1,2,3,4)(5,6,7,8), (3,4)(7,8), 
+  (9,10,11), (10,11)(13,14) ]
+
 ## Section 2.5.1
-gap> G2 := SmallGroup( 288, 956 );  SetName( G2, "G2" );
+gap> G8 := SmallGroup( 288, 956 );  SetName( G8, "G8" );
 <pc group of size 288 with 7 generators>
 gap> d12 := DihedralGroup( 12 );  SetName( d12, "d12" );
 <pc group of size 12 with 3 generators>
 gap> a1 := d12.1;;  a2 := d12.2;;  a3 := d12.3;;  a0 := One( d12 );;
-gap> gensG2 := GeneratorsOfGroup( G2 );;
-gap> t2 := GroupHomomorphismByImages( G2, d12, gensG2,
+gap> gensG8 := GeneratorsOfGroup( G8 );;
+gap> t8 := GroupHomomorphismByImages( G8, d12, gensG8,
 >           [ a0, a1*a3, a2*a3, a0, a0, a3, a0 ] );;
-gap> h2 := GroupHomomorphismByImages( G2, d12, gensG2,
+gap> h8 := GroupHomomorphismByImages( G8, d12, gensG8,
 >           [ a1*a2*a3, a0, a0, a2*a3, a0, a0, a3^2 ] );;                   
-gap> e2 := GroupHomomorphismByImages( d12, G2, [a1,a2,a3],
->        [ G2.1*G2.2*G2.4*G2.6^2, G2.3*G2.4*G2.6^2*G2.7, G2.6*G2.7^2 ] );;
-gap> C2 := PreCat1GroupByTailHeadEmbedding( t2, h2, e2 );
-[G2=>d12]
-gap> IsCat1Group( C2 );
+gap> e8 := GroupHomomorphismByImages( d12, G8, [a1,a2,a3],
+>        [ G8.1*G8.2*G8.4*G8.6^2, G8.3*G8.4*G8.6^2*G8.7, G8.6*G8.7^2 ] );;
+gap> C8 := PreCat1GroupByTailHeadEmbedding( t8, h8, e8 );
+[G8=>d12]
+gap> IsCat1Group( C8 );
 true
-gap> Display(C2);
+gap> Display(C8);
 
-Cat1-group [G2=>d12] :- 
-: Source group G2 has generators:
+Cat1-group [G8=>d12] :- 
+: Source group G8 has generators:
   [ f1, f2, f3, f4, f5, f6, f7 ]
 : Range group d12 has generators:
   [ f1, f2, f3 ]
@@ -353,16 +379,16 @@ Cat1-group [G2=>d12] :-
 : kernel embedding maps generators of kernel to:
   [ f1, f4, f5, f7 ]
 
-gap> IsCat1Group( C2 );
+gap> IsCat1Group( C8 );
    true
 gap> EC4 := EndomorphismPreCat1Group( C4 );
    [s4s4=>Group( [ (1,2,3,4)(5,6,7,8), (3,4)(7,8), (), () ] )]
 
 ## Section 2.5.2
-gap> X2 := XModOfCat1Group( C2 );;
-gap> Display( X2 );
+gap> X8 := XModOfCat1Group( C8 );;
+gap> Display( X8 );
 
-Crossed module xmod([G2=>d12]) :- 
+Crossed module xmod([G8=>d12]) :- 
 : Source group has generators:
   [ f1, f4, f5, f7 ]
 : Range group d12 has generators:
@@ -374,9 +400,9 @@ Crossed module xmod([G2=>d12]) :-
   f2 --> { source gens --> [ f1*f5*f7^2, f4, f5, f7 ] }
   f3 --> { source gens --> [ f1*f7, f4, f5, f7 ] }
   These 3 automorphisms generate the group of automorphisms.
-: associated cat1-group is [G2=>d12]
+: associated cat1-group is [G8=>d12]
 
-gap> StructureDescription( X2 );
+gap> StructureDescription( X8 );
 [ "D24", "D12" ]
 
 ## Section 2.6.1
@@ -419,13 +445,13 @@ Using small generating set [ f1, f2, f2*f3 ] for source of homs.
   [ f1, f3^2, <identity> of ... ] ]
 (4)  [ [ f1, f2, f2*f3 ],  tail = head = identity mapping ]
 4
-gap> C18 := Cat1Select( 18, 4, 3 );
+gap> B18 := Cat1Select( 18, 4, 3 );
 [(C3 x C3) : C2=>Group( [ f1, <identity> of ..., f3 ] )]
-gap> iso18 := IsomorphismPermObject( C18 );;
-gap> PC18 := Image( iso18 ); 
+gap> iso18 := IsomorphismPermObject( B18 );;
+gap> PB18 := Image( iso18 ); 
 [Group( [ (2,3)(5,6), (4,5,6), (1,2,3) ] )=>Group( [ (2,3)(5,6), (), (1,2,3) 
  ] )]
-gap> X18 := XModOfCat1Group( PC18 ); 
+gap> Y18 := XModOfCat1Group( PB18 ); 
 [Group( [ (4,5,6) ] )->Group( [ (2,3)(5,6), (), (1,2,3) ] )]
 
 ## Section 2.7.2 
@@ -441,9 +467,9 @@ gap> all := AllCat1DataGroupsBasic( gp );
   [Group( [ f1, f2, f3 ] )=>Group( [ f1, f2, f3 ] )] ]
 
 ## Section 2.8.1
-gap> IdGroup( X2 );
+gap> IdGroup( X8 );
 [ [ 24, 6 ], [ 12, 4 ] ]
-gap> IdGroup( C2 );
+gap> IdGroup( C8 );
 [ [ 288, 956 ], [ 12, 4 ] ]
 
 ## Section 2.9.1

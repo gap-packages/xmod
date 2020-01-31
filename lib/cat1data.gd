@@ -2,7 +2,7 @@
 ##
 #W  cat1data.gd                GAP4 package `XMod'               Chris Wensley
 ##
-#Y  Copyright (C) 2001-2018, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2020, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 ##  These functions are used in the construction of the data file cat1data.g 

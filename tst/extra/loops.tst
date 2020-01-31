@@ -2,7 +2,7 @@
 ##
 #W  loops.tst                   GAP4 package `XMod'              Chris Wensley
 ##  
-#Y  Copyright (C) 2001-2018, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2020, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 
 gap> START_TEST( "XMod package: loops.tst" );
@@ -17,7 +17,9 @@ gap> M1 := PcGroupFpGroup( M2 );;
 #I  You are creating a Pc group with non-prime relative orders.
 #I  Many algorithms require prime relative orders.
 #I  Use `RefinedPcGroup' to convert.
-gap> M0 := RefinedPcGroup( M1 );; 
+gap> iso0 := IsomorphismRefinedPcGroup( M1 );
+[ f1, f1^2, f2, f2^2 ] -> Pcgs([ f1, f2, f3, f4 ])
+gap> M0 := Range( iso0 );; 
 gap> genM0 := GeneratorsOfGroup( M0 );; 
 gap> a := M0.1;;  b := M0.2;;  c := M0.3;;  d := M0.4;; 
 gap> [ c^2=d, a^2=b, c^a=c^-1 ]; 

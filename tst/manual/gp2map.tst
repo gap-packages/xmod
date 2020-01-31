@@ -2,7 +2,7 @@
 ##
 #W  gp2map.tst                    XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2019, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2020, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 ##
@@ -16,12 +16,12 @@ gap> SetInfoLevel( InfoGroupoids, 0 );;
 gap> c5 := Group( (5,6,7,8,9) );;
 gap> SetName( c5, "c5" );
 gap> X5 := XModByAutomorphismGroup( c5 );;
-gap> G2 := SmallGroup( 288, 956 );;  
-gap> SetName( G2, "G2" );
+gap> G8 := SmallGroup( 288, 956 );;  
+gap> SetName( G8, "G8" );
 gap> d12 := DihedralGroup( 12 );;  
 gap> SetName( d12, "d12" );
 gap> a1 := d12.1;;  a2 := d12.2;;  a3 := d12.3;;  a0 := One( d12 );;
-gap> gensG2 := GeneratorsOfGroup( G2 );;
+gap> gensG8 := GeneratorsOfGroup( G8 );;
 gap> g18gens := [ (1,2,3), (4,5,6), (2,3)(5,6) ];;
 gap> g18 := Group( g18gens );; 
 gap> SetName( g18, "g18" );
@@ -32,14 +32,14 @@ gap> t1 := GroupHomomorphismByImages(g18,s3a,g18gens,[(7,8,9),(),(8,9)]);;
 gap> h1 := GroupHomomorphismByImages(g18,s3a,g18gens,[(7,8,9),(7,8,9),(8,9)]);;
 gap> e1 := GroupHomomorphismByImages(s3a,g18,s3agens,[(1,2,3),(2,3)(5,6)]);;
 gap> C18 := Cat1Group( t1, h1, e1 );;
-gap> t2 := GroupHomomorphismByImages( G2, d12, gensG2,
+gap> t8 := GroupHomomorphismByImages( G8, d12, gensG8,
 >           [ a0, a1*a3, a2*a3, a0, a0, a3, a0 ] );;
-gap> h2 := GroupHomomorphismByImages( G2, d12, gensG2,
+gap> h8 := GroupHomomorphismByImages( G8, d12, gensG8,
 >           [ a1*a2*a3, a0, a0, a2*a3, a0, a0, a3^2 ] );;                   
-gap> e2 := GroupHomomorphismByImages( d12, G2, [a1,a2,a3],
->        [ G2.1*G2.2*G2.4*G2.6^2, G2.3*G2.4*G2.6^2*G2.7, G2.6*G2.7^2 ] );;
-gap> C2 := PreCat1GroupByTailHeadEmbedding( t2, h2, e2 );;
-gap> X2 := XModOfCat1Group( C2 );;
+gap> e8 := GroupHomomorphismByImages( d12, G8, [a1,a2,a3],
+>        [ G8.1*G8.2*G8.4*G8.6^2, G8.3*G8.4*G8.6^2*G8.7, G8.6*G8.7^2 ] );;
+gap> C8 := PreCat1GroupByTailHeadEmbedding( t8, h8, e8 );;
+gap> X8 := XModOfCat1Group( C8 );;
 
 
 ## Chapter 3
@@ -111,36 +111,36 @@ Morphism of cat1-groups :-
   [ (7,8,9), (8,9) ]
 
 ## Section 3.3.2
-gap> iso2 := IsomorphismPerm2DimensionalGroup( C2 );
-   [[G2=>d12] => [..]]
+gap> iso8 := IsomorphismPerm2DimensionalGroup( C8 );
+   [[G8=>d12] => [..]]
 
 ## Section 3.4.1
-gap> H2 := Subgroup(G2, [G2.3,G2.4,G2.6,G2.7] );  SetName( H2, "H2" );
+gap> H8 := Subgroup(G8, [G8.3,G8.4,G8.6,G8.7] );  SetName( H8, "H8" );
 Group([ f3, f4, f6, f7 ])
 gap> c6 := Subgroup( d12, [a2,a3] );  SetName( c6, "c6" );
 Group([ f2, f3 ])
-gap> SC2 := Sub2DimensionalGroup( C2, H2, c6 );
-[H2=>c6]
-gap> IsCat1Group( SC2 );
+gap> SC8 := Sub2DimensionalGroup( C8, H8, c6 );
+[H8=>c6]
+gap> IsCat1Group( SC8 );
 true
-gap> inc2 := InclusionMorphism2DimensionalDomains( C2, SC2 );
-[[H2=>c6] => [G2=>d12]]
-gap> CompositionMorphism( iso2, inc2 );                  
-[[H2=>c6] => Pc[G2=>d12]]
+gap> inc8 := InclusionMorphism2DimensionalDomains( C8, SC8 );
+[[H8=>c6] => [G8=>d12]]
+gap> CompositionMorphism( iso8, inc8 ); 
+[[H8=>c6] => Pc[G8=>d12]]
 
 ## Section 3.4.2
 gap> c2 := Group( (19,20) );                                    
 Group([ (19,20) ])
 gap> X0 := XModByNormalSubgroup( c2, c2 );  SetName( X0, "X0" );
 [Group( [ (19,20) ] )->Group( [ (19,20) ] )]
-gap>  SX2 := Source( X2 );;
-gap> genSX2 := GeneratorsOfGroup( SX2 ); 
+gap>  SX8 := Source( X8 );;
+gap> genSX8 := GeneratorsOfGroup( SX8 ); 
 [ f1, f4, f5, f7 ]
-gap> sigma0 := GroupHomomorphismByImages(SX2,c2,genSX2,[(19,20),(),(),()]);
+gap> sigma0 := GroupHomomorphismByImages(SX8,c2,genSX8,[(19,20),(),(),()]);
 [ f1, f4, f5, f7 ] -> [ (19,20), (), (), () ]
 gap> rho0 := GroupHomomorphismByImages(d12,c2,[a1,a2,a3],[(19,20),(),()]);
 [ f1, f2, f3 ] -> [ (19,20), (), () ]
-gap> mor0 := XModMorphism( X2, X0, sigma0, rho0 );;           
+gap> mor0 := XModMorphism( X8, X0, sigma0, rho0 );;           
 gap> K0 := Kernel( mor0 );;
 gap> StructureDescription( K0 );
 [ "C12", "C6" ]

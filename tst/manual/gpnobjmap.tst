@@ -2,7 +2,7 @@
 ##
 #W  gpnobjmap.tst                 XMOD test file                Chris Wensley
 ##                                                               Alper Odabas
-#Y  Copyright (C) 2001-2019, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2020, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 gap> START_TEST( "XMod package: gpnobjmap.tst" );
@@ -10,6 +10,8 @@ gap> saved_infolevel_xmod := InfoLevel( InfoXMod );;
 gap> SetInfoLevel( InfoXMod, 0 );;
 gap> saved_infolevel_groupoids := InfoLevel( InfoGroupoids );; 
 gap> SetInfoLevel( InfoGroupoids, 0 );;
+
+gap> SetAssertionLevel(3); 
 
 gap> s3 := SmallGroup( 6, 1 );;
 gap> homs := AllHomomorphisms( s3, s3 );;
@@ -154,15 +156,12 @@ gap> CC6 := Cat2Group( Cat1Group(6,2,2), Cat1Group(6,2,3) );
 gap> IsCat2Group( CC6 );
 true
 
-## now producing an error (08/08/18)
-## gap> xsCC6 := PreCrossedSquareOfPreCat2Group( CC6 );
-## crossed square with crossed modules:
-##      up = [Group( () )->Group( [ (1,2) ] )]
-##    left = [Group( () )->Group( [ (), (3,4,5) ] )]
-##    down = [Group( [ (), (3,4,5) ] )->Group( () )]
-##   right = [Group( [ (1,2) ] )->Group( () )]   
+## now producing an error (13/01/20)
+## gap> xsCC6 := CrossedSquareOfCat2Group( CC6 );;
 ## gap> IsCrossedSquare( xsCC6 );
 ## true
+
+
 ## gap> CCconj := Cat2GroupOfCrossedSquare( XSconj );
 ## gap> IsCat2Group( CCconj );
 ## true

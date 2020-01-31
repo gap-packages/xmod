@@ -2,7 +2,7 @@
 ##
 #W  gp2obj.gi                 GAP4 package `XMod'               Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2019, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2020, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 ##  This file contains generic methods for (pre-)crossed modules and
@@ -756,7 +756,7 @@ function( X0 )
         G := DirectProduct( R0, S0 );
         info := DirectProductInfo( G );
         if ( HasName( S0 ) and HasName( R0 ) ) then
-            SetName( G, Concatenation( Name( R0 ), "x", Name( S0 ) ) );
+            SetName( G, Concatenation( "(", Name(R0), " x ", Name(S0), ")" ) );
         fi;
         genG := GeneratorsOfGroup( G );
         imbdy := List( genS0, s -> ImageElm( Xbdy, s ) );
@@ -2320,6 +2320,7 @@ end );
 ##
 #M  AllCat1GroupsWithImage  . . . . . . cat1-group structures with given range
 #O  AllCat1GroupsWithImageIterator( <gp> )  . . iterator for the previous list
+#M  AllCat1GroupsWithImageNumber . . . . .  # cat1-groups with specified range
 #F  NextIterator_AllCat1GroupsWithImage( <iter> ) 
 #F  IsDoneIterator_AllCat1GroupsWithImage( <iter> ) 
 #F  ShallowCopy_AllCat1GroupsWithImage( <iter> ) 
@@ -2569,6 +2570,38 @@ function( G )
     return L;
 end );
 
+InstallMethod( AllCat1GroupFamilies, "gives lists of isomorphic cat1-groups", 
+    true, [ IsGroup ], 0,
+function( G )
+
+    local reps, cat1, iso1, classes, i, C, k, found, iso; 
+
+    reps := AllCat1GroupsUpToIsomorphism( G ); 
+    cat1 := CatnGroupNumbers( G ).cat1; 
+    iso1 := CatnGroupNumbers( G ).iso1; 
+    classes := ListWithIdenticalEntries( iso1, 0 ); 
+    for k in [1..iso1] do 
+        classes[k] := [ ]; 
+    od; 
+    i := 0;
+    for C in AllCat1GroupsIterator( G ) do 
+        if not ( C = fail ) then 
+            i := i+1; 
+            k := 0; 
+            found := false; 
+            while ( not found ) do 
+                k := k+1; 
+                iso := IsomorphismCat1Groups( C, reps[k] ); 
+                if ( iso <> fail ) then 
+                    found := true; 
+                    Add( classes[k], i ); 
+                fi;
+            od;
+        fi;
+    od;
+    return classes; 
+end ); 
+
 #############################################################################
 ##
 #M  DirectProductInfo( <obj> ) . . . . . . . . . . . . . . . . for 2d-objects
@@ -2591,18 +2624,14 @@ function( obj )
                 projections := [ ] );
 end );
 
-#?  (19/07/07) : allowed for case when one of Xsrc,Xrng,Ysrc,Yrng trivial ##
-#?               using parameter list: spec(=[0,0,0,0] by default)        ##
-
 InstallOtherMethod( DirectProductOp,
     "method for pre-crossed modules", true, [ IsList, IsPreXMod ], 0,
 function( list, X1 )
 
-    local Xsrc, Xrng, Y1, Ysrc, Yrng, genXrng, genYrng, genXsrc, genYsrc,
-           XSpos, YSpos, XRpos, YRpos, Spos, imaut, autgen, aut, act,
-           XY, S, R, genS, lenS, genR, lenR, imbdy, bdy, a, i, j, k,
-           Xbdy, Ybdy, Xact, Yact, imXbdy, imYbdy, alpha, info,
-           eXS, eYS, pXS, pYS, eXR, eYR, spec;
+    local src1, X2, src2, gensrc1, gensrc2, S, infoS, emS1, emS2, prS1, prS2, 
+          rng1, rng2, genrng1, genrng2, R, infoR, emR1, emR2, prR1, prR2, 
+          bdy1, bdy2, bdy, act1, act2, aut1, aut2, aut, act, 
+          X0, em1, em2, pr1, pr2, info; 
 
     if not ( Length( list ) = 2 ) then
         Error( "direct product not yet implemented for more than 2 terms" );
@@ -2610,215 +2639,159 @@ function( list, X1 )
     if not ( list[1] = X1 ) then
         Error( "second argument should be first entry in first argument list" );
     fi;
-    Y1 := list[2]; 
+    X2 := list[2]; 
     ##  first the source group 
-    Xsrc := Source( X1 );
-    Ysrc := Source( Y1 );
-    genXsrc := GeneratorsOfGroup( Xsrc );
-    genYsrc := GeneratorsOfGroup( Ysrc );
-    spec := [false,false,false,false]; 
-    if ( Size( Xsrc ) = 1 ) then 
-        spec[1] := true; 
-    elif ( Size( Ysrc ) = 1 ) then 
-        spec[3] := true;
-    fi; 
-    if spec[1] then 
-        S := Ysrc; 
-        eYS := IdentityMapping( S ); 
-        pYS := IdentityMapping( S );
-    elif spec[3] then 
-        S := Xsrc;
-        eXS := IdentityMapping( S ); 
-        pXS := IdentityMapping( S ); 
-    else
-        S := DirectProduct( Xsrc, Ysrc );
-        if ( not HasName( S ) and HasName( Xsrc ) and HasName( Ysrc ) ) then
-            SetName( S, Concatenation( Name( Xsrc ), "x", Name( Ysrc ) ) );
-        fi;
-        eXS := Embedding( S, 1 );
-        eYS := Embedding( S, 2 );
-        pXS := Projection( S, 1 );
-        pYS := Projection( S, 2 ); 
-    fi;
-    genS := GeneratorsOfGroup( S );
-    lenS := Length( genS );
-    Spos := [ 1..lenS ];
-    if spec[1] then 
-        XSpos := [ ]; 
-        YSpos := [ 1..Length( genYsrc ) ]; 
-    elif spec[3] then 
-        XSpos := [ 1..Length( genXsrc ) ]; 
-        YSpos := [ ]; 
-    else 
-        XSpos := [ 1..Length( genXsrc ) ];
-        YSpos := [ 1+Length( genXsrc ) .. lenS ]; 
-    fi;
+    src1 := Source( X1 );
+    src2 := Source( X2 );
+    gensrc1 := GeneratorsOfGroup( src1 );
+    gensrc2 := GeneratorsOfGroup( src2 );
+    S := DirectProductOp( [src1,src2], src2 );
+    infoS := DirectProductInfo( S ); 
+    emS1 := Embedding( S, 1 ); 
+    emS2 := Embedding( S, 2 );
+    prS1 := Projection( S, 1 );  
+    prS2 := Projection( S, 2 );  
     ##  now for the range group 
-    Xrng := Range( X1 );
-    Yrng := Range( Y1 );
-    genXrng := GeneratorsOfGroup( Xrng );
-    genYrng := GeneratorsOfGroup( Yrng );
-    if ( Size( Xrng ) = 1 ) then 
-        spec[2] := true; 
-    elif ( Size( Yrng ) = 1 ) then 
-        spec[4] := true;
+    rng1 := Range( X1 );
+    rng2 := Range( X2 );
+    genrng1 := GeneratorsOfGroup( rng1 );
+    genrng2 := GeneratorsOfGroup( rng2 );
+    R := DirectProductOp( [rng1,rng2], rng2 );
+    infoR := DirectProductInfo( R ); 
+    emR1 := Embedding( R, 1 ); 
+    emR2 := Embedding( R, 2 );
+    prR1 := Projection( R, 1 );  
+    prR2 := Projection( R, 2 );  
+    ##  now for the boundary and action 
+    bdy1 := Boundary( X1 );
+    bdy2 := Boundary( X2 );
+    bdy := DirectProductOfFunctions( S, R, bdy1, bdy2 ); 
+    act1 := XModAction( X1 );
+    act2 := XModAction( X2 );
+    aut1 := Range( act1 );
+    aut2 := Range( act2 );
+    aut := DirectProductOfAutomorphismGroups( aut1, aut2 ); 
+    act := DirectProductOfFunctions( R, aut, act1, act2 ); 
+    X0 := PreXModByBoundaryAndAction( bdy, act );
+    if ( IsXMod( X1 ) and IsXMod( X2 ) ) then
+        SetIsXMod( X0, true );
     fi;
-    if spec[2] then 
-        R := Yrng; 
-        eXR := MappingToOne( Xrng, Yrng ); 
-        eYR := IdentityMapping( R );
-    elif spec[4] then 
-        R := Xrng; 
-        eXR := IdentityMapping( R ); 
-        eYR := MappingToOne( Yrng, Xrng );
-    else
-        R := DirectProduct( Xrng, Yrng );
-        if ( not HasName( R ) and HasName( Xrng ) and HasName( Yrng ) ) then
-            SetName( R, Concatenation( Name( Xrng ), "x", Name( Yrng ) ) );
-        fi;
-        eXR := Embedding( R, 1 );
-        eYR := Embedding( R, 2 );
-    fi;
-    genR := GeneratorsOfGroup( R );
-    lenR := Length( genR );
-    if spec[2] then 
-        XRpos := [ ]; 
-        YRpos := [ 1..Length( genYrng ) ]; 
-    elif spec[4] then 
-        XRpos := [ 1..Length( genXrng ) ]; 
-        YRpos := [ ]; 
-    else 
-        XRpos := [ 1..Length( genXrng ) ];
-        YRpos := [ 1+Length( genXrng ) .. lenR ];
-    fi;
-    ##  now for the boundary 
-    Xbdy := Boundary( X1 );
-    Ybdy := Boundary( Y1 );
-    Xact := XModAction( X1 );
-    Yact := XModAction( Y1 );
-    imXbdy := List( genS{ XSpos },
-        s -> ImageElm( eXR, ImageElm( Xbdy, ImageElm( pXS, s ) ) ) );
-    imYbdy := List( genS{ YSpos },
-        s -> ImageElm( eYR, ImageElm( Ybdy, ImageElm( pYS, s ) ) ) );
-    imbdy := Concatenation( imXbdy, imYbdy );
-    bdy := GroupHomomorphismByImages( S, R, genS, imbdy );
-    autgen := 0 * [ 1..lenR ];
-    for i in XRpos do
-        a := ImageElm( Xact, genXrng[i] );
-        imaut := 0 * Spos;
-        for j in YSpos do
-            imaut[j] := genS[j];
-        od;
-        for j in XSpos do
-            imaut[j] := ImageElm( eXS, ImageElm( a, ImageElm(pXS,genS[j] ) ) );
-        od;
-        alpha := GroupHomomorphismByImages( S, S, genS, imaut );
-        autgen[i] := alpha;
-    od; 
-    if spec[2] then 
-        k := 0; 
-    else 
-        k := Length( genXrng );
+    em1 := PreXModMorphismByGroupHomomorphisms( X1, X0, emS1, emR1 ); 
+    em2 := PreXModMorphismByGroupHomomorphisms( X2, X0, emS2, emR2 );
+    pr1 := PreXModMorphismByGroupHomomorphisms( X0, X1, prS1, prR1 ); 
+    pr2 := PreXModMorphismByGroupHomomorphisms( X0, X2, prS2, prR2 ); 
+    info := rec( embeddings := [ em1, em2 ], 
+                 objects := [ X1, X2 ], 
+                 projections := [ pr1, pr2 ] ); 
+    SetDirectProductInfo( X0, info ); 
+    if ( HasName( X1 ) and HasName( X2 ) ) then 
+        SetName( X0, Concatenation( "[", Name(X1), "x", Name(X2), "]" ) ); 
     fi; 
-    for i in YRpos do
-        a := ImageElm( Yact, genYrng[i-k] );
-        imaut := 0 * Spos;
-        for j in XSpos do
-            imaut[j] := genS[j];
-        od;
-        for j in YSpos do
-            imaut[j] := ImageElm( eYS, ImageElm( a, ImageElm(pYS,genS[j] ) ) );
-        od;
-        alpha := GroupHomomorphismByImages( S, S, genS, imaut );
-        autgen[i] := alpha;
-    od;
-    aut := Group( autgen );
-    act := GroupHomomorphismByImages( R, aut, genR, autgen );
-    XY := PreXModByBoundaryAndAction( bdy, act );
-    if ( IsXMod( X1 ) and IsXMod( Y1 ) ) then
-        SetIsXMod( XY, true );
+    return X0;
+end );
+
+##############################################################################
+
+InstallOtherMethod( DirectProductOp,
+    "method for pre-cat1-groups", true, [ IsList, IsPreCat1Group ], 0,
+function( list, C1 )
+
+    local C2, G1, G2, genG1, genG2, G, emG1, emG2, prG1, prG2, 
+          R1, R2, genR1, genR2, R, emR1, emR2, prR1, prR2,  
+          t1, t2, t, h1, h2, h, e1, e2, e, C0, em1, em2, pr1, pr2, info;  
+
+    if not ( Length( list ) = 2 ) then
+        Error( "direct product not yet implemented for more than 2 terms" );
     fi;
-    if ( HasName( X1 ) and HasName( Y1 ) ) then
-        SetName( XY, Concatenation( Name( X1 ), "x", Name( Y1 ) ) );
-    elif ( HasName( Source(XY) ) and HasName( Range(XY) ) ) then 
-        SetName( XY, Concatenation( "[", Name( Source(XY ) ), 
-                     "->", Name( Range(XY) ), "]" ) ); 
+    if not ( list[1] = C1 ) then
+        Error( "second argument should be first entry in first argument list" );
     fi;
-    info := DirectProductInfo( XY );
-    info!.objects := [ X1, Y1 ];
-    return XY;
+    C2 := list[2]; 
+    ##  first the source group 
+    G1 := Source( C1 );
+    G2 := Source( C2 );
+    genG1 := GeneratorsOfGroup( G1 );
+    genG2 := GeneratorsOfGroup( G2 );
+    G := DirectProduct( G1, G2 );
+    if ( not HasName( G ) and HasName( G1 ) and HasName( G2 ) ) then
+        SetName( G, Concatenation( "(", Name(G1), "x", Name(G2), ")" ) );
+    fi;
+    emG1 := Embedding( G, 1 );
+    emG2 := Embedding( G, 2 );
+    prG1 := Projection( G, 1 );
+    prG2 := Projection( G, 2 ); 
+    ##  now for the range group 
+    R1 := Range( C1 );
+    R2 := Range( C2 );
+    genR1 := GeneratorsOfGroup( R1 );
+    genR2 := GeneratorsOfGroup( R2 );
+    R := DirectProduct( R1, R2 );
+    if ( not HasName( R ) and HasName( R1 ) and HasName( R2 ) ) then
+        SetName( R, Concatenation( "(", Name(R1), " x ", Name(R2), ")" ) );
+    fi;
+    emR1 := Embedding( R, 1 );
+    emR2 := Embedding( R, 2 );
+    prR1 := Projection( R, 1 );
+    prR2 := Projection( R, 2 ); 
+    ##  now for the tail, head and embedding 
+    t1 := TailMap( C1 );
+    t2 := TailMap( C2 );
+    t := DirectProductOfFunctions( G, R, t1, t2 ); 
+    h1 := HeadMap( C1 );
+    h2 := HeadMap( C2 );
+    h := DirectProductOfFunctions( G, R, h1, h2 ); 
+    e1 := RangeEmbedding( C1 );
+    e2 := RangeEmbedding( C2 );
+    e := DirectProductOfFunctions( R, G, e1, e2 ); 
+    C0 := PreCat1GroupByTailHeadEmbedding( t, h, e );
+    if ( IsCat1Group( C1 ) and IsCat1Group( C2 ) ) then
+        SetIsCat1Group( C0, true );
+    fi;
+    em1 := PreCat1GroupMorphismByGroupHomomorphisms( C1, C0, emG1, emR1 ); 
+    em2 := PreCat1GroupMorphismByGroupHomomorphisms( C2, C0, emG2, emR2 );
+    pr1 := PreCat1GroupMorphismByGroupHomomorphisms( C0, C1, prG1, prR1 ); 
+    pr2 := PreCat1GroupMorphismByGroupHomomorphisms( C0, C2, prG2, prR2 ); 
+    info := rec( embeddings := [ em1, em2 ], 
+                 objects := [ C1, C2 ], 
+                 projections := [ pr1, pr2 ] ); 
+    SetDirectProductInfo( C0, info ); 
+    if ( HasName( C1 ) and HasName( C2 ) ) then 
+        SetName( C0, Concatenation( "[", Name(C1), " x ", Name(C2), "]" ) ); 
+    fi; 
+    return C0;
 end );
 
 ##############################################################################
 ##
 #M  Embedding . . . . for direct products of (pre-)xmods and (pre-)cat1-groups
+#M  Projection . . .  for direct products of (pre-)xmods and (pre-)cat1-groups
 ##
 InstallOtherMethod( Embedding, "generic method for (pre-)xmods & (pre-)cat1s",
     true, [ Is2DimensionalGroup, IsPosInt ], 0,
 function( D, i )
-    local info, eS, eR, obj, mor;
+
+    local info;
 
     info := DirectProductInfo( D );
     if IsBound( info!.embeddings[i] ) then
         return info!.embeddings[i];
+    else 
+        return fail; 
     fi;
-    eS := Embedding( Source( D ), i );
-    eR := Embedding( Range( D ), i );
-    Info( InfoXMod, 3, "SourceEmbedding: ", eS );
-    Info( InfoXMod, 3, " RangeEmbedding: ", eR );
-    obj := info!.objects[i]; 
-    if IsPreXMod( D ) then
-        mor := PreXModMorphism( obj, D, eS, eR );
-    elif IsPreCat1Group( D ) then
-        mor := PreCat1GroupMorphism( obj, D, eS, eR );
-    else
-        mor := fail;
-    fi;
-    if not ( mor = fail ) then
-        SetIsInjective( mor, true );
-        info!.embeddings[i] := mor;
-    fi;
-    return mor;
 end );
 
-##############################################################################
-##
-#M  Projection . . .  for direct products of (pre-)xmods and (pre-)cat1-groups
-##
 InstallOtherMethod( Projection, "generic method for (pre-)xmods & (pre-)cat1s",
     true, [ Is2DimensionalGroup, IsPosInt ], 0,
 function( D, i )
-    local G, info, pS, pR, mor;
 
-    G := Source( D ); 
-    if HasDirectProductInfo( G ) then 
-        info := DirectProductInfo( D ); 
-        if not ( i in [1,2] ) then 
-            Error( "only two projections available" ); 
-        fi; 
-    else 
-        info := SemidirectProductInfo( G ); 
-        if not ( i = 1 ) then 
-            Error( "only the first projection is available" ); 
-        fi; 
-    fi; 
+    local info;
+
+    info := DirectProductInfo( D );
     if IsBound( info!.projections[i] ) then
         return info!.projections[i];
+    else 
+        return fail; 
     fi;
-    pS := Projection( G, i );
-    pR := Projection( Range( D ), i );
-    if IsPreXMod( D ) then
-        mor := PreXModMorphism( info!.objects[i], D, pS, pR );
-    elif IsPreCat1Group( D ) then
-        mor := PreCat1GroupMorphism( info!.objects[i], D, pS, pR );
-    else
-        mor := fail;
-    fi;
-    if not ( mor = fail ) then
-        SetIsInjective( mor, true );
-        info!.projections[i] := mor;
-    fi;
-    return mor;
 end );
 
 ##############################################################################

@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2obj.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  Copyright (C) 1996-2019, Chris Wensley et al,                      --> 
+<!--  Copyright (C) 1996-2020, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -172,15 +172,16 @@ gap> gen12 := [ (1,2,3,4,5,6), (2,6)(3,5) ];;
 gap> d12 := Group( gen12 );;                  
 gap> gen6 := [ (7,8,9), (8,9) ];;
 gap> s3 := Group( gen6 );;
+gap> SetName( d12, "d12" );  SetName( s3, "s3" ); 
 gap> pr12 := GroupHomomorphismByImages( d12, s3, gen12, gen6 );;
 gap> Kernel( pr12 ) = Centre( d12 );
 true
 gap> X12 := XModByCentralExtension( pr12 );;
 gap> Display( X12 );                         
-Crossed module :- 
-: Source group has generators:
+Crossed module [d12->s3] :- 
+: Source group d12 has generators:
   [ (1,2,3,4,5,6), (2,6)(3,5) ]
-: Range group has generators:
+: Range group s3 has generators:
   [ (7,8,9), (8,9) ]
 : Boundary homomorphism maps source generators to:
   [ (7,8,9), (8,9) ]
@@ -221,14 +222,15 @@ gap> theta := GroupHomomorphismByImages( s4, s3, gens4, [(7,8),(8,9),(7,8)] );;
 gap> X1 := XModByPullback( X12, theta );; 
 gap> StructureDescription( Source( X1 ) );
 "C2 x S4"
-gap> info := PullbackInfo( Source( X1 ) );;
-gap> info!.directProduct;
+gap> SetName( s4, "s4" );  SetName( Source( X1 ), "c2s4" ); 
+gap> infoX1 := PullbackInfo( Source( X1 ) );;
+gap> infoX1!.directProduct;
 Group([ (1,2,3,4,5,6), (2,6)(3,5), (7,8), (8,9), (9,10) ])
-gap> info!.projections[1];
+gap> infoX1!.projections[1];
 [ (7,8)(9,10), (7,9)(8,10), (2,6)(3,5)(8,9), (1,5,3)(2,6,4)(8,10,9), 
   (1,6,5,4,3,2)(8,9,10) ] -> [ (), (), (2,6)(3,5), (1,5,3)(2,6,4), 
   (1,6,5,4,3,2) ]
-gap> info!.projections[2];
+gap> infoX1!.projections[2];
 [ (7,8)(9,10), (7,9)(8,10), (2,6)(3,5)(8,9), (1,5,3)(2,6,4)(8,10,9), 
   (1,6,5,4,3,2)(8,9,10) ] -> [ (11,12)(13,14), (11,13)(12,14), (12,13), 
   (12,14,13), (12,13,14) ]
@@ -246,23 +248,18 @@ See section <Ref Sect="sect-abelian-modules" /> for an example.
 </ManSection>
 
 <ManSection>
-   <Oper Name="DirectProductOp"
-         Arg="L X1" Label="for crossed modules" />
+   <Oper Name="DirectProduct"
+         Arg="X1 X2" Label="for crossed modules" />
 <Description>
 The direct product  <M>\calX_{1} \times \calX_{2}</M>
 of two crossed modules has source  <M>S_1 \times S_2</M>,
 range  <M>R_1 \times R_2</M>  and boundary
 <M>\partial_1 \times \partial_2</M>,  with  <M>R_1,\ R_2</M>  acting
-trivially on  <M>S_2,\ S_1</M>  respectively.
+trivially on  <M>S_2,\ S_1</M>  respectively. 
+The embeddings and projections are constructed automatically, 
+and placed in the <C>DirectProductInfo</C> attribute, 
+together with the two <E>objects</E> <M>\calX_{1} \times \calX_{2}</M>. 
 <P/> 
-Since <C>DirectProduct</C> is a global function which only accepts groups, 
-it is necessary to provide an "other method" for the operation 
-<C>DirectProductOp</C>. 
-This operation takes as parameters a list of 
-crossed modules, followed by the first of these: 
-<C>DirectProductOp([X1,X2],X1);</C>. 
-At present only the direct product of two crossed modules is implemented. 
-<P/>
 The example constructs the product of the two crossed modules formed in 
 subsection <Ref Oper="XModByTrivialAction"/>. 
 <P/>
@@ -270,8 +267,15 @@ subsection <Ref Oper="XModByTrivialAction"/>.
 </ManSection>
 <Example>
 <![CDATA[
-gap> DirectProductOp( [X8a,X8b], X8a );
-[<-1>x<i>->q8xq8]
+gap> X8ab := DirectProduct( X8a, X8b );
+[[<-1>->q8]x[<i>->q8]]
+gap> infoX8ab := DirectProductInfo( X8ab );
+rec( 
+  embeddings := [ [[<-1>->q8] => [<-1>x<i>->q8xq8]], 
+      [[<i>->q8] => [<-1>x<i>->q8xq8]] ], objects := [ [<-1>->q8], [<i>->q8] ]
+    , 
+  projections := [ [[<-1>x<i>->q8xq8] => [<-1>->q8]], 
+      [[<-1>x<i>->q8xq8] => [<i>->q8]] ] )
 ]]>
 </Example>
 
@@ -309,9 +313,9 @@ subsection <Ref Oper="XModByCentralExtension"/>.
 <Example>
 <![CDATA[
 gap> Source( X12 );   
-Group([ (1,2,3,4,5,6), (2,6)(3,5) ])
+d12
 gap> Range( X12 );    
-Group([ (7,8,9), (8,9) ])
+s3
 gap> Boundary( X12 ); 
 [ (1,2,3,4,5,6), (2,6)(3,5) ] -> [ (7,8,9), (8,9) ]
 gap> XModAction( X12 );
@@ -755,14 +759,15 @@ gap> StructureDescription( C18 );
 ]]>
 </Example>
 
+The next four subsections contain some more constructors for 
+cat<M>^1</M>-groups. 
+
 <ManSection>
    <Oper Name="DiagonalCat1Group" 
          Arg="gen1" />
 <Description>
 <B>[Needs revising!]</B>
 <P/>
-The next three subsections contain some more constructors for 
-cat<M>^1</M>-groups. 
 The following listing shows an example of a permutation cat<M>^1</M>-group 
 of size <M>[576,24]</M> with source group <M>S_4 \times S_4</M>, 
 range group a third <M>S_4</M>, and <M>t \neq h</M>. 
@@ -866,6 +871,47 @@ gap> IsomorphismCat1Groups( C2, CXC2 );
 ]]>
 </Example>
 
+<ManSection>
+   <Oper Name="DirectProduct"
+         Arg="C1 C2" Label="for cat1-groups" />
+<Description>
+The direct product  <M>\calC_{1} \times \calC_{2}</M>
+of two cat<M>^1</M>-groups has source  <M>G_1 \times G_2</M> 
+and range  <M>R_1 \times R_2</M>. 
+The tail, head and embedding maps are 
+<M>t_1 \times t_2</M>, <M>h_1 \times h_2</M> and <M>e_1 \times e_2</M>. 
+The embeddings and projections are constructed automatically, 
+and placed in the <C>DirectProductInfo</C> attribute, 
+together with the two <E>objects</E> <M>\calC_{1}</M> and <M>\calX_{2}</M>. 
+<P/> 
+The example constructs the product of two of the cat<M>^1</M>-groups 
+constructed above. 
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> C418 := DirectProduct( C4, C18 ); 
+[(s4s4xg18)=>(s4dxs3a)]
+gap> infoC418 := DirectProductInfo( C418 );
+rec( 
+  embeddings := [ [[s4s4=>s4d] => [(s4s4xg18)=>(s4dxs3a)]], 
+      [[g18=>s3a] => [(s4s4xg18)=>(s4dxs3a)]] ], 
+  objects := [ [s4s4=>s4d], [g18=>s3a] ], 
+  projections := [ [[(s4s4xg18)=>(s4dxs3a)] => [s4s4=>s4d]], 
+      [[(s4s4xg18)=>(s4dxs3a)] => [g18=>s3a]] ] )
+gap> t418 := TailMap( C418 );
+[ (1,2,3,4), (3,4), (5,6,7,8), (7,8), (9,10,11), (12,13,14), (10,11)(13,14) 
+ ] -> [ (1,2,3,4), (3,4), (), (), (5,6,7), (), (6,7) ]
+gap> h418 := HeadMap( C418 );
+[ (1,2,3,4), (3,4), (5,6,7,8), (7,8), (9,10,11), (12,13,14), (10,11)(13,14) 
+ ] -> [ (), (), (1,2,3,4), (3,4), (5,6,7), (5,6,7), (6,7) ]
+gap> e418 := RangeEmbedding( C418 );
+[ (1,2,3,4), (3,4), (5,6,7), (6,7) ] -> [ (1,2,3,4)(5,6,7,8), (3,4)(7,8), 
+  (9,10,11), (10,11)(13,14) ]
+]]>
+</Example>
+
 </Section> 
 
 <Section Label="sect-properties-cat1">
@@ -902,28 +948,28 @@ cat<M>^1</M>-group for which <C>IsPreCat1GroupByEndomorphisms</C> is true.
 <P/>
 <Example>
 <![CDATA[
-gap> G2 := SmallGroup( 288, 956 );  SetName( G2, "G2" );
+gap> G8 := SmallGroup( 288, 956 );  SetName( G8, "G8" );
 <pc group of size 288 with 7 generators>
 gap> d12 := DihedralGroup( 12 );  SetName( d12, "d12" );
 <pc group of size 12 with 3 generators>
 gap> a1 := d12.1;;  a2 := d12.2;;  a3 := d12.3;;  a0 := One( d12 );;
-gap> gensG2 := GeneratorsOfGroup( G2 );;
-gap> t2 := GroupHomomorphismByImages( G2, d12, gensG2,
+gap> gensG8 := GeneratorsOfGroup( G8 );;
+gap> t8 := GroupHomomorphismByImages( G8, d12, gensG8,
 >           [ a0, a1*a3, a2*a3, a0, a0, a3, a0 ] );;
-gap> h2 := GroupHomomorphismByImages( G2, d12, gensG2,
+gap> h8 := GroupHomomorphismByImages( G8, d12, gensG8,
 >           [ a1*a2*a3, a0, a0, a2*a3, a0, a0, a3^2 ] );;                   
-gap> e2 := GroupHomomorphismByImages( d12, G2, [a1,a2,a3],
->        [ G2.1*G2.2*G2.4*G2.6^2, G2.3*G2.4*G2.6^2*G2.7, G2.6*G2.7^2 ] );
+gap> e8 := GroupHomomorphismByImages( d12, G8, [a1,a2,a3],
+>        [ G8.1*G8.2*G8.4*G8.6^2, G8.3*G8.4*G8.6^2*G8.7, G8.6*G8.7^2 ] );
 [ f1, f2, f3 ] -> [ f1*f2*f4*f6^2, f3*f4*f6^2*f7, f6*f7^2 ]
-gap> C2 := PreCat1GroupByTailHeadEmbedding( t2, h2, e2 );
-[G2=>d12]
-gap> IsCat1Group( C2 );
+gap> C8 := PreCat1GroupByTailHeadEmbedding( t8, h8, e8 );
+[G8=>d12]
+gap> IsCat1Group( C8 );
 true
-gap> KnownPropertiesOfObject( C2 );
+gap> KnownPropertiesOfObject( C8 );
 [ "CanEasilyCompareElements", "CanEasilySortElements", "IsDuplicateFree", 
   "IsGeneratorsOfSemigroup", "IsPreCat1Domain", "IsPerm2DimensionalGroup", 
   "IsPreCat1Group", "IsCat1Group", "IsPreCat1GroupByEndomorphisms" ]
-gap> IsPreCat1GroupByEndomorphisms( C2 );
+gap> IsPreCat1GroupByEndomorphisms( C8 );
 false
 gap> EC4 := EndomorphismPreCat1Group( C4 );
 [s4s4=>Group( [ (1,2,3,4)(5,6,7,8), (3,4)(7,8), (), () ] )]
@@ -995,10 +1041,10 @@ where <M>G = R \ltimes S</M>;
 <P/>
 <Example>
 <![CDATA[
-gap> X2 := XModOfCat1Group( C2 );;
-gap> Display( X2 );
+gap> X8 := XModOfCat1Group( C8 );;
+gap> Display( X8 );
 
-Crossed module X([G2=>d12]) :- 
+Crossed module X([G8=>d12]) :- 
 : Source group has generators:
   [ f1, f4, f5, f7 ]
 : Range group d12 has generators:
@@ -1010,9 +1056,9 @@ Crossed module X([G2=>d12]) :-
   f2 --> { source gens --> [ f1*f5*f7^2, f4, f5, f7 ] }
   f3 --> { source gens --> [ f1*f7, f4, f5, f7 ] }
   These 3 automorphisms generate the group of automorphisms.
-: associated cat1-group is [G2=>d12]
+: associated cat1-group is [G8=>d12]
 
-gap> StructureDescription(X2);
+gap> StructureDescription(X8);
 [ "D24", "D12" ]
 
 ]]>
@@ -1188,12 +1234,12 @@ Using small generating set [ f1, f2, f2*f3 ] for source of homs.
 (4)  [ [ f1, f2, f2*f3 ],  tail = head = identity mapping ]
 4
 gap> ## select the third of these cat1-structures 
-gap> C18 := Cat1Select( 18, 4, 3 );
+gap> B18 := Cat1Select( 18, 4, 3 );
 [(C3 x C3) : C2=>Group( [ f1, <identity> of ..., f3 ] )]
 gap> ## convert from a pc-cat1-group to a permutation cat1-group
-gap> iso18 := IsomorphismPermObject( C18 );;
-gap> PC18 := Image( iso18 );;
-gap> Display( PC18 );
+gap> iso18 := IsomorphismPermObject( B18 );;
+gap> PB18 := Image( iso18 );;
+gap> Display( PB18 );
 Cat1-group :- 
 : Source group has generators:
   [ (2,3)(5,6), (4,5,6), (1,2,3) ]
@@ -1212,8 +1258,8 @@ Cat1-group :-
 : kernel embedding maps generators of kernel to:
   [ (4,5,6) ]
 gap> convert the result to the associated permutation crossed module 
-gap> X18 := XModOfCat1Group( PC18 );; 
-gap> Display( X18 ); 
+gap> Y18 := XModOfCat1Group( PB18 );; 
+gap> Display( Y18 ); 
 Crossed module:- 
 : Source group has generators:
   [ (4,5,6) ]
@@ -1289,9 +1335,9 @@ to the source and range of the 2d-group.
 <P/>
 <Example>
 <![CDATA[
-gap> IdGroup( X2 );
+gap> IdGroup( X8 );
 [ [ 24, 6 ], [ 12, 4 ] ]
-gap> StructureDescription( C2 );
+gap> StructureDescription( C8 );
 [ "(S3 x D24) : C2", "D12" ]
 ]]>
 </Example>

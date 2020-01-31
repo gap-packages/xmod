@@ -2,7 +2,7 @@
 ##
 #W  dom2dnd.gd                 GAP4 package `XMod'               Chris Wensley
 ##                                                                Alper Odabas
-#Y  Copyright (C) 2001-2018, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2020, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 #############################################################################
@@ -93,12 +93,6 @@ DeclareGlobalFunction( "MakeHigherDimensionalMonoid" );
 DeclareCategory( "IsHigherDimensionalGroup", 
     IsHigherDimensionalMagmaWithInverses 
     and CategoryCollections( IsAssociativeElement ) );
-
-############################################################################# 
-## 
-#O  KindOfHigherDimensionalDomain( <m2d> ) 
-## 
-DeclareOperation( "KindOfHigherDimensionalDomain", [ IsList ] );  
 
 ############################################################################# 
 ##  

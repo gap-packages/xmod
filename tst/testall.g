@@ -2,7 +2,7 @@
 ##
 #W  testall.g                 GAP4 package `XMod'               Chris Wensley
 ## 
-#Y  Copyright (C) 2001-2019, Chris Wensley et al 
+#Y  Copyright (C) 2001-2020, Chris Wensley et al 
 ##
 #############################################################################
 

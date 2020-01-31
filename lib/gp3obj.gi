@@ -5,7 +5,7 @@
 ##  This file implements generic methods for (pre-)crossed squares 
 ##  and (pre-)cat2-groups.
 ##
-#Y  Copyright (C) 2001-2019, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2020, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
     
 #############################################################################
@@ -1088,7 +1088,7 @@ function( g3d )
            MappingGeneratorsImages( hlt ), "\n" );  
     fi;
     if ( trt = hrt ) then 
-        Print( " left tail=head: ", 
+        Print( "right tail=head: ", 
            MappingGeneratorsImages( trt ), "\n" );  
     else 
         Print( "right tail/head: ", 
@@ -1096,7 +1096,7 @@ function( g3d )
            MappingGeneratorsImages( hrt ), "\n" ); 
     fi; 
     if ( tdn = hdn ) then 
-        Print( " left tail=head: ", 
+        Print( " down tail=head: ", 
            MappingGeneratorsImages( tdn ), "\n" );  
     else 
         Print( " down tail/head: ", 
@@ -1415,7 +1415,7 @@ end );
 #M  AllCat2GroupsWithImagesIterator . . . cat2-groups with given up,left range
 #M  DoAllCat2GroupsWithImagesIterator 
 #M  AllCat2GroupsWithImages . . . cat2-groups with specified range for up,left
-#M  AllCat2GroupsWithImagesNumber . . . . # cat2-groups with specified up,left
+#M  AllCat2GroupsWithImagesNumber . . # cat2-groups with specified up,left gps
 #M  AllCat2GroupsWithImagesUpToIsomorphism . . . iso class reps of cat2-groups
 ##
 BindGlobal( "NextIterator_AllCat2GroupsWithImages", function ( iter ) 
@@ -1527,33 +1527,45 @@ function ( G, R, Q )
     len0 := 0; 
     num := 0; 
     GRiter := AllCat1GroupsWithImageIterator( G, R ); 
-    GQiter := AllCat1GroupsWithImageIterator( G, Q ); 
-    upiter := ShallowCopy( GRiter );
-    for up in upiter do 
-        leftiter := ShallowCopy( GQiter );
-        for left in leftiter do 
-            C := Cat2Group( up, left ); 
-            if ( not ( C = fail ) and IsCat2Group( C ) ) then 
-                num := num+1; 
-                j := 0; 
-                found := false; 
-                while ( not found ) and ( j < len0 ) do 
-                    j := j+1; 
-                    iso := IsomorphismPreCat2Groups( C, L0[j] );
-                    if not ( iso = fail ) then 
-                        found := true; 
+    if ( Q = R ) then 
+        GQiter := ShallowCopy( GRiter ); 
+    else 
+        GQiter := AllCat1GroupsWithImageIterator( G, Q ); 
+    fi;
+    upiter := ShallowCopy( GRiter ); 
+    up := 0; 
+    while not ( up = fail ) do 
+        up := NextIterator( upiter ); 
+        if not ( up = fail ) then 
+            leftiter := ShallowCopy( GQiter ); 
+            left := 0;
+            while not ( left = fail ) do 
+                left := NextIterator( leftiter ); 
+                if not ( left = fail ) then 
+                    C := Cat2Group( up, left ); 
+                    if ( not ( C = fail ) and IsCat2Group( C ) ) then 
+                        num := num+1; 
+                        j := 0; 
+                        found := false; 
+                        while ( not found ) and ( j < len0 ) do 
+                            j := j+1; 
+                            iso := IsomorphismPreCat2Groups( C, L0[j] );
+                            if not ( iso = fail ) then 
+                                found := true; 
+                            fi; 
+                        od; 
+                        if not found then 
+                            Add( L0, C ); 
+                            len0 := len0+1; 
+                            if ( InfoLevel( InfoXMod ) > 0 ) then 
+                                Display( C ); 
+                                Print( "---------------------------------\n" ); 
+                            fi; 
+                        fi; 
                     fi; 
-                od; 
-                if not found then 
-                    Add( L0, C ); 
-                    len0 := len0+1; 
-                    if ( InfoLevel( InfoXMod ) > 0 ) then 
-                        Display( C ); 
-                        Print( "-------------------------------------\n" ); 
-                    fi; 
-                fi; 
-            fi; 
-        od; 
+                fi;
+            od; 
+        fi; 
     od; 
     Info( InfoXMod, 1, "cat2-groups: ", num, " found, ", len0, " classes" ); 
     return L0; 
@@ -1622,9 +1634,11 @@ InstallMethod( AllCat2GroupsIterator, "for a group", [ IsGroup ], 0,
 InstallMethod( AllCat2Groups, "for a group", [ IsGroup ], 0, 
 function( G ) 
 
-    local L, omit, pairs, all1, C, genC; 
+    local L, omit, pairs, all1, C, genC, symm, predg; 
 
     InitCatnGroupRecords( G ); 
+    symm := 0; 
+    predg := 0; 
     L := [ ]; 
     omit := CatnGroupLists( G ).omit; 
     if not omit then 
@@ -1636,6 +1650,12 @@ function( G )
             Add( L, C ); 
             if not omit then 
                 genC := GeneratingCat1Groups( C ); 
+                if ( genC[1] = genC[2] ) then 
+                    symm := symm + 1; 
+                fi; 
+                if not IsCat1Group( Diagonal2DimensionalGroup( C ) ) then 
+                    predg := predg + 1; 
+                fi; 
                 Add( pairs, 
                     [ Position( all1, genC[1] ), Position( all1, genC[2] ) ] );
             fi; 
@@ -1643,6 +1663,8 @@ function( G )
     od;
     if not IsBound( CatnGroupNumbers( G ).cat2 ) then 
         CatnGroupNumbers( G ).cat2 := Length( L ); 
+        CatnGroupNumbers( G ).symm2 := symm; 
+        CatnGroupNumbers( G ).predg := predg; 
     fi; 
     if not omit then 
         Sort( pairs ); 
@@ -1669,8 +1691,8 @@ InstallMethod( AllCat2GroupsUpToIsomorphism, "iso class reps of cat2-groups",
     true, [ IsGroup ], 0,
 function( G )
 
-    local all1, iso1, omit, classes, L, numL, posL, symmnum, symmpos, 
-          prediag, prediagpos, i, C, k, found, iso, genC, perm; 
+    local all1, iso1, omit, classes, L, numL, posL, symmc2, sisopos, symmiso,  
+          predg, isopredg, pisopos, i, C, k, found, iso, genC, perm; 
 
     InitCatnGroupRecords( G ); 
     if not IsBound( CatnGroupNumbers( G ).iso1 ) then 
@@ -1684,15 +1706,23 @@ function( G )
     L := [ ];
     numL := 0; 
     posL := [ ]; 
-    symmnum := 0; 
-    symmpos := [ ]; 
-    prediag := 0; 
-    prediagpos := [ ]; 
+    symmc2 := 0; 
+    sisopos := [ ]; 
+    symmiso := 0; 
+    predg := 0; 
+    isopredg := 0; 
+    pisopos := [ ];
     i := 0;
     for C in AllCat2GroupsIterator( G ) do 
         if not ( C = fail ) then 
             genC := GeneratingCat1Groups( C ); 
             i := i+1; 
+            if ( genC[1] = genC[2] ) then 
+                symmc2 := symmc2 + 1; 
+            fi; 
+            if not IsCat1Group( Diagonal2DimensionalGroup( C ) ) then 
+                predg := predg + 1; 
+            fi; 
             k := 0; 
             found := false; 
             while ( not found ) and ( k < numL ) do 
@@ -1711,12 +1741,12 @@ function( G )
                 Add( posL, i );
                 numL := numL + 1; 
                 if ( genC[1] = genC[2] ) then 
-                    symmnum := symmnum + 1;
-                    Add( symmpos, numL ); 
+                    symmiso := symmiso + 1;
+                    Add( sisopos, numL ); 
                 fi; 
                 if not IsCat1Group( Diagonal2DimensionalGroup( C ) ) then 
-                    prediag := prediag + 1; 
-                    Add( prediagpos, numL );
+                    isopredg := isopredg + 1; 
+                    Add( pisopos, numL ); 
                 fi; 
                 if not omit then 
                     Add( classes, 
@@ -1727,28 +1757,31 @@ function( G )
     od; 
     if not IsBound( CatnGroupNumbers( G ).cat2 ) then 
         CatnGroupNumbers( G ).cat2 := i; 
+        CatnGroupNumbers( G ).symm2 := symmc2; 
     fi; 
     if not IsBound( CatnGroupLists( G ).allcat2pos ) then 
         CatnGroupLists( G ).allcat2pos := posL; 
     fi; 
     if not IsBound( CatnGroupNumbers( G ).iso2 ) then 
         CatnGroupNumbers( G ).iso2 := numL; 
-        CatnGroupNumbers( G ).symm2 := symmnum; 
-        if ( prediag > 0 ) then 
-            CatnGroupNumbers( G ).prediag2 := prediag; 
-        fi; 
+    fi; 
+    if not IsBound( CatnGroupNumbers( G ).siso2 ) then 
+        CatnGroupNumbers( G ).siso2 := symmiso; 
+    fi; 
+    if not IsBound( CatnGroupNumbers( G ).predg ) then 
+        CatnGroupNumbers( G ).predg := predg; 
+    fi; 
+    if not IsBound( CatnGroupNumbers( G ).isopredg ) then 
+        CatnGroupNumbers( G ).isopredg := isopredg; 
+        CatnGroupLists( G ).pisopos := pisopos; 
     fi; 
     Info( InfoXMod, 1, "reps found at positions ", posL ); 
     if not omit then 
         perm := Sortex( classes ); 
         L := Permuted( L, perm ); 
         CatnGroupLists( G ).cat2classes := classes; 
-        symmpos := List( symmpos, i -> i^perm ); 
-        prediagpos := List( prediagpos, i -> i^perm ); 
-        CatnGroupLists( G ).symmpos := symmpos; 
-        if ( prediag > 0 ) then 
-            CatnGroupLists( G ).prediagpos := prediagpos; 
-        fi; 
+        sisopos := List( sisopos, i -> i^perm ); 
+        CatnGroupLists( G ).sisopos := sisopos; 
     fi; 
     return L; 
 end ); 
@@ -1765,7 +1798,7 @@ function( G )
     classes := ListWithIdenticalEntries( iso2, 0 ); 
     for k in [1..iso2] do 
         classes[k] := [ ]; 
-    od;
+    od; 
     i := 0;
     for C in AllCat2GroupsIterator( G ) do 
         if not ( C = fail ) then 
@@ -1902,10 +1935,10 @@ InstallMethod( PreCrossedSquareOfPreCat2Group, true,
 function( C2G )
  
     local n, l, i, j, k, up, down, left, right, isolar, liste1, liste2, 
-          G, gensrc, x, C1, C2, h1, t1, h2, t2, L, M, N, P, XS, 
-          diag, genL, imdelta, delta, liste, partial, action, aut, actML, 
-          XM, kappa, CM1, CM2, lambda, actNL, CM3, mu, actPM, CM4, nu, actPN, 
-          xp, actPL;
+          G, gensrc, x, C1, C2, h1, t1, h2, t2, 
+          L, M, N, P, XS, diag, genL, imdelta, delta, liste, partial, 
+          action, aut, actML, XM, kappa, CM1, CM2, lambda, actNL, CM3, 
+          mu, actPM, CM4, nu, actPN, xp, actPL;
 
     C1 := GeneratingCat1Groups( C2G )[1];
     C2 := GeneratingCat1Groups( C2G )[2];
@@ -1914,21 +1947,11 @@ function( C2G )
     fi;
     if not ( IsPerm2DimensionalGroup( C2 ) ) then
         C2 := Image(IsomorphismPermObject( C2 ) );
-    fi;    
+    fi; 
     h1 := HeadMap( C1 );
     t1 := TailMap( C1 );
     h2 := HeadMap( C2 );
-    t2 := TailMap( C2 );    
-    G := Image( IsomorphismPermObject( Source( t1 ) ) );
-    gensrc := GeneratorsOfGroup( G ); 
-    t1 := GroupHomomorphismByImagesNC( G, G, gensrc, 
-              List(gensrc, x -> ImageElm( t1, x ) ) ); 
-    h1 := GroupHomomorphismByImagesNC( G, G, gensrc, 
-              List(gensrc, x -> ImageElm( h1, x ) ) ); 
-    t2 := GroupHomomorphismByImagesNC( G, G, gensrc, 
-              List(gensrc, x -> ImageElm( t2, x ) ) ); 
-    h2 := GroupHomomorphismByImagesNC( G, G, gensrc, 
-              List(gensrc, x -> ImageElm( h2, x ) ) ); 
+    t2 := TailMap( C2 );  
     L := Intersection( Kernel( t1 ), Kernel( t2 ) ) ;
     M := Intersection( Image( t1 ), Kernel( t2 ) );
     N := Intersection( Kernel ( t1 ), Image( t2 ) );

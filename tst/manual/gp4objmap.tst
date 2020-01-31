@@ -2,7 +2,7 @@
 ##
 #W  gp4objmap.tst                 XMOD test file                Chris Wensley
 ##
-#Y  Copyright (C) 2001-2019, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2020, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 gap> START_TEST( "XMod package: gp4objmap.tst" );
@@ -52,6 +52,23 @@ gap> Cat3Group( all1[5], all1[7], all1[11] );
 1 : [d12 => Group( [ (), (1,4)(2,3)(5,6) ] )]
 2 : [d12 => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )]
 3 : [d12 => Group( [ (1,5,3)(2,6,4), (1,4)(2,3)(5,6) ] )]
+gap> GroupsOfHigherDimensionalGroup( last ); 
+[ d12, Group([ (), (1,4)(2,3)(5,6) ]), Group([ (1,4)(2,5)(3,6), (2,6)
+  (3,5) ]), Group([ (), (1,4)(2,3)(5,6) ]), Group([ (1,5,3)(2,6,4), (1,4)(2,3)
+  (5,6) ]), Group([ (), (1,4)(2,3)(5,6) ]), Group([ (), (1,4)(2,3)(5,6) ]), 
+  Group([ (), (1,4)(2,3)(5,6) ]) ]
+
+## Section 9.2.1
+gap> PCn := PreCatnGroup( [ all1[5], all1[7], all1[11], all1[12] ] );
+(pre-)cat4-group with generating (pre-)cat1-groups:
+1 : [d12 => Group( [ (), (1,4)(2,3)(5,6) ] )]
+2 : [d12 => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )]
+3 : [d12 => Group( [ (1,5,3)(2,6,4), (1,4)(2,3)(5,6) ] )]
+4 : [d12 => Group( [ (1,2,3,4,5,6), (2,6)(3,5) ] )]
+gap> IsCatnGroup( PCn );                                             
+true
+gap> HigherDimension( PCn );
+5
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 

@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp3objmap.xml         XMod documentation            Chris Wensley  -->
 <!--                                                                     -->
-<!--  Copyright (C) 1996-2019, Chris Wensley et al,                      --> 
+<!--  Copyright (C) 1996-2020, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -1153,21 +1153,22 @@ and then using the iterator <C>AllCat2GroupsWithImagesIterator(G,R,Q)</C>.
          Arg="G R Q" />
    <Attr Name="AllCat2GroupsWithImagesNumber"
          Arg="G R Q" />
-   <Oper Name="AllCat2GroupsWithImagesUpToIsomorphism"
-         Arg="G R Q" />
    <Oper Name="AllCat2GroupsWithImages"
          Arg="G R Q" />
+   <Oper Name="AllCat2GroupsWithImagesUpToIsomorphism"
+         Arg="G R Q" />
 <Description>
-The iterator <C>AllCat2GroupsIterator(G)</C> iterates through all the 
-cat<M>^2</M>-groups with source <C>G</C>. 
-The attribute <C>AllCat2GroupsNumber(G)</C> runs through this iterator 
-to count the number <M>n</M> of these cat<M>^2</M>-groups. 
-The operation <C>AllCat1Groups(G)</C> returns a list containing these 
+The iterator <C>AllCat2GroupsWithImagesIterator(G)</C> iterates through all 
+the cat<M>^2</M>-groups with source <C>G</C> and generating cat<M>^1</M>-groups 
+<C>(G=>R)</C> and <C>(G=>Q)</C>. 
+The attribute <C>AllCat2GroupsWithImagesNumber(G)</C> runs through this iterator 
+to determine the number <M>n</M> of these cat<M>^2</M>-groups. 
+The operation <C>AllCat2GroupsWithImages(G)</C> returns a list containing these 
 <M>n</M> cat<M>^2</M>-groups.  
 Since these lists can get very long, this operation should only be used 
 for simple cases. 
-The operation <C>AllCat2GroupsUpToIsomorphism(G)</C> returns representatives 
-of the isomorphism classes of these cat<M>^2</M>-groups. 
+The operation <C>AllCat2GroupsWith~ImagesUpToIsomorphism(G)</C> returns 
+representatives of the isomorphism classes of these cat<M>^2</M>-groups. 
 </Description> 
 </ManSection>
 <P/>
@@ -1200,9 +1201,10 @@ The iterator <C>AllCat2GroupsIterator(G)</C> iterates through all the
 cat<M>^2</M>-groups with source <C>G</C>. 
 The attribute <C>AllCat2GroupsNumber(G)</C> runs this iterator to count the 
 number <M>n</M> of these cat<M>^2</M>-groups. 
-The operation <C>AllCat1Groups(G)</C> returns a list containing these <M>n</M> 
-cat2-groups.  Since these lists can get very long, this operation should only 
-be used for simple cases. 
+The operation <C>AllCat2Groups(G)</C> returns a list containing these <M>n</M> 
+cat<M>^2</M>-groups.  
+Since these lists can get very long, this operation should only be used 
+for simple cases. 
 The operation <C>AllCat2GroupsUpToIsomorphism(G)</C> returns representatives 
 of the isomorphism classes of these subgroups. 
 The operation <C>AllCat2GroupFamilies(G)</C> returns a list of lists. 
@@ -1239,7 +1241,8 @@ gap> fams := AllCat2GroupFamilies( d12 );
   [ 30, 31, 32, 33, 34, 35 ], [ 9, 12, 15 ], [ 19, 20, 21, 26, 27, 28 ], 
   [ 36, 37, 38 ], [ 22, 29 ], [ 39, 40 ], [ 41 ] ]
 gap> CatnGroupNumbers( d12 );
-rec( cat1 := 12, cat2 := 41, idem := 21, iso1 := 4, iso2 := 10, symm2 := 4 )
+rec( cat1 := 12, cat2 := 41, idem := 21, iso1 := 4, iso2 := 10, 
+  isopredg := 0, predg := 0, siso2 := 4, symm2 := 12 )
 gap> CatnGroupLists( d12 );
 rec( allcat2pos := [ 1, 7, 9, 16, 19, 22, 30, 36, 39, 41 ],
   cat2classes := 
@@ -1258,7 +1261,7 @@ rec( allcat2pos := [ 1, 7, 9, 16, 19, 22, 30, 36, 39, 41 ],
       [ 6, 12 ], [ 7, 7 ], [ 7, 10 ], [ 7, 11 ], [ 7, 12 ], [ 8, 8 ], 
       [ 8, 10 ], [ 8, 11 ], [ 8, 12 ], [ 9, 9 ], [ 9, 10 ], [ 9, 11 ], 
       [ 9, 12 ], [ 10, 10 ], [ 10, 12 ], [ 11, 11 ], [ 11, 12 ], [ 12, 12 ] ],
-  omit := false, symmpos := [ 1, 5, 8, 10 ] )
+  omit := false, pisopos := [  ], sisopos := [ 1, 5, 8, 10 ] )
 ]]>
 </Example>
 
