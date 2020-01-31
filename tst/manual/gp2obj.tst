@@ -341,26 +341,26 @@ gap> e418 := RangeEmbedding( C418 );
   (9,10,11), (10,11)(13,14) ]
 
 ## Section 2.5.1
-gap> G2 := SmallGroup( 288, 956 );  SetName( G2, "G2" );
+gap> G8 := SmallGroup( 288, 956 );  SetName( G8, "G8" );
 <pc group of size 288 with 7 generators>
 gap> d12 := DihedralGroup( 12 );  SetName( d12, "d12" );
 <pc group of size 12 with 3 generators>
 gap> a1 := d12.1;;  a2 := d12.2;;  a3 := d12.3;;  a0 := One( d12 );;
-gap> gensG2 := GeneratorsOfGroup( G2 );;
-gap> t2 := GroupHomomorphismByImages( G2, d12, gensG2,
+gap> gensG8 := GeneratorsOfGroup( G8 );;
+gap> t8 := GroupHomomorphismByImages( G8, d12, gensG8,
 >           [ a0, a1*a3, a2*a3, a0, a0, a3, a0 ] );;
-gap> h2 := GroupHomomorphismByImages( G2, d12, gensG2,
+gap> h8 := GroupHomomorphismByImages( G8, d12, gensG8,
 >           [ a1*a2*a3, a0, a0, a2*a3, a0, a0, a3^2 ] );;                   
-gap> e2 := GroupHomomorphismByImages( d12, G2, [a1,a2,a3],
->        [ G2.1*G2.2*G2.4*G2.6^2, G2.3*G2.4*G2.6^2*G2.7, G2.6*G2.7^2 ] );;
-gap> C2 := PreCat1GroupByTailHeadEmbedding( t2, h2, e2 );
-[G2=>d12]
-gap> IsCat1Group( C2 );
+gap> e8 := GroupHomomorphismByImages( d12, G8, [a1,a2,a3],
+>        [ G8.1*G8.2*G8.4*G8.6^2, G8.3*G8.4*G8.6^2*G8.7, G8.6*G8.7^2 ] );;
+gap> C8 := PreCat1GroupByTailHeadEmbedding( t8, h8, e8 );
+[G8=>d12]
+gap> IsCat1Group( C8 );
 true
-gap> Display(C2);
+gap> Display(C8);
 
-Cat1-group [G2=>d12] :- 
-: Source group G2 has generators:
+Cat1-group [G8=>d12] :- 
+: Source group G8 has generators:
   [ f1, f2, f3, f4, f5, f6, f7 ]
 : Range group d12 has generators:
   [ f1, f2, f3 ]
@@ -379,16 +379,16 @@ Cat1-group [G2=>d12] :-
 : kernel embedding maps generators of kernel to:
   [ f1, f4, f5, f7 ]
 
-gap> IsCat1Group( C2 );
+gap> IsCat1Group( C8 );
    true
 gap> EC4 := EndomorphismPreCat1Group( C4 );
    [s4s4=>Group( [ (1,2,3,4)(5,6,7,8), (3,4)(7,8), (), () ] )]
 
 ## Section 2.5.2
-gap> X2 := XModOfCat1Group( C2 );;
-gap> Display( X2 );
+gap> X8 := XModOfCat1Group( C8 );;
+gap> Display( X8 );
 
-Crossed module xmod([G2=>d12]) :- 
+Crossed module xmod([G8=>d12]) :- 
 : Source group has generators:
   [ f1, f4, f5, f7 ]
 : Range group d12 has generators:
@@ -400,9 +400,9 @@ Crossed module xmod([G2=>d12]) :-
   f2 --> { source gens --> [ f1*f5*f7^2, f4, f5, f7 ] }
   f3 --> { source gens --> [ f1*f7, f4, f5, f7 ] }
   These 3 automorphisms generate the group of automorphisms.
-: associated cat1-group is [G2=>d12]
+: associated cat1-group is [G8=>d12]
 
-gap> StructureDescription( X2 );
+gap> StructureDescription( X8 );
 [ "D24", "D12" ]
 
 ## Section 2.6.1
@@ -467,9 +467,9 @@ gap> all := AllCat1DataGroupsBasic( gp );
   [Group( [ f1, f2, f3 ] )=>Group( [ f1, f2, f3 ] )] ]
 
 ## Section 2.8.1
-gap> IdGroup( X2 );
+gap> IdGroup( X8 );
 [ [ 24, 6 ], [ 12, 4 ] ]
-gap> IdGroup( C2 );
+gap> IdGroup( C8 );
 [ [ 288, 956 ], [ 12, 4 ] ]
 
 ## Section 2.9.1

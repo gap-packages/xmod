@@ -2320,6 +2320,7 @@ end );
 ##
 #M  AllCat1GroupsWithImage  . . . . . . cat1-group structures with given range
 #O  AllCat1GroupsWithImageIterator( <gp> )  . . iterator for the previous list
+#M  AllCat1GroupsWithImageNumber . . . . .  # cat1-groups with specified range
 #F  NextIterator_AllCat1GroupsWithImage( <iter> ) 
 #F  IsDoneIterator_AllCat1GroupsWithImage( <iter> ) 
 #F  ShallowCopy_AllCat1GroupsWithImage( <iter> ) 

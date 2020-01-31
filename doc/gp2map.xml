@@ -258,13 +258,13 @@ then construct an isomorphism <M>(\gamma,\rho)</M> between them.
 <P/>
 <Example>
 <![CDATA[
-gap> t2 := GroupHomomorphismByImages(g18,s3a,g18gens,[(),(7,8,9),(8,9)]);;     
-gap> e2 := GroupHomomorphismByImages(s3a,g18,s3agens,[(4,5,6),(2,3)(5,6)]);;   
-gap> C2 := Cat1Group( t2, h1, e2 );; 
+gap> t3 := GroupHomomorphismByImages(g18,s3a,g18gens,[(),(7,8,9),(8,9)]);;     
+gap> e3 := GroupHomomorphismByImages(s3a,g18,s3agens,[(4,5,6),(2,3)(5,6)]);;   
+gap> C3 := Cat1Group( t3, h1, e3 );; 
 gap> imgamma := [ (4,5,6), (1,2,3), (2,3)(5,6) ];; 
 gap> gamma := GroupHomomorphismByImages( g18, g18, g18gens, imgamma );;
 gap> rho := IdentityMapping( s3a );; 
-gap> mor := Cat1GroupMorphism( C1, C2, gamma, rho );;
+gap> mor := Cat1GroupMorphism( C18, C3, gamma, rho );;
 gap> Display( mor );;
 Morphism of cat1-groups :- 
 : Source = [g18=>s3a] with generating sets:
@@ -306,8 +306,8 @@ Names are assigned automatically.
 <P/>
 <Example>
 <![CDATA[
-gap> iso2 := IsomorphismPerm2DimensionalGroup( C2 );
-[[G2=>d12] => [..]]
+gap> iso8 := IsomorphismPerm2DimensionalGroup( C8 );
+[[G8=>d12] => [..]]
 ]]>
 </Example>
 </Section>
@@ -330,18 +330,18 @@ calls the <Ref Oper="CompositionMorphism"/> function for maps
 <P/>
 <Example>
 <![CDATA[
-gap> H2 := Subgroup(G2,[G2.3,G2.4,G2.6,G2.7]);  SetName( H2, "H2" );
+gap> H8 := Subgroup(G8,[G8.3,G8.4,G8.6,G8.7]);  SetName( H8, "H8" );
 Group([ f3, f4, f6, f7 ])
 gap> c6 := Subgroup( d12, [b,c] );  SetName( c6, "c6" );
 Group([ f2, f3 ])
-gap> SC2 := Sub2DimensionalGroup( C2, H2, c6 );
-[H2=>c6]
-gap> IsCat1Group( SC2 );
+gap> SC8 := Sub2DimensionalGroup( C8, H8, c6 );
+[H8=>c6]
+gap> IsCat1Group( SC8 );
 true
-gap> inc2 := InclusionMorphism2DimensionalDomains( C2, SC2 );
-[[H2=>c6] => [G2=>d12]]
-gap> CompositionMorphism( iso2, inc );                  
-[[H2=>c6] => P[G2=>d12]]
+gap> inc8 := InclusionMorphism2DimensionalDomains( C8, SC8 );
+[[H8=>c6] => [G8=>d12]]
+gap> CompositionMorphism( iso8, inc );                  
+[[H8=>c6] => P[G8=>d12]]
 ]]>
 </Example>
 
@@ -364,14 +364,14 @@ gap> c2 := Group( (19,20) );
 Group([ (19,20) ])
 gap> X0 := XModByNormalSubgroup( c2, c2 );  SetName( X0, "X0" );
 [Group( [ (19,20) ] )->Group( [ (19,20) ] )]
-gap>  SX2 := Source( X2 );;
-gap> genSX2 := GeneratorsOfGroup( SX2 ); 
+gap> SX8 := Source( X8 );;
+gap> genSX8 := GeneratorsOfGroup( SX8 ); 
 [ f1, f4, f5, f7 ]
-gap> sigma0 := GroupHomomorphismByImages(SX2,c2,genSX2,[(19,20),(),(),()]);
+gap> sigma0 := GroupHomomorphismByImages(SX8,c2,genSX8,[(19,20),(),(),()]);
 [ f1, f4, f5, f7 ] -> [ (19,20), (), (), () ]
 gap> rho0 := GroupHomomorphismByImages(d12,c2,[a1,a2,a3],[(19,20),(),()]);
 [ f1, f2, f3 ] -> [ (19,20), (), () ]
-gap> mor0 := XModMorphism( X2, X0, sigma0, rho0 );;           
+gap> mor0 := XModMorphism( X8, X0, sigma0, rho0 );;           
 gap> K0 := Kernel( mor0 );;
 gap> StructureDescription( K0 );
 [ "C12", "C6" ]

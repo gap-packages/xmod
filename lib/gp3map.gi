@@ -626,12 +626,22 @@ function( D1, D2 )
           phi, alpha, gamma, rho, sigma, pi, isoup, isolt, isort, isodn;
 
     up1 := Up2DimensionalGroup( D1 );
-    lt1 := Left2DimensionalGroup( D1 ); 
-    rt1 := Right2DimensionalGroup( D1 );
-    dn1 := Down2DimensionalGroup( D1 );
     up2 := Up2DimensionalGroup( D2 );
+    isoup := IsomorphismPreCat1Groups( up1, up2 ); 
+    if ( isoup = fail ) then 
+        Info( InfoXMod, 2, "no isomorphism up1 -> up2" ); 
+        return fail; 
+    fi; 
+    lt1 := Left2DimensionalGroup( D1 ); 
     lt2 := Left2DimensionalGroup( D2 ); 
+    isolt := IsomorphismPreCat1Groups( lt1, lt2 ); 
+    if ( isolt = fail ) then 
+        Info( InfoXMod, 2, "no isomorphism lt1 -> lt2" ); 
+        return fail; 
+    fi; 
+    rt1 := Right2DimensionalGroup( D1 );
     rt2 := Right2DimensionalGroup( D2 );
+    dn1 := Down2DimensionalGroup( D1 );
     dn2 := Down2DimensionalGroup( D2 );
     G1 := Source( up1 ); 
     G2 := Source( up2 ); 

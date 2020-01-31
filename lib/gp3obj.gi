@@ -1088,7 +1088,7 @@ function( g3d )
            MappingGeneratorsImages( hlt ), "\n" );  
     fi;
     if ( trt = hrt ) then 
-        Print( " left tail=head: ", 
+        Print( "right tail=head: ", 
            MappingGeneratorsImages( trt ), "\n" );  
     else 
         Print( "right tail/head: ", 
@@ -1096,7 +1096,7 @@ function( g3d )
            MappingGeneratorsImages( hrt ), "\n" ); 
     fi; 
     if ( tdn = hdn ) then 
-        Print( " left tail=head: ", 
+        Print( " down tail=head: ", 
            MappingGeneratorsImages( tdn ), "\n" );  
     else 
         Print( " down tail/head: ", 
@@ -1415,7 +1415,7 @@ end );
 #M  AllCat2GroupsWithImagesIterator . . . cat2-groups with given up,left range
 #M  DoAllCat2GroupsWithImagesIterator 
 #M  AllCat2GroupsWithImages . . . cat2-groups with specified range for up,left
-#M  AllCat2GroupsWithImagesNumber . . . . # cat2-groups with specified up,left
+#M  AllCat2GroupsWithImagesNumber . . # cat2-groups with specified up,left gps
 #M  AllCat2GroupsWithImagesUpToIsomorphism . . . iso class reps of cat2-groups
 ##
 BindGlobal( "NextIterator_AllCat2GroupsWithImages", function ( iter ) 

@@ -20,15 +20,18 @@
 /doc/*.toc
 /doc/manual.pdf
 /doc/bib.xml.bib
+/expt/
+/tst/allxmods.g
 /tst/apps.g
-/tst/der.g
+/tst/c*.g
+/tst/d24.g
 /tst/gp*.g
-/tst/isoclinic.g
+/tst/i*.g
+/tst/loops.g
+/tst/others.g
+/tst/testextra.g
+/tst/testmanual.g
 /tst/util.g
-/xtst/c*.g 
-/xtst/induced.g
-/xtst/loops.g
-/xtst/others.g
 
 /tmp/
 /gh-pages/
