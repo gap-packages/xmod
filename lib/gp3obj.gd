@@ -86,6 +86,7 @@ DeclareProperty( "IsSymmetric3DimensionalGroup",
 #A  Left2DimensionalGroup( <PS> ) 
 #A  Right2DimensionalGroup( <PS> ) 
 #A  Diagonal2DimensionalGroup( <PS> ) 
+#A  Subdiagonal2DimensionalGroup( <PS> ) 
 #A  CrossDiagonalActions( <PS> ) 
 #A  CrossedPairing( <PS> )
 #A  Transpose3DimensionalGroup( <PS> )
@@ -97,6 +98,7 @@ DeclareAttribute( "Left2DimensionalGroup", IsHigherDimensionalGroup );
 DeclareAttribute( "Down2DimensionalGroup", IsHigherDimensionalGroup );
 DeclareAttribute( "Right2DimensionalGroup", IsHigherDimensionalGroup );
 DeclareAttribute( "Diagonal2DimensionalGroup", IsHigherDimensionalGroup );
+DeclareAttribute( "Subdiagonal2DimensionalGroup", IsHigherDimensionalGroup );
 DeclareAttribute( "CrossDiagonalActions", IsHigherDimensionalGroup );
 DeclareAttribute( "CrossedPairing", IsHigherDimensionalGroup );
 DeclareAttribute( "Transpose3DimensionalGroup", IsHigherDimensionalGroup );

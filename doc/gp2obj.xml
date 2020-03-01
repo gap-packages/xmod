@@ -312,10 +312,8 @@ subsection <Ref Oper="XModByCentralExtension"/>.
 </ManSection>
 <Example>
 <![CDATA[
-gap> Source( X12 );   
-d12
-gap> Range( X12 );    
-s3
+gap> [ Source( X12 ), Range( X12 ) ];    
+[ d12, s3 ]
 gap> Boundary( X12 ); 
 [ (1,2,3,4,5,6), (2,6)(3,5) ] -> [ (7,8,9), (8,9) ]
 gap> XModAction( X12 );
@@ -330,8 +328,15 @@ gap> XModAction( X12 );
          Arg="X0, s, r" />
 <Description>
 This function returns the element <M>s^r</M> given by <C>XModAction(X0)</C>. 
+<P/>
 </Description>
 </ManSection>
+<Example>
+<![CDATA[
+gap> ImageElmXModAction( X12, (1,2,3,4,5,6), (8,9) );
+(1,6,5,4,3,2)
+]]>
+</Example>
 
 <ManSection>
    <Attr Name="Size"
@@ -565,7 +570,7 @@ gap> aut16 := Group( [ aut1, aut2 ] );;
 gap> act16 := GroupHomomorphismByImages( sk4, aut16, [b1^4,b2], [aut1,aut2] );;
 gap> P16 := PreXModByBoundaryAndAction( bdy16, act16 );
 [d16->sk4]
-gap> IsXMod(P16);
+gap> IsXMod( P16 );
 false
 ]]>
 </Example>
@@ -736,10 +741,8 @@ but not in the example <C>C18</C> above.
 </ManSection>
 <Example>
 <![CDATA[
-gap> Source( C18 );
-g18
-gap> Range( C18 );
-s3a
+gap> [ Source( C18 ), Range( C18 ) ];
+[ g18, s3a ]
 gap> TailMap( C18 );
 [ (1,2,3), (4,5,6), (2,3)(5,6) ] -> [ (7,8,9), (), (8,9) ]
 gap> HeadMap( C18 );
@@ -764,50 +767,40 @@ cat<M>^1</M>-groups.
 
 <ManSection>
    <Oper Name="DiagonalCat1Group" 
-         Arg="gen1" />
+         Arg="genG" />
 <Description>
-<B>[Needs revising!]</B>
-<P/>
-The following listing shows an example of a permutation cat<M>^1</M>-group 
-of size <M>[576,24]</M> with source group <M>S_4 \times S_4</M>, 
-range group a third <M>S_4</M>, and <M>t \neq h</M>. 
-A similar example may be reproduced using the command 
-<Code>C := DiagonalCat1Group([(1,2,3,4),(3,4)]);</Code>. 
+This operation constructs examples of cat<M>^1</M>-groups of the form 
+<M>G \times G \Rightarrow G</M>. 
+The tail map is the identity on the first factor and kills of the second, 
+while the head map does the reverse. 
+The range embedding maps <M>G</M> to the diagonal in <M>G \times G</M>. 
+The corresponding crossed module is isomorphic to the identity crossed 
+module on <M>G</M>. 
 </Description>
 </ManSection>
 <P/>
 <Example>
 <![CDATA[
-gap> G4 := Group( (1,2,3,4), (3,4), (5,6,7,8), (7,8) );; 
-gap> R4 := Group( (9,10,11,12), (11,12) );;
-gap> SetName( G4, "s4s4" );  SetName( R4, "s4d" ); 
-gap> G4gens := GeneratorsOfGroup( G4 );; 
-gap> R4gens := GeneratorsOfGroup( R4 );; 
-gap> t := GroupHomomorphismByImages( G4, R4, G4gens, 
->            Concatenation( R4gens, [ (), () ] ) );; 
-gap> h := GroupHomomorphismByImages( G4, R4, G4gens,  
->            Concatenation( [ (), () ], R4gens ) );; 
-gap> e := GroupHomomorphismByImages( R4, G4, R4gens, 
->            [ (1,2,3,4)(5,6,7,8), (3,4)(7,8) ] );; 
-gap> C4 := PreCat1GroupByTailHeadEmbedding( t, h, e );; 
-gap> Display(C4);
-Cat1-group [s4s4=>s4d] :- 
-: Source group s4s4 has generators:
-  [ (1,2,3,4), (3,4), (5,6,7,8), (7,8) ]
-: Range group s4d has generators:
-  [ ( 9,10,11,12), (11,12) ]
+gap> C4 := DiagonalCat1Group( [ (1,2,3), (2,3,4) ] );;
+gap> SetName( Source(C4), "a4a4" );  SetName( Range(C4_, "a4d" );
+gap> Display( C4 );
+Cat1-group [a4a4=>a4d] :- 
+: Source group a4a4 has generators:
+  [ (1,2,3), (2,3,4), (5,6,7), (6,7,8) ]
+: Range group a4d has generators:
+  [ ( 9,10,11), (10,11,12) ]
 : tail homomorphism maps source generators to:
-  [ ( 9,10,11,12), (11,12), (), () ]
+  [ ( 9,10,11), (10,11,12), (), () ]
 : head homomorphism maps source generators to:
-  [ (), (), ( 9,10,11,12), (11,12) ]
+  [ (), (), ( 9,10,11), (10,11,12) ]
 : range embedding maps range generators to:
-  [ (1,2,3,4)(5,6,7,8), (3,4)(7,8) ]
+  [ (1,2,3)(5,6,7), (2,3,4)(6,7,8) ]
 : kernel has generators:
-  [ (5,6,7,8), (7,8) ]
+  [ (5,6,7), (6,7,8) ]
 : boundary homomorphism maps generators of kernel to:
-  [ ( 9,10,11,12), (11,12) ]
+  [ ( 9,10,11), (10,11,12) ]
 : kernel embedding maps generators of kernel to:
-  [ (5,6,7,8), (7,8) ]
+  [ (5,6,7), (6,7,8) ]
 ]]>
 </Example>
 
@@ -824,9 +817,11 @@ but has the tail and head maps interchanged.
 <Example>
 <![CDATA[
 gap> R4 := ReverseCat1Group( C4 );
-[s4s4=>s4d]
+[a4a4=>a4d]
 gap> Boundary( R4 );
-[ (3,4), (2,3), (1,2,3,4) ] -> [ (11,12), (10,11), (9,10,11,12) ]
+[ (2,3,4), (1,2,3) ] -> [ (10,11,12), (9,10,11) ]
+gap> TailMap( R4 ) = HeadMap( R4 ); 
+false
 gap> TailMap( R4 ) = HeadMap( C4 ); 
 true
 ]]>
@@ -846,7 +841,7 @@ and <M>P = [a4,a4]=k4</M>, so that <M>G/P = s4/k4 \cong s3</M>.
 <P/>
 <Example>
 <![CDATA[
-gap> s4:=Group( (1,2,3), (3,4) );;  SetName( s4, "s4" ); 
+gap> s4 := Group( (1,2,3), (3,4) );;  SetName( s4, "s4" ); 
 gap> h := GroupHomomorphismByImages( s4, s4, [(1,2,3),(3,4)], [(),(3,4)] );;
 gap> c2 := Image( h );;  SetName( c2, "c2" );
 gap> C := PreCat1Group( h, h );
@@ -872,6 +867,29 @@ gap> IsomorphismCat1Groups( C2, CXC2 );
 </Example>
 
 <ManSection>
+   <Oper Name="SubCat1Group"
+         Arg="C1 S1" />
+   <Oper Name="SubPreCat1Group"
+         Arg="C1 S1" />
+<Description>
+<M>S_1</M> is a sub-cat<M>^1</M>-group of <M>C_1</M> 
+provided the source and range of <M>S_1</M> 
+are subgroups of the source and range of <M>C_1</M> 
+and that the tail, head and embedding of <M>S_1</M> 
+are the appropriate restrictions of those of <M>C_1</M>. 
+<P/>
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> s3 := Subgroup( s4, [(2,3),(3,4)] );; 
+gap> res := DoublyRestrictedMapping( h, s3, s3 );; 
+gap> S := PreCat1Group( res, res );
+[Group( [ (2,3), (3,4) ] )=>Group( [ (3,4), (3,4) ] )]
+]]>
+</Example>
+
+<ManSection>
    <Oper Name="DirectProduct"
          Arg="C1 C2" Label="for cat1-groups" />
 <Description>
@@ -891,23 +909,23 @@ constructed above.
 </ManSection>
 <Example>
 <![CDATA[
-gap> C418 := DirectProduct( C4, C18 ); 
-[(s4s4xg18)=>(s4dxs3a)]
+gap> C418 := DirectProduct( C4, C18 );
+[(a4a4xg18)=>(a4d x s3a)]
 gap> infoC418 := DirectProductInfo( C418 );
 rec( 
-  embeddings := [ [[s4s4=>s4d] => [(s4s4xg18)=>(s4dxs3a)]], 
-      [[g18=>s3a] => [(s4s4xg18)=>(s4dxs3a)]] ], 
-  objects := [ [s4s4=>s4d], [g18=>s3a] ], 
-  projections := [ [[(s4s4xg18)=>(s4dxs3a)] => [s4s4=>s4d]], 
-      [[(s4s4xg18)=>(s4dxs3a)] => [g18=>s3a]] ] )
+  embeddings := [ [[a4a4=>a4d] => [(a4a4xg18)=>(a4d x s3a)]], 
+      [[g18=>s3a] => [(a4a4xg18)=>(a4d x s3a)]] ], 
+  objects := [ [a4a4=>a4d], [g18=>s3a] ], 
+  projections := [ [[(a4a4xg18)=>(a4d x s3a)] => [a4a4=>a4d]], 
+      [[(a4a4xg18)=>(a4d x s3a)] => [g18=>s3a]] ] )
 gap> t418 := TailMap( C418 );
-[ (1,2,3,4), (3,4), (5,6,7,8), (7,8), (9,10,11), (12,13,14), (10,11)(13,14) 
- ] -> [ (1,2,3,4), (3,4), (), (), (5,6,7), (), (6,7) ]
+[ (1,2,3), (2,3,4), (5,6,7), (6,7,8), (9,10,11), (12,13,14), (10,11)(13,14) 
+ ] -> [ (1,2,3), (2,3,4), (), (), (5,6,7), (), (6,7) ]
 gap> h418 := HeadMap( C418 );
-[ (1,2,3,4), (3,4), (5,6,7,8), (7,8), (9,10,11), (12,13,14), (10,11)(13,14) 
- ] -> [ (), (), (1,2,3,4), (3,4), (5,6,7), (5,6,7), (6,7) ]
+[ (1,2,3), (2,3,4), (5,6,7), (6,7,8), (9,10,11), (12,13,14), (10,11)(13,14) 
+ ] -> [ (), (), (1,2,3), (2,3,4), (5,6,7), (5,6,7), (6,7) ]
 gap> e418 := RangeEmbedding( C418 );
-[ (1,2,3,4), (3,4), (5,6,7), (6,7) ] -> [ (1,2,3,4)(5,6,7,8), (3,4)(7,8), 
+[ (1,2,3), (2,3,4), (5,6,7), (6,7) ] -> [ (1,2,3)(5,6,7), (2,3,4)(6,7,8), 
   (9,10,11), (10,11)(13,14) ]
 ]]>
 </Example>
@@ -972,7 +990,7 @@ gap> KnownPropertiesOfObject( C8 );
 gap> IsPreCat1GroupByEndomorphisms( C8 );
 false
 gap> EC4 := EndomorphismPreCat1Group( C4 );
-[s4s4=>Group( [ (1,2,3,4)(5,6,7,8), (3,4)(7,8), (), () ] )]
+[a4a4=>Group( [ (1,2,3,4)(5,6,7,8), (3,4)(7,8), (), () ] )]
 ]]>
 </Example>
 
@@ -1322,6 +1340,7 @@ commutator and derived subcrossed modules; etc.
 <P/> 
 Here we mention two functions for groups which have been extended to the 
 two-dimensional case. 
+<P/>
 <ManSection>
    <Oper Name="IdGroup" 
          Arg="2DimensionalGroup" Label="for 2d-groups" /> 
@@ -1339,6 +1358,37 @@ gap> IdGroup( X8 );
 [ [ 24, 6 ], [ 12, 4 ] ]
 gap> StructureDescription( C8 );
 [ "(S3 x D24) : C2", "D12" ]
+]]>
+</Example>
+
+There are also a number of functions which test for sub-structures.
+<P/>
+<ManSection>
+   <Oper Name="IsSubXMod" 
+         Arg="X0 S0" /> 
+   <Oper Name="IsSubPreXMod" 
+         Arg="X0 S0" /> 
+   <Oper Name="IsSubCat1Group" 
+         Arg="G0 R0" /> 
+   <Oper Name="IsSubPreCat1Group" 
+         Arg="G0 R0" /> 
+   <Oper Name="IsSub2DimensionalGroup" 
+         Arg="G0 R0" /> 
+<Description>
+These functions test whether the second argument is a sub-2d-group 
+of the first argument. 
+The examples refer back to sub-2d-groups created in sections 
+<Ref Sect="sect-properties-xmod" /> and 
+<Ref Sect="sect-cat1" />. 
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> IsSubXMod( X4, Y4 );
+true
+gap> IsSubPreCat1Group( C, S );
+true
 ]]>
 </Example>
 

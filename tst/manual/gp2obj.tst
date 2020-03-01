@@ -11,7 +11,7 @@ gap> SetInfoLevel( InfoXMod, 0 );
 gap> saved_infolevel_groupoids := InfoLevel( InfoGroupoids );; 
 gap> SetInfoLevel( InfoGroupoids, 0 );;
 
-## Chapter 2,  Section 2.1.2
+## Chapter 2,  Section 2.1.1
 gap> c5 := Group( (5,6,7,8,9) );;
 gap> SetName( c5, "c5" );
 gap> id5 := IdentityMapping( c5 );;
@@ -118,16 +118,18 @@ rec( embeddings := [ [[<-1>->q8] => [..]], [[<i>->q8] => [..]] ],
   projections := [ [[..] => [<-1>->q8]], [[..] => [<i>->q8]] ] )
 
 ## Section 2.1.9
-gap> Source( X12 );   
-d12
-gap> Range( X12 );    
-s3
+gap> [ Source( X12 ), Range( X12 ) ];    
+[ d12, s3 ]
 gap> Boundary( X12 ); 
 [ (1,2,3,4,5,6), (2,6)(3,5) ] -> [ (7,8,9), (8,9) ]
 gap> XModAction( X12 );
 [ (7,8,9), (8,9) ] -> 
 [ [ (1,2,3,4,5,6), (2,6)(3,5) ] -> [ (1,2,3,4,5,6), (1,3)(4,6) ], 
   [ (1,2,3,4,5,6), (2,6)(3,5) ] -> [ (1,6,5,4,3,2), (2,6)(3,5) ] ]
+
+## Section 2.1.10
+gap> ImageElmXModAction( X12, (1,2,3,4,5,6), (8,9) );
+(1,6,5,4,3,2)
 
 ## Section 2.1.11
 gap> Size( X5 );
@@ -172,7 +174,7 @@ gap> NX4 := NormalSubXMods( X4 );;
 gap> Length( NX4 ); 
 5
 
-## Section 2.2.2
+## Section 2.2.3
 gap> d8d8 := Group( (1,2,3,4), (1,3), (5,6,7,8), (5,7) );;
 gap> X88 := XModByAutomorphismGroup( d8d8 );;
 gap> Size( X88 );
@@ -231,10 +233,8 @@ gap> C18 := Cat1Group( t1, h1, e1 );
 [g18=>s3a]
 
 ## Section 2.4.2
-gap> Source( C18 );
-g18
-gap> Range( C18 );
-s3a
+gap> [ Source( C18 ), Range( C18 ) ];
+[ g18, s3a ]
 gap> TailMap( C18 );
 [ (1,2,3), (4,5,6), (2,3)(5,6) ] -> [ (7,8,9), (), (8,9) ]
 gap> HeadMap( C18 );
@@ -253,49 +253,40 @@ gap> StructureDescription( C18 );
 [ "(C3 x C3) : C2", "S3" ]
 
 ## Section 2.4.3
-gap> G4 := Group( (1,2,3,4), (3,4), (5,6,7,8), (7,8) );; 
-gap> R4 := Group( (9,10,11,12), (11,12) );;
-gap> SetName( G4, "s4s4" );  SetName( R4, "s4d" ); 
-gap> G4gens := GeneratorsOfGroup( G4 );; 
-gap> R4gens := GeneratorsOfGroup( R4 );; 
-gap> t := GroupHomomorphismByImages( G4, R4, G4gens, 
->            Concatenation( R4gens, [ (), () ] ) );; 
-gap> h := GroupHomomorphismByImages( G4, R4, G4gens,  
->            Concatenation( [ (), () ], R4gens ) );; 
-gap> e := GroupHomomorphismByImages( R4, G4, R4gens, 
->            [ (1,2,3,4)(5,6,7,8), (3,4)(7,8) ] );; 
-gap> C4 := PreCat1GroupByTailHeadEmbedding( t, h, e ); 
-[s4s4=>s4d]
-gap> Display( C4 ); 
+gap> C4 := DiagonalCat1Group( [ (1,2,3), (2,3,4) ] );;
+gap> SetName( Source(C4), "a4a4" );  SetName( Range(C4), "a4d" );
+gap> Display( C4 );
 
-Cat1-group [s4s4=>s4d] :- 
-: Source group s4s4 has generators:
-  [ (1,2,3,4), (3,4), (5,6,7,8), (7,8) ]
-: Range group s4d has generators:
-  [ ( 9,10,11,12), (11,12) ]
+Cat1-group [a4a4=>a4d] :- 
+: Source group a4a4 has generators:
+  [ (1,2,3), (2,3,4), (5,6,7), (6,7,8) ]
+: Range group a4d has generators:
+  [ ( 9,10,11), (10,11,12) ]
 : tail homomorphism maps source generators to:
-  [ ( 9,10,11,12), (11,12), (), () ]
+  [ ( 9,10,11), (10,11,12), (), () ]
 : head homomorphism maps source generators to:
-  [ (), (), ( 9,10,11,12), (11,12) ]
+  [ (), (), ( 9,10,11), (10,11,12) ]
 : range embedding maps range generators to:
-  [ (1,2,3,4)(5,6,7,8), (3,4)(7,8) ]
+  [ (1,2,3)(5,6,7), (2,3,4)(6,7,8) ]
 : kernel has generators:
-  [ (5,6,7,8), (7,8) ]
+  [ (5,6,7), (6,7,8) ]
 : boundary homomorphism maps generators of kernel to:
-  [ ( 9,10,11,12), (11,12) ]
+  [ ( 9,10,11), (10,11,12) ]
 : kernel embedding maps generators of kernel to:
-  [ (5,6,7,8), (7,8) ]
+  [ (5,6,7), (6,7,8) ]
 
 ## Section 2.4.4
 gap> R4 := ReverseCat1Group( C4 );
-[s4s4=>s4d]
+[a4a4=>a4d]
 gap> Boundary( R4 );
-[ (3,4), (2,3), (1,2,3,4) ] -> [ (11,12), (10,11), (9,10,11,12) ]
+[ (2,3,4), (1,2,3) ] -> [ (10,11,12), (9,10,11) ]
+gap> TailMap( R4 ) = HeadMap( R4 ); 
+false
 gap> TailMap( R4 ) = HeadMap( C4 ); 
 true
 
 ## Section 2.4.5
-gap> s4:=Group( (1,2,3), (3,4) );;  SetName( s4, "s4" ); 
+gap> s4 := Group( (1,2,3), (3,4) );;  SetName( s4, "s4" ); 
 gap> k4 := Subgroup( s4, [ (1,2)(3,4), (1,3)(2,4) ] );;
 gap> h := GroupHomomorphismByImages( s4, s4, [(1,2,3),(3,4)], [(),(3,4)] );;
 gap> c2 := Image( h );;  SetName( c2, "c2" );
@@ -320,24 +311,30 @@ gap> StructureDescription( CXC2 );
 gap> IsomorphismCat1Groups( C2, CXC2 );
 [[..] => [(..|X..)=>c2]]
 
-## Section 2.4.5
-gap> C418 := DirectProduct( C4, C18 ); 
-[(s4s4xg18)=>(s4dxs3a)]
+## Section 2.4.6
+gap> s3 := Subgroup( s4, [(2,3),(3,4)] );;
+gap> res := DoublyRestrictedMapping( h, s3, s3 );;
+gap> S := PreCat1Group( res, res );
+[Group( [ (2,3), (3,4) ] )=>Group( [ (3,4), (3,4) ] )]
+
+## Section 2.4.7
+gap> C418 := DirectProduct( C4, C18 );
+[(a4a4xg18)=>(a4d x s3a)]
 gap> infoC418 := DirectProductInfo( C418 );
 rec( 
-  embeddings := [ [[s4s4=>s4d] => [(s4s4xg18)=>(s4dxs3a)]], 
-      [[g18=>s3a] => [(s4s4xg18)=>(s4dxs3a)]] ], 
-  objects := [ [s4s4=>s4d], [g18=>s3a] ], 
-  projections := [ [[(s4s4xg18)=>(s4dxs3a)] => [s4s4=>s4d]], 
-      [[(s4s4xg18)=>(s4dxs3a)] => [g18=>s3a]] ] )
+  embeddings := [ [[a4a4=>a4d] => [(a4a4xg18)=>(a4d x s3a)]], 
+      [[g18=>s3a] => [(a4a4xg18)=>(a4d x s3a)]] ], 
+  objects := [ [a4a4=>a4d], [g18=>s3a] ], 
+  projections := [ [[(a4a4xg18)=>(a4d x s3a)] => [a4a4=>a4d]], 
+      [[(a4a4xg18)=>(a4d x s3a)] => [g18=>s3a]] ] )
 gap> t418 := TailMap( C418 );
-[ (1,2,3,4), (3,4), (5,6,7,8), (7,8), (9,10,11), (12,13,14), (10,11)(13,14) 
- ] -> [ (1,2,3,4), (3,4), (), (), (5,6,7), (), (6,7) ]
+[ (1,2,3), (2,3,4), (5,6,7), (6,7,8), (9,10,11), (12,13,14), (10,11)(13,14) 
+ ] -> [ (1,2,3), (2,3,4), (), (), (5,6,7), (), (6,7) ]
 gap> h418 := HeadMap( C418 );
-[ (1,2,3,4), (3,4), (5,6,7,8), (7,8), (9,10,11), (12,13,14), (10,11)(13,14) 
- ] -> [ (), (), (1,2,3,4), (3,4), (5,6,7), (5,6,7), (6,7) ]
+[ (1,2,3), (2,3,4), (5,6,7), (6,7,8), (9,10,11), (12,13,14), (10,11)(13,14) 
+ ] -> [ (), (), (1,2,3), (2,3,4), (5,6,7), (5,6,7), (6,7) ]
 gap> e418 := RangeEmbedding( C418 );
-[ (1,2,3,4), (3,4), (5,6,7), (6,7) ] -> [ (1,2,3,4)(5,6,7,8), (3,4)(7,8), 
+[ (1,2,3), (2,3,4), (5,6,7), (6,7) ] -> [ (1,2,3)(5,6,7), (2,3,4)(6,7,8), 
   (9,10,11), (10,11)(13,14) ]
 
 ## Section 2.5.1
@@ -382,7 +379,7 @@ Cat1-group [G8=>d12] :-
 gap> IsCat1Group( C8 );
    true
 gap> EC4 := EndomorphismPreCat1Group( C4 );
-   [s4s4=>Group( [ (1,2,3,4)(5,6,7,8), (3,4)(7,8), (), () ] )]
+[a4a4=>Group( [ (1,2,3)(5,6,7), (2,3,4)(6,7,8), (), () ] )]
 
 ## Section 2.5.2
 gap> X8 := XModOfCat1Group( C8 );;
@@ -471,6 +468,12 @@ gap> IdGroup( X8 );
 [ [ 24, 6 ], [ 12, 4 ] ]
 gap> IdGroup( C8 );
 [ [ 288, 956 ], [ 12, 4 ] ]
+
+## Section 2.8.2
+gap> IsSubXMod( X4, Y4 );
+true
+gap> IsSubPreCat1Group( C, S );
+true
 
 ## Section 2.9.1
 gap> s3 := Group( (11,12), (12,13) );; 

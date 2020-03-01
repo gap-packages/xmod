@@ -1,7 +1,9 @@
 # CHANGES to the 'XMod' package
 
-## 2.77 -> 2.77dev (30/01/2020) 
+## 2.77 -> 2.77dev (01/03/2020) 
 
+ * (01/03/20) corrected DiagonalCat1Group 
+ * (29/02/20) added SubdiagonalCat1Group and IsSubXMod, IsSub*** 
  * (30/01/20) added tests on kernels in IsomorphismCat1Groups - valid?? 
  * (14/01/20) fixed IdentityMapping for cat2-groups and catn-groups  
  * (10/01/20) revised CatnGroupNumbers fields for crossed squares & cat2-groups 

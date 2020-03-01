@@ -10,7 +10,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Chapter Label="chap-obj3">
-m
+
 <Heading>Crossed squares and Cat<M>^2</M>-groups</Heading>
 
 <Index>3d-group</Index>
@@ -1092,10 +1092,8 @@ gap> TC2 := Transpose3DimensionalGroup( C2 );
    <Attr Name="CrossedSquareOfCat2Group"
          Arg="CC" />
 <Description>
-<E>These functions are very experimental!</E> 
-<P/>
-These functions provide the conversion from crossed square to 
-cat<M>^2</M>-group, and conversely.  
+These functions provide for conversion between crossed squares and 
+cat<M>^2</M>-groups.  
 (They are the 3-dimensional equivalents of 
 <Ref Oper="Cat1GroupOfXMod"/> and <Ref Oper="XModOfCat1Group"/>.) 
 </Description>
@@ -1127,6 +1125,43 @@ gap> Size( C2act );
 ]]>
 </Example>
 
+<ManSection Label="subdiag-cat1">
+   <Attr Name="Subdiagonal2DimensionalGroup"
+         Arg="obj" />
+<Description>
+The diagonal of a crossed square is always a crossed module, 
+but the diagonal of a cat<M>^2</M>-group need only be a pre-cat<M>^1</M>-group. 
+There is, however, a sub-cat<M>^1</M>-group of this diagonal which, 
+in the case of a cat<M>^2</M>-group constructed from a crossed square, 
+is <M>(P \ltimes L => P)</M>. 
+(The name of this operation is very porvisional.) 
+<P/>
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> G := SmallGroup( 24, 10 );; 
+gap> a := G.1;; b := G.2;; c := G.3;; d := G.4;; o := One(G);; 
+gap> R := Subgroup( G, [b,c] );; 
+gap> t1 := GroupHomomorphismByImages( G, R, [a,b,c,d], [o,b,c,o] );; 
+gap> e1 := GroupHomomorphismByImages( R, G, [b,c], [b,c] );; 
+gap> C1 := PreCat1GroupByTailHeadEmbedding( t1, t1, e1 );; 
+gap> Q := Subgroup( G, [a,c] );; 
+gap> t2 := GroupHomomorphismByImages( G, Q, [a,b,c,d], [a,o,c,o] );; 
+gap> e2 := GroupHomomorphismByImages( Q, G, [a,c], [a,c] );; 
+gap> C2 := PreCat1GroupByTailHeadEmbedding( t2, t2, e2 );; 
+gap> cat2 := PreCat2Group( C1, C2 );; 
+gap> dg := Diagonal2DimensionalGroup( cat2 );;
+gap> IsCat1Group( dg ); 
+false
+gap> sub := Subdiagonal2DimensionalGroup( cat2 );; 
+gap> IsCat1Group( sub );
+true
+gap> IsSub2DimensionalGroup( dg, sub );
+true
+]]>
+</Example>
 </Section>
 
 

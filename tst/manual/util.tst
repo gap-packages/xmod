@@ -41,6 +41,18 @@ gap> MappingToOne( c4, imd8 );
 [ (11,13,15,17)(12,14,16,18) ] -> [ () ]
 
 ## Section 12.1.2
+gap> s4 := Group( (1,2), (2,3), (3,4) );; 
+gap> f := GroupHomomorphismByImages( s4, s4, 
+>             [ (1,2), (2,3), (3,4) ], [ (3,4), (2,3), (3,4) ] );; 
+gap> a4 := Subgroup( s4, [ (1,2,3), (2,3,4) ] );;
+gap> res := DoublyRestrictedMapping( f, a4, a4 );
+[ (1,2,3), (2,3,4) ] -> [ (2,4,3), (2,3,4) ]
+gap> [ Source(res) = a4, Range(res) = a4]; 
+[ true, true ]
+gap> Image( res ) = a4;
+false
+
+## Section 12.1.3
 ##  cannot use GeneratorsOfGroup( innd8 ) here 
 ##  because the answer varies from one run to another 
 gap> autd8 := AutomorphismGroup( d8 );;

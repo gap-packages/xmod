@@ -328,6 +328,27 @@ gap> C2act := Cat2GroupOfCrossedSquare( XSact );
 gap> Size( C2act );
 [ 80000, 400, 400, 20 ]
 
+# Section 8.4.5
+gap> G := SmallGroup( 24, 10 );; 
+gap> a := G.1;; b := G.2;; c := G.3;; d := G.4;; o := One(G);; 
+gap> R := Subgroup( G, [b,c] );; 
+gap> t1 := GroupHomomorphismByImages( G, R, [a,b,c,d], [o,b,c,o] );; 
+gap> e1 := GroupHomomorphismByImages( R, G, [b,c], [b,c] );; 
+gap> C1 := PreCat1GroupByTailHeadEmbedding( t1, t1, e1 );; 
+gap> Q := Subgroup( G, [a,c] );; 
+gap> t2 := GroupHomomorphismByImages( G, Q, [a,b,c,d], [a,o,c,o] );; 
+gap> e2 := GroupHomomorphismByImages( Q, G, [a,c], [a,c] );; 
+gap> C2 := PreCat1GroupByTailHeadEmbedding( t2, t2, e2 );; 
+gap> cat2 := PreCat2Group( C1, C2 );; 
+gap> dg := Diagonal2DimensionalGroup( cat2 );;
+gap> IsCat1Group( dg ); 
+false
+gap> sub := Subdiagonal2DimensionalGroup( cat2 );; 
+gap> IsCat1Group( sub );
+true
+gap> IsSub2DimensionalGroup( dg, sub );
+true
+
 # Section 8.5.1
 gap> c2 := Subgroup( d12, [ (1,3)(4,6) ] );; 
 gap> s3 := Subgroup( d12, [ (1,3)(4,6), (1,5)(2,4) ] );; 

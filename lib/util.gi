@@ -695,3 +695,28 @@ function( G, H )
     return subG;
 end );
 
+##############################################################################
+##  added  29/02/20 - should only be temporary
+##############################################################################
+##
+#M  DoublyRestrictedMapping . . . . for a mapping, a subdomain and a subrange
+##
+InstallMethod( DoublyRestrictedMapping, "for a mapping and two subdomains", 
+    true, [ IsGroupGeneralMapping, IsGroup, IsGroup ], 0, 
+function( f, ssrc, srng ) 
+
+    local src, rng, gens, ims; 
+
+    src := Source( f ); 
+    rng := Range( f ); 
+    if not IsSubgroup( src, ssrc ) and IsSubgroup( rng, srng ) then 
+        return fail; 
+    fi; 
+    gens := GeneratorsOfGroup( ssrc ); 
+    ims := List( gens, g -> ImageElm( f, g ) ); 
+    if not ForAll( ims, g -> g in srng ) then 
+        return fail; 
+    fi;
+    return GroupGeneralMappingByImages( ssrc, srng, gens, ims ); 
+end );
+

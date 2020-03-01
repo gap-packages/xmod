@@ -1574,6 +1574,22 @@ end );
 
 ##############################################################################
 ##
+#M  IsSub2DimensionalGroup . . . tests whethere sub is a sub-structure of obj
+##
+InstallMethod( IsSub2DimensionalGroup, "generic method for 2d-objects", true,
+    [ Is2DimensionalGroup, Is2DimensionalGroup ], 0,
+function( obj, sub ) 
+    if IsPreXMod( obj ) then 
+        return IsSubPreXMod( obj, sub ); 
+    elif IsPreCat1Group( obj ) then 
+        return IsSubPreCat1Group( obj, sub ); 
+    else 
+        return fail; 
+    fi;
+end );
+
+##############################################################################
+##
 #M  SubPreXMod                 creates SubPreXMod from Ssrc<=Psrc & Srng<=Prng
 ##
 InstallMethod( SubPreXMod, "generic method for pre-crossed modules", true,
@@ -2283,35 +2299,41 @@ InstallMethod( DiagonalCat1Group, "cat1-group from a list of generators",
     true, [ IsList ], 0,
 function( gen1 )
 
-    local m, lgen, gen2, genR, i, p, L1, len1, L2, j, 
+    local m, m2, lgen, gen2, gen3, gen4, i, p, L1, len1, L2, L3, L4, j, 
            G, R, genG, one, ids, t, h, e, C;
 
     m := Maximum( List( gen1, g -> LargestMovedPoint(g) ) ); 
+    m2 := m+m; 
     lgen := Length( gen1 ); 
-    gen2 := ShallowCopy( gen1 ); 
-    genR := ShallowCopy( gen1 ); 
+    gen2 := [1..lgen]; 
+    gen3 := [1..lgen]; 
+    gen3 := [1..lgen]; 
+    gen4 := [1..lgen]; 
     for i in [1..lgen] do 
         p := gen1[i]; 
         L1 := ListPerm( p ); 
         len1 := Length( L1 ); 
         L2 := [1..2*m]; 
+        L3 := [1..3*m]; 
+        L4 := [1..2*m]; 
         for j in [1..len1] do 
             L2[m+j] := L1[j]+m; 
+            L3[m2+j] := L1[j]+m2; 
+            L4[m+j] := L1[j]+m; 
+            L4[j] := L1[j]; 
         od; 
         gen2[i] := PermList( L2 ); 
-        for j in [1..len1] do 
-            L2[j] := L1[j]; 
-        od; 
-        genR[i] := PermList( L2 ); 
+        gen3[i] := PermList( L3 ); 
+        gen4[i] := PermList( L4 ); 
     od;
     genG := Concatenation( gen1, gen2 ); 
     G := Group( genG ); 
-    R := Group( genR ); 
+    R := Group( gen3 ); 
     one := One( G ); 
     ids := ListWithIdenticalEntries( lgen, one ); 
-    t := GroupHomomorphismByImages( G, R, genG, Concatenation( genR, ids ) ); 
-    h := GroupHomomorphismByImages( G, R, genG, Concatenation( ids, genR ) );
-    e := GroupHomomorphismByImages( R, G, genR, genR ); 
+    t := GroupHomomorphismByImages( G, R, genG, Concatenation( gen3, ids ) ); 
+    h := GroupHomomorphismByImages( G, R, genG, Concatenation( ids, gen3 ) );
+    e := GroupHomomorphismByImages( R, G, gen3, gen4 ); 
     C := PreCat1GroupByTailHeadEmbedding( t, h, e ); 
     return C;
 end );

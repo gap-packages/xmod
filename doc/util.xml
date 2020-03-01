@@ -31,13 +31,14 @@ Sections on <E>Printing Lists</E> and
 were moved to the <Package>Utils</Package> package with version 2.56. 
 
 
-<Section><Heading>Inclusion and Restriction Mappings</Heading>
+<Section><Heading>Mappings</Heading>
 
 <Index>inclusion mapping</Index>
 <Index>restriction mapping</Index>
 
-These functions have been moved to the <Package>gpd</Package> package, 
-but are still documented here. 
+The following two functions have been moved to the 
+<Package>gpd</Package> package, but are still documented here. 
+
 <ManSection>
    <Oper Name="InclusionMappingGroups"
          Arg="G H" />
@@ -60,6 +61,33 @@ gap> Print( incd8, "\n" );
 gap> imd8 := Image( incd8 );;
 gap> MappingToOne( c4, imd8 );
 [ (11,13,15,17)(12,14,16,18) ] -> [ () ]
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="DoublyRestrictedMapping"
+         Arg="f G H" />
+<Description> 
+The <C>RestrictedMapping</C> function provides requires a subgroup of 
+the source of a mapping <M>f</M> as source of the restriction, 
+but makes no prescription for the range. 
+The call <C>DoublyRestrictedMapping(f,G,H)</C> returns a restriction 
+of <M>f</M> with source <M>G</M> and range <M>H</M>. 
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> s4 := Group( (1,2), (2,3), (3,4) );; 
+gap> f := GroupHomomorphismByImages( s4, s4, 
+>             [ (1,2), (2,3), (3,4) ], [ (3,4), (2,3), (3,4) ] );; 
+gap> a4 := Subgroup( s4, [ (1,2,3), (2,3,4) ] );;
+gap> res := DoublyRestrictedMapping( f, a4, a4 );
+[ (1,2,3), (2,3,4) ] -> [ (2,4,3), (2,3,4) ]
+gap> [ Source(res) = a4, Range(res) = a4]; 
+[ true, true ]
+gap> Image( res ) = a4;
+false
 ]]>
 </Example>
 

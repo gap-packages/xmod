@@ -1308,17 +1308,17 @@ function( up, left )
     tl := TailMap( left ); 
     hl := HeadMap( left ); 
     el := RangeEmbedding( left ); 
-    ## check that the 1-maps commute with the 2-maps 
+    ## check that the up-maps commute with the lt-maps 
     tea := tu*eu*tl*el; 
     hea := hu*eu*hl*el; 
     if not ( ( tea = tl*el*tu*eu ) 
          and ( hea = hl*el*hu*eu ) 
          and ( tu*eu*hl*el = hl*el*tu*eu ) 
          and ( hu*eu*tl*el = tl*el*hu*eu ) )  then 
-        Info( InfoXMod, 2, "1-maps do not commute with 2-maps" ); 
+        Info( InfoXMod, 2, "up-maps do not commute with lt-maps" ); 
         return fail; 
     fi; 
-    Info( InfoXMod, 2, "yes : 1-maps do commute with the 2-maps" ); 
+    Info( InfoXMod, 2, "yes : up-maps do commute with the lt-maps" ); 
     ## more checks? 
     ## determine the group P 
     P := Image( tea ); 
@@ -1408,6 +1408,36 @@ function( up, left, right, down, diag )
     ok := IsCat2Group( PC2 ); 
     ok := IsPreCatnGroupByEndomorphisms( PC2 ); 
     return PC2;
+end ); 
+
+##############################################################################
+##
+#M  Subdiagonal2DimensionalGroup . . . . . . . . . . . . for a pre-cat2-group
+## 
+InstallMethod( Subdiagonal2DimensionalGroup, "for a pre-cat2-group", 
+    true, [ IsPreCat2Group ], 0,
+function( cat2 )
+
+    local  up, ktup, lt, ktlt, L, genL, dg, edg, mgiedg, P, genPL, PL, sdg; 
+
+    up := Up2DimensionalGroup( cat2 );
+    lt := Left2DimensionalGroup( cat2 );
+    L := Intersection( Kernel( TailMap( up ) ), Kernel( TailMap( lt ) ) ); 
+    genL := GeneratorsOfGroup( L );
+    dg := Diagonal2DimensionalGroup( cat2 ); 
+    edg := RangeEmbedding( dg ); 
+    mgiedg := MappingGeneratorsImages( edg );
+    P := Range( dg ); 
+    genPL := Concatenation( genL, GeneratorsOfGroup( Image( edg ) ) ); 
+    PL := Subgroup( Source( up ), genPL );
+    sdg := PreCat1GroupByTailHeadEmbedding( 
+               RestrictedMapping( TailMap( dg ), PL ), 
+               RestrictedMapping( HeadMap( dg ), PL ), 
+               GroupHomomorphismByImages( P, PL, mgiedg[1], mgiedg[2] ) ); 
+    if not IsCat1Group( sdg ) then 
+        Error( "expecting sdg to be a cat1-group" ); 
+    fi; 
+    return sdg;
 end ); 
 
 ##############################################################################

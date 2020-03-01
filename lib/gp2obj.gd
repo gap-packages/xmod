@@ -211,12 +211,15 @@ DeclareProperty( "IsFreeXMod", IsPreXModObj );
 
 #############################################################################
 ##
+#O  IsSub2DimensionalGroup( <obj>, <sub> )
 #O  IsSubPreXMod( <obj>, <subobj>  )
 #O  IsSubXMod( <obj>, <subobj> )
 #O  IsSubPreCat1Group( <obj>, <subobj> )
 #O  IsSubCat1Group( <obj>, <subobj> )
 #O  IsNormalSub2DimensionalDomain( <obj>, <subobj> ) 
 ##
+DeclareOperation( "IsSub2DimensionalGroup", 
+    [ Is2DimensionalGroup, Is2DimensionalGroup ] );
 DeclareOperation( "IsSubPreXMod", 
     [ Is2DimensionalGroup, Is2DimensionalGroup ] );
 DeclareOperation( "IsSubXMod", [ Is2DimensionalGroup, Is2DimensionalGroup ] );
@@ -233,6 +236,7 @@ DeclareOperation( "IsNormalSub2DimensionalDomain",
 #O  SubPreXMod( <PM, Ssrc, Srng> )
 #O  SubXMod( <PM, Ssrc, Srng> )
 #O  SubPreCat1Group( <C>, <H> )                           
+#O  SubCat1Group( <C>, <H> )                           
 ##
 DeclareOperation( "Sub2DimensionalGroup", 
     [ Is2DimensionalGroup, IsGroup, IsGroup ] );

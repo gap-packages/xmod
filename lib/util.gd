@@ -2,7 +2,6 @@
 ##
 #W  util.gd                    GAP4 package `XMod'               Chris Wensley
 #W                                                                 & Murat Alp
-##
 #Y  Copyright (C) 2001-2020, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
@@ -108,3 +107,12 @@ DeclareOperation( "MetacyclicGroup", [ IsPosInt, IsPosInt, IsPosInt ] );
 #O  AutomorphismsFixingSubgroups( G, H ) 
 ##
 DeclareOperation( "AutomorphismsFixingSubgroups", [ IsGroup, IsList ] );
+
+#############################################################################
+##  29/02/20 - should only be temporary
+#############################################################################
+##
+#O  DoublyRestrictedMapping( f, ssrc, srng ) 
+##
+DeclareOperation( "DoublyRestrictedMapping", 
+    [ IsGroupGeneralMapping, IsDomain, IsDomain ] );
