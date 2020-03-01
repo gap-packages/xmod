@@ -94,13 +94,10 @@ false
 <ManSection>
    <Oper Name="InnerAutomorphismsByNormalSubgroup"
          Arg="G N" />
-   <Prop Name="IsGroupOfAutomorphisms"
-         Arg="A" />
 <Description>
 Inner automorphisms of a group <C>G</C> 
-by the elements of a normal subgroup <C>N</C>
-are calculated with the first of these functions, 
-usually with <C>G</C> = <C>N</C>.
+by the elements of a normal subgroup <C>N</C> are calculated, 
+often with <C>G</C> = <C>N</C>.
 </Description>
 </ManSection>
 <P/>
@@ -110,6 +107,19 @@ gap> autd8 := AutomorphismGroup( d8 );;
 gap> innd8 := InnerAutomorphismsByNormalSubgroup( d8, d8 );;
 gap> GeneratorsOfGroup( innd8 );
 [ ^(1,2,3,4), ^(1,3) ]
+]]>
+</Example>
+
+<ManSection>
+   <Prop Name="IsGroupOfAutomorphisms"
+         Arg="A" />
+<Description>
+Tests whether the elements of a group are automorphisms. 
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
 gap> IsGroupOfAutomorphisms( innd8 );
 true
 ]]>
