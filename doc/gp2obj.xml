@@ -276,6 +276,8 @@ rec(
     , 
   projections := [ [[<-1>x<i>->q8xq8] => [<-1>->q8]], 
       [[<-1>x<i>->q8xq8] => [<i>->q8]] ] )
+gap> DirectProduct( X8a, X8b, X12 );
+[[[<-1>->q8]x[<i>->q8]]x[d12->s3]]
 ]]>
 </Example>
 

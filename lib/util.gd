@@ -107,12 +107,3 @@ DeclareOperation( "MetacyclicGroup", [ IsPosInt, IsPosInt, IsPosInt ] );
 #O  AutomorphismsFixingSubgroups( G, H ) 
 ##
 DeclareOperation( "AutomorphismsFixingSubgroups", [ IsGroup, IsList ] );
-
-#############################################################################
-##  29/02/20 - should only be temporary
-#############################################################################
-##
-#O  DoublyRestrictedMapping( f, ssrc, srng ) 
-##
-DeclareOperation( "DoublyRestrictedMapping", 
-    [ IsGroupGeneralMapping, IsDomain, IsDomain ] );
