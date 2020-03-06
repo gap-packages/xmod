@@ -2650,16 +2650,20 @@ InstallOtherMethod( DirectProductOp,
     "method for pre-crossed modules", true, [ IsList, IsPreXMod ], 0,
 function( list, X1 )
 
-    local src1, X2, src2, gensrc1, gensrc2, S, infoS, emS1, emS2, prS1, prS2, 
-          rng1, rng2, genrng1, genrng2, R, infoR, emR1, emR2, prR1, prR2, 
-          bdy1, bdy2, bdy, act1, act2, aut1, aut2, aut, act, 
+    local i, src1, X2, src2, gensrc1, gensrc2, S, infoS, emS1, emS2, 
+          prS1, prS2, rng1, rng2, genrng1, genrng2, R, infoR, emR1, emR2, 
+          prR1, prR2, bdy1, bdy2, bdy, act1, act2, aut1, aut2, aut, act, 
           X0, em1, em2, pr1, pr2, info; 
 
-    if not ( Length( list ) = 2 ) then
-        Error( "direct product not yet implemented for more than 2 terms" );
-    fi;
     if not ( list[1] = X1 ) then
         Error( "second argument should be first entry in first argument list" );
+    fi;
+    if ( Length( list ) > 2 ) then 
+        X0 := DirectProductOp( [ X1, list[2] ], X1 ); 
+        for i in [3..Length(list)] do
+            X0 := DirectProductOp( [ X0, list[i] ], X0 ); 
+        od; 
+        return X0; 
     fi;
     X2 := list[2]; 
     ##  first the source group 
@@ -2718,15 +2722,19 @@ InstallOtherMethod( DirectProductOp,
     "method for pre-cat1-groups", true, [ IsList, IsPreCat1Group ], 0,
 function( list, C1 )
 
-    local C2, G1, G2, genG1, genG2, G, emG1, emG2, prG1, prG2, 
+    local i, C2, G1, G2, genG1, genG2, G, emG1, emG2, prG1, prG2, 
           R1, R2, genR1, genR2, R, emR1, emR2, prR1, prR2,  
           t1, t2, t, h1, h2, h, e1, e2, e, C0, em1, em2, pr1, pr2, info;  
 
-    if not ( Length( list ) = 2 ) then
-        Error( "direct product not yet implemented for more than 2 terms" );
-    fi;
     if not ( list[1] = C1 ) then
         Error( "second argument should be first entry in first argument list" );
+    fi;
+    if ( Length( list ) > 2 ) then 
+        C0 := DirectProductOp( [ C1, list[2] ], C1 ); 
+        for i in [3..Length(list)] do
+            C0 := DirectProductOp( [ C0, list[i] ], C0 ); 
+        od; 
+        return C0; 
     fi;
     C2 := list[2]; 
     ##  first the source group 

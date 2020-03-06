@@ -116,6 +116,8 @@ gap> infoX8ab := DirectProductInfo( X8ab );
 rec( embeddings := [ [[<-1>->q8] => [..]], [[<i>->q8] => [..]] ], 
   objects := [ [<-1>->q8], [<i>->q8] ], 
   projections := [ [[..] => [<-1>->q8]], [[..] => [<i>->q8]] ] )
+gap> DirectProduct( X8a, X8b, X12 );
+[[[<-1>->q8]x[<i>->q8]]x[d12->s3]]
 
 ## Section 2.1.9
 gap> [ Source( X12 ), Range( X12 ) ];    
@@ -313,7 +315,7 @@ gap> IsomorphismCat1Groups( C2, CXC2 );
 
 ## Section 2.4.6
 gap> s3 := Subgroup( s4, [(2,3),(3,4)] );;
-gap> res := DoublyRestrictedMapping( h, s3, s3 );;
+gap> res := GeneralRestrictedMapping( h, s3, s3 );;
 gap> S := PreCat1Group( res, res );
 [Group( [ (2,3), (3,4) ] )=>Group( [ (3,4), (3,4) ] )]
 

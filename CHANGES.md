@@ -1,7 +1,9 @@
 # CHANGES to the 'XMod' package
 
-## 2.77 -> 2.77dev (01/03/2020) 
+## 2.77 -> 2.77dev (06/03/2020) 
 
+ * (06/03/20) now running under GAP 4.11.0 
+ * (02/03/20) fixed issue 41, (Direct/Co)Product for more than two objects
  * (01/03/20) corrected DiagonalCat1Group 
  * (29/02/20) added SubdiagonalCat1Group and IsSubXMod, IsSub*** 
  * (30/01/20) added tests on kernels in IsomorphismCat1Groups - valid?? 
