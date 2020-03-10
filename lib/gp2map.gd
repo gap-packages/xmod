@@ -122,11 +122,12 @@ DeclareAttribute( "IsomorphismXModByNormalSubgroup", IsXMod );
 
 #############################################################################
 ##
-#F  SmallerDegreePerm2DimensionalGroup( <args> )
-#A  SmallerDegreePermPreXMod( <XM> )
+#A  SmallerDegreePermutationRepresentation2DimensionalGroup( <2dgp> )
+#A  SmallerDegree2DimensionalGroup( <2dgp> )
 ##
-DeclareGlobalFunction( "SmallerDegreePerm2DimensionalGroup" );
-DeclareAttribute( "SmallerDegreePermPreXMod", IsPreXMod );
+DeclareAttribute( 
+    "SmallerDegreePermutationRepresentation2DimensionalGroup", 
+    IsPerm2DimensionalGroup );
 
 #############################################################################
 ##

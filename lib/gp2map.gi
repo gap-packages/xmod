@@ -1555,25 +1555,26 @@ end );
 
 ##############################################################################
 ##
-#F  SmallerDegreePerm2DimensionalGroup( <obj> )
+#F  SmallerDegreePermutationRepresentation2DimensionalGroup( <obj> )
 ##
-InstallGlobalFunction( SmallerDegreePerm2DimensionalGroup, function( obj )
+InstallMethod( SmallerDegreePermutationRepresentation2DimensionalGroup, 
+    "method for a pre-xmod or a pre-cat1-group", true,
+    [ IsPerm2DimensionalGroup ], 0,
+function( obj )
 
     local src, rng, sigma, rho, mor; 
 
-    # for a PreXMod
-    if ( IsPreXMod( obj ) and IsPermPreXMod( obj ) ) then
-        src := Source( obj );
-        rng := Range( obj );
+    if IsPerm2DimensionalGroup( obj ) then
+        src := Source( obj ); 
+        rng := Range( obj ); 
         sigma := SmallerDegreePermutationRepresentation( src );
         rho := SmallerDegreePermutationRepresentation( rng );
         mor := IsomorphismByIsomorphisms( obj, [ sigma, rho ] );
         return mor;
+    else
+        return fail;
     fi;
-    # alternatives not allowed
-    Info( InfoXMod, 2, "at present only implemented for a PermPreXMod" );
-    return fail;
-end );
+end ); 
 
 ##############################################################################
 ##
