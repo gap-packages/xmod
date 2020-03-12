@@ -1,5 +1,11 @@
 language: c
-
+env:
+  global:
+    # For details how this works, and what other configurations you
+    # can make, please look at <https://github.com/gap-system/pkg-ci-scripts>
+    #- GAP_PKGS_TO_CLONE="SomeOtherPackage"
+    - GAP_PKGS_TO_BUILD="io nq profiling" # note: io and profiling always must be built
+    
 addons:
   apt:
     packages:
@@ -10,6 +16,7 @@ addons:
 matrix:
   include:
     - env: GAPBRANCH=master
+    - env: GAPBRANCH=stable-4.11
     - env: GAPBRANCH=stable-4.10
 
 branches:
