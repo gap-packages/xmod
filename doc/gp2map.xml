@@ -289,18 +289,12 @@ Morphism of cat1-groups :-
          Arg="2DimensionalGroup" Label="for pre-cat1 morphisms" />
    <Attr Name="IsomorphismPc2DimensionalGroup"
          Arg="2DimensionalGroup" Label="for pre-cat1 morphisms" />
-   <Func Name="SmallerDegreePerm2DimensionalDomain"
-         Arg="2DimensionalDomain" Label="for pre-cat1 morphisms" />
 <Description>
 The global function <C>IsomorphismPermObject</C> 
 calls <C>IsomorphismPerm2DimensionalGroup</C>, 
 which constructs a morphism whose <Ref Attr="SourceHom"/> 
 and <Ref Attr="RangeHom"/> are calculated using 
 <C>IsomorphismPermGroup</C> on the source and range.  
-Similarly the operation <C>SmallerDegreePermutationRepresentation</C> 
-may be used on the two groups to obtain the attribute 
-<C>SmallerDegreePerm2DimensionalDomain</C>.
-Names are assigned automatically.
 </Description>
 </ManSection>
 <P/>
@@ -310,6 +304,31 @@ gap> iso8 := IsomorphismPerm2DimensionalGroup( C8 );
 [[G8=>d12] => [..]]
 ]]>
 </Example>
+
+<ManSection>
+   <Attr Name="SmallerDegreePermutationRepresentation2DimensionalGroup"
+         Arg="Perm2DimensionalGroup" Label="for perm 2d-groups" />
+<Description>
+The attribute  
+<C>SmallerDegreePermutationRepresentation2DimensionalGroup</C> 
+is obtained by calling <C>SmallerDegreePermutationRepresentation</C>  
+on the source and range to obtain the an isomorphism for the pre-xmod 
+or pre-cat<M>^1</M>-group. 
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> G := Group( (1,2,3,4)(5,6,7,8) );; 
+gap> H := Subgroup( G, [ (1,3)(2,4)(5,7)(6,8) ] );;
+gap> XG := XModByNormalSubgroup( G, H );
+[Group( [ (1,3)(2,4)(5,7)(6,8) ] )->Group( [ (1,2,3,4)(5,6,7,8) ] )]
+gap> sdpr := SmallerDegreePermutationRepresentation2DimensionalGroup( XG );; 
+gap> Range( sdpr );
+[Group( [ (1,2) ] )->Group( [ (1,2,3,4) ] )]
+]]>
+</Example>
+
 </Section>
 
 

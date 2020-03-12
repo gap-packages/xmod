@@ -114,6 +114,15 @@ Morphism of cat1-groups :-
 gap> iso8 := IsomorphismPerm2DimensionalGroup( C8 );
    [[G8=>d12] => [..]]
 
+## Section 3.3.3
+gap> G := Group( (1,2,3,4)(5,6,7,8) );; 
+gap> H := Subgroup( G, [ (1,3)(2,4)(5,7)(6,8) ] );;
+gap> XG := XModByNormalSubgroup( G, H );
+[Group( [ (1,3)(2,4)(5,7)(6,8) ] )->Group( [ (1,2,3,4)(5,6,7,8) ] )]
+gap> sdpr := SmallerDegreePermutationRepresentation2DimensionalGroup( XG );; 
+gap> Range( sdpr );
+[Group( [ (1,2) ] )->Group( [ (1,2,3,4) ] )]
+
 ## Section 3.4.1
 gap> H8 := Subgroup(G8, [G8.3,G8.4,G8.6,G8.7] );  SetName( H8, "H8" );
 Group([ f3, f4, f6, f7 ])
