@@ -104,8 +104,6 @@ PackageDoc := rec(
   Autoload  := true
 ),
 
-SetInfoLevel(InfoPackageLoading,4);
-
 Dependencies := rec(
   GAP := ">=4.11.0",
   NeededOtherPackages := [ ["Utils", ">= 0.69"], 
