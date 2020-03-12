@@ -253,7 +253,7 @@ InstallMethod( InducedXModFromTrivialSource, "for an xmod and an inclusion",
     true, [ IsXMod, IsGroupHomomorphism ], 0,
 function( X0, iota )
 
-    local M, Q, I, IX, morsrc, mor, ok; 
+    local M, Q, I, IX, morsrc, mor, ok, sdpr; 
 
     Info( InfoXMod, 2, "calling InducedXModFromTrivialSource" ); 
     Q := Range( iota );
@@ -270,6 +270,11 @@ function( X0, iota )
     else 
         ok := IsXModMorphism( mor ); 
     fi;
+    sdpr := SmallerDegreePermutationRepresentation2DimensionalGroup( IX ); 
+    if not ( sdpr = fail ) then 
+        IX := Range( sdpr ); 
+        mor := mor * sdpr;
+    fi;
     SetMorphismOfInducedXMod( IX, mor ); 
     return IX;
 end );
@@ -283,7 +288,8 @@ InstallMethod( InducedXModFromTrivialRange, "for an xmod and a monomorphism",
 function( X0, iota )
 
     local P, Q, oQ, genQ, lenQ, regQ, M, genM, lenM, I, genI, lenI, info, 
-          morsrc, Ibdy, n, q, rq, L, i, j, k, imact, Iact, Iaut, IX, mor, ok; 
+          morsrc, Ibdy, n, q, rq, L, i, j, k, imact, Iact, Iaut, IX, mor, 
+          ok, sdpr; 
 
     Info( InfoXMod, 2, "calling InducedXModFromTrivialRange" ); 
     P := Range( X0 ); 
@@ -332,6 +338,11 @@ function( X0, iota )
     else 
         ok := IsXModMorphism( mor ); 
     fi;
+    sdpr := SmallerDegreePermutationRepresentation2DimensionalGroup( IX ); 
+    if not ( sdpr = fail ) then 
+        IX := Range( sdpr ); 
+        mor := mor * sdpr;
+    fi;
     SetMorphismOfInducedXMod( IX, mor ); 
     return IX;
 end );
@@ -361,7 +372,7 @@ function( X0, iota, trans )
           info, ispc, I, f2p, degI, prenew, imold, 
           homFIQ, imIQ, FK, genFK, genK, K, oK, mgiFIQ, words, imrem, imM, 
           idI, genI, genpos, imact, imI, genim, aut, mor, morsrc, 
-          bdy, act, ishom, IX, series, idseries;
+          bdy, act, ishom, IX, series, idseries, sdpr;
 
     CopowerAction := function( i, j, q ) 
     ## calculates (s,u)^q where (s,u) corresponds generator genFI[i][j] 
@@ -826,6 +837,11 @@ function( X0, iota, trans )
     if not IsXModMorphism( mor ) then
         Print( "mor: X0 -> IX  not an xmod morphism!\n" );
     fi;
+    sdpr := SmallerDegreePermutationRepresentation2DimensionalGroup( IX ); 
+    if not ( sdpr = fail ) then 
+        IX := Range( sdpr ); 
+        mor := mor * sdpr;
+    fi;
     SetMorphismOfInducedXMod( IX, mor );
     return IX;
 end );
@@ -841,7 +857,7 @@ function( X0, iota )
     local ispc, S, genS, R, bdy, act, K, genK, s, r, a, x, 
           H, genH, rcos, reps, Q, lenQ, genQ, preQ, PI, actPI, 
           isoI, I, genI, imi, istar, acthom, imb, bdystar, i, 
-          autgen, imI, imS, actstar, autstar, idI, IX, ok, mor;
+          autgen, imI, imS, actstar, autstar, idI, IX, ok, mor, sdpr;
 
     Info( InfoXMod, 2, "calling InducedXModBySurjection" ); 
     R := Range( X0 );
@@ -851,6 +867,11 @@ function( X0, iota )
         istar := IdentityMapping( S ); 
         mor := IsomorphismByIsomorphisms( X0, [ istar, iota ] );
         IX := Image( mor ); 
+        sdpr := SmallerDegreePermutationRepresentation2DimensionalGroup( IX ); 
+        if not ( sdpr = fail ) then 
+            IX := Range( sdpr ); 
+            mor := mor * sdpr;
+        fi;
         SetMorphismOfInducedXMod( IX, mor );
         return IX;
     fi; 
@@ -915,6 +936,11 @@ function( X0, iota )
         ok := IsCentralExtension2DimensionalGroup( IX ); 
     fi;
     mor := XModMorphism( X0, IX, istar, iota );
+    sdpr := SmallerDegreePermutationRepresentation2DimensionalGroup( IX ); 
+    if not ( sdpr = fail ) then 
+        IX := Range( sdpr ); 
+        mor := mor * sdpr;
+    fi;
     SetMorphismOfInducedXMod( IX, mor );
     return IX;
 end );
