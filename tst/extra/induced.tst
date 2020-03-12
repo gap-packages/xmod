@@ -56,14 +56,14 @@ gap> Display( indc4c2c6i );
 
 Crossed module i*([c4a->PAut(c4a)]) :- 
 : Source group has generators:
-  [ ( 1, 2, 3, 4), ( 5, 6, 7, 8), ( 9,10,11,12) ]
+  [ (1,2,3,4), (5,6,7,8), ( 9,10,11,12) ]
 : Range group c6 has generators:
   [ (11,12,13,14,15,16) ]
 : Boundary homomorphism maps source generators to:
   [ (), (), () ]
 : Action homomorphism maps range generators to automorphisms:
-  (11,12,13,14,15,16) --> { source gens --> [ ( 9,10,11,12), ( 1, 4, 3, 2), 
-  ( 5, 6, 7, 8) ] }
+  (11,12,13,14,15,16) --> { source gens --> 
+[ ( 9,10,11,12), (1,4,3,2), (5,6,7,8) ] }
   This automorphism generates the group of automorphisms.
 
 gap> q8 := Group( (1,2,3,4)(5,8,7,6), (1,5,3,7)(2,6,4,8) );; 

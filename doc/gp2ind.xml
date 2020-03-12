@@ -234,7 +234,6 @@ The induced group is a general linear group <C>GL(2,3)</C>.
 gap> s3c := Subgroup( s4, [ (2,3), (3,4) ] );;  
 gap> SetName( s3c, "s3c" );
 gap> indXs3c := InducedXMod( s4, s3c, s3c );
-#I induced group has Size: 48
 i*([s3c->s3c])
 gap> StructureDescription( indXs3c );
 [ "GL(2,3)", "S4" ]
