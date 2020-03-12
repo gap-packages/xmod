@@ -270,11 +270,13 @@ function( X0, iota )
     else 
         ok := IsXModMorphism( mor ); 
     fi;
-    sdpr := SmallerDegreePermutationRepresentation2DimensionalGroup( IX ); 
-    if not ( sdpr = fail ) then 
-        IX := Range( sdpr ); 
-        mor := mor * sdpr;
-    fi;
+    if IsPermGroup( IX ) then 
+        sdpr := SmallerDegreePermutationRepresentation2DimensionalGroup( IX ); 
+        if not ( sdpr = fail ) then 
+            IX := Range( sdpr ); 
+            mor := mor * sdpr;
+        fi; 
+    fi; 
     SetMorphismOfInducedXMod( IX, mor ); 
     return IX;
 end );
@@ -338,11 +340,13 @@ function( X0, iota )
     else 
         ok := IsXModMorphism( mor ); 
     fi;
-    sdpr := SmallerDegreePermutationRepresentation2DimensionalGroup( IX ); 
-    if not ( sdpr = fail ) then 
-        IX := Range( sdpr ); 
-        mor := mor * sdpr;
-    fi;
+    if IsPermGroup( IX ) then 
+        sdpr := SmallerDegreePermutationRepresentation2DimensionalGroup( IX ); 
+        if not ( sdpr = fail ) then 
+            IX := Range( sdpr ); 
+            mor := mor * sdpr;
+        fi; 
+    fi; 
     SetMorphismOfInducedXMod( IX, mor ); 
     return IX;
 end );
@@ -837,11 +841,13 @@ function( X0, iota, trans )
     if not IsXModMorphism( mor ) then
         Print( "mor: X0 -> IX  not an xmod morphism!\n" );
     fi;
-    sdpr := SmallerDegreePermutationRepresentation2DimensionalGroup( IX ); 
-    if not ( sdpr = fail ) then 
-        IX := Range( sdpr ); 
-        mor := mor * sdpr;
-    fi;
+    if IsPermGroup( IX ) then 
+        sdpr := SmallerDegreePermutationRepresentation2DimensionalGroup( IX ); 
+        if not ( sdpr = fail ) then 
+            IX := Range( sdpr ); 
+            mor := mor * sdpr;
+        fi; 
+    fi; 
     SetMorphismOfInducedXMod( IX, mor );
     return IX;
 end );
@@ -867,11 +873,13 @@ function( X0, iota )
         istar := IdentityMapping( S ); 
         mor := IsomorphismByIsomorphisms( X0, [ istar, iota ] );
         IX := Image( mor ); 
-        sdpr := SmallerDegreePermutationRepresentation2DimensionalGroup( IX ); 
-        if not ( sdpr = fail ) then 
-            IX := Range( sdpr ); 
-            mor := mor * sdpr;
-        fi;
+        if IsPermGroup( IX ) then 
+            sdpr := SmallerDegreePermutationRepresentation2DimensionalGroup(IX); 
+            if not ( sdpr = fail ) then 
+                IX := Range( sdpr ); 
+                mor := mor * sdpr;
+            fi; 
+        fi; 
         SetMorphismOfInducedXMod( IX, mor );
         return IX;
     fi; 
@@ -935,12 +943,14 @@ function( X0, iota )
          and IsCentralExtension2DimensionalGroup( X0 ) ) then 
         ok := IsCentralExtension2DimensionalGroup( IX ); 
     fi;
-    mor := XModMorphism( X0, IX, istar, iota );
-    sdpr := SmallerDegreePermutationRepresentation2DimensionalGroup( IX ); 
-    if not ( sdpr = fail ) then 
-        IX := Range( sdpr ); 
-        mor := mor * sdpr;
-    fi;
+    mor := XModMorphism( X0, IX, istar, iota ); 
+    if IsPermGroup( IX ) then 
+        sdpr := SmallerDegreePermutationRepresentation2DimensionalGroup( IX ); 
+        if not ( sdpr = fail ) then 
+            IX := Range( sdpr ); 
+            mor := mor * sdpr;
+        fi; 
+    fi; 
     SetMorphismOfInducedXMod( IX, mor );
     return IX;
 end );
