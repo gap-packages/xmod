@@ -666,7 +666,7 @@ function( t, h, e )
     if not ok then
         Error( "not a pre-cat1-group" );
     fi;
-    ok := IsPreCat1GroupByEndomorphisms( C1G ); 
+    ok := IsPreCat1GroupWithIdentityEmbedding( C1G ); 
     ok := IsCat1Group( C1G );
     ## check the types 
     if ( IsPermGroup( src ) and IsPermGroup( rng ) ) then 
@@ -715,11 +715,11 @@ InstallGlobalFunction( PreCat1Group, function( arg )
     fi; 
     # one endomorphism 
     if ( ( nargs=1 ) and IsEndoMapping( arg[1] ) ) then 
-        return PreCat1GroupByEndomorphisms( arg[1], arg[1] );
+        return PreCat1GroupWithIdentityEmbedding( arg[1], arg[1] );
     # two endomorphisms
     elif ( nargs=2 ) then
         if ( IsEndoMapping( arg[1] ) and IsEndoMapping( arg[2] ) ) then
-            return PreCat1GroupByEndomorphisms( arg[1], arg[2] ); 
+            return PreCat1GroupWithIdentityEmbedding( arg[1], arg[2] ); 
         elif ( Image( arg[1] ) = Source( arg[2] ) ) then 
             return PreCat1GroupByTailHeadEmbedding( arg[1], arg[1], arg[2] );
         fi;
@@ -1772,19 +1772,12 @@ end );
 #############################################################################
 ##
 #M  IsIdentityPreCat1Group
-#M  IsPreCat1GroupByEndomorphisms 
 ##
 InstallMethod( IsIdentityPreCat1Group, "test a pre-cat1-group", true, 
     [ IsPreCat1Group ], 0,
 function( C1G )
     return ( ( TailMap( C1G ) = IdentityMapping( Source( C1G ) ) ) and
              ( HeadMap( C1G ) = IdentityMapping( Source( C1G ) ) ) );
-end );
-
-InstallMethod( IsPreCat1GroupByEndomorphisms, "test a pre-cat1-group", true, 
-    [ IsPreCat1Group ], 0,
-function( obj )
-    return IsSubgroup( Source(obj), Range(obj) ); 
 end );
 
 #############################################################################
@@ -1862,7 +1855,7 @@ function( size, gpnum, num )
         elif ( num = 1 ) then 
             G := SmallGroup( 1, 1 ); 
             t := IdentityMapping( G ); 
-            return PreCat1GroupByEndomorphisms( t, t ); 
+            return PreCat1GroupWithIdentityEmbedding( t, t ); 
         else 
             return fail;
         fi; 
@@ -1964,7 +1957,7 @@ function( size, gpnum, num )
         SetIsEndoMapping( h, true );
         kert := Kernel( t );
     fi; 
-    C1G := PreCat1GroupByEndomorphisms( t, h ); 
+    C1G := PreCat1GroupWithIdentityEmbedding( t, h ); 
     ok := IsCat1Group( C1G ); 
     if ok then 
         XC := XModOfCat1Group( C1G ); 
@@ -2034,7 +2027,7 @@ function( size, gpnum, num )
     SetIsEndoMapping( t, true );
     SetIsEndoMapping( h, true );
     kert := Kernel( t ); 
-    C1G := PreCat1GroupByEndomorphisms( t, h ); 
+    C1G := PreCat1GroupWithIdentityEmbedding( t, h ); 
     ok := IsCat1Group( C1G ); 
     if ok then 
         XC := XModOfCat1Group( C1G ); 
@@ -2083,17 +2076,21 @@ end );
 
 #############################################################################
 ##
-#M  IsPreCat1GroupByEndomorphisms( <pcg> ) 
-#M  PreCat1GroupByEndomorphisms( <et>, <eh> ) 
-#M  EndomorphismPreCat1Group( <pcg> )
+#M  IsPreCat1GroupWithIdentityEmbedding( <pcg> ) 
+#M  PreCat1GroupWithIdentityEmbedding( <et>, <eh> ) 
+#M  IsomorphicPreCat1GroupWithIdentityEmbedding( <pcg> )
 ##
-InstallMethod( IsPreCat1GroupByEndomorphisms, "tail & head are endomorphisms", 
+InstallMethod( IsPreCat1GroupWithIdentityEmbedding, "tail & head are endos", 
     true, [ IsPreCat1Group ], 0,
-function( C1G )
-    return IsSubgroup( Source( C1G ), Range( C1G ) ); 
+function( obj ) 
+    local e, genR;
+    e := RangeEmbedding( obj );
+    genR := GeneratorsOfGroup( Range( obj ) ); 
+    return IsSubgroup( Source(obj), Range(obj) ) and 
+           ForAll( genR, r -> ImageElm( e, r ) = r ); 
 end );
 
-InstallMethod( PreCat1GroupByEndomorphisms,
+InstallMethod( PreCat1GroupWithIdentityEmbedding,
     "cat1-group from tail and head endomorphisms", true, 
     [ IsGroupHomomorphism, IsGroupHomomorphism ], 0,
 function( et, eh )
@@ -2121,19 +2118,30 @@ function( et, eh )
     return PreCat1GroupByTailHeadEmbedding( t, h, e ); 
 end );
 
-InstallMethod( EndomorphismPreCat1Group,
+InstallMethod( IsomorphicPreCat1GroupWithIdentityEmbedding,
     "convert cat1-group to one with endomorphisms", true, [ IsPreCat1Group ], 0,
 function( C1G )
 
-    local e, t, h;
+    local e, t, h, R, genR, te, he, sigma, rho, EC1G, ER, genER, iso;
 
-    if IsPreCat1GroupByEndomorphisms( C1G ) then 
+    if IsPreCat1GroupWithIdentityEmbedding( C1G ) then 
         return C1G; 
     fi; 
     e := RangeEmbedding( C1G ); 
-    t := TailMap( C1G ) * e; 
-    h := HeadMap( C1G ) * e; 
-    return PreCat1GroupByEndomorphisms( t, h );
+    t := TailMap( C1G ); 
+    te := t * e; 
+    R := Image( t ); 
+    genR := GeneratorsOfGroup( R ); 
+    h := HeadMap( C1G ); 
+    he := h * e; 
+    ER := Image( te ); 
+    EC1G := PreCat1GroupWithIdentityEmbedding( te, he ); 
+    genER := List( genR, r -> ImageElm( e, r ) ); 
+    sigma := IdentityMapping( Source( C1G ) );
+    rho := GroupHomomorphismByImages( R, ER, genR, genER ); 
+    iso := PreCat1GroupMorphismByGroupHomomorphisms( C1G, EC1G, sigma, rho ); 
+    SetIsomorphismToPreCat1GroupWithIdentityEmbedding( C1G, iso ); 
+    return EC1G; 
 end ); 
 
 #############################################################################
@@ -2360,7 +2368,7 @@ BindGlobal( "NextIterator_AllCat1GroupsWithImage", function ( iter )
                                         iter!.gens, iter!.images[ pair[1] ] ); 
         h := GroupHomomorphismByImages( iter!.group, iter!.group, 
                                         iter!.gens, iter!.images[ pair[2] ] ); 
-        C := PreCat1GroupByEndomorphisms( t, h ); 
+        C := PreCat1GroupWithIdentityEmbedding( t, h ); 
         if ( not ( C = fail ) and IsCat1Group( C ) ) then 
             ok := true; 
             return C; 

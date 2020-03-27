@@ -269,9 +269,9 @@ gap> b := (2,6)(3,5);;
 gap> d12 := Group( a, b );; 
 gap> SetName( d12, "d12" );
 gap> t1 := GroupHomomorphismByImages( d12, d12, [a,b], [a^3,b] );; 
-gap> up := PreCat1GroupByEndomorphisms( t1, t1 );;
+gap> up := PreCat1GroupWithIdentityEmbedding( t1, t1 );;
 gap> t2 := GroupHomomorphismByImages( d12, d12, [a,b], [a^4,b] );; 
-gap> left := PreCat1GroupByEndomorphisms( t2, t2 );;
+gap> left := PreCat1GroupWithIdentityEmbedding( t2, t2 );;
 gap> C2 := Cat2Group( up, left );
 (pre-)cat2-group with generating (pre-)cat1-groups:
 1 : [d12 => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )]
@@ -296,7 +296,7 @@ gap> PC2 := PreCat2GroupByPreCat1Groups( up, left, right, down, diag );
 (pre-)cat2-group with generating (pre-)cat1-groups:
 1 : [d12 => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )]
 2 : [d12 => Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )]
-gap> IsPreCatnGroupByEndomorphisms( PC2 );
+gap> IsPreCatnGroupWithIdentityEmbeddings( PC2 );
 false
 
 # Section 8.4.2

@@ -850,7 +850,7 @@ function( PCG )
         rhom := IdentityMapping( Prng );
     else
         Prgen := GeneratorsOfGroup( Prng ); 
-        if IsPreCat1GroupByEndomorphisms( PCG ) then 
+        if IsPreCat1GroupWithIdentityEmbedding( PCG ) then 
             rhom := RestrictedMapping( shom, Prng ); 
         else 
             rhom := IsomorphismPermGroup( Prng );
@@ -1076,7 +1076,7 @@ end );
 #M  IsomorphismCat1Groups  . . . isomorphism between a pair of cat1-groups 
 ##
 InstallMethod( IsomorphismPreCat1Groups, "generic method for 2 pre-cat1-groups", 
-    true, [ IsPreCat1Group, IsPreCat1Group ], 0,
+    true, [ IsPreCat1Group, IsPreCat1Group ], 0, 
 function( C1, C2 )
 
     local t1, h1, e1, t2, h2, e2, G1, G2, R1, R2, phi, psi, alpha, gamma, rho;

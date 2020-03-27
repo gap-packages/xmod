@@ -149,15 +149,13 @@ end );
 
 #############################################################################
 ##
-#M  IsPreCatnGroupByEndomorphisms . . .  check that all t,h are endomorphisms
+#M  IsPreCatnGroupWithIdentityEmbeddings . . . check that all e are identities
 ##
-#?  maybe we should have GeneratingPreCat1Groups? 
-##
-InstallMethod( IsPreCatnGroupByEndomorphisms, "test a pre-catn-group", true, 
-    [ IsPreCatnGroup ], 0,
+InstallMethod( IsPreCatnGroupWithIdentityEmbeddings, "test a pre-catn-group", 
+    true, [ IsPreCatnGroup ], 0,
 function( obj ) 
 
-    local gps, G, dim, tup, tlt, trt, tdn, genM, genN; 
+    local gps, G, dim, up, lt, rt, dn; 
 
     gps := GroupsOfHigherDimensionalGroup( obj ); 
     G := gps[1]; 
@@ -166,21 +164,16 @@ function( obj )
     fi; 
     dim := HigherDimension( obj ); 
     if ( dim = 2 ) then 
-        return true; 
+        return IsPreCat1GroupWithIdentityEmbedding( obj ); 
     elif ( dim = 3 ) then 
-        tup := TailMap( Up2DimensionalGroup( obj ) ); 
-        tlt := TailMap( Left2DimensionalGroup( obj ) ); 
-        trt := TailMap( Right2DimensionalGroup( obj ) ); 
-        tdn := TailMap( Down2DimensionalGroup( obj ) ); 
-        genM := GeneratorsOfGroup( gps[2] ); 
-        if not ForAll( genM, m -> ImageElm(tlt,m) = ImageElm(trt,m) ) then 
-            return false; 
-        fi; 
-        genN := GeneratorsOfGroup( gps[3] ); 
-        if not ForAll( genN, n -> ImageElm(tup,n) = ImageElm(tdn,n) ) then 
-            return false; 
-        fi; 
-        return true; 
+        up := Up2DimensionalGroup( obj ) ; 
+        lt := Left2DimensionalGroup( obj ); 
+        rt := Right2DimensionalGroup( obj ); 
+        dn := Down2DimensionalGroup( obj ); 
+        return IsPreCat1GroupWithIdentityEmbedding( up )
+           and IsPreCat1GroupWithIdentityEmbedding( lt )  
+           and IsPreCat1GroupWithIdentityEmbedding( rt )  
+           and IsPreCat1GroupWithIdentityEmbedding( dn );  
     else 
         Error( "not implemented for dim >= 4" ); 
     fi;

@@ -1326,7 +1326,7 @@ function( up, left )
         Error( "t*e*a and h*e*a do not have the same range" ); 
     fi; 
     genP := GeneratorsOfGroup( P ); 
-    diag := PreCat1GroupByEndomorphisms( tea, hea ); 
+    diag := PreCat1GroupWithIdentityEmbedding( tea, hea ); 
     if ( diag = fail ) then 
         Print( "diag fails to be a cat1-group\n" ); 
         return fail; 
@@ -1406,7 +1406,7 @@ function( up, left, right, down, diag )
     SetIsPreCatnGroup( PC2, true ); 
     SetHigherDimension( PC2, 3 ); 
     ok := IsCat2Group( PC2 ); 
-    ok := IsPreCatnGroupByEndomorphisms( PC2 ); 
+    ok := IsPreCatnGroupWithIdentityEmbeddings( PC2 ); 
     return PC2;
 end ); 
 
@@ -1863,8 +1863,9 @@ function( G )
     Iler := Filtered( Eler, h -> CompositionMapping( h, h ) = h );
     for i in [1..Length(Iler)] do
         for j in [1..Length(Iler)] do
-            if PreCat1GroupByEndomorphisms(Iler[i],Iler[j]) <> fail then                     
-                Add(allprecat1,PreCat1GroupByEndomorphisms(Iler[i],Iler[j]));                    
+            if PreCat1GroupWithIdentityEmbedding(Iler[i],Iler[j]) <> fail then 
+                Add( allprecat1, 
+                     PreCat1GroupWithIdentityEmbedding(Iler[i],Iler[j]));                    
             else 
                 continue; 
             fi;                

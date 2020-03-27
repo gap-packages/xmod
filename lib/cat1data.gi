@@ -62,10 +62,10 @@ function( gp )
 
     C := [ 0, 0 ]; 
     zero := MappingToOne( gp, gp ); 
-    C[1] := PreCat1GroupByEndomorphisms( zero, zero ); 
+    C[1] := PreCat1GroupWithIdentityEmbedding( zero, zero ); 
     IsCat1Group( C[1] ); 
     one := IdentityMapping( gp ); 
-    C[2] := PreCat1GroupByEndomorphisms( one, one ); 
+    C[2] := PreCat1GroupWithIdentityEmbedding( one, one ); 
     IsCat1Group( C[2] ); 
     return C; 
 end ); 
@@ -184,7 +184,7 @@ function( gp )
                         Print( "t: ", MappingGeneratorsImages(t)[2], "\n" ); 
                         Print( "h: ", MappingGeneratorsImages(h)[2], "\n" ); 
                     fi; 
-                    CC := PreCat1GroupByEndomorphisms( t, h ); 
+                    CC := PreCat1GroupWithIdentityEmbedding( t, h ); 
                     if not IsCat1Group( CC ) then 
                         Error( "not a cat1-group" ); 
                     fi; 
@@ -557,7 +557,7 @@ function( gp, ireps, idems, range, C )
                         Print( "t : ", MappingGeneratorsImages(t)[2], "\n",  
                                "h : ", MappingGeneratorsImages(h)[2], "\n" ); 
                         fi; 
-                    CC := PreCat1GroupByEndomorphisms( t, h ); 
+                    CC := PreCat1GroupWithIdentityEmbedding( t, h ); 
                     if not IsCat1Group( CC ) then 
                         Error( "not a cat1-group" ); 
                     fi; 

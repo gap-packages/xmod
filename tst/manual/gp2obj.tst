@@ -380,7 +380,7 @@ Cat1-group [G8=>d12] :-
 
 gap> IsCat1Group( C8 );
    true
-gap> EC4 := EndomorphismPreCat1Group( C4 );
+gap> EC4 := IsomorphicPreCat1GroupWithIdentityEmbedding( C4 );
 [a4a4=>Group( [ (1,2,3)(5,6,7), (2,3,4)(6,7,8), (), () ] )]
 
 ## Section 2.5.2
