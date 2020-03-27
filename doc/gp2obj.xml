@@ -951,18 +951,9 @@ There are also more specific properties.
          Arg="C0" />
    <Prop Name="IsIdentityCat1Group"
          Arg="C0" />
-   <Prop Name="IsPreCat1GroupWithIdentityEmbedding"
-         Arg="C0" />
-   <Attr Name="IsomorphicPreCat1GroupWithIdentityEmbedding" 
-         Arg="C0" /> 
 <Description>
 <C>IsIdentityCat1Group(C0)</C> is true when the head and tail maps of <C>C0</C> 
 are identity mappings. 
-<C>IsPreCat1GroupWithIdentityEmbedding(C0)</C> is true when the range 
-embedding of <C>C0</C> is an inclusion mapping. 
-When this is not the case, replacing <M>t,h,e</M> by <M>t*e,h*e</M> 
-and the inclusion mapping of the image of <M>e</M> gives an isomorphic 
-cat<M>^1</M>-group for which <C>IsPreCat1GroupWithIdentityEmbedding</C> is true. 
 </Description>
 </ManSection>
 <P/>
@@ -987,12 +978,39 @@ gap> IsCat1Group( C8 );
 true
 gap> KnownPropertiesOfObject( C8 );
 [ "CanEasilyCompareElements", "CanEasilySortElements", "IsDuplicateFree", 
-  "IsGeneratorsOfSemigroup", "IsPreCat1Domain", "IsPerm2DimensionalGroup", 
-  "IsPreCat1Group", "IsCat1Group", "IsPreCat1GroupByEndomorphisms" ]
-gap> IsPreCat1GroupWithIdentityEmbedding( C8 );
+  "IsGeneratorsOfSemigroup", "IsPreCat1Domain", "IsPc2DimensionalGroup", 
+  "IsPreXMod", "IsPreCat1Group", "IsCat1Group", "IsIdentityPreCat1Group", 
+  "IsPreCat1GroupWithIdentityEmbedding" ]
+]]>
+</Example>
+
+<ManSection>
+   <Prop Name="IsPreCat1GroupWithIdentityEmbedding"
+         Arg="C0" />
+   <Attr Name="IsomorphicPreCat1GroupWithIdentityEmbedding" 
+         Arg="C0" /> 
+   <Attr Name="IsomorphismToPreCat1GroupWithIdentityEmbedding" 
+         Arg="C0" /> 
+<Description>
+<C>IsPreCat1GroupWithIdentityEmbedding(C0)</C> is true when the range 
+embedding of <C>C0</C> is an inclusion mapping. 
+When this is not the case, replacing <M>t,h,e</M> by <M>t*e,h*e</M> 
+and the inclusion mapping of the image of <M>e</M> gives an isomorphic 
+cat<M>^1</M>-group for which <C>IsPreCat1GroupWithIdentityEmbedding</C> is true. 
+This is the <C>IsomorphicPreCat1GroupWithIdentityEmbedding</C> of <C>C0</C> and 
+<C>IsomorphismToPreCat1GroupWithIdentityEmbedding</C> is the isomorphism 
+between them. (See the next chapter for mappings of cat<M>^1</M>-groups.) 
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> IsPreCat1GroupWithIdentityEmbedding( C4 );
 false
-gap> EC4 := IsomorphicPreCat1GroupWithIdentityEmbedding( C4 );
-[a4a4=>Group( [ (1,2,3,4)(5,6,7,8), (3,4)(7,8), (), () ] )]
+gap> IC4 := IsomorphicPreCat1GroupWithIdentityEmbedding( C4 );
+[a4a4=>Group( [ (1,2,3)(5,6,7), (2,3,4)(6,7,8), (), () ] )]
+gap> IsomorphismToPreCat1GroupWithIdentityEmbedding( C4 );
+[[a4a4=>a4d] => [..]]
 ]]>
 </Example>
 

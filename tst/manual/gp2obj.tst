@@ -380,10 +380,16 @@ Cat1-group [G8=>d12] :-
 
 gap> IsCat1Group( C8 );
    true
-gap> EC4 := IsomorphicPreCat1GroupWithIdentityEmbedding( C4 );
-[a4a4=>Group( [ (1,2,3)(5,6,7), (2,3,4)(6,7,8), (), () ] )]
 
 ## Section 2.5.2
+gap> IsPreCat1GroupWithIdentityEmbedding( C4 );
+false
+gap> IC4 := IsomorphicPreCat1GroupWithIdentityEmbedding( C4 );
+[a4a4=>Group( [ (1,2,3)(5,6,7), (2,3,4)(6,7,8), (), () ] )]
+gap> IsomorphismToPreCat1GroupWithIdentityEmbedding( C4 );
+[[a4a4=>a4d] => [..]]
+
+## Section 2.5.3
 gap> X8 := XModOfCat1Group( C8 );;
 gap> Display( X8 );
 
