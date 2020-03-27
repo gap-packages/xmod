@@ -994,6 +994,9 @@ gap> KnownPropertiesOfObject( C8 );
 <Description>
 <C>IsPreCat1GroupWithIdentityEmbedding(C0)</C> is true when the range 
 embedding of <C>C0</C> is an inclusion mapping. 
+(This property used to be called <C>IsPreCat1GroupByEndomorphisms</C> but, 
+as the example below shows, when the tail and head maps are endomorphisms 
+the range embedding need not be an inclusion.) 
 When this is not the case, replacing <M>t,h,e</M> by <M>t*e,h*e</M> 
 and the inclusion mapping of the image of <M>e</M> gives an isomorphic 
 cat<M>^1</M>-group for which <C>IsPreCat1GroupWithIdentityEmbedding</C> is true. 
@@ -1005,12 +1008,17 @@ between them. (See the next chapter for mappings of cat<M>^1</M>-groups.)
 <P/>
 <Example>
 <![CDATA[
-gap> IsPreCat1GroupWithIdentityEmbedding( C4 );
+gap> G5 := Group( (1,2,3,4,5) );;                                             
+gap> t := GroupHomomorphismByImages( G5, G5, [(1,2,3,4,5)], [(1,5,4,3,2)] );;
+gap> PC5 := PreCat1GroupByTailHeadEmbedding( t, t, t );
+[Group( [ (1,2,3,4,5) ] )=>Group( [ (1,2,3,4,5) ] )]
+gap> IsPreCat1GroupWithIdentityEmbedding( PC5 );
 false
-gap> IC4 := IsomorphicPreCat1GroupWithIdentityEmbedding( C4 );
-[a4a4=>Group( [ (1,2,3)(5,6,7), (2,3,4)(6,7,8), (), () ] )]
-gap> IsomorphismToPreCat1GroupWithIdentityEmbedding( C4 );
-[[a4a4=>a4d] => [..]]
+gap> IPC5 := IsomorphicPreCat1GroupWithIdentityEmbedding( PC5 );
+[Group( [ (1,2,3,4,5) ] )=>Group( [ (1,2,3,4,5) ] )]
+gap> TailMap( IPC5 ); RangeEmbedding( IPC5 );
+[ (1,2,3,4,5) ] -> [ (1,2,3,4,5) ]
+[ (1,2,3,4,5) ] -> [ (1,2,3,4,5) ]
 ]]>
 </Example>
 

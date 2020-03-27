@@ -382,12 +382,17 @@ gap> IsCat1Group( C8 );
    true
 
 ## Section 2.5.2
-gap> IsPreCat1GroupWithIdentityEmbedding( C4 );
+gap> G5 := Group( (1,2,3,4,5) );;                                             
+gap> t := GroupHomomorphismByImages( G5, G5, [(1,2,3,4,5)], [(1,5,4,3,2)] );;
+gap> PC5 := PreCat1GroupByTailHeadEmbedding( t, t, t );
+[Group( [ (1,2,3,4,5) ] )=>Group( [ (1,2,3,4,5) ] )]
+gap> IsPreCat1GroupWithIdentityEmbedding( PC5 );
 false
-gap> IC4 := IsomorphicPreCat1GroupWithIdentityEmbedding( C4 );
-[a4a4=>Group( [ (1,2,3)(5,6,7), (2,3,4)(6,7,8), (), () ] )]
-gap> IsomorphismToPreCat1GroupWithIdentityEmbedding( C4 );
-[[a4a4=>a4d] => [..]]
+gap> IPC5 := IsomorphicPreCat1GroupWithIdentityEmbedding( PC5 );
+[Group( [ (1,2,3,4,5) ] )=>Group( [ (1,2,3,4,5) ] )]
+gap> TailMap( IPC5 ); RangeEmbedding( IPC5 );
+[ (1,2,3,4,5) ] -> [ (1,2,3,4,5) ]
+[ (1,2,3,4,5) ] -> [ (1,2,3,4,5) ]
 
 ## Section 2.5.3
 gap> X8 := XModOfCat1Group( C8 );;
