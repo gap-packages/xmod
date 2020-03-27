@@ -253,7 +253,7 @@ DeclareOperation( "SubCat1Group", [ IsCat1Group, IsGroup, IsGroup ] );
 #A  TrivialSubPreCat1Group( <obj> )
 #A  TrivialSubCat1Group( <obj> )
 #P  IsIdentityPreCat1Group( <obj> )
-#P  IsPreCat1GroupByEndomorphisms( <obj> )
+#P  IsPreCat1GroupWithIdentityEmbedding( <obj> )
 ##
 DeclareOperation( "TrivialSub2DimensionalGroup", [ Is2DimensionalGroup ] );
 DeclareAttribute( "TrivialSubPreXMod", IsPreXMod );
@@ -261,7 +261,7 @@ DeclareAttribute( "TrivialSubXMod", IsXMod );
 DeclareAttribute( "TrivialSubPreCat1Group", IsPreCat1Group );
 DeclareAttribute( "TrivialSubCat1Group", IsCat1Group );
 DeclareProperty( "IsIdentityPreCat1Group", IsPreCat1Group );
-DeclareProperty( "IsPreCat1GroupByEndomorphisms", IsPreCat1Group ); 
+DeclareProperty( "IsPreCat1GroupWithIdentityEmbedding", IsPreCat1Group ); 
 
 #############################################################################
 ##
@@ -285,23 +285,21 @@ DeclareSynonym( "PreCat1ByTailHeadEmbedding", PreCat1Obj );
 ##
 #F  PreCat1Group( <arg> )
 #O  PreCat1GroupByTailHeadEmbedding( <t>, <h>, <e> )
-#O  PreCat1GroupByEndomorphisms( <tail>, <head> )
-#A  EndomorphismPreCat1Group( <PCG> ) 
+#O  PreCat1GroupWithIdentityEmbedding( <tail>, <head> )
+#A  IsomorphicPreCat1GroupWithIdentityEmbedding( <PCG> ) 
+#A  IsomorphismToPreCat1GroupWithIdentityEmbedding( <PCG> ) 
 #A  ReverseCat1Group( <PCG> )
 ##
 DeclareGlobalFunction( "PreCat1Group" );
 DeclareOperation( "PreCat1GroupByTailHeadEmbedding",
     [ IsGroupHomomorphism, IsGroupHomomorphism, IsGroupHomomorphism ] );
-DeclareOperation( "PreCat1GroupByEndomorphisms",
+DeclareOperation( "PreCat1GroupWithIdentityEmbedding",
     [ IsGroupHomomorphism, IsGroupHomomorphism ] );
-DeclareAttribute( "EndomorphismPreCat1Group", IsPreCat1Group ); 
+DeclareAttribute( "IsomorphicPreCat1GroupWithIdentityEmbedding", 
+    IsPreCat1Group ); 
+DeclareAttribute( "IsomorphismToPreCat1GroupWithIdentityEmbedding", 
+    IsPreCat1Group ); 
 DeclareAttribute( "ReverseCat1Group", IsPreCat1Group );
-
-#############################################################################
-##
-#P  IsPreCat1GroupByEndomorphisms( <PCG> )
-##
-DeclareProperty( "IsPreCat1GroupByEndomorphisms", IsPreCat1Group ); 
 
 #############################################################################
 ##

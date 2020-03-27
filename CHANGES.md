@@ -1,8 +1,12 @@
 # CHANGES to the 'XMod' package
 
-## 2.77 -> 2.77dev (10/03/2020) 
+## 2.77 -> 2.77dev (27/03/2020) 
 
- * (10/03/20) now SmallerDegreePermutationRepresentation2DimensionalGroup in
+ * (27/03/20) IsPreCat1GroupByEndomorphisms (ditto CatnGroup) 
+              -> IsPreCat1GroupWithIdentityEmbedding 
+              (IsomorphismTo)EndomorphismCat1Group 
+              -> IsomorphicPreCat1GroupWithIdentityEmbedding 
+ * (12/03/20) now SmallerDegreePermutationRepresentation2DimensionalGroup in
               place of SmallerDegreePerm2DimensionalDomain
  * (06/03/20) now running under GAP 4.11.0 
  * (02/03/20) fixed issue 41, (Direct/Co)Product for more than two objects

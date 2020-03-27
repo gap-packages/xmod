@@ -43,9 +43,9 @@ DeclareProperty( "IsPcHigherDimensionalGroup", IsHigherDimensionalGroup );
 
 #############################################################################
 ##
-#P  IsPreCatnGroupByEndomorphisms( <obj> )
+#P  IsPreCatnGroupWithIdentityEmbeddings( <obj> )
 ##
-DeclareProperty( "IsPreCatnGroupByEndomorphisms", IsPreCatnGroup ); 
+DeclareProperty( "IsPreCatnGroupWithIdentityEmbeddings", IsPreCatnGroup ); 
 
 #############################################################################
 ##

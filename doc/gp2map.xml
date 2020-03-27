@@ -237,11 +237,11 @@ e_2 \circ \rho ~=~ \gamma \circ e_1.
          Arg="map" />
    <Func Name="Cat1GroupMorphism"
          Arg="args" />
-   <Oper Name="Cat1GroupMorphismByHoms"
+   <Oper Name="Cat1GroupMorphismByGroupHomomorphisms"
          Arg="C1 C2 gamma rho" />
    <Func Name="PreCat1GroupMorphism"
          Arg="args" />
-   <Oper Name="PreCat1GroupMorphismByHoms"
+   <Oper Name="PreCat1GroupMorphismByGroupHomomorphisms"
          Arg="P1 P2 gamma rho" />
    <Oper Name="InclusionMorphism2DimensionalDomains"
          Arg="C1 S1" Label="for cat1-groups" />

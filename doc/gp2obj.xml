@@ -656,7 +656,7 @@ and <M>~h \circ e \circ h = h</M>.
          Arg="args" />
    <Oper Name="PreCat1GroupByTailHeadEmbedding"
          Arg="t h e" />
-   <Oper Name="PreCat1GroupByEndomorphisms"
+   <Oper Name="PreCat1GroupWithIdentityEmbedding"
          Arg="t h" />
 <Description>
 The global functions <C>Cat1Group</C> and <C>PreCat1Group</C> 
@@ -668,11 +668,11 @@ which is equivalent to <C>PreCat1GroupByTailHeadEmbedding(t,h,e);</C>
 </Item>
 <Item>
 as <C>Cat1Group(t,h);</C> when <M>t,h</M> are two endomorphisms, 
-which is equivalent to <C>PreCat1GroupByEndomorphisms(t,h);</C> 
+which is equivalent to <C>PreCat1GroupWithIdentityEmbedding(t,h);</C> 
 </Item>
 <Item>
 as <C>Cat1Group(t);</C> when <M>t=h</M> is an endomorphism, 
-which is equivalent to <C>PreCat1GroupByEndomorphisms(t,t);</C> 
+which is equivalent to <C>PreCat1GroupWithIdentityEmbedding(t,t);</C> 
 </Item>
 <Item>
 as <C>Cat1Group(t,e);</C> when <M>t=h</M> and <M>e</M> are homomorphisms, 
@@ -951,18 +951,18 @@ There are also more specific properties.
          Arg="C0" />
    <Prop Name="IsIdentityCat1Group"
          Arg="C0" />
-   <Prop Name="IsPreCat1GroupByEndomorphisms"
+   <Prop Name="IsPreCat1GroupWithIdentityEmbedding"
          Arg="C0" />
-   <Attr Name="EndomorphismPreCat1Group" 
+   <Attr Name="IsomorphicPreCat1GroupWithIdentityEmbedding" 
          Arg="C0" /> 
 <Description>
 <C>IsIdentityCat1Group(C0)</C> is true when the head and tail maps of <C>C0</C> 
 are identity mappings. 
-<C>IsPreCat1GroupByEndomorphisms(C0)</C> is true when the range of <C>C0</C> 
-is a subgroup of the source. 
+<C>IsPreCat1GroupWithIdentityEmbedding(C0)</C> is true when the range 
+embedding of <C>C0</C> is an inclusion mapping. 
 When this is not the case, replacing <M>t,h,e</M> by <M>t*e,h*e</M> 
 and the inclusion mapping of the image of <M>e</M> gives an isomorphic 
-cat<M>^1</M>-group for which <C>IsPreCat1GroupByEndomorphisms</C> is true. 
+cat<M>^1</M>-group for which <C>IsPreCat1GroupWithIdentityEmbedding</C> is true. 
 </Description>
 </ManSection>
 <P/>
@@ -989,9 +989,9 @@ gap> KnownPropertiesOfObject( C8 );
 [ "CanEasilyCompareElements", "CanEasilySortElements", "IsDuplicateFree", 
   "IsGeneratorsOfSemigroup", "IsPreCat1Domain", "IsPerm2DimensionalGroup", 
   "IsPreCat1Group", "IsCat1Group", "IsPreCat1GroupByEndomorphisms" ]
-gap> IsPreCat1GroupByEndomorphisms( C8 );
+gap> IsPreCat1GroupWithIdentityEmbedding( C8 );
 false
-gap> EC4 := EndomorphismPreCat1Group( C4 );
+gap> EC4 := IsomorphicPreCat1GroupWithIdentityEmbedding( C4 );
 [a4a4=>Group( [ (1,2,3,4)(5,6,7,8), (3,4)(7,8), (), () ] )]
 ]]>
 </Example>

@@ -20,9 +20,9 @@ gap> idem := Filtered( homs, i -> CompositionMapping(i,i) = i );
   [ f1, f2 ] -> [ f1, <identity> of ... ],
   [ f1, f2 ] -> [ f1*f2^2, <identity> of ... ],
   [ f1, f2 ] -> [ f1*f2, <identity> of ... ], [ f1, f2 ] -> [ f1, f2 ] ]
-gap> pc1 := PreCat1GroupByEndomorphisms( idem[1], idem[1] );
+gap> pc1 := PreCat1GroupWithIdentityEmbedding( idem[1], idem[1] );
 [Group( [ f1, f2 ] )=>Group( [ <identity> of ..., <identity> of ... ] )]
-gap> pc2 := PreCat1GroupByEndomorphisms( idem[2], idem[2] );
+gap> pc2 := PreCat1GroupWithIdentityEmbedding( idem[2], idem[2] );
 [Group( [ f1, f2 ] )=>Group( [ f1, <identity> of ... ] )]
 gap> CC12 := CatnGroup( [ pc1, pc2 ] );
 (pre-)cat2-group with generating (pre-)cat1-groups:
@@ -31,7 +31,7 @@ gap> CC12 := CatnGroup( [ pc1, pc2 ] );
 gap> HigherDimension( CC12 );
 3
 
-gap> pc3 := PreCat1GroupByEndomorphisms( idem[5], idem[5] );
+gap> pc3 := PreCat1GroupWithIdentityEmbedding( idem[5], idem[5] );
 [Group( [ f1, f2 ] )=>Group( [ f1, f2 ] )]
 gap> CC233 := CatnGroup( [pc2, pc3, pc3] );
 (pre-)cat3-group with generating (pre-)cat1-groups:
