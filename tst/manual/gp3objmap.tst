@@ -377,7 +377,8 @@ gap> fams := AllCat2GroupFamilies( d12 );
   [ 36, 37, 38 ], [ 22, 29 ], [ 39, 40 ], [ 41 ] ]
 gap> CatnGroupNumbers( d12 );
 rec( cat1 := 12, cat2 := 41, idem := 21, iso1 := 4, iso2 := 10, 
-  isopredg := 0, predg := 0, siso2 := 4, symm2 := 12 )
+  isopredg := 0, predg := 0, siso1 := 4, siso2 := 4, symm1 := 12, symm2 := 12 
+ )
 gap> CatnGroupLists( d12 );
 rec( allcat2pos := [ 1, 7, 9, 16, 19, 22, 30, 36, 39, 41 ],
   cat2classes := 

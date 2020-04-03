@@ -1200,9 +1200,9 @@ gap> iso12 := AllCat1GroupsUpToIsomorphism( d12 );
 
 <ManSection>
    <Attr Name="CatnGroupNumbers"
-         Arg="G" />
+         Arg="G" Label="for cat1-groups" />
    <Attr Name="CatnGroupLists"
-         Arg="G" />
+         Arg="G" Label="for cat1-groups" />
    <Oper Name="InitCatnGroupRecords"
          Arg="G" />
 <Description>
@@ -1214,6 +1214,9 @@ endomorphisms of <M>G</M>.
 Similarly, <C>CatnGroupNumbers(G).cat1</C> is the number of cat<M>^1</M>-groups 
 on <M>G</M>, while <C>CatnGroupNumbers(G).iso1</C> is the number of 
 isomorphism classes of these cat<M>^1</M>-groups. 
+Also <C>CatnGroupNumbers(G).symm1</C> is the number of cat<M>^1</M>-groups 
+whose <C>TailMap</C> is the same as the <C>HeadMap</C>, while <C>CatnGroupNumbers(G).siso1</C> is the number of 
+isomorphism classes of these symmetric cat<M>^1</M>-groups. 
 The attribute <C>CatnGroupLists</C> is used for storing results 
 of cat<M>^2</M>-group calculations. 
 </Description> 
@@ -1222,7 +1225,7 @@ of cat<M>^2</M>-group calculations.
 <Example>
 <![CDATA[
 gap> CatnGroupNumbers( d12 );
-rec( cat1 := 12, idem := 21, iso1 := 4 )
+rec( cat1 := 12, idem := 21, iso1 := 4, siso1 := 4, symm1 := 12 )
 ]]>
 </Example>
 </Section> 

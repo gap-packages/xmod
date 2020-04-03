@@ -20,9 +20,6 @@ DeclareCategory( "IsSPGeneral2DimensionalMapping",
 DeclareCategory( "IsNonSPGeneral2DimensionalMapping", 
     IsNonSPGeneralMapping and IsGeneral2DimensionalMapping ); 
 
-##  temporary measure to keep XModAlg working:
-DeclareSynonym( "IsGeneral2dMapping", IsGeneral2DimensionalMapping ); 
-
 #############################################################################
 ##
 #C  IsGeneral2DimensionalMappingCollection . . category of colls of mwo maps
