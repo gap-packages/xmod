@@ -664,7 +664,7 @@ function( t, h, e )
       Is2DimensionalGroup, true );
     ok := IsPreCat1Group( C1G ); 
     if not ok then
-        Error( "not a pre-cat1-group" );
+        return fail;
     fi;
     ok := IsPreCat1GroupWithIdentityEmbedding( C1G ); 
     ok := IsCat1Group( C1G );
@@ -2040,31 +2040,43 @@ end );
 #M  PreCat1GroupByTailHeadEmbedding
 ##
 InstallMethod( PreCat1GroupByTailHeadEmbedding,
-    "cat1-group from tail, head and embedding", true, 
+    "pre-cat1-group from tail, head and embedding", true, 
     [ IsGroupHomomorphism, IsGroupHomomorphism, IsGroupHomomorphism ], 0,
-function( t, h, e )
+function( t0, h0, e0 )
 
-    local genG, R, genR, imh, imt, ime, eR, kert, kergen, bdy, imbdy, 
-          f, C1G, ok, G, PC;
+    local t, h, e, G, genG, R, genR, eR, mgi, kert, f, kergen, bdy, imbdy, PC;
 
+    t := t0; 
+    h := h0; 
+    e := e0; 
     G := Source( t );
-    genG := GeneratorsOfGroup( G );
+    genG := GeneratorsOfGroup( G ); 
     R := Range( t );
     genR := SmallGeneratingSet( R ); 
     eR := Image( e ); 
-    if not ( ( Source( h ) = G )
-             and ( Image( h ) = R ) and ( Source( e ) = R )
-             and IsInjective( e ) and IsSubgroup( G, eR ) )  then
+    if not ( ( Source( h ) = G ) and ( Range( h ) = R ) )  then 
+        Info( InfoXMod, 2, "t,h do not have the same source and range" ); 
+        return fail;
+    fi; 
+    ## adjust the case when t,h are endomorphisms but not one-one 
+    if ( R <> Image( t ) ) then 
+        R := Image( t ); 
+        if not ( R = Image( h ) ) then 
+            return fail; 
+        fi; 
+        genR := SmallGeneratingSet( R ); 
+        mgi := MappingGeneratorsImages( t ); 
+        t := GroupHomomorphismByImages( G, R, mgi[1], mgi[2] ); 
+        mgi := MappingGeneratorsImages( h ); 
+        h := GroupHomomorphismByImages( G, R, mgi[1], mgi[2] ); 
+    fi; 
+    if not ( ( Source( e ) = R ) and IsInjective( e ) 
+             and IsSubgroup( G, eR ) ) then 
+        Info( InfoXMod, 2, "incorrect data for the embedding" ); 
         return fail;
     fi;
-    imh := List( genG, x -> ImageElm( h, x ) );
-    imt := List( genG, x -> ImageElm( t, x ) );
-    ime := List( genR, x -> ImageElm( e, x ) );
     kert := Kernel( t );
     f := InclusionMappingGroups( G, kert );
-    ## hres := GroupHomomorphismByImages( G, R, genG, imh );
-    ## tres := GroupHomomorphismByImages( G, R, genG, imt );
-    ## eres := GroupHomomorphismByImages( R, G, genR, ime );
     kergen := GeneratorsOfGroup( kert );
     imbdy := List( kergen, x -> ImageElm( h, x) );
     bdy := GroupHomomorphismByImages( kert, R, kergen, imbdy );
@@ -2524,13 +2536,17 @@ InstallMethod( AllCat1GroupsIterator, "for a group", [ IsGroup ], 0,
 InstallMethod( AllCat1Groups, "for a group", [ IsGroup ], 0, 
 function( G ) 
 
-    local L, C, images, lens; 
+    local L, C, images, lens, symm; 
 
     InitCatnGroupRecords( G ); 
     L := [ ];
+    symm := 0; 
     for C in AllCat1GroupsIterator( G ) do 
        if not ( C = fail ) then 
            Add( L, C ); 
+           if ( TailMap( C ) = HeadMap( C ) ) then 
+               symm := symm + 1;
+           fi; 
         fi; 
     od;
     if not IsBound( CatnGroupNumbers( G ).idem ) then 
@@ -2540,6 +2556,9 @@ function( G )
     fi; 
     if not IsBound( CatnGroupNumbers( G ).cat1 ) then 
         CatnGroupNumbers( G ).cat1 := Length( L ); 
+    fi; 
+    if not IsBound( CatnGroupNumbers( G ).symm1 ) then 
+        CatnGroupNumbers( G ).symm1 := symm; 
     fi; 
     return L; 
 end ); 
@@ -2562,12 +2581,13 @@ InstallMethod( AllCat1GroupsUpToIsomorphism, "iso class reps of cat1-groups",
     true, [ IsGroup ], 0,
 function( G )
 
-    local L, numL, i, k, C, ok, found, iso, images, lens;
+    local L, numL, i, k, C, ok, found, iso, images, lens, symm;
 
     InitCatnGroupRecords( G ); 
     L := [ ]; 
     i := 0; 
     numL := 0; 
+    symm := 0; 
     for C in AllCat1GroupsIterator( G ) do 
         if not ( C = fail ) then 
             i := i+1; 
@@ -2584,6 +2604,9 @@ function( G )
                 Add( L, C ); 
                 numL := numL + 1;
             fi;
+            if ( TailMap( C ) = HeadMap( C ) ) then 
+                symm := symm + 1; 
+            fi;
         fi;
     od; 
     if not IsBound( CatnGroupNumbers( G ).idem ) then 
@@ -2597,7 +2620,19 @@ function( G )
     if not IsBound( CatnGroupNumbers( G ).iso1 ) then 
         CatnGroupNumbers( G ).iso1 := numL; 
     fi; 
-    return L;
+    if not IsBound( CatnGroupNumbers( G ).symm1 ) then 
+        CatnGroupNumbers( G ).symm1 := symm; 
+    fi; 
+    symm := 0; 
+    for C in L do 
+        if ( TailMap( C ) = HeadMap( C ) ) then 
+            symm := symm + 1; 
+        fi;
+    od; 
+    if not IsBound( CatnGroupNumbers( G ).siso1 ) then 
+        CatnGroupNumbers( G ).siso1 := symm; 
+    fi; 
+    return L; 
 end );
 
 InstallMethod( AllCat1GroupFamilies, "gives lists of isomorphic cat1-groups", 

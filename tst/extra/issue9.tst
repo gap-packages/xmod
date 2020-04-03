@@ -20,11 +20,11 @@ gap> h := GroupHomomorphismByImages( G, R, Ggens,
 >      [ (), (),  (1,2,3)(4,5,6), (2,3)(5,6) ] );
 [ (1,2,3), (2,3), (4,5,6), (5,6) ] -> [ (), (), (1,2,3)(4,5,6), (2,3)(5,6) ]
 gap> e := GroupHomomorphismByImages( R, G, Rgens, Rgens );;
-gap> C2 := PreCat1ByTailHeadEmbedding( t, h, e );
+gap> C2 := PreCat1GroupByTailHeadEmbedding( t, h, e );
 [Group( [ (1,2,3), (2,3), (4,5,6), (5,6) ] )=>Group(
 [ (1,2,3)(4,5,6), (2,3)(5,6) ] )]
 gap> SetName( G, "s3s3" );; SetName( R, "s3d" );;
-gap> C2 := PreCat1ByTailHeadEmbedding( t, h, e );
+gap> C2 := PreCat1GroupByTailHeadEmbedding( t, h, e );
 [s3s3=>s3d]
 gap> X2 := XModOfCat1Group(C2);
 xmod([s3s3=>s3d])

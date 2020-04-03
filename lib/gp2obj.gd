@@ -278,9 +278,6 @@ DeclareAttribute( "TailMap", IsPreCat1Group );
 DeclareAttribute( "RangeEmbedding", IsPreCat1Group );
 DeclareAttribute( "KernelEmbedding", IsPreCat1Group );
 
-##  temporary measure to keep XModAlg working:
-DeclareSynonym( "PreCat1ByTailHeadEmbedding", PreCat1Obj ); 
-
 #############################################################################
 ##
 #F  PreCat1Group( <arg> )

@@ -1,7 +1,8 @@
 # CHANGES to the 'XMod' package
 
-## 2.77 -> 2.77dev (27/03/2020) 
+## 2.77 -> 2.77dev (03/04/2020) 
 
+ * (02/04/20) revised IsomorphismPreCat1Groups 
  * (27/03/20) IsPreCat1GroupByEndomorphisms (ditto CatnGroup) 
               -> IsPreCat1GroupWithIdentityEmbedding 
               (IsomorphismTo)EndomorphismCat1Group 
