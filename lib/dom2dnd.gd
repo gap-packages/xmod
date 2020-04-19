@@ -102,6 +102,12 @@ BindGlobal( "FamilyHigherDimensionalGroup",
     NewFamily( "Family2DimensionalGroup", IsHigherDimensionalGroup, 
                CanEasilySortElements, CanEasilySortElements ) ); 
 
+#############################################################################
+##
+#O  DisplayLeadMaps( <obj> ) 
+##
+DeclareOperation( "DisplayLeadMaps", [ IsHigherDimensionalDomain ] ); 
+
 
 #######################  HIGHER DIMENSIONAL SUBDOMAINS  #####################
 

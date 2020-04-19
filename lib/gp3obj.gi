@@ -1051,6 +1051,42 @@ InstallMethod( ViewObj, "method for a 3d-group", true, [ IsPreCrossedSquare ],
 ##
 #M Display( <g3d> . . . . . . . . . . . . . . . . . . . . display a 3d-group 
 ##
+InstallMethod( DisplayLeadMaps, "method for a pre-cat2-group", true, 
+    [ IsPreCat2Group ], 0,
+function( g3d )
+
+    local up, tup, hup, lt, tlt, hlt; 
+
+    up := Up2DimensionalGroup( g3d ); 
+    tup := TailMap( up );
+    hup := HeadMap( up ); 
+    lt := Left2DimensionalGroup( g3d ); 
+    tlt := TailMap( lt );
+    hlt := HeadMap( lt ); 
+    Print( "(pre-)cat2-group with top group: ", 
+           MappingGeneratorsImages( tup )[1], "\n" ); 
+    if ( tup = hup ) then 
+        Print( "   up tail=head images: ", 
+           MappingGeneratorsImages( tup )[2], "\n" );  
+    else 
+        Print( "   up tail/head images: ", 
+           MappingGeneratorsImages( tup )[2], ", ", 
+           MappingGeneratorsImages( hup )[2], "\n" );  
+    fi; 
+    if ( tlt = hlt ) then 
+        Print( " left tail=head images: ", 
+           MappingGeneratorsImages( tlt )[2], "\n" );  
+    else 
+        Print( " left tail/head images: ", 
+           MappingGeneratorsImages( tlt )[2], ", ", 
+           MappingGeneratorsImages( hlt )[2], "\n" );  
+    fi;
+end );
+
+#############################################################################
+##
+#M Display( <g3d> . . . . . . . . . . . . . . . . . . . . display a 3d-group 
+##
 InstallMethod( Display, "method for a pre-cat2-group", true, 
     [ IsPreCat2Group ], 0,
 function( g3d )
@@ -1069,7 +1105,7 @@ function( g3d )
     dn := Down2DimensionalGroup( g3d ); 
     tdn := TailMap( dn );
     hdn := HeadMap( dn ); 
-    Print( "cat2-group with groups: ", 
+    Print( "(pre-)cat2-group with groups: ", 
            [ Source(up), Range(up), Range(lt), Range(dn) ], "\n" );
     if ( tup = hup ) then 
         Print( "   up tail=head: ", 
@@ -1564,15 +1600,15 @@ function ( G, R, Q )
     fi;
     upiter := ShallowCopy( GRiter ); 
     up := 0; 
-    while not ( up = fail ) do 
+    while not IsDoneIterator( upiter ) do 
         up := NextIterator( upiter ); 
         if not ( up = fail ) then 
             leftiter := ShallowCopy( GQiter ); 
             left := 0;
-            while not ( left = fail ) do 
+            while not IsDoneIterator( leftiter ) do 
                 left := NextIterator( leftiter ); 
                 if not ( left = fail ) then 
-                    C := Cat2Group( up, left ); 
+                    C := PreCat2Group( up, left ); 
                     if ( not ( C = fail ) and IsCat2Group( C ) ) then 
                         num := num+1; 
                         j := 0; 

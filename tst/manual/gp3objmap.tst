@@ -55,8 +55,9 @@ gap> down := XModByTrivialAction( nu );;
 gap> xp := CrossedPairingByCommutators( N, M, L );; 
 gap> Print( "xp([c,b]) = ", ImageElmCrossedPairing( xp, [c,b] ), "\n" ); 
 xp([c,b]) = (1,3)(2,4)
-gap> PXS := PreCrossedSquareByPreXMods( up, left, right, down, diag, xp ); 
-pre-crossed square with pre-crossed modules:
+gap> PXS := PreCrossedSquareByPreXMods( up, left, right, down, diag, xp );;
+gap> Display( PXS ); 
+(pre-)crossed square with (pre-)crossed modules:
       up = [Group( [ (1,3)(2,4) ] ) -> Group( [ (2,4) ] )]
     left = [Group( [ (1,3)(2,4) ] ) -> Group( [ (1,2)(3,4) ] )]
    right = [Group( [ (2,4) ] ) -> Group( () )]
@@ -350,14 +351,38 @@ gap> IsSub2DimensionalGroup( dg, sub );
 true
 
 # Section 8.5.1
-gap> c2 := Subgroup( d12, [ (1,3)(4,6) ] );; 
-gap> s3 := Subgroup( d12, [ (1,3)(4,6), (1,5)(2,4) ] );; 
-gap> AllCat2GroupsWithImagesNumber( d12, c2, s3 );
-1
-gap> AllCat2GroupsWithImages( d12, c2, s3 );      
-[ (pre-)cat2-group with generating (pre-)cat1-groups:
-    1 : [d12 => Group( [ (), (1,3)(4,6) ] )]
-    2 : [d12 => Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )] ]
+gap> G8 := Group( (1,2), (3,4), (5,6) );;
+gap> A := Subgroup( G8, [ (1,2) ] );; 
+gap> B := Subgroup( G8, [ (3,4) ] );;
+gap> AllCat2GroupsWithImagesNumber( G8, A, A );
+4
+gap> all := AllCat2GroupsWithImages( G8, A, A );;     
+gap> for C in all do DisplayLeadMaps( C ); od;
+(pre-)cat2-group with top group: [ (1,2), (3,4), (5,6) ]
+   up tail=head images: [ (1,2), (1,2), () ]
+ left tail=head images: [ (1,2), (1,2), () ]
+(pre-)cat2-group with top group: [ (1,2), (3,4), (5,6) ]
+   up tail=head images: [ (1,2), (), () ]
+ left tail=head images: [ (1,2), (), () ]
+(pre-)cat2-group with top group: [ (1,2), (3,4), (5,6) ]
+   up tail=head images: [ (1,2), (), (1,2) ]
+ left tail=head images: [ (1,2), (), (1,2) ]
+(pre-)cat2-group with top group: [ (1,2), (3,4), (5,6) ]
+   up tail=head images: [ (1,2), (1,2), (1,2) ]
+ left tail=head images: [ (1,2), (1,2), (1,2) ]
+gap> AllCat2GroupsWithImagesNumber( G8, A, B );
+16
+gap> iso := AllCat2GroupsWithImagesUpToIsomorphism( G8, A, B );;
+gap> for C in iso do DisplayLeadMaps( C ); od;
+(pre-)cat2-group with top group: [ (1,2), (3,4), (5,6) ]
+   up tail=head images: [ (1,2), (), () ]
+ left tail=head images: [ (), (3,4), () ]
+(pre-)cat2-group with top group: [ (1,2), (3,4), (5,6) ]
+   up tail=head images: [ (1,2), (), () ]
+ left tail/head images: [ (), (3,4), () ], [ (), (3,4), (3,4) ]
+(pre-)cat2-group with top group: [ (1,2), (3,4), (5,6) ]
+   up tail/head images: [ (1,2), (), () ], [ (1,2), (), (1,2) ]
+ left tail/head images: [ (), (3,4), () ], [ (), (3,4), (3,4) ]
 
 # Section 8.5.2
 gap> AllCat2GroupsNumber( d12 );

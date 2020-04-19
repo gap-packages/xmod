@@ -1,7 +1,9 @@
 # CHANGES to the 'XMod' package
 
-## 2.77 -> 2.77dev (16/04/2020) 
+## 2.77 -> 2.77dev (19/04/2020) 
 
+ * (19/04/20) added operation DisplayLeadMaps for a HigherDimensionalDomain 
+              fixed an error in AllCat2GroupsWithImagesUpToIsomorphism 
  * (16/04/20) fixed an error in the function GroupGroupoid
  * (03/04/20) added fields .symm1 and .siso1 to CatnGroupNumbers 
  * (02/04/20) revised IsomorphismPreCat1Groups 

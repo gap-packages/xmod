@@ -357,7 +357,7 @@ The name is formed by concatenating the names of the source and range
 <P/> 
 The <Ref Attr="ExternalSetXMod"/> for a crossed module is the source group considered as a G-set of the range group using the crossed module action. 
 <P/> 
-<Index>display a 2d-group</Index>
+<Index>Display for a 2d-group</Index>
 The <C>Display</C> function is used to print details of 2d-groups.
 </Description>
 </ManSection>
