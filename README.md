@@ -1,267 +1,210 @@
-# GitHubPagesForGAP
-
-This repository can be used to quickly set up a website hosted by
-[GitHub](https://github.com/) for GAP packages using a GitHub repository.
-Specifically, this uses [GitHub pages](https://pages.github.com/)
-by adding a `gh-pages` branch to your package repository which
-contains data generated from the `PackageInfo.g` file of your package.
-
-## Initial setup
-
-The easiest way to do this is to run the `setup-gh-pages` shell script
-provided in the [GitHubPagesForGAP]() from within a git clone of your
-package's GitHub repository.
-
-In case this does not work, or if you want to really know what's going
-on, you can also follow the manual instructions described after the fold.
-
-------
-
-The following instructions assume you do not already have a `gh-pages`
-branch in your repository. If you do have one, you should delete it before
-following these instructions.
-
-1. Go into your clone of your package repository.
-
-2. Setup a `gh-pages` branch in a `gh-pages` subdirectory.
-
-   Users with a recent enough git version (recommended is >= 2.7.0)
-   can do this using a "worktree", via the following commands:
-
-   ```sh
-   # Add a new remote pointing to the GitHubPagesForGAP repository
-   git remote add -f gh-gap https://github.com/gap-system/GitHubPagesForGAP
-
-   # Create a fresh gh-pages branch from the new remote
-   git branch gh-pages gh-gap/gh-pages --no-track
-
-   # Create a new worktree and change into it
-   git worktree add gh-pages gh-pages
-   cd gh-pages
-   ```
-
-   Everybody else should instead do the following, with the URL
-   in the initial clone command suitably adjusted:
-
-   ```sh
-   # Create a fresh clone of your repository, and change into it
-   git clone https://github.com/USERNAME/REPOSITORY gh-pages
-   cd gh-pages
-
-   # Add a new remote pointing to the GitHubPagesForGAP repository
-   git remote add gh-gap https://github.com/gap-system/GitHubPagesForGAP
-   git fetch gh-gap
-
-   # Create a fresh gh-pages branch from the new remote
-   git checkout -b gh-pages gh-gap/gh-pages --no-track
-   ```
-
-5. Add in copies of your `PackageInfo.g`, `README` (or `README.md`) and manual:
-
-   ```
-   cp -f ../PackageInfo.g ../README* .
-   cp -f ../doc/*.{css,html,js,txt} doc/
-   ```
-
-6. Now run the `update.g` GAP script. This extracts data from your
-   `PackageInfo.g` file and puts that data into `_data/package.yml`.
-   From this, the website template can populate the web pages with
-   some sensible default values.
-
-   ```
-   gap update.g
-   ```
-
-7. Commit and push everything.
-
-   ```
-   git add PackageInfo.g README* doc/ _data/package.yml
-   git commit -m "Setup gh-pages based on GitHubPagesForGAP"
-   git push --set-upstream origin gh-pages
-   ```
-
-That's it. You can now see your new package website under
-https://USERNAME.github.io/REPOSITORY/ (of course after
-adjusting USERNAME and REPOSITORY suitably).
-
-
-## Using an existing gh-pages branch
-
-If you previously set up [GitHubPagesForGAP]() and thus already have a `gh-pages`
-branch, you may on occasion have need to make a fresh clone of your package
-repository, and then also would like to recreate the `gh-pages` directory.
-
-The easiest way to do this is to run the `setup-gh-pages` shell script
-provided in the [GitHubPagesForGAP]() from within a git clone of your
-package's GitHub repository.
-
-In case this does not work, or if you want to really know what's going
-on, you can also follow the manual instructions described after the fold.
-
-------
-
-Users with a recent enough git version (recommended is >= 2.7)
-can do this using a "worktree", via the following commands:
-
-   ```sh
-   git branch gh-pages origin/gh-pages
-   git worktree add gh-pages gh-pages
-   ```
-
-If you are using an older version of git, you can instead use a second clone
-of your repository instead:
-
-   ```sh
-   git clone -b gh-pages https://github.com/USERNAME/REPOSITORY gh-pages
-   ```
-
-
-## Adjusting the content and layout
-
-[GitHubPagesForGAP]() tries to automatically provide good defaults for
-most packages. However, you can tweak everything about it:
-
-* To adjust the page layout, edit the files `stylesheets/styles.css`
-and `_layouts/default.html`.
-
-* To adjust the content of the front page, edit `index.md` (resp.
-  for the content of the sidebar, edit `_layouts/default.html`
-
-* You can also add additional pages, in various formats (HTML,
-Markdown, Textile, ...).
-
-For details, please consult the [Jekyll](http://jekyllrb.com/)
-manual.
-
-
-## Testing the site locally
-
-If you would like to test your site on your own machine, without
-uploading it to GitHub (where it is visible to the public), you can do
-so by installing [Jekyll](http://jekyllrb.com/), the static web site
-generator used by GitHub to power GitHub Pages.
-
-Once you have installed Jekyll as described on its homepage, you can
-test the website locally as follows:
-
-1. Go to the `gh-pages` directory we created above.
-
-2. Run jekyll (this launches a tiny web server on your machine):
-
-   ```
-   jekyll serve -w
-   ```
-
-3. Visit the URL http://localhost:4000 in a web browser.
-
-
-## Updating after you made a release
-
-Whenever you make a release of your package (and perhaps more often than
-that), you will want to update your website. The easiest way is to use
-the `release` script from the [ReleaseTools][], which performs all
-the necessary steps for you, except for the very last of actually
-publishing the package (and it can do even that for you, if you
-pass the `-p` option to it).
-
-However, you can also do it manually. The steps for doing it are quite
-similar to the above:
-
-1. Go to the `gh-pages` directory we created above.
-
-2. Add in copies of your `PackageInfo.g`, `README` (or `README.md`) and manual:
-
-   ```
-   cp -f ../PackageInfo.g ../README* .
-   cp -f ../doc/*.{css,html,js,txt} doc/
-   ```
-
-3. Now run the `update.g` GAP script.
-
-4. Commit and push the work we have just done.
-
-   ```
-   git add PackageInfo.g README* doc/ _data/package.yml
-   git commit -m "Update web pages"
-   git push
-   ```
-
-A few seconds after you have done this, your changes will be online
-under https://USERNAME.github.io/REPOSITORY/ .
-
-
-## Updating to a newer version of GitHubPagesForGAP
-
-Normally you should not have to ever do this. However, if you really want to,
-you can attempt to update to the most recent version of [GitHubPagesForGAP]() via
-the following instructions. The difficulty of such an update depends on how
-much you tweaked the site after initially cloning [GitHubPagesForGAP]().
-
-1. Go to the `gh-pages` directory we created above.
-   Make sure that there are no uncommitted changes, as they will be lost
-   when following these instructions.
-
-2. Make sure the `gh-gap` remote exists and has the correct URL. If in doubt,
-   just re-add it:
-   ```
-   git remote remove gh-gap
-   git remote add gh-gap https://github.com/gap-system/GitHubPagesForGAP
-   ```
-
-3. Attempt to merge the latest GitHubPagesForGAP.
-   ```
-   git pull gh-gap gh-pages
-   ```
-
-4. If this produced no errors and just worked, skip to the next step.
-   But it is quite likely that you will have conflicts in the file
-   `_data/package.yml`, or in your `README` or `PackageInfo.g` files.
-   These can usually be resolved by entering this:
-   ```
-   cp ../PackageInfo.g ../README* .
-   gap update.g
-   git add PackageInfo.g README* _data/package.yml
-   ```
-   If you are lucky, these were the only conflicts (check with `git status`).
-   If no merge conflicts remain, finish with this command:
-   ```
-   git commit -m "Merge gh-gap/gh-pages"
-   ```
-   If you still have merge conflicts, and don't know how to resolve them, or
-   get stuck some other way, you can abort the merge process and revert to the
-   original state by issuing this command:
-   ```
-   git merge --abort
-   ```
-
-5. You should be done now. Don't forget to push your changes if you want them
-   to become public.
-
-
-## Packages using GitHubPagesForGAP
-
-The majority of packages listed on <https://gap-packages.github.io> use
-[GitHubPagesForGAP](). If you want some specific examples, here are some:
-
-* <https://gap-packages.github.io/anupq>
-* <https://gap-packages.github.io/cvec>
-* <https://gap-packages.github.io/genss>
-* <https://gap-packages.github.io/io>
-* <https://gap-packages.github.io/NormalizInterface>
-* <https://gap-packages.github.io/nq>
-* <https://gap-packages.github.io/orb>
-* <https://gap-packages.github.io/polenta>
-* <https://gap-packages.github.io/recog>
-
-
-## Contact
-
-Please submit bug reports, suggestions for improvements and patches via
-the [issue tracker](https://github.com/gap-system/GitHubPagesForGAP/issues).
-
-You can also contact me directly via [email](max@quendi.de).
-
-Copyright (c) 2013-2019 Max Horn
-
-[GitHubPagesForGAP]: https://github.com/gap-system/GitHubPagesForGAP
-[ReleaseTools]: https://github.com/gap-system/ReleaseTools
+#############################################################################
+##
+##  PackageInfo.g  file for the package XMod 
+##  Chris Wensley et al 
+
+SetPackageInfo( rec( 
+
+PackageName := "XMod",
+Subtitle := "Crossed Modules and Cat1-Groups",
+Version := "2.78",
+Date := "03/05/2020", # dd/mm/yyyy format
+License := "GPL-2.0-or-later",
+
+Persons := [
+  rec(
+    LastName      := "Wensley",
+    FirstNames    := "Chris",
+    IsAuthor      := true,
+    IsMaintainer  := true,
+    Email         := "c.d.wensley@bangor.ac.uk",
+    WWWHome       := "http://pages.bangor.ac.uk/~mas023/",
+    PostalAddress := Concatenation( [
+                      "Dr. C.D. Wensley\n",
+                      "School of Computer Science and Electronic Engineering\n",
+                      "Bangor University\n",
+                      "Dean Street\n",
+                      "Bangor\n",
+                      "Gwynedd LL57 1UT\n",
+                      "UK"] ),
+    Place         := "Llanfairfechan",
+    Institution   := "Bangor University"
+  ),
+  rec(
+    LastName      := "Alp",
+    FirstNames    := "Murat",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "muratalp@nigde.edu.tr",
+    PostalAddress := Concatenation( [ 
+                       "Prof. Dr. M. Alp\n",
+                       "Ömer Halisdemir University\n",
+                       "Art and Science Faculty\n",
+                       "Mathematics Department\n",
+                       "Nigde\n",
+                       "Turkey"] ),
+    Place         := "Nigde",
+    Institution   := "Ömer Halisdemir University"
+  ),
+    rec(
+    LastName      := "Odabas",
+    FirstNames    := "Alper",
+    IsAuthor      := true,
+    IsMaintainer  := false,
+    Email         := "aodabas@ogu.edu.tr",
+    PostalAddress := Concatenation( [ 
+                       "Dr. A. Odabas \n",
+                       "Osmangazi University \n",
+                       "Arts and Sciences Faculty \n",
+                       "Department of Mathematics and Computer Science \n",
+                       "Eskisehir \n",
+                       "Turkey"] ),
+    Place         := "Eskisehir",
+    Institution   := "Osmangazi University"
+  ),
+    rec(
+    LastName      := "Uslu",
+    FirstNames    := "Enver Onder",
+    IsAuthor      := true,
+    IsMaintainer  := false
+  )
+],
+
+Status := "accepted",
+CommunicatedBy := "Derek Holt (Warwick)",
+AcceptDate := "12/1996",
+
+SourceRepository := rec( 
+    Type             := "git", 
+    URL              := "https://github.com/gap-packages/xmod" ),
+    IssueTrackerURL  := Concatenation( ~.SourceRepository.URL, "/issues" ),
+    PackageWWWHome   := "https://gap-packages.github.io/xmod/",
+    README_URL       := Concatenation( ~.PackageWWWHome, "README.md" ),
+    PackageInfoURL   := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
+    ArchiveURL       := Concatenation( ~.SourceRepository.URL, 
+                                       "/releases/download/v", ~.Version, 
+                                       "/", ~.PackageName, "-", ~.Version ), 
+
+SupportEmail := "c.d.wensley@bangor.ac.uk",
+ArchiveFormats  := ".tar.gz",
+
+AbstractHTML :=
+ "The <span class=\"pkgname\">XMod</span> package provides a collection \
+  of functions for computing with crossed modules and cat1-groups, \
+their derivations and sections, morphisms of these structures, \
+and higher-dimensional generalisations.",
+
+PackageDoc := rec(
+  BookName  := "XMod",
+  ArchiveURLSubset := ["doc"],
+  HTMLStart := "doc/chap0.html",
+  PDFFile   := "doc/manual.pdf",
+  SixFile   := "doc/manual.six",
+  LongTitle := "Crossed Modules and Cat1-Groups in GAP",
+  Autoload  := true
+),
+
+Dependencies := rec(
+  GAP := ">=4.11.0",
+  NeededOtherPackages := [ ["Utils", ">= 0.69"], 
+                           ["groupoids", ">= 1.68"], 
+                           ["Hap", ">= 1.25"],
+                           ["AutPGrp", ">= 1.10.2"], 
+                           ["SmallGrp", ">= 1.4.1" ] ], 
+  SuggestedOtherPackages := [ ["AutoDoc", ">=2019.09.04"], 
+                              ["GAPDoc", ">= 1.6.2"] ],
+  ExternalConditions := [ ]
+),
+
+AvailabilityTest := ReturnTrue,
+
+BannerString := Concatenation( 
+  "Loading XMod ", String( ~.Version ), 
+  " (methods for crossed modules and cat1-groups)\n",
+  "by Chris Wensley (http://pages.bangor.ac.uk/~mas023/),\n", 
+  " with contributions from:\n", 
+  "    Murat Alp (muratalp@nigde.edu.tr),\n", 
+  "    Alper Odabas (aodabas@ogu.edu.tr),\n", 
+  "and Enver Uslu.\n", 
+  "----------",
+  "-------------------------------------------------------------------\n" ), 
+
+Autoload := false, 
+
+TestFile := "tst/testall.g",
+
+Keywords := ["crossed module", "cat1-group", "derivation", "section", 
+             "actor", "crossed square" ], 
+
+AutoDoc := rec(
+    TitlePage := rec(
+        Copyright := Concatenation(
+            "&copyright; 1996-2020, Chris Wensley et al. <P/>\n", 
+            "The &XMod; package is free software; you can redistribute it ", 
+            "and/or modify it under the terms of the GNU General ", 
+            "Public License as published by the Free Software Foundation; ", 
+            "either version 2 of the License, or (at your option) ", 
+            "any later version.\n"
+            ),
+        Abstract := Concatenation( 
+            "The &XMod; package provides functions for computation with\n",
+            "<List>\n", 
+            "  <Item>\n", 
+            "  finite crossed modules of groups and cat1-groups, \n", 
+            "  and morphisms of these structures; \n", 
+            "  </Item>\n", 
+            "  <Item>\n", 
+            "  finite pre-crossed modules, pre-cat1-groups, ", 
+            "  and their Peiffer quotients;\n", 
+            "  </Item>\n", 
+            "  <Item>\n", 
+            "  isoclinism classes of groups and crossed modules; \n", 
+            "  </Item>\n", 
+            "  <Item>\n", 
+            "  derivations of crossed modules and sections of cat1-groups; \n", 
+            "  </Item>\n", 
+            "  <Item>\n", 
+            "  crossed squares and their morphisms, ", 
+            "  including the actor crossed square of a crossed module; \n", 
+            "  </Item>\n", 
+            "  <Item>\n", 
+            "  crossed modules of finite groupoids (experimental version). \n", 
+            "  </Item>\n", 
+            "</List>\n", 
+            "<P/>\n", 
+            "&XMod; was originally implemented in 1996 using the &GAP;3 ", 
+            "language, when the second author was studying for a Ph.D. ", 
+            "<Cite Key='A1'/> in Bangor.\n", 
+            "<P/>\n", 
+            "In April 2002 the first and third parts were converted ", 
+            "to &GAP;4, the pre-structures were added, ", 
+            "and version 2.001 was released. \n", 
+            "The final two parts, covering derivations, sections and actors, ", 
+            "were included in the January 2004 release 2.002 for &GAP; 4.4.\n", 
+            "<P/>\n", 
+            "In October 2015 functions for computing isoclinism classes of ", 
+            "crossed modules, written by Alper Odaba&#x15f; and Enver Uslu, ", 
+            "were added.\n",  
+            "These are contained in Chapter <Ref Chap='chap-isclnc' />, ", 
+            "and are described in detail in the paper <Cite Key='IOU1' />.\n", 
+            "<P/>\n", 
+            "Bug reports, suggestions and comments are, of course, welcome. ", 
+            "Please submit an issue at ", 
+            "<URL>https://github.com/gap-packages/xmod/issues/</URL> ", 
+            "or send an email to the first author at ", 
+            "<Email>c.d.wensley@bangor.ac.uk</Email>. \n", 
+            "<P/>\n"
+            ), 
+        Acknowledgements := Concatenation( 
+            "This documentation was prepared using the ", 
+            "&GAPDoc; <Cite Key='GAPDoc'/> and ", 
+            "&AutoDoc; <Cite Key='AutoDoc'/> packages.<P/>\n", 
+            "The procedure used to produce new releases uses the package ", 
+            "<Package>GitHubPagesForGAP</Package> ", 
+            "<Cite Key='GitHubPagesForGAP' /> ", 
+            "and the package <Package>ReleaseTools</Package>.<P/>" 
+            ),
+    ) 
+),
+
+));
