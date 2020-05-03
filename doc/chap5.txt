@@ -1,0 +1,318 @@
+  
+  [1X5 [33X[0;0YWhitehead group of a crossed module[133X[101X
+  
+  
+  [1X5.1 [33X[0;0YDerivations and Sections[133X[101X
+  
+  [33X[0;0YThe  Whitehead  monoid  [22XDer(calX)[122X  of  [22XcalX[122X was defined in [Whi48] to be the
+  monoid  of all [13Xderivations[113X from [22XR[122X to [22XS[122X, that is the set of all maps [22Xχ : R ->
+  S[122X, with [13XWhitehead multiplication[113X [22X⋆[122X (on the [13Xright[113X) satisfying:[133X
+  
+  
+  [24X[33X[0;6Y{\bf  Der\  1}:  \chi(qr) ~=~ (\chi q)^{r} \; (\chi r), \qquad {\bf Der\ 2}:
+  (\chi_1 \star \chi_2)(r) ~=~ (\chi_2 r)(\chi_1 r)(\chi_2 \partial \chi_1 r).[133X
+  
+  [124X
+  
+  [33X[0;0YThe  zero  map  is the identity for this composition. Invertible elements in
+  the  monoid  are called [13Xregular[113X. The Whitehead group of [22XcalX[122X is the group of
+  regular  derivations in [22XDer(calX )[122X. In the next chapter the [13Xactor[113X of [22XcalX[122X is
+  defined  as  a  crossed  module  whose  source  and  range  are  permutation
+  representations of the Whitehead group and the automorphism group of [22XcalX[122X.[133X
+  
+  [33X[0;0YThe  construction  for cat1-groups equivalent to the derivation of a crossed
+  module  is the [13Xsection[113X. The monoid of sections of [22XcalC = (e;t,h : G -> R)[122X is
+  the  set  of group homomorphisms [22Xξ : R -> G[122X, with Whitehead multiplication [22X⋆[122X
+  (on the [13Xright[113X) satisfying:[133X
+  
+  
+  [24X[33X[0;6Y{\bf Sect\ 1}: t \circ \xi ~=~ {\rm id}_R, \quad {\bf Sect\ 2}: (\xi_1 \star
+  \xi_2)(r)  ~=~  (\xi_1  r)(e  h  \xi_1 r)^{-1}(\xi_2 h \xi_1 r) ~=~ (\xi_2 h
+  \xi_1 r)(e h \xi_1 r)^{-1}(\xi_1 r).[133X
+  
+  [124X
+  
+  [33X[0;0YThe  embedding [22Xe[122X is the identity for this composition, and [22Xh(ξ_1 ⋆ ξ_2) = (h
+  ξ_1)(h ξ_2)[122X. A section is [13Xregular[113X when [22Xh ξ[122X is an automorphism, and the group
+  of regular sections is isomorphic to the Whitehead group.[133X
+  
+  [33X[0;0YIf [22Xϵ[122X denotes the inclusion of [22XS = ker t[122X in [22XG[122X then [22X∂ = h ϵ : S -> R[122X and[133X
+  
+  
+  [24X[33X[0;6Y\xi r ~=~ (e r)(e \chi r), \quad\mbox{which equals}\quad (r, \chi r) ~\in~ R
+  \ltimes S,[133X
+  
+  [124X
+  
+  [33X[0;0Ydetermines a section [22Xξ[122X of [22XcalC[122X in terms of the corresponding derivation [22Xχ[122X of
+  [22XcalX[122X, and conversely.[133X
+  
+  [1X5.1-1 DerivationByImages[101X
+  
+  [33X[1;0Y[29X[2XDerivationByImages[102X( [3XX0[103X, [3Xims[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsDerivation[102X( [3Xmap[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsUp2DimensionalMapping[102X( [3Xmap[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XUpImagePositions[102X( [3Xchi[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XUpGeneratorImages[102X( [3Xchi[103X ) [32X attribute[133X
+  
+  [33X[0;0YDerivations  are stored like group homomorphisms by specifying the images of
+  a  generating  set.  Images  of  the remaining elements may then be obtained
+  using  axiom  [22XDer  1[122X.  The  function [10XIsDerivation[110X is automatically called to
+  check that this procedure is well-defined.[133X
+  
+  [33X[0;0YIn  the  following example a cat1-group [10XC3[110X and the associated crossed module
+  [10XX3[110X  are  constructed,  where [10XX3[110X is isomorphic to the inclusion of the normal
+  cyclic group [10Xc3[110X in the symmetric group [10Xs3[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xg18 := Group( (1,2,3), (4,5,6), (2,3)(5,6) );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( g18, "g18" );[127X[104X
+    [4X[25Xgap>[125X [27Xgen18 := GeneratorsOfGroup( g18 );;[127X[104X
+    [4X[25Xgap>[125X [27Xg1 := gen18[1];;  g2 := gen18[2];;  g3 := gen18[3];;[127X[104X
+    [4X[25Xgap>[125X [27Xs3 := Subgroup( g18, gen18{[2..3]} );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( s3, "s3" );;[127X[104X
+    [4X[25Xgap>[125X [27Xt := GroupHomomorphismByImages( g18, s3, gen18, [g2,g2,g3] );;[127X[104X
+    [4X[25Xgap>[125X [27Xh := GroupHomomorphismByImages( g18, s3, gen18, [(),g2,g3] );;[127X[104X
+    [4X[25Xgap>[125X [27Xe := GroupHomomorphismByImages( s3, g18, [g2,g3], [g2,g3] );;[127X[104X
+    [4X[25Xgap>[125X [27XC3 := Cat1Group( t, h, e );[127X[104X
+    [4X[28X[g18=>s3][128X[104X
+    [4X[25Xgap>[125X [27XSetName( Kernel(t), "c3" );;[127X[104X
+    [4X[25Xgap>[125X [27XX3 := XModOfCat1Group( C3 );[127X[104X
+    [4X[28X[c3->s3][128X[104X
+    [4X[25Xgap>[125X [27Ximchi1 := [ (), (1,2,3)(4,6,5) ];;[127X[104X
+    [4X[25Xgap>[125X [27Xchi1 := DerivationByImages( X3, imchi1 );[127X[104X
+    [4X[28XDerivationByImages( s3, c3, [ (4,5,6), (2,3)(5,6) ], [128X[104X
+    [4X[28X[ (), (1,2,3)(4,6,5) ] )[128X[104X
+    [4X[25Xgap>[125X [27X[ IsUp2DimensionalMapping( chi1 ), IsDerivation( chi1 ) ];[127X[104X
+    [4X[28X[ true, true ][128X[104X
+    [4X[25Xgap>[125X [27XUpImagePositions( chi1 );[127X[104X
+    [4X[28X[ 1, 1, 1, 2, 2, 2 ][128X[104X
+    [4X[25Xgap>[125X [27XUpGeneratorImages( chi1 ); [127X[104X
+    [4X[28X[ (), (1,2,3)(4,6,5) ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X5.1-2 PrincipalDerivation[101X
+  
+  [33X[1;0Y[29X[2XPrincipalDerivation[102X( [3XX0[103X, [3Xs[103X ) [32X operation[133X
+  
+  [33X[0;0YThe [13Xprincipal derivation[113X determined by [22Xs ∈ S[122X is the derivation [22Xη_s : R -> S,
+  r ↦ (s^-1)^rs[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xeta := PrincipalDerivation( X3, (1,2,3)(4,6,5) );[127X[104X
+    [4X[28XDerivationByImages( s3, c3, [ (4,5,6), (2,3)(5,6) ], [ (), (1,3,2)(4,5,6) ] )[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X5.1-3 SectionByHomomorphism[101X
+  
+  [33X[1;0Y[29X[2XSectionByHomomorphism[102X( [3XC[103X, [3Xhom[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsSection[102X( [3Xhom[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XSectionByDerivation[102X( [3Xchi[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XDerivationBySection[102X( [3Xxi[103X ) [32X operation[133X
+  
+  [33X[0;0YSections  [13Xare[113X  group homomorphisms, so do not need a special representation.
+  Operations  [10XSectionByDerivation[110X  and [10XDerivationBySection[110X convert derivations
+  to   sections,   and   vice-versa,   calling   [2XCat1GroupOfXMod[102X  ([14X2.5-3[114X)  and
+  [2XXModOfCat1Group[102X ([14X2.5-3[114X) automatically.[133X
+  
+  [33X[0;0YTwo strategies for calculating derivations and sections are implemented, see
+  [AW00].  The  default method for [2XAllDerivations[102X ([14X5.2-1[114X) is to search for all
+  possible  sets  of  images  using a backtracking procedure, and when all the
+  derivations  are  found it is not known which are regular. In early versions
+  of  this  package,  the default method for [10XAllSections( <C> )[110X was to compute
+  all  endomorphisms  on  the  range  group  [10XR[110X  of  [10XC[110X as possibilities for the
+  composite  [22Xh  ξ[122X.  A  backtrack  method then found possible images for such a
+  section.  In  the  current version the derivations of the associated crossed
+  module  are  calculated,  and  these  are  all  converted  to sections using
+  [2XSectionByDerivation[102X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xhom2 := GroupHomomorphismByImages( s3, g18, [ (4,5,6), (2,3)(5,6) ], [127X[104X
+    [4X[25X>[125X [27X[ (1,3,2)(4,6,5), (1,2)(4,6) ] );;[127X[104X
+    [4X[25Xgap>[125X [27Xxi2 := SectionByHomomorphism( C3, hom2 );                                 [127X[104X
+    [4X[28XSectionByHomomorphism( s3, g18, [ (4,5,6), (2,3)(5,6) ], [128X[104X
+    [4X[28X[ (1,3,2)(4,6,5), (1,2)(4,6) ] )[128X[104X
+    [4X[25Xgap>[125X [27X[ IsUp2DimensionalMapping( xi2 ), IsSection( xi2 ) ];[127X[104X
+    [4X[28X[ true, true ][128X[104X
+    [4X[25Xgap>[125X [27Xchi2 := DerivationBySection( xi2 );[127X[104X
+    [4X[28XDerivationByImages( s3, c3, [ (4,5,6), (2,3)(5,6) ], [128X[104X
+    [4X[28X[ (1,3,2)(4,5,6), (1,2,3)(4,6,5) ] )[128X[104X
+    [4X[25Xgap>[125X [27Xxi1 := SectionByDerivation( chi1 );[127X[104X
+    [4X[28XSectionByHomomorphism( s3, g18, [ (4,5,6), (2,3)(5,6) ], [128X[104X
+    [4X[28X[ (1,2,3), (1,2)(4,6) ] )[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X5.1-4 IdentityDerivation[101X
+  
+  [33X[1;0Y[29X[2XIdentityDerivation[102X( [3XX0[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XIdentitySection[102X( [3XC0[103X ) [32X attribute[133X
+  
+  [33X[0;0YThe identity derivation maps the range group to the identity subgroup of the
+  source, while the identity section is just the range embedding considered as
+  a section.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XIdentityDerivation( X3 ); [127X[104X
+    [4X[28XDerivationByImages( s3, c3, [ (4,5,6), (2,3)(5,6) ], [ (), () ] )[128X[104X
+    [4X[25Xgap>[125X [27XIdentitySection(C3);     [127X[104X
+    [4X[28XSectionByHomomorphism( s3, g18, [ (4,5,6), (2,3)(5,6) ], [128X[104X
+    [4X[28X[ (4,5,6), (2,3)(5,6) ] )[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X5.1-5 WhiteheadProduct[101X
+  
+  [33X[1;0Y[29X[2XWhiteheadProduct[102X( [3Xchi1[103X, [3Xchi2[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XWhiteheadOrder[102X( [3Xchi[103X ) [32X operation[133X
+  
+  [33X[0;0YThe [10XWhiteheadProduct[110X may be applied to two derivations to form [22Xχ_1 ⋆ χ_2[122X, or
+  to  two  sections  to  form  [22Xξ_1  ⋆  ξ_2[122X.  The  [10XWhiteheadOrder[110X  of a regular
+  derivation  [22Xχ[122X  is  the smallest power of [22Xχ[122X, using this product, equal to the
+  [2XIdentityDerivation[102X ([14X5.1-4[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xchi12 := WhiteheadProduct( chi1, chi2 );[127X[104X
+    [4X[28XDerivationByImages( s3, c3, [ (4,5,6), (2,3)(5,6) ], [ (1,2,3)(4,6,5), () ] )[128X[104X
+    [4X[25Xgap>[125X [27Xxi12 := WhiteheadProduct( xi1, xi2 );[127X[104X
+    [4X[28XSectionByHomomorphism( s3, g18, [ (4,5,6), (2,3)(5,6) ], [128X[104X
+    [4X[28X[ (1,2,3), (2,3)(5,6) ] )[128X[104X
+    [4X[25Xgap>[125X [27Xxi12 = SectionByDerivation( chi12 ); [127X[104X
+    [4X[28Xtrue [128X[104X
+    [4X[25Xgap>[125X [27X[ WhiteheadOrder( chi2 ), WhiteheadOrder( xi2 ) ];[127X[104X
+    [4X[28X[ 2, 2 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X5.2 [33X[0;0YWhitehead Groups and Monoids[133X[101X
+  
+  [33X[0;0YAs  mentioned  at  the  beginning  of  this  chapter,  the  Whitehead monoid
+  [22XDer(calX)[122X  of  [22XcalX[122X is the monoid of all derivations from [22XR[122X to [22XS[122X. Monoids of
+  derivations    have    representation   [10XIsMonoidOfUp2DimensionalMappingsObj[110X.
+  Multiplication  tables  for  Whitehead  monoids  enable  the construction of
+  transformation representations.[133X
+  
+  [1X5.2-1 AllDerivations[101X
+  
+  [33X[1;0Y[29X[2XAllDerivations[102X( [3XX0[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XImagesTable[102X( [3Xobj[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XDerivationClass[102X( [3Xmon[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XWhiteheadMonoidTable[102X( [3XX0[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XWhiteheadTransformationMonoid[102X( [3XX0[103X ) [32X attribute[133X
+  
+  [33X[0;0YUsing our example [10XX3[110X we find that there are just nine derivations.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xall3 := AllDerivations( X3 );[127X[104X
+    [4X[28Xmonoid of derivations with images list:[128X[104X
+    [4X[28X[ (), () ][128X[104X
+    [4X[28X[ (), (1,3,2)(4,5,6) ][128X[104X
+    [4X[28X[ (), (1,2,3)(4,6,5) ][128X[104X
+    [4X[28X[ (1,3,2)(4,5,6), () ][128X[104X
+    [4X[28X[ (1,3,2)(4,5,6), (1,3,2)(4,5,6) ][128X[104X
+    [4X[28X[ (1,3,2)(4,5,6), (1,2,3)(4,6,5) ][128X[104X
+    [4X[28X[ (1,2,3)(4,6,5), () ][128X[104X
+    [4X[28X[ (1,2,3)(4,6,5), (1,3,2)(4,5,6) ][128X[104X
+    [4X[28X[ (1,2,3)(4,6,5), (1,2,3)(4,6,5) ][128X[104X
+    [4X[25Xgap>[125X [27XDerivationClass( all3 );[127X[104X
+    [4X[28X"all"[128X[104X
+    [4X[25Xgap>[125X [27XPerform( ImagesTable( all3 ), Display );[127X[104X
+    [4X[28X[ 1, 1, 1, 1, 1, 1 ][128X[104X
+    [4X[28X[ 1, 1, 1, 3, 3, 3 ][128X[104X
+    [4X[28X[ 1, 1, 1, 2, 2, 2 ][128X[104X
+    [4X[28X[ 1, 3, 2, 1, 3, 2 ][128X[104X
+    [4X[28X[ 1, 3, 2, 3, 2, 1 ][128X[104X
+    [4X[28X[ 1, 3, 2, 2, 1, 3 ][128X[104X
+    [4X[28X[ 1, 2, 3, 1, 2, 3 ][128X[104X
+    [4X[28X[ 1, 2, 3, 3, 1, 2 ][128X[104X
+    [4X[28X[ 1, 2, 3, 2, 3, 1 ][128X[104X
+    [4X[25Xgap>[125X [27Xwmt3 := WhiteheadMonoidTable( X3 );; [127X[104X
+    [4X[25Xgap>[125X [27XPerform( wmt3, Display );[127X[104X
+    [4X[28X[ 1, 2, 3, 4, 5, 6, 7, 8, 9 ][128X[104X
+    [4X[28X[ 2, 3, 1, 5, 6, 4, 8, 9, 7 ][128X[104X
+    [4X[28X[ 3, 1, 2, 6, 4, 5, 9, 7, 8 ][128X[104X
+    [4X[28X[ 4, 6, 5, 1, 3, 2, 7, 9, 8 ][128X[104X
+    [4X[28X[ 5, 4, 6, 2, 1, 3, 8, 7, 9 ][128X[104X
+    [4X[28X[ 6, 5, 4, 3, 2, 1, 9, 8, 7 ][128X[104X
+    [4X[28X[ 7, 7, 7, 7, 7, 7, 7, 7, 7 ][128X[104X
+    [4X[28X[ 8, 8, 8, 8, 8, 8, 8, 8, 8 ][128X[104X
+    [4X[28X[ 9, 9, 9, 9, 9, 9, 9, 9, 9 ][128X[104X
+    [4X[25Xgap>[125X [27Xwtm3 := WhiteheadTransformationMonoid( X3 );[127X[104X
+    [4X[28X<transformation monoid of degree 9 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XGeneratorsOfMonoid( wtm3 ); [127X[104X
+    [4X[28X[ Transformation( [ 2, 3, 1, 5, 6, 4, 8, 9, 7 ] ), [128X[104X
+    [4X[28X  Transformation( [ 4, 6, 5, 1, 3, 2, 7, 9, 8 ] ), [128X[104X
+    [4X[28X  Transformation( [ 7, 7, 7, 7, 7, 7, 7, 7, 7 ] ) ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X5.2-2 RegularDerivations[101X
+  
+  [33X[1;0Y[29X[2XRegularDerivations[102X( [3XX0[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XImagesList[102X( [3Xobj[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XWhiteheadGroupTable[102X( [3XX0[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XWhiteheadPermGroup[102X( [3XX0[103X ) [32X attribute[133X
+  
+  [33X[0;0Y[10XRegularDerivations[110X are those derivations which are invertible in the monoid.
+  Multiplication  tables  for  the  Whitehead group enable the construction of
+  permutation representations.[133X
+  
+  [33X[0;0YOf  the nine derivations of [10XX3[110X just six are regular. The associated group is
+  isomorphic to the symmetric group [10Xs3[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xreg3 := RegularDerivations( X3 );[127X[104X
+    [4X[28Xmonoid of derivations with images list:[128X[104X
+    [4X[28X[ (), () ][128X[104X
+    [4X[28X[ (), (1,3,2)(4,5,6) ][128X[104X
+    [4X[28X[ (), (1,2,3)(4,6,5) ][128X[104X
+    [4X[28X[ (1,3,2)(4,5,6), () ][128X[104X
+    [4X[28X[ (1,3,2)(4,5,6), (1,3,2)(4,5,6) ][128X[104X
+    [4X[28X[ (1,3,2)(4,5,6), (1,2,3)(4,6,5) ][128X[104X
+    [4X[25Xgap>[125X [27Xwgt3 := WhiteheadGroupTable( X3 );; [127X[104X
+    [4X[25Xgap>[125X [27XPerform( wgt3, Display );[127X[104X
+    [4X[28X[ [ 1, 2, 3, 4, 5, 6 ],[128X[104X
+    [4X[28X  [ 2, 3, 1, 5, 6, 4 ],[128X[104X
+    [4X[28X  [ 3, 1, 2, 6, 4, 5 ],[128X[104X
+    [4X[28X  [ 4, 6, 5, 1, 3, 2 ],[128X[104X
+    [4X[28X  [ 5, 4, 6, 2, 1, 3 ],[128X[104X
+    [4X[28X  [ 6, 5, 4, 3, 2, 1 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xwpg3 := WhiteheadPermGroup( X3 );[127X[104X
+    [4X[28XGroup([ (1,2,3)(4,5,6), (1,4)(2,6)(3,5) ])[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X5.2-3 PrincipalDerivations[101X
+  
+  [33X[1;0Y[29X[2XPrincipalDerivations[102X( [3XX0[103X ) [32X attribute[133X
+  
+  [33X[0;0YThe principal derivations form a subgroup of the Whitehead group.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XPDX3 := PrincipalDerivations( X3 );[127X[104X
+    [4X[28Xmonoid of derivations with images list:[128X[104X
+    [4X[28X[ (), () ][128X[104X
+    [4X[28X[ (), (1,3,2)(4,5,6) ][128X[104X
+    [4X[28X[ (), (1,2,3)(4,6,5) ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X5.2-4 AllSections[101X
+  
+  [33X[1;0Y[29X[2XAllSections[102X( [3XC0[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XRegularSections[102X( [3XC0[103X ) [32X attribute[133X
+  
+  [33X[0;0YThese  operations  have  been  declared  but  are  not  yet implemented. The
+  interested user should, instead, work with the corresponding derivations.[133X
+  

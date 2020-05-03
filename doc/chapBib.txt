@@ -1,0 +1,93 @@
+  
+  
+  [1XReferences[101X
+  
+  [[20XAlp97[120X]   [16XAlp,  M.[116X,  [17XGAP,  crossed  modules,  cat1-groups:  applications  of
+  computational  group  theory[117X,  Ph.D.  thesis,  University  of  Wales, Bangor
+  (1997).
+  
+  [[20XAW00[120X]  [16XAlp, M. and Wensley, C. D.[116X, [17XEnumeration of cat1-groups of low order[117X,
+  [18XInt. J. Algebra and Computation[118X, [19X10[119X (2000), 407--424.
+  
+  [[20XAW10[120X] [16XAlp, M. and Wensley, C. D.[116X, [17XAutomorphisms and homotopies of groupoids
+  and crossed modules[117X, [18XApplied Categorical Structures[118X, [19X18[119X (2010), 473-495.
+  
+  [[20XBH78[120X]  [16XBrown,  R.  and Higgins, P. J.[116X, [17XOn the connection between the second
+  relative homotopy group and some related spaces[117X, [18XProc. London Math. Soc.[118X, [19X36[119X
+  (1978), 193--212.
+  
+  [[20XBHS11[120X]  [16XBrown,  R.,  Higgins,  P.  J. and Sivera, R.[116X, [17XNonabelian algrebraic
+  topology[117X, European Mathematical Society, Tracts in Mathematics, [19X15[119X (2011).
+  
+  [[20XBL87[120X]  [16XBrown,  R.  and  Loday,  J.-L.[116X,  [17XVan  Kampen theorems for diagram of
+  spaces[117X, [18XTopology[118X, [19X26[119X (1987), 311--335.
+  
+  [[20XBro82[120X] [16XBrown, R.[116X ([1m[31mBrown, R. and Thickstun, T. L.[15X, Eds.), [17XHigher-dimensional
+  group  theory[117X,  in  Low-dimensional  topology,  Cambridge  University Press,
+  London Math. Soc. Lecture Note Series, [19X48[119X (1982), 215--238.
+  
+  [[20XBro18[120X]  [16XBrown,  R.[116X, [17XCrossed modules, and the homotopy 2-type of a free loop
+  space[117X, [18XarXiv:1003.5617 [math.AT][118X (2018), 1--11.
+  
+  [[20XBW95[120X]  [16XBrown, R. and Wensley, C. D.[116X, [17XOn finite induced crossed modules, and
+  the homotopy 2-type of mapping cones[117X, [18XTheory and Applications of Categories[118X,
+  [19X1[119X (1995), 54--71.
+  
+  [[20XBW96[120X] [16XBrown, R. and Wensley, C. D.[116X, [17XComputing crossed modules induced by an
+  inclusion  of  a  normal  subgroup,  with  applications to homotopy 2-types[117X,
+  [18XTheory and Applications of Categories[118X, [19X2[119X (1996), 3--16.
+  
+  [[20XBW03[120X]   [16XBrown,   R.   and  Wensley,  C.  D.[116X,  [17XComputation  and  homotopical
+  applications of induced crossed modules[117X, [18XJ. Symbolic Computation[118X, [19X35[119X (2003),
+  59--72.
+  
+  [[20XEll84[120X]  [16XEllis,  G.[116X, [17XCrossed modules and their higher dimensional analogues[117X,
+  Ph.D. thesis, University of Wales, Bangor (1984).
+  
+  [[20XES87[120X] [16XEllis, G. and Steiner, R.[116X, [17XHigher dimensional crossed modules and the
+  homotopy  groups  of  (n+1)-ads.[117X,  [18XJ.  Pure  and  Appl.  Algebra[118X, [19X46[119X (1987),
+  117--136.
+  
+  [[20XGH17[120X]  [16XGutsche,  S. and Horn, M.[116X, [17XAutoDoc - Generate documentation from GAP
+  source    code    (Version    2017.09.15)[117X    (2017),    ((    GAP   package,
+  https://github.com/gap-packages/AutoDoc )).
+  
+  [[20XGil90[120X]  [16XGilbert,  N.  D.[116X,  [17XDerivations,  automorphisms and crossed modules[117X,
+  [18XComm. in Algebra[118X, [19X18[119X (1990), 2703--2734.
+  
+  [[20XHor17[120X] [16XHorn, M.[116X, [17XGitHubPagesForGAP - Template for easily using GitHub Pages
+  within    GAP    packages    (Version   0.2)[117X   (2017),   ((   GAP   package,
+  https://gap-system.github.io/GitHubPagesForGAP/ )).
+  
+  [[20XIOU16[120X]  [16XIlgaz,  E.,  Odabas,  A.  and  Uslu,  E.  O.[116X, [17XIsoclinism of crossed
+  modules[117X,       [18XJ.       Symb.       Comput.[118X,       [19X[119X      (2016),      1--17,
+  ((http://dx.doi.org/10.1016/j.jsc.2015.08.006)).
+  
+  [[20XJNO90[120X]  [16XJames,  R.,  Newman,  M. F. and O'Brien, E. A.[116X, [17XThe groups of order
+  128[117X, [18XJ. Algebra[118X, [19X129[119X (1990), 136--158.
+  
+  [[20XLN17[120X]  [16XLübeck,  F.  and  Neunhöffer,  M.[116X, [17XGAPDoc (version 1.6)[117X, RWTH Aachen
+  (2017),                   ((                   GAP                  package,
+  http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/index.html )).
+  
+  [[20XLod82[120X] [16XLoday, J.-L.[116X, [17XSpaces with finitely many non-trivial homotopy groups[117X,
+  [18XJ. App. Algebra[118X, [19X24[119X (1982), 179--202.
+  
+  [[20XMoo01[120X]  [16XMoore,  E. J.[116X, [17XGraphs of Groups: Word Computations and Free Crossed
+  Resolutions[117X, Ph.D. thesis, University of Wales, Bangor (2001).
+  
+  [[20XNor87[120X]  [16XNorrie,  K.  J.[116X,  [17XCrossed  modules and analogues of group theorems[117X,
+  Ph.D. thesis, King's College, University of London (1987).
+  
+  [[20XNor90[120X]  [16XNorrie,  K. J.[116X, [17XActions and automorphisms of crossed modules[117X, [18XBull.
+  Soc. Math. France[118X, [19X118[119X (1990), 129--146.
+  
+  [[20XWhi48[120X]  [16XWhitehead, J. H. C.[116X, [17XOn operators in relative homotopy groups[117X, [18XAnn.
+  of Math.[118X, [19X49[119X (1948), 610--640.
+  
+  [[20XWhi49[120X]  [16XWhitehead,  J.  H. C.[116X, [17XCombinatorial homotopy II[117X, [18XBull. Amer. Math.
+  Soc.[118X, [19X55[119X (1949), 453--496.
+  
+  
+  
+  [32X

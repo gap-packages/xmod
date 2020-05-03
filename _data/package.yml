@@ -1,18 +1,18 @@
 name: GitHubPagesForGAP
-version: "0.2"
+version: "0.3"
 license: "0BSD"
-date: 2017-02-04
+date: 2019-11-10
 description: |
     A GitHub Pages generator for GAP packages
 
 authors:
     - name: Max Horn
-      url: http://www.quendi.de/math
+      url: https://www.quendi.de/math
     - name: A. U. Thor
 
 maintainers:
     - name: Max Horn
-      url: http://www.quendi.de/math
+      url: https://www.quendi.de/math
     - name: Jan Itor
 
 GAP: ">=4.8.1"
@@ -37,9 +37,9 @@ github: https://github.com/gap-system/GitHubPagesForGAP
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/gap-system/GitHubPagesForGAP/releases/download/v0.2/GitHubPagesForGAP-0.2.tar.gz
+      url: https://github.com/gap-system/GitHubPagesForGAP/releases/download/v0.3/GitHubPagesForGAP-0.3.tar.gz
     - name: .tar.bz2
-      url: https://github.com/gap-system/GitHubPagesForGAP/releases/download/v0.2/GitHubPagesForGAP-0.2.tar.bz2
+      url: https://github.com/gap-system/GitHubPagesForGAP/releases/download/v0.3/GitHubPagesForGAP-0.3.tar.bz2
 
 abstract: |
     This is a pseudo package that contains no actual  <span class="pkgname">GAP</span> code. Instead, it is a template for other  GAP packages that allows to quickly setup GitHub Pages.
@@ -51,26 +51,28 @@ keywords: |
     GitHub Pages, GAP.
 citeas: |
     <p class='BibEntry'>
-    [<span class='BibKey'>HTI17</span>]   <b class='BibAuthor'>Horn, M., Thor, A. U. and Itor, J.</b>,
+    [<span class='BibKey'>HTI19</span>]   <b class='BibAuthor'>Horn, M., Thor, A. U. and Itor, J.</b>,
      <i class='BibTitle'>GitHubPagesForGAP, A GitHub Pages generator for GAP packages,
-             Version 0.2</i>
-     (<span class='BibYear'>2017</span>)<br />
+             Version 0.3</i>
+     (<span class='BibYear'>2019</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://gap-system.github.io/GitHubPagesForGAP/">https://gap-system.github.io/GitHubPagesForGAP/</a></span>.
     </p>
     
 
 bibtex: |
-    @misc{ GitHubPagesForGAP0.2,
+    @misc{ GitHubPagesForGAP0.3,
       author =           {Horn, M. and Thor, A. U. and Itor, J.},
-      title =            {{GitHubPagesForGAP}, A GitHub Pages generator for GAP packages, {V}ersion 0.2},
-      month =            {Feb},
-      year =             {2017},
+      title =            {{GitHubPagesForGAP},  A GitHub Pages generator for GAP
+                          packages, {V}ersion 0.3},
+      month =            {Nov},
+      year =             {2019},
       note =             {GAP package},
-      howpublished =     {\href                              {https://gap-system.github.io/GitHubPagesForGAP/}
+      howpublished =     {\href
+                          {https://gap-system.github.io/GitHubPagesForGAP/}
                           {\texttt{https://gap-system.github.io/}\discretionary
                           {}{}{}\texttt{GitHubPagesForGAP/}}},
       keywords =         {GitHub Pages; GAP},
-      printedkey =       {HTI17}
+      printedkey =       {HTI19}
     }
 

@@ -1,0 +1,1261 @@
+  
+  [1X2 [33X[0;0Y2d-groups : crossed modules and cat[22X^1[122X[101X[1X-groups[133X[101X
+  
+  [33X[0;0YThe term [13X2d-group[113X refers to a set of equivalent categories of which the most
+  common   are   the   categories   of   [13Xcrossed  modules[113X;  [13Xcat[22X^1[122X-groups[113X;  and
+  [13Xgroup-groupoids[113X, all of which involve a pair of groups.[133X
+  
+  
+  [1X2.1 [33X[0;0YConstructions for crossed modules[133X[101X
+  
+  [33X[0;0YA  crossed  module  (of  groups)  [22XcalX  =  (∂ : S -> R )[122X consists of a group
+  homomorphism  [22X∂[122X, called the [13Xboundary[113X of [22XcalX[122X, with [13Xsource[113X [22XS[122X and [13Xrange[113X [22XR[122X. The
+  group [22XR[122X acts on itself by conjugation, and on [22XS[122X by an [13Xaction[113X [22Xα : R -> Aut(S)[122X
+  such that, for all [22Xs,s_1,s_2 ∈ S[122X and [22Xr ∈ R[122X,[133X
+  
+  
+  [24X[33X[0;6Y{\bf  XMod\  1}  :  \partial(s^r)  = r^{-1} (\partial s) r = (\partial s)^r,
+  \qquad {\bf XMod\ 2} : s_1^{\partial s_2} = s_2^{-1}s_1 s_2 = {s_1}^{s_2}.[133X
+  
+  [124X
+  
+  [33X[0;0YWhen only the first of these axioms is satisfied, the resulting structure is
+  a [13Xpre-crossed module[113X (see section [14X2.3[114X). The kernel of [22X∂[122X is abelian.[133X
+  
+  [33X[0;0Y(Much  of  the  literature on crossed modules uses left actions, but we have
+  chosen  to  use  right  actions  in  this package since that is the standard
+  choice for group actions in [5XGAP[105X.)[133X
+  
+  [1X2.1-1 XMod[101X
+  
+  [33X[1;0Y[29X[2XXMod[102X( [3Xargs[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XXModByBoundaryAndAction[102X( [3Xbdy[103X, [3Xact[103X ) [32X operation[133X
+  
+  [33X[0;0YThe  global  function [10XXMod[110X calls one of the standard constructions described
+  in  the  following  subsections. In the example the boundary is the identity
+  mapping on [10Xc5[110X and the action is trivial.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xc5 := Group( (5,6,7,8,9) );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( c5, "c5" );[127X[104X
+    [4X[25Xgap>[125X [27Xid5 := IdentityMapping( c5 );;[127X[104X
+    [4X[25Xgap>[125X [27Xac5 := AutomorphismGroup( c5 );; [127X[104X
+    [4X[25Xgap>[125X [27Xact := MappingToOne( c5, ac5 );;[127X[104X
+    [4X[25Xgap>[125X [27XXMod( id5, act ) = XModByBoundaryAndAction( id5, act );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.1-2 XModByNormalSubgroup[101X
+  
+  [33X[1;0Y[29X[2XXModByNormalSubgroup[102X( [3XG[103X, [3XN[103X ) [32X operation[133X
+  
+  [33X[0;0YA  [13Xconjugation  crossed  module[113X is the inclusion of a normal subgroup [22XS ⊴ R[122X,
+  where [22XR[122X acts on [22XS[122X by conjugation.[133X
+  
+  [1X2.1-3 XModByTrivialAction[101X
+  
+  [33X[1;0Y[29X[2XXModByTrivialAction[102X( [3Xbdy[103X ) [32X operation[133X
+  
+  [33X[0;0YA  [13Xtrivial action crossed module[113X [22X(∂ : S -> R)[122X has [22Xs^r = s[122X for all [22Xs ∈ S, r ∈
+  R[122X, the source is abelian and the image lies in the centre of the range.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xq8 := QuaternionGroup( IsPermGroup, 8 );[127X[104X
+    [4X[28XGroup([ (1,5,3,7)(2,8,4,6), (1,2,3,4)(5,6,7,8) ])[128X[104X
+    [4X[25Xgap>[125X [27XSetName( q8, "q8" );[127X[104X
+    [4X[25Xgap>[125X [27Xc2 := Centre( q8 );                     [127X[104X
+    [4X[28XGroup([ (1,3)(2,4)(5,7)(6,8) ])[128X[104X
+    [4X[25Xgap>[125X [27XSetName( c2, "<-1>" );[127X[104X
+    [4X[25Xgap>[125X [27Xbdy := InclusionMappingGroups( q8, c2 );;[127X[104X
+    [4X[25Xgap>[125X [27XX8a := XModByTrivialAction( bdy );[127X[104X
+    [4X[28X[<-1>->q8][128X[104X
+    [4X[25Xgap>[125X [27Xc4 := Subgroup( q8, [q8.1] );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( c4, "<i>" );[127X[104X
+    [4X[25Xgap>[125X [27XX8b := XModByNormalSubgroup( q8, c4 );[127X[104X
+    [4X[28X[<i>->q8][128X[104X
+    [4X[25Xgap>[125X [27XDisplay(X8b);        [127X[104X
+    [4X[28XCrossed module [<i>->q8] :- [128X[104X
+    [4X[28X: Source group has generators:[128X[104X
+    [4X[28X  [ (1,5,3,7)(2,8,4,6) ][128X[104X
+    [4X[28X: Range group q8 has generators:[128X[104X
+    [4X[28X  [ (1,5,3,7)(2,8,4,6), (1,2,3,4)(5,6,7,8) ][128X[104X
+    [4X[28X: Boundary homomorphism maps source generators to:[128X[104X
+    [4X[28X  [ (1,5,3,7)(2,8,4,6) ][128X[104X
+    [4X[28X: Action homomorphism maps range generators to automorphisms:[128X[104X
+    [4X[28X  (1,5,3,7)(2,8,4,6) --> { source gens --> [ (1,5,3,7)(2,8,4,6) ] }[128X[104X
+    [4X[28X  (1,2,3,4)(5,6,7,8) --> { source gens --> [ (1,7,3,5)(2,6,4,8) ] }[128X[104X
+    [4X[28X  These 2 automorphisms generate the group of automorphisms.[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.1-4 XModByAutomorphismGroup[101X
+  
+  [33X[1;0Y[29X[2XXModByAutomorphismGroup[102X( [3Xgrp[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XXModByInnerAutomorphismGroup[102X( [3Xgrp[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XXModByGroupOfAutomorphisms[102X( [3XG[103X, [3XA[103X ) [32X operation[133X
+  
+  [33X[0;0YAn [13Xautomorphism crossed module[113X has as range a subgroup [22XR[122X of the automorphism
+  group  Aut[22X(S)[122X  of  [22XS[122X  which  contains the inner automorphism group of [22XS[122X. The
+  boundary maps [22Xs ∈ S[122X to the inner automorphism of [22XS[122X by [22Xs[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XX5 := XModByAutomorphismGroup( c5 );[127X[104X
+    [4X[28X[c5 -> Aut(c5)] [128X[104X
+    [4X[25Xgap>[125X [27XDisplay( X5 );[127X[104X
+    [4X[28XCrossed module [c5->Aut(c5)] :- [128X[104X
+    [4X[28X: Source group c5 has generators:[128X[104X
+    [4X[28X  [ (5,6,7,8,9) ][128X[104X
+    [4X[28X: Range group Aut(c5) has generators:[128X[104X
+    [4X[28X  [ GroupHomomorphismByImages( c5, c5, [ (5,6,7,8,9) ], [ (5,7,9,6,8) ] ) ][128X[104X
+    [4X[28X: Boundary homomorphism maps source generators to:[128X[104X
+    [4X[28X  [ IdentityMapping( c5 ) ][128X[104X
+    [4X[28X: Action homomorphism maps range generators to automorphisms:[128X[104X
+    [4X[28X  GroupHomomorphismByImages( c5, c5, [ (5,6,7,8,9) ], [128X[104X
+    [4X[28X[ (5,7,9,6,8) ] ) --> { source gens --> [ (5,7,9,6,8) ] }[128X[104X
+    [4X[28X  This automorphism generates the group of automorphisms.[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.1-5 XModByCentralExtension[101X
+  
+  [33X[1;0Y[29X[2XXModByCentralExtension[102X( [3Xbdy[103X ) [32X operation[133X
+  
+  [33X[0;0YA  [13Xcentral extension crossed module[113X has as boundary a surjection [22X∂ : S -> R[122X,
+  with central kernel, where [22Xr ∈ R[122X acts on [22XS[122X by conjugation with [22X∂^-1r[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xgen12 := [ (1,2,3,4,5,6), (2,6)(3,5) ];;[127X[104X
+    [4X[25Xgap>[125X [27Xd12 := Group( gen12 );;                  [127X[104X
+    [4X[25Xgap>[125X [27Xgen6 := [ (7,8,9), (8,9) ];;[127X[104X
+    [4X[25Xgap>[125X [27Xs3 := Group( gen6 );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( d12, "d12" );  SetName( s3, "s3" ); [127X[104X
+    [4X[25Xgap>[125X [27Xpr12 := GroupHomomorphismByImages( d12, s3, gen12, gen6 );;[127X[104X
+    [4X[25Xgap>[125X [27XKernel( pr12 ) = Centre( d12 );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XX12 := XModByCentralExtension( pr12 );;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay( X12 );                         [127X[104X
+    [4X[28XCrossed module [d12->s3] :- [128X[104X
+    [4X[28X: Source group d12 has generators:[128X[104X
+    [4X[28X  [ (1,2,3,4,5,6), (2,6)(3,5) ][128X[104X
+    [4X[28X: Range group s3 has generators:[128X[104X
+    [4X[28X  [ (7,8,9), (8,9) ][128X[104X
+    [4X[28X: Boundary homomorphism maps source generators to:[128X[104X
+    [4X[28X  [ (7,8,9), (8,9) ][128X[104X
+    [4X[28X: Action homomorphism maps range generators to automorphisms:[128X[104X
+    [4X[28X  (7,8,9) --> { source gens --> [ (1,2,3,4,5,6), (1,3)(4,6) ] }[128X[104X
+    [4X[28X  (8,9) --> { source gens --> [ (1,6,5,4,3,2), (2,6)(3,5) ] }[128X[104X
+    [4X[28X  These 2 automorphisms generate the group of automorphisms.[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.1-6 XModByPullback[101X
+  
+  [33X[1;0Y[29X[2XXModByPullback[102X( [3Xxmod[103X, [3Xhom[103X ) [32X operation[133X
+  
+  [33X[0;0YLet  [22XcalX_0  =  (μ  :  M -> P)[122X be a crossed module. If [22Xν : N -> P[122X is a group
+  homomorphism  with  the  same range as [22XcalX_0[122X, form the pullback group [22XL = M
+  ×_P  N[122X, with projection [22Xλ : L -> N[122X (as defined in the [5XUtils[105X package). Then [22XN[122X
+  acts on [22XL[122X by [22X(m,n)^n' := (m^ν n',n^n')[122X, so that [22XcalX_1 = (λ : L -> N)[122X is the
+  [13X  pullback  crossed  module[113X  determined  by  [22XcalX_0[122X  and  [22Xν[122X. There is also a
+  morphism of crossed modules [22X(κ,ν) : calX_1 -> calX_2[122X.[133X
+  
+  [33X[0;0YThe  example  forms  a  pullback  of  the crossed module [10XX12[110X of the previous
+  subsection.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xgens4 := [ (11,12), (12,13), (13,14) ];; [127X[104X
+    [4X[25Xgap>[125X [27Xs4 := Group( gens4 );; [127X[104X
+    [4X[25Xgap>[125X [27Xtheta := GroupHomomorphismByImages( s4, s3, gens4, [(7,8),(8,9),(7,8)] );;[127X[104X
+    [4X[25Xgap>[125X [27XX1 := XModByPullback( X12, theta );; [127X[104X
+    [4X[25Xgap>[125X [27XStructureDescription( Source( X1 ) );[127X[104X
+    [4X[28X"C2 x S4"[128X[104X
+    [4X[25Xgap>[125X [27XSetName( s4, "s4" );  SetName( Source( X1 ), "c2s4" ); [127X[104X
+    [4X[25Xgap>[125X [27XinfoX1 := PullbackInfo( Source( X1 ) );;[127X[104X
+    [4X[25Xgap>[125X [27XinfoX1!.directProduct;[127X[104X
+    [4X[28XGroup([ (1,2,3,4,5,6), (2,6)(3,5), (7,8), (8,9), (9,10) ])[128X[104X
+    [4X[25Xgap>[125X [27XinfoX1!.projections[1];[127X[104X
+    [4X[28X[ (7,8)(9,10), (7,9)(8,10), (2,6)(3,5)(8,9), (1,5,3)(2,6,4)(8,10,9), [128X[104X
+    [4X[28X  (1,6,5,4,3,2)(8,9,10) ] -> [ (), (), (2,6)(3,5), (1,5,3)(2,6,4), [128X[104X
+    [4X[28X  (1,6,5,4,3,2) ][128X[104X
+    [4X[25Xgap>[125X [27XinfoX1!.projections[2];[127X[104X
+    [4X[28X[ (7,8)(9,10), (7,9)(8,10), (2,6)(3,5)(8,9), (1,5,3)(2,6,4)(8,10,9), [128X[104X
+    [4X[28X  (1,6,5,4,3,2)(8,9,10) ] -> [ (11,12)(13,14), (11,13)(12,14), (12,13), [128X[104X
+    [4X[28X  (12,14,13), (12,13,14) ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.1-7 XModByAbelianModule[101X
+  
+  [33X[1;0Y[29X[2XXModByAbelianModule[102X( [3Xabmod[103X ) [32X operation[133X
+  
+  [33X[0;0YA [13Xcrossed abelian module[113X has an abelian module as source and the zero map as
+  boundary. See section [14X12.2[114X for an example.[133X
+  
+  [1X2.1-8 DirectProduct[101X
+  
+  [33X[1;0Y[29X[2XDirectProduct[102X( [3XX1[103X, [3XX2[103X ) [32X operation[133X
+  
+  [33X[0;0YThe  direct  product [22XcalX_1 × calX_2[122X of two crossed modules has source [22XS_1 ×
+  S_2[122X,  range [22XR_1 × R_2[122X and boundary [22X∂_1 × ∂_2[122X, with [22XR_1, R_2[122X acting trivially
+  on  [22XS_2,  S_1[122X  respectively.  The embeddings and projections are constructed
+  automatically,  and placed in the [10XDirectProductInfo[110X attribute, together with
+  the two [13Xobjects[113X [22XcalX_1 × calX_2[122X.[133X
+  
+  [33X[0;0YThe  example  constructs  the  product  of the two crossed modules formed in
+  subsection [2XXModByTrivialAction[102X ([14X2.1-3[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XX8ab := DirectProduct( X8a, X8b );[127X[104X
+    [4X[28X[[<-1>->q8]x[<i>->q8]][128X[104X
+    [4X[25Xgap>[125X [27XinfoX8ab := DirectProductInfo( X8ab );[127X[104X
+    [4X[28Xrec( [128X[104X
+    [4X[28X  embeddings := [ [[<-1>->q8] => [<-1>x<i>->q8xq8]], [128X[104X
+    [4X[28X      [[<i>->q8] => [<-1>x<i>->q8xq8]] ], objects := [ [<-1>->q8], [<i>->q8] ][128X[104X
+    [4X[28X    , [128X[104X
+    [4X[28X  projections := [ [[<-1>x<i>->q8xq8] => [<-1>->q8]], [128X[104X
+    [4X[28X      [[<-1>x<i>->q8xq8] => [<i>->q8]] ] )[128X[104X
+    [4X[25Xgap>[125X [27XDirectProduct( X8a, X8b, X12 );[127X[104X
+    [4X[28X[[[<-1>->q8]x[<i>->q8]]x[d12->s3]][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.1-9 Source[101X
+  
+  [33X[1;0Y[29X[2XSource[102X( [3XX0[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XRange[102X( [3XX0[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XBoundary[102X( [3XX0[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XXModAction[102X( [3XX0[103X ) [32X attribute[133X
+  
+  [33X[0;0YThe  following  attributes  are used in the construction of a crossed module
+  [10XX0[110X.[133X
+  
+  [30X    [33X[0;6Y[10XSource(X0)[110X  and  [10XRange(X0)[110X  are  the  source  [22XS[122X  and range [22XR[122X of [22X∂[122X, the
+        boundary [10XBoundary(X0)[110X;[133X
+  
+  [30X    [33X[0;6Y[10XXModAction(X0)[110X is a homomorphism from [22XR[122X to a group of automorphisms of
+        [10XX0[110X.[133X
+  
+  [33X[0;0Y(Up  until  version  2.63  there  was an additional attribute [10XAutoGroup[110X, the
+  range of [10XXModAction(X0)[110X.)[133X
+  
+  [33X[0;0YThe   example   uses  the  crossed  module  [10XX12[110X  constructed  in  subsection
+  [2XXModByCentralExtension[102X ([14X2.1-5[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27X[ Source( X12 ), Range( X12 ) ];    [127X[104X
+    [4X[28X[ d12, s3 ][128X[104X
+    [4X[25Xgap>[125X [27XBoundary( X12 ); [127X[104X
+    [4X[28X[ (1,2,3,4,5,6), (2,6)(3,5) ] -> [ (7,8,9), (8,9) ][128X[104X
+    [4X[25Xgap>[125X [27XXModAction( X12 );[127X[104X
+    [4X[28X[ (7,8,9), (8,9) ] -> [128X[104X
+    [4X[28X[ [ (1,2,3,4,5,6), (2,6)(3,5) ] -> [ (1,2,3,4,5,6), (1,3)(4,6) ], [128X[104X
+    [4X[28X  [ (1,2,3,4,5,6), (2,6)(3,5) ] -> [ (1,6,5,4,3,2), (2,6)(3,5) ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.1-10 ImageElmXModAction[101X
+  
+  [33X[1;0Y[29X[2XImageElmXModAction[102X( [3XX0[103X, [3Xs[103X, [3Xr[103X ) [32X operation[133X
+  
+  [33X[0;0YThis function returns the element [22Xs^r[122X given by [10XXModAction(X0)[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XImageElmXModAction( X12, (1,2,3,4,5,6), (8,9) );[127X[104X
+    [4X[28X(1,6,5,4,3,2)[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.1-11 Size[101X
+  
+  [33X[1;0Y[29X[2XSize[102X( [3XX0[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XName[102X( [3XX0[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XIdGroup[102X( [3XX0[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XExternalSetXMod[102X( [3XX0[103X ) [32X attribute[133X
+  
+  [33X[0;0YMore  familiar  attributes are [10XName[110X, [10XSize[110X and [10XIdGroup[110X. The name is formed by
+  concatenating  the  names of the source and range (if these exist). [10XSize[110X and
+  [10XIdGroup[110X return two-element lists.[133X
+  
+  [33X[0;0YThe [2XExternalSetXMod[102X for a crossed module is the source group considered as a
+  G-set of the range group using the crossed module action.[133X
+  
+  [33X[0;0YThe [10XDisplay[110X function is used to print details of 2d-groups.[133X
+  
+  [33X[0;0YIn  the  simple  example  below,  [10XX5[110X  is  the  automorphism  crossed  module
+  constructed   in   subsection  [2XXModByAutomorphismGroup[102X  ([14X2.1-4[114X).  The  [10XPrint[110X
+  statements  at  the  end  of  the  example  list the [5XGAP[105X representations and
+  attributes of [10XX5[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSize( X5 );  IdGroup( X5 ); [127X[104X
+    [4X[28X[ 5, 4 ][128X[104X
+    [4X[28X[ [ 5, 1 ], [ 4, 1 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xext := ExternalSetXMod( X5 ); [127X[104X
+    [4X[28X<xset:[ (), (5,6,7,8,9), (5,7,9,6,8), (5,8,6,9,7), (5,9,8,7,6) ]>[128X[104X
+    [4X[25Xgap>[125X [27XOrbits( ext );[127X[104X
+    [4X[28X[ [ () ], [ (5,6,7,8,9), (5,7,9,6,8), (5,9,8,7,6), (5,8,6,9,7) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xa := GeneratorsOfGroup( Range( X5 ) )[1]^2; [127X[104X
+    [4X[28X[ (5,6,7,8,9) ] -> [ (5,9,8,7,6) ][128X[104X
+    [4X[25Xgap>[125X [27XImageElmXModAction( X5, (5,7,9,6,8), a );[127X[104X
+    [4X[28X(5,8,6,9,7)[128X[104X
+    [4X[25Xgap>[125X [27XRepresentationsOfObject( X5 );[127X[104X
+    [4X[28X[ "IsComponentObjectRep", "IsAttributeStoringRep", "IsPreXModObj" ][128X[104X
+    [4X[25Xgap>[125X [27XKnownAttributesOfObject( X5);[127X[104X
+    [4X[28X[ "Name", "Size", "Range", "Source", "IdGroup", "Boundary", "XModAction", [128X[104X
+    [4X[28X  "ExternalSetXMod" ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.2 [33X[0;0YProperties of crossed modules[133X[101X
+  
+  [33X[0;0YThe  underlying  category  structures  for  the  objects constructed in this
+  chapter   follow  the  sequence  [10XIs2DimensionalDomain[110X;  [10XIs2DimensionalMagma[110X;
+  [10XIs2DimensionalMagmaWithOne[110X;  [10XIs2DimensionalMagmaWithInverses[110X,  mirroring the
+  situation   for   (one-dimensional)   groups.   From   these   we  construct
+  [10XIs2DimensionalSemigroup[110X, [10XIs2DimensionalMonoid[110X and [10XIs2DimensionalGroup[110X.[133X
+  
+  [33X[0;0YThere  are  then  a  variety  of properties associated with crossed modules,
+  starting with [10XIsPreXMod[110X and [10XIsXMod[110X.[133X
+  
+  [1X2.2-1 IsXMod[101X
+  
+  [33X[1;0Y[29X[2XIsXMod[102X( [3XX0[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsPreXMod[102X( [3XX0[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsPerm2DimensionalGroup[102X( [3XX0[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsPc2DimensionalGroup[102X( [3XX0[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsFp2DimensionalGroup[102X( [3XX0[103X ) [32X property[133X
+  
+  [33X[0;0YA  structure  which  has [10XIsPerm2DimensionalGroup[110X is a precrossed module or a
+  pre-cat[22X^1[122X-group   (see   section  [14X2.4[114X)  whose  source  and  range  are  both
+  permutation      groups.      The      properties     [10XIsPc2DimensionalGroup[110X,
+  [10XIsFp2DimensionalGroup[110X  are  defined  similarly.  In the example below we see
+  that  [10XX5[110X  has  [10XIsPreXMod[110X, [10XIsXMod[110X and [10XIsPerm2DimensionalGroup[110X. There are also
+  properties  corresponding  to  the  various  construction  methods listed in
+  section                [14X2.1[114X:                [10XIsTrivialAction2DimensionalGroup[110X;
+  [10XIsNormalSubgroup2DimensionalGroup[110X;      [10XIsCentralExtension2DimensionalGroup[110X;
+  [10XIsAutomorphismGroup2DimensionalGroup[110X; [10XIsAbelianModule2DimensionalGroup[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XKnownPropertiesOfObject( X5 );[127X[104X
+    [4X[28X[ "IsEmpty", "IsTrivial", "IsNonTrivial", "IsFinite", [128X[104X
+    [4X[28X  "CanEasilyCompareElements", "CanEasilySortElements", "IsDuplicateFree", [128X[104X
+    [4X[28X  "IsGeneratorsOfSemigroup", "IsPreXModDomain", "IsPreXMod", "IsXMod", [128X[104X
+    [4X[28X  "IsAutomorphismGroup2DimensionalGroup" ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.2-2 SubXMod[101X
+  
+  [33X[1;0Y[29X[2XSubXMod[102X( [3XX0[103X, [3Xsrc[103X, [3Xrng[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XTrivialSubXMod[102X( [3XX0[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XNormalSubXMods[102X( [3XX0[103X ) [32X attribute[133X
+  
+  [33X[0;0YWith  the  standard  crossed  module  constructors  listed above as building
+  blocks,  sub-crossed  modules,  normal  sub-crossed modules [22XcalN ⊲ calX[122X, and
+  also  quotients [22XcalX/calN[122X may be constructed. A sub-crossed module [22XcalS = (δ
+  : N -> M)[122X is [13Xnormal[113X in [22XcalX = (∂ : S -> R)[122X if[133X
+  
+  [30X    [33X[0;6Y[22XN,M[122X are normal subgroups of [22XS,R[122X respectively,[133X
+  
+  [30X    [33X[0;6Y[22Xδ[122X is the restriction of [22X∂[122X,[133X
+  
+  [30X    [33X[0;6Y[22Xn^r ∈ N[122X for all [22Xn ∈ N,~r ∈ R[122X,[133X
+  
+  [30X    [33X[0;6Y[22X(s^-1)^ms ∈ N[122X for all [22Xm ∈ M,~s ∈ S[122X.[133X
+  
+  [33X[0;0YThese  conditions  ensure that [22XM ⋉ N[122X is normal in the semidirect product [22XR ⋉
+  S[122X.  (Note  that  [22X⟨  s,m  ⟩  =  (s^-1)^ms[122X is a displacement: see [2XDisplacement[102X
+  ([14X4.1-3[114X).)[133X
+  
+  [33X[0;0YA  method  for  [10XIsNormal[110X for precrossed modules is provided. See section [14X4.1[114X
+  for factor crossed modules and their natural morphisms.[133X
+  
+  [33X[0;0YThe  five normal subcrossed modules of [10XX4[110X found in the following example are
+  [10X[id,id], [k4,k4], [k4,a4], [a4,a4][110X and [10XX4[110X itself.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xs4 := Group( (1,2), (2,3), (3,4) );; [127X[104X
+    [4X[25Xgap>[125X [27Xa4 := Subgroup( s4, [ (1,2,3), (2,3,4) ] );; [127X[104X
+    [4X[25Xgap>[125X [27Xk4 := Subgroup( a4, [ (1,2)(3,4), (1,3)(2,4) ] );; [127X[104X
+    [4X[25Xgap>[125X [27XSetName(s4,"s4");  SetName(a4,"a4");  SetName(k4,"k4"); [127X[104X
+    [4X[25Xgap>[125X [27XX4 := XModByNormalSubgroup( s4, a4 );[127X[104X
+    [4X[28X[a4->s4][128X[104X
+    [4X[25Xgap>[125X [27XY4 := SubXMod( X4, k4, a4 ); [127X[104X
+    [4X[28X[k4->a4][128X[104X
+    [4X[25Xgap>[125X [27XIsNormal(X4,Y4);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XNX4 := NormalSubXMods( X4 );;[127X[104X
+    [4X[25Xgap>[125X [27XLength( NX4 ); [127X[104X
+    [4X[28X5[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.2-3 KernelCokernelXMod[101X
+  
+  [33X[1;0Y[29X[2XKernelCokernelXMod[102X( [3XX0[103X ) [32X attribute[133X
+  
+  [33X[0;0YLet  [22XcalX = (∂ : S -> R)[122X. If [22XK leqslant S[122X is the kernel of [22X∂[122X, and [22XJ leqslant
+  R[122X is the image of [22X∂[122X, form [22XC = R/J[122X. Then [22X(ν∂|_K : K -> C)[122X is a crossed module
+  where  [22Xν  :  R  -> C, r ↦ Jr[122X is the natural map, and the action of [22XC[122X on [22XK[122X is
+  given by [22Xk^Jr = k^r[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xd8d8 := Group( (1,2,3,4), (1,3), (5,6,7,8), (5,7) );;[127X[104X
+    [4X[25Xgap>[125X [27XX88 := XModByAutomorphismGroup( d8d8 );;[127X[104X
+    [4X[25Xgap>[125X [27XSize( X88 );[127X[104X
+    [4X[28X[ 64, 2048 ][128X[104X
+    [4X[25Xgap>[125X [27XY88 := KernelCokernelXMod( X88 );;[127X[104X
+    [4X[25Xgap>[125X [27XStructureDescription( Y88 );[127X[104X
+    [4X[28X[ "C2 x C2", "(D8 x D8) : C2" ] [128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.3 [33X[0;0YPre-crossed modules[133X[101X
+  
+  [1X2.3-1 PreXModByBoundaryAndAction[101X
+  
+  [33X[1;0Y[29X[2XPreXModByBoundaryAndAction[102X( [3Xbdy[103X, [3Xact[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSubPreXMod[102X( [3XX0[103X, [3Xsrc[103X, [3Xrng[103X ) [32X operation[133X
+  
+  [33X[0;0YIf  axiom [22XXMod 2[122X is [13Xnot[113X satisfied, the corresponding structure is known as a
+  [13Xpre-crossed module[113X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xb1 := (11,12,13,14,15,16,17,18);;  b2 := (12,18)(13,17)(14,16);;[127X[104X
+    [4X[25Xgap>[125X [27Xd16 := Group( b1, b2 );;[127X[104X
+    [4X[25Xgap>[125X [27Xsk4 := Subgroup( d16, [ b1^4, b2 ] );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( d16, "d16" );  SetName( sk4, "sk4" );[127X[104X
+    [4X[25Xgap>[125X [27Xbdy16 := GroupHomomorphismByImages( d16, sk4, [b1,b2], [b1^4,b2] );;[127X[104X
+    [4X[25Xgap>[125X [27Xaut1 := GroupHomomorphismByImages( d16, d16, [b1,b2], [b1^5,b2] );;[127X[104X
+    [4X[25Xgap>[125X [27Xaut2 := GroupHomomorphismByImages( d16, d16, [b1,b2], [b1,b2^4*b2] );;[127X[104X
+    [4X[25Xgap>[125X [27Xaut16 := Group( [ aut1, aut2 ] );;[127X[104X
+    [4X[25Xgap>[125X [27Xact16 := GroupHomomorphismByImages( sk4, aut16, [b1^4,b2], [aut1,aut2] );;[127X[104X
+    [4X[25Xgap>[125X [27XP16 := PreXModByBoundaryAndAction( bdy16, act16 );[127X[104X
+    [4X[28X[d16->sk4][128X[104X
+    [4X[25Xgap>[125X [27XIsXMod( P16 );[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.3-2 PeifferSubgroup[101X
+  
+  [33X[1;0Y[29X[2XPeifferSubgroup[102X( [3XX0[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XXModByPeifferQuotient[102X( [3Xprexmod[103X ) [32X attribute[133X
+  
+  [33X[0;0YThe  [13XPeiffer  subgroup[113X  [22XP[122X  of  a  pre-crossed module [22XcalX[122X is the subgroup of
+  [22Xker(∂)[122X generated by [13XPeiffer commutators[113X[133X
+  
+  
+  [24X[33X[0;6Y\lfloor  s_1,s_2  \rfloor ~=~ (s_1^{-1})^{\partial s_2}~s_2^{-1}~s_1~s_2 ~=~
+  \langle \partial s_2, s_1 \rangle\ [s_1,s_2]~.[133X
+  
+  [124X
+  
+  [33X[0;0YThen  [22XcalP = (0 : P -> {1_R})[122X is a normal sub-pre-crossed module of [22XcalX[122X and
+  [22XcalX/calP = (∂ : S/P -> R)[122X is a crossed module.[133X
+  
+  [33X[0;0YIn the following example the Peiffer subgroup is cyclic of size [22X4[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XP := PeifferSubgroup( P16 );[127X[104X
+    [4X[28XGroup( [ (11,15)(12,16)(13,17)(14,18), (11,17,15,13)(12,18,16,14) ] )[128X[104X
+    [4X[25Xgap>[125X [27XX16 := XModByPeifferQuotient( P16 );[127X[104X
+    [4X[28XPeiffer([d16->sk4])[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( X16 );[127X[104X
+    [4X[28XCrossed module Peiffer([d16->sk4]) :-[128X[104X
+    [4X[28X: Source group has generators:[128X[104X
+    [4X[28X  [ f1, f2 ][128X[104X
+    [4X[28X: Range group has generators:[128X[104X
+    [4X[28X  [ (11,15)(12,16)(13,17)(14,18), (12,18)(13,17)(14,16) ][128X[104X
+    [4X[28X: Boundary homomorphism maps source generators to:[128X[104X
+    [4X[28X  [ (12,18)(13,17)(14,16), (11,15)(12,16)(13,17)(14,18) ][128X[104X
+    [4X[28X  The automorphism group is trivial[128X[104X
+    [4X[25Xgap>[125X [27Xiso16 := IsomorphismPermGroup( Source( X16 ) );;[127X[104X
+    [4X[25Xgap>[125X [27XS16 := Image( iso16 );[127X[104X
+    [4X[28XGroup([ (1,2), (3,4) ])   [128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.4 [33X[0;0YCat[22X^1[122X[101X[1X-groups and pre-cat[22X^1[122X[101X[1X-groups[133X[101X
+  
+  [33X[0;0YIn  [Lod82],  Loday  reformulated  the  notion  of  a  crossed  module  as a
+  cat[22X^1[122X-group,  namely  a  group  [22XG[122X  with a pair of endomorphisms [22Xt,h : G -> G[122X
+  having  a  common  image  [22XR[122X  and  satisfying  certain  axioms.  We  find  it
+  computationally  convenient to define a cat[22X^1[122X-group [22XcalC = (e;t,h : G -> R )[122X
+  as  having  source  group  [22XG[122X,  range  group  [22XR[122X, and three homomorphisms: two
+  surjections [22Xt,h : G -> R[122X and an embedding [22Xe : R -> G[122X satisfying:[133X
+  
+  
+  [24X[33X[0;6Y{\bf  Cat\ 1} : ~t \circ e ~=~ h \circ e = {\rm id}_R, \qquad {\bf Cat\ 2} :
+  ~[\ker t, \ker h] ~=~ \{ 1_G \}.[133X
+  
+  [124X
+  
+  [33X[0;0YIt  follows that [22Xt ∘ e ∘ h = h,~ h ∘ e ∘ t = t,~ t ∘ e ∘ t = t~[122X and [22X~h ∘ e ∘
+  h = h[122X. (See section [14X2.5[114X for the case when [22Xt,h[122X are endomorphisms.)[133X
+  
+  [1X2.4-1 Cat1Group[101X
+  
+  [33X[1;0Y[29X[2XCat1Group[102X( [3Xargs[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPreCat1Group[102X( [3Xargs[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPreCat1GroupByTailHeadEmbedding[102X( [3Xt[103X, [3Xh[103X, [3Xe[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPreCat1GroupWithIdentityEmbedding[102X( [3Xt[103X, [3Xh[103X ) [32X operation[133X
+  
+  [33X[0;0YThe  global  functions  [10XCat1Group[110X  and [10XPreCat1Group[110X can be called in various
+  ways.[133X
+  
+  [30X    [33X[0;6Yas  [10XCat1Group(t,h,e);[110X  when  [22Xt,h,e[122X  are  three homomorphisms, which is
+        equivalent to [10XPreCat1GroupByTailHeadEmbedding(t,h,e);[110X[133X
+  
+  [30X    [33X[0;6Yas [10XCat1Group(t,h);[110X when [22Xt,h[122X are two endomorphisms, which is equivalent
+        to [10XPreCat1GroupWithIdentityEmbedding(t,h);[110X[133X
+  
+  [30X    [33X[0;6Yas  [10XCat1Group(t);[110X  when [22Xt=h[122X is an endomorphism, which is equivalent to
+        [10XPreCat1GroupWithIdentityEmbedding(t,t);[110X[133X
+  
+  [30X    [33X[0;6Yas  [10XCat1Group(t,e);[110X  when  [22Xt=h[122X  and  [22Xe[122X  are  homomorphisms,  which  is
+        equivalent to [10XPreCat1GroupByTailHeadEmbedding(t,t,e);[110X[133X
+  
+  [30X    [33X[0;6Yas  [10XCat1Group(i,j,k);[110X  when [22Xi,j,k[122X are integers, which is equivalent to
+        [10XCat1Select(i,j,k);[110X as described in section [14X2.7[114X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xg18gens := [ (1,2,3), (4,5,6), (2,3)(5,6) ];;     [127X[104X
+    [4X[25Xgap>[125X [27Xs3agens := [ (7,8,9), (8,9) ];;                [127X[104X
+    [4X[25Xgap>[125X [27Xg18 := Group( g18gens );;  SetName( g18, "g18" ); [127X[104X
+    [4X[25Xgap>[125X [27Xs3a := Group( s3agens );;  SetName( s3a, "s3a" );[127X[104X
+    [4X[25Xgap>[125X [27Xt1 := GroupHomomorphismByImages(g18,s3a,g18gens,[(7,8,9),(),(8,9)]);     [127X[104X
+    [4X[28X[ (1,2,3), (4,5,6), (2,3)(5,6) ] -> [ (7,8,9), (), (8,9) ][128X[104X
+    [4X[25Xgap>[125X [27Xh1 := GroupHomomorphismByImages(g18,s3a,g18gens,[(7,8,9),(7,8,9),(8,9)]);[127X[104X
+    [4X[28X[ (1,2,3), (4,5,6), (2,3)(5,6) ] -> [ (7,8,9), (7,8,9), (8,9) ][128X[104X
+    [4X[25Xgap>[125X [27Xe1 := GroupHomomorphismByImages(s3a,g18,s3agens,[(1,2,3),(2,3)(5,6)]);   [127X[104X
+    [4X[28X[ (7,8,9), (8,9) ] -> [ (1,2,3), (2,3)(5,6) ][128X[104X
+    [4X[25Xgap>[125X [27XC18 := Cat1Group( t1, h1, e1 );[127X[104X
+    [4X[28X[g18=>s3a][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.4-2 Source[101X
+  
+  [33X[1;0Y[29X[2XSource[102X( [3XC[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XRange[102X( [3XC[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XTailMap[102X( [3XC[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XHeadMap[102X( [3XC[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XRangeEmbedding[102X( [3XC[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XKernelEmbedding[102X( [3XC[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XBoundary[102X( [3XC[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XName[102X( [3XC[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XSize[102X( [3XC[103X ) [32X attribute[133X
+  
+  [33X[0;0YThese are the attributes of a cat[22X^1[122X-group [22XcalC[122X in this implementation.[133X
+  
+  [33X[0;0YThe  maps  [22Xt,h[122X are often referred to as the [13Xsource[113X and [13Xtarget[113X, but we choose
+  to  call  them the [13Xtail[113X and [13Xhead[113X of [22XcalC[122X, because [13Xsource[113X is the [5XGAP[105X term for
+  the domain of a function. The [10XRangeEmbedding[110X is the embedding of [10XR[110X in [10XG[110X, the
+  [10XKernelEmbedding[110X  is  the inclusion of the kernel of [10Xt[110X in [10XG[110X, and the [10XBoundary[110X
+  is  the  restriction of [10Xh[110X to the kernel of [10Xt[110X. It is frequently the case that
+  [22Xt=h[122X, but not in the example [10XC18[110X above.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27X[ Source( C18 ), Range( C18 ) ];[127X[104X
+    [4X[28X[ g18, s3a ][128X[104X
+    [4X[25Xgap>[125X [27XTailMap( C18 );[127X[104X
+    [4X[28X[ (1,2,3), (4,5,6), (2,3)(5,6) ] -> [ (7,8,9), (), (8,9) ][128X[104X
+    [4X[25Xgap>[125X [27XHeadMap( C18 );[127X[104X
+    [4X[28X[ (1,2,3), (4,5,6), (2,3)(5,6) ] -> [ (7,8,9), (7,8,9), (8,9) ][128X[104X
+    [4X[25Xgap>[125X [27XRangeEmbedding( C18 );[127X[104X
+    [4X[28X[ (7,8,9), (8,9) ] -> [ (1,2,3), (2,3)(5,6) ][128X[104X
+    [4X[25Xgap>[125X [27XKernel( C18 );[127X[104X
+    [4X[28XGroup([ (4,5,6) ])[128X[104X
+    [4X[25Xgap>[125X [27XKernelEmbedding( C18 );[127X[104X
+    [4X[28X[ (4,5,6) ] -> [ (4,5,6) ][128X[104X
+    [4X[25Xgap>[125X [27XName( C18 );[127X[104X
+    [4X[28X"[g18=>s3a]"[128X[104X
+    [4X[25Xgap>[125X [27XSize( C18 );[127X[104X
+    [4X[28X[ 18, 6 ][128X[104X
+    [4X[25Xgap>[125X [27XStructureDescription( C18 );[127X[104X
+    [4X[28X[ "(C3 x C3) : C2", "S3" ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe next four subsections contain some more constructors for cat[22X^1[122X-groups.[133X
+  
+  [1X2.4-3 DiagonalCat1Group[101X
+  
+  [33X[1;0Y[29X[2XDiagonalCat1Group[102X( [3XgenG[103X ) [32X operation[133X
+  
+  [33X[0;0YThis  operation  constructs  examples of cat[22X^1[122X-groups of the form [22XG × G ⇒ G[122X.
+  The  tail  map  is the identity on the first factor and kills of the second,
+  while  the  head  map  does  the  reverse. The range embedding maps [22XG[122X to the
+  diagonal  in  [22XG  ×  G[122X. The corresponding crossed module is isomorphic to the
+  identity crossed module on [22XG[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XC4 := DiagonalCat1Group( [ (1,2,3), (2,3,4) ] );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( Source(C4), "a4a4" );  SetName( Range(C4_, "a4d" );[127X[104X
+    [4X[25Xgap>[125X [27XDisplay( C4 );[127X[104X
+    [4X[28XCat1-group [a4a4=>a4d] :- [128X[104X
+    [4X[28X: Source group a4a4 has generators:[128X[104X
+    [4X[28X  [ (1,2,3), (2,3,4), (5,6,7), (6,7,8) ][128X[104X
+    [4X[28X: Range group a4d has generators:[128X[104X
+    [4X[28X  [ ( 9,10,11), (10,11,12) ][128X[104X
+    [4X[28X: tail homomorphism maps source generators to:[128X[104X
+    [4X[28X  [ ( 9,10,11), (10,11,12), (), () ][128X[104X
+    [4X[28X: head homomorphism maps source generators to:[128X[104X
+    [4X[28X  [ (), (), ( 9,10,11), (10,11,12) ][128X[104X
+    [4X[28X: range embedding maps range generators to:[128X[104X
+    [4X[28X  [ (1,2,3)(5,6,7), (2,3,4)(6,7,8) ][128X[104X
+    [4X[28X: kernel has generators:[128X[104X
+    [4X[28X  [ (5,6,7), (6,7,8) ][128X[104X
+    [4X[28X: boundary homomorphism maps generators of kernel to:[128X[104X
+    [4X[28X  [ ( 9,10,11), (10,11,12) ][128X[104X
+    [4X[28X: kernel embedding maps generators of kernel to:[128X[104X
+    [4X[28X  [ (5,6,7), (6,7,8) ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.4-4 ReverseCat1Group[101X
+  
+  [33X[1;0Y[29X[2XReverseCat1Group[102X( [3XC0[103X ) [32X attribute[133X
+  
+  [33X[0;0YThe [13Xreverse[113X of a cat[22X^1[122X-group [22XC[122X has the same source, range and embedding, but
+  has the tail and head maps interchanged.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XR4 := ReverseCat1Group( C4 );[127X[104X
+    [4X[28X[a4a4=>a4d][128X[104X
+    [4X[25Xgap>[125X [27XBoundary( R4 );[127X[104X
+    [4X[28X[ (2,3,4), (1,2,3) ] -> [ (10,11,12), (9,10,11) ][128X[104X
+    [4X[25Xgap>[125X [27XTailMap( R4 ) = HeadMap( R4 ); [127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XTailMap( R4 ) = HeadMap( C4 ); [127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.4-5 Cat1GroupByPeifferQuotient[101X
+  
+  [33X[1;0Y[29X[2XCat1GroupByPeifferQuotient[102X( [3XP[103X ) [32X operation[133X
+  
+  [33X[0;0YIf  [22XC  =  (e;t,h : G -> R)[122X is a pre-cat[22X^1[122X-group, its Peiffer subgroup is [22XP =
+  [ker  t,ker  h][122X  and  the  associated cat[22X^1[122X-group [22XC_2[122X has source [22XG/P[122X. In the
+  example,  [22Xt=h : s4 -> c2[122X with [22Xker t = ker h = a4[122X and [22XP = [a4,a4]=k4[122X, so that
+  [22XG/P = s4/k4 ≅ s3[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xs4 := Group( (1,2,3), (3,4) );;  SetName( s4, "s4" ); [127X[104X
+    [4X[25Xgap>[125X [27Xh := GroupHomomorphismByImages( s4, s4, [(1,2,3),(3,4)], [(),(3,4)] );;[127X[104X
+    [4X[25Xgap>[125X [27Xc2 := Image( h );;  SetName( c2, "c2" );[127X[104X
+    [4X[25Xgap>[125X [27XC := PreCat1Group( h, h );[127X[104X
+    [4X[28X[s4=>c2][128X[104X
+    [4X[25Xgap>[125X [27XP := PeifferSubgroupPreCat1Group( C );[127X[104X
+    [4X[28XGroup([ (1,3)(2,4), (1,2)(3,4) ])[128X[104X
+    [4X[25Xgap>[125X [27XC2 := Cat1GroupByPeifferQuotient( C );[127X[104X
+    [4X[28X[Group( [ f1, f2 ] )=>c2][128X[104X
+    [4X[25Xgap>[125X [27XStructureDescription( C2 );[127X[104X
+    [4X[28X[ "S3", "C2" ][128X[104X
+    [4X[25Xgap>[125X [27XXC := PreXModOfPreCat1Group( C );;[127X[104X
+    [4X[25Xgap>[125X [27XStructureDescription( XC );  [127X[104X
+    [4X[28X[ "A4", "C2" ][128X[104X
+    [4X[25Xgap>[125X [27XXC2 := XModByPeifferQuotient( XC );;[127X[104X
+    [4X[25Xgap>[125X [27XStructureDescription( XC2 );[127X[104X
+    [4X[28X[ "C3", "C2" ][128X[104X
+    [4X[25Xgap>[125X [27XCXC2 := Cat1GroupOfXMod( XC2 );;[127X[104X
+    [4X[25Xgap>[125X [27XStructureDescription( CXC2 );[127X[104X
+    [4X[28X[ "S3", "C2" ][128X[104X
+    [4X[25Xgap>[125X [27XIsomorphismCat1Groups( C2, CXC2 );[127X[104X
+    [4X[28X[[..] => [(..|X..)=>c2]][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.4-6 SubCat1Group[101X
+  
+  [33X[1;0Y[29X[2XSubCat1Group[102X( [3XC1[103X, [3XS1[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSubPreCat1Group[102X( [3XC1[103X, [3XS1[103X ) [32X operation[133X
+  
+  [33X[0;0Y[22XS_1[122X  is  a  sub-cat[22X^1[122X-group  of [22XC_1[122X provided the source and range of [22XS_1[122X are
+  subgroups  of  the  source  and  range  of  [22XC_1[122X  and that the tail, head and
+  embedding of [22XS_1[122X are the appropriate restrictions of those of [22XC_1[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xs3 := Subgroup( s4, [(2,3),(3,4)] );; [127X[104X
+    [4X[25Xgap>[125X [27Xres := DoublyRestrictedMapping( h, s3, s3 );; [127X[104X
+    [4X[25Xgap>[125X [27XS := PreCat1Group( res, res );[127X[104X
+    [4X[28X[Group( [ (2,3), (3,4) ] )=>Group( [ (3,4), (3,4) ] )][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.4-7 DirectProduct[101X
+  
+  [33X[1;0Y[29X[2XDirectProduct[102X( [3XC1[103X, [3XC2[103X ) [32X operation[133X
+  
+  [33X[0;0YThe  direct product [22XcalC_1 × calC_2[122X of two cat[22X^1[122X-groups has source [22XG_1 × G_2[122X
+  and  range [22XR_1 × R_2[122X. The tail, head and embedding maps are [22Xt_1 × t_2[122X, [22Xh_1 ×
+  h_2[122X   and  [22Xe_1  ×  e_2[122X.  The  embeddings  and  projections  are  constructed
+  automatically,  and placed in the [10XDirectProductInfo[110X attribute, together with
+  the two [13Xobjects[113X [22XcalC_1[122X and [22XcalX_2[122X.[133X
+  
+  [33X[0;0YThe  example  constructs  the product of two of the cat[22X^1[122X-groups constructed
+  above.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XC418 := DirectProduct( C4, C18 );[127X[104X
+    [4X[28X[(a4a4xg18)=>(a4d x s3a)][128X[104X
+    [4X[25Xgap>[125X [27XinfoC418 := DirectProductInfo( C418 );[127X[104X
+    [4X[28Xrec( [128X[104X
+    [4X[28X  embeddings := [ [[a4a4=>a4d] => [(a4a4xg18)=>(a4d x s3a)]], [128X[104X
+    [4X[28X      [[g18=>s3a] => [(a4a4xg18)=>(a4d x s3a)]] ], [128X[104X
+    [4X[28X  objects := [ [a4a4=>a4d], [g18=>s3a] ], [128X[104X
+    [4X[28X  projections := [ [[(a4a4xg18)=>(a4d x s3a)] => [a4a4=>a4d]], [128X[104X
+    [4X[28X      [[(a4a4xg18)=>(a4d x s3a)] => [g18=>s3a]] ] )[128X[104X
+    [4X[25Xgap>[125X [27Xt418 := TailMap( C418 );[127X[104X
+    [4X[28X[ (1,2,3), (2,3,4), (5,6,7), (6,7,8), (9,10,11), (12,13,14), (10,11)(13,14) [128X[104X
+    [4X[28X ] -> [ (1,2,3), (2,3,4), (), (), (5,6,7), (), (6,7) ][128X[104X
+    [4X[25Xgap>[125X [27Xh418 := HeadMap( C418 );[127X[104X
+    [4X[28X[ (1,2,3), (2,3,4), (5,6,7), (6,7,8), (9,10,11), (12,13,14), (10,11)(13,14) [128X[104X
+    [4X[28X ] -> [ (), (), (1,2,3), (2,3,4), (5,6,7), (5,6,7), (6,7) ][128X[104X
+    [4X[25Xgap>[125X [27Xe418 := RangeEmbedding( C418 );[127X[104X
+    [4X[28X[ (1,2,3), (2,3,4), (5,6,7), (6,7) ] -> [ (1,2,3)(5,6,7), (2,3,4)(6,7,8), [128X[104X
+    [4X[28X  (9,10,11), (10,11)(13,14) ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.5 [33X[0;0YProperties of cat[22X^1[122X[101X[1X-groups and pre-cat[22X^1[122X[101X[1X-groups[133X[101X
+  
+  [33X[0;0YMany  of  the properties listed in section [14X2.2[114X apply to pre-cat[22X^1[122X-groups and
+  to cat[22X^1[122X-groups since these are also 2d-groups. There are also more specific
+  properties.[133X
+  
+  [1X2.5-1 IsCat1Group[101X
+  
+  [33X[1;0Y[29X[2XIsCat1Group[102X( [3XC0[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsPreXCat1Group[102X( [3XC0[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsIdentityCat1Group[102X( [3XC0[103X ) [32X property[133X
+  
+  [33X[0;0Y[10XIsIdentityCat1Group(C0)[110X  is  true  when  the  head  and  tail maps of [10XC0[110X are
+  identity mappings.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XG8 := SmallGroup( 288, 956 );  SetName( G8, "G8" );[127X[104X
+    [4X[28X<pc group of size 288 with 7 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xd12 := DihedralGroup( 12 );  SetName( d12, "d12" );[127X[104X
+    [4X[28X<pc group of size 12 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xa1 := d12.1;;  a2 := d12.2;;  a3 := d12.3;;  a0 := One( d12 );;[127X[104X
+    [4X[25Xgap>[125X [27XgensG8 := GeneratorsOfGroup( G8 );;[127X[104X
+    [4X[25Xgap>[125X [27Xt8 := GroupHomomorphismByImages( G8, d12, gensG8,[127X[104X
+    [4X[25X>[125X [27X          [ a0, a1*a3, a2*a3, a0, a0, a3, a0 ] );;[127X[104X
+    [4X[25Xgap>[125X [27Xh8 := GroupHomomorphismByImages( G8, d12, gensG8,[127X[104X
+    [4X[25X>[125X [27X          [ a1*a2*a3, a0, a0, a2*a3, a0, a0, a3^2 ] );;                   [127X[104X
+    [4X[25Xgap>[125X [27Xe8 := GroupHomomorphismByImages( d12, G8, [a1,a2,a3],[127X[104X
+    [4X[25X>[125X [27X       [ G8.1*G8.2*G8.4*G8.6^2, G8.3*G8.4*G8.6^2*G8.7, G8.6*G8.7^2 ] );[127X[104X
+    [4X[28X[ f1, f2, f3 ] -> [ f1*f2*f4*f6^2, f3*f4*f6^2*f7, f6*f7^2 ][128X[104X
+    [4X[25Xgap>[125X [27XC8 := PreCat1GroupByTailHeadEmbedding( t8, h8, e8 );[127X[104X
+    [4X[28X[G8=>d12][128X[104X
+    [4X[25Xgap>[125X [27XIsCat1Group( C8 );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XKnownPropertiesOfObject( C8 );[127X[104X
+    [4X[28X[ "CanEasilyCompareElements", "CanEasilySortElements", "IsDuplicateFree", [128X[104X
+    [4X[28X  "IsGeneratorsOfSemigroup", "IsPreCat1Domain", "IsPc2DimensionalGroup", [128X[104X
+    [4X[28X  "IsPreXMod", "IsPreCat1Group", "IsCat1Group", "IsIdentityPreCat1Group", [128X[104X
+    [4X[28X  "IsPreCat1GroupWithIdentityEmbedding" ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.5-2 IsPreCat1GroupWithIdentityEmbedding[101X
+  
+  [33X[1;0Y[29X[2XIsPreCat1GroupWithIdentityEmbedding[102X( [3XC0[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsomorphicPreCat1GroupWithIdentityEmbedding[102X( [3XC0[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XIsomorphismToPreCat1GroupWithIdentityEmbedding[102X( [3XC0[103X ) [32X attribute[133X
+  
+  [33X[0;0Y[10XIsPreCat1GroupWithIdentityEmbedding(C0)[110X  is true when the range embedding of
+  [10XC0[110X   is   an   inclusion   mapping.   (This   property  used  to  be  called
+  [10XIsPreCat1GroupByEndomorphisms[110X but, as the example below shows, when the tail
+  and  head  maps  are  endomorphisms  the  range  embedding  need  not  be an
+  inclusion.)  When  this  is not the case, replacing [22Xt,h,e[122X by [22Xt*e,h*e[122X and the
+  inclusion  mapping  of  the  image  of [22Xe[122X gives an isomorphic cat[22X^1[122X-group for
+  which    [10XIsPreCat1GroupWithIdentityEmbedding[110X    is   true.   This   is   the
+  [10XIsomorphicPreCat1GroupWithIdentityEmbedding[110X         of         [10XC0[110X        and
+  [10XIsomorphismToPreCat1GroupWithIdentityEmbedding[110X  is  the  isomorphism between
+  them. (See the next chapter for mappings of cat[22X^1[122X-groups.)[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XG5 := Group( (1,2,3,4,5) );;                                             [127X[104X
+    [4X[25Xgap>[125X [27Xt := GroupHomomorphismByImages( G5, G5, [(1,2,3,4,5)], [(1,5,4,3,2)] );;[127X[104X
+    [4X[25Xgap>[125X [27XPC5 := PreCat1GroupByTailHeadEmbedding( t, t, t );[127X[104X
+    [4X[28X[Group( [ (1,2,3,4,5) ] )=>Group( [ (1,2,3,4,5) ] )][128X[104X
+    [4X[25Xgap>[125X [27XIsPreCat1GroupWithIdentityEmbedding( PC5 );[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIPC5 := IsomorphicPreCat1GroupWithIdentityEmbedding( PC5 );[127X[104X
+    [4X[28X[Group( [ (1,2,3,4,5) ] )=>Group( [ (1,2,3,4,5) ] )][128X[104X
+    [4X[25Xgap>[125X [27XTailMap( IPC5 ); RangeEmbedding( IPC5 );[127X[104X
+    [4X[28X[ (1,2,3,4,5) ] -> [ (1,2,3,4,5) ][128X[104X
+    [4X[28X[ (1,2,3,4,5) ] -> [ (1,2,3,4,5) ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.5-3 Cat1GroupOfXMod[101X
+  
+  [33X[1;0Y[29X[2XCat1GroupOfXMod[102X( [3XX0[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XXModOfCat1Group[102X( [3XC0[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XPreCat1GroupOfPreXMod[102X( [3XP0[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XPreXModOfPreCat1Group[102X( [3XP0[103X ) [32X attribute[133X
+  
+  [33X[0;0YThe   category   of  crossed  modules  is  equivalent  to  the  category  of
+  cat[22X^1[122X-groups, and the functors between these two categories may be described
+  as follows. Starting with the crossed module [22XcalX = (∂ : S -> R)[122X the group [22XG[122X
+  is  defined  as the semidirect product [22XG = R ⋉ S[122X using the action from [22XcalX[122X,
+  with multiplication rule[133X
+  
+  
+  [24X[33X[0;6Y(r_1,s_1)(r_2,s_2) ~=~ (r_1r_2,{s_1}^{r_2}s_2).[133X
+  
+  [124X
+  
+  [33X[0;0YThe structural morphisms are given by[133X
+  
+  
+  [24X[33X[0;6Yt(r,s) = r, \quad h(r,s) = r (\partial s), \quad er = (r,1).[133X
+  
+  [124X
+  
+  [33X[0;0YOn  the  other hand, starting with a cat[22X^1[122X-group [22XcalC = (e;t,h : G -> R)[122X, we
+  define [22XS = ker t[122X, the range [22XR[122X is unchanged, and [22X∂ = h∣_S[122X. The action of [22XR[122X on
+  [22XS[122X is conjugation in [22XG[122X via the embedding of [22XR[122X in [22XG[122X.[133X
+  
+  [33X[0;0YAs  from  version 2.74, the attribute [10XPreCat1GroupOfPreXMod[110X of a pre-crossed
+  modute [22XX = (∂ : S -> R)[122X returns a record with fields[133X
+  
+  [30X    [33X[0;6Y[10X.precat1[110X,  the  pre-cat1-group [22XC = (e;t,h: G -> R)[122X of [22XX[122X, where [22XG = R ⋉
+        S[122X;[133X
+  
+  [30X    [33X[0;6Y[10X.iscat1[110X, true if [22XC[122X is a cat1-group;[133X
+  
+  [30X    [33X[0;6Y[10X.xmodSourceEmbedding[110X, the image [22XS'[122X of [22XS[122X in [22XG[122X;[133X
+  
+  [30X    [33X[0;6Y[10X.xmodSourceEmbeddingIsomorphism[110X, the isomorphism [22XS -> S'[122X;[133X
+  
+  [30X    [33X[0;6Y[10X.xmodRangeEmbedding[110X, the image [22XR'[122X of [22XR[122X in [22XG[122X;[133X
+  
+  [30X    [33X[0;6Y[10X.xmodRangeEmbeddingIsomorphism[110X, the isomorphism [22XR -> R'[122X;[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XX8 := XModOfCat1Group( C8 );;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay( X8 );[127X[104X
+    [4X[28X[128X[104X
+    [4X[28XCrossed module X([G8=>d12]) :- [128X[104X
+    [4X[28X: Source group has generators:[128X[104X
+    [4X[28X  [ f1, f4, f5, f7 ][128X[104X
+    [4X[28X: Range group d12 has generators:[128X[104X
+    [4X[28X  [ f1, f2, f3 ][128X[104X
+    [4X[28X: Boundary homomorphism maps source generators to:[128X[104X
+    [4X[28X  [ f1*f2*f3, f2*f3, <identity> of ..., f3^2 ][128X[104X
+    [4X[28X: Action homomorphism maps range generators to automorphisms:[128X[104X
+    [4X[28X  f1 --> { source gens --> [ f1*f5, f4*f5, f5, f7^2 ] }[128X[104X
+    [4X[28X  f2 --> { source gens --> [ f1*f5*f7^2, f4, f5, f7 ] }[128X[104X
+    [4X[28X  f3 --> { source gens --> [ f1*f7, f4, f5, f7 ] }[128X[104X
+    [4X[28X  These 3 automorphisms generate the group of automorphisms.[128X[104X
+    [4X[28X: associated cat1-group is [G8=>d12][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XStructureDescription(X8);[127X[104X
+    [4X[28X[ "D24", "D12" ][128X[104X
+    [4X[28X[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.6 [33X[0;0YEnumerating cat[22X^1[122X[101X[1X-groups with a given source[133X[101X
+  
+  [33X[0;0YAs the size of a group [22XG[122X increases, the number of cat[22X^1[122X-groups with source [22XG[122X
+  increases   rapidly.   However,  one  is  usually  only  interested  in  the
+  isomorphism   classes   of   cat[22X^1[122X-groups   with   source   [22XG[122X.  An  iterator
+  [10XAllCat1GroupsIterator[110X   is   provided,   which   runs  through  the  various
+  cat[22X^1[122X-groups.   This   iterator  finds,  for  each  subgroup  [22XR[122X  of  [22XG[122X,  the
+  cat[22X^1[122X-groups   with   range   [22XR[122X.   It  does  this  by  running  through  the
+  [10XAllSubgroupsIterator(G)[110X  provided  by  the [5XUtils[105X package, and then using the
+  iterator [10XAllCat1GroupsWithImageIterator(G,R)[110X.[133X
+  
+  [1X2.6-1 AllCat1GroupsWithImageIterator[101X
+  
+  [33X[1;0Y[29X[2XAllCat1GroupsWithImageIterator[102X( [3XG[103X, [3XR[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAllCat1GroupsWithImageNumber[102X( [3XG[103X, [3XR[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XAllCat1GroupsWithImageUpToIsomorphism[102X( [3XG[103X, [3XR[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAllCat1GroupsWithImage[102X( [3XG[103X, [3XR[103X ) [32X operation[133X
+  
+  [33X[0;0YThe  iterator  [10XAllCat1GroupsWithImageIterator(G,R)[110X  iterates through all the
+  cat[22X^1[122X-groups    with    source    [10XG[110X    and    range    [22XR[122X.    The   attribute
+  [10XAllCat1GroupsWithImageNumber(G)[110X  runs  through  this  iterator  to count the
+  number  [22Xn_R[122X  of  these cat[22X^1[122X-groups. The operation [10XAllCat1GroupsWithImage(G)[110X
+  returns  a list containing these [22Xn_R[122X cat[22X^1[122X-groups. Since these lists can get
+  very  long,  this  operation  should  only  be  used  for  simple cases. The
+  operation  [10XAllCat1GroupsWithImageUpToIsomorphism(G)[110X  returns representatives
+  of the isomorphism classes of these cat[22X^1[122X-groups.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xd12 := DihedralGroup( IsPermGroup, 12 );  SetName( d12, "d12" );[127X[104X
+    [4X[28XGroup([ (1,2,3,4,5,6), (2,6)(3,5) ])[128X[104X
+    [4X[25Xgap>[125X [27Xc2 := Subgroup( d12, [ (1,6)(2,5)(3,4) ] );; [127X[104X
+    [4X[25Xgap>[125X [27XAllCat1GroupsWithImageNumber( d12, c2 );[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27XL12 := AllCat1GroupsWithImage( d12, c2 );[127X[104X
+    [4X[28X[ [d12=>Group( [ (), (1,6)(2,5)(3,4) ] )] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.6-2 AllCat1GroupsIterator[101X
+  
+  [33X[1;0Y[29X[2XAllCat1GroupsIterator[102X( [3XG[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAllCat1GroupsNumber[102X( [3XG[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XAllCat1GroupsUpToIsomorphism[102X( [3XG[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAllCat1Groups[102X( [3XG[103X ) [32X operation[133X
+  
+  [33X[0;0YThe  iterator [10XAllCat1GroupsIterator(G)[110X iterates through all the cat[22X^1[122X-groups
+  with  source  [10XG[110X.  The attribute [10XAllCat1GroupsNumber(G)[110X runs this iterator to
+  count  the  number  [22Xn[122X  of these cat[22X^1[122X-groups. The operation [10XAllCat1Groups(G)[110X
+  returns  a  list  containing these [22Xn[122X cat[22X^1[122X-groups. Since these lists can get
+  very  long,  this  operation  should  only  be  used  for  simple cases. The
+  operation  [10XAllCat1GroupsUpToIsomorphism(G)[110X  returns  representatives  of the
+  isomorphism classes of these subgroups.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xiter := AllCat1GroupsIterator( d12 );;[127X[104X
+    [4X[25Xgap>[125X [27XAllCat1GroupsNumber( d12 );[127X[104X
+    [4X[28X12[128X[104X
+    [4X[25Xgap>[125X [27Xiso12 := AllCat1GroupsUpToIsomorphism( d12 );[127X[104X
+    [4X[28X[ [d12=>Group( [ (), (2,6)(3,5) ] )], [128X[104X
+    [4X[28X  [d12=>Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )], [128X[104X
+    [4X[28X  [d12=>Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )], [128X[104X
+    [4X[28X  [d12=>Group( [ (1,2,3,4,5,6), (2,6)(3,5) ] )] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.6-3 CatnGroupNumbers[101X
+  
+  [33X[1;0Y[29X[2XCatnGroupNumbers[102X( [3XG[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XCatnGroupLists[102X( [3XG[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XInitCatnGroupRecords[102X( [3XG[103X ) [32X operation[133X
+  
+  [33X[0;0YThe  attribute  [10XCatnGroupNumbers[110X  for  a  group  [22XG[122X is a mutable record which
+  stores  numbers  of cat[22X^1[122X-groups, cat[22X^2[122X-groups, etc. as they are calculated.
+  The field [10XCatnGroupNumbers(G).idem[110X is the number of idempotent endomorphisms
+  of  [22XG[122X.  Similarly, [10XCatnGroupNumbers(G).cat1[110X is the number of cat[22X^1[122X-groups on
+  [22XG[122X,  while  [10XCatnGroupNumbers(G).iso1[110X  is the number of isomorphism classes of
+  these   cat[22X^1[122X-groups.   Also  [10XCatnGroupNumbers(G).symm1[110X  is  the  number  of
+  cat[22X^1[122X-groups   whose   [10XTailMap[110X   is   the   same   as   the  [10XHeadMap[110X,  while
+  [10XCatnGroupNumbers(G).siso1[110X  is  the  number  of  isomorphism classes of these
+  symmetric  cat[22X^1[122X-groups.  The  attribute  [10XCatnGroupLists[110X is used for storing
+  results of cat[22X^2[122X-group calculations.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XCatnGroupNumbers( d12 );[127X[104X
+    [4X[28Xrec( cat1 := 12, idem := 21, iso1 := 4, siso1 := 4, symm1 := 12 )[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.7 [33X[0;0YSelection of a small cat[22X^1[122X[101X[1X-group[133X[101X
+  
+  [33X[0;0YThe  [10XCat1Group[110X function may also be used to select a cat[22X^1[122X-group from a data
+  file.  All cat[22X^1[122X-structures on groups of size up to [22X70[122X (ordered according to
+  the  [5XGAP[105X  4  numbering  of  small  groups)  are  stored  in  a  list in file
+  [11Xcat1data.g[111X.     Global    variables    [10XCAT1_LIST_MAX_SIZE    :=    70[110X    and
+  [10XCAT1_LIST_CLASS_SIZES[110X  are  also  stored.  The  data  is  read into the list
+  [10XCAT1_LIST[110X only when this function is called.[133X
+  
+  [1X2.7-1 Cat1Select[101X
+  
+  [33X[1;0Y[29X[2XCat1Select[102X( [3Xsize[103X, [3Xgpnum[103X, [3Xnum[103X ) [32X operation[133X
+  
+  [33X[0;0YThe  function  [10XCat1Select[110X  may  be  used  in  three ways. [10XCat1Select( size )[110X
+  returns  the  names  of  the  groups with this size, while [10XCat1Select( size,
+  gpnum )[110X prints a list of cat[22X^1[122X-structures for this chosen group. [10XCat1Select(
+  size, gpnum, num )[110X returns the chosen cat[22X^1[122X-group.[133X
+  
+  [33X[0;0YThe  example  below  is  the  first  case  in which [22Xt ≠ h[122X and the associated
+  conjugation crossed module is given by the normal subgroup [10Xc3[110X of [10Xs3[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27X## check the number of groups of size 18[127X[104X
+    [4X[25Xgap>[125X [27XL18 := Cat1Select( 18 ); [127X[104X
+    [4X[28XUsage:  Cat1Select( size, gpnum, num );[128X[104X
+    [4X[28X[ "D18", "C18", "C3 x S3", "(C3 x C3) : C2", "C6 x C3" ][128X[104X
+    [4X[25Xgap>[125X [27X## check the number of cat1-structures on the fourth of these[127X[104X
+    [4X[25Xgap>[125X [27XCat1Select( 18, 4 );[127X[104X
+    [4X[28XUsage:  Cat1Select( size, gpnum, num );[128X[104X
+    [4X[28XThere are 4 cat1-structures for the group (C3 x C3) : C2.[128X[104X
+    [4X[28XUsing small generating set [ f1, f2, f2*f3 ] for source of homs.[128X[104X
+    [4X[28X[ [range gens], [tail genimages], [head genimages] ] :-[128X[104X
+    [4X[28X(1)  [ [ f1 ], [ f1, <identity> of ..., <identity> of ... ], [128X[104X
+    [4X[28X  [ f1, <identity> of ..., <identity> of ... ] ][128X[104X
+    [4X[28X(2)  [ [ f1, f3 ], [ f1, <identity> of ..., f3 ], [128X[104X
+    [4X[28X  [ f1, <identity> of ..., f3 ] ][128X[104X
+    [4X[28X(3)  [ [ f1, f3 ], [ f1, <identity> of ..., f3 ], [128X[104X
+    [4X[28X  [ f1, f3^2, <identity> of ... ] ][128X[104X
+    [4X[28X(4)  [ [ f1, f2, f2*f3 ],  tail = head = identity mapping ][128X[104X
+    [4X[28X4[128X[104X
+    [4X[25Xgap>[125X [27X## select the third of these cat1-structures [127X[104X
+    [4X[25Xgap>[125X [27XB18 := Cat1Select( 18, 4, 3 );[127X[104X
+    [4X[28X[(C3 x C3) : C2=>Group( [ f1, <identity> of ..., f3 ] )][128X[104X
+    [4X[25Xgap>[125X [27X## convert from a pc-cat1-group to a permutation cat1-group[127X[104X
+    [4X[25Xgap>[125X [27Xiso18 := IsomorphismPermObject( B18 );;[127X[104X
+    [4X[25Xgap>[125X [27XPB18 := Image( iso18 );;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay( PB18 );[127X[104X
+    [4X[28XCat1-group :- [128X[104X
+    [4X[28X: Source group has generators:[128X[104X
+    [4X[28X  [ (2,3)(5,6), (4,5,6), (1,2,3) ][128X[104X
+    [4X[28X: Range group has generators:[128X[104X
+    [4X[28X  [ (2,3), (), (1,2,3) ][128X[104X
+    [4X[28X: tail homomorphism maps source generators to:[128X[104X
+    [4X[28X  [ (2,3), (), (1,2,3) ][128X[104X
+    [4X[28X: head homomorphism maps source generators to:[128X[104X
+    [4X[28X  [ (2,3), (1,3,2), (1,2,3) ][128X[104X
+    [4X[28X: range embedding maps range generators to:[128X[104X
+    [4X[28X  [ (2,3)(5,6), (), (1,2,3) ][128X[104X
+    [4X[28X: kernel has generators:[128X[104X
+    [4X[28X  [ (4,5,6) ][128X[104X
+    [4X[28X: boundary homomorphism maps generators of kernel to:[128X[104X
+    [4X[28X  [ (1,3,2) ][128X[104X
+    [4X[28X: kernel embedding maps generators of kernel to:[128X[104X
+    [4X[28X  [ (4,5,6) ][128X[104X
+    [4X[25Xgap>[125X [27Xconvert the result to the associated permutation crossed module [127X[104X
+    [4X[25Xgap>[125X [27XY18 := XModOfCat1Group( PB18 );; [127X[104X
+    [4X[25Xgap>[125X [27XDisplay( Y18 ); [127X[104X
+    [4X[28XCrossed module:- [128X[104X
+    [4X[28X: Source group has generators:[128X[104X
+    [4X[28X  [ (4,5,6) ][128X[104X
+    [4X[28X: Range group has generators:[128X[104X
+    [4X[28X  [ (2,3), (), (1,2,3) ][128X[104X
+    [4X[28X: Boundary homomorphism maps source generators to:[128X[104X
+    [4X[28X  [ (1,3,2) ][128X[104X
+    [4X[28X: Action homomorphism maps range generators to automorphisms:[128X[104X
+    [4X[28X  (2,3) --> { source gens --> [ (4,6,5) ] }[128X[104X
+    [4X[28X  () --> { source gens --> [ (4,5,6) ] }[128X[104X
+    [4X[28X  (1,2,3) --> { source gens --> [ (4,5,6) ] }[128X[104X
+    [4X[28X  These 3 automorphisms generate the group of automorphisms.[128X[104X
+    [4X[28X: associated cat1-group is [..=>..][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.7-2 AllCat1DataGroupsBasic[101X
+  
+  [33X[1;0Y[29X[2XAllCat1DataGroupsBasic[102X( [3Xgp[103X ) [32X operation[133X
+  
+  [33X[0;0YFor  a  group  [22XG[122X of size greater than [22X70[122X which is reasonably straightforward
+  this  function may be used to construct a list of all cat[22X^1[122X-group structures
+  on  [22XG[122X.  The  operation also attempts to write output to a file in the folder
+  [11Xxmod/lib[111X.  (Other  operations in the file [11Xcat1data.gi[111X have been used to deal
+  with  the  more  complicated  groups  of  size  up  to [22X70[122X, but these are not
+  described here.)[133X
+  
+  [33X[0;0YVan Luyen Le has a more efficient algorithm, extending the data up to groups
+  of size 171, which is expected to appear in a future release of [5XHAP[105X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xgp := SmallGroup( 102, 2 ); [127X[104X
+    [4X[28X<pc group of size 102 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XStructureDescription( gp ); [127X[104X
+    [4X[28X"C3 x D34"[128X[104X
+    [4X[25Xgap>[125X [27Xall := AllCat1DataGroupsBasic( gp );[127X[104X
+    [4X[28X#I Edit last line of .../xmod/lib/nn.kk.out to end with ] ] ] ] ][128X[104X
+    [4X[28X[ [Group( [ f1, f2, f3 ] )=>Group( [ f1, <identity> of ..., <identity> of ... [128X[104X
+    [4X[28X     ] )], [Group( [ f1, f2, f3 ] )=>Group( [ f1, f2, <identity> of ... ] )], [128X[104X
+    [4X[28X  [Group( [ f1, f2, f3 ] )=>Group( [ f1, <identity> of ..., f3 ] )], [128X[104X
+    [4X[28X  [Group( [ f1, f2, f3 ] )=>Group( [ f1, f2, f3 ] )] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.8 [33X[0;0YMore functions for crossed modules and cat[22X^1[122X[101X[1X-groups[133X[101X
+  
+  [33X[0;0YChapter  [14X4[114X  contains  functions  for  quotient  crossed modules; centre of a
+  crossed module; commutator and derived subcrossed modules; etc.[133X
+  
+  [33X[0;0YHere  we  mention  two  functions for groups which have been extended to the
+  two-dimensional case.[133X
+  
+  [1X2.8-1 IdGroup[101X
+  
+  [33X[1;0Y[29X[2XIdGroup[102X( [3X2DimensionalGroup[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XStructureDescription[102X( [3X2DimensionalGroup[103X ) [32X operation[133X
+  
+  [33X[0;0YThese  functions return two-element lists formed by applying the function to
+  the source and range of the 2d-group.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XIdGroup( X8 );[127X[104X
+    [4X[28X[ [ 24, 6 ], [ 12, 4 ] ][128X[104X
+    [4X[25Xgap>[125X [27XStructureDescription( C8 );[127X[104X
+    [4X[28X[ "(S3 x D24) : C2", "D12" ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThere are also a number of functions which test for sub-structures.[133X
+  
+  [1X2.8-2 IsSubXMod[101X
+  
+  [33X[1;0Y[29X[2XIsSubXMod[102X( [3XX0[103X, [3XS0[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsSubPreXMod[102X( [3XX0[103X, [3XS0[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsSubCat1Group[102X( [3XG0[103X, [3XR0[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsSubPreCat1Group[102X( [3XG0[103X, [3XR0[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsSub2DimensionalGroup[102X( [3XG0[103X, [3XR0[103X ) [32X operation[133X
+  
+  [33X[0;0YThese  functions  test  whether the second argument is a sub-2d-group of the
+  first argument. The examples refer back to sub-2d-groups created in sections
+  [14X2.2[114X and [14X2.4[114X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XIsSubXMod( X4, Y4 );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsSubPreCat1Group( C, S );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X2.9 [33X[0;0YThe group groupoid associated to a cat[22X^1[122X[101X[1X-group[133X[101X
+  
+  [33X[0;0YA  [13Xgroup  groupoid[113X  is  an  algebraic  object which is both a groupoid and a
+  group.  The  category  of group groupoids is equivalent to the categories of
+  precrossed  modules  and  precat[22X^1[122X-groups.  Starting with a (pre)cat[22X^1[122X-group
+  [22XcalC  = (e;t,h : G -> R)[122X, we form the groupoid [22XcalG[122X having the elements of [22XR[122X
+  as objects and the elements of [22XG[122X as arrows. The arrow [22Xg[122X has tail [22Xtg[122X and head
+  [22Xhg[122X. [22XcalG[122X has one connected component for each coset of [22XtG[122X in [22XR[122X.[133X
+  
+  [33X[0;0YThe groupoid (partial) multiplication [22X*[122X on these arrows is defined by:[133X
+  
+  
+  [24X[33X[0;6Y(g_1  :  r_1 \to r_2) * (g_2 : r_2 \to r_3) ~=~ (g_1(er_2^{-1})g_2 : r_1 \to
+  r_3).[133X
+  
+  [124X
+  
+  [1X2.9-1 GroupGroupoid[101X
+  
+  [33X[1;0Y[29X[2XGroupGroupoid[102X( [3Xprecat1[103X ) [32X attribute[133X
+  
+  [33X[0;0YThe  operation [10XGroupGroupoid[110X implements this construction. In the example we
+  start  with a crossed module [22X(C_3^2 -> S_3)[122X, form the associated cat[22X^1[122X-group
+  [22X(S_3 ⋉ C_3^2 ⇒ S_3)[122X, and then form the group groupoid [10Xgpd33[110X. Since the image
+  of the boundary of the crossed module is [22XC_3[122X, with index [22X2[122X in the range, the
+  groupoid   has   two   connected   components,  and  the  root  objects  are
+  [22X{(),(12,13)}[122X.  The size of the vertex groups is [22X|ker t ∩ ker h| = 3[122X, and the
+  generators  at  the  root  objects  are [22X() -> ( 4, 5, 6)( 7, 9, 8) -> ()[122X and
+  [22X(12,13) -> ( 2, 3)( 4, 6)( 7, 8) -> (12,13)[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xs3 := Group( (11,12), (12,13) );; [127X[104X
+    [4X[25Xgap>[125X [27Xc3c3 := Group( [ (14,15,16), (17,18,19) ] );; [127X[104X
+    [4X[25Xgap>[125X [27Xbdy := GroupHomomorphismByImages( c3c3, s3, [127X[104X
+    [4X[25X>[125X [27X       [(14,15,16),(17,18,19)], [(11,12,13),(11,12,13)] );;[127X[104X
+    [4X[25Xgap>[125X [27Xa := GroupHomomorphismByImages( c3c3, c3c3, [127X[104X
+    [4X[25X>[125X [27X       [(14,15,16),(17,18,19)], [(14,16,15),(17,19,18)] );; [127X[104X
+    [4X[25Xgap>[125X [27Xaut := Group( [a] );; [127X[104X
+    [4X[25Xgap>[125X [27Xact := GroupHomomorphismByImages( s3, aut, [(11,12),(12,13)], [a,a] );;[127X[104X
+    [4X[25Xgap>[125X [27XX33 := XModByBoundaryAndAction( bdy, act );; [127X[104X
+    [4X[25Xgap>[125X [27XC33 := Cat1GroupOfXMod( X33 ).precat1;; [127X[104X
+    [4X[25Xgap>[125X [27XG33 := Source( C33 );; [127X[104X
+    [4X[25Xgap>[125X [27Xgpd33 := GroupGroupoid( C33 ); [127X[104X
+    [4X[28Xgroupoid with 2 pieces:[128X[104X
+    [4X[28X1:  single piece groupoid with rays: < Group( [ ()>-(4,5,6)(7,9,8)->() ] ), [128X[104X
+    [4X[28X[ (), (11,12,13), (11,13,12) ], [ ()>-()->(), ()>-(7,8,9)->(11,12,13), [128X[104X
+    [4X[28X  ()>-(7,9,8)->(11,13,12) ] >[128X[104X
+    [4X[28X2:  single piece groupoid with rays: < Group( [128X[104X
+    [4X[28X[ (12,13)>-(2,3)(4,6)(7,8)->(12,13) ] ), [ (12,13), (11,12), (11,13) ], [128X[104X
+    [4X[28X[ (12,13)>-(2,3)(5,6)(8,9)->(12,13), (12,13)>-(2,3)(5,6)(7,9)->(11,13), [128X[104X
+    [4X[28X  (12,13)>-(2,3)(5,6)(7,8)->(11,12) ] >[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.9-2 GroupGroupoidElement[101X
+  
+  [33X[1;0Y[29X[2XGroupGroupoidElement[102X( [3Xprecat1[103X, [3Xroot[103X, [3Xg[103X ) [32X operation[133X
+  
+  [33X[0;0YSince  we  need  to  define a second multiplication on the elements of [22XG[122X, we
+  have to convert [22Xg ∈ G[122X into a new type of object, [10XGroupGroupoidElementType[110X, a
+  record [22Xe[122X with fields:[133X
+  
+  [30X    [33X[0;6Y[10Xe!.precat1[110X, the precat[22X^1[122X-group from which [22XcalG[122X was formed;[133X
+  
+  [30X    [33X[0;6Y[10Xe!.root[110X, the root object of the component containing [22Xe[122X;[133X
+  
+  [30X    [33X[0;6Y[10Xe!.element[110X, the element [22Xg ∈ G[122X;[133X
+  
+  [30X    [33X[0;6Y[10Xe!.tail[110X, the tail object of the element [22Xe[122X;[133X
+  
+  [30X    [33X[0;6Y[10Xe!.head[110X, the head object of the element [22Xe[122X;[133X
+  
+  [30X    [33X[0;6Y[10Xe!.tailid[110X, the identity element at the tail object;[133X
+  
+  [30X    [33X[0;6Y[10Xe!.headid[110X, the identity element at the head object;[133X
+  
+  [33X[0;0YIn  the example we pick a particular pair of elements [22Xg_1,g_2 ∈ G[122X, construct
+  group groupoid elements [22Xe_1,e_2[122X from them, and show that [22Xg_1*g_2[122X and [22Xe_1*e_2[122X
+  give  very  different  results.  (Warning:  at  present iterators for object
+  groups and homsets do not work.)[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xpiece2 := Pieces( gpd33 )[2];;[127X[104X
+    [4X[25Xgap>[125X [27Xobs2 := piece2!.objects; [127X[104X
+    [4X[28X[ (12,13), (11,12), (11,13) ][128X[104X
+    [4X[25Xgap>[125X [27XRaysOfGroupoid( piece2 );[127X[104X
+    [4X[28X[ (12,13)>-(2,3)(5,6)(8,9)->(12,13), (12,13)>-(2,3)(5,6)(7,9)->(11,13), [128X[104X
+    [4X[28X  (12,13)>-(2,3)(5,6)(7,8)->(11,12) ][128X[104X
+    [4X[25Xgap>[125X [27Xg1 := (1,2)(5,6)(7,9);; [127X[104X
+    [4X[25Xgap>[125X [27Xg2 := (2,3)(4,5)(7,8);;                         [127X[104X
+    [4X[25Xgap>[125X [27Xg1 * g2;[127X[104X
+    [4X[28X(1,3,2)(4,5,6)(7,9,8)[128X[104X
+    [4X[25Xgap>[125X [27Xe1 := GroupGroupoidElement( C33, (12,13), g1 ); [127X[104X
+    [4X[28X(11,12)>-(1,2)(5,6)(7,9)->(12,13)[128X[104X
+    [4X[25Xgap>[125X [27Xe2 := GroupGroupoidElement( C33, (12,13), g2 );[127X[104X
+    [4X[28X(12,13)>-(2,3)(4,5)(7,8)->(11,13)[128X[104X
+    [4X[25Xgap>[125X [27Xe1*e2;[127X[104X
+    [4X[28X(11,12)>-(1,2)(4,5)(8,9)->(11,13)[128X[104X
+    [4X[25Xgap>[125X [27Xe2^-1;[127X[104X
+    [4X[28X(11,13)>-(1,3)(4,6)(7,9)->(12,13)[128X[104X
+    [4X[25Xgap>[125X [27Xobgp := ObjectGroup( gpd33, (11,12) );[127X[104X
+    [4X[28X<group with 1 generators>[128X[104X
+    [4X[25Xgap>[125X [27XGeneratorsOfGroup( obgp )[1];[127X[104X
+    [4X[28X(11,13)>-( 1, 3)( 4, 6)( 7, 8)->(11,13)[128X[104X
+    [4X[25Xgap>[125X [27XHomset( gpd33, (11,12), (11,13) );[127X[104X
+    [4X[28X<homset (11,12) -> (11,13) with head group Group( [128X[104X
+    [4X[28X[ (11,12)>-( 1, 2)( 4, 6)( 7, 8)->(11,12) ] )>[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  

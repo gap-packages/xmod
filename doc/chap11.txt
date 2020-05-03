@@ -1,0 +1,86 @@
+  
+  [1X11 [33X[0;0YApplications[133X[101X
+  
+  [33X[0;0YThis  chapter was added in April 2018 for version 2.66 of [5XXMod[105X. Initially it
+  describes  crossed  modules  for  free loop spaces. Further applications may
+  arise in due course.[133X
+  
+  
+  [1X11.1 [33X[0;0YFree Loop Spaces[133X[101X
+  
+  [33X[0;0YThese  functions have been used to produce examples for Ronald Brown's paper
+  [13XCrossed  modules,  and the homotopy [22X2[122X-type of a free loop space[113X [Bro18]. The
+  relevant theorem in that paper is as follows.[133X
+  
+  [33X[0;0Y[12XTheorem 2.1[112X [13X Let [22XcalM = (∂ : M -> P)[122X be a crossed module of groups and let [22XX
+  =  BcalM[122X  be  the  classifying space of [22XcalM[122X. Then the components of [22XLX[122X, the
+  free  loop space on [22XX[122X, are determined by equivalence classes of elements [22Xa ∈
+  P[122X  where  [22Xa,a'[122X are equivalent if and only if there are elements [22Xm ∈ M, p ∈ P[122X
+  such that [22Xa'= p + a - ∂ m - p[122X. [113X[133X
+  
+  [33X[0;0Y[13X  Further  the  homotopy  [22X2[122X-type  of  a  component  of  [22XLX[122X given by [22Xa ∈ P[122X is
+  determined  by  the  crossed  module  of groups [22XLcalM[a] = (∂_a : M -> P(a))[122X
+  where: [113X[133X
+  
+  [30X    [33X[0;6Y[13X  [22XP(a)[122X  is  the  subgroup of the cat[22X^1[122X-group [22XG = P ⋉ M[122X such that [22X∂ m =
+        [p,a] = -p-a+p+a[122X; [113X[133X
+  
+  [30X    [33X[0;6Y[13X [22X∂_a(m) = (∂ m, m^-1m^a)[122X for [22Xm ∈ M[122X; [113X[133X
+  
+  [30X    [33X[0;6Y[13X  the action of [22XP(a)[122X on [22XM[122X is given by [22Xn^(p,m) = n^p[122X for [22Xn ∈ M, (p,m) ∈
+        P(a)[122X. [113X[133X
+  
+  [33X[0;0Y[13X In particular [22Xπ_1(LX,a)[122X is isomorphic to [22Xmathrmcokernel(∂_a)[122X, and [22Xπ_2(LX,a)
+  ≅  π_2(X,*)^bara}[122X,  the elements of [22Xπ_2(X,*)[122X fixed under the action of [22Xbara[122X,
+  the class of [22Xa[122X in [22Xπ_1(X,*)[122X. [113X[133X
+  
+  [33X[0;0Y[13X   There   is   an   exact   sequence   [22Xπ  stackrelϕ->  π  ->  π_1(LX,a)  ->
+  C_bara}(π_1(X,*))  ->  1[122X,  in  which [22Xπ = π_2(X,*)[122X, and [22Xϕ[122X is the morphism [22Xm ↦
+  m^-1m^a[122X. [113X[133X
+  
+  [1X11.1-1 LoopsXMod[101X
+  
+  [33X[1;0Y[29X[2XLoopsXMod[102X( [3XM[103X, [3Xa[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAllLoopsXMod[102X( [3XM[103X ) [32X operation[133X
+  
+  [33X[0;0YThe   operation   [10XLoopsXMod(M,a)[110X  calculates  the  crossed  module  [22XLcalM[a][122X
+  described in the theorem.[133X
+  
+  [33X[0;0YThe  operation  [10XAllLoopsXMod(M)[110X  returns  a list of crossed modules, one for
+  each  equivalence  class  of  elements  [22Xp  ∈  P[122X.  [12XThese operations should be
+  considered experimental at present.[112X[133X
+  
+  [33X[0;0YIn  the example below the automorphism crossed module [10XX8[110X has [22XM ≅ C_2^3[122X and [22XP
+  =  PSL(3,2)[122X  is the automorphism group of [22XM[122X. There are [22X6[122X equivalence classes
+  and,  for  each  [22XLX[122X  calculated,  the [2XSize[102X ([14X2.1-11[114X) and [2XStructureDescription[102X
+  ([14X2.8-1[114X) are printed out.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xk8 := Group( (3,4), (5,6), (7,8) );; [127X[104X
+    [4X[25Xgap>[125X [27XSetName( k8, "k8" ); [127X[104X
+    [4X[25Xgap>[125X [27XY8 := XModByAutomorphismGroup( k8 );; [127X[104X
+    [4X[25Xgap>[125X [27XX8 := Image( IsomorphismPerm2DimensionalGroup( Y8 ) );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( X8, "X8" );[127X[104X
+    [4X[25Xgap>[125X [27XPrint( "X8: ", Size( X8 ), " : ", StructureDescription( X8 ), "\n" );  [127X[104X
+    [4X[28XX8: [ 8, 168 ] : [ "C2 x C2 x C2", "PSL(3,2)" ][128X[104X
+    [4X[25Xgap>[125X [27XLX := LoopsXMod( X8, (1,2)(5,6) );;[127X[104X
+    [4X[25Xgap>[125X [27XSize( LX );  StructureDescription( LX ); [127X[104X
+    [4X[28X[ 8, 64 ][128X[104X
+    [4X[28X[ "C2 x C2 x C2", "((C2 x C2 x C2 x C2) : C2) : C2" ][128X[104X
+    [4X[25Xgap>[125X [27XSetInfoLevel( InfoXMod, 1 );[127X[104X
+    [4X[25Xgap>[125X [27XLX8 := AllLoopsXMod( X8 );;[127X[104X
+    [4X[28X#I  LoopsXMod with a = (), [ 8, 1344 ] [128X[104X
+    [4X[28X#I  LoopsXMod with a = (4,5)(6,7), [ 8, 64 ][128X[104X
+    [4X[28X#I  LoopsXMod with a = (2,3)(4,6,5,7), [ 8, 32 ][128X[104X
+    [4X[28X#I  LoopsXMod with a = (2,4,6)(3,5,7), [ 8, 24 ] [128X[104X
+    [4X[28X#I  LoopsXMod with a = (1,2,4,3,6,7,5), [ 8, 56 ] [128X[104X
+    [4X[28X#I  LoopsXMod with a = (1,2,4,5,7,3,6), [ 8, 56 ][128X[104X
+    [4X[25Xgap>[125X [27Xiso := IsomorphismGroups( Range( LX ), Range( LX8[2] ) );[127X[104X
+    [4X[28X[ (1,2)(3,4)(5,6)(7,8), (1,3)(2,4)(5,7)(6,8), (1,5)(2,6)(3,7)(4,8), [128X[104X
+    [4X[28X  (5,8)(6,7), (2,3)(6,7), (2,7)(3,6) ] -> [128X[104X
+    [4X[28X[ (1,5)(2,6)(3,7)(4,8), (1,6)(2,5)(3,8)(4,7), (1,4)(2,3)(5,8)(6,7), [128X[104X
+    [4X[28X  (1,2)(5,6), (1,2)(3,4), (1,3)(2,4) ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  

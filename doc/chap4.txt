@@ -1,0 +1,566 @@
+  
+  [1X4 [33X[0;0YIsoclinism of groups and crossed modules[133X[101X
+  
+  [33X[0;0YThis  chapter  describes  some  functions  written by Alper Odabaş and Enver
+  Uslu,  and  reported  in  their  paper  [IOU16].  Section  [14X4.1[114X contains some
+  additional  basic  functions  for  crossed  modules, constructing quotients,
+  centres,  centralizers  and  normalizers.  In Sections [14X4.2[114X and [14X4.3[114X there are
+  functions  dealing  specifically  with isoclinism for groups and for crossed
+  modules.  Since  these  functions represent a recent addition to the package
+  (as  of  November  2015),  the function names are liable to change in future
+  versions.  The  notion  of isoclinism has been crucial to the enumeration of
+  groups  of  prime  power  order,  see for example James, Newman and O'Brien,
+  [JNO90].[133X
+  
+  
+  [1X4.1 [33X[0;0YMore operations for crossed modules[133X[101X
+  
+  [1X4.1-1 FactorPreXMod[101X
+  
+  [33X[1;0Y[29X[2XFactorPreXMod[102X( [3XX1[103X, [3XX2[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNaturalMorphismByNormalSubPreXMod[102X( [3XX1[103X, [3XX2[103X ) [32X operation[133X
+  
+  [33X[0;0YWhen [22XcalX_2 = (∂_2 : S_2 -> R_2)[122X is a normal sub-precrossed module of [22XcalX_1
+  = (∂_1 : S_1 -> R_1)[122X, then the quotient precrossed module is [22X(∂ : S_2/S_1 ->
+  R_2/R_1)[122X with the induced boundary and action maps. Quotienting a precrossed
+  module  by  it's  Peiffer  subgroup  is a special case of this construction.
+  (Permutation representations vary between different versions of [5XGAP[105X.)[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xd24 := DihedralGroup( IsPermGroup, 24 );; [127X[104X
+    [4X[25Xgap>[125X [27XSetName( d24, "d24" );[127X[104X
+    [4X[25Xgap>[125X [27XY24 := XModByAutomorphismGroup( d24 );; [127X[104X
+    [4X[25Xgap>[125X [27XSize( Y24 );[127X[104X
+    [4X[28X[ 24, 48 ][128X[104X
+    [4X[25Xgap>[125X [27XX24 := Image( IsomorphismPerm2DimensionalGroup( Y24 ) );[127X[104X
+    [4X[28X[d24->Group([ (2,4), (1,2,3,4), (6,7), (5,6,7) ])][128X[104X
+    [4X[25Xgap>[125X [27Xnsx := NormalSubXMods( X24 );; [127X[104X
+    [4X[25Xgap>[125X [27XLength( nsx );[127X[104X
+    [4X[28X40[128X[104X
+    [4X[25Xgap>[125X [27Xids := List( nsx, n -> IdGroup(n) );; [127X[104X
+    [4X[25Xgap>[125X [27Xpos1 := Position( ids, [ [4,1], [8,3] ] );;[127X[104X
+    [4X[25Xgap>[125X [27XXn1 := nsx[pos1]; [127X[104X
+    [4X[28X[Group( [ f2*f4^2, f3*f4 ] )->Group( [ f3, f4, f5 ] )][128X[104X
+    [4X[25Xgap>[125X [27Xnat1 := NaturalMorphismByNormalSubPreXMod( X24, Xn1 );; [127X[104X
+    [4X[25Xgap>[125X [27XQn1 := FactorPreXMod( X24, Xn1 );; [127X[104X
+    [4X[25Xgap>[125X [27X[ Size( Xn1 ), Size( Qn1 ) ];[127X[104X
+    [4X[28X[ [ 4, 8 ], [ 6, 6 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X4.1-2 IntersectionSubXMods[101X
+  
+  [33X[1;0Y[29X[2XIntersectionSubXMods[102X( [3XX0[103X, [3XX1[103X, [3XX2[103X ) [32X operation[133X
+  
+  [33X[0;0YWhen  [10XX1,X2[110X are subcrossed modules of [10XX0[110X, then the source and range of their
+  intersection  are  the  intersections of the sources and ranges of [10XX1[110X and [10XX2[110X
+  respectively.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xpos2 := Position( ids, [ [24,6], [12,4] ] );;[127X[104X
+    [4X[25Xgap>[125X [27XXn2 := nsx[pos2];; [127X[104X
+    [4X[25Xgap>[125X [27XIdGroup( Xn2 );         [127X[104X
+    [4X[28X[ [ 24, 6 ], [ 12, 4 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xpos3 := Position( ids, [ [12,2], [24,5] ] );;[127X[104X
+    [4X[25Xgap>[125X [27XXn3 := nsx[pos3];; [127X[104X
+    [4X[25Xgap>[125X [27XIdGroup( Xn3 );[127X[104X
+    [4X[28X[ [ 12, 2 ], [ 24, 5 ] ][128X[104X
+    [4X[25Xgap>[125X [27XXn23 := IntersectionSubXMods( X24, Xn2, Xn3 );;[127X[104X
+    [4X[25Xgap>[125X [27XIdGroup( Xn23 );[127X[104X
+    [4X[28X[ [ 12, 2 ], [ 6, 2 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X4.1-3 Displacement[101X
+  
+  [33X[1;0Y[29X[2XDisplacement[102X( [3Xalpha[103X, [3Xr[103X, [3Xs[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XDisplacementGroup[102X( [3XX0[103X, [3XQ[103X, [3XT[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XDisplacementSubgroup[102X( [3XX0[103X ) [32X attribute[133X
+  
+  [33X[0;0YCommutators  may  be  written  [22X[r,q] = r^-1q^-1rq = (q^-1)^rq = r^-1r^q[122X, and
+  satisfy identities[133X
+  
+  
+  [24X[33X[0;6Y[r,q]^p   =  [r^p,q^p],  \qquad  [pr,q]  =  [p,q]^r[r,q],  \qquad  [r,pq]  =
+  [r,q][r,p]^q, \qquad [r,q]^{-1} = [q,r].[133X
+  
+  [124X
+  
+  [33X[0;0YIn  a similar way, when a group [22XR[122X acts on a group [22XS[122X, the [13Xdisplacement[113X of [22Xs ∈
+  S[122X  by [22Xr ∈ R[122X is defined to be [22X⟨ r,s ⟩ := (s^-1)^rs ∈ S[122X. When [22XcalX = (∂ : S ->
+  R)[122X is a pre-crossed module, the first crossed module axiom requires [22X∂⟨ r,s ⟩
+  =  [r,∂  s][122X.  When [22Xα[122X is the action of [22XcalX[122X, the [2XDisplacement[102X function may be
+  used  to  calculate [22X⟨ r,s ⟩[122X. Displacements satisfy the following identities,
+  where [22Xs,t ∈ S,~ p,q,r ∈ R[122X:[133X
+  
+  
+  [24X[33X[0;6Y\langle r,s \rangle^p = \langle r^p,s^p \rangle, \qquad \langle qr,s \rangle
+  =  \langle  q,s \rangle^r \langle r,s \rangle, \qquad \langle r,st \rangle =
+  \langle r,t \rangle \langle r,s \rangle^t, \qquad \langle r,s \rangle^{-1} =
+  \langle r^{-1},s^r \rangle.[133X
+  
+  [124X
+  
+  [33X[0;0YThe  operation  [2XDisplacementGroup[102X  applied  to  [10XX0,Q,T[110X  is the subgroup of [10XS[110X
+  consisting  of  all  the  displacements  [22X⟨  r,s  ⟩,  r ∈ Q leqslant R, s ∈ T
+  leqslant S[122X. The [2XDisplacementSubgroup[102X of [22XcalX[122X is the subgroup [22XDisp(calX)[122X of [22XS[122X
+  given  by  [10XDisplacementGroup(X0,R,S)[110X.  The  identities  imply  [22X⟨ r,s ⟩^t = ⟨
+  r,st^r^-1} ⟩ ⟨ r^-1,t ⟩[122X, so [22XDisp(calX)[122X is normal in [22XS[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xpos4 := Position( ids, [ [6,2], [24,14] ] );;[127X[104X
+    [4X[25Xgap>[125X [27XXn4 := nsx[pos4];; [127X[104X
+    [4X[25Xgap>[125X [27Xbn4 := Boundary( Xn4 );;[127X[104X
+    [4X[25Xgap>[125X [27XSn4 := Source(Xn4);; [127X[104X
+    [4X[25Xgap>[125X [27XRn4 := Range(Xn4);; [127X[104X
+    [4X[25Xgap>[125X [27XgenRn4 := GeneratorsOfGroup( Rn4 );;[127X[104X
+    [4X[25Xgap>[125X [27XL := List( genRn4, g -> ( Order(g) = 2 ) and [127X[104X
+    [4X[25X>[125X [27X                not ( IsNormal( Rn4, Subgroup( Rn4, [g] ) ) ) );;[127X[104X
+    [4X[25Xgap>[125X [27Xpos := Position( L, true );;[127X[104X
+    [4X[25Xgap>[125X [27Xs := Sn4.1;  r := genRn4[pos]; [127X[104X
+    [4X[28X(1,3,5,7,9,11)(2,4,6,8,10,12)[128X[104X
+    [4X[28X(6,7)[128X[104X
+    [4X[25Xgap>[125X [27Xact := XModAction( Xn4 );; [127X[104X
+    [4X[25Xgap>[125X [27Xd := Displacement( act, r, s );[127X[104X
+    [4X[28X(1,5,9)(2,6,10)(3,7,11)(4,8,12)[128X[104X
+    [4X[25Xgap>[125X [27XImage( bn4, d ) = Comm( r, Image( bn4, s ) );  [127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XQn4 := Subgroup( Rn4, [ (6,7), (1,3), (2,4) ] );;   [127X[104X
+    [4X[25Xgap>[125X [27XTn4 := Subgroup( Sn4, [ (1,3,5,7,9,11)(2,4,6,8,10,12) ] );;[127X[104X
+    [4X[25Xgap>[125X [27XDisplacementGroup( Xn4, Qn4, Tn4 );                        [127X[104X
+    [4X[28XGroup([ (1,5,9)(2,6,10)(3,7,11)(4,8,12) ])[128X[104X
+    [4X[25Xgap>[125X [27XDisplacementSubgroup( Xn4 );[127X[104X
+    [4X[28XGroup([ (1,5,9)(2,6,10)(3,7,11)(4,8,12) ])[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X4.1-4 CommutatorSubXMod[101X
+  
+  [33X[1;0Y[29X[2XCommutatorSubXMod[102X( [3XX[103X, [3XX1[103X, [3XX2[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XCrossActionSubgroup[102X( [3XX[103X, [3XX1[103X, [3XX2[103X ) [32X operation[133X
+  
+  [33X[0;0YWhen  [22XcalX_1 = (N -> Q), calX_2 = (M -> P)[122X are two normal subcrossed modules
+  of  [22XcalX  = (∂ : S -> R)[122X, the displacements [22X⟨ p,n ⟩[122X and [22X⟨ q,m ⟩[122X all map by [22X∂[122X
+  into  [22X[Q,P][122X.  These  displacements  form  a normal subgroup of [22XS[122X, called the
+  [10XCrossActionSubgroup[110X. The [10XCommutatorSubXMod[110X [22X[calX_1,calX_2][122X has this subgroup
+  as source and [22X[P,Q][122X as range, and is normal in [22XcalX[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XCAn23 := CrossActionSubgroup( X24, Xn2, Xn3 );;[127X[104X
+    [4X[25Xgap>[125X [27XIdGroup( CAn23 );[127X[104X
+    [4X[28X[ 12, 2 ][128X[104X
+    [4X[25Xgap>[125X [27XCn23 := CommutatorSubXMod( X24, Xn2, Xn3 );;[127X[104X
+    [4X[25Xgap>[125X [27XIdGroup( Cn23 );[127X[104X
+    [4X[28X[ [ 12, 2 ], [ 6, 2 ] ][128X[104X
+    [4X[25Xgap>[125X [27XXn23 = Cn23;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X4.1-5 DerivedSubXMod[101X
+  
+  [33X[1;0Y[29X[2XDerivedSubXMod[102X( [3XX0[103X ) [32X attribute[133X
+  
+  [33X[0;0YThe [10XDerivedSubXMod[110X of [22XcalX[122X is the normal subcrossed module [22X[calX,calX] = (∂'
+  :  Disp(calX)  ->  [R,R])[122X  where  [22X∂'[122X is the restriction of [22X∂[122X (see page 66 of
+  Norrie's thesis [Nor87]).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XDXn4 := DerivedSubXMod( Xn4 );;[127X[104X
+    [4X[25Xgap>[125X [27XIdGroup( DXn4 );[127X[104X
+    [4X[28X[ [ 3, 1 ], [ 3, 1 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X4.1-6 FixedPointSubgroupXMod[101X
+  
+  [33X[1;0Y[29X[2XFixedPointSubgroupXMod[102X( [3XX0[103X, [3XT[103X, [3XQ[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XStabilizerSubgroupXMod[102X( [3XX0[103X, [3XT[103X, [3XQ[103X ) [32X operation[133X
+  
+  [33X[0;0YThe  [10XFixedPointSubgroupXMod(X,T,Q)[110X  for  [22XcalX=(∂  :  S -> R)[122X is the subgroup
+  [22XFix(calX,T,Q)[122X  of  elements  [22Xt  ∈  T leqslant S[122X individually fixed under the
+  action of [22XQ leqslant R[122X.[133X
+  
+  [33X[0;0YThe [10XStabilizerSubgroupXMod(X,T,Q)[110X for [22XcalX[122X is the subgroup [22XStab(calX,T,Q)[122X of
+  [22XQ  leqslant R[122X whose elements act trivially on the whole of [22XT leqslant S[122X (see
+  page 19 of Norrie's thesis [Nor87]).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xfix := FixedPointSubgroupXMod( Xn4, Sn4, Rn4 );[127X[104X
+    [4X[28XGroup([ (1,7)(2,8)(3,9)(4,10)(5,11)(6,12) ])[128X[104X
+    [4X[25Xgap>[125X [27Xstab := StabilizerSubgroupXMod( Xn4, Sn4, Rn4 );;[127X[104X
+    [4X[25Xgap>[125X [27XIdGroup( stab );[127X[104X
+    [4X[28X[ 12, 5 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X4.1-7 CentreXMod[101X
+  
+  [33X[1;0Y[29X[2XCentreXMod[102X( [3XX0[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XCentralizer[102X( [3XX[103X, [3XY[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNormalizer[102X( [3XX[103X, [3XY[103X ) [32X operation[133X
+  
+  [33X[0;0YThe  [13Xcentre[113X  [22XZ(calX)[122X  of  [22XcalX  = (∂ : S -> R)[122X has as source the fixed point
+  subgroup  [22XFix(calX,S,R)[122X.  The  range  is the intersection of the centre [22XZ(R)[122X
+  with the stabilizer subgroup.[133X
+  
+  [33X[0;0YWhen  [22XcalY  =  (T  ->  Q)[122X is a subcrossed module of [22XcalX = (∂ : S -> R)[122X, the
+  [13Xcentralizer[113X  [22XC_calX(calY)[122X  of  [22XcalY[122X  has  as source the fixed point subgroup
+  [22XFix(calX,S,Q)[122X.  The range is the intersection of the centralizer [22XC_R(Q)[122X with
+  [22XStab(calX,T,R)[122X.[133X
+  
+  [33X[0;0YThe  [13Xnormalizer[113X  [22XN_calX(calY)[122X  of  [22XcalY[122X  has  as  source  the  subgroup of [22XS[122X
+  consisting of the displacements [22X⟨ s,q ⟩[122X which lie in [22XS[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XZXn4 := CentreXMod( Xn4 );      [127X[104X
+    [4X[28X[Group( [ f3*f4 ] )->Group( [ f3, f5 ] )][128X[104X
+    [4X[25Xgap>[125X [27XIdGroup( ZXn4 );[127X[104X
+    [4X[28X[ [ 2, 1 ], [ 4, 2 ] ][128X[104X
+    [4X[25Xgap>[125X [27XCDXn4 := Centralizer( Xn4, DXn4 );[127X[104X
+    [4X[28X[Group( [ f3*f4 ] )->Group( [ f2 ] )][128X[104X
+    [4X[25Xgap>[125X [27XIdGroup( CDXn4 );    [127X[104X
+    [4X[28X[ [ 2, 1 ], [ 3, 1 ] ][128X[104X
+    [4X[25Xgap>[125X [27XNDXn4 := Normalizer( Xn4, DXn4 ); [127X[104X
+    [4X[28X[Group( <identity> of ... )->Group( [ f5, f2*f3 ] )][128X[104X
+    [4X[25Xgap>[125X [27XIdGroup( NDXn4 );[127X[104X
+    [4X[28X[ [ 1, 1 ], [ 12, 5 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X4.1-8 CentralQuotient[101X
+  
+  [33X[1;0Y[29X[2XCentralQuotient[102X( [3XG[103X ) [32X attribute[133X
+  
+  [33X[0;0YThe  [10XCentralQuotient[110X  of  a group [22XG[122X is the crossed module [22X(G -> G/Z(G))[122X with
+  the  natural  homomorphism  as  the  boundary map. This is a special case of
+  [2XXModByCentralExtension[102X ([14X2.1-5[114X).[133X
+  
+  [33X[0;0YSimilarly,  the  central  quotient  of  a crossed module [22XcalX[122X is the crossed
+  square [22X(calX ⇒ calX/Z(calX))[122X (see section [14X8.2[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XQ24 := CentralQuotient( d24);  IdGroup( Q24 );                     [127X[104X
+    [4X[28X[d24->d24/Z(d24)][128X[104X
+    [4X[28X[ [ 24, 6 ], [ 12, 4 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X4.1-9 IsAbelian2DimensionalGroup[101X
+  
+  [33X[1;0Y[29X[2XIsAbelian2DimensionalGroup[102X( [3XX0[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsAspherical2DimensionalGroup[102X( [3XX0[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsSimplyConnected2DimensionalGroup[102X( [3XX0[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsFaithful2DimensionalGroup[102X( [3XX0[103X ) [32X property[133X
+  
+  [33X[0;0YA crossed module is [13Xabelian[113X if it equal to its centre. This is the case when
+  the range group is abelian and the action is trivial.[133X
+  
+  [33X[0;0YA crossed module is [13Xaspherical[113X if the boundary has trivial kernel.[133X
+  
+  [33X[0;0YA crossed module is [13Xsimply connected[113X if the boundary has trivial cokernel.[133X
+  
+  [33X[0;0YA crossed module is [13Xfaithful[113X if the action is faithful.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27X[ IsAbelian2DimensionalGroup(Xn4), IsAbelian2DimensionalGroup(X24) ];[127X[104X
+    [4X[28X[ false, false ][128X[104X
+    [4X[25Xgap>[125X [27Xpos7 := Position( ids, [ [3,1], [6,1] ] );;[127X[104X
+    [4X[25Xgap>[125X [27X[ IsAspherical2DimensionalGroup(nsx[pos7]), IsAspherical2DimensionalGroup(X24) ];[127X[104X
+    [4X[28X[ true, false ][128X[104X
+    [4X[25Xgap>[125X [27X[ IsSimplyConnected2DimensionalGroup(Xn4), IsSimplyConnected2DimensionalGroup(X24) ];[127X[104X
+    [4X[28X[ true, true ][128X[104X
+    [4X[25Xgap>[125X [27X[ IsFaithful2DimensionalGroup(Xn4), IsFaithful2DimensionalGroup(X24) ];              [127X[104X
+    [4X[28X[ false, true ] [128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X4.1-10 LowerCentralSeriesOfXMod[101X
+  
+  [33X[1;0Y[29X[2XLowerCentralSeriesOfXMod[102X( [3XX0[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XIsNilpotent2DimensionalGroup[102X( [3XX0[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XNilpotencyClass2DimensionalGroup[102X( [3XX0[103X ) [32X attribute[133X
+  
+  [33X[0;0YLet  [22XcalY[122X be a subcrossed module of [22XcalX[122X. A [13X series of length[113X [22Xn[122X from [22XcalX[122X to
+  [22XcalY[122X has the form[133X
+  
+  
+  [24X[33X[0;6Y\calX ~=~ \calX_0 ~\unrhd~ \calX_1 ~\unrhd~ \cdots ~\unrhd~ \calX_i ~\unrhd~
+  \cdots ~\unrhd~ \calX_n ~=~ \calY \quad (1 \leqslant i \leqslant n).[133X
+  
+  [124X
+  
+  [33X[0;0YThe quotients [22XcalF_i = calX_i / calX_i-1[122X are the [13Xfactors[113X of the series.[133X
+  
+  [33X[0;0YA  factor  [22XcalF_i[122X  is  [13Xcentral[113X if [22XcalX_i-1 ⊴ calX[122X and [22XcalF_i[122X is a subcrossed
+  module of the centre of [22XcalX / calX_i-1[122X.[133X
+  
+  [33X[0;0YA series is [13Xcentral[113X if all its factors are central.[133X
+  
+  [33X[0;0Y[22XcalX[122X is [13Xsoluble[113X if it has a series all of whose factors are abelian.[133X
+  
+  [33X[0;0Y[22XcalX[122X  is  [13Xnilpotent[113X  is  it  has  a  series all of whose factors are central
+  factors of [22XcalX[122X.[133X
+  
+  [33X[0;0YThe [13Xlower central series[113X of [22XcalX[122X is the sequence (see [Nor87], p.77):[133X
+  
+  
+  [24X[33X[0;6Y\calX  ~=~  \Gamma_1(\calX)  ~\unrhd~ \Gamma_2(\calX) ~\unrhd~ \cdots \qquad
+  \mbox{where} \qquad \Gamma_j(\calX) ~=~ [ \Gamma_{j-1}(\calX), \calX].[133X
+  
+  [124X
+  
+  [33X[0;0YIf  [22XcalX[122X  is  nilpotent,  then  its lower central series is its most rapidly
+  descending central series.[133X
+  
+  [33X[0;0YThe  least  integer [22Xc[122X such that [22XΓ_c+1(calX)[122X is the trivial crossed module is
+  the [13Xnilpotency class[113X of [22XcalX[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xlcs := LowerCentralSeries( X24 );;      [127X[104X
+    [4X[25Xgap>[125X [27XList( lcs, g -> IdGroup(g) );[127X[104X
+    [4X[28X[ [ [ 24, 6 ], [ 48, 38 ] ], [ [ 12, 2 ], [ 6, 2 ] ], [ [ 6, 2 ], [ 3, 1 ] ], [128X[104X
+    [4X[28X  [ [ 3, 1 ], [ 3, 1 ] ] ][128X[104X
+    [4X[25Xgap>[125X [27XIsNilpotent2DimensionalGroup( X24 );      [127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XNilpotencyClassOf2DimensionalGroup( X24 );[127X[104X
+    [4X[28X0[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X4.1-11 AllXMods[101X
+  
+  [33X[1;0Y[29X[2XAllXMods[102X( [3Xargs[103X ) [32X function[133X
+  
+  [33X[0;0YThe  global  function [10XAllXMods[110X may be called in three ways: as [10XAllXMods(S,R)[110X
+  to  compute  all  crossed  modules  with  chosen source and range groups; as
+  [10XAllXMods([n,m])[110X  to  compute  all  crossed  modules with a given size; or as
+  [10XAllXMods(ord)[110X  to  compute  all crossed modules whose associated cat1-groups
+  have a given size [10Xord[110X.[133X
+  
+  [33X[0;0YIn the example we see that there are [22X4[122X crossed modules [22X(C_6 -> S_3)[122X; forming
+  a  subset  of  the [22X17[122X crossed modules with size [10X[6,6][110X; and that these form a
+  subset of the [22X205[122X crossed modules whose cat1-group has size [22X36[122X. There are [22X40[122X
+  precrossed modules with size [10X[6,6][110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xxc6s3 := AllXMods( SmallGroup(6,2), SmallGroup(6,1) );;   [127X[104X
+    [4X[25Xgap>[125X [27XLength( xc6s3 );           [127X[104X
+    [4X[28X4[128X[104X
+    [4X[25Xgap>[125X [27Xx66 := AllXMods( [6,6] );;   [127X[104X
+    [4X[25Xgap>[125X [27XLength( x66 );[127X[104X
+    [4X[28X17[128X[104X
+    [4X[25Xgap>[125X [27Xx36 := AllXMods( 36 );; [127X[104X
+    [4X[25Xgap>[125X [27XLength( x36 ); [127X[104X
+    [4X[28X205[128X[104X
+    [4X[25Xgap>[125X [27Xsize36 := List( x36, x -> [ Size(Source(x)), Size(Range(x)) ] );;[127X[104X
+    [4X[25Xgap>[125X [27XCollected( size36 );[127X[104X
+    [4X[28X[ [ [ 1, 36 ], 14 ], [ [ 2, 18 ], 7 ], [ [ 3, 12 ], 21 ], [ [ 4, 9 ], 14 ], [128X[104X
+    [4X[28X  [ [ 6, 6 ], 17 ], [ [ 9, 4 ], 102 ], [ [ 12, 3 ], 8 ], [ [ 18, 2 ], 18 ], [128X[104X
+    [4X[28X  [ [ 36, 1 ], 4 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X4.1-12 IsomorphismXMods[101X
+  
+  [33X[1;0Y[29X[2XIsomorphismXMods[102X( [3XX1[103X, [3XX2[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAllXModsUpToIsomorphism[102X( [3Xlist[103X ) [32X operation[133X
+  
+  [33X[0;0YThe  function [10XIsomorphismXMods[110X computes an isomorphism [22Xμ : calX_1 -> calX_2[122X,
+  provided  one exists, or else returns [10Xfail[110X. In the example below we see that
+  the  [22X17[122X  crossed  modules of size [10X[6,6][110X in [10Xx66[110X (see the previous subsection)
+  fall into [22X9[122X isomorphism classes.[133X
+  
+  [33X[0;0YThe  function  [10XAllXModsUpToIsomorphism[110X  takes  a list of crossed modules and
+  partitions them into isomorphism classes.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XIsomorphismXMods( x66[1], x66[2] );[127X[104X
+    [4X[28X[[Group( [ f1, f2 ] )->Group( [ f1, f2 ] )] => [Group( [ f1, f2 ] )->Group( [128X[104X
+    [4X[28X[ f1, f2 ] )]][128X[104X
+    [4X[25Xgap>[125X [27Xiso66 := AllXModsUpToIsomorphism( x66 );;  Length( iso66 ); [127X[104X
+    [4X[28X9 [128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X4.2 [33X[0;0YIsoclinism for groups[133X[101X
+  
+  [1X4.2-1 Isoclinism[101X
+  
+  [33X[1;0Y[29X[2XIsoclinism[102X( [3XG[103X, [3XH[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAreIsoclinicDomains[102X( [3XG[103X, [3XH[103X ) [32X operation[133X
+  
+  [33X[0;0YLet [22XG,H[122X be groups with central quotients [22XQ(G)[122X and [22XQ(H)[122X and derived subgroups
+  [22X[G,G][122X  and  [22X[H,H][122X respectively. Let [22Xc_G : G/Z(G) × G/Z(G) -> [G,G][122X and [22Xc_H :
+  H/Z(H)  × H/Z(H) -> [H,H][122X be the two commutator maps. An [13Xisoclinism[113X [22XG ∼ H[122X is
+  a  pair  of  isomorphisms  [22X(η,ξ)[122X where [22Xη : G/Z(G) -> H/Z(H)[122X and [22Xξ : [G,G] ->
+  [H,H][122X  such  that  [22Xc_G  *  ξ  =  (η × η) * c_H[122X. Isoclinism is an equivalence
+  relation, and all abelian groups are isoclinic to the trivial group.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XG := SmallGroup( 64, 6 );;  StructureDescription( G ); [127X[104X
+    [4X[28X"(C8 x C4) : C2"[128X[104X
+    [4X[25Xgap>[125X [27XQG := CentralQuotient( G );;  IdGroup( QG );[127X[104X
+    [4X[28X[ [ 64, 6 ], [ 8, 3 ] ][128X[104X
+    [4X[25Xgap>[125X [27XH := SmallGroup( 32, 41 );;  StructureDescription( H );[127X[104X
+    [4X[28X"C2 x Q16"[128X[104X
+    [4X[25Xgap>[125X [27XQH := CentralQuotient( H );;  IdGroup( QH );[127X[104X
+    [4X[28X[ [ 32, 41 ], [ 8, 3 ] ][128X[104X
+    [4X[25Xgap>[125X [27XIsoclinism( G, H );[127X[104X
+    [4X[28X[ [ f1, f2, f3 ] -> [ f1, f2*f3, f3 ], [ f3, f5 ] -> [ f4*f5, f5 ] ][128X[104X
+    [4X[25Xgap>[125X [27XK := SmallGroup( 32, 43 );;  StructureDescription( K );[127X[104X
+    [4X[28X"(C2 x D8) : C2"[128X[104X
+    [4X[25Xgap>[125X [27XQK := CentralQuotient( K );;  IdGroup( QK );                       [127X[104X
+    [4X[28X[ [ 32, 43 ], [ 16, 11 ] ][128X[104X
+    [4X[25Xgap>[125X [27XAreIsoclinicDomains( G, K );[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X4.2-2 IsStemDomain[101X
+  
+  [33X[1;0Y[29X[2XIsStemDomain[102X( [3XG[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsoclinicStemDomain[102X( [3XG[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XAllStemGroupIds[102X( [3Xn[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAllStemGroupFamilies[102X( [3Xn[103X ) [32X operation[133X
+  
+  [33X[0;0YA  group  [22XG[122X  is  a [13Xstem group[113X if [22XZ(G) ≤ [G,G][122X. Every group is isoclinic to a
+  stem  group,  but distinct stem groups may be isoclinic. For example, groups
+  [22XD_8, Q_8[122X are two isoclinic stem groups.[133X
+  
+  [33X[0;0YThe function [10XIsoclinicStemDomain [110X returns a stem group isoclinic to [22XG[122X.[133X
+  
+  [33X[0;0YThe  function [10XAllStemGroupIds[110X returns the [10XIdGroup[110X list of the stem groups of
+  a   specified   size,  while  [10XAllStemGroupFamilies[110X  splits  this  list  into
+  isoclinism classes.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XDerivedSubgroup(G);     [127X[104X
+    [4X[28XGroup([ f3, f5 ])[128X[104X
+    [4X[25Xgap>[125X [27XIsStemDomain( G );[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsoclinicStemDomain( G );[127X[104X
+    [4X[28X<pc group of size 16 with 4 generators>[128X[104X
+    [4X[25Xgap>[125X [27XAllStemGroupIds( 32 );[127X[104X
+    [4X[28X[ [ 32, 6 ], [ 32, 7 ], [ 32, 8 ], [ 32, 18 ], [ 32, 19 ], [ 32, 20 ], [128X[104X
+    [4X[28X  [ 32, 27 ], [ 32, 28 ], [ 32, 29 ], [ 32, 30 ], [ 32, 31 ], [ 32, 32 ], [128X[104X
+    [4X[28X  [ 32, 33 ], [ 32, 34 ], [ 32, 35 ], [ 32, 43 ], [ 32, 44 ], [ 32, 49 ], [128X[104X
+    [4X[28X  [ 32, 50 ] ][128X[104X
+    [4X[25Xgap>[125X [27XAllStemGroupFamilies( 32 );[127X[104X
+    [4X[28X[ [ [ 32, 6 ], [ 32, 7 ], [ 32, 8 ] ], [ [ 32, 18 ], [ 32, 19 ], [ 32, 20 ] ],[128X[104X
+    [4X[28X  [ [ 32, 27 ], [ 32, 28 ], [ 32, 29 ], [ 32, 30 ], [ 32, 31 ], [ 32, 32 ], [128X[104X
+    [4X[28X      [ 32, 33 ], [ 32, 34 ], [ 32, 35 ] ], [ [ 32, 43 ], [ 32, 44 ] ], [128X[104X
+    [4X[28X  [ [ 32, 49 ], [ 32, 50 ] ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X4.2-3 IsoclinicRank[101X
+  
+  [33X[1;0Y[29X[2XIsoclinicRank[102X( [3XG[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XIsoclinicMiddleLength[102X( [3XG[103X ) [32X attribute[133X
+  
+  [33X[0;0YLet [22XG[122X be a finite [22Xp[122X-group. Then [22Xlog_p |[G,G] / (Z(G) ∩ [G,G])|[122X is called the
+  [13Xmiddle length[113X of [22XG[122X. Also [22Xlog_p |Z(G) ∩ [G,G]| + log_p |G/Z(G)|[122X is called the
+  [13Xrank[113X  of  [22XG[122X. These invariants appear in the tables of isoclinism families of
+  groups of order 128 in [JNO90].[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XIsoclinicMiddleLength( G );[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27XIsoclinicRank( G );[127X[104X
+    [4X[28X4[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X4.3 [33X[0;0YIsoclinism for crossed modules[133X[101X
+  
+  [1X4.3-1 Isoclinism[101X
+  
+  [33X[1;0Y[29X[2XIsoclinism[102X( [3XX0[103X, [3XY0[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAreIsoclinicDomains[102X( [3XX0[103X, [3XY0[103X ) [32X operation[133X
+  
+  [33X[0;0YLet [22XcalX,calY[122X be crossed modules with central quotients [22XQ(calX)[122X and [22XQ(calY)[122X,
+  and derived subcrossed modules [22X[calX,calX][122X and [22X[calY,calY][122X respectively. Let
+  [22Xc_calX  : Q(calX) × Q(calX) -> [calX,calX][122X and [22Xc_calY : Q(calY) × Q(calY) ->
+  [calY,calY][122X  be the two commutator maps. An [13Xisoclinism[113X [22XcalX ∼ calY[122X is a pair
+  of  bijective  morphisms  [22X(η,ξ)[122X  where  [22Xη  :  Q(calX)  ->  Q(calY)[122X  and  [22Xξ :
+  [calX,calX]  ->  [calY,calY][122X  such  that  [22Xc_calX  *  ξ  =  (η × η) * c_calY[122X.
+  Isoclinism  is  an equivalence relation, and all abelian crossed modules are
+  isoclinic to the trivial crossed module.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XC8 := Cat1Group( 16, 8, 1 );;[127X[104X
+    [4X[25Xgap>[125X [27XX8 := XMod(C8);  IdGroup( X8 );[127X[104X
+    [4X[28X[Group( [ f1*f2*f3, f3, f4 ] )->Group( [ f2, f2 ] )][128X[104X
+    [4X[28X[ [ 8, 1 ], [ 2, 1 ] ][128X[104X
+    [4X[25Xgap>[125X [27XC9 := Cat1Group( 32, 9, 1 );[127X[104X
+    [4X[28X[(C8 x C2) : C2=>Group( [ f2, f2 ] )][128X[104X
+    [4X[25Xgap>[125X [27XX9 := XMod( C9 );  IdGroup( X9 );[127X[104X
+    [4X[28X[Group( [ f1*f2*f3, f3, f4, f5 ] )->Group( [ f2, f2 ] )][128X[104X
+    [4X[28X[ [ 16, 5 ], [ 2, 1 ] ][128X[104X
+    [4X[25Xgap>[125X [27XAreIsoclinicDomains( X8, X9 );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xism89 := Isoclinism( X8, X9 );;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay( ism89 );[127X[104X
+    [4X[28X[ [[Group( [ f1, f2, <identity> of ... ] ) -> Group( [ f2, f2 ] )] => [Group( [128X[104X
+    [4X[28X    [ f1, f2, <identity> of ..., <identity> of ... ] ) -> Group( [128X[104X
+    [4X[28X    [ f2, f2 ] )]], [128X[104X
+    [4X[28X  [[Group( [ f3 ] ) -> Group( <identity> of ... )] => [Group( [128X[104X
+    [4X[28X    [ f3 ] ) -> Group( <identity> of ... )]] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X4.3-2 IsStemDomain[101X
+  
+  [33X[1;0Y[29X[2XIsStemDomain[102X( [3XX0[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsoclinicStemDomain[102X( [3XX0[103X ) [32X attribute[133X
+  
+  [33X[0;0YA  crossed  module  [22XcalX[122X  is a [13Xstem crossed module[113X if [22XZ(calX) ≤ [calX,calX][122X.
+  Every  crossed  module  is  isoclinic to a stem crossed module, but distinct
+  stem crossed modules may be isoclinic.[133X
+  
+  [33X[0;0YA method for [10XIsoclinicStemDomain[110X has yet to be implemented.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XIsStemDomain(X8);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsStemDomain(X9);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X4.3-3 IsoclinicRank[101X
+  
+  [33X[1;0Y[29X[2XIsoclinicRank[102X( [3XX0[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XIsoclinicMiddleLength[102X( [3XX0[103X ) [32X attribute[133X
+  
+  [33X[0;0YThe formulae in subsection [14X4.2-3[114X are applied to the crossed module.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XIsoclinicMiddleLength(X8);[127X[104X
+    [4X[28X[ 1, 0 ][128X[104X
+    [4X[25Xgap>[125X [27XIsoclinicRank(X8);        [127X[104X
+    [4X[28X[ 3, 1 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  

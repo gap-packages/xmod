@@ -1,0 +1,154 @@
+  
+  [1X1 [33X[0;0YIntroduction[133X[101X
+  
+  [33X[0;0YThe [5XXMod[105X package provides functions for computation with[133X
+  
+  [30X    [33X[0;6Yfinite  crossed  modules  of  groups and cat1-groups, and morphisms of
+        these structures;[133X
+  
+  [30X    [33X[0;6Yfinite   pre-crossed   modules,  pre-cat1-groups,  and  their  Peiffer
+        quotients;[133X
+  
+  [30X    [33X[0;6Yderivations of crossed modules and sections of cat1-groups;[133X
+  
+  [30X    [33X[0;6Yisoclinism of groups and crossed modules;[133X
+  
+  [30X    [33X[0;6Ythe actor crossed square of a crossed module;[133X
+  
+  [30X    [33X[0;6Ycrossed   squares,  cat2-groups,  and  their  morphisms  (experimental
+        version);[133X
+  
+  [30X    [33X[0;6Ycrossed modules of groupoids (experimental version).[133X
+  
+  [33X[0;0YIt is loaded with the command[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XLoadPackage( "xmod" ); [127X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  term  crossed  module  was introduced by J. H. C. Whitehead in [Whi48],
+  [Whi49]. Loday, in [Lod82], reformulated the notion of a crossed module as a
+  cat1-group.  Norrie  [Nor90],  [Nor87]  and  Gilbert  [Gil90]  have  studied
+  derivations,  automorphisms  of  crossed  modules and the actor of a crossed
+  module,  while  Ellis [Ell84] has investigated higher dimensional analogues.
+  Properties of induced crossed modules have been determined by Brown, Higgins
+  and Wensley in [BH78], [BW95] and [BW96]. For further references see [AW00],
+  where  we  discuss  some  of the data structures and algorithms used in this
+  package, and also tabulate isomorphism classes of cat1-groups up to size [22X30[122X.[133X
+  
+  [33X[0;0Y[5XXMod[105X  was  originally implemented in 1997 using the [5XGAP[105X 3 language. In April
+  2002  the  first and third parts were converted to [5XGAP[105X 4, the pre-structures
+  were  added,  and  version 2.001 was released. The final two parts, covering
+  derivations,  sections and actors, were included in the January 2004 release
+  2.002  for  [5XGAP[105X 4.4. Many of the function names have been changed during the
+  conversion,  for  example  [10XConjugationXMod[110X  has  become [2XXModByNormalSubgroup[102X
+  ([14X2.1-2[114X).  For  a  list  of  name  changes  see the file [11Xnames.pdf[111X in the [11Xdoc[111X
+  directory.[133X
+  
+  [33X[0;0YIn  October  2015  Alper  Odabaş  and  Enver  Uslu were added to the list of
+  package  authors. Their functions for computing isoclinism classes of groups
+  and  crossed modules are contained in Chapter [14X4[114X, and are described in detail
+  in their paper [IOU16].[133X
+  
+  [33X[0;0YThe    package    may    be    obtained    as    a   compressed   tar   file
+  [11XXMod-version.number.tar.gz[111X by ftp from one of the following sites:[133X
+  
+  [30X    [33X[0;6Ythe            [5XXMod[105X           GitHub           release           site:
+        [7Xhttps://github.com/gap-packages.github.io/xmod/[107X.[133X
+  
+  [30X    [33X[0;6Yany                  [5XGAP[105X                 archive,                 e.g.
+        [7Xhttps://www.gap-system.org/Packages/packages.html[107X;[133X
+  
+  [33X[0;0YThe      package      also      has      a     GitHub     repository     at:
+  [7Xhttps://github.com/gap-packages/xmod/[107X.[133X
+  
+  [33X[0;0YCrossed  modules  and  cat1-groups are special types of [13X2-dimensional groups[113X
+  [Bro82],   [BHS11],   and   are   implemented   as  [10X2DimensionalDomains[110X  and
+  [10X2DimensionalGroups[110X having a [10XSource[110X and a [10XRange[110X.[133X
+  
+  [33X[0;0YThe  package  divides into eight parts. The first part is concerned with the
+  standard constructions for pre-crossed modules and crossed modules; together
+  with  direct products; normal sub-crossed modules; and quotients. Operations
+  for constructing pre-cat1-groups and cat1-groups, and for converting between
+  cat1-groups and crossed modules, are also included.[133X
+  
+  [33X[0;0YThe  second  part  is  concerned with [13Xmorphisms[113X of (pre-)crossed modules and
+  (pre-)cat1-groups,  together with standard operations for morphisms, such as
+  composition, image and kernel.[133X
+  
+  [33X[0;0YThe third part is the most recent part of the package, introduced in October
+  2015.  Additional operations and properties for crossed modules are included
+  in  Section  [14X4.1[114X. Then, in [14X4.2[114X and [14X4.3[114X there are functions for isoclinism of
+  groups and crossed modules.[133X
+  
+  [33X[0;0YThe fourth part is concerned with the equivalent notions of [13Xderivation[113X for a
+  crossed module and [13Xsection[113X for a cat1-group, and the monoids which they form
+  under the Whitehead multiplication.[133X
+  
+  [33X[0;0YThe  fifth  part deals with actor crossed modules and actor cat1-groups. For
+  the  actor  crossed  module  [22XAct(calX)[122X  of  a crossed module [22XcalX[122X we require
+  representations  for  the Whitehead group of regular derivations of [22XcalX[122X and
+  for  the  group  of automorphisms of [22XcalX[122X. The construction also provides an
+  inner morphism from [22XcalX[122X to [22XAct(calX)[122X whose kernel is the centre of [22XcalX[122X.[133X
+  
+  [33X[0;0YThe  sixth  part,  which  remains  under  development, contains functions to
+  compute induced crossed modules.[133X
+  
+  [33X[0;0YSince version 2.007 there are experimental functions for [13Xcrossed squares[113X and
+  their morphisms, structures which arise as [22X3[122X-dimensional groups. Examples of
+  these  are  inclusions of normal sub-crossed modules, and the inner morphism
+  from a crossed module to its actor.[133X
+  
+  [33X[0;0YThe  eighth  part  has  some  experimental  functions for crossed modules of
+  groupoids, interacting with the package [5Xgroupoids[105X. Much more work on this is
+  needed.[133X
+  
+  [33X[0;0YFuture  plans  include the implementation of [13Xgroup-graphs[113X which will provide
+  examples   of   pre-crossed   modules  (their  implementation  will  require
+  interaction  with  graph-theoretic functions in [5XGAP[105X 4). There are also plans
+  to implement cat2-groups, and conversion betwen these and crossed squares.[133X
+  
+  [33X[0;0YThe  equivalent categories [10XXMod[110X (crossed modules) and [10XCat1[110X (cat1-groups) are
+  also  equivalent  to [10XGpGpd[110X, the subcategory of group objects in the category
+  [10XGpd[110X  of  groupoids.  Finite  groupoids have been implemented in Emma Moore's
+  package [5Xgroupoids[105X [Moo01] for groupoids and crossed resolutions.[133X
+  
+  [33X[0;0YIn  order  that  the  user  has  some  control  of the verbosity of the [5XXMod[105X
+  package's functions, an [10XInfoClass[110X [10XInfoXMod[110X is provided (see Chapter [10Xref:Info
+  Functions[110X  in  the  [5XGAP[105X  Reference  Manual  for  a  description  of the [10XInfo[110X
+  mechanism).  By  default, the [10XInfoLevel[110X of [10XInfoXMod[110X is [10X0[110X; progressively more
+  information is supplied by raising the [10XInfoLevel[110X to [10X1[110X, [10X2[110X and [10X3[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSetInfoLevel( InfoXMod, 1); #sets the InfoXMod level to 1[127X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YOnce  the  package  is loaded, the manual [10Xdoc/manual.pdf[110X can be found in the
+  documentation  folder. The [10Xhtml[110X versions, with or without MathJax, should be
+  rebuilt as follows:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XReadPackage( "xmod, "makedoc.g" ); [127X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YIt  is  possible  to  check that the package has been installed correctly by
+  running the test files:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XReadPackage( "xmod", "tst/testall.g" );[127X[104X
+    [4X[28X#I  Testing .../pkg/xmod/tst/gp2obj.tst [128X[104X
+    [4X[28X... [128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YAdditional  information can be found on the [13XComputational Higher-dimensional
+  Discrete                 Algebra[113X                 website                 at:
+  [7Xhttp://pages.bangor.ac.uk/~mas023/chda/intro.html[107X.[133X
+  

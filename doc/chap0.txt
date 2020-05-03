@@ -1,1 +1,299 @@
-Placeholder
+  
+  
+                                     [1X XMod [101X
+  
+  
+                       [1X Crossed Modules and Cat1-Groups [101X
+  
+  
+                                      2.78
+  
+  
+                                   3 May 2020
+  
+  
+                                 Chris Wensley
+  
+                                   Murat Alp
+  
+                                  Alper Odabas
+  
+                                Enver Onder Uslu
+  
+  
+  
+  Chris Wensley
+      Email:    [7Xmailto:c.d.wensley@bangor.ac.uk[107X
+      Homepage: [7Xhttp://pages.bangor.ac.uk/~mas023/[107X
+      Address:  [33X[0;14YDr. C.D. Wensley[133X
+                [33X[0;14YSchool of Computer Science and Electronic Engineering[133X
+                [33X[0;14YBangor University[133X
+                [33X[0;14YDean Street[133X
+                [33X[0;14YBangor[133X
+                [33X[0;14YGwynedd LL57 1UT[133X
+                [33X[0;14YUK[133X
+  
+  
+  Murat Alp
+      Email:    [7Xmailto:muratalp@nigde.edu.tr[107X
+      Address:  [33X[0;14YProf. Dr. M. Alp[133X
+                [33X[0;14YÖmer Halisdemir University[133X
+                [33X[0;14YArt and Science Faculty[133X
+                [33X[0;14YMathematics Department[133X
+                [33X[0;14YNigde[133X
+                [33X[0;14YTurkey[133X
+  
+  
+  Alper Odabas
+      Email:    [7Xmailto:aodabas@ogu.edu.tr[107X
+      Address:  [33X[0;14YDr. A. Odabas[133X
+                [33X[0;14YOsmangazi University[133X
+                [33X[0;14YArts and Sciences Faculty[133X
+                [33X[0;14YDepartment of Mathematics and Computer Science[133X
+                [33X[0;14YEskisehir[133X
+                [33X[0;14YTurkey[133X
+  
+  
+  
+  -------------------------------------------------------
+  [1XAbstract[101X
+  [33X[0;0YThe [5XXMod[105X package provides functions for computation with[133X
+  
+  [30X    [33X[0;6Yfinite  crossed  modules  of  groups and cat1-groups, and morphisms of
+        these structures;[133X
+  
+  [30X    [33X[0;6Yfinite   pre-crossed   modules,  pre-cat1-groups,  and  their  Peiffer
+        quotients;[133X
+  
+  [30X    [33X[0;6Yisoclinism classes of groups and crossed modules;[133X
+  
+  [30X    [33X[0;6Yderivations of crossed modules and sections of cat1-groups;[133X
+  
+  [30X    [33X[0;6Ycrossed  squares  and  their  morphisms,  including  the actor crossed
+        square of a crossed module;[133X
+  
+  [30X    [33X[0;6Ycrossed modules of finite groupoids (experimental version).[133X
+  
+  [33X[0;0Y[5XXMod[105X  was  originally  implemented in 1996 using the [5XGAP[105X3 language, when the
+  second author was studying for a Ph.D. [Alp97] in Bangor.[133X
+  
+  [33X[0;0YIn  April  2002  the  first  and  third  parts  were  converted to [5XGAP[105X4, the
+  pre-structures  were  added,  and  version 2.001 was released. The final two
+  parts,  covering  derivations,  sections  and  actors,  were included in the
+  January 2004 release 2.002 for [5XGAP[105X 4.4.[133X
+  
+  [33X[0;0YIn  October  2015  functions  for  computing  isoclinism  classes of crossed
+  modules,  written  by  Alper  Odabaş  and  Enver Uslu, were added. These are
+  contained in Chapter [14X4[114X, and are described in detail in the paper [IOU16].[133X
+  
+  [33X[0;0YBug reports, suggestions and comments are, of course, welcome. Please submit
+  an issue at [7Xhttps://github.com/gap-packages/xmod/issues/[107X or send an email to
+  the first author at [7Xmailto:c.d.wensley@bangor.ac.uk[107X.[133X
+  
+  
+  -------------------------------------------------------
+  [1XCopyright[101X
+  [33X[0;0Y© 1996-2020, Chris Wensley et al.[133X
+  
+  [33X[0;0YThe  [5XXMod[105X package is free software; you can redistribute it and/or modify it
+  under  the  terms of the GNU General Public License as published by the Free
+  Software  Foundation;  either  version 2 of the License, or (at your option)
+  any later version.[133X
+  
+  
+  -------------------------------------------------------
+  [1XAcknowledgements[101X
+  [33X[0;0YThis  documentation  was prepared using the [5XGAPDoc[105X [LN17] and [5XAutoDoc[105X [GH17]
+  packages.[133X
+  
+  [33X[0;0YThe   procedure   used   to   produce   new   releases   uses   the  package
+  [5XGitHubPagesForGAP[105X [Hor17] and the package [5XReleaseTools[105X.[133X
+  
+  
+  -------------------------------------------------------
+  
+  
+  [1XContents (XMod)[101X
+  
+  1 [33X[0;0YIntroduction[133X
+  2 [33X[0;0Y2d-groups : crossed modules and cat[22X^1[122X-groups[133X
+    2.1 [33X[0;0YConstructions for crossed modules[133X
+      2.1-1 XMod
+      2.1-2 XModByNormalSubgroup
+      2.1-3 XModByTrivialAction
+      2.1-4 XModByAutomorphismGroup
+      2.1-5 XModByCentralExtension
+      2.1-6 XModByPullback
+      2.1-7 XModByAbelianModule
+      2.1-8 DirectProduct
+      2.1-9 Source
+      2.1-10 ImageElmXModAction
+      2.1-11 Size
+    2.2 [33X[0;0YProperties of crossed modules[133X
+      2.2-1 IsXMod
+      2.2-2 SubXMod
+      2.2-3 KernelCokernelXMod
+    2.3 [33X[0;0YPre-crossed modules[133X
+      2.3-1 PreXModByBoundaryAndAction
+      2.3-2 PeifferSubgroup
+    2.4 [33X[0;0YCat[22X^1[122X-groups and pre-cat[22X^1[122X-groups[133X
+      2.4-1 Cat1Group
+      2.4-2 Source
+      2.4-3 DiagonalCat1Group
+      2.4-4 ReverseCat1Group
+      2.4-5 Cat1GroupByPeifferQuotient
+      2.4-6 SubCat1Group
+      2.4-7 DirectProduct
+    2.5 [33X[0;0YProperties of cat[22X^1[122X-groups and pre-cat[22X^1[122X-groups[133X
+      2.5-1 IsCat1Group
+      2.5-2 IsPreCat1GroupWithIdentityEmbedding
+      2.5-3 Cat1GroupOfXMod
+    2.6 [33X[0;0YEnumerating cat[22X^1[122X-groups with a given source[133X
+      2.6-1 AllCat1GroupsWithImageIterator
+      2.6-2 AllCat1GroupsIterator
+      2.6-3 CatnGroupNumbers
+    2.7 [33X[0;0YSelection of a small cat[22X^1[122X-group[133X
+      2.7-1 Cat1Select
+      2.7-2 AllCat1DataGroupsBasic
+    2.8 [33X[0;0YMore functions for crossed modules and cat[22X^1[122X-groups[133X
+      2.8-1 IdGroup
+      2.8-2 IsSubXMod
+    2.9 [33X[0;0YThe group groupoid associated to a cat[22X^1[122X-group[133X
+      2.9-1 GroupGroupoid
+      2.9-2 GroupGroupoidElement
+  3 [33X[0;0Y2d-mappings[133X
+    3.1 [33X[0;0YMorphisms of 2-dimensional groups[133X
+      3.1-1 Source
+    3.2 [33X[0;0YMorphisms of pre-crossed modules[133X
+      3.2-1 IsXModMorphism
+      3.2-2 IsInjective
+      3.2-3 XModMorphism
+      3.2-4 IsomorphismPerm2DimensionalGroup
+      3.2-5 MorphismOfPullback
+    3.3 [33X[0;0YMorphisms of pre-cat1-groups[133X
+      3.3-1 IsCat1GroupMorphism
+      3.3-2 IsomorphismPermObject
+      3.3-3 SmallerDegreePermutationRepresentation2DimensionalGroup
+    3.4 [33X[0;0YOperations on morphisms[133X
+      3.4-1 CompositionMorphism
+      3.4-2 Kernel
+  4 [33X[0;0YIsoclinism of groups and crossed modules[133X
+    4.1 [33X[0;0YMore operations for crossed modules[133X
+      4.1-1 FactorPreXMod
+      4.1-2 IntersectionSubXMods
+      4.1-3 Displacement
+      4.1-4 CommutatorSubXMod
+      4.1-5 DerivedSubXMod
+      4.1-6 FixedPointSubgroupXMod
+      4.1-7 CentreXMod
+      4.1-8 CentralQuotient
+      4.1-9 IsAbelian2DimensionalGroup
+      4.1-10 LowerCentralSeriesOfXMod
+      4.1-11 AllXMods
+      4.1-12 IsomorphismXMods
+    4.2 [33X[0;0YIsoclinism for groups[133X
+      4.2-1 Isoclinism
+      4.2-2 IsStemDomain
+      4.2-3 IsoclinicRank
+    4.3 [33X[0;0YIsoclinism for crossed modules[133X
+      4.3-1 Isoclinism
+      4.3-2 IsStemDomain
+      4.3-3 IsoclinicRank
+  5 [33X[0;0YWhitehead group of a crossed module[133X
+    5.1 [33X[0;0YDerivations and Sections[133X
+      5.1-1 DerivationByImages
+      5.1-2 PrincipalDerivation
+      5.1-3 SectionByHomomorphism
+      5.1-4 IdentityDerivation
+      5.1-5 WhiteheadProduct
+    5.2 [33X[0;0YWhitehead Groups and Monoids[133X
+      5.2-1 AllDerivations
+      5.2-2 RegularDerivations
+      5.2-3 PrincipalDerivations
+      5.2-4 AllSections
+  6 [33X[0;0YActors of 2d-groups[133X
+    6.1 [33X[0;0YActor of a crossed module[133X
+      6.1-1 AutomorphismPermGroup
+      6.1-2 WhiteheadXMod
+      6.1-3 XModCentre
+  7 [33X[0;0YInduced constructions[133X
+    7.1 [33X[0;0YCoproducts of crossed modules[133X
+      7.1-1 CoproductXMod
+    7.2 [33X[0;0YInduced crossed modules[133X
+      7.2-1 InducedXMod
+      7.2-2 AllInducedXMods
+    7.3 [33X[0;0YInduced cat[22X^1[122X-groups[133X
+      7.3-1 InducedCat1Group
+  8 [33X[0;0YCrossed squares and Cat[22X^2[122X-groups[133X
+    8.1 [33X[0;0YDefinition of a crossed square and a crossed [22Xn[122X-cube of groups[133X
+    8.2 [33X[0;0YConstructions for crossed squares[133X
+      8.2-1 CrossedSquareByXMods
+      8.2-2 CrossedSquareByNormalSubgroups
+      8.2-3 CrossedSquareByNormalSubXMod
+      8.2-4 ActorCrossedSquare
+      8.2-5 CrossedSquareByAutomorphismGroup
+      8.2-6 CrossedSquareByPullback
+      8.2-7 CrossedSquareByXModSplitting
+      8.2-8 CrossedSquare
+      8.2-9 Transpose3DimensionalGroup
+      8.2-10 CentralQuotient
+      8.2-11 IsCrossedSquare
+      8.2-12 Up2DimensionalGroup
+      8.2-13 IsSymmetric3DimensionalGroup
+      8.2-14 CrossedPairing
+    8.3 [33X[0;0YMorphisms of crossed squares[133X
+      8.3-1 CrossedSquareMorphism
+      8.3-2 Source
+      8.3-3 IsCrossedSquareMorphism
+      8.3-4 InclusionMorphismHigherDimensionalDomains
+    8.4 [33X[0;0YDefinitions and constructions for cat[22X^2[122X-groups and their morphisms[133X
+      8.4-1 Cat2Group
+      8.4-2 DisplayLeadMaps
+      8.4-3 Transpose3DimensionalGroup
+      8.4-4 Cat2GroupMorphism
+      8.4-5 Cat2GroupOfCrossedSquare
+      8.4-6 Subdiagonal2DimensionalGroup
+    8.5 [33X[0;0YEnumerating cat[22X^2[122X-groups with a given source[133X
+      8.5-1 AllCat2GroupsWithImagesIterator
+      8.5-2 AllCat2GroupsIterator
+  9 [33X[0;0YCrossed cubes and Cat[22X^3[122X-groups[133X
+    9.1 [33X[0;0YFunctions for (pre-)cat[22X^3[122X-groups[133X
+      9.1-1 Cat3Group
+      9.1-2 Front3DimensionalGroup
+    9.2 [33X[0;0YEnumerating cat[22X^3[122X-groups with a given source[133X
+      9.2-1 AllCat3GroupTriples
+    9.3 [33X[0;0YDefinition and constructions for cat[22X^n[122X-groups and their morphisms[133X
+      9.3-1 PreCatnGroup
+  10 [33X[0;0YCrossed modules of groupoids[133X
+    10.1 [33X[0;0YConstructions for crossed modules of groupoids[133X
+      10.1-1 SinglePiecePreXModWithObjects
+      10.1-2 IsXModWithObjects
+      10.1-3 IsPermPreXModWithObjects
+      10.1-4 Root2dGroup
+  11 [33X[0;0YApplications[133X
+    11.1 [33X[0;0YFree Loop Spaces[133X
+      11.1-1 LoopsXMod
+  12 [33X[0;0YUtility functions[133X
+    12.1 [33X[0;0YMappings[133X
+      12.1-1 InclusionMappingGroups
+      12.1-2 InnerAutomorphismsByNormalSubgroup
+      12.1-3 IsGroupOfAutomorphisms
+    12.2 [33X[0;0YAbelian Modules[133X
+      12.2-1 AbelianModuleObject
+  13 [33X[0;0YDevelopment history[133X
+    13.1 [33X[0;0YChanges from version to version[133X
+      13.1-1 [33X[0;0YVersion 1 for [5XGAP[105X 3[133X
+      13.1-2 [33X[0;0YVersion 2[133X
+      13.1-3 [33X[0;0YVersion 2.001 for [5XGAP[105X 4[133X
+      13.1-4 [33X[0;0YInduced crossed modules[133X
+      13.1-5 [33X[0;0YVersions 2.002 -- 2.006[133X
+      13.1-6 [33X[0;0YVersions 2.007 -- 2.010[133X
+    13.2 [33X[0;0YVersions for [5XGAP[105X [4.5 .. 4.8][133X
+      13.2-1 [33X[0;0YAllCat1s[133X
+      13.2-2 [33X[0;0YVersions 2.43 - 2.56[133X
+      13.2-3 [33X[0;0YVersion 2.61[133X
+      13.2-4 [33X[0;0YVersion 2.63 - 2.74[133X
+    13.3 [33X[0;0YWhat needs doing next?[133X
+  
+  
+  [32X
