@@ -1,8 +1,9 @@
 # CHANGES to the 'XMod' package
 
-## 2.78 -> 2.78dev (04/05/2020) 
+## 2.78 -> 2.79 (04/05/2020) 
 
- * (04/05/20)
+ * (04/05/20) corrected: README.md overwritten by PackageInfo.g 
+              added operation LoopClasses to go with LoopsXMod 
 
 ## 2.77 -> 2.78 (03/05/2020) 
 
