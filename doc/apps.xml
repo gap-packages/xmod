@@ -73,53 +73,61 @@ is the morphism <M>m \mapsto m^{-1}m^a</M>.
 </E>
 <P/>
 <ManSection>
+   <Oper Name="LoopClasses"
+         Arg="M" />
    <Oper Name="LoopsXMod"
          Arg="M a" />
    <Oper Name="AllLoopsXMod"
          Arg="M" />
+
 <Description>
+The operation <C>LoopClasses</C> computes the equivalence
+classes <M>[a]</M> described above. 
+These are all unions of conjugacy classes. 
+<P/> 
 The operation <C>LoopsXMod(M,a)</C> calculates the crossed module 
 <M>L\calM[a]</M> described in the theorem. 
 <P/> 
 The operation <C>AllLoopsXMod(M)</C> returns a list of crossed modules, 
-one for each equivalence class of elements <M>p \in P</M>. 
-<B>These operations should be considered experimental at present.</B> 
+one for each equivalence class of elements <M>[a] \subseteq P</M>. 
 <P/>
 In the example below the automorphism crossed module <C>X8</C> has 
 <M>M \cong C_2^3</M> and <M>P = PSL(3,2)</M> 
 is the automorphism group of <M>M</M>. 
-There are <M>6</M> equivalence classes and, for each <M>LX</M> calculated, 
-the <Ref Meth="Size" Label="for crossed modules"/> and 
-<Ref Meth="StructureDescription" Label="for 2d-groups"/> are printed out. 
+There are <M>6</M> equivalence classes which, in this case, 
+are identical with the conjugacy classes. 
+For each <M>LX</M> calculated, the <Ref Meth="IdGroup" Label="for 2d-groups"/> is printed out. 
 </Description>
 </ManSection>
 <P/>
 <Example>
 <![CDATA[
-gap> k8 := Group( (3,4), (5,6), (7,8) );; 
 gap> SetName( k8, "k8" ); 
 gap> Y8 := XModByAutomorphismGroup( k8 );; 
 gap> X8 := Image( IsomorphismPerm2DimensionalGroup( Y8 ) );;
 gap> SetName( X8, "X8" );
 gap> Print( "X8: ", Size( X8 ), " : ", StructureDescription( X8 ), "\n" );  
 X8: [ 8, 168 ] : [ "C2 x C2 x C2", "PSL(3,2)" ]
+gap> classes := LoopClasses( X8 );;
+positions of conjugacy classes in loop classes: [ 1, 2, 3, 4, 5, 6 ]
+gap> List( classes, c -> Length(c) );
+[ 1, 21, 42, 56, 24, 24 ]
 gap> LX := LoopsXMod( X8, (1,2)(5,6) );;
-gap> Size( LX );  StructureDescription( LX ); 
+gap> Size( LX ); 
 [ 8, 64 ]
-[ "C2 x C2 x C2", "((C2 x C2 x C2 x C2) : C2) : C2" ]
+gap> IdGroup( LX );
+[ [ 8, 5 ], [ 64, 138 ] ]
 gap> SetInfoLevel( InfoXMod, 1 );
 gap> LX8 := AllLoopsXMod( X8 );;
-#I  LoopsXMod with a = (), [ 8, 1344 ] 
-#I  LoopsXMod with a = (4,5)(6,7), [ 8, 64 ]
-#I  LoopsXMod with a = (2,3)(4,6,5,7), [ 8, 32 ]
-#I  LoopsXMod with a = (2,4,6)(3,5,7), [ 8, 24 ] 
-#I  LoopsXMod with a = (1,2,4,3,6,7,5), [ 8, 56 ] 
-#I  LoopsXMod with a = (1,2,4,5,7,3,6), [ 8, 56 ]
-gap> iso := IsomorphismGroups( Range( LX ), Range( LX8[2] ) );
-[ (1,2)(3,4)(5,6)(7,8), (1,3)(2,4)(5,7)(6,8), (1,5)(2,6)(3,7)(4,8), 
-  (5,8)(6,7), (2,3)(6,7), (2,7)(3,6) ] -> 
-[ (1,5)(2,6)(3,7)(4,8), (1,6)(2,5)(3,8)(4,7), (1,4)(2,3)(5,8)(6,7), 
-  (1,2)(5,6), (1,2)(3,4), (1,3)(2,4) ]
+#I  LoopsXMod with a = (),  IdGroup = [ [ 8, 5 ], [ 1344, 11686 ] ]
+#I  LoopsXMod with a = (4,5)(6,7),  IdGroup = [ [ 8, 5 ], [ 64, 138 ] ]
+#I  LoopsXMod with a = (2,3)(4,6,5,7),  IdGroup = [ [ 8, 5 ], [ 32, 6 ] ]
+#I  LoopsXMod with a = (2,4,6)(3,5,7),  IdGroup = [ [ 8, 5 ], [ 24, 13 ] ]
+#I  LoopsXMod with a = (1,2,4,3,6,7,5),  IdGroup = [ [ 8, 5 ], [ 56, 11 ] ]
+#I  LoopsXMod with a = (1,2,4,5,7,3,6),  IdGroup = [ [ 8, 5 ], [ 56, 11 ] ]
+gap> iso := IsomorphismGroups( Range( LX ), Range( LX8[2] ) );;
+gap> iso = fail;
+false
 ]]>
 </Example>
 

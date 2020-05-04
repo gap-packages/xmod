@@ -19,6 +19,10 @@ gap> X8 := Image( IsomorphismPerm2DimensionalGroup( Y8 ) );;
 gap> SetName( X8, "X8" );
 gap> Print( "X8: ", Size( X8 ), " : ", StructureDescription( X8 ), "\n" );  
 X8: [ 8, 168 ] : [ "C2 x C2 x C2", "PSL(3,2)" ]
+gap> classes := LoopClasses( X8 );;
+positions of conjugacy classes in loop classes: [ 1, 2, 3, 4, 5, 6 ]
+gap> List( classes, c -> Length(c) );
+[ 1, 21, 42, 56, 24, 24 ]
 gap> LX := LoopsXMod( X8, (1,2)(5,6) );;
 gap> Size( LX ); 
 [ 8, 64 ]
