@@ -38,49 +38,54 @@
   C_bara}(π_1(X,*))  ->  1[122X,  in  which [22Xπ = π_2(X,*)[122X, and [22Xϕ[122X is the morphism [22Xm ↦
   m^-1m^a[122X. [113X[133X
   
-  [1X11.1-1 LoopsXMod[101X
+  [1X11.1-1 LoopClasses[101X
   
+  [33X[1;0Y[29X[2XLoopClasses[102X( [3XM[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XLoopsXMod[102X( [3XM[103X, [3Xa[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XAllLoopsXMod[102X( [3XM[103X ) [32X operation[133X
+  
+  [33X[0;0YThe  operation  [10XLoopClasses[110X  computes  the equivalence classes [22X[a][122X described
+  above. These are all unions of conjugacy classes.[133X
   
   [33X[0;0YThe   operation   [10XLoopsXMod(M,a)[110X  calculates  the  crossed  module  [22XLcalM[a][122X
   described in the theorem.[133X
   
   [33X[0;0YThe  operation  [10XAllLoopsXMod(M)[110X  returns  a list of crossed modules, one for
-  each  equivalence  class  of  elements  [22Xp  ∈  P[122X.  [12XThese operations should be
-  considered experimental at present.[112X[133X
+  each equivalence class of elements [22X[a] ⊆ P[122X.[133X
   
   [33X[0;0YIn  the example below the automorphism crossed module [10XX8[110X has [22XM ≅ C_2^3[122X and [22XP
   =  PSL(3,2)[122X  is the automorphism group of [22XM[122X. There are [22X6[122X equivalence classes
-  and,  for  each  [22XLX[122X  calculated,  the [2XSize[102X ([14X2.1-11[114X) and [2XStructureDescription[102X
-  ([14X2.8-1[114X) are printed out.[133X
+  which,  in  this case, are identical with the conjugacy classes. For each [22XLX[122X
+  calculated, the [2XIdGroup[102X ([14X2.8-1[114X) is printed out.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27Xk8 := Group( (3,4), (5,6), (7,8) );; [127X[104X
     [4X[25Xgap>[125X [27XSetName( k8, "k8" ); [127X[104X
     [4X[25Xgap>[125X [27XY8 := XModByAutomorphismGroup( k8 );; [127X[104X
     [4X[25Xgap>[125X [27XX8 := Image( IsomorphismPerm2DimensionalGroup( Y8 ) );;[127X[104X
     [4X[25Xgap>[125X [27XSetName( X8, "X8" );[127X[104X
     [4X[25Xgap>[125X [27XPrint( "X8: ", Size( X8 ), " : ", StructureDescription( X8 ), "\n" );  [127X[104X
     [4X[28XX8: [ 8, 168 ] : [ "C2 x C2 x C2", "PSL(3,2)" ][128X[104X
+    [4X[25Xgap>[125X [27Xclasses := LoopClasses( X8 );;[127X[104X
+    [4X[28Xpositions of conjugacy classes in loop classes: [ 1, 2, 3, 4, 5, 6 ][128X[104X
+    [4X[25Xgap>[125X [27XList( classes, c -> Length(c) );[127X[104X
+    [4X[28X[ 1, 21, 42, 56, 24, 24 ][128X[104X
     [4X[25Xgap>[125X [27XLX := LoopsXMod( X8, (1,2)(5,6) );;[127X[104X
-    [4X[25Xgap>[125X [27XSize( LX );  StructureDescription( LX ); [127X[104X
+    [4X[25Xgap>[125X [27XSize( LX ); [127X[104X
     [4X[28X[ 8, 64 ][128X[104X
-    [4X[28X[ "C2 x C2 x C2", "((C2 x C2 x C2 x C2) : C2) : C2" ][128X[104X
+    [4X[25Xgap>[125X [27XIdGroup( LX );[127X[104X
+    [4X[28X[ [ 8, 5 ], [ 64, 138 ] ][128X[104X
     [4X[25Xgap>[125X [27XSetInfoLevel( InfoXMod, 1 );[127X[104X
     [4X[25Xgap>[125X [27XLX8 := AllLoopsXMod( X8 );;[127X[104X
-    [4X[28X#I  LoopsXMod with a = (), [ 8, 1344 ] [128X[104X
-    [4X[28X#I  LoopsXMod with a = (4,5)(6,7), [ 8, 64 ][128X[104X
-    [4X[28X#I  LoopsXMod with a = (2,3)(4,6,5,7), [ 8, 32 ][128X[104X
-    [4X[28X#I  LoopsXMod with a = (2,4,6)(3,5,7), [ 8, 24 ] [128X[104X
-    [4X[28X#I  LoopsXMod with a = (1,2,4,3,6,7,5), [ 8, 56 ] [128X[104X
-    [4X[28X#I  LoopsXMod with a = (1,2,4,5,7,3,6), [ 8, 56 ][128X[104X
-    [4X[25Xgap>[125X [27Xiso := IsomorphismGroups( Range( LX ), Range( LX8[2] ) );[127X[104X
-    [4X[28X[ (1,2)(3,4)(5,6)(7,8), (1,3)(2,4)(5,7)(6,8), (1,5)(2,6)(3,7)(4,8), [128X[104X
-    [4X[28X  (5,8)(6,7), (2,3)(6,7), (2,7)(3,6) ] -> [128X[104X
-    [4X[28X[ (1,5)(2,6)(3,7)(4,8), (1,6)(2,5)(3,8)(4,7), (1,4)(2,3)(5,8)(6,7), [128X[104X
-    [4X[28X  (1,2)(5,6), (1,2)(3,4), (1,3)(2,4) ][128X[104X
+    [4X[28X#I  LoopsXMod with a = (),  IdGroup = [ [ 8, 5 ], [ 1344, 11686 ] ][128X[104X
+    [4X[28X#I  LoopsXMod with a = (4,5)(6,7),  IdGroup = [ [ 8, 5 ], [ 64, 138 ] ][128X[104X
+    [4X[28X#I  LoopsXMod with a = (2,3)(4,6,5,7),  IdGroup = [ [ 8, 5 ], [ 32, 6 ] ][128X[104X
+    [4X[28X#I  LoopsXMod with a = (2,4,6)(3,5,7),  IdGroup = [ [ 8, 5 ], [ 24, 13 ] ][128X[104X
+    [4X[28X#I  LoopsXMod with a = (1,2,4,3,6,7,5),  IdGroup = [ [ 8, 5 ], [ 56, 11 ] ][128X[104X
+    [4X[28X#I  LoopsXMod with a = (1,2,4,5,7,3,6),  IdGroup = [ [ 8, 5 ], [ 56, 11 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xiso := IsomorphismGroups( Range( LX ), Range( LX8[2] ) );;[127X[104X
+    [4X[25Xgap>[125X [27Xiso = fail;[127X[104X
+    [4X[28Xfalse[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   

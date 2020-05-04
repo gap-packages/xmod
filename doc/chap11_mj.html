@@ -28,7 +28,7 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap11_mj.html#X8575260A80F735BD">11.1 <span class="Heading">Free Loop Spaces</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11_mj.html#X7F70CD007FFF395E">11.1-1 LoopsXMod</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11_mj.html#X87781C76804E783E">11.1-1 LoopClasses</a></span>
 </div></div>
 </div>
 
@@ -62,45 +62,50 @@
 
 <p><em> There is an exact sequence <span class="SimpleMath">\( \pi \stackrel{\,\phi\,}{\to} \pi \to \pi_1(LX,a) \to C_{\bar{a}}(\pi_1(X,*)) \to 1\)</span>, in which <span class="SimpleMath">\(\pi = \pi_2(X,*)\)</span>, and <span class="SimpleMath">\(\phi\)</span> is the morphism <span class="SimpleMath">\(m \mapsto m^{-1}m^a\)</span>. </em></p>
 
-<p><a id="X7F70CD007FFF395E" name="X7F70CD007FFF395E"></a></p>
+<p><a id="X87781C76804E783E" name="X87781C76804E783E"></a></p>
 
-<h5>11.1-1 LoopsXMod</h5>
+<h5>11.1-1 LoopClasses</h5>
 
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LoopClasses</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LoopsXMod</code>( <var class="Arg">M</var>, <var class="Arg">a</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllLoopsXMod</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>The operation <code class="code">LoopClasses</code> computes the equivalence classes <span class="SimpleMath">\([a]\)</span> described above. These are all unions of conjugacy classes.</p>
+
 <p>The operation <code class="code">LoopsXMod(M,a)</code> calculates the crossed module <span class="SimpleMath">\(L\calM[a]\)</span> described in the theorem.</p>
 
-<p>The operation <code class="code">AllLoopsXMod(M)</code> returns a list of crossed modules, one for each equivalence class of elements <span class="SimpleMath">\(p \in P\)</span>. <strong class="button">These operations should be considered experimental at present.</strong></p>
+<p>The operation <code class="code">AllLoopsXMod(M)</code> returns a list of crossed modules, one for each equivalence class of elements <span class="SimpleMath">\([a] \subseteq P\)</span>.</p>
 
-<p>In the example below the automorphism crossed module <code class="code">X8</code> has <span class="SimpleMath">\(M \cong C_2^3\)</span> and <span class="SimpleMath">\(P = PSL(3,2)\)</span> is the automorphism group of <span class="SimpleMath">\(M\)</span>. There are <span class="SimpleMath">\(6\)</span> equivalence classes and, for each <span class="SimpleMath">\(LX\)</span> calculated, the <code class="func">Size</code> (<a href="chap2_mj.html#X7DCC43E47B1764F2"><span class="RefLink">2.1-11</span></a>) and <code class="func">StructureDescription</code> (<a href="chap2_mj.html#X7831DB527CF9DD57"><span class="RefLink">2.8-1</span></a>) are printed out.</p>
+<p>In the example below the automorphism crossed module <code class="code">X8</code> has <span class="SimpleMath">\(M \cong C_2^3\)</span> and <span class="SimpleMath">\(P = PSL(3,2)\)</span> is the automorphism group of <span class="SimpleMath">\(M\)</span>. There are <span class="SimpleMath">\(6\)</span> equivalence classes which, in this case, are identical with the conjugacy classes. For each <span class="SimpleMath">\(LX\)</span> calculated, the <code class="func">IdGroup</code> (<a href="chap2_mj.html#X7831DB527CF9DD57"><span class="RefLink">2.8-1</span></a>) is printed out.</p>
 
 
 <div class="example"><pre>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">k8 := Group( (3,4), (5,6), (7,8) );; </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( k8, "k8" ); </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y8 := XModByAutomorphismGroup( k8 );; </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">X8 := Image( IsomorphismPerm2DimensionalGroup( Y8 ) );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( X8, "X8" );</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Print( "X8: ", Size( X8 ), " : ", StructureDescription( X8 ), "\n" );  </span>
 X8: [ 8, 168 ] : [ "C2 x C2 x C2", "PSL(3,2)" ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">classes := LoopClasses( X8 );;</span>
+positions of conjugacy classes in loop classes: [ 1, 2, 3, 4, 5, 6 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List( classes, c -&gt; Length(c) );</span>
+[ 1, 21, 42, 56, 24, 24 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LX := LoopsXMod( X8, (1,2)(5,6) );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size( LX );  StructureDescription( LX ); </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size( LX ); </span>
 [ 8, 64 ]
-[ "C2 x C2 x C2", "((C2 x C2 x C2 x C2) : C2) : C2" ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IdGroup( LX );</span>
+[ [ 8, 5 ], [ 64, 138 ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetInfoLevel( InfoXMod, 1 );</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LX8 := AllLoopsXMod( X8 );;</span>
-#I  LoopsXMod with a = (), [ 8, 1344 ] 
-#I  LoopsXMod with a = (4,5)(6,7), [ 8, 64 ]
-#I  LoopsXMod with a = (2,3)(4,6,5,7), [ 8, 32 ]
-#I  LoopsXMod with a = (2,4,6)(3,5,7), [ 8, 24 ] 
-#I  LoopsXMod with a = (1,2,4,3,6,7,5), [ 8, 56 ] 
-#I  LoopsXMod with a = (1,2,4,5,7,3,6), [ 8, 56 ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := IsomorphismGroups( Range( LX ), Range( LX8[2] ) );</span>
-[ (1,2)(3,4)(5,6)(7,8), (1,3)(2,4)(5,7)(6,8), (1,5)(2,6)(3,7)(4,8), 
-  (5,8)(6,7), (2,3)(6,7), (2,7)(3,6) ] -&gt; 
-[ (1,5)(2,6)(3,7)(4,8), (1,6)(2,5)(3,8)(4,7), (1,4)(2,3)(5,8)(6,7), 
-  (1,2)(5,6), (1,2)(3,4), (1,3)(2,4) ]
+#I  LoopsXMod with a = (),  IdGroup = [ [ 8, 5 ], [ 1344, 11686 ] ]
+#I  LoopsXMod with a = (4,5)(6,7),  IdGroup = [ [ 8, 5 ], [ 64, 138 ] ]
+#I  LoopsXMod with a = (2,3)(4,6,5,7),  IdGroup = [ [ 8, 5 ], [ 32, 6 ] ]
+#I  LoopsXMod with a = (2,4,6)(3,5,7),  IdGroup = [ [ 8, 5 ], [ 24, 13 ] ]
+#I  LoopsXMod with a = (1,2,4,3,6,7,5),  IdGroup = [ [ 8, 5 ], [ 56, 11 ] ]
+#I  LoopsXMod with a = (1,2,4,5,7,3,6),  IdGroup = [ [ 8, 5 ], [ 56, 11 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := IsomorphismGroups( Range( LX ), Range( LX8[2] ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso = fail;</span>
+false
 
 </pre></div>
 

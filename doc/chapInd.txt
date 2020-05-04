@@ -266,6 +266,7 @@
   [2XLeft2DimensionalMorphism[102X 8.3-2 
   [2XLeft3DimensionalGroup[102X 9.1-2 
   loop space 11.1 
+  [2XLoopClasses[102X 11.1-1 
   [2XLoopsXMod[102X 11.1-1 
   [2XLowerCentralSeriesOfXMod[102X 4.1-10 
   [2XLueXMod[102X 6.1-2 
