@@ -5,8 +5,63 @@
 #Y  Copyright (C) 2001-2020, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
-##############################################################################
-##
+############################################################################## 
+## 
+InstallMethod( LoopClasses, "for a crossed module", true, [ IsPreXMod ], 0, 
+function( X0 ) 
+
+    local M0, elM0, P0, elP0, act0, bdy0, Q0, elQ0, lenP, found, L, 
+          i, a, p, m, b, classes, class, conj, numj, pos, c, c1, j, cj; 
+
+    if not IsXMod( X0 ) then 
+        Error( "X0 should be a crossed module" ); 
+    fi; 
+    M0 := Source( X0 ); 
+    elM0 := Elements( M0 ); 
+    P0 := Range( X0 ); 
+    elP0 := Elements( P0 ); 
+    lenP := Length( elP0 ); 
+    act0 := XModAction( X0 ); 
+    bdy0 := Boundary( X0 ); 
+    Q0 := Image( bdy0 ); 
+    elQ0 := Elements( Q0 ); 
+    found := ListWithIdenticalEntries( lenP, 0 ); 
+    L := [ ]; 
+    classes := [ ]; 
+    for i in [1..lenP] do 
+        a := elP0[i]; 
+        if ( found[i] = 0 ) then 
+            found[i] := 1; 
+            class := [ ];
+            for p in elP0 do 
+                for m in elM0 do 
+                    b := a^p * ImageElm( bdy0, m );  ## a' = a^p + delta(m) 
+                    if not ( b in class ) then  
+                        found[ Position( elP0, b ) ] := 1; 
+                        Add( class, b ); 
+                    fi; 
+                od; 
+            od; 
+            Add( classes, class );
+        fi; 
+    od; 
+    conj := List( ConjugacyClasses( P0 ), c -> Elements( c ) ); 
+    numj := Length( conj ); 
+    pos := ListWithIdenticalEntries( numj, 0 ); 
+    for i in [1..numj] do 
+        c := conj[i]; 
+        c1 := c[1];
+        cj := First( classes, j -> c1 in j ); 
+        if ForAll( c, g -> g in cj ) then 
+            pos[i] := Position( classes, cj ); 
+        fi; 
+    od; 
+    Print( "positions of conjugacy classes in loop classes: ", pos, "\n" ); 
+    return classes;      
+end ); 
+
+############################################################################## 
+## 
 InstallMethod( LoopsXMod, "for a crossed module and an element", true, 
     [ IsPreXMod, IsObject ], 0, 
 function( X0, a ) 
@@ -124,7 +179,6 @@ function( X0 )
     imgenM0 := List( genM0, g -> List( igenP0, p -> ImageElm(p,g) ) ); 
     imbdy0 := ImagesSource( bdy0 ); 
     Q0 := P0/imbdy0; 
-    SetName( P0, "P0" ); 
     conjP0 := ConjugacyClasses( P0 ); 
     repsP0 := List( conjP0, c -> Representative( c ) ); 
     eltsP0 := List( conjP0, c -> Elements(c) ); 
@@ -152,7 +206,7 @@ function( X0 )
             eclP0[ Position( eltsP0, p ) ] := i; 
         od;
     od; 
-    Info( InfoXMod, 3, "eclP0 = ", eclP0 ); 
+    Info( InfoXMod, 3, "\neclP0 = ", eclP0 ); 
     genimbdy0 := GeneratorsOfGroup( imbdy0 ); 
     for i in [1..nclP0] do 
         if ( relP0[i] = i ) then 

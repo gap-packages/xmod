@@ -7,8 +7,10 @@
 
 ##############################################################################
 ##
+#O  LoopClasses( <X0> )
 #O  LoopsXMod( <X0>, <a> )
 #O  AllLoopsXMod( <X0> ) 
 ##  
+DeclareOperation( "LoopClasses", [ IsPreXMod ] );
 DeclareOperation( "LoopsXMod", [ IsPreXMod, IsObject ] );
 DeclareOperation( "AllLoopsXMod", [ IsPreXMod ] );
