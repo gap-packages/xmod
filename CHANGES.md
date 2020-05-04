@@ -2,7 +2,7 @@
 
 ## 2.77 -> 2.79 (04/05/2020) 
 
- * (04/05/20) added operation LoopClasses to go with LoopsXMod 
+ * (04/05/20) added operation LoopClasses to go with (All)LoopsXMod 
  * (03/05/20) reinstalling the package after hard disc replacement
  * (19/04/20) added operation DisplayLeadMaps for a HigherDimensionalDomain 
               fixed an error in AllCat2GroupsWithImagesUpToIsomorphism 
