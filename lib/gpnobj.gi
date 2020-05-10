@@ -7,6 +7,20 @@
 #Y  Copyright (C) 2001-2020, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
+#############################################################################
+##
+#M  IsHigherDimensionalGroup( <obj> )  . . . . . . . for 2-dimensional groups
+#M  HigherDimension( <obj> )  . . . .  . . . . . . . for 2-dimensional groups
+##
+InstallImmediateMethod( IsHigherDimensionalGroup, Is2DimensionalGroup, 0, 
+    function( obj ) 
+    return true;
+end );
+
+InstallImmediateMethod( HigherDimension, Is2DimensionalGroup, 0, 
+    function( obj ) 
+    return 2;
+end );
 
 #############################################################################
 ##

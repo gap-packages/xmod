@@ -69,7 +69,7 @@ BindGlobal( "PcPreCatnObjType",
 #A  GeneratingCat1Groups( <P> ) 
 #A  HigherDimension ( <P> ) 
 #A  GroupsOfHigherDimensonalGroup( <obj> ) 
-#A  EdgesesOfHigherDimensonalGroup( <obj> ) 
+#A  EdgesOfHigherDimensonalGroup( <obj> ) 
 #A  FacesOfHigherDimensonalGroup( <obj> ) 
 ##
 DeclareOperation( "PreCatnObj", [ IsList ] );

@@ -161,16 +161,28 @@ function ( mor, phi )
     local n1, n2, mors1, mors2;
     
     n1 := HigherDimension( mor );
-    n2 := HigherDimension( phi );
-    mors1 := ListOf2DimensionalMappings( mor );
-    mors2 := ListOf2DimensionalMappings( phi );        
-    
-    if ( ( n1 <> n2 ) or ( mors1 <> mors2  ) ) then
-        return false;
-    elif ( IsPreCatnGroupMorphism( mor ) and IsPreCatnGroupMorphism( phi ) 
-           and (Source(mor) = Source(phi)) and (Range(mor) = Range(phi)) ) then
-        return true;
-    fi;
+    n2 := HigherDimension( phi ); 
+    if ( n1 <> n2 ) then 
+        return false; 
+    fi; 
+    if not ( ( Source(mor) = Source(phi) ) and 
+              ( Range(mor) = Range(phi)  ) ) then
+        return false; 
+    fi; 
+    if ( n1 = 3 ) then 
+        return ( ( Up2DimensionalMorphism( mor ) 
+                   = Up2DimensionalMorphism( phi ) )
+             and ( Left2DimensionalMorphism( mor ) 
+                   = Left2DimensionalMorphism( phi ) )
+             and ( Right2DimensionalMorphism( mor ) 
+                   = Right2DimensionalMorphism( phi ) )
+             and ( Down2DimensionalMorphism( mor ) 
+                   = Down2DimensionalMorphism( phi ) ) );
+    else 
+        mors1 := ListOf2DimensionalMappings( mor );
+        mors2 := ListOf2DimensionalMappings( phi ); 
+        return ( mors1 = mors2 ); 
+    fi; 
 end );
 
 #############################################################################

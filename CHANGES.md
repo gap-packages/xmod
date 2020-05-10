@@ -1,5 +1,11 @@
 # CHANGES to the 'XMod' package
 
+## 2.79 -> 2.79dev (10/05/2020) 
+
+ * (10/05/20) split gp3objmap.tst into gp3xs.tst and gp3cat2.tst 
+ * (08/05/20) added DirectProductOp method for PreCat2Groups 
+              added PreCat2GroupMorphismByGroupHomomorphisms method
+
 ## 2.77 -> 2.79 (04/05/2020) 
 
  * (04/05/20) added operation LoopClasses to go with (All)LoopsXMod 

@@ -150,7 +150,7 @@ gap> Print( RepresentationsOfObject(X5), "\n" );
 [ "IsComponentObjectRep", "IsAttributeStoringRep", "IsPreXModObj" ]
 gap> Print( KnownAttributesOfObject(X5), "\n" );
 [ "Name", "Size", "Range", "Source", "IdGroup", "Boundary", "XModAction", 
-  "ExternalSetXMod" ]
+  "ExternalSetXMod", "HigherDimension" ]
 
 ## Section 2.2.1
 gap> kpoX5 := KnownPropertiesOfObject(X5);;
@@ -436,7 +436,7 @@ gap> iso12 := AllCat1GroupsUpToIsomorphism( d12 );
 
 ## Section 2.6.3
 gap> CatnGroupNumbers( d12 );
-rec( cat1 := 12, idem := 21, iso1 := 4, siso1 := 4, symm1 := 12 )
+rec( cat1 := 12, idem := 21, iso1 := 4, siso := 4, symm := 12 )
 
 ## Section 2.7.1
 gap> L18 := Cat1Select( 18 ); 

@@ -143,26 +143,6 @@ function( mor )
     fi;
 end );
 
-##############################################################################
-##
-#M  \=( <mor>, <phi> ) . . . . . test if two morphisms of 3d-objects are equal
-##
-InstallMethod( \=,
-    "generic method for two 3d-morphisms", IsIdenticalObj, 
-    [ IsPreCrossedSquareMorphism, IsPreCrossedSquareMorphism ], 0,
-function ( mor, phi )
-    return ( ( Source( mor ) = Source( phi ) )
-         and ( Range( mor ) = Range( phi ) )
-         and ( Up2DimensionalMorphism( mor ) 
-               = Up2DimensionalMorphism( phi ) )
-         and ( Left2DimensionalMorphism( mor ) 
-               = Left2DimensionalMorphism( phi ) )
-         and ( Right2DimensionalMorphism( mor ) 
-               = Right2DimensionalMorphism( phi ) )
-         and ( Down2DimensionalMorphism( mor ) 
-               = Down2DimensionalMorphism( phi ) ) );
-end );
-
 #############################################################################
 ##
 #F  MappingGeneratorsImages( <map> ) . . . . . for a HigherDimensionalMapping
@@ -461,23 +441,18 @@ end );
 ##
 InstallGlobalFunction( Cat2GroupMorphism, function( arg )
 
-    local nargs;
+    local mor, ok;
 
-    nargs := Length( arg );
-    # two cat2-groups and two homomorphisms
-    if ( nargs = 3 ) then 
-        if IsCat2Group( arg[1] ) and IsCat2Group( arg[2])
-               and ForAll( arg[3], m -> IsCat1GroupMorphism(m) ) then 
-            return Cat2GroupMorphismByCat1GroupMorphisms(arg[1],arg[2],arg[3]); 
-        elif IsCat2Group( arg[1] ) and IsCat2Group( arg[2]) 
-               and ForAll( arg[3], m -> IsGroupHomomorphism(m) )  then 
-            return 
-               Cat2GroupMorphismByGroupHomomorphisms(arg[1],arg[2],arg[3]); 
-        fi;
-    fi;
-    # alternatives not allowed
-    Info( InfoXMod, 2, "usage: Cat2GroupMorphism( src, rng, list of maps );" );
-    return fail;
+    mor := PreCat2GroupMorphism( arg ); 
+    if ( mor = fail ) then 
+        return fail; 
+    fi; 
+    ok := IsCat2GroupMorphism( mor ); 
+    if ok then 
+        return mor; 
+    else 
+        return fail; 
+    fi; 
 end );
 
 ###############################################################################
@@ -489,22 +464,28 @@ InstallGlobalFunction( PreCat2GroupMorphism, function( arg )
     local nargs;
 
     nargs := Length( arg );
-    # two pre-cat2-groups and two pre-cat1-group morphisms
-    if ( ( nargs = 4 ) and IsPreCat2Group( arg[1] ) and IsPreCat2Group( arg[2])
+    # two pre-cat2-groups and two pre-cat1-group morphisms or list of gp homs
+    if ( ( nargs = 4 ) and IsPreCat2Group( arg[1] ) and IsPreCat2Group( arg[2] )
                        and IsPreCat1GroupMorphism( arg[3] )
                        and IsPreCat1GroupMorphism( arg[4] ) ) then
         return PreCat2GroupMorphismByPreCat1GroupMorphisms( 
-                   arg[1], arg[2], arg[3], arg[4] );
+                   arg[1], arg[2], arg[3], arg[4] ); 
+    elif ( ( nargs = 3 ) and IsPreCat2Group( arg[1] ) 
+           and IsPreCat2Group( arg[2] ) and IsList( arg[3] ) ) then 
+        return PreCat2GroupMorphismByGroupHomomorphisms( 
+                   arg[1], arg[2], arg[3] ); 
     fi;
     # alternatives not allowed
     Info( InfoXMod, 2, 
-          "usage: PreCat2GroupMorphism( src, rng, upmor, ltmor );" );
+          "usage: PreCat2GroupMorphism( src, rng, upmor, ltmor );\n", 
+          "   or: PreCat2GroupMorphism( src, rng, list of gp homs" );
     return fail;
 end );
 
 ###############################################################################
 ##
 #M  PreCat2GroupMorphismByPreCat1GroupMorphisms( <src>, <rng>, <upm>, <ltm> ) 
+#M  Cat2GroupMorphismByCat1GroupMorphisms( <src>, <rng>, <upm>, <ltm> ) 
 ##
 InstallMethod( PreCat2GroupMorphismByPreCat1GroupMorphisms,
     "for two pre-cat2-groups and two pre-cat1-group morphisms,", true,
@@ -553,22 +534,75 @@ function( C1, C2, upmor, ltmor )
     return mor;
 end );
 
-##############################################################################
-##
-#M  Cat2GroupMorphismByCat1GroupMorphisms( <Cs>, <Cr>, <list> ) 
-##  . . . make cat2-group mapping
-##
 InstallMethod( Cat2GroupMorphismByCat1GroupMorphisms, 
     "for two cat2-groups and 2 morphisms", true, 
-    [ IsCat2Group, IsCat2Group, IsList ], 0,
-function( src, rng, list )
+    [ IsCat2Group, IsCat2Group, IsCat1GroupMorphism, IsCat1GroupMorphism ], 0,
+function( src, rng, upm, ltm )
 
     local mor, ok;
 
-    if not ForAll( list, m -> IsCat1GroupMorphism(m) ) then 
-        Error( "third argument should be a list of cat1-morphisms" ); 
+    mor := PreCat2GroupMorphismByPreCat1GroupMorphisms( src, rng, upm, ltm );
+    ok := IsCat2GroupMorphism( mor );
+    if not ok then
+        return fail;
+    fi;
+    return mor;
+end );
+
+###############################################################################
+##
+#M  PreCat2GroupMorphismByGroupHomomorphisms( <src>, <rng>, <homs> ) 
+##
+InstallMethod( PreCat2GroupMorphismByGroupHomomorphisms,
+    "for two pre-cat2-groups and a list of group homomorphisms,", true,
+    [ IsPreCat2Group, IsPreCat2Group, IsList ], 0,
+function( C1, C2, homs )
+
+    local gamma, rho, xi, pi, up1, lt1, rt1, dn1, dg1, up2, lt2, rt2, dn2, dg2, 
+          upmor, ltmor, rtmor, dnmor, mor, ok;
+
+    if not ( Length( homs ) = 4 ) then 
+        Error( "expecting 4 group homomorphisms" ); 
     fi; 
-    mor := PreCat2GroupMorphismByPreCat1GroupMorphisms( src, rng, list );
+    if not ForAll( homs, h -> IsGroupHomomorphism( h ) ) then 
+        Error( "expecting 4 group homomorphisms" ); 
+    fi; 
+    gamma := homs[1]; 
+    rho := homs[2]; 
+    xi := homs[3]; 
+    pi := homs[4]; 
+    up1 := Up2DimensionalGroup( C1 ); 
+    lt1 := Left2DimensionalGroup( C1 ); 
+    rt1 := Right2DimensionalGroup( C1 ); 
+    dn1 := Down2DimensionalGroup( C1 ); 
+    dg1 := Diagonal2DimensionalGroup( C1 ); 
+    up2 := Up2DimensionalGroup( C2 ); 
+    lt2 := Left2DimensionalGroup( C2 ); 
+    rt2 := Right2DimensionalGroup( C2 ); 
+    dn2 := Down2DimensionalGroup( C2 ); 
+    dg2 := Diagonal2DimensionalGroup( C2 ); 
+    upmor := PreCat1GroupMorphism( up1, up2, gamma, rho ); 
+    ltmor := PreCat1GroupMorphism( lt1, lt2, gamma, xi ); 
+    rtmor := PreCat1GroupMorphism( rt1, rt2, rho, pi ); 
+    dnmor := PreCat1GroupMorphism( dn1, dn2, xi, pi ); 
+    mor := MakeHigherDimensionalGroupMorphism( C1, C2, 
+               [ upmor, ltmor, rtmor, dnmor ] );
+    if not IsPreCat2GroupMorphism( mor ) then
+        Info( InfoXMod, 1, "not a morphism of pre-cat2-groups.\n" );
+        return fail;
+    fi;
+    ok := IsCat2GroupMorphism( mor );
+    return mor;
+end );
+
+InstallMethod( Cat2GroupMorphismByGroupHomomorphisms, 
+    "for two cat2-groups and a list of group homomorphisms", true, 
+    [ IsCat2Group, IsCat2Group, IsList ], 0,
+function( src, rng, homs )
+
+    local mor, ok;
+
+    mor := PreCat2GroupMorphismByGroupHomomorphisms( src, rng, homs );
     ok := IsCat2GroupMorphism( mor );
     if not ok then
         return fail;

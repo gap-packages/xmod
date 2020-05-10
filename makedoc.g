@@ -37,9 +37,9 @@ AutoDoc( rec(
         ## MainPage := false, 
         includes := [ "intro.xml",     "gp2obj.xml",    "gp2map.xml", 
                       "isoclinic.xml", "gp2up.xml",     "gp2act.xml",
-                      "gp2ind.xml",    "gp3objmap.xml", "gp4objmap.xml", 
-                      "gpd2obj.xml",   "apps.xml",      "util.xml", 
-                      "history.xml"
+                      "gp2ind.xml",    "gp3xsq.xml",    "gp3cat2.xml", 
+                      "gp4objmap.xml", "gpd2obj.xml",   "apps.xml", 
+                      "util.xml",      "history.xml"
                     ],
         bib := "bib.xml", 
         entities := rec( 

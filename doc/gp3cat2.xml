@@ -1,0 +1,571 @@
+<!-- ------------------------------------------------------------------- -->
+<!--                                                                     -->
+<!--  gp3cat2.xml           XMod documentation            Chris Wensley  -->
+<!--                                                                     -->
+<!--  Copyright (C) 1996-2020, Chris Wensley et al,                      --> 
+<!--  School of Computer Science, Bangor University, U.K.                --> 
+<!--                                                                     -->
+<!-- ------------------------------------------------------------------- -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Section Label="sect-cat2-definitions">
+<Heading>Definitions and constructions for cat<M>^2</M>-groups and their morphisms 
+</Heading>
+
+<Index>cat<M>^2</M>-group</Index>
+
+We give here three equivalent definitions of cat<M>^2</M>-groups. 
+When we come to define cat<M>^n</M>-groups we shall give a similar set of 
+definitions. 
+<P/>
+Firstly, we take the definition of a cat<M>^2</M>-group from 
+Section 5 of Brown and Loday <Cite Key="brow:lod"/>, suitably modified.
+A cat<M>^2</M>-group  <M>\calC = (C_{[2]},C_{\{2\}},C_{\{1\}},C_{\emptyset})</M>  
+comprises four groups (one for each of the subsets of <M>[2]</M>) 
+and <M>15</M> homomorphisms, as shown in the following diagram:
+<Display>
+<![CDATA[
+\vcenter{\xymatrix{
+ & C_{[2]} \ar[ddd] <-1.2ex>  \ar[ddd] <-2.0ex>_{\ddot{t}_2,\ddot{h}_2}
+     \ar[rrr] <+1.2ex>  \ar[rrr] <+2.0ex>^{\ddot{t}_1,\ddot{h}_1}
+     \ar[dddrrr] <-0.2ex>  \ar[dddrrr] <-1.0ex>_(0.55){t_{[2]},h_{[2]}}
+    &&&  C_{\{2\}}  \ar[lll]^{\ddot{e}_1}
+            \ar[ddd]<+1.2ex>  \ar[ddd] <+2.0ex>^{\dot{t}_2,\dot{h}_2}  \\
+\calC \quad = \quad
+ &  &&&   \\
+ &  &&&   \\
+ & C_{\{1\}} \ar[uuu]_{\ddot{e}_2}
+     \ar[rrr] <-1.2ex>  \ar[rrr] <-2.0ex>_{\dot{t}_1,\dot{h}_1} 
+    &&&  C_{\emptyset} \ar[uuu]^{\dot{e}_2}   \ar[lll]_{\dot{e}_1} 
+           \ar[uuulll] <-1.0ex>_{e_{[2]}}
+ \\
+}}
+]]></Display>
+The following axioms are satisfied by these homomorphisms: 
+<List>
+<Item>
+the four sides of the square (up, left, right, down) are cat<M>^1</M>-groups, 
+denoted <M>\ddot{\calC}_1, \ddot{\calC}_2, \dot{\calC}_1, \dot{\calC}_2</M>; 
+</Item>
+<Item>
+<M>
+ \dot{t}_1\circ\ddot{h}_2 = \dot{h}_2\circ\ddot{t}_1, ~
+ \dot{t}_2\circ\ddot{h}_1 = \dot{h}_1\circ\ddot{t}_2, ~
+ \dot{e}_1\circ\dot{t}_2 = \ddot{t}_2\circ\ddot{e}_1, ~
+ \dot{e}_2\circ\dot{t}_1 = \ddot{t}_1\circ\ddot{e}_2, ~
+ \dot{e}_1\circ\dot{h}_2 = \ddot{h}_2\circ\ddot{e}_1, ~
+ \dot{e}_2\circ\dot{h}_1 = \ddot{h}_1\circ\ddot{e}_2; 
+ </M>
+</Item>
+<Item>
+<M>
+ \dot{t}_1\circ\ddot{t}_2 = \dot{t}_2\circ\ddot{t}_1 = t_{[2]}, ~ 
+ \dot{h}_1\circ\ddot{h}_2 = \dot{h}_2\circ\ddot{h}_1 = h_{[2]}, ~
+ \dot{e}_1\circ\ddot{e}_2 = \dot{e}_2\circ\ddot{e}_1 = e_{[2]},
+</M>
+making the diagonal a pre-cat<M>^1</M>-group
+<M>(e_{[2]}; t_{[2]}, h_{[2]} : C_{[2]} \to C_{\emptyset})</M>.
+</Item>
+</List>
+It follows from these identities that 
+<M>(\ddot{t}_1,\dot{t}_1),\,(\ddot{h}_1,\dot{h}_1)</M> 
+and <M>(\ddot{e}_1,\dot{e}_1)</M> are morphisms of cat<M>^1</M>-groups, 
+and similarly in the vertical direction. 
+<P/>
+Secondly, we give the simplest of the three definitions, 
+adapted from Ellis-Steiner <Cite Key="ell:st"/>. 
+A cat<M>^2</M>-group  <M>\calC</M> consists of groups <M>G, R_1,R_2</M> 
+and six homomorphisms 
+<M>t_1,h_1 : G \to R_2,~ e_1 : R_2 \to G,~
+ t_2,h_2 : G \to R_1,~ e_2 : R_1 \to G</M>,  
+satisfying the following axioms for all <M>1 \leqslant i \leqslant 2</M>,
+<List>
+<Item>
+<M>
+(t_i \circ e_i)r = r,~ (h_i \circ e_i)r = r,~ 
+\forall r \in R_{[2] \setminus \{i\}}, \quad 
+[\ker t_i, \ker h_i] = 1, 
+</M>
+</Item>
+<Item>
+<M>
+(e_1 \circ t_1) \circ (e_2 \circ t_2) = (e_2 \circ t_2) \circ (e_1 \circ t_1), \quad
+(e_1 \circ h_1) \circ (e_2 \circ h_2) = (e_2 \circ h_2) \circ (e_1 \circ h_1), 
+</M>
+</Item>
+<Item>
+<M>
+(e_1 \circ t_1) \circ (e_2 \circ h_2) = (e_2 \circ h_2) \circ (e_1 \circ t_1), \quad 
+(e_2 \circ t_2) \circ (e_1 \circ h_1) = (e_1 \circ h_1) \circ (e_2 \circ t_2). 
+</M>
+</Item>
+</List>
+<P/>
+Our third definition defines a cat<M>^2</M>-group as a 
+"cat<M>^1</M>-group of cat<M>^1</M>-groups". 
+A cat<M>^2</M>-group <M>\calC</M> consists of two cat<M>^1</M>-groups 
+<M>\calC_1 = (e_1;t_1,h_1 : G_1 \to R_1)</M> and 
+<M>\calC_2 = (e_2;t_2,h_2 : G_2 \to R_2)</M> and cat<M>^1</M>-morphisms
+<M>t = (\ddot{t},\dot{t}),\; h = (\ddot{h},\dot{h}) : 
+\calC_1 \to \calC_2,\; 
+e = (\ddot{e},\dot{e}) : \calC_2 \to \calC_1</M>,  
+subject to the following conditions: 
+<Display>
+(t \circ e) ~\mbox{and}~ (h \circ e)
+~\mbox{are the identity mapping on}~ \calC_2, 
+\qquad  
+[\ker t, \ker h] = \{ 1_{\calC_1} \},
+</Display>
+where <M>\ker t = (\ker \ddot{t},\ \ker \dot{t})</M>, 
+and similarly for <M>\ker h</M>. 
+
+<ManSection Label="cat2-group">
+   <Func Name="Cat2Group"
+         Arg="args" />
+   <Func Name="PreCat2Group"
+         Arg="args" />
+   <Prop Name="IsCat2Group"
+         Arg="C" />
+   <Oper Name="PreCat2GroupByPreCat1Groups"
+         Arg="L" />
+<Description>
+The global functions <C>Cat2Group</C> and <C>PreCat2Group</C> are normally 
+called with two arguments - the generating up and left cat<M>^1</M>-groups - 
+or with a single argument which is a crossed square. 
+The operation <C>PreCat2GroupByPreCat1Groups</C> has five arguments - 
+the up, left, right, down and diagonal cat<M>^1</M>-groups. 
+<P/>
+The two cat<M>^2</M>-groups <C>C2a, C2b</C> constructed in the 
+following example are isomorphic.  
+They differ in the down-left group <C>P</C>. 
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> a := (1,2,3,4,5,6);;  b := (2,6)(3,5);; 
+gap> G := Group( a, b );;  SetName( G, "d12" );
+gap> t1 := GroupHomomorphismByImages( G, G, [a,b], [a^3,b] );; 
+gap> up := PreCat1GroupByEndomorphisms( t1, t1 );;
+gap> t2 := GroupHomomorphismByImages( G, G, [a,b], [a^4,b] );; 
+gap> left := PreCat1GroupByEndomorphisms( t2, t2 );;
+gap> C2a := Cat2Group( up, left );
+(pre-)cat2-group with generating (pre-)cat1-groups:
+1 : [d12 => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )]
+2 : [d12 => Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )]
+gap> IsCat2Group( C2a );
+true
+gap> genR := [ (1,4)(2,5)(3,6), (2,6)(3,5) ];;
+gap> R := Subgroup( G, genR );; 
+gap> genQ := [ (1,3,5)(2,4,6), (2,6)(3,5) ];; 
+gap> Q := Subgroup( G, genQ );; 
+gap> Pa := Group( b );;  SetName( Pa, "c2a" ); 
+gap> Pb := Group( (7,8) );;  SetName( Pb, "c2b" ); 
+gap> t3 := GroupHomomorphismByImages( R, P, genR, [(),(7,8)] );; 
+gap> e3 := GroupHomomorphismByImages( P, R, [(7,8)], [(2,6)(3,5)] );; 
+gap> right := PreCat1GroupByTailHeadEmbedding( t3, t3, e3 );;
+gap> t4 := GroupHomomorphismByImages( Q, P, genQ, [(),(7,8)] );; 
+gap> e4 := GroupHomomorphismByImages( P, Q, [(7,8)], [(2,6)(3,5)] );; 
+gap> down := PreCat1GroupByTailHeadEmbedding( t4, t4, e4 );;
+gap> t0 := t1 * t3;; 
+gap> e0 := GroupHomomorphismByImages( P, G, [(7,8)], [(2,6)(3,5)] );; 
+gap> diag := PreCat1GroupByTailHeadEmbedding( t0, t0, e0 );;
+gap> C2b := PreCat2GroupByPreCat1Groups( up, left, right, down, diag ); 
+(pre-)cat2-group with generating (pre-)cat1-groups:
+1 : [d12 => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )]
+2 : [d12 => Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )]
+gap> IsPreCatnGroupWithIdentityEmbeddings( C2b );
+false
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="DirectProduct" Arg="C2a,C2b" />
+<Description>
+The direct product <M>\calC_{1} \times \calC_{2}</M>
+has as its four up, left, right and down cat<M>^1</M>-groups 
+the direct products of those in <M>\calC_{1}</M> and <M>\calC_{2}</M>.  
+The embeddings and projections are constructed automatically, 
+and placed in the <C>DirectProductInfo</C> attribute, 
+together with the two <E>objects</E> <M>\calC_{1}</M> and <M>\calC_{2}</M>. 
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> C2ab := DirectProductOp( [ C2a, C2b ], C2a ); 
+(pre-)cat2-group with generating (pre-)cat1-groups:
+1 : [Group( [ (1,2,3,4,5,6), (2,6)(3,5), ( 7, 8, 9,10,11,12), ( 8,12)( 9,11) 
+ ] ) => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5), ( 7,10)( 8,11)( 9,12), 
+  ( 8,12)( 9,11) ] )]
+2 : [Group( [ (1,2,3,4,5,6), (2,6)(3,5), ( 7, 8, 9,10,11,12), ( 8,12)( 9,11) 
+ ] ) => Group( [ (1,5,3)(2,6,4), (2,6)(3,5), ( 7, 9,11)( 8,10,12), 
+  ( 8,12)( 9,11) ] )]
+gap> StructureDescription( C2ab );  
+[ "C2 x C2 x S3 x S3", "C2 x C2 x C2 x C2", "S3 x S3", "C2 x C2" ]
+gap> SetName( C2ab, "C2ab" );
+gap> Embedding( C2ab, 1 );   
+<mapping: (pre-)cat2-group with generating (pre-)cat1-groups:
+1 : [d12 => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )]
+2 : [d12 => Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )] -> C2ab >
+gap> Projection( C2ab, 2 );
+<mapping: C2ab -> (pre-)cat2-group with generating (pre-)cat1-groups:
+1 : [d12 => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )]
+2 : [d12 => Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )] >
+]]>
+</Example>
+
+
+<ManSection>
+   <Oper Name="DisplayLeadMaps" Arg="C0" />
+<Description>
+This operation provides an alternative to <C>Display</C> 
+giving a shorter output.  Generators of the up-left group are output, 
+together with their images under the up and left tail and head maps. 
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> DisplayLeadMaps( C2b );
+(pre-)cat2-group with up-left group: [ (1,2,3,4,5,6), (2,6)(3,5) ]
+   up tail=head images: [ (1,4)(2,5)(3,6), (2,6)(3,5) ]
+ left tail=head images: [ (1,5,3)(2,6,4), (2,6)(3,5) ]
+]]>
+</Example>
+
+<ManSection>
+   <Attr Name="Transpose3DimensionalGroup" 
+         Arg="S0" Label="for cat2-groups" />
+<Description>
+The <E>transpose</E> of a cat<M>^2</M>-group <M>\calC</M> with groups 
+<M>[G,R,Q,P]</M> is the cat<M>^2</M>-group <M>\tilde{\calC}</M> 
+with groups <M>[G,Q,R,P]</M>.
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> TC2a := Transpose3DimensionalGroup( C2a );
+(pre-)cat2-group with generating (pre-)cat1-groups:
+1 : [d12 => Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )]
+2 : [d12 => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )]
+]]>
+</Example>
+
+
+<ManSection Label="cat2-mor">
+   <Func Name="Cat2GroupMorphism" 
+         Arg="args" />
+   <Oper Name="Cat2GroupMorphismByCat1GroupMorphisms" 
+         Arg="src, rng, upmor, ltmor" />
+   <Oper Name="Cat2GroupMorphismByGroupHomomorphisms" 
+         Arg="src, rng, homs" />
+   <Func Name="PreCat2GroupMorphism" 
+         Arg="args" />
+   <Oper Name="PreCat2GroupMorphismByPreCat1GroupMorphisms" 
+         Arg="src, rng, upmor, ltmor" />
+   <Oper Name="PreCat2GroupMorphismByGroupHomomorphisms" 
+         Arg="src, rng, homs" />
+<Description> 
+A (pre-)cat<M>^2</M>-group morphism 
+<M>\mu : \calC = (G,R,Q,P) \to \calC' = (G',R',Q',P')</M> 
+is a list of four group homomorphisms 
+<M>\gamma : G \to G',~ \rho : R \to R',~ \xi : Q \to Q'</M> 
+and <M>\pi : P \to P'</M> 
+which commute with all the tail, head and embedding maps so that 
+<M>(\gamma,\rho), (\gamma,\xi), (\rho,\pi)</M> and <M>(\xi,\pi)</M> 
+are all (pre-)cat<M>^1</M>-group morphisms. 
+<P/> 
+For the operations <C>(Pre)Cat2GroupMorphismByPreCat1GroupMorphisms</C> 
+the third and fourth parameters <C>upmor, ltmor</C> 
+are two cat<M>^1</M>-group morphisms 
+with source the up and left cat<M>^1</M>-groups in <M>\calC</M>. 
+<P/> 
+For the operations <C>(Pre)Cat2GroupMorphismByGroupHomomorphisms</C> 
+the third parameter <C>mors</C> is the list <M>[\gamma,\rho,\xi,\pi]</M>. 
+<P/> 
+The example constructs an automorphism of <C>c2a</C> is two ways, 
+using the two methods described above, 
+an d verifies that the result is the same in each case. 
+</Description>
+</ManSection>
+<Example>
+<![CDATA[
+gap> gamma := GroupHomomorphismByImages( G, G, [a,b], [a^-1,b] );;
+gap> rho := IdentityMapping( R );;
+gap> xi := GroupHomomorphismByImages( Q, Q, [a^2,b], [a^-2,b] );;
+gap> pi := IdentityMapping( Pa );;
+gap> homs := [ gamma, rho, xi, pi ];;
+gap> mor1 := Cat2GroupMorphismByGroupHomomorphisms( C2a, C2a, homs );   
+<mapping: (pre-)cat2-group with generating (pre-)cat1-groups:
+1 : [d12 => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )]
+2 : [d12 => Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )] -> (pre-)cat
+2-group with generating (pre-)cat1-groups:
+1 : [d12 => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )]
+2 : [d12 => Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )] >
+gap> upmor := Cat1GroupMorphism( up, up, gamma, rho );; 
+gap> ltmor := Cat1GroupMorphism( left, left, gamma, xi );; 
+gap> mor2 := Cat2GroupMorphismByCat1GroupMorphisms( C2a, C2a, upmor, ltmor );; 
+gap> mor1 = mor2; 
+true
+]]>
+</Example>
+
+<ManSection Label="cat2-xsq">
+   <Attr Name="Cat2GroupOfCrossedSquare"
+         Arg="xsq" />
+   <Attr Name="CrossedSquareOfCat2Group"
+         Arg="CC" />
+<Description>
+These functions provide for conversion between crossed squares and 
+cat<M>^2</M>-groups.  
+(They are the 3-dimensional equivalents of 
+<Ref Oper="Cat1GroupOfXMod"/> and <Ref Oper="XModOfCat1Group"/>.) 
+The actor crossed square <C>XSact</C> was constructed in section 
+<Ref Func="ActorCrossedSquare" />. 
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> xsC2a := CrossedSquareOfCat2Group( C2a );
+crossed square with crossed modules:
+      up = [Group( () ) -> Group( [ (1,4)(2,5)(3,6) ] )]
+    left = [Group( () ) -> Group( [ (1,3,5)(2,4,6) ] )]
+   right = [Group( [ (1,4)(2,5)(3,6) ] ) -> Group( [ (2,6)(3,5) ] )]
+    down = [Group( [ (1,3,5)(2,4,6) ] ) -> Group( [ (2,6)(3,5) ] )]
+
+gap> IdGroup( xsC2a );
+[ [ 1, 1 ], [ 2, 1 ], [ 3, 1 ], [ 2, 1 ] ]
+
+gap> SetName( Source( Right2DimensionalGroup( XSact ) ), "c5:c4" );
+gap> SetName( Range( Right2DimensionalGroup( XSact ) ), "c5:c4" );
+gap> Name( XSact );
+"[d10a->c5:c4,d20->c5:c4]"
+
+gap> C2act := Cat2GroupOfCrossedSquare( XSact );             
+(pre-)cat2-group with generating (pre-)cat1-groups:
+1 : [((c5:c4 |X c5:c4) |X (d20 |X d10a))=>(c5:c4 |X c5:c4)]
+2 : [((c5:c4 |X c5:c4) |X (d20 |X d10a))=>(c5:c4 |X d20)]
+gap> Size( C2act );
+[ 80000, 400, 400, 20 ]
+]]>
+</Example>
+
+<ManSection Label="subdiag-cat1">
+   <Attr Name="Subdiagonal2DimensionalGroup"
+         Arg="obj" />
+<Description>
+The diagonal of a crossed square is always a crossed module, 
+but the diagonal of a cat<M>^2</M>-group need only be a pre-cat<M>^1</M>-group. 
+There is, however, a sub-cat<M>^1</M>-group of this diagonal which, 
+in the case of a cat<M>^2</M>-group constructed from a crossed square, 
+is <M>(P \ltimes L => P)</M>. 
+(The name of this operation is very provisional.) 
+<P/>
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> G24 := SmallGroup( 24, 10 );; 
+gap> w := G24.1;; x := G24.2;; y := G24.3;; z := G24.4;; o := One(G24);; 
+gap> R := Subgroup( G24, [x,y] );; 
+gap> txy := GroupHomomorphismByImages( G24, R, [w,x,y,z], [o,x,y,o] );; 
+gap> exy := GroupHomomorphismByImages( R, G24, [x,y], [x,y] );; 
+gap> C1xy := PreCat1GroupByTailHeadEmbedding( txy, txy, exy );; 
+gap> Q := Subgroup( G24, [w,y] );; 
+gap> twy := GroupHomomorphismByImages( G24, Q, [w,x,y,z], [w,o,y,o] );; 
+gap> ewy := GroupHomomorphismByImages( Q, G24, [w,y], [w,y] );; 
+gap> C1wy := PreCat1GroupByTailHeadEmbedding( twy, twy, ewy );; 
+gap> C2wxy := PreCat2Group( C1xy, C1xy );; 
+gap> dg := Diagonal2DimensionalGroup( C2wxy );;
+gap> IsCat1Group( dg ); 
+false
+gap> C1sub := Subdiagonal2DimensionalGroup( C2wxy );; 
+gap> IsCat1Group( C1sub );
+true
+gap> IsSub2DimensionalGroup( dg, C1sub );
+true
+]]>
+</Example>
+</Section>
+
+
+<Section Label="sect-allcat2">
+<Heading>Enumerating cat<M>^2</M>-groups with a given source</Heading>
+
+This section mirrors that for cat<M>^1</M>-groups (<Ref Sect="sect-allcat1" />). 
+As the size of a group <M>G</M> increases, 
+the number of cat<M>^2</M>-groups with source <M>G</M> increases rapidly.  
+However, one is usually only interested in the isomorphism classes 
+of cat<M>^2</M>-groups with source <M>G</M>. 
+An iterator <C>AllCat2GroupsIterator</C> is provided, 
+which runs through the various cat<M>^2</M>-groups. 
+This iterator finds, for each unordered pair of subgroups <M>R,Q</M> of 
+<M>G</M>, the cat<M>^2</M>-groups whose <C>Up2DimensionalGroup</C> 
+has range <M>R</M>, and whose <C>Left2DimensionalGroup</C> has range <M>Q</M>. 
+It does this by running through 
+<C>UnoderedPairsIterator(AllSubgroupsIterator(G))</C> 
+provided by the <Package>Utils</Package> package, 
+and then using the iterator <C>AllCat2GroupsWithImagesIterator(G,R,Q)</C>. 
+
+<ManSection>
+   <Oper Name="AllCat2GroupsWithImagesIterator"
+         Arg="G R Q" />
+   <Attr Name="AllCat2GroupsWithImagesNumber"
+         Arg="G R Q" />
+   <Oper Name="AllCat2GroupsWithImages"
+         Arg="G R Q" />
+   <Oper Name="AllCat2GroupsWithImagesUpToIsomorphism"
+         Arg="G R Q" />
+<Description>
+The iterator <C>AllCat2GroupsWithImagesIterator(G)</C> iterates through all 
+the cat<M>^2</M>-groups with source <C>G</C> and generating cat<M>^1</M>-groups 
+<C>(G=>R)</C> and <C>(G=>Q)</C>. 
+The attribute <C>AllCat2GroupsWithImagesNumber(G)</C> runs through this iterator 
+to determine the number <M>n</M> of these cat<M>^2</M>-groups. 
+The operation <C>AllCat2GroupsWithImages(G)</C> returns a list containing these 
+<M>n</M> cat<M>^2</M>-groups.  
+Since these lists can get very long, this operation should only be used 
+for simple cases. 
+The operation <C>AllCat2GroupsWithImagesUpToIsomorphism(G)</C> returns 
+representatives of the isomorphism classes of these cat<M>^2</M>-groups. 
+</Description> 
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> G8 := Group( (1,2), (3,4), (5,6) );;
+gap> A := Subgroup( G8, [ (1,2) ] );; 
+gap> B := Subgroup( G8, [ (3,4) ] );;
+gap> AllCat2GroupsWithImagesNumber( G8, A, A );
+4
+gap> all := AllCat2GroupsWithImages( G8, A, A );;     
+gap> for C2 in all do DisplayLeadMaps( C2 ); od;
+(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ]
+   up tail=head images: [ (1,2), (1,2), () ]
+ left tail=head images: [ (1,2), (1,2), () ]
+(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ]
+   up tail=head images: [ (1,2), (), () ]
+ left tail=head images: [ (1,2), (), () ]
+(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ]
+   up tail=head images: [ (1,2), (), (1,2) ]
+ left tail=head images: [ (1,2), (), (1,2) ]
+(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ]
+   up tail=head images: [ (1,2), (1,2), (1,2) ]
+ left tail=head images: [ (1,2), (1,2), (1,2) ]
+gap> AllCat2GroupsWithImagesNumber( G8, A, B );
+16
+gap> iso := AllCat2GroupsWithImagesUpToIsomorphism( G8, A, B );;
+gap> for C2 in iso do DisplayLeadMaps( C2 ); od;
+(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ]
+   up tail=head images: [ (1,2), (), () ]
+ left tail=head images: [ (), (3,4), () ]
+(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ]
+   up tail=head images: [ (1,2), (), () ]
+ left tail/head images: [ (), (3,4), () ], [ (), (3,4), (3,4) ]
+(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ]
+   up tail/head images: [ (1,2), (), () ], [ (1,2), (), (1,2) ]
+ left tail/head images: [ (), (3,4), () ], [ (), (3,4), (3,4) ]
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="AllCat2GroupsIterator"
+         Arg="G" />
+   <Attr Name="AllCat2GroupsNumber"
+         Arg="G" />
+   <Oper Name="AllCat2Groups"
+         Arg="G" />
+   <Oper Name="AllCat2GroupsUpToIsomorphism"
+         Arg="G" />
+   <Oper Name="AllCat2GroupFamilies"
+         Arg="G" />
+   <Attr Name="CatnGroupNumbers"
+         Arg="G" Label="for cat2-groups" />
+   <Attr Name="CatnGroupLists"
+         Arg="G" Label="for cat2-groups" />
+<Description>
+The iterator <C>AllCat2GroupsIterator(G)</C> iterates through all the 
+cat<M>^2</M>-groups with source <C>G</C>. 
+The attribute <C>AllCat2GroupsNumber(G)</C> runs this iterator to count the 
+number <M>n</M> of these cat<M>^2</M>-groups. 
+The operation <C>AllCat2Groups(G)</C> returns a list containing these <M>n</M> 
+cat<M>^2</M>-groups.  
+Since these lists can get very long, this operation should only be used 
+for simple cases. 
+The operation <C>AllCat2GroupsUpToIsomorphism(G)</C> returns representatives 
+of the isomorphism classes of these subgroups. 
+The operation <C>AllCat2GroupFamilies(G)</C> returns a list of lists. 
+The <M>k</M>-th list contains the positions of the cat<M>^2</M>-groups in 
+<C>AllCat2Groups(G)</C> which are isomorphic to the <M>k</M>-th representative. 
+So, for <C>d12</C>, the <M>41</M> cat<M>^2</M>-groups form <M>10</M> classes, 
+and the sizes of these classes are <C>[6,6,6,6,3,6,3,2,2,1]</C>. 
+Four of these classes contain symmetric cat<M>^2</M>-groups. 
+<P/>
+The field <C>CatnGroupNumbers(G).cat2</C> is the number of cat<M>^2</M>-groups 
+on <M>G</M>, while <C>CatnGroupNumbers(G).iso2</C> is the number of 
+isomorphism classes of these cat<M>^2</M>-groups. 
+Also <C>CatnGroupNumbers(G).symm</C> is the number of cat<M>^2</M>-groups 
+whose <C>Up2DimensionalGroup</C> is the same as the 
+<C>Left2DimensionalGroup</C>, while <C>CatnGroupNumbers(G).siso</C> is the 
+number of isomorphism classes of these symmetric cat<M>^2</M>-groups. 
+<P/>
+Provided that <C>CatnGroupLists(G).omit</C> is not set to <C>true</C>,  
+<E>sorted</E> lists of generating pairs, and of the classes they belong to, 
+are added to the record <C>CatnGroupLists</C>.  
+For example <C>[5,7]</C> in these lists for <C>d12</C> indicates that there is 
+a cat<M>^2</M>-group generated by the fifth and seventh cat<M>^1</M>-groups 
+and that this is in the second class whose representative is <C>[1,7]</C>. 
+Classes <C>[1,5,8,10]</C> contain symmetric cat<M>^2</M>-groups. 
+</Description> 
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> AllCat2GroupsNumber( d12 );
+41
+gap> reps2 := AllCat2GroupsUpToIsomorphism( d12 );;
+gap> Length( reps2 );
+10
+gap> List( reps2, C -> StructureDescription( C ) );
+[ [ "D12", "C2", "C2", "C2" ], [ "D12", "C2", "C2 x C2", "C2" ], 
+  [ "D12", "C2", "S3", "C2" ], [ "D12", "C2", "D12", "C2" ], 
+  [ "D12", "C2 x C2", "C2 x C2", "C2 x C2" ], [ "D12", "C2 x C2", "S3", "C2" ]
+    , [ "D12", "C2 x C2", "D12", "C2 x C2" ], [ "D12", "S3", "S3", "S3" ], 
+  [ "D12", "S3", "D12", "S3" ], [ "D12", "D12", "D12", "D12" ] ]
+gap> fams := AllCat2GroupFamilies( d12 );
+[ [ 1, 2, 3, 4, 5, 6 ], [ 7, 8, 10, 11, 13, 14 ], [ 16, 17, 18, 23, 24, 25 ], 
+  [ 30, 31, 32, 33, 34, 35 ], [ 9, 12, 15 ], [ 19, 20, 21, 26, 27, 28 ], 
+  [ 36, 37, 38 ], [ 22, 29 ], [ 39, 40 ], [ 41 ] ]
+gap> CatnGroupNumbers( d12 );
+rec( cat1 := 12, cat2 := 41, idem := 21, iso1 := 4, iso2 := 10, 
+  isopredg := 0, predg := 0, siso := 4, symm := 12 )
+gap> CatnGroupLists( d12 );
+rec( allcat2pos := [ 1, 7, 9, 16, 19, 22, 30, 36, 39, 41 ],
+  cat2classes := 
+    [ [ [ 1, 1 ], [ 2, 2 ], [ 3, 3 ], [ 4, 4 ], [ 5, 5 ], [ 6, 6 ] ], 
+      [ [ 1, 7 ], [ 5, 7 ], [ 2, 8 ], [ 6, 8 ], [ 3, 9 ], [ 4, 9 ] ], 
+      [ [ 1, 10 ], [ 2, 10 ], [ 3, 10 ], [ 4, 11 ], [ 5, 11 ], [ 6, 11 ] ], 
+      [ [ 1, 12 ], [ 2, 12 ], [ 3, 12 ], [ 4, 12 ], [ 5, 12 ], [ 6, 12 ] ], 
+      [ [ 7, 7 ], [ 8, 8 ], [ 9, 9 ] ], 
+      [ [ 7, 10 ], [ 8, 10 ], [ 9, 10 ], [ 7, 11 ], [ 8, 11 ], [ 9, 11 ] ], 
+      [ [ 7, 12 ], [ 8, 12 ], [ 9, 12 ] ], [ [ 10, 10 ], [ 11, 11 ] ], 
+      [ [ 10, 12 ], [ 11, 12 ] ], [ [ 12, 12 ] ] ], 
+  cat2pairs := [ [ 1, 1 ], [ 1, 7 ], [ 1, 10 ], [ 1, 12 ], [ 2, 2 ], 
+      [ 2, 8 ], [ 2, 10 ], [ 2, 12 ], [ 3, 3 ], [ 3, 9 ], [ 3, 10 ], 
+      [ 3, 12 ], [ 4, 4 ], [ 4, 9 ], [ 4, 11 ], [ 4, 12 ], [ 5, 5 ], 
+      [ 5, 7 ], [ 5, 11 ], [ 5, 12 ], [ 6, 6 ], [ 6, 8 ], [ 6, 11 ], 
+      [ 6, 12 ], [ 7, 7 ], [ 7, 10 ], [ 7, 11 ], [ 7, 12 ], [ 8, 8 ], 
+      [ 8, 10 ], [ 8, 11 ], [ 8, 12 ], [ 9, 9 ], [ 9, 10 ], [ 9, 11 ], 
+      [ 9, 12 ], [ 10, 10 ], [ 10, 12 ], [ 11, 11 ], [ 11, 12 ], [ 12, 12 ] ],
+  omit := false, pisopos := [  ], sisopos := [ 1, 5, 8, 10 ] )
+]]>
+</Example>
+
+</Section> 
+
+</Chapter>

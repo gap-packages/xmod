@@ -1,11 +1,11 @@
 #############################################################################
 ##
-#W  gp3objmap.tst                 XMOD test file                Chris Wensley
+#W  gp3xsq.tst                 XMOD test file                   Chris Wensley
 ##
 #Y  Copyright (C) 2001-2020, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
-gap> START_TEST( "XMod package: gp3objmap.tst" );
+gap> START_TEST( "XMod package: gp3xsq.tst" );
 gap> saved_infolevel_xmod := InfoLevel( InfoXMod );; 
 gap> SetInfoLevel( InfoXMod, 0 );;
 gap> saved_infolevel_groupoids := InfoLevel( InfoGroupoids );; 
@@ -264,166 +264,6 @@ gap> KnownPropertiesOfObject( autoconj );
   "IsEndomorphismHigherDimensionalDomain", 
   "IsAutomorphismHigherDimensionalDomain" ]
 
-# Section 8.4.1 
-gap> a := (1,2,3,4,5,6);;
-gap> b := (2,6)(3,5);; 
-gap> d12 := Group( a, b );; 
-gap> SetName( d12, "d12" );
-gap> t1 := GroupHomomorphismByImages( d12, d12, [a,b], [a^3,b] );; 
-gap> up := PreCat1GroupWithIdentityEmbedding( t1, t1 );;
-gap> t2 := GroupHomomorphismByImages( d12, d12, [a,b], [a^4,b] );; 
-gap> left := PreCat1GroupWithIdentityEmbedding( t2, t2 );;
-gap> C2 := Cat2Group( up, left );
-(pre-)cat2-group with generating (pre-)cat1-groups:
-1 : [d12 => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )]
-2 : [d12 => Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )]
-gap> IsCat2Group( C2 );
-true
-gap> genk4 := [ (1,4)(2,5)(3,6), (2,6)(3,5) ];;
-gap> k4 := Subgroup( d12, genk4 );; 
-gap> gens3 := [ (1,3,5)(2,4,6), (2,6)(3,5) ];; 
-gap> s3 := Subgroup( d12, gens3 );; 
-gap> P := Group( (7,8) );; 
-gap> t3 := GroupHomomorphismByImages( k4, P, genk4, [(),(7,8)] );; 
-gap> e3 := GroupHomomorphismByImages( P, k4, [(7,8)], [(2,6)(3,5)] );; 
-gap> right := PreCat1GroupByTailHeadEmbedding( t3, t3, e3 );;
-gap> t4 := GroupHomomorphismByImages( s3, P, gens3, [(),(7,8)] );; 
-gap> e4 := GroupHomomorphismByImages( P, s3, [(7,8)], [(2,6)(3,5)] );; 
-gap> down := PreCat1GroupByTailHeadEmbedding( t4, t4, e4 );;
-gap> t0 := t1 * t3;; 
-gap> e0 := GroupHomomorphismByImages( P, d12, [(7,8)], [(2,6)(3,5)] );; 
-gap> diag := PreCat1GroupByTailHeadEmbedding( t0, t0, e0 );;
-gap> PC2 := PreCat2GroupByPreCat1Groups( up, left, right, down, diag ); 
-(pre-)cat2-group with generating (pre-)cat1-groups:
-1 : [d12 => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )]
-2 : [d12 => Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )]
-gap> IsPreCatnGroupWithIdentityEmbeddings( PC2 );
-false
-
-# Section 8.4.2
-gap> TC2 := Transpose3DimensionalGroup( C2 );
-(pre-)cat2-group with generating (pre-)cat1-groups:
-1 : [d12 => Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )]
-2 : [d12 => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )]
-
-# Section 8.4.4 
-gap> xsC2 := CrossedSquareOfCat2Group( C2 );
-crossed square with crossed modules:
-      up = [Group( () ) -> Group( [ (1,4)(2,5)(3,6) ] )]
-    left = [Group( () ) -> Group( [ (1,3,5)(2,4,6) ] )]
-   right = [Group( [ (1,4)(2,5)(3,6) ] ) -> Group( [ (2,6)(3,5) ] )]
-    down = [Group( [ (1,3,5)(2,4,6) ] ) -> Group( [ (2,6)(3,5) ] )]
-
-gap> IdGroup( xsC2 );
-[ [ 1, 1 ], [ 2, 1 ], [ 3, 1 ], [ 2, 1 ] ]
-
-gap> SetName( Source( Right2DimensionalGroup( XSact ) ), "c5:c4" );
-gap> SetName( Range( Right2DimensionalGroup( XSact ) ), "c5:c4" );
-gap> Name( XSact );
-"[d10a->c5:c4,d20->c5:c4]"
-
-gap> C2act := Cat2GroupOfCrossedSquare( XSact );             
-(pre-)cat2-group with generating (pre-)cat1-groups:
-1 : [((c5:c4 |X c5:c4) |X (d20 |X d10a))=>(c5:c4 |X c5:c4)]
-2 : [((c5:c4 |X c5:c4) |X (d20 |X d10a))=>(c5:c4 |X d20)]
-gap> Size( C2act );
-[ 80000, 400, 400, 20 ]
-
-# Section 8.4.5
-gap> G := SmallGroup( 24, 10 );; 
-gap> a := G.1;; b := G.2;; c := G.3;; d := G.4;; o := One(G);; 
-gap> R := Subgroup( G, [b,c] );; 
-gap> t1 := GroupHomomorphismByImages( G, R, [a,b,c,d], [o,b,c,o] );; 
-gap> e1 := GroupHomomorphismByImages( R, G, [b,c], [b,c] );; 
-gap> C1 := PreCat1GroupByTailHeadEmbedding( t1, t1, e1 );; 
-gap> Q := Subgroup( G, [a,c] );; 
-gap> t2 := GroupHomomorphismByImages( G, Q, [a,b,c,d], [a,o,c,o] );; 
-gap> e2 := GroupHomomorphismByImages( Q, G, [a,c], [a,c] );; 
-gap> C2 := PreCat1GroupByTailHeadEmbedding( t2, t2, e2 );; 
-gap> cat2 := PreCat2Group( C1, C2 );; 
-gap> dg := Diagonal2DimensionalGroup( cat2 );;
-gap> IsCat1Group( dg ); 
-false
-gap> sub := Subdiagonal2DimensionalGroup( cat2 );; 
-gap> IsCat1Group( sub );
-true
-gap> IsSub2DimensionalGroup( dg, sub );
-true
-
-# Section 8.5.1
-gap> G8 := Group( (1,2), (3,4), (5,6) );;
-gap> A := Subgroup( G8, [ (1,2) ] );; 
-gap> B := Subgroup( G8, [ (3,4) ] );;
-gap> AllCat2GroupsWithImagesNumber( G8, A, A );
-4
-gap> all := AllCat2GroupsWithImages( G8, A, A );;     
-gap> for C in all do DisplayLeadMaps( C ); od;
-(pre-)cat2-group with top group: [ (1,2), (3,4), (5,6) ]
-   up tail=head images: [ (1,2), (1,2), () ]
- left tail=head images: [ (1,2), (1,2), () ]
-(pre-)cat2-group with top group: [ (1,2), (3,4), (5,6) ]
-   up tail=head images: [ (1,2), (), () ]
- left tail=head images: [ (1,2), (), () ]
-(pre-)cat2-group with top group: [ (1,2), (3,4), (5,6) ]
-   up tail=head images: [ (1,2), (), (1,2) ]
- left tail=head images: [ (1,2), (), (1,2) ]
-(pre-)cat2-group with top group: [ (1,2), (3,4), (5,6) ]
-   up tail=head images: [ (1,2), (1,2), (1,2) ]
- left tail=head images: [ (1,2), (1,2), (1,2) ]
-gap> AllCat2GroupsWithImagesNumber( G8, A, B );
-16
-gap> iso := AllCat2GroupsWithImagesUpToIsomorphism( G8, A, B );;
-gap> for C in iso do DisplayLeadMaps( C ); od;
-(pre-)cat2-group with top group: [ (1,2), (3,4), (5,6) ]
-   up tail=head images: [ (1,2), (), () ]
- left tail=head images: [ (), (3,4), () ]
-(pre-)cat2-group with top group: [ (1,2), (3,4), (5,6) ]
-   up tail=head images: [ (1,2), (), () ]
- left tail/head images: [ (), (3,4), () ], [ (), (3,4), (3,4) ]
-(pre-)cat2-group with top group: [ (1,2), (3,4), (5,6) ]
-   up tail/head images: [ (1,2), (), () ], [ (1,2), (), (1,2) ]
- left tail/head images: [ (), (3,4), () ], [ (), (3,4), (3,4) ]
-
-# Section 8.5.2
-gap> AllCat2GroupsNumber( d12 );
-41
-gap> reps2 := AllCat2GroupsUpToIsomorphism( d12 );;
-gap> Length( reps2 );
-10
-gap> List( reps2, C -> StructureDescription( C ) );
-[ [ "D12", "C2", "C2", "C2" ], [ "D12", "C2", "C2 x C2", "C2" ], 
-  [ "D12", "C2", "S3", "C2" ], [ "D12", "C2", "D12", "C2" ], 
-  [ "D12", "C2 x C2", "C2 x C2", "C2 x C2" ], [ "D12", "C2 x C2", "S3", "C2" ]
-    , [ "D12", "C2 x C2", "D12", "C2 x C2" ], [ "D12", "S3", "S3", "S3" ], 
-  [ "D12", "S3", "D12", "S3" ], [ "D12", "D12", "D12", "D12" ] ]
-gap> fams := AllCat2GroupFamilies( d12 );
-[ [ 1, 2, 3, 4, 5, 6 ], [ 7, 8, 10, 11, 13, 14 ], [ 16, 17, 18, 23, 24, 25 ], 
-  [ 30, 31, 32, 33, 34, 35 ], [ 9, 12, 15 ], [ 19, 20, 21, 26, 27, 28 ], 
-  [ 36, 37, 38 ], [ 22, 29 ], [ 39, 40 ], [ 41 ] ]
-gap> CatnGroupNumbers( d12 );
-rec( cat1 := 12, cat2 := 41, idem := 21, iso1 := 4, iso2 := 10, 
-  isopredg := 0, predg := 0, siso1 := 4, siso2 := 4, symm1 := 12, symm2 := 12 
- )
-gap> CatnGroupLists( d12 );
-rec( allcat2pos := [ 1, 7, 9, 16, 19, 22, 30, 36, 39, 41 ],
-  cat2classes := 
-    [ [ [ 1, 1 ], [ 2, 2 ], [ 3, 3 ], [ 4, 4 ], [ 5, 5 ], [ 6, 6 ] ], 
-      [ [ 1, 7 ], [ 5, 7 ], [ 2, 8 ], [ 6, 8 ], [ 3, 9 ], [ 4, 9 ] ], 
-      [ [ 1, 10 ], [ 2, 10 ], [ 3, 10 ], [ 4, 11 ], [ 5, 11 ], [ 6, 11 ] ], 
-      [ [ 1, 12 ], [ 2, 12 ], [ 3, 12 ], [ 4, 12 ], [ 5, 12 ], [ 6, 12 ] ], 
-      [ [ 7, 7 ], [ 8, 8 ], [ 9, 9 ] ], 
-      [ [ 7, 10 ], [ 8, 10 ], [ 9, 10 ], [ 7, 11 ], [ 8, 11 ], [ 9, 11 ] ], 
-      [ [ 7, 12 ], [ 8, 12 ], [ 9, 12 ] ], [ [ 10, 10 ], [ 11, 11 ] ], 
-      [ [ 10, 12 ], [ 11, 12 ] ], [ [ 12, 12 ] ] ], 
-  cat2pairs := [ [ 1, 1 ], [ 1, 7 ], [ 1, 10 ], [ 1, 12 ], [ 2, 2 ], 
-      [ 2, 8 ], [ 2, 10 ], [ 2, 12 ], [ 3, 3 ], [ 3, 9 ], [ 3, 10 ], 
-      [ 3, 12 ], [ 4, 4 ], [ 4, 9 ], [ 4, 11 ], [ 4, 12 ], [ 5, 5 ], 
-      [ 5, 7 ], [ 5, 11 ], [ 5, 12 ], [ 6, 6 ], [ 6, 8 ], [ 6, 11 ], 
-      [ 6, 12 ], [ 7, 7 ], [ 7, 10 ], [ 7, 11 ], [ 7, 12 ], [ 8, 8 ], 
-      [ 8, 10 ], [ 8, 11 ], [ 8, 12 ], [ 9, 9 ], [ 9, 10 ], [ 9, 11 ], 
-      [ 9, 12 ], [ 10, 10 ], [ 10, 12 ], [ 11, 11 ], [ 11, 12 ], [ 12, 12 ] ],
-  omit := false, pisopos := [  ], sisopos := [ 1, 5, 8, 10 ] )
-
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 
-gap> STOP_TEST( "gp3objmap.tst", 10000 );
+gap> STOP_TEST( "gp3xsq.tst", 10000 );

@@ -384,7 +384,7 @@ gap> RepresentationsOfObject( X5 );
 [ "IsComponentObjectRep", "IsAttributeStoringRep", "IsPreXModObj" ]
 gap> KnownAttributesOfObject( X5);
 [ "Name", "Size", "Range", "Source", "IdGroup", "Boundary", "XModAction", 
-  "ExternalSetXMod" ]
+  "ExternalSetXMod", "HigherDimension" ]
 ]]>
 </Example>
 
@@ -393,7 +393,6 @@ gap> KnownAttributesOfObject( X5);
 
 <Section Label="sect-properties-xmod">
 <Heading>Properties of crossed modules</Heading>
-
 
 <Index>Is2DimensionalDomain</Index>
 <Index>Is2DimensionalGroup</Index>
@@ -902,7 +901,7 @@ The tail, head and embedding maps are
 <M>t_1 \times t_2</M>, <M>h_1 \times h_2</M> and <M>e_1 \times e_2</M>. 
 The embeddings and projections are constructed automatically, 
 and placed in the <C>DirectProductInfo</C> attribute, 
-together with the two <E>objects</E> <M>\calC_{1}</M> and <M>\calX_{2}</M>. 
+together with the two <E>objects</E> <M>\calC_{1}</M> and <M>\calC_{2}</M>. 
 <P/> 
 The example constructs the product of two of the cat<M>^1</M>-groups 
 constructed above. 
@@ -1214,9 +1213,11 @@ endomorphisms of <M>G</M>.
 Similarly, <C>CatnGroupNumbers(G).cat1</C> is the number of cat<M>^1</M>-groups 
 on <M>G</M>, while <C>CatnGroupNumbers(G).iso1</C> is the number of 
 isomorphism classes of these cat<M>^1</M>-groups. 
-Also <C>CatnGroupNumbers(G).symm1</C> is the number of cat<M>^1</M>-groups 
-whose <C>TailMap</C> is the same as the <C>HeadMap</C>, while <C>CatnGroupNumbers(G).siso1</C> is the number of 
+Also <C>CatnGroupNumbers(G).symm</C> is the number of cat<M>^1</M>-groups 
+whose <C>TailMap</C> is the same as the <C>HeadMap</C>, while <C>CatnGroupNumbers(G).siso</C> is the number of 
 isomorphism classes of these symmetric cat<M>^1</M>-groups. 
+Symmetric cat<M>^1</M>-groups are in one-one correspondence with 
+symmetric cat<M>^2</M>-groups.  
 The attribute <C>CatnGroupLists</C> is used for storing results 
 of cat<M>^2</M>-group calculations. 
 </Description> 
@@ -1225,7 +1226,7 @@ of cat<M>^2</M>-group calculations.
 <Example>
 <![CDATA[
 gap> CatnGroupNumbers( d12 );
-rec( cat1 := 12, idem := 21, iso1 := 4, siso1 := 4, symm1 := 12 )
+rec( cat1 := 12, idem := 21, iso1 := 4, siso := 4, symm := 12 )
 ]]>
 </Example>
 </Section> 
