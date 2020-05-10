@@ -13,7 +13,7 @@
 #O  PreCrossedSquareMorphismByPreXModMorphisms( <src>, <rng>, <list> )
 #O  PreCrossedSquareMorphismByGroupHomomorphisms( <src>, <rng>, <list> )
 #F  PreCat2GroupMorphism( <args> )
-#O  PreCat2GroupMorphismByPreCat1GroupMorphisms( <src>, <rng>, <list> )
+#O  PreCat2GroupMorphismByPreCat1GroupMorphisms( <src>, <rng>, <upm>, <ltm> )
 #O  PreCat2GroupMorphismByGroupHomomorphisms( <src>, <rng>, <list> )
 ##
 DeclareGlobalFunction( "PreCrossedSquareMorphism" );
@@ -34,8 +34,8 @@ DeclareOperation( "PreCat2GroupMorphismByGroupHomomorphisms",
 #O  CrossedSquareMorphismByXModMorphisms( <src>, <rng>, <list> )
 #O  CrossedSquareMorphismByGroupHomomorphisms( <src>, <rng>, <list> )
 #F  Cat2GroupMorphism( <args> )
-#O  Cat2GroupMorphismByCat1GroupMorphisms( <src>, <rng>, <list> )
-#O  Cat2GroupMorphismByGroupHomomorphisms( <src>, <rng>, <list> )
+#O  Cat2GroupMorphismByCat1GroupMorphisms( <src>, <rng>, <upm>, <ltm> )
+#O  Cat2GroupMorphismByGroupHomomorphisms( <src>, <rng>, <homs> )
 #O  InclusionMorphismHigherDimensionalDomains( <obj>, <sub> )
 ##
 DeclareGlobalFunction( "CrossedSquareMorphism" );
@@ -45,7 +45,7 @@ DeclareOperation( "CrossedSquareMorphismByGroupHomomorphisms",
     [ IsCrossedSquare, IsCrossedSquare, IsList ] );
 DeclareGlobalFunction( "Cat2GroupMorphism" );
 DeclareOperation( "Cat2GroupMorphismByCat1GroupMorphisms",
-    [ IsCat2Group, IsCat2Group, IsList ] );
+    [ IsCat2Group, IsCat2Group, IsCat1GroupMorphism, IsCat1GroupMorphism ] );
 DeclareOperation( "Cat2GroupMorphismByGroupHomomorphisms",
     [ IsCat2Group, IsCat2Group, IsList ] );
 DeclareOperation( "InclusionMorphismHigherDimensionalDomains", 

@@ -1063,7 +1063,7 @@ function( g3d )
     lt := Left2DimensionalGroup( g3d ); 
     tlt := TailMap( lt );
     hlt := HeadMap( lt ); 
-    Print( "(pre-)cat2-group with top group: ", 
+    Print( "(pre-)cat2-group with up-left group: ", 
            MappingGeneratorsImages( tup )[1], "\n" ); 
     if ( tup = hup ) then 
         Print( "   up tail=head images: ", 
@@ -1477,6 +1477,216 @@ function( cat2 )
 end ); 
 
 ##############################################################################
+## 
+#M  DirectProductOp . . . . . . . . . . . . . . . . . for two pre-cat2-groups 
+## 
+InstallOtherMethod( DirectProductOp,
+    "method for pre-cat2-groups", true, [ IsList, IsPreCat2Group ], 0,
+function( list, A )
+
+    local C, i, B, upA, ltA, rtA, dnA, dgA, upB, ltB, rtB, dnB, dgB, 
+          G, R, Q, P, eG1, eG2, eR1, eR2, eQ1, eQ2, eP1, eP2, 
+          mtuA, mhuA, meuA, mtuB, mhuB, meuB, mtlA, mhlA, melA, 
+          mtlB, mhlB, melB, mtrA, mhrA, merA, mtrB, mhrB, merB, 
+          mtdA, mhdA, medA, mtdB, mhdB, medB, mtgA, mhgA, megA, 
+          mtgB, mhgB, megB, mtuC, mhuC, meuC, tuC, huC, euC, upC, 
+          mtlC, mhlC, melC, tlC, hlC, elC, ltC, mtrC, mhrC, merC, 
+          trC, hrC, erC, rtC, mtdC, mhdC, medC, tdC, hdC, edC, dnC, 
+          mtgC, mhgC, megC, tgC, hgC, egC, dgC, 
+          eupA, eupB, eltA, eltB, embA, embB, pG1, pG2, 
+          pR1, pR2, pQ1, pQ2, pupA, pupB, pltA, pltB, proA, proB, info;
+
+    if not ( list[1] = A ) then
+        Error( "second argument should be first entry in first argument list" );
+    fi;
+    if ( Length( list ) > 2 ) then 
+        C := DirectProductOp( [ A, list[2] ], A ); 
+        for i in [3..Length(list)] do
+            C := DirectProductOp( [ C, list[i] ], C ); 
+        od; 
+        return C; 
+    fi;
+    B := list[2]; 
+    upA := Up2DimensionalGroup( A ); 
+    ltA := Left2DimensionalGroup( A ); 
+    rtA := Right2DimensionalGroup( A ); 
+    dnA := Down2DimensionalGroup( A ); 
+    dgA := Diagonal2DimensionalGroup( A ); 
+    upB := Up2DimensionalGroup( B ); 
+    ltB := Left2DimensionalGroup( B ); 
+    rtB := Right2DimensionalGroup( B ); 
+    dnB := Down2DimensionalGroup( B ); 
+    dgB := Diagonal2DimensionalGroup( B ); 
+    G := DirectProductOp( [ Source(upA), Source(upB) ], Source(upA) ); 
+    R := DirectProductOp( [ Range(upA), Range(upB) ], Range(upA) ); 
+    Q := DirectProductOp( [ Source(dnA), Source(dnB) ], Source(dnA) ); 
+    P := DirectProductOp( [ Range(dnA), Range(dnB) ], Range(dnA) ); 
+    eG1 := Embedding( G, 1 ); 
+    eG2 := Embedding( G, 2 ); 
+    eR1 := Embedding( R, 1 ); 
+    eR2 := Embedding( R, 2 ); 
+    eQ1 := Embedding( Q, 1 ); 
+    eQ2 := Embedding( Q, 2 ); 
+    eP1 := Embedding( P, 1 ); 
+    eP2 := Embedding( P, 2 ); 
+    ## construct the up cat2-group for C
+    mtuA := MappingGeneratorsImages( TailMap( upA ) ); 
+    mtuA := [ List( mtuA[1], x -> ImageElm( eG1, x ) ), 
+              List( mtuA[2], x -> ImageElm( eR1, x ) ) ];
+    mtuB := MappingGeneratorsImages( TailMap( upB ) ); 
+    mtuB := [ List( mtuB[1], x -> ImageElm( eG2, x ) ), 
+              List( mtuB[2], x -> ImageElm( eR2, x ) ) ];
+    mtuC := [ Concatenation(mtuA[1],mtuB[1]), Concatenation(mtuA[2],mtuB[2]) ];
+    tuC := GroupHomomorphismByImages( G, R, mtuC[1], mtuC[2] ); 
+    mhuA := MappingGeneratorsImages( HeadMap( upA ) ); 
+    mhuA := [ List( mhuA[1], x -> ImageElm( eG1, x ) ), 
+              List( mhuA[2], x -> ImageElm( eR1, x ) ) ];
+    mhuB := MappingGeneratorsImages( HeadMap( upB ) ); 
+    mhuB := [ List( mhuB[1], x -> ImageElm( eG2, x ) ), 
+              List( mhuB[2], x -> ImageElm( eR2, x ) ) ];
+    mhuC := [ Concatenation(mhuA[1],mhuB[1]), Concatenation(mhuA[2],mhuB[2]) ];
+    huC := GroupHomomorphismByImages( G, R, mhuC[1], mhuC[2] ); 
+    meuA := MappingGeneratorsImages( RangeEmbedding( upA ) ); 
+    meuA := [ List( meuA[1], x -> ImageElm( eR1, x ) ), 
+              List( meuA[2], x -> ImageElm( eG1, x ) ) ];
+    meuB := MappingGeneratorsImages( RangeEmbedding( upB ) ); 
+    meuB := [ List( meuB[1], x -> ImageElm( eR2, x ) ), 
+              List( meuB[2], x -> ImageElm( eG2, x ) ) ];
+    meuC := [ Concatenation(meuA[1],meuB[1]), Concatenation(meuA[2],meuB[2]) ];
+    euC := GroupHomomorphismByImages( R, G, meuC[1], meuC[2] ); 
+    upC := PreCat1GroupByTailHeadEmbedding( tuC, huC, euC );
+    ## construct the left cat2-group for C
+    mtlA := MappingGeneratorsImages( TailMap( ltA ) ); 
+    mtlA := [ List( mtlA[1], x -> ImageElm( eG1, x ) ), 
+              List( mtlA[2], x -> ImageElm( eQ1, x ) ) ];
+    mtlB := MappingGeneratorsImages( TailMap( ltB ) ); 
+    mtlB := [ List( mtlB[1], x -> ImageElm( eG2, x ) ), 
+              List( mtlB[2], x -> ImageElm( eQ2, x ) ) ];
+    mtlC := [ Concatenation(mtlA[1],mtlB[1]), Concatenation(mtlA[2],mtlB[2]) ];
+    tlC := GroupHomomorphismByImages( G, Q, mtlC[1], mtlC[2] ); 
+    mhlA := MappingGeneratorsImages( HeadMap( ltA ) ); 
+    mhlA := [ List( mhlA[1], x -> ImageElm( eG1, x ) ), 
+              List( mhlA[2], x -> ImageElm( eQ1, x ) ) ];
+    mhlB := MappingGeneratorsImages( HeadMap( ltB ) ); 
+    mhlB := [ List( mhlB[1], x -> ImageElm( eG2, x ) ), 
+              List( mhlB[2], x -> ImageElm( eQ2, x ) ) ];
+    mhlC := [ Concatenation(mhlA[1],mhlB[1]), Concatenation(mhlA[2],mhlB[2]) ];
+    hlC := GroupHomomorphismByImages( G, Q, mhlC[1], mhlC[2] ); 
+    melA := MappingGeneratorsImages( RangeEmbedding( ltA ) ); 
+    melA := [ List( melA[1], x -> ImageElm( eQ1, x ) ), 
+              List( melA[2], x -> ImageElm( eG1, x ) ) ];
+    melB := MappingGeneratorsImages( RangeEmbedding( ltB ) ); 
+    melB := [ List( melB[1], x -> ImageElm( eQ2, x ) ), 
+              List( melB[2], x -> ImageElm( eG2, x ) ) ];
+    melC := [ Concatenation(melA[1],melB[1]), Concatenation(melA[2],melB[2]) ];
+    elC := GroupHomomorphismByImages( Q, G, melC[1], melC[2] ); 
+    ltC := PreCat1GroupByTailHeadEmbedding( tlC, hlC, elC );
+    ## construct the right cat2-group for C
+    mtrA := MappingGeneratorsImages( TailMap( rtA ) ); 
+    mtrA := [ List( mtrA[1], x -> ImageElm( eR1, x ) ), 
+              List( mtrA[2], x -> ImageElm( eP1, x ) ) ];
+    mtrB := MappingGeneratorsImages( TailMap( rtB ) ); 
+    mtrB := [ List( mtrB[1], x -> ImageElm( eR2, x ) ), 
+              List( mtrB[2], x -> ImageElm( eP2, x ) ) ];
+    mtrC := [ Concatenation(mtrA[1],mtrB[1]), Concatenation(mtrA[2],mtrB[2]) ];
+    trC := GroupHomomorphismByImages( R, P, mtrC[1], mtrC[2] ); 
+    mhrA := MappingGeneratorsImages( HeadMap( rtA ) ); 
+    mhrA := [ List( mhrA[1], x -> ImageElm( eR1, x ) ), 
+              List( mhrA[2], x -> ImageElm( eP1, x ) ) ];
+    mhrB := MappingGeneratorsImages( HeadMap( rtB ) ); 
+    mhrB := [ List( mhrB[1], x -> ImageElm( eR2, x ) ), 
+              List( mhrB[2], x -> ImageElm( eP2, x ) ) ];
+    mhrC := [ Concatenation(mhrA[1],mhrB[1]), Concatenation(mhrA[2],mhrB[2]) ];
+    hrC := GroupHomomorphismByImages( R, P, mhrC[1], mhrC[2] ); 
+    merA := MappingGeneratorsImages( RangeEmbedding( rtA ) ); 
+    merA := [ List( merA[1], x -> ImageElm( eP1, x ) ), 
+              List( merA[2], x -> ImageElm( eR1, x ) ) ];
+    merB := MappingGeneratorsImages( RangeEmbedding( rtB ) ); 
+    merB := [ List( merB[1], x -> ImageElm( eP2, x ) ), 
+              List( merB[2], x -> ImageElm( eR2, x ) ) ];
+    merC := [ Concatenation(merA[1],merB[1]), Concatenation(merA[2],merB[2]) ];
+    erC := GroupHomomorphismByImages( P, R, merC[1], merC[2] ); 
+    rtC := PreCat1GroupByTailHeadEmbedding( trC, hrC, erC );
+    ## construct the down cat2-group for C
+    mtdA := MappingGeneratorsImages( TailMap( dnA ) ); 
+    mtdA := [ List( mtdA[1], x -> ImageElm( eQ1, x ) ), 
+              List( mtdA[2], x -> ImageElm( eP1, x ) ) ];
+    mtdB := MappingGeneratorsImages( TailMap( dnB ) ); 
+    mtdB := [ List( mtdB[1], x -> ImageElm( eQ2, x ) ), 
+              List( mtdB[2], x -> ImageElm( eP2, x ) ) ];
+    mtdC := [ Concatenation(mtdA[1],mtdB[1]), Concatenation(mtdA[2],mtdB[2]) ];
+    tdC := GroupHomomorphismByImages( Q, P, mtdC[1], mtdC[2] ); 
+    mhdA := MappingGeneratorsImages( HeadMap( dnA ) ); 
+    mhdA := [ List( mhdA[1], x -> ImageElm( eQ1, x ) ), 
+              List( mhdA[2], x -> ImageElm( eP1, x ) ) ];
+    mhdB := MappingGeneratorsImages( HeadMap( dnB ) ); 
+    mhdB := [ List( mhdB[1], x -> ImageElm( eQ2, x ) ), 
+              List( mhdB[2], x -> ImageElm( eP2, x ) ) ];
+    mhdC := [ Concatenation(mhdA[1],mhdB[1]), Concatenation(mhdA[2],mhdB[2]) ];
+    hdC := GroupHomomorphismByImages( Q, P, mhdC[1], mhdC[2] ); 
+    medA := MappingGeneratorsImages( RangeEmbedding( dnA ) ); 
+    medA := [ List( medA[1], x -> ImageElm( eP1, x ) ), 
+              List( medA[2], x -> ImageElm( eQ1, x ) ) ];
+    medB := MappingGeneratorsImages( RangeEmbedding( dnB ) ); 
+    medB := [ List( medB[1], x -> ImageElm( eP2, x ) ), 
+              List( medB[2], x -> ImageElm( eQ2, x ) ) ];
+    medC := [ Concatenation(medA[1],medB[1]), Concatenation(medA[2],medB[2]) ];
+    edC := GroupHomomorphismByImages( P, Q, medC[1], medC[2] ); 
+    dnC := PreCat1GroupByTailHeadEmbedding( tdC, hdC, edC );
+    ## construct the diagonal cat2-group for C
+    mtgA := MappingGeneratorsImages( TailMap( dgA ) ); 
+    mtgA := [ List( mtgA[1], x -> ImageElm( eG1, x ) ), 
+              List( mtgA[2], x -> ImageElm( eP1, x ) ) ];
+    mtgB := MappingGeneratorsImages( TailMap( dgB ) ); 
+    mtgB := [ List( mtgB[1], x -> ImageElm( eG2, x ) ), 
+              List( mtgB[2], x -> ImageElm( eP2, x ) ) ];
+    mtgC := [ Concatenation(mtgA[1],mtgB[1]), Concatenation(mtgA[2],mtgB[2]) ];
+    tgC := GroupHomomorphismByImages( G, P, mtgC[1], mtgC[2] ); 
+    mhgA := MappingGeneratorsImages( HeadMap( dgA ) ); 
+    mhgA := [ List( mhgA[1], x -> ImageElm( eG1, x ) ), 
+              List( mhgA[2], x -> ImageElm( eP1, x ) ) ];
+    mhgB := MappingGeneratorsImages( HeadMap( dgB ) ); 
+    mhgB := [ List( mhgB[1], x -> ImageElm( eG2, x ) ), 
+              List( mhgB[2], x -> ImageElm( eP2, x ) ) ];
+    mhgC := [ Concatenation(mhgA[1],mhgB[1]), Concatenation(mhgA[2],mhgB[2]) ];
+    hgC := GroupHomomorphismByImages( G, P, mhgC[1], mhgC[2] ); 
+    megA := MappingGeneratorsImages( RangeEmbedding( dgA ) ); 
+    megA := [ List( megA[1], x -> ImageElm( eP1, x ) ), 
+              List( megA[2], x -> ImageElm( eG1, x ) ) ];
+    megB := MappingGeneratorsImages( RangeEmbedding( dgB ) ); 
+    megB := [ List( megB[1], x -> ImageElm( eP2, x ) ), 
+              List( megB[2], x -> ImageElm( eG2, x ) ) ];
+    megC := [ Concatenation(megA[1],megB[1]), Concatenation(megA[2],megB[2]) ];
+    egC := GroupHomomorphismByImages( P, G, megC[1], megC[2] ); 
+    dgC := PreCat1GroupByTailHeadEmbedding( tgC, hgC, egC );
+    C := PreCat2GroupByPreCat1Groups( upC, ltC, rtC, dnC, dgC ); 
+    ## now for the embeddings and projections 
+    eupA := PreCat1GroupMorphismByGroupHomomorphisms( upA, upC, eG1, eR1 );
+    eupB := PreCat1GroupMorphismByGroupHomomorphisms( upB, upC, eG2, eR2 );
+    eltA := PreCat1GroupMorphismByGroupHomomorphisms( ltA, ltC, eG1, eQ1 );
+    eltB := PreCat1GroupMorphismByGroupHomomorphisms( ltB, ltC, eG2, eQ2 );
+    embA := PreCat2GroupMorphismByPreCat1GroupMorphisms( A, C, eupA, eltA ); 
+    embB := PreCat2GroupMorphismByPreCat1GroupMorphisms( B, C, eupB, eltB ); 
+    pG1 := Projection( G, 1 ); 
+    pG2 := Projection( G, 2 ); 
+    pR1 := Projection( R, 1 ); 
+    pR2 := Projection( R, 2 ); 
+    pQ1 := Projection( Q, 1 ); 
+    pQ2 := Projection( Q, 2 ); 
+    pupA := PreCat1GroupMorphismByGroupHomomorphisms( upC, upA, pG1, pR1 );
+    pupB := PreCat1GroupMorphismByGroupHomomorphisms( upC, upB, pG2, pR2 );
+    pltA := PreCat1GroupMorphismByGroupHomomorphisms( ltC, ltA, pG1, pQ1 );
+    pltB := PreCat1GroupMorphismByGroupHomomorphisms( ltC, ltB, pG2, pQ2 );
+    proA := PreCat2GroupMorphismByPreCat1GroupMorphisms( C, A, pupA, pltA ); 
+    proB := PreCat2GroupMorphismByPreCat1GroupMorphisms( C, B, pupB, pltB ); 
+    info := rec( embeddings := [ embA, embB ], 
+                 objects := list, 
+                 projections := [ proA, proB ] ); 
+    SetDirectProductInfo( C, info ); 
+    return C;
+end );
+
+#############################################################################
 ##
 #M  AllCat2GroupsWithImagesIterator . . . cat2-groups with given up,left range
 #M  DoAllCat2GroupsWithImagesIterator 
@@ -1700,10 +1910,9 @@ InstallMethod( AllCat2GroupsIterator, "for a group", [ IsGroup ], 0,
 InstallMethod( AllCat2Groups, "for a group", [ IsGroup ], 0, 
 function( G ) 
 
-    local L, omit, pairs, all1, C, genC, symm, predg; 
+    local L, omit, pairs, all1, C, genC, predg; 
 
     InitCatnGroupRecords( G ); 
-    symm := 0; 
     predg := 0; 
     L := [ ]; 
     omit := CatnGroupLists( G ).omit; 
@@ -1716,9 +1925,6 @@ function( G )
             Add( L, C ); 
             if not omit then 
                 genC := GeneratingCat1Groups( C ); 
-                if ( genC[1] = genC[2] ) then 
-                    symm := symm + 1; 
-                fi; 
                 if not IsCat1Group( Diagonal2DimensionalGroup( C ) ) then 
                     predg := predg + 1; 
                 fi; 
@@ -1729,7 +1935,6 @@ function( G )
     od;
     if not IsBound( CatnGroupNumbers( G ).cat2 ) then 
         CatnGroupNumbers( G ).cat2 := Length( L ); 
-        CatnGroupNumbers( G ).symm2 := symm; 
         CatnGroupNumbers( G ).predg := predg; 
     fi; 
     if not omit then 
@@ -1757,7 +1962,7 @@ InstallMethod( AllCat2GroupsUpToIsomorphism, "iso class reps of cat2-groups",
     true, [ IsGroup ], 0,
 function( G )
 
-    local all1, iso1, omit, classes, L, numL, posL, symmc2, sisopos, symmiso,  
+    local all1, iso1, omit, classes, L, numL, posL, sisopos,   
           predg, isopredg, pisopos, i, C, k, found, iso, genC, perm; 
 
     InitCatnGroupRecords( G ); 
@@ -1772,9 +1977,7 @@ function( G )
     L := [ ];
     numL := 0; 
     posL := [ ]; 
-    symmc2 := 0; 
     sisopos := [ ]; 
-    symmiso := 0; 
     predg := 0; 
     isopredg := 0; 
     pisopos := [ ];
@@ -1783,9 +1986,6 @@ function( G )
         if not ( C = fail ) then 
             genC := GeneratingCat1Groups( C ); 
             i := i+1; 
-            if ( genC[1] = genC[2] ) then 
-                symmc2 := symmc2 + 1; 
-            fi; 
             if not IsCat1Group( Diagonal2DimensionalGroup( C ) ) then 
                 predg := predg + 1; 
             fi; 
@@ -1807,7 +2007,6 @@ function( G )
                 Add( posL, i );
                 numL := numL + 1; 
                 if ( genC[1] = genC[2] ) then 
-                    symmiso := symmiso + 1;
                     Add( sisopos, numL ); 
                 fi; 
                 if not IsCat1Group( Diagonal2DimensionalGroup( C ) ) then 
@@ -1823,16 +2022,12 @@ function( G )
     od; 
     if not IsBound( CatnGroupNumbers( G ).cat2 ) then 
         CatnGroupNumbers( G ).cat2 := i; 
-        CatnGroupNumbers( G ).symm2 := symmc2; 
     fi; 
     if not IsBound( CatnGroupLists( G ).allcat2pos ) then 
         CatnGroupLists( G ).allcat2pos := posL; 
     fi; 
     if not IsBound( CatnGroupNumbers( G ).iso2 ) then 
         CatnGroupNumbers( G ).iso2 := numL; 
-    fi; 
-    if not IsBound( CatnGroupNumbers( G ).siso2 ) then 
-        CatnGroupNumbers( G ).siso2 := symmiso; 
     fi; 
     if not IsBound( CatnGroupNumbers( G ).predg ) then 
         CatnGroupNumbers( G ).predg := predg; 

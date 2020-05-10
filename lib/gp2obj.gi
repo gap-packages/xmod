@@ -2557,8 +2557,8 @@ function( G )
     if not IsBound( CatnGroupNumbers( G ).cat1 ) then 
         CatnGroupNumbers( G ).cat1 := Length( L ); 
     fi; 
-    if not IsBound( CatnGroupNumbers( G ).symm1 ) then 
-        CatnGroupNumbers( G ).symm1 := symm; 
+    if not IsBound( CatnGroupNumbers( G ).symm ) then 
+        CatnGroupNumbers( G ).symm := symm; 
     fi; 
     return L; 
 end ); 
@@ -2620,8 +2620,8 @@ function( G )
     if not IsBound( CatnGroupNumbers( G ).iso1 ) then 
         CatnGroupNumbers( G ).iso1 := numL; 
     fi; 
-    if not IsBound( CatnGroupNumbers( G ).symm1 ) then 
-        CatnGroupNumbers( G ).symm1 := symm; 
+    if not IsBound( CatnGroupNumbers( G ).symm ) then 
+        CatnGroupNumbers( G ).symm := symm; 
     fi; 
     symm := 0; 
     for C in L do 
@@ -2629,8 +2629,8 @@ function( G )
             symm := symm + 1; 
         fi;
     od; 
-    if not IsBound( CatnGroupNumbers( G ).siso1 ) then 
-        CatnGroupNumbers( G ).siso1 := symm; 
+    if not IsBound( CatnGroupNumbers( G ).siso ) then 
+        CatnGroupNumbers( G ).siso := symm; 
     fi; 
     return L; 
 end );
@@ -2837,10 +2837,10 @@ end );
 ##############################################################################
 ##
 #M  Embedding . . . . for direct products of (pre-)xmods and (pre-)cat1-groups
-#M  Projection . . .  for direct products of (pre-)xmods and (pre-)cat1-groups
+#M  Projection  . . . and also (pre)-cat2-groups and others 
 ##
 InstallOtherMethod( Embedding, "generic method for (pre-)xmods & (pre-)cat1s",
-    true, [ Is2DimensionalGroup, IsPosInt ], 0,
+    true, [ HasHigherDimension, IsPosInt ], 0,
 function( D, i )
 
     local info;
@@ -2854,7 +2854,7 @@ function( D, i )
 end );
 
 InstallOtherMethod( Projection, "generic method for (pre-)xmods & (pre-)cat1s",
-    true, [ Is2DimensionalGroup, IsPosInt ], 0,
+    true, [ HasHigherDimension, IsPosInt ], 0,
 function( D, i )
 
     local info;
