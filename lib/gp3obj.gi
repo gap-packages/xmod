@@ -1854,6 +1854,7 @@ end );
 #F  NextIterator_AllCat2Groups( <iter> ) 
 #F  IsDoneIterator_AllCat2Groups( <iter> ) 
 #F  ShallowCopy_AllCat2Groups( <iter> ) 
+#M  AllCat2GroupsMatrix  . . . . . . . . . 0-1 matrix indexed by AllCat1Groups
 #A  AllCat2GroupsNumber( <gp> ) . . . . . . . . .  number of these cat2-groups
 #M  AllCat2GroupsUpToIsomorphism . . . iso class reps of cat2-group structures
 ##
@@ -1942,6 +1943,39 @@ function( G )
         CatnGroupLists( G ).cat2pairs := pairs; 
     fi; 
     return L; 
+end ); 
+
+InstallMethod( AllCat2GroupsMatrix, "for a group", [ IsGroup ], 0, 
+function( G ) 
+
+    local all1, gamma1, L, M, tot, i, j, C; 
+
+    all1 := AllCat1Groups( G ); 
+    gamma1 := Length( all1 ); 
+    M := List( [1..gamma1], x -> List( [1..gamma1], y -> 0 ) );
+    tot := 0; 
+    for i in [1..gamma1] do 
+        for j in [i..gamma1] do 
+            C := Cat2Group( all1[i], all1[j] ); 
+            if not ( C = fail ) then 
+                tot := tot+1; 
+                M[i][j] := 1; 
+            fi;
+        od; 
+    od;
+    for i in [2..gamma1] do 
+        for j in [1..i-1] do 
+            M[i][j] := M[j][i]; 
+        od; 
+    od;
+    Print( "number of cat2-groups found = ", tot, "\n" ); 
+    for i in [1..gamma1] do 
+        for j in [1..gamma1] do 
+            if M[i][j]=1 then Print( "1" ); else Print("."); fi;
+        od;
+        Print( "\n" );
+    od; 
+    return M; 
 end ); 
 
 InstallMethod( AllCat2GroupsNumber, "for a group", [ IsGroup ], 0, 

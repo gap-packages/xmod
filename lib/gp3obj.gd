@@ -222,15 +222,16 @@ DeclareOperation( "AllCat2GroupsWithImagesUpToIsomorphism",
 ## 
 #O  AllCat2Groups( <G> ) 
 #O  AllCat2GroupsIterator( <gp> )
+#O  AllCat2GroupsMatrix( <G> ) 
 #A  AllCat2GroupsNumber( <gp> )
 #O  AllCat2GroupsUpToIsomorphism( <G> ) 
 #O  TableRowForCat1Groups( <G> ) 
 #O  TableRowForCat2Groups( <G> ) 
 ## 
 DeclareOperation( "AllCat2Groups", [ IsGroup ] ); 
-DeclareOperation( "AllCat2GroupsIterator", [ IsGroup ] ); DeclareAttribute( "AllCat2GroupsNumber", IsGroup ); 
+DeclareOperation( "AllCat2GroupsIterator", [ IsGroup ] ); DeclareOperation( "AllCat2GroupsMatrix", [ IsGroup ] ); 
+DeclareAttribute( "AllCat2GroupsNumber", IsGroup ); 
 DeclareOperation( "AllCat2GroupsUpToIsomorphism", [ IsGroup ] ); 
-DeclareAttribute( "SymmetricCat2GroupsUpToIsomorphismNumber", IsGroup ); 
 DeclareOperation( "AllCat2GroupFamilies", [ IsGroup ] ); 
 DeclareOperation( "TableRowForCat1Groups", [ IsGroup ] ); 
 DeclareOperation( "TableRowForCat2Groups", [ IsGroup ] ); 

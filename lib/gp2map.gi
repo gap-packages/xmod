@@ -1342,15 +1342,15 @@ end );
 
 #############################################################################
 ##
-#M  ReverseIsomorphism                                   for a pre-cat1-group
+#M  TransposeIsomorphism                                 for a pre-cat1-group
 ##
-InstallMethod( ReverseIsomorphism, "method for a cat1-group", true,
+InstallMethod( TransposeIsomorphism, "method for a cat1-group", true,
     [ IsPreCat1Group ], 0,
 function( C1G )
 
     local rev, shom, rhom, src, gensrc, t, h, e, im;
 
-    rev := ReverseCat1Group( C1G );
+    rev := TransposeCat1Group( C1G );
     src := Source( C1G );
     gensrc := GeneratorsOfGroup( src );
     t := TailMap( C1G );

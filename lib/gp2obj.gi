@@ -688,14 +688,14 @@ end );
 
 #############################################################################
 ##
-#M  ReverseCat1Group                                     for a pre-cat1-group
+#M  TransposeCat1Group                                     for a pre-cat1-group
 ##
-InstallMethod( ReverseCat1Group, "method for a cat1-group", true, 
+InstallMethod( TransposeCat1Group, "method for a cat1-group", true, 
     [ IsPreCat1Group ], 0,
 function( C1G )
     local rev;
     rev := PreCat1Group( HeadMap(C1G), TailMap(C1G), RangeEmbedding(C1G ) );
-    SetReverseCat1Group( rev, C1G );
+    SetTransposeCat1Group( rev, C1G );
     return rev;
 end );
 
@@ -1803,6 +1803,9 @@ InstallGlobalFunction( Cat1Group, function( arg )
         elif ( nargs = 3 ) then 
             C1G := PreCat1Group( arg[1], arg[2], arg[3] ); 
         fi;
+        if ( C1G = fail ) then 
+            return fail; 
+        fi; 
         ok := IsCat1Group( C1G );
         if ok then
             return C1G;
@@ -2484,6 +2487,7 @@ end );
 #F  NextIterator_AllCat1Groups( <iter> ) 
 #F  IsDoneIterator_AllCat1Groups( <iter> ) 
 #F  ShallowCopy_AllCat1Groups( <iter> ) 
+#M  AllCat1GroupsMatrix  . . . . . . . . . 0-1-2 matrix indexed by projections
 #A  AllCat1GroupsNumber( <gp> ) . . . . . . . . .  number of these cat1-groups
 #M  AllCat1GroupsUpToIsomorphism . . . iso class reps of cat1-group structures
 ##
@@ -2561,6 +2565,54 @@ function( G )
         CatnGroupNumbers( G ).symm := symm; 
     fi; 
     return L; 
+end ); 
+
+InstallMethod( AllCat1GroupsMatrix, "for a group", [ IsGroup ], 0, 
+function( G ) 
+
+    local endG, eps, L, M, ctot, ptot, i, j, C; 
+
+    endG := IdempotentEndomorphisms( G ); 
+    eps := Length( endG ); 
+    M := List( [1..eps], x -> List( [1..eps], y -> 0 ) );
+    ctot := 0; 
+    ptot := 0;
+    for i in [1..eps] do 
+        for j in [i..eps] do 
+            C := PreCat1Group( endG[i], endG[j] ); 
+            if not ( C = fail ) then 
+                M[i][j] := 1; 
+                if IsCat1Group( C ) then 
+                    ctot := ctot+1; 
+                    M[i][j] := 2; 
+                else 
+                    ptot := ptot+1;
+                fi;
+            fi;
+        od; 
+    od;
+    for i in [2..eps] do 
+        for j in [1..i-1] do 
+            M[i][j] := M[j][i]; 
+        od; 
+    od;
+    Print( "number of cat1-groups found = ", ctot, "\n" ); 
+    if ( ptot > 0 ) then 
+        Print( "number of additional pre-cat1-groups found = ", ptot, "\n" ); 
+    fi; 
+    for i in [1..eps] do 
+        for j in [1..eps] do 
+            if M[i][j]=2 then 
+                Print( "2" ); 
+            elif M[i][j]=1 then 
+                Print( "1" );
+            else 
+                Print("."); 
+            fi;
+        od;
+        Print( "\n" );
+    od; 
+    return M; 
 end ); 
 
 InstallMethod( AllCat1GroupsNumber, "for a group", [ IsGroup ], 0, 
