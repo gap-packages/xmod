@@ -278,7 +278,7 @@ Cat1-group [a4a4=>a4d] :-
   [ (5,6,7), (6,7,8) ]
 
 ## Section 2.4.4
-gap> R4 := ReverseCat1Group( C4 );
+gap> R4 := TransposeCat1Group( C4 );
 [a4a4=>a4d]
 gap> Boundary( R4 );
 [ (2,3,4), (1,2,3) ] -> [ (10,11,12), (9,10,11) ]
@@ -286,6 +286,10 @@ gap> TailMap( R4 ) = HeadMap( R4 );
 false
 gap> TailMap( R4 ) = HeadMap( C4 ); 
 true
+gap> MappingGeneratorsImages( TransposeIsomorphism(C4) );
+[ [ [ (1,2,3), (2,3,4), (5,6,7), (6,7,8) ], 
+      [ (5,6,7), (6,7,8), (1,2,3), (2,3,4) ] ], 
+  [ [ (9,10,11), (10,11,12) ], [ (9,10,11), (10,11,12) ] ] ]
 
 ## Section 2.4.5
 gap> s4 := Group( (1,2,3), (3,4) );;  SetName( s4, "s4" ); 

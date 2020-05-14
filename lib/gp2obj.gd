@@ -285,7 +285,7 @@ DeclareAttribute( "KernelEmbedding", IsPreCat1Group );
 #O  PreCat1GroupWithIdentityEmbedding( <tail>, <head> )
 #A  IsomorphicPreCat1GroupWithIdentityEmbedding( <PCG> ) 
 #A  IsomorphismToPreCat1GroupWithIdentityEmbedding( <PCG> ) 
-#A  ReverseCat1Group( <PCG> )
+#A  TransposeCat1Group( <PCG> )
 ##
 DeclareGlobalFunction( "PreCat1Group" );
 DeclareOperation( "PreCat1GroupByTailHeadEmbedding",
@@ -296,7 +296,7 @@ DeclareAttribute( "IsomorphicPreCat1GroupWithIdentityEmbedding",
     IsPreCat1Group ); 
 DeclareAttribute( "IsomorphismToPreCat1GroupWithIdentityEmbedding", 
     IsPreCat1Group ); 
-DeclareAttribute( "ReverseCat1Group", IsPreCat1Group );
+DeclareAttribute( "TransposeCat1Group", IsPreCat1Group );
 
 #############################################################################
 ##
@@ -345,13 +345,14 @@ DeclareOperation( "AllCat1GroupsWithImageUpToIsomorphism", [ IsGroup ] );
 #O  AllCat1Groups( <gp> )
 #O  AllCat1GroupsIterator( <gp> )
 #F  DoAllCat1GroupsIterator 
+#O  AllCat1GroupsMatrix( <gp> )
 #A  AllCat1GroupsNumber( <gp> )
 #O  AllCat1GroupsUpToIsomorphism( <gp> )
 #O  AllCat1GroupFamilies( <gp> )
 ##
 DeclareOperation( "AllCat1Groups", [ IsGroup ] ); 
 DeclareOperation( "AllCat1GroupsIterator", [ IsGroup ] ); DeclareGlobalFunction( "DoAllCat1GroupsIterator" ); 
-DeclareAttribute( "AllCat1GroupsNumber", IsGroup ); 
+DeclareOperation( "AllCat1GroupsMatrix", [ IsGroup ] ); DeclareAttribute( "AllCat1GroupsNumber", IsGroup ); 
 DeclareOperation( "AllCat1GroupsUpToIsomorphism", [ IsGroup ] ); 
 DeclareOperation( "AllCat1GroupFamilies", [ IsGroup ] ); 
 

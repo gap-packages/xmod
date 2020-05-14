@@ -80,10 +80,10 @@ DeclareProperty( "IsPermPreCat1GroupMorphism", IsPreCat1GroupMorphism );
 
 #############################################################################
 ##
-#A  ReverseIsomorphism( <PCG> )
+#A  TransposeIsomorphism( <PCG> )
 #O  CompositionMorphism( <mor2>, <mor1> )
 ##
-DeclareAttribute( "ReverseIsomorphism", IsPreCat1Group );
+DeclareAttribute( "TransposeIsomorphism", IsPreCat1Group );
 DeclareOperation( "CompositionMorphism", [ Is2DimensionalMapping, Is2DimensionalMapping ] );
 
 #############################################################################

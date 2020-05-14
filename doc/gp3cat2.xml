@@ -474,9 +474,52 @@ gap> for C2 in iso do DisplayLeadMaps( C2 ); od;
 </Example>
 
 <ManSection>
+   <Attr Name="AllCat2GroupsMatrix"
+         Arg="G" />
+<Description>
+The operation <C>AllCat2GroupsMatrix(G)</C> constructs a symmetric matrix 
+<M>M</M> with rows and columns labelled by the cat<M>^1</M>-groups 
+<M>C_i</M> on <M>G</M>, where <M>M_{ij}</M> is 
+<M>1</M> if <M>C_i,C_j</M> combine to form a cat<M>^2</M>-group,  
+and <M>0</M> otherwise.  The matrix is automatically printed out 
+with dots in place of zeroes. 
+<P/> 
+In the example we see that the dihedral group <M>D_{12}</M> 
+has <M>12</M> cat<M>^12</M>-groups and <M>41</M> cat<M>^2</M>-groups, 
+<M>12</M> of which are symmetric. 
+This operation is intended to be used to illustrate how cat<M>^2</M>-groups 
+are formed, and should only be used with groups of low order. 
+<P/> 
+The attribute <C>AllCat2GroupsNumber(G)</C> returns the  
+number <M>n</M> of these cat<M>^2</M>-groups. 
+</Description> 
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> AllCat2GroupsMatrix(d12);;                
+number of cat2-groups found = 41
+1.....1..1.1
+.1.....1.1.1
+..1.....11.1
+...1....1.11
+....1.1...11
+.....1.1..11
+1...1.1..111
+.1...1.1.111
+..11....1111
+111...1111.1
+...111111.11
+111111111111
+gap> AllCat2GroupsNumber(d12); 
+41
+]]>
+</Example>
+
+<ManSection>
    <Oper Name="AllCat2GroupsIterator"
          Arg="G" />
-   <Attr Name="AllCat2GroupsNumber"
+   <Attr Name="AllCat2GroupsMatrix"
          Arg="G" />
    <Oper Name="AllCat2Groups"
          Arg="G" />
@@ -491,8 +534,6 @@ gap> for C2 in iso do DisplayLeadMaps( C2 ); od;
 <Description>
 The iterator <C>AllCat2GroupsIterator(G)</C> iterates through all the 
 cat<M>^2</M>-groups with source <C>G</C>. 
-The attribute <C>AllCat2GroupsNumber(G)</C> runs this iterator to count the 
-number <M>n</M> of these cat<M>^2</M>-groups. 
 The operation <C>AllCat2Groups(G)</C> returns a list containing these <M>n</M> 
 cat<M>^2</M>-groups.  
 Since these lists can get very long, this operation should only be used 

@@ -806,18 +806,21 @@ Cat1-group [a4a4=>a4d] :-
 </Example>
 
 <ManSection>
-   <Attr Name="ReverseCat1Group"
+   <Attr Name="TransposeCat1Group"
+         Arg="C0" />
+   <Attr Name="TransposeIsomorphism"
          Arg="C0" />
 <Description> 
-The <E>reverse</E> of a cat<M>^1</M>-group <M>C</M> 
+The <E>transpose</E> of a cat<M>^1</M>-group <M>C</M> 
 has the same source, range and embedding, 
-but has the tail and head maps interchanged.
+but has the tail and head maps interchanged. 
+The <C>TransposeIsomorphism</C> gives the isomorphism between the two. 
 </Description>
 </ManSection>
 <P/>
 <Example>
 <![CDATA[
-gap> R4 := ReverseCat1Group( C4 );
+gap> R4 := TransposeCat1Group( C4 );
 [a4a4=>a4d]
 gap> Boundary( R4 );
 [ (2,3,4), (1,2,3) ] -> [ (10,11,12), (9,10,11) ]
@@ -825,6 +828,10 @@ gap> TailMap( R4 ) = HeadMap( R4 );
 false
 gap> TailMap( R4 ) = HeadMap( C4 ); 
 true
+gap> MappingGeneratorsImages( TransposeIsomorphism(C4) );
+[ [ [ (1,2,3), (2,3,4), (5,6,7), (6,7,8) ], 
+      [ (5,6,7), (6,7,8), (1,2,3), (2,3,4) ] ], 
+  [ [ (9,10,11), (10,11,12) ], [ (9,10,11), (10,11,12) ] ] ]
 ]]>
 </Example>
 
@@ -1162,19 +1169,60 @@ gap> L12 := AllCat1GroupsWithImage( d12, c2 );
 </Example>
 
 <ManSection>
+   <Attr Name="AllCat1GroupsMatrix"
+         Arg="G" />
+<Description>
+The operation <C>AllCat1GroupsMatrix(G)</C> constructs a symmetric matrix 
+<M>M</M> with rows and columns labelled by the idempotent endomorphisms 
+<M>e_i</M> on <M>G</M>, where <M>M_{ij}</M> is 
+<M>2</M> if <M>e_i,e_j</M> combine to form a cat<M>^1</M>-group; 
+<M>1</M> if they only form a pre-cat<M>^1</M>-group; 
+and <M>0</M> otherwise.  The matrix is automatically printed out 
+with dots in place of zeroes. 
+<P/> 
+In the example we see that the group <M>QD_{16}</M> 
+has <M>10</M> idempotent endomorphisms and <M>5</M> cat<M>12</M>-groups, 
+all of which are symmetric(<M>t=h)</M>, 
+and a further <M>9</M> pre-cat<M>^1</M>-groups. 
+(A cat<M>^1</M>-group and its transpose are not counted twice.) 
+This operation is intended to be used to illustrate how cat<M>^2</M>-groups 
+are formed, and should only be used with groups of low order. 
+<P/> 
+The attribute <C>AllCat1GroupsNumber(G)</C> returns the  
+number <M>n</M> of these cat<M>^1</M>-groups. 
+</Description> 
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> AllCat1GroupsMatrix( G );;                 
+number of cat1-groups found = 5
+number of additional pre-cat1-groups found = 9
+1.........
+.21.......
+.11.......
+...21.....
+...11.....
+.....21...
+.....11...
+.......21.
+.......11.
+.........2
+]]>
+</Example>
+
+<ManSection>
    <Oper Name="AllCat1GroupsIterator"
          Arg="G" />
-   <Attr Name="AllCat1GroupsNumber"
-         Arg="G" />
    <Oper Name="AllCat1GroupsUpToIsomorphism"
+         Arg="G" />
+   <Oper Name="AllCat1GroupsMatrix"
          Arg="G" />
    <Oper Name="AllCat1Groups"
          Arg="G" />
 <Description>
 The iterator <C>AllCat1GroupsIterator(G)</C> iterates through all the 
 cat<M>^1</M>-groups with source <C>G</C>. 
-The attribute <C>AllCat1GroupsNumber(G)</C> runs this iterator to count the 
-number <M>n</M> of these cat<M>^1</M>-groups. 
 The operation <C>AllCat1Groups(G)</C> returns a list containing these <M>n</M> 
 cat<M>^1</M>-groups.  
 Since these lists can get very long, this operation should only 
