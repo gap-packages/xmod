@@ -74,7 +74,8 @@ function( X0 )
                 od; 
             od; 
             len := Length( class );
-            Print( "class has length ", len, " with elements\n", class, "\n" );
+            Info( InfoXMod, 1, "class has length ", len, 
+                               " with elements\n", class );
             Add( classes, class ); 
             nc := nc+1; 
         fi; 
