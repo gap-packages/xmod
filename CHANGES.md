@@ -1,7 +1,8 @@
 # CHANGES to the 'XMod' package
 
-## 2.79 -> 2.79dev (10/05/2020) 
+## 2.79 -> 2.79dev (25/05/2020) 
 
+ * (24/05/20) added AllCat2GroupsWithFixedUp(AndRange) 
  * (10/05/20) split gp3objmap.tst into gp3xs.tst and gp3cat2.tst 
               added operation AllCat2GroupMatrix 
  * (08/05/20) added DirectProductOp method for PreCat2Groups 

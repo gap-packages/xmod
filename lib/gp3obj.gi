@@ -1847,6 +1847,49 @@ function ( G, R, Q )
     return L0; 
 end ); 
 
+#############################################################################
+##
+#M  AllCat2GroupsWithFixedUpAndLeftRange . .  cat2-groups with given up and R 
+#M  AllCat2GroupsWithFixedUp . . . . . . . cat2-groups with specified up cat1 
+##
+InstallMethod( AllCat2GroupsWithFixedUpAndLeftRange, 
+    "for a group and and a cat1-group", [ IsPreCat1Group, IsGroup ], 0, 
+function ( up, R ) 
+
+    local G, L0, C1, C2, iter; 
+
+    G := Source( up );  
+    L0 := [ ]; 
+    iter := AllCat1GroupsWithImageIterator( G, R );
+    while not IsDoneIterator( iter ) do 
+        C1 := NextIterator( iter ); 
+        C2 := Cat2Group( up, C1 ); 
+        if ( not ( C2 = fail ) and IsCat2Group( C2 ) ) then 
+            Add( L0, C2 ); 
+        fi; 
+    od;
+    return L0; 
+end ); 
+
+InstallMethod( AllCat2GroupsWithFixedUp, 
+    "for a group and and a cat1-group", [ IsPreCat1Group ], 0, 
+function ( up ) 
+
+    local G, L0, C1, C2, iter; 
+
+    G := Source( up );  
+    L0 := [ ]; 
+    iter := AllCat1GroupsIterator( G );
+    while not IsDoneIterator( iter ) do 
+        C1 := NextIterator( iter ); 
+        C2 := Cat2Group( up, C1 ); 
+        if ( not ( C2 = fail ) and IsCat2Group( C2 ) ) then 
+            Add( L0, C2 ); 
+        fi; 
+    od;
+    return L0; 
+end ); 
+
 ##############################################################################
 ##
 #M  AllCat2Groups . . . . . . . list of cat2-group structures on a given group

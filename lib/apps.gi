@@ -5,36 +5,216 @@
 #Y  Copyright (C) 2001-2020, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
-############################################################################## 
-## 
-InstallMethod( LoopClasses, "for a crossed module", true, [ IsPreXMod ], 0, 
-function( X0 ) 
+##############################################################################
+##
+InstallMethod( LoopClass, "for a crossed module and an element", true, 
+    [ IsPreXMod, IsObject ], 0, 
+function( X0, a ) 
 
-    local M0, elM0, P0, elP0, act0, bdy0, Q0, elQ0, lenP, found, L, 
-          i, a, p, m, b, classes, class, conj, numj, pos, c, c1, j, cj; 
+    local M0, P0, bdy0, Q0, class, p, c, q, b, len; 
 
     if not IsXMod( X0 ) then 
         Error( "X0 should be a crossed module" ); 
     fi; 
     M0 := Source( X0 ); 
-    elM0 := Elements( M0 ); 
     P0 := Range( X0 ); 
-    elP0 := Elements( P0 ); 
-    lenP := Length( elP0 ); 
-    act0 := XModAction( X0 ); 
+    if not ( a in P0 ) then 
+        Error( "element a not in the range group P0" ); 
+    fi; 
     bdy0 := Boundary( X0 ); 
     Q0 := Image( bdy0 ); 
-    elQ0 := Elements( Q0 ); 
+    class := [ ]; 
+    for p in P0 do 
+        c := a^p; 
+        for q in Q0 do 
+            b := c*q; 
+            if not ( b in class ) then 
+                Add( class, b );
+            fi;
+        od; 
+    od; 
+    len := Length( class );
+    Print( "class has length ", len, " with elements\n", class, "\n" );
+    return class;
+end ); 
+
+
+##############################################################################
+##
+InstallMethod( LoopClasses, "for a crossed module", true, [ IsPreXMod ], 0, 
+function( X0 ) 
+
+    local M0, P0, bdy0, Q0, classes, nc, class, a, found, i, p, c, q, b, len; 
+
+    if not IsXMod( X0 ) then 
+        Error( "X0 should be a crossed module" ); 
+    fi; 
+    M0 := Source( X0 ); 
+    P0 := Range( X0 ); 
+    bdy0 := Boundary( X0 ); 
+    Q0 := Image( bdy0 ); 
+    classes := [ ]; 
+    nc := 0; 
+    for a in P0 do 
+        found := false; 
+        for i in [1..nc] do 
+            if ( a in classes[i] ) then 
+                found := true; 
+            fi; 
+        od; 
+        if not found then 
+            class := [ ]; 
+            for p in P0 do 
+                c := a^p; 
+                for q in Q0 do 
+                    b := c*q; 
+                    if not ( b in class ) then 
+                        Add( class, b );
+                    fi;
+                od; 
+            od; 
+            len := Length( class );
+            Print( "class has length ", len, " with elements\n", class, "\n" );
+            Add( classes, class ); 
+            nc := nc+1; 
+        fi; 
+    od;
+    return classes; 
+end ); 
+
+
+InstallMethod( LoopClassOld, "for a crossed module and an element", true, 
+    [ IsPreXMod, IsObject ], 0, 
+function( X0, a ) 
+
+    local M0, genM0, lenM0, P0, bdy0, act0, aut0, acta, elPa, p, c, m, 
+          nPa, C0, G0, e1, e2, Pa, genPa, posPa, i, e, e2m, e1p, g, ngPa, 
+          imda, j, pa, ma, bdy1, imact1, act1;
+
+    if not IsXMod( X0 ) then 
+        Error( "X0 should be a crossed module" ); 
+    fi; 
+    M0 := Source( X0 ); 
+    genM0 := GeneratorsOfGroup( M0 );
+    lenM0 := Length( genM0 ); 
+    P0 := Range( X0 ); 
+    if not ( a in P0 ) then 
+        Error( "element a not in the range group P0" ); 
+    fi; 
+    bdy0 := Boundary( X0 ); 
+    act0 := XModAction( X0 ); 
+    aut0 := Range( act0 ); 
+    acta := ImageElm( act0, a ); 
+    elPa := [ ]; 
+    for p in P0 do 
+        c := Comm( p, a ); 
+        for m in M0 do 
+            if ( ImageElm( bdy0, m ) = c ) then 
+                Add( elPa, [p,m] );
+            fi;
+        od; 
+    od; 
+    nPa := Length( elPa );
+    Print( "elPa has length ", nPa, " with elements ", elPa, "\n" );
+    C0 := PreCat1GroupOfPreXMod( X0 ).precat1; 
+    G0 := Source( C0 ); 
+    e1 := Embedding( G0, 1 ); 
+    e2 := Embedding( G0, 2 );
+    Pa := Subgroup( G0, [ ] ); 
+    genPa := [ ];
+    posPa := [ ];
+    for i in [1..nPa] do 
+        e := elPa[i]; 
+        p := e[1]; 
+        m := e[2]; 
+        e2m := ImageElm( e2, m ); 
+        e1p := ImageElm( e1, p ); 
+        g := e1p * e2m;
+        if not ( g in Pa ) then 
+            Add( genPa, g );
+            Add( posPa, i );
+            Pa := Subgroup( G0, genPa ); 
+        fi;
+    od;
+    Info( InfoXMod, 2, "Pa has size ", Size( Pa ) ); 
+    ngPa := Length( genPa ); 
+    ## construct the boundary for X1 
+    imda := ListWithIdenticalEntries( lenM0, 0 ); 
+    for j in [1..lenM0] do 
+        m := genM0[j];  
+        pa := ImageElm( bdy0, m ); 
+        ma := m^-1 * ImageElm( acta, m ); 
+        e2m := ImageElm( e2, ma ); 
+        e1p := ImageElm( e1, pa ); 
+        g := e1p * e2m;
+        if not ( g in Pa ) then 
+            Error( "element g not in Pa" ); 
+        fi; 
+        imda[j] := g; 
+    od; 
+    bdy1 := GroupHomomorphismByImages( M0, Pa, genM0, imda ); 
+    if ( bdy1 = fail ) then 
+        Error( "bdy1 fails to be a homomorphism" ); 
+    fi;
+    if ( InfoLevel( InfoXMod ) > 1 ) then 
+        Print( "the boundary map:\n" ); 
+        Display( bdy1 ); 
+    fi; 
+    ## construct the action map for X1 
+    imact1 := ListWithIdenticalEntries( ngPa, 0 ); 
+    for i in [1..ngPa] do  
+        p := elPa[ posPa[i] ][1]; 
+        imact1[i] := ImageElm( act0, p ); 
+    od; 
+    act1 := GroupHomomorphismByImages( Pa, aut0, genPa, imact1 ); 
+    if ( InfoLevel( InfoXMod ) > 1 ) then 
+        Print( "the action map:\n" ); 
+        Display( act1 ); 
+    fi; 
+    ## now we can construct the crossed module 
+    return XModByBoundaryAndAction( bdy1, act1 );  
+end ); 
+
+############################################################################## 
+## 
+InstallMethod( LoopClassesNew, "for a crossed module", true, 
+    [ IsPreXMod ], 0, 
+function( X0 ) 
+
+    local M0, iterM0, P0, iterPa, iterPb, iterPp, lenP, elP0, 
+          act0, bdy0, Q0, found, L, i, a, p, m, b, 
+          classes, class, conj, numj, pos, c, c1, j, cj; 
+
+    if not IsXMod( X0 ) then 
+        Error( "X0 should be a crossed module" ); 
+    fi; 
+    M0 := Source( X0 ); 
+    P0 := Range( X0 ); 
+    bdy0 := Boundary( X0 ); 
+    Q0 := Image( bdy0 ); 
+    if IsAbelian( P0 ) then 
+        return List( RightCosets( P0, Q0 ), c -> Representative(c) ); 
+    fi;
+    iterM0 := Iterator( M0 ); 
+##    elM0 := Elements( M0 ); 
+    iterPa := Iterator( P0 );
+    iterPp := Iterator( P0 ); 
+    elP0 := Elements( P0 ); 
+    lenP := Size( P0 ); 
+    act0 := XModAction( X0 ); 
+##    elQ0 := Elements( Q0 ); 
     found := ListWithIdenticalEntries( lenP, 0 ); 
     L := [ ]; 
     classes := [ ]; 
-    for i in [1..lenP] do 
-        a := elP0[i]; 
+    while not IsDoneIterator( iterPa ) do 
+        a := NextIterator( iterPa ); 
         if ( found[i] = 0 ) then 
             found[i] := 1; 
             class := [ ];
-            for p in elP0 do 
-                for m in elM0 do 
+            while not IsDoneIterator( iterPp ) do 
+                p := NextIterator( iterPp ); 
+                while not IsDoneIterator( iterM0 ) do 
+                    m := NextIterator( iterM0 );  
                     b := a^p * ImageElm( bdy0, m );  ## a' = a^p + delta(m) 
                     if not ( b in class ) then  
                         found[ Position( elP0, b ) ] := 1; 
@@ -45,19 +225,69 @@ function( X0 )
             Add( classes, class );
         fi; 
     od; 
-    conj := List( ConjugacyClasses( P0 ), c -> Elements( c ) ); 
-    numj := Length( conj ); 
-    pos := ListWithIdenticalEntries( numj, 0 ); 
-    for i in [1..numj] do 
-        c := conj[i]; 
-        c1 := c[1];
-        cj := First( classes, j -> c1 in j ); 
-        if ForAll( c, g -> g in cj ) then 
-            pos[i] := Position( classes, cj ); 
+    if not IsAbelian( P0 ) then 
+        conj := List( ConjugacyClasses( P0 ), c -> Elements( c ) ); 
+        numj := Length( conj ); 
+        pos := ListWithIdenticalEntries( numj, 0 ); 
+        for i in [1..numj] do 
+            c := conj[i]; 
+            c1 := c[1];
+            cj := First( classes, j -> c1 in j ); 
+            if ForAll( c, g -> g in cj ) then 
+                pos[i] := Position( classes, cj ); 
+            fi; 
+        od; 
+        Print( "positions of conjugacy classes in loop classes: ", pos, "\n" ); 
+    fi; 
+    return classes; 
+end ); 
+
+############################################################################## 
+## 
+InstallMethod( LoopClassRepresentatives, "for a crossed module", true, 
+    [ IsPreXMod ], 0, 
+function( X0 ) 
+
+    local M0, iterM0, P0, iterPa, iterPb, iterPp, lenP, 
+          act0, bdy0, Q0, found, L, i, a, p, m, b, 
+          reps, conj, numj, pos, c, c1, j, cj; 
+
+    if not IsXMod( X0 ) then 
+        Error( "X0 should be a crossed module" ); 
+    fi; 
+    M0 := Source( X0 ); 
+    P0 := Range( X0 ); 
+    bdy0 := Boundary( X0 ); 
+    Q0 := Image( bdy0 ); 
+    if IsAbelian( P0 ) then 
+        return List( RightCosets( P0, Q0 ), c -> Representative(c) ); 
+    fi;
+    iterM0 := Iterator( M0 ); 
+##    elM0 := Elements( M0 ); 
+    iterPa := Iterator( P0 );
+    iterPp := Iterator( P0 ); 
+##    elP0 := Elements( P0 ); 
+    lenP := Size( P0 ); 
+    act0 := XModAction( X0 ); 
+##    elQ0 := Elements( Q0 ); 
+    found := ListWithIdenticalEntries( lenP, 0 ); 
+    L := [ ]; 
+    reps := [ ]; 
+    while not IsDoneIterator( iterPa ) do 
+        a := NextIterator( iterPa ); 
+        if ( found[i] = 0 ) then 
+            found[i] := 1; 
+            Add( reps, a );
+            while not IsDoneIterator( iterPp ) do 
+                p := NextIterator( iterPp ); 
+                while not IsDoneIterator( iterM0 ) do 
+                    m := NextIterator( iterM0 );  
+                    b := a^p * ImageElm( bdy0, m );  ## a' = a^p + delta(m) 
+                od; 
+            od; 
         fi; 
     od; 
-    Print( "positions of conjugacy classes in loop classes: ", pos, "\n" ); 
-    return classes;      
+    return reps; 
 end ); 
 
 ############################################################################## 

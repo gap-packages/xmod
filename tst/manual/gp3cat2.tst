@@ -193,6 +193,27 @@ gap> for C2 in iso do DisplayLeadMaps( C2 ); od;
  left tail/head images: [ (), (3,4), () ], [ (), (3,4), (3,4) ]
 
 # Section 8.5.2
+gap> up := Up2DimensionalGroup( iso[1] );                
+[Group( [ (1,2), (3,4), (5,6) ] )=>Group( [ (1,2), (), () ] )]
+gap> AllCat2GroupsWithFixedUp( up );;                    
+gap> Length(last);                                       
+28
+gap> L := AllCat2GroupsWithFixedUpAndLeftRange( up, B );;
+gap> for C in L do DisplayLeadMaps( C ); od;             
+(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ]
+   up tail=head images: [ (1,2), (), () ]
+ left tail=head images: [ (), (3,4), () ]
+(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ]
+   up tail=head images: [ (1,2), (), () ]
+ left tail/head images: [ (), (3,4), () ], [ (), (3,4), (3,4) ]
+(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ]
+   up tail=head images: [ (1,2), (), () ]
+ left tail/head images: [ (), (3,4), (3,4) ], [ (), (3,4), () ]
+(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ]
+   up tail=head images: [ (1,2), (), () ]
+ left tail=head images: [ (), (3,4), (3,4) ]
+
+# Section 8.5.3
 gap> AllCat2GroupsNumber( G );
 41
 gap> reps2 := AllCat2GroupsUpToIsomorphism( G );;
