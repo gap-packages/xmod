@@ -312,7 +312,7 @@
     [4X[28X[ "IsComponentObjectRep", "IsAttributeStoringRep", "IsPreXModObj" ][128X[104X
     [4X[25Xgap>[125X [27XKnownAttributesOfObject( X5);[127X[104X
     [4X[28X[ "Name", "Size", "Range", "Source", "IdGroup", "Boundary", "XModAction", [128X[104X
-    [4X[28X  "ExternalSetXMod" ][128X[104X
+    [4X[28X  "ExternalSetXMod", "HigherDimension" ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
@@ -635,16 +635,18 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [1X2.4-4 ReverseCat1Group[101X
+  [1X2.4-4 TransposeCat1Group[101X
   
-  [33X[1;0Y[29X[2XReverseCat1Group[102X( [3XC0[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XTransposeCat1Group[102X( [3XC0[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XTransposeIsomorphism[102X( [3XC0[103X ) [32X attribute[133X
   
-  [33X[0;0YThe [13Xreverse[113X of a cat[22X^1[122X-group [22XC[122X has the same source, range and embedding, but
-  has the tail and head maps interchanged.[133X
+  [33X[0;0YThe  [13Xtranspose[113X  of a cat[22X^1[122X-group [22XC[122X has the same source, range and embedding,
+  but  has the tail and head maps interchanged. The [10XTransposeIsomorphism[110X gives
+  the isomorphism between the two.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XR4 := ReverseCat1Group( C4 );[127X[104X
+    [4X[25Xgap>[125X [27XR4 := TransposeCat1Group( C4 );[127X[104X
     [4X[28X[a4a4=>a4d][128X[104X
     [4X[25Xgap>[125X [27XBoundary( R4 );[127X[104X
     [4X[28X[ (2,3,4), (1,2,3) ] -> [ (10,11,12), (9,10,11) ][128X[104X
@@ -652,6 +654,10 @@
     [4X[28Xfalse[128X[104X
     [4X[25Xgap>[125X [27XTailMap( R4 ) = HeadMap( C4 ); [127X[104X
     [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XMappingGeneratorsImages( TransposeIsomorphism(C4) );[127X[104X
+    [4X[28X[ [ [ (1,2,3), (2,3,4), (5,6,7), (6,7,8) ], [128X[104X
+    [4X[28X      [ (5,6,7), (6,7,8), (1,2,3), (2,3,4) ] ], [128X[104X
+    [4X[28X  [ [ (9,10,11), (10,11,12) ], [ (9,10,11), (10,11,12) ] ] ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
@@ -717,7 +723,7 @@
   and  range [22XR_1 × R_2[122X. The tail, head and embedding maps are [22Xt_1 × t_2[122X, [22Xh_1 ×
   h_2[122X   and  [22Xe_1  ×  e_2[122X.  The  embeddings  and  projections  are  constructed
   automatically,  and placed in the [10XDirectProductInfo[110X attribute, together with
-  the two [13Xobjects[113X [22XcalC_1[122X and [22XcalX_2[122X.[133X
+  the two [13Xobjects[113X [22XcalC_1[122X and [22XcalC_2[122X.[133X
   
   [33X[0;0YThe  example  constructs  the product of two of the cat[22X^1[122X-groups constructed
   above.[133X
@@ -931,20 +937,56 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [1X2.6-2 AllCat1GroupsIterator[101X
+  [1X2.6-2 AllCat1GroupsMatrix[101X
+  
+  [33X[1;0Y[29X[2XAllCat1GroupsMatrix[102X( [3XG[103X ) [32X attribute[133X
+  
+  [33X[0;0YThe  operation  [10XAllCat1GroupsMatrix(G)[110X  constructs a symmetric matrix [22XM[122X with
+  rows  and  columns  labelled by the idempotent endomorphisms [22Xe_i[122X on [22XG[122X, where
+  [22XM_ij[122X  is  [22X2[122X  if [22Xe_i,e_j[122X combine to form a cat[22X^1[122X-group; [22X1[122X if they only form a
+  pre-cat[22X^1[122X-group;  and  [22X0[122X  otherwise. The matrix is automatically printed out
+  with dots in place of zeroes.[133X
+  
+  [33X[0;0YIn  the  example we see that the group [22XQD_16[122X has [22X10[122X idempotent endomorphisms
+  and  [22X5[122X  cat[22X12[122X-groups,  all  of  which  are  symmetric([22Xt=h)[122X,  and a further [22X9[122X
+  pre-cat[22X^1[122X-groups.  (A  cat[22X^1[122X-group and its transpose are not counted twice.)
+  This  operation  is  intended  to be used to illustrate how cat[22X^2[122X-groups are
+  formed, and should only be used with groups of low order.[133X
+  
+  [33X[0;0YThe   attribute   [10XAllCat1GroupsNumber(G)[110X  returns  the  number  [22Xn[122X  of  these
+  cat[22X^1[122X-groups.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XAllCat1GroupsMatrix( G );;                 [127X[104X
+    [4X[28Xnumber of cat1-groups found = 5[128X[104X
+    [4X[28Xnumber of additional pre-cat1-groups found = 9[128X[104X
+    [4X[28X1.........[128X[104X
+    [4X[28X.21.......[128X[104X
+    [4X[28X.11.......[128X[104X
+    [4X[28X...21.....[128X[104X
+    [4X[28X...11.....[128X[104X
+    [4X[28X.....21...[128X[104X
+    [4X[28X.....11...[128X[104X
+    [4X[28X.......21.[128X[104X
+    [4X[28X.......11.[128X[104X
+    [4X[28X.........2[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.6-3 AllCat1GroupsIterator[101X
   
   [33X[1;0Y[29X[2XAllCat1GroupsIterator[102X( [3XG[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XAllCat1GroupsNumber[102X( [3XG[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XAllCat1GroupsUpToIsomorphism[102X( [3XG[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAllCat1GroupsMatrix[102X( [3XG[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XAllCat1Groups[102X( [3XG[103X ) [32X operation[133X
   
   [33X[0;0YThe  iterator [10XAllCat1GroupsIterator(G)[110X iterates through all the cat[22X^1[122X-groups
-  with  source  [10XG[110X.  The attribute [10XAllCat1GroupsNumber(G)[110X runs this iterator to
-  count  the  number  [22Xn[122X  of these cat[22X^1[122X-groups. The operation [10XAllCat1Groups(G)[110X
-  returns  a  list  containing these [22Xn[122X cat[22X^1[122X-groups. Since these lists can get
-  very  long,  this  operation  should  only  be  used  for  simple cases. The
-  operation  [10XAllCat1GroupsUpToIsomorphism(G)[110X  returns  representatives  of the
-  isomorphism classes of these subgroups.[133X
+  with  source  [10XG[110X.  The  operation  [10XAllCat1Groups(G)[110X returns a list containing
+  these  [22Xn[122X  cat[22X^1[122X-groups.  Since these lists can get very long, this operation
+  should     only    be    used    for    simple    cases.    The    operation
+  [10XAllCat1GroupsUpToIsomorphism(G)[110X  returns  representatives of the isomorphism
+  classes of these subgroups.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
@@ -959,7 +1001,7 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [1X2.6-3 CatnGroupNumbers[101X
+  [1X2.6-4 CatnGroupNumbers[101X
   
   [33X[1;0Y[29X[2XCatnGroupNumbers[102X( [3XG[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XCatnGroupLists[102X( [3XG[103X ) [32X attribute[133X
@@ -970,16 +1012,17 @@
   The field [10XCatnGroupNumbers(G).idem[110X is the number of idempotent endomorphisms
   of  [22XG[122X.  Similarly, [10XCatnGroupNumbers(G).cat1[110X is the number of cat[22X^1[122X-groups on
   [22XG[122X,  while  [10XCatnGroupNumbers(G).iso1[110X  is the number of isomorphism classes of
-  these   cat[22X^1[122X-groups.   Also  [10XCatnGroupNumbers(G).symm1[110X  is  the  number  of
+  these   cat[22X^1[122X-groups.   Also   [10XCatnGroupNumbers(G).symm[110X  is  the  number  of
   cat[22X^1[122X-groups   whose   [10XTailMap[110X   is   the   same   as   the  [10XHeadMap[110X,  while
-  [10XCatnGroupNumbers(G).siso1[110X  is  the  number  of  isomorphism classes of these
-  symmetric  cat[22X^1[122X-groups.  The  attribute  [10XCatnGroupLists[110X is used for storing
-  results of cat[22X^2[122X-group calculations.[133X
+  [10XCatnGroupNumbers(G).siso[110X  is  the  number  of  isomorphism  classes of these
+  symmetric cat[22X^1[122X-groups. Symmetric cat[22X^1[122X-groups are in one-one correspondence
+  with  symmetric  cat[22X^2[122X-groups.  The  attribute  [10XCatnGroupLists[110X  is  used for
+  storing results of cat[22X^2[122X-group calculations.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27XCatnGroupNumbers( d12 );[127X[104X
-    [4X[28Xrec( cat1 := 12, idem := 21, iso1 := 4, siso1 := 4, symm1 := 12 )[128X[104X
+    [4X[28Xrec( cat1 := 12, idem := 21, iso1 := 4, siso := 4, symm := 12 )[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   

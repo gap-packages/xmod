@@ -53,7 +53,7 @@
   
   [33X[0;0YThe  global  functions  [10XCat3Group[110X  and  [10XPreCat3Group[110X  are  normally  take as
   arguments  a  pair  of cat[22X^2[122X-groups or a trio of cat[22X^1[122X-groups. In subsection
-  [2XAllCat2GroupsIterator[102X  ([14X8.5-2[114X)  the  list of pairs [10XCatnGroupLists(d12).pairs[110X
+  [2XAllCat2GroupsIterator[102X  ([14X8.5-4[114X)  the  list of pairs [10XCatnGroupLists(d12).pairs[110X
   contains  the  three  entries  [10X[6,8],[8,11][110X  and [10X[6,11][110X. It follows that the
   sixth, eighth and eleventh cat[22X^1[122X-groups for [10Xd12[110X generate a cat[22X^3[122X-group.[133X
   

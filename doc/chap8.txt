@@ -741,7 +741,8 @@
         C_∅)[122X.[133X
   
   [33X[0;0YIt  follows from these identities that [22X(ddott_1,dott_1),(ddoth_1,doth_1)[122X and
-  [22X(ddote_1,dote_1)[122X are morphisms of cat[22X^1[122X-groups.[133X
+  [22X(ddote_1,dote_1)[122X  are  morphisms  of  cat[22X^1[122X-groups,  and  similarly  in  the
+  vertical direction.[133X
   
   [33X[0;0YSecondly,  we  give  the  simplest  of  the  three definitions, adapted from
   Ellis-Steiner  [ES87].  A cat[22X^2[122X-group [22XcalC[122X consists of groups [22XG, R_1,R_2[122X and
@@ -780,68 +781,104 @@
   [33X[1;0Y[29X[2XPreCat2GroupByPreCat1Groups[102X( [3XL[103X ) [32X operation[133X
   
   [33X[0;0YThe global functions [10XCat2Group[110X and [10XPreCat2Group[110X are normally called with two
-  arguments  -  the  generating  up  and left cat1[22X^1[122X-groups - or with a single
+  arguments  -  the  generating  up  and  left cat[22X^1[122X-groups - or with a single
   argument     which     is     a     crossed     square.     The    operation
-  [10XPreCat2GroupByPreCat1Groups[110X  has  five  arguments - the up, left, right,down
+  [10XPreCat2GroupByPreCat1Groups[110X  has  five arguments - the up, left, right, down
   and diagonal cat[22X^1[122X-groups.[133X
+  
+  [33X[0;0YThe  two  cat[22X^2[122X-groups  [10XC2a,  C2b[110X  constructed  in the following example are
+  isomorphic. They differ in the down-left group [10XP[110X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27Xa := (1,2,3,4,5,6);;[127X[104X
-    [4X[25Xgap>[125X [27Xb := (2,6)(3,5);; [127X[104X
-    [4X[25Xgap>[125X [27Xd12 := Group( a, b );; [127X[104X
-    [4X[25Xgap>[125X [27XSetName( d12, "d12" );[127X[104X
-    [4X[25Xgap>[125X [27Xt1 := GroupHomomorphismByImages( d12, d12, [a,b], [a^3,b] );; [127X[104X
+    [4X[25Xgap>[125X [27Xa := (1,2,3,4,5,6);;  b := (2,6)(3,5);; [127X[104X
+    [4X[25Xgap>[125X [27XG := Group( a, b );;  SetName( G, "d12" );[127X[104X
+    [4X[25Xgap>[125X [27Xt1 := GroupHomomorphismByImages( G, G, [a,b], [a^3,b] );; [127X[104X
     [4X[25Xgap>[125X [27Xup := PreCat1GroupByEndomorphisms( t1, t1 );;[127X[104X
-    [4X[25Xgap>[125X [27Xt2 := GroupHomomorphismByImages( d12, d12, [a,b], [a^4,b] );; [127X[104X
+    [4X[25Xgap>[125X [27Xt2 := GroupHomomorphismByImages( G, G, [a,b], [a^4,b] );; [127X[104X
     [4X[25Xgap>[125X [27Xleft := PreCat1GroupByEndomorphisms( t2, t2 );;[127X[104X
-    [4X[25Xgap>[125X [27XC2 := Cat2Group( up, left );[127X[104X
+    [4X[25Xgap>[125X [27XC2a := Cat2Group( up, left );[127X[104X
     [4X[28X(pre-)cat2-group with generating (pre-)cat1-groups:[128X[104X
     [4X[28X1 : [d12 => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )][128X[104X
     [4X[28X2 : [d12 => Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )][128X[104X
-    [4X[25Xgap>[125X [27XIsCat2Group( C2 );[127X[104X
+    [4X[25Xgap>[125X [27XIsCat2Group( C2a );[127X[104X
     [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27Xgenk4 := [ (1,4)(2,5)(3,6), (2,6)(3,5) ];;[127X[104X
-    [4X[25Xgap>[125X [27Xk4 := Subgroup( d12, genk4 );; [127X[104X
-    [4X[25Xgap>[125X [27Xgens3 := [ (1,3,5)(2,4,6), (2,6)(3,5) ];; [127X[104X
-    [4X[25Xgap>[125X [27Xs3 := Subgroup( d12, gens3 );; [127X[104X
-    [4X[25Xgap>[125X [27XP := Group( (7,8) );; [127X[104X
-    [4X[25Xgap>[125X [27Xt3 := GroupHomomorphismByImages( k4, P, genk4, [(),(7,8)] );; [127X[104X
-    [4X[25Xgap>[125X [27Xe3 := GroupHomomorphismByImages( P, k4, [(7,8)], [(2,6)(3,5)] );; [127X[104X
+    [4X[25Xgap>[125X [27XgenR := [ (1,4)(2,5)(3,6), (2,6)(3,5) ];;[127X[104X
+    [4X[25Xgap>[125X [27XR := Subgroup( G, genR );; [127X[104X
+    [4X[25Xgap>[125X [27XgenQ := [ (1,3,5)(2,4,6), (2,6)(3,5) ];; [127X[104X
+    [4X[25Xgap>[125X [27XQ := Subgroup( G, genQ );; [127X[104X
+    [4X[25Xgap>[125X [27XPa := Group( b );;  SetName( Pa, "c2a" ); [127X[104X
+    [4X[25Xgap>[125X [27XPb := Group( (7,8) );;  SetName( Pb, "c2b" ); [127X[104X
+    [4X[25Xgap>[125X [27Xt3 := GroupHomomorphismByImages( R, P, genR, [(),(7,8)] );; [127X[104X
+    [4X[25Xgap>[125X [27Xe3 := GroupHomomorphismByImages( P, R, [(7,8)], [(2,6)(3,5)] );; [127X[104X
     [4X[25Xgap>[125X [27Xright := PreCat1GroupByTailHeadEmbedding( t3, t3, e3 );;[127X[104X
-    [4X[25Xgap>[125X [27Xt4 := GroupHomomorphismByImages( s3, P, gens3, [(),(7,8)] );; [127X[104X
-    [4X[25Xgap>[125X [27Xe4 := GroupHomomorphismByImages( P, s3, [(7,8)], [(2,6)(3,5)] );; [127X[104X
+    [4X[25Xgap>[125X [27Xt4 := GroupHomomorphismByImages( Q, P, genQ, [(),(7,8)] );; [127X[104X
+    [4X[25Xgap>[125X [27Xe4 := GroupHomomorphismByImages( P, Q, [(7,8)], [(2,6)(3,5)] );; [127X[104X
     [4X[25Xgap>[125X [27Xdown := PreCat1GroupByTailHeadEmbedding( t4, t4, e4 );;[127X[104X
     [4X[25Xgap>[125X [27Xt0 := t1 * t3;; [127X[104X
-    [4X[25Xgap>[125X [27Xe0 := GroupHomomorphismByImages( P, d12, [(7,8)], [(2,6)(3,5)] );; [127X[104X
+    [4X[25Xgap>[125X [27Xe0 := GroupHomomorphismByImages( P, G, [(7,8)], [(2,6)(3,5)] );; [127X[104X
     [4X[25Xgap>[125X [27Xdiag := PreCat1GroupByTailHeadEmbedding( t0, t0, e0 );;[127X[104X
-    [4X[25Xgap>[125X [27XPC2 := PreCat2GroupByPreCat1Groups( up, left, right, down, diag ); [127X[104X
+    [4X[25Xgap>[125X [27XC2b := PreCat2GroupByPreCat1Groups( up, left, right, down, diag ); [127X[104X
     [4X[28X(pre-)cat2-group with generating (pre-)cat1-groups:[128X[104X
     [4X[28X1 : [d12 => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )][128X[104X
     [4X[28X2 : [d12 => Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )][128X[104X
-    [4X[25Xgap>[125X [27XIsPreCatnGroupByEndomorphisms(PC2);[127X[104X
+    [4X[25Xgap>[125X [27XIsPreCatnGroupWithIdentityEmbeddings( C2b );[127X[104X
     [4X[28Xfalse[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [1X8.4-2 DisplayLeadMaps[101X
+  [1X8.4-2 DirectProduct[101X
   
-  [33X[1;0Y[29X[2XDisplayLeadMaps[102X( [3XC0[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XDirectProduct[102X( [3XC2a[103X, [3XC2b[103X ) [32X operation[133X
   
-  [33X[0;0YThis  operation  provides  an  alternative  to [10XDisplay[110X which gives a shorter
-  output.  Generators  of  the  top-left group are output, together with their
-  images under the up and left tail and head maps.[133X
+  [33X[0;0YThe  direct product [22XcalC_1 × calC_2[122X has as its four up, left, right and down
+  cat[22X^1[122X-groups  the  direct  products  of  those  in  [22XcalC_1[122X  and  [22XcalC_2[122X. The
+  embeddings  and projections are constructed automatically, and placed in the
+  [10XDirectProductInfo[110X  attribute,  together  with  the  two  [13Xobjects[113X  [22XcalC_1[122X and
+  [22XcalC_2[122X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XDisplayLeadMaps( PC2 );[127X[104X
-    [4X[28X(pre-)cat2-group with top group: [ (1,2,3,4,5,6), (2,6)(3,5) ][128X[104X
+    [4X[25Xgap>[125X [27XC2ab := DirectProductOp( [ C2a, C2b ], C2a ); [127X[104X
+    [4X[28X(pre-)cat2-group with generating (pre-)cat1-groups:[128X[104X
+    [4X[28X1 : [Group( [ (1,2,3,4,5,6), (2,6)(3,5), ( 7, 8, 9,10,11,12), ( 8,12)( 9,11) [128X[104X
+    [4X[28X ] ) => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5), ( 7,10)( 8,11)( 9,12), [128X[104X
+    [4X[28X  ( 8,12)( 9,11) ] )][128X[104X
+    [4X[28X2 : [Group( [ (1,2,3,4,5,6), (2,6)(3,5), ( 7, 8, 9,10,11,12), ( 8,12)( 9,11) [128X[104X
+    [4X[28X ] ) => Group( [ (1,5,3)(2,6,4), (2,6)(3,5), ( 7, 9,11)( 8,10,12), [128X[104X
+    [4X[28X  ( 8,12)( 9,11) ] )][128X[104X
+    [4X[25Xgap>[125X [27XStructureDescription( C2ab );  [127X[104X
+    [4X[28X[ "C2 x C2 x S3 x S3", "C2 x C2 x C2 x C2", "S3 x S3", "C2 x C2" ][128X[104X
+    [4X[25Xgap>[125X [27XSetName( C2ab, "C2ab" );[127X[104X
+    [4X[25Xgap>[125X [27XEmbedding( C2ab, 1 );   [127X[104X
+    [4X[28X<mapping: (pre-)cat2-group with generating (pre-)cat1-groups:[128X[104X
+    [4X[28X1 : [d12 => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )][128X[104X
+    [4X[28X2 : [d12 => Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )] -> C2ab >[128X[104X
+    [4X[25Xgap>[125X [27XProjection( C2ab, 2 );[127X[104X
+    [4X[28X<mapping: C2ab -> (pre-)cat2-group with generating (pre-)cat1-groups:[128X[104X
+    [4X[28X1 : [d12 => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )][128X[104X
+    [4X[28X2 : [d12 => Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )] >[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X8.4-3 DisplayLeadMaps[101X
+  
+  [33X[1;0Y[29X[2XDisplayLeadMaps[102X( [3XC0[103X ) [32X operation[133X
+  
+  [33X[0;0YThis  operation  provides an alternative to [10XDisplay[110X giving a shorter output.
+  Generators of the up-left group are output, together with their images under
+  the up and left tail and head maps.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XDisplayLeadMaps( C2b );[127X[104X
+    [4X[28X(pre-)cat2-group with up-left group: [ (1,2,3,4,5,6), (2,6)(3,5) ][128X[104X
     [4X[28X   up tail=head images: [ (1,4)(2,5)(3,6), (2,6)(3,5) ][128X[104X
     [4X[28X left tail=head images: [ (1,5,3)(2,6,4), (2,6)(3,5) ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [1X8.4-3 Transpose3DimensionalGroup[101X
+  [1X8.4-4 Transpose3DimensionalGroup[101X
   
   [33X[1;0Y[29X[2XTranspose3DimensionalGroup[102X( [3XS0[103X ) [32X attribute[133X
   
@@ -850,40 +887,80 @@
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XTC2 := Transpose3DimensionalGroup( C2 );[127X[104X
+    [4X[25Xgap>[125X [27XTC2a := Transpose3DimensionalGroup( C2a );[127X[104X
     [4X[28X(pre-)cat2-group with generating (pre-)cat1-groups:[128X[104X
     [4X[28X1 : [d12 => Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )][128X[104X
     [4X[28X2 : [d12 => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [1X8.4-4 Cat2GroupMorphism[101X
+  [1X8.4-5 Cat2GroupMorphism[101X
   
   [33X[1;0Y[29X[2XCat2GroupMorphism[102X( [3Xargs[103X ) [32X function[133X
-  [33X[1;0Y[29X[2XCat2GroupMorphismByCat1GroupMorphisms[102X( [3Xsrc[103X, [3Xrng[103X, [3Xmors[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XCat2GroupMorphismByGroupHomomorphisms[102X( [3Xsrc[103X, [3Xrng[103X, [3Xmors[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XPreCat2GroupMorphismByPreCat1GroupMorphisms[102X( [3Xsrc[103X, [3Xrng[103X, [3Xmors[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XPreCat2GroupMorphismByGroupHomomorphisms[102X( [3Xsrc[103X, [3Xrng[103X, [3Xmors[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XCat2GroupMorphismByCat1GroupMorphisms[102X( [3Xsrc[103X, [3Xrng[103X, [3Xupmor[103X, [3Xltmor[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XCat2GroupMorphismByGroupHomomorphisms[102X( [3Xsrc[103X, [3Xrng[103X, [3Xhoms[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPreCat2GroupMorphism[102X( [3Xargs[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPreCat2GroupMorphismByPreCat1GroupMorphisms[102X( [3Xsrc[103X, [3Xrng[103X, [3Xupmor[103X, [3Xltmor[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPreCat2GroupMorphismByGroupHomomorphisms[102X( [3Xsrc[103X, [3Xrng[103X, [3Xhoms[103X ) [32X operation[133X
   
-  [1X8.4-5 Cat2GroupOfCrossedSquare[101X
+  [33X[0;0YA  (pre-)cat[22X^2[122X-group  morphism [22Xμ : calC = (G,R,Q,P) -> calC' = (G',R',Q',P')[122X
+  is  a  list of four group homomorphisms [22Xγ : G -> G',~ ρ : R -> R',~ ξ : Q ->
+  Q'[122X  and [22Xπ : P -> P'[122X which commute with all the tail, head and embedding maps
+  so that [22X(γ,ρ), (γ,ξ), (ρ,π)[122X and [22X(ξ,π)[122X are all (pre-)cat[22X^1[122X-group morphisms.[133X
+  
+  [33X[0;0YFor  the  operations [10X(Pre)Cat2GroupMorphismByPreCat1GroupMorphisms[110X the third
+  and fourth parameters [10Xupmor, ltmor[110X are two cat[22X^1[122X-group morphisms with source
+  the up and left cat[22X^1[122X-groups in [22XcalC[122X.[133X
+  
+  [33X[0;0YFor  the  operations  [10X(Pre)Cat2GroupMorphismByGroupHomomorphisms[110X  the  third
+  parameter [10Xmors[110X is the list [22X[γ,ρ,ξ,π][122X.[133X
+  
+  [33X[0;0YThe  example  constructs  an  automorphism of [10Xc2a[110X is two ways, using the two
+  methods  described  above, an d verifies that the result is the same in each
+  case.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xgamma := GroupHomomorphismByImages( G, G, [a,b], [a^-1,b] );;[127X[104X
+    [4X[25Xgap>[125X [27Xrho := IdentityMapping( R );;[127X[104X
+    [4X[25Xgap>[125X [27Xxi := GroupHomomorphismByImages( Q, Q, [a^2,b], [a^-2,b] );;[127X[104X
+    [4X[25Xgap>[125X [27Xpi := IdentityMapping( Pa );;[127X[104X
+    [4X[25Xgap>[125X [27Xhoms := [ gamma, rho, xi, pi ];;[127X[104X
+    [4X[25Xgap>[125X [27Xmor1 := Cat2GroupMorphismByGroupHomomorphisms( C2a, C2a, homs );   [127X[104X
+    [4X[28X<mapping: (pre-)cat2-group with generating (pre-)cat1-groups:[128X[104X
+    [4X[28X1 : [d12 => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )][128X[104X
+    [4X[28X2 : [d12 => Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )] -> (pre-)cat[128X[104X
+    [4X[28X2-group with generating (pre-)cat1-groups:[128X[104X
+    [4X[28X1 : [d12 => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )][128X[104X
+    [4X[28X2 : [d12 => Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )] >[128X[104X
+    [4X[25Xgap>[125X [27Xupmor := Cat1GroupMorphism( up, up, gamma, rho );; [127X[104X
+    [4X[25Xgap>[125X [27Xltmor := Cat1GroupMorphism( left, left, gamma, xi );; [127X[104X
+    [4X[25Xgap>[125X [27Xmor2 := Cat2GroupMorphismByCat1GroupMorphisms( C2a, C2a, upmor, ltmor );; [127X[104X
+    [4X[25Xgap>[125X [27Xmor1 = mor2; [127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X8.4-6 Cat2GroupOfCrossedSquare[101X
   
   [33X[1;0Y[29X[2XCat2GroupOfCrossedSquare[102X( [3Xxsq[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XCrossedSquareOfCat2Group[102X( [3XCC[103X ) [32X attribute[133X
   
   [33X[0;0YThese   functions   provide  for  conversion  between  crossed  squares  and
   cat[22X^2[122X-groups.  (They  are  the  3-dimensional equivalents of [2XCat1GroupOfXMod[102X
-  ([14X2.5-3[114X) and [2XXModOfCat1Group[102X ([14X2.5-3[114X).)[133X
+  ([14X2.5-3[114X)  and  [2XXModOfCat1Group[102X  ([14X2.5-3[114X).)  The actor crossed square [10XXSact[110X was
+  constructed in section [2XActorCrossedSquare[102X ([14X8.2-4[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XxsC2 := CrossedSquareOfCat2Group( C2 );[127X[104X
+    [4X[25Xgap>[125X [27XxsC2a := CrossedSquareOfCat2Group( C2a );[127X[104X
     [4X[28Xcrossed square with crossed modules:[128X[104X
     [4X[28X      up = [Group( () ) -> Group( [ (1,4)(2,5)(3,6) ] )][128X[104X
     [4X[28X    left = [Group( () ) -> Group( [ (1,3,5)(2,4,6) ] )][128X[104X
     [4X[28X   right = [Group( [ (1,4)(2,5)(3,6) ] ) -> Group( [ (2,6)(3,5) ] )][128X[104X
     [4X[28X    down = [Group( [ (1,3,5)(2,4,6) ] ) -> Group( [ (2,6)(3,5) ] )][128X[104X
     [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XIdGroup( xsC16 );[127X[104X
+    [4X[25Xgap>[125X [27XIdGroup( xsC2a );[127X[104X
     [4X[28X[ [ 1, 1 ], [ 2, 1 ], [ 3, 1 ], [ 2, 1 ] ][128X[104X
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27XSetName( Source( Right2DimensionalGroup( XSact ) ), "c5:c4" );[127X[104X
@@ -900,7 +977,7 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [1X8.4-6 Subdiagonal2DimensionalGroup[101X
+  [1X8.4-7 Subdiagonal2DimensionalGroup[101X
   
   [33X[1;0Y[29X[2XSubdiagonal2DimensionalGroup[102X( [3Xobj[103X ) [32X attribute[133X
   
@@ -912,24 +989,24 @@
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XG := SmallGroup( 24, 10 );; [127X[104X
-    [4X[25Xgap>[125X [27Xa := G.1;; b := G.2;; c := G.3;; d := G.4;; o := One(G);; [127X[104X
-    [4X[25Xgap>[125X [27XR := Subgroup( G, [b,c] );; [127X[104X
-    [4X[25Xgap>[125X [27Xt1 := GroupHomomorphismByImages( G, R, [a,b,c,d], [o,b,c,o] );; [127X[104X
-    [4X[25Xgap>[125X [27Xe1 := GroupHomomorphismByImages( R, G, [b,c], [b,c] );; [127X[104X
-    [4X[25Xgap>[125X [27XC1 := PreCat1GroupByTailHeadEmbedding( t1, t1, e1 );; [127X[104X
-    [4X[25Xgap>[125X [27XQ := Subgroup( G, [a,c] );; [127X[104X
-    [4X[25Xgap>[125X [27Xt2 := GroupHomomorphismByImages( G, Q, [a,b,c,d], [a,o,c,o] );; [127X[104X
-    [4X[25Xgap>[125X [27Xe2 := GroupHomomorphismByImages( Q, G, [a,c], [a,c] );; [127X[104X
-    [4X[25Xgap>[125X [27XC2 := PreCat1GroupByTailHeadEmbedding( t2, t2, e2 );; [127X[104X
-    [4X[25Xgap>[125X [27Xcat2 := PreCat2Group( C1, C2 );; [127X[104X
-    [4X[25Xgap>[125X [27Xdg := Diagonal2DimensionalGroup( cat2 );;[127X[104X
+    [4X[25Xgap>[125X [27XG24 := SmallGroup( 24, 10 );; [127X[104X
+    [4X[25Xgap>[125X [27Xw := G24.1;; x := G24.2;; y := G24.3;; z := G24.4;; o := One(G24);; [127X[104X
+    [4X[25Xgap>[125X [27XR := Subgroup( G24, [x,y] );; [127X[104X
+    [4X[25Xgap>[125X [27Xtxy := GroupHomomorphismByImages( G24, R, [w,x,y,z], [o,x,y,o] );; [127X[104X
+    [4X[25Xgap>[125X [27Xexy := GroupHomomorphismByImages( R, G24, [x,y], [x,y] );; [127X[104X
+    [4X[25Xgap>[125X [27XC1xy := PreCat1GroupByTailHeadEmbedding( txy, txy, exy );; [127X[104X
+    [4X[25Xgap>[125X [27XQ := Subgroup( G24, [w,y] );; [127X[104X
+    [4X[25Xgap>[125X [27Xtwy := GroupHomomorphismByImages( G24, Q, [w,x,y,z], [w,o,y,o] );; [127X[104X
+    [4X[25Xgap>[125X [27Xewy := GroupHomomorphismByImages( Q, G24, [w,y], [w,y] );; [127X[104X
+    [4X[25Xgap>[125X [27XC1wy := PreCat1GroupByTailHeadEmbedding( twy, twy, ewy );; [127X[104X
+    [4X[25Xgap>[125X [27XC2wxy := PreCat2Group( C1xy, C1xy );; [127X[104X
+    [4X[25Xgap>[125X [27Xdg := Diagonal2DimensionalGroup( C2wxy );;[127X[104X
     [4X[25Xgap>[125X [27XIsCat1Group( dg ); [127X[104X
     [4X[28Xfalse[128X[104X
-    [4X[25Xgap>[125X [27Xsub := Subdiagonal2DimensionalGroup( cat2 );; [127X[104X
-    [4X[25Xgap>[125X [27XIsCat1Group( sub );[127X[104X
+    [4X[25Xgap>[125X [27XC1sub := Subdiagonal2DimensionalGroup( C2wxy );; [127X[104X
+    [4X[25Xgap>[125X [27XIsCat1Group( C1sub );[127X[104X
     [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XIsSub2DimensionalGroup( dg, sub );[127X[104X
+    [4X[25Xgap>[125X [27XIsSub2DimensionalGroup( dg, C1sub );[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
@@ -961,7 +1038,7 @@
   determine    the   number   [22Xn[122X   of   these   cat[22X^2[122X-groups.   The   operation
   [10XAllCat2GroupsWithImages(G)[110X  returns  a list containing these [22Xn[122X cat[22X^2[122X-groups.
   Since  these lists can get very long, this operation should only be used for
-  simple   cases.   The  operation  [10XAllCat2GroupsWith~ImagesUpToIsomorphism(G)[110X
+  simple   cases.   The   operation  [10XAllCat2GroupsWithImagesUpToIsomorphism(G)[110X
   returns representatives of the isomorphism classes of these cat[22X^2[122X-groups.[133X
   
   [4X[32X  Example  [32X[104X
@@ -972,39 +1049,110 @@
     [4X[25Xgap>[125X [27XAllCat2GroupsWithImagesNumber( G8, A, A );[127X[104X
     [4X[28X4[128X[104X
     [4X[25Xgap>[125X [27Xall := AllCat2GroupsWithImages( G8, A, A );;     [127X[104X
-    [4X[25Xgap>[125X [27Xfor C in all do DisplayLeadMaps( C ); od;[127X[104X
-    [4X[28X(pre-)cat2-group with top group: [ (1,2), (3,4), (5,6) ][128X[104X
+    [4X[25Xgap>[125X [27Xfor C2 in all do DisplayLeadMaps( C2 ); od;[127X[104X
+    [4X[28X(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ][128X[104X
     [4X[28X   up tail=head images: [ (1,2), (1,2), () ][128X[104X
     [4X[28X left tail=head images: [ (1,2), (1,2), () ][128X[104X
-    [4X[28X(pre-)cat2-group with top group: [ (1,2), (3,4), (5,6) ][128X[104X
+    [4X[28X(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ][128X[104X
     [4X[28X   up tail=head images: [ (1,2), (), () ][128X[104X
     [4X[28X left tail=head images: [ (1,2), (), () ][128X[104X
-    [4X[28X(pre-)cat2-group with top group: [ (1,2), (3,4), (5,6) ][128X[104X
+    [4X[28X(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ][128X[104X
     [4X[28X   up tail=head images: [ (1,2), (), (1,2) ][128X[104X
     [4X[28X left tail=head images: [ (1,2), (), (1,2) ][128X[104X
-    [4X[28X(pre-)cat2-group with top group: [ (1,2), (3,4), (5,6) ][128X[104X
+    [4X[28X(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ][128X[104X
     [4X[28X   up tail=head images: [ (1,2), (1,2), (1,2) ][128X[104X
     [4X[28X left tail=head images: [ (1,2), (1,2), (1,2) ][128X[104X
     [4X[25Xgap>[125X [27XAllCat2GroupsWithImagesNumber( G8, A, B );[127X[104X
     [4X[28X16[128X[104X
     [4X[25Xgap>[125X [27Xiso := AllCat2GroupsWithImagesUpToIsomorphism( G8, A, B );;[127X[104X
-    [4X[25Xgap>[125X [27Xfor C in iso do DisplayLeadMaps( C ); od;[127X[104X
-    [4X[28X(pre-)cat2-group with top group: [ (1,2), (3,4), (5,6) ][128X[104X
+    [4X[25Xgap>[125X [27Xfor C2 in iso do DisplayLeadMaps( C2 ); od;[127X[104X
+    [4X[28X(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ][128X[104X
     [4X[28X   up tail=head images: [ (1,2), (), () ][128X[104X
     [4X[28X left tail=head images: [ (), (3,4), () ][128X[104X
-    [4X[28X(pre-)cat2-group with top group: [ (1,2), (3,4), (5,6) ][128X[104X
+    [4X[28X(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ][128X[104X
     [4X[28X   up tail=head images: [ (1,2), (), () ][128X[104X
     [4X[28X left tail/head images: [ (), (3,4), () ], [ (), (3,4), (3,4) ][128X[104X
-    [4X[28X(pre-)cat2-group with top group: [ (1,2), (3,4), (5,6) ][128X[104X
+    [4X[28X(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ][128X[104X
     [4X[28X   up tail/head images: [ (1,2), (), () ], [ (1,2), (), (1,2) ][128X[104X
     [4X[28X left tail/head images: [ (), (3,4), () ], [ (), (3,4), (3,4) ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [1X8.5-2 AllCat2GroupsIterator[101X
+  [1X8.5-2 AllCat2GroupsWithFixedUp[101X
+  
+  [33X[1;0Y[29X[2XAllCat2GroupsWithFixedUp[102X( [3XC[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAllCat2GroupsWithFixedUpAndLeftRange[102X( [3XC[103X, [3XR[103X ) [32X operation[133X
+  
+  [33X[0;0YThe  operation  [10XAllCat2GroupsWithFixedUp(C)[110X  constructs all the cat[22X^2[122X-groups
+  with  a  fixed  [10XUp2DimensionalGroup[110X  [22XC[122X. In the second operation the user may
+  also specify the range of the [10XLeft2DimensionalGroup[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xup := Up2DimensionalGroup( iso[1] );                [127X[104X
+    [4X[28X[Group( [ (1,2), (3,4), (5,6) ] )=>Group( [ (1,2), (), () ] )][128X[104X
+    [4X[25Xgap>[125X [27XAllCat2GroupsWithFixedUp( up );;                    [127X[104X
+    [4X[25Xgap>[125X [27XLength(last);                                       [127X[104X
+    [4X[28X28[128X[104X
+    [4X[25Xgap>[125X [27XL := AllCat2GroupsWithFixedUpAndLeftRange( up, B );;[127X[104X
+    [4X[25Xgap>[125X [27Xfor C in L do DisplayLeadMaps( C ); od;             [127X[104X
+    [4X[28X(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ][128X[104X
+    [4X[28X   up tail=head images: [ (1,2), (), () ][128X[104X
+    [4X[28X left tail=head images: [ (), (3,4), () ][128X[104X
+    [4X[28X(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ][128X[104X
+    [4X[28X   up tail=head images: [ (1,2), (), () ][128X[104X
+    [4X[28X left tail/head images: [ (), (3,4), () ], [ (), (3,4), (3,4) ][128X[104X
+    [4X[28X(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ][128X[104X
+    [4X[28X   up tail=head images: [ (1,2), (), () ][128X[104X
+    [4X[28X left tail/head images: [ (), (3,4), (3,4) ], [ (), (3,4), () ][128X[104X
+    [4X[28X(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ][128X[104X
+    [4X[28X   up tail=head images: [ (1,2), (), () ][128X[104X
+    [4X[28X left tail=head images: [ (), (3,4), (3,4) ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X8.5-3 AllCat2GroupsMatrix[101X
+  
+  [33X[1;0Y[29X[2XAllCat2GroupsMatrix[102X( [3XG[103X ) [32X attribute[133X
+  
+  [33X[0;0YThe  operation  [10XAllCat2GroupsMatrix(G)[110X  constructs a symmetric matrix [22XM[122X with
+  rows  and  columns labelled by the cat[22X^1[122X-groups [22XC_i[122X on [22XG[122X, where [22XM_ij[122X is [22X1[122X if
+  [22XC_i,C_j[122X  combine  to  form  a  cat[22X^2[122X-group,  and  [22X0[122X otherwise. The matrix is
+  automatically printed out with dots in place of zeroes.[133X
+  
+  [33X[0;0YIn  the example we see that the dihedral group [22XD_12[122X has [22X12[122X cat[22X^12[122X-groups and
+  [22X41[122X cat[22X^2[122X-groups, [22X12[122X of which are symmetric. This operation is intended to be
+  used to illustrate how cat[22X^2[122X-groups are formed, and should only be used with
+  groups of low order.[133X
+  
+  [33X[0;0YThe   attribute   [10XAllCat2GroupsNumber(G)[110X  returns  the  number  [22Xn[122X  of  these
+  cat[22X^2[122X-groups.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XAllCat2GroupsMatrix(d12);;                [127X[104X
+    [4X[28Xnumber of cat2-groups found = 41[128X[104X
+    [4X[28X1.....1..1.1[128X[104X
+    [4X[28X.1.....1.1.1[128X[104X
+    [4X[28X..1.....11.1[128X[104X
+    [4X[28X...1....1.11[128X[104X
+    [4X[28X....1.1...11[128X[104X
+    [4X[28X.....1.1..11[128X[104X
+    [4X[28X1...1.1..111[128X[104X
+    [4X[28X.1...1.1.111[128X[104X
+    [4X[28X..11....1111[128X[104X
+    [4X[28X111...1111.1[128X[104X
+    [4X[28X...111111.11[128X[104X
+    [4X[28X111111111111[128X[104X
+    [4X[25Xgap>[125X [27XAllCat2GroupsNumber(d12); [127X[104X
+    [4X[28X41[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X8.5-4 AllCat2GroupsIterator[101X
   
   [33X[1;0Y[29X[2XAllCat2GroupsIterator[102X( [3XG[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XAllCat2GroupsNumber[102X( [3XG[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XAllCat2GroupsMatrix[102X( [3XG[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XAllCat2Groups[102X( [3XG[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XAllCat2GroupsUpToIsomorphism[102X( [3XG[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XAllCat2GroupFamilies[102X( [3XG[103X ) [32X operation[133X
@@ -1012,23 +1160,21 @@
   [33X[1;0Y[29X[2XCatnGroupLists[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0YThe  iterator [10XAllCat2GroupsIterator(G)[110X iterates through all the cat[22X^2[122X-groups
-  with  source  [10XG[110X.  The attribute [10XAllCat2GroupsNumber(G)[110X runs this iterator to
-  count  the  number  [22Xn[122X  of these cat[22X^2[122X-groups. The operation [10XAllCat2Groups(G)[110X
-  returns  a  list  containing these [22Xn[122X cat[22X^2[122X-groups. Since these lists can get
-  very  long,  this  operation  should  only  be  used  for  simple cases. The
-  operation  [10XAllCat2GroupsUpToIsomorphism(G)[110X  returns  representatives  of the
-  isomorphism     classes     of     these     subgroups.     The    operation
-  [10XAllCat2GroupFamilies(G)[110X  returns a list of lists. The [22Xk[122X-th list contains the
-  positions  of  the  cat[22X^2[122X-groups in [10XAllCat2Groups(G)[110X which are isomorphic to
-  the  [22Xk[122X-th  representative. So, for [10Xd12[110X, the [22X41[122X cat[22X^2[122X-groups form [22X10[122X classes,
-  and  the  sizes  of  these  classes are [10X[6,6,3,6,6,2,6,3,2,1][110X. Four of these
-  classes contain symmetric cat[22X^2[122X-groups.[133X
+  with  source  [10XG[110X.  The  operation  [10XAllCat2Groups(G)[110X returns a list containing
+  these  [22Xn[122X  cat[22X^2[122X-groups.  Since these lists can get very long, this operation
+  should     only    be    used    for    simple    cases.    The    operation
+  [10XAllCat2GroupsUpToIsomorphism(G)[110X  returns  representatives of the isomorphism
+  classes  of these subgroups. The operation [10XAllCat2GroupFamilies(G)[110X returns a
+  list  of  lists. The [22Xk[122X-th list contains the positions of the cat[22X^2[122X-groups in
+  [10XAllCat2Groups(G)[110X  which  are  isomorphic to the [22Xk[122X-th representative. So, for
+  [10Xd12[110X, the [22X41[122X cat[22X^2[122X-groups form [22X10[122X classes, and the sizes of these classes are
+  [10X[6,6,6,6,3,6,3,2,2,1][110X. Four of these classes contain symmetric cat[22X^2[122X-groups.[133X
   
   [33X[0;0YThe field [10XCatnGroupNumbers(G).cat2[110X is the number of cat[22X^2[122X-groups on [22XG[122X, while
   [10XCatnGroupNumbers(G).iso2[110X  is  the  number  of  isomorphism  classes of these
-  cat[22X^2[122X-groups.  Also  [10XCatnGroupNumbers(G).symm2[110X is the number of cat[22X^2[122X-groups
+  cat[22X^2[122X-groups.  Also  [10XCatnGroupNumbers(G).symm[110X  is the number of cat[22X^2[122X-groups
   whose  [10XUp2DimensionalGroup[110X  is  the same as the [10XLeft2DimensionalGroup[110X, while
-  [10XCatnGroupNumbers(G).siso2[110X  is  the  number  of  isomorphism classes of these
+  [10XCatnGroupNumbers(G).siso[110X  is  the  number  of  isomorphism  classes of these
   symmetric cat[22X^2[122X-groups.[133X
   
   [33X[0;0YProvided  that  [10XCatnGroupLists(G).omit[110X  is  not set to [10Xtrue[110X, [13Xsorted[113X lists of
@@ -1057,8 +1203,7 @@
     [4X[28X  [ 36, 37, 38 ], [ 22, 29 ], [ 39, 40 ], [ 41 ] ][128X[104X
     [4X[25Xgap>[125X [27XCatnGroupNumbers( d12 );[127X[104X
     [4X[28Xrec( cat1 := 12, cat2 := 41, idem := 21, iso1 := 4, iso2 := 10, [128X[104X
-    [4X[28X  isopredg := 0, predg := 0, siso1 := 4, siso2 := 4, symm1 := 12, symm2 := 12 [128X[104X
-    [4X[28X )[128X[104X
+    [4X[28X  isopredg := 0, predg := 0, siso := 4, symm := 12 )[128X[104X
     [4X[25Xgap>[125X [27XCatnGroupLists( d12 );[127X[104X
     [4X[28Xrec( allcat2pos := [ 1, 7, 9, 16, 19, 22, 30, 36, 39, 41 ],[128X[104X
     [4X[28X  cat2classes := [128X[104X

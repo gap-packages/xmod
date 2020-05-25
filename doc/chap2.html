@@ -56,7 +56,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7CF4C37F87D27EBA">2.4-1 Cat1Group</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7C4FFC4086531157">2.4-2 Source</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X79944C7B87F767FD">2.4-3 DiagonalCat1Group</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7D30A5207FEB4D42">2.4-4 ReverseCat1Group</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X79385660821E54A3">2.4-4 TransposeCat1Group</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X87544FAD873672E1">2.4-5 Cat1GroupByPeifferQuotient</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X85D9C5F881DBA9FC">2.4-6 SubCat1Group</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7CE4F14585F6D473">2.4-7 DirectProduct</a></span>
@@ -74,8 +74,9 @@ Properties of cat<span class="SimpleMath">^1</span>-groups and pre-cat<span clas
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7A1B967D7B6273F4">2.6-1 AllCat1GroupsWithImageIterator</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7FEB2FCE7D9ADA85">2.6-2 AllCat1GroupsIterator</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7C6346A17FEEDFA1">2.6-3 CatnGroupNumbers</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7FBFC8C87FC1AC5A">2.6-2 AllCat1GroupsMatrix</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7FEB2FCE7D9ADA85">2.6-3 AllCat1GroupsIterator</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7C6346A17FEEDFA1">2.6-4 CatnGroupNumbers</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X7A6A70BD86DE458D">2.7 <span class="Heading">Selection of a small cat<span class="SimpleMath">^1</span>-group</span></a>
 </span>
@@ -402,7 +403,7 @@ rec(
 [ "IsComponentObjectRep", "IsAttributeStoringRep", "IsPreXModObj" ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">KnownAttributesOfObject( X5);</span>
 [ "Name", "Size", "Range", "Source", "IdGroup", "Boundary", "XModAction", 
-  "ExternalSetXMod" ]
+  "ExternalSetXMod", "HigherDimension" ]
 
 </pre></div>
 
@@ -712,17 +713,18 @@ Cat1-group [a4a4=&gt;a4d] :-
 
 </pre></div>
 
-<p><a id="X7D30A5207FEB4D42" name="X7D30A5207FEB4D42"></a></p>
+<p><a id="X79385660821E54A3" name="X79385660821E54A3"></a></p>
 
-<h5>2.4-4 ReverseCat1Group</h5>
+<h5>2.4-4 TransposeCat1Group</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReverseCat1Group</code>( <var class="Arg">C0</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>The <em>reverse</em> of a cat<span class="SimpleMath">^1</span>-group <span class="SimpleMath">C</span> has the same source, range and embedding, but has the tail and head maps interchanged.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TransposeCat1Group</code>( <var class="Arg">C0</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TransposeIsomorphism</code>( <var class="Arg">C0</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>The <em>transpose</em> of a cat<span class="SimpleMath">^1</span>-group <span class="SimpleMath">C</span> has the same source, range and embedding, but has the tail and head maps interchanged. The <code class="code">TransposeIsomorphism</code> gives the isomorphism between the two.</p>
 
 
 <div class="example"><pre>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R4 := ReverseCat1Group( C4 );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R4 := TransposeCat1Group( C4 );</span>
 [a4a4=&gt;a4d]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Boundary( R4 );</span>
 [ (2,3,4), (1,2,3) ] -&gt; [ (10,11,12), (9,10,11) ]
@@ -730,6 +732,10 @@ Cat1-group [a4a4=&gt;a4d] :-
 false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TailMap( R4 ) = HeadMap( C4 ); </span>
 true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MappingGeneratorsImages( TransposeIsomorphism(C4) );</span>
+[ [ [ (1,2,3), (2,3,4), (5,6,7), (6,7,8) ], 
+      [ (5,6,7), (6,7,8), (1,2,3), (2,3,4) ] ], 
+  [ [ (9,10,11), (10,11,12) ], [ (9,10,11), (10,11,12) ] ] ]
 
 </pre></div>
 
@@ -791,7 +797,7 @@ Group([ (1,3)(2,4), (1,2)(3,4) ])
 <h5>2.4-7 DirectProduct</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DirectProduct</code>( <var class="Arg">C1</var>, <var class="Arg">C2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>The direct product <span class="SimpleMath">calC_1 × calC_2</span> of two cat<span class="SimpleMath">^1</span>-groups has source <span class="SimpleMath">G_1 × G_2</span> and range <span class="SimpleMath">R_1 × R_2</span>. The tail, head and embedding maps are <span class="SimpleMath">t_1 × t_2</span>, <span class="SimpleMath">h_1 × h_2</span> and <span class="SimpleMath">e_1 × e_2</span>. The embeddings and projections are constructed automatically, and placed in the <code class="code">DirectProductInfo</code> attribute, together with the two <em>objects</em> <span class="SimpleMath">calC_1</span> and <span class="SimpleMath">calX_2</span>.</p>
+<p>The direct product <span class="SimpleMath">calC_1 × calC_2</span> of two cat<span class="SimpleMath">^1</span>-groups has source <span class="SimpleMath">G_1 × G_2</span> and range <span class="SimpleMath">R_1 × R_2</span>. The tail, head and embedding maps are <span class="SimpleMath">t_1 × t_2</span>, <span class="SimpleMath">h_1 × h_2</span> and <span class="SimpleMath">e_1 × e_2</span>. The embeddings and projections are constructed automatically, and placed in the <code class="code">DirectProductInfo</code> attribute, together with the two <em>objects</em> <span class="SimpleMath">calC_1</span> and <span class="SimpleMath">calC_2</span>.</p>
 
 <p>The example constructs the product of two of the cat<span class="SimpleMath">^1</span>-groups constructed above.</p>
 
@@ -990,15 +996,45 @@ Group([ (1,2,3,4,5,6), (2,6)(3,5) ])
 
 </pre></div>
 
+<p><a id="X7FBFC8C87FC1AC5A" name="X7FBFC8C87FC1AC5A"></a></p>
+
+<h5>2.6-2 AllCat1GroupsMatrix</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllCat1GroupsMatrix</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>The operation <code class="code">AllCat1GroupsMatrix(G)</code> constructs a symmetric matrix <span class="SimpleMath">M</span> with rows and columns labelled by the idempotent endomorphisms <span class="SimpleMath">e_i</span> on <span class="SimpleMath">G</span>, where <span class="SimpleMath">M_ij</span> is <span class="SimpleMath">2</span> if <span class="SimpleMath">e_i,e_j</span> combine to form a cat<span class="SimpleMath">^1</span>-group; <span class="SimpleMath">1</span> if they only form a pre-cat<span class="SimpleMath">^1</span>-group; and <span class="SimpleMath">0</span> otherwise. The matrix is automatically printed out with dots in place of zeroes.</p>
+
+<p>In the example we see that the group <span class="SimpleMath">QD_16</span> has <span class="SimpleMath">10</span> idempotent endomorphisms and <span class="SimpleMath">5</span> cat<span class="SimpleMath">12</span>-groups, all of which are symmetric(<span class="SimpleMath">t=h)</span>, and a further <span class="SimpleMath">9</span> pre-cat<span class="SimpleMath">^1</span>-groups. (A cat<span class="SimpleMath">^1</span>-group and its transpose are not counted twice.) This operation is intended to be used to illustrate how cat<span class="SimpleMath">^2</span>-groups are formed, and should only be used with groups of low order.</p>
+
+<p>The attribute <code class="code">AllCat1GroupsNumber(G)</code> returns the number <span class="SimpleMath">n</span> of these cat<span class="SimpleMath">^1</span>-groups.</p>
+
+
+<div class="example"><pre>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AllCat1GroupsMatrix( G );;                 </span>
+number of cat1-groups found = 5
+number of additional pre-cat1-groups found = 9
+1.........
+.21.......
+.11.......
+...21.....
+...11.....
+.....21...
+.....11...
+.......21.
+.......11.
+.........2
+
+</pre></div>
+
 <p><a id="X7FEB2FCE7D9ADA85" name="X7FEB2FCE7D9ADA85"></a></p>
 
-<h5>2.6-2 AllCat1GroupsIterator</h5>
+<h5>2.6-3 AllCat1GroupsIterator</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllCat1GroupsIterator</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllCat1GroupsNumber</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllCat1GroupsUpToIsomorphism</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllCat1GroupsMatrix</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllCat1Groups</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>The iterator <code class="code">AllCat1GroupsIterator(G)</code> iterates through all the cat<span class="SimpleMath">^1</span>-groups with source <code class="code">G</code>. The attribute <code class="code">AllCat1GroupsNumber(G)</code> runs this iterator to count the number <span class="SimpleMath">n</span> of these cat<span class="SimpleMath">^1</span>-groups. The operation <code class="code">AllCat1Groups(G)</code> returns a list containing these <span class="SimpleMath">n</span> cat<span class="SimpleMath">^1</span>-groups. Since these lists can get very long, this operation should only be used for simple cases. The operation <code class="code">AllCat1GroupsUpToIsomorphism(G)</code> returns representatives of the isomorphism classes of these subgroups.</p>
+<p>The iterator <code class="code">AllCat1GroupsIterator(G)</code> iterates through all the cat<span class="SimpleMath">^1</span>-groups with source <code class="code">G</code>. The operation <code class="code">AllCat1Groups(G)</code> returns a list containing these <span class="SimpleMath">n</span> cat<span class="SimpleMath">^1</span>-groups. Since these lists can get very long, this operation should only be used for simple cases. The operation <code class="code">AllCat1GroupsUpToIsomorphism(G)</code> returns representatives of the isomorphism classes of these subgroups.</p>
 
 
 <div class="example"><pre>
@@ -1016,18 +1052,18 @@ Group([ (1,2,3,4,5,6), (2,6)(3,5) ])
 
 <p><a id="X7C6346A17FEEDFA1" name="X7C6346A17FEEDFA1"></a></p>
 
-<h5>2.6-3 CatnGroupNumbers</h5>
+<h5>2.6-4 CatnGroupNumbers</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CatnGroupNumbers</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CatnGroupLists</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InitCatnGroupRecords</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>The attribute <code class="code">CatnGroupNumbers</code> for a group <span class="SimpleMath">G</span> is a mutable record which stores numbers of cat<span class="SimpleMath">^1</span>-groups, cat<span class="SimpleMath">^2</span>-groups, etc. as they are calculated. The field <code class="code">CatnGroupNumbers(G).idem</code> is the number of idempotent endomorphisms of <span class="SimpleMath">G</span>. Similarly, <code class="code">CatnGroupNumbers(G).cat1</code> is the number of cat<span class="SimpleMath">^1</span>-groups on <span class="SimpleMath">G</span>, while <code class="code">CatnGroupNumbers(G).iso1</code> is the number of isomorphism classes of these cat<span class="SimpleMath">^1</span>-groups. Also <code class="code">CatnGroupNumbers(G).symm1</code> is the number of cat<span class="SimpleMath">^1</span>-groups whose <code class="code">TailMap</code> is the same as the <code class="code">HeadMap</code>, while <code class="code">CatnGroupNumbers(G).siso1</code> is the number of isomorphism classes of these symmetric cat<span class="SimpleMath">^1</span>-groups. The attribute <code class="code">CatnGroupLists</code> is used for storing results of cat<span class="SimpleMath">^2</span>-group calculations.</p>
+<p>The attribute <code class="code">CatnGroupNumbers</code> for a group <span class="SimpleMath">G</span> is a mutable record which stores numbers of cat<span class="SimpleMath">^1</span>-groups, cat<span class="SimpleMath">^2</span>-groups, etc. as they are calculated. The field <code class="code">CatnGroupNumbers(G).idem</code> is the number of idempotent endomorphisms of <span class="SimpleMath">G</span>. Similarly, <code class="code">CatnGroupNumbers(G).cat1</code> is the number of cat<span class="SimpleMath">^1</span>-groups on <span class="SimpleMath">G</span>, while <code class="code">CatnGroupNumbers(G).iso1</code> is the number of isomorphism classes of these cat<span class="SimpleMath">^1</span>-groups. Also <code class="code">CatnGroupNumbers(G).symm</code> is the number of cat<span class="SimpleMath">^1</span>-groups whose <code class="code">TailMap</code> is the same as the <code class="code">HeadMap</code>, while <code class="code">CatnGroupNumbers(G).siso</code> is the number of isomorphism classes of these symmetric cat<span class="SimpleMath">^1</span>-groups. Symmetric cat<span class="SimpleMath">^1</span>-groups are in one-one correspondence with symmetric cat<span class="SimpleMath">^2</span>-groups. The attribute <code class="code">CatnGroupLists</code> is used for storing results of cat<span class="SimpleMath">^2</span>-group calculations.</p>
 
 
 <div class="example"><pre>
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CatnGroupNumbers( d12 );</span>
-rec( cat1 := 12, idem := 21, iso1 := 4, siso1 := 4, symm1 := 12 )
+rec( cat1 := 12, idem := 21, iso1 := 4, siso := 4, symm := 12 )
 
 </pre></div>
 

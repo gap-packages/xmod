@@ -60,17 +60,20 @@ and a crossed <span class="SimpleMath">\(n\)</span>-cube of groups</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8_mj.html#X849D845586F92444">8.4-1 Cat2Group</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8_mj.html#X85713B1C7C34324E">8.4-2 DisplayLeadMaps</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8_mj.html#X864B346686AAA522">8.4-3 Transpose3DimensionalGroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8_mj.html#X83616C237F4745FB">8.4-4 Cat2GroupMorphism</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8_mj.html#X7D46CB517FCAA83B">8.4-5 Cat2GroupOfCrossedSquare</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8_mj.html#X82F896C7851294B7">8.4-6 Subdiagonal2DimensionalGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8_mj.html#X861BA02C7902A4F4">8.4-2 DirectProduct</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8_mj.html#X85713B1C7C34324E">8.4-3 DisplayLeadMaps</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8_mj.html#X864B346686AAA522">8.4-4 Transpose3DimensionalGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8_mj.html#X83616C237F4745FB">8.4-5 Cat2GroupMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8_mj.html#X7D46CB517FCAA83B">8.4-6 Cat2GroupOfCrossedSquare</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8_mj.html#X82F896C7851294B7">8.4-7 Subdiagonal2DimensionalGroup</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8_mj.html#X80FB2B328578DE42">8.5 <span class="Heading">Enumerating cat<span class="SimpleMath">\(^2\)</span>-groups with a given source</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8_mj.html#X7D421DE57B44F37A">8.5-1 AllCat2GroupsWithImagesIterator</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8_mj.html#X7EFCF9697E845B2C">8.5-2 AllCat2GroupsIterator</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8_mj.html#X783F7FEB7B79B062">8.5-2 AllCat2GroupsWithFixedUp</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8_mj.html#X84636E047CDF2DF3">8.5-3 AllCat2GroupsMatrix</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8_mj.html#X7EFCF9697E845B2C">8.5-4 AllCat2GroupsIterator</a></span>
 </div></div>
 </div>
 
@@ -819,7 +822,7 @@ true
 
 </li>
 </ul>
-<p>It follows from these identities that <span class="SimpleMath">\((\ddot{t}_1,\dot{t}_1),\,(\ddot{h}_1,\dot{h}_1)\)</span> and <span class="SimpleMath">\((\ddot{e}_1,\dot{e}_1)\)</span> are morphisms of cat<span class="SimpleMath">\(^1\)</span>-groups.</p>
+<p>It follows from these identities that <span class="SimpleMath">\((\ddot{t}_1,\dot{t}_1),\,(\ddot{h}_1,\dot{h}_1)\)</span> and <span class="SimpleMath">\((\ddot{e}_1,\dot{e}_1)\)</span> are morphisms of cat<span class="SimpleMath">\(^1\)</span>-groups, and similarly in the vertical direction.</p>
 
 <p>Secondly, we give the simplest of the three definitions, adapted from Ellis-Steiner <a href="chapBib_mj.html#biBell:st">[ES87]</a>. A cat<span class="SimpleMath">\(^2\)</span>-group <span class="SimpleMath">\(\calC\)</span> consists of groups <span class="SimpleMath">\(G, R_1,R_2\)</span> and six homomorphisms <span class="SimpleMath">\(t_1,h_1 : G \to R_2,~ e_1 : R_2 \to G,~ t_2,h_2 : G \to R_1,~ e_2 : R_1 \to G\)</span>, satisfying the following axioms for all <span class="SimpleMath">\(1 \leqslant i \leqslant 2\)</span>,</p>
 
@@ -854,60 +857,93 @@ true
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PreCat2Group</code>( <var class="Arg">args</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCat2Group</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PreCat2GroupByPreCat1Groups</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>The global functions <code class="code">Cat2Group</code> and <code class="code">PreCat2Group</code> are normally called with two arguments - the generating up and left cat1<span class="SimpleMath">\(^1\)</span>-groups - or with a single argument which is a crossed square. The operation <code class="code">PreCat2GroupByPreCat1Groups</code> has five arguments - the up, left, right,down and diagonal cat<span class="SimpleMath">\(^1\)</span>-groups.</p>
+<p>The global functions <code class="code">Cat2Group</code> and <code class="code">PreCat2Group</code> are normally called with two arguments - the generating up and left cat<span class="SimpleMath">\(^1\)</span>-groups - or with a single argument which is a crossed square. The operation <code class="code">PreCat2GroupByPreCat1Groups</code> has five arguments - the up, left, right, down and diagonal cat<span class="SimpleMath">\(^1\)</span>-groups.</p>
+
+<p>The two cat<span class="SimpleMath">\(^2\)</span>-groups <code class="code">C2a, C2b</code> constructed in the following example are isomorphic. They differ in the down-left group <code class="code">P</code>.</p>
 
 
 <div class="example"><pre>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := (1,2,3,4,5,6);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">b := (2,6)(3,5);; </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">d12 := Group( a, b );; </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( d12, "d12" );</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t1 := GroupHomomorphismByImages( d12, d12, [a,b], [a^3,b] );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := (1,2,3,4,5,6);;  b := (2,6)(3,5);; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := Group( a, b );;  SetName( G, "d12" );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t1 := GroupHomomorphismByImages( G, G, [a,b], [a^3,b] );; </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">up := PreCat1GroupByEndomorphisms( t1, t1 );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t2 := GroupHomomorphismByImages( d12, d12, [a,b], [a^4,b] );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t2 := GroupHomomorphismByImages( G, G, [a,b], [a^4,b] );; </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">left := PreCat1GroupByEndomorphisms( t2, t2 );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C2 := Cat2Group( up, left );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C2a := Cat2Group( up, left );</span>
 (pre-)cat2-group with generating (pre-)cat1-groups:
 1 : [d12 =&gt; Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )]
 2 : [d12 =&gt; Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCat2Group( C2 );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCat2Group( C2a );</span>
 true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">genk4 := [ (1,4)(2,5)(3,6), (2,6)(3,5) ];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">k4 := Subgroup( d12, genk4 );; </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gens3 := [ (1,3,5)(2,4,6), (2,6)(3,5) ];; </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s3 := Subgroup( d12, gens3 );; </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P := Group( (7,8) );; </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t3 := GroupHomomorphismByImages( k4, P, genk4, [(),(7,8)] );; </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e3 := GroupHomomorphismByImages( P, k4, [(7,8)], [(2,6)(3,5)] );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">genR := [ (1,4)(2,5)(3,6), (2,6)(3,5) ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := Subgroup( G, genR );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">genQ := [ (1,3,5)(2,4,6), (2,6)(3,5) ];; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := Subgroup( G, genQ );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Pa := Group( b );;  SetName( Pa, "c2a" ); </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Pb := Group( (7,8) );;  SetName( Pb, "c2b" ); </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t3 := GroupHomomorphismByImages( R, P, genR, [(),(7,8)] );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e3 := GroupHomomorphismByImages( P, R, [(7,8)], [(2,6)(3,5)] );; </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">right := PreCat1GroupByTailHeadEmbedding( t3, t3, e3 );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t4 := GroupHomomorphismByImages( s3, P, gens3, [(),(7,8)] );; </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e4 := GroupHomomorphismByImages( P, s3, [(7,8)], [(2,6)(3,5)] );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t4 := GroupHomomorphismByImages( Q, P, genQ, [(),(7,8)] );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e4 := GroupHomomorphismByImages( P, Q, [(7,8)], [(2,6)(3,5)] );; </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">down := PreCat1GroupByTailHeadEmbedding( t4, t4, e4 );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t0 := t1 * t3;; </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e0 := GroupHomomorphismByImages( P, d12, [(7,8)], [(2,6)(3,5)] );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e0 := GroupHomomorphismByImages( P, G, [(7,8)], [(2,6)(3,5)] );; </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">diag := PreCat1GroupByTailHeadEmbedding( t0, t0, e0 );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PC2 := PreCat2GroupByPreCat1Groups( up, left, right, down, diag ); </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C2b := PreCat2GroupByPreCat1Groups( up, left, right, down, diag ); </span>
 (pre-)cat2-group with generating (pre-)cat1-groups:
 1 : [d12 =&gt; Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )]
 2 : [d12 =&gt; Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsPreCatnGroupByEndomorphisms(PC2);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsPreCatnGroupWithIdentityEmbeddings( C2b );</span>
 false
+
+</pre></div>
+
+<p><a id="X861BA02C7902A4F4" name="X861BA02C7902A4F4"></a></p>
+
+<h5>8.4-2 DirectProduct</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DirectProduct</code>( <var class="Arg">C2a</var>, <var class="Arg">C2b</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>The direct product <span class="SimpleMath">\(\calC_{1} \times \calC_{2}\)</span> has as its four up, left, right and down cat<span class="SimpleMath">\(^1\)</span>-groups the direct products of those in <span class="SimpleMath">\(\calC_{1}\)</span> and <span class="SimpleMath">\(\calC_{2}\)</span>. The embeddings and projections are constructed automatically, and placed in the <code class="code">DirectProductInfo</code> attribute, together with the two <em>objects</em> <span class="SimpleMath">\(\calC_{1}\)</span> and <span class="SimpleMath">\(\calC_{2}\)</span>.</p>
+
+
+<div class="example"><pre>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C2ab := DirectProductOp( [ C2a, C2b ], C2a ); </span>
+(pre-)cat2-group with generating (pre-)cat1-groups:
+1 : [Group( [ (1,2,3,4,5,6), (2,6)(3,5), ( 7, 8, 9,10,11,12), ( 8,12)( 9,11) 
+ ] ) =&gt; Group( [ (1,4)(2,5)(3,6), (2,6)(3,5), ( 7,10)( 8,11)( 9,12), 
+  ( 8,12)( 9,11) ] )]
+2 : [Group( [ (1,2,3,4,5,6), (2,6)(3,5), ( 7, 8, 9,10,11,12), ( 8,12)( 9,11) 
+ ] ) =&gt; Group( [ (1,5,3)(2,6,4), (2,6)(3,5), ( 7, 9,11)( 8,10,12), 
+  ( 8,12)( 9,11) ] )]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription( C2ab );  </span>
+[ "C2 x C2 x S3 x S3", "C2 x C2 x C2 x C2", "S3 x S3", "C2 x C2" ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( C2ab, "C2ab" );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Embedding( C2ab, 1 );   </span>
+&lt;mapping: (pre-)cat2-group with generating (pre-)cat1-groups:
+1 : [d12 =&gt; Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )]
+2 : [d12 =&gt; Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )] -&gt; C2ab &gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Projection( C2ab, 2 );</span>
+&lt;mapping: C2ab -&gt; (pre-)cat2-group with generating (pre-)cat1-groups:
+1 : [d12 =&gt; Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )]
+2 : [d12 =&gt; Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )] &gt;
 
 </pre></div>
 
 <p><a id="X85713B1C7C34324E" name="X85713B1C7C34324E"></a></p>
 
-<h5>8.4-2 DisplayLeadMaps</h5>
+<h5>8.4-3 DisplayLeadMaps</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DisplayLeadMaps</code>( <var class="Arg">C0</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>This operation provides an alternative to <code class="code">Display</code> which gives a shorter output. Generators of the top-left group are output, together with their images under the up and left tail and head maps.</p>
+<p>This operation provides an alternative to <code class="code">Display</code> giving a shorter output. Generators of the up-left group are output, together with their images under the up and left tail and head maps.</p>
 
 
 <div class="example"><pre>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DisplayLeadMaps( PC2 );</span>
-(pre-)cat2-group with top group: [ (1,2,3,4,5,6), (2,6)(3,5) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DisplayLeadMaps( C2b );</span>
+(pre-)cat2-group with up-left group: [ (1,2,3,4,5,6), (2,6)(3,5) ]
    up tail=head images: [ (1,4)(2,5)(3,6), (2,6)(3,5) ]
  left tail=head images: [ (1,5,3)(2,6,4), (2,6)(3,5) ]
 
@@ -915,7 +951,7 @@ false
 
 <p><a id="X864B346686AAA522" name="X864B346686AAA522"></a></p>
 
-<h5>8.4-3 Transpose3DimensionalGroup</h5>
+<h5>8.4-4 Transpose3DimensionalGroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Transpose3DimensionalGroup</code>( <var class="Arg">S0</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>The <em>transpose</em> of a cat<span class="SimpleMath">\(^2\)</span>-group <span class="SimpleMath">\(\calC\)</span> with groups <span class="SimpleMath">\([G,R,Q,P]\)</span> is the cat<span class="SimpleMath">\(^2\)</span>-group <span class="SimpleMath">\(\tilde{\calC}\)</span> with groups <span class="SimpleMath">\([G,Q,R,P]\)</span>.</p>
@@ -923,7 +959,7 @@ false
 
 <div class="example"><pre>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TC2 := Transpose3DimensionalGroup( C2 );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TC2a := Transpose3DimensionalGroup( C2a );</span>
 (pre-)cat2-group with generating (pre-)cat1-groups:
 1 : [d12 =&gt; Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )]
 2 : [d12 =&gt; Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )]
@@ -932,32 +968,64 @@ false
 
 <p><a id="X83616C237F4745FB" name="X83616C237F4745FB"></a></p>
 
-<h5>8.4-4 Cat2GroupMorphism</h5>
+<h5>8.4-5 Cat2GroupMorphism</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Cat2GroupMorphism</code>( <var class="Arg">args</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Cat2GroupMorphismByCat1GroupMorphisms</code>( <var class="Arg">src</var>, <var class="Arg">rng</var>, <var class="Arg">mors</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Cat2GroupMorphismByGroupHomomorphisms</code>( <var class="Arg">src</var>, <var class="Arg">rng</var>, <var class="Arg">mors</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PreCat2GroupMorphismByPreCat1GroupMorphisms</code>( <var class="Arg">src</var>, <var class="Arg">rng</var>, <var class="Arg">mors</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PreCat2GroupMorphismByGroupHomomorphisms</code>( <var class="Arg">src</var>, <var class="Arg">rng</var>, <var class="Arg">mors</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p><a id="X7D46CB517FCAA83B" name="X7D46CB517FCAA83B"></a></p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Cat2GroupMorphismByCat1GroupMorphisms</code>( <var class="Arg">src</var>, <var class="Arg">rng</var>, <var class="Arg">upmor</var>, <var class="Arg">ltmor</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Cat2GroupMorphismByGroupHomomorphisms</code>( <var class="Arg">src</var>, <var class="Arg">rng</var>, <var class="Arg">homs</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PreCat2GroupMorphism</code>( <var class="Arg">args</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PreCat2GroupMorphismByPreCat1GroupMorphisms</code>( <var class="Arg">src</var>, <var class="Arg">rng</var>, <var class="Arg">upmor</var>, <var class="Arg">ltmor</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PreCat2GroupMorphismByGroupHomomorphisms</code>( <var class="Arg">src</var>, <var class="Arg">rng</var>, <var class="Arg">homs</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>A (pre-)cat<span class="SimpleMath">\(^2\)</span>-group morphism <span class="SimpleMath">\(\mu : \calC = (G,R,Q,P) \to \calC' = (G',R',Q',P')\)</span> is a list of four group homomorphisms <span class="SimpleMath">\(\gamma : G \to G',~ \rho : R \to R',~ \xi : Q \to Q'\)</span> and <span class="SimpleMath">\(\pi : P \to P'\)</span> which commute with all the tail, head and embedding maps so that <span class="SimpleMath">\((\gamma,\rho), (\gamma,\xi), (\rho,\pi)\)</span> and <span class="SimpleMath">\((\xi,\pi)\)</span> are all (pre-)cat<span class="SimpleMath">\(^1\)</span>-group morphisms.</p>
 
-<h5>8.4-5 Cat2GroupOfCrossedSquare</h5>
+<p>For the operations <code class="code">(Pre)Cat2GroupMorphismByPreCat1GroupMorphisms</code> the third and fourth parameters <code class="code">upmor, ltmor</code> are two cat<span class="SimpleMath">\(^1\)</span>-group morphisms with source the up and left cat<span class="SimpleMath">\(^1\)</span>-groups in <span class="SimpleMath">\(\calC\)</span>.</p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Cat2GroupOfCrossedSquare</code>( <var class="Arg">xsq</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CrossedSquareOfCat2Group</code>( <var class="Arg">CC</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>These functions provide for conversion between crossed squares and cat<span class="SimpleMath">\(^2\)</span>-groups. (They are the 3-dimensional equivalents of <code class="func">Cat1GroupOfXMod</code> (<a href="chap2_mj.html#X82F10A59867C765D"><span class="RefLink">2.5-3</span></a>) and <code class="func">XModOfCat1Group</code> (<a href="chap2_mj.html#X82F10A59867C765D"><span class="RefLink">2.5-3</span></a>).)</p>
+<p>For the operations <code class="code">(Pre)Cat2GroupMorphismByGroupHomomorphisms</code> the third parameter <code class="code">mors</code> is the list <span class="SimpleMath">\([\gamma,\rho,\xi,\pi]\)</span>.</p>
+
+<p>The example constructs an automorphism of <code class="code">c2a</code> is two ways, using the two methods described above, an d verifies that the result is the same in each case.</p>
 
 
 <div class="example"><pre>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">xsC2 := CrossedSquareOfCat2Group( C2 );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gamma := GroupHomomorphismByImages( G, G, [a,b], [a^-1,b] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rho := IdentityMapping( R );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">xi := GroupHomomorphismByImages( Q, Q, [a^2,b], [a^-2,b] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi := IdentityMapping( Pa );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">homs := [ gamma, rho, xi, pi ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mor1 := Cat2GroupMorphismByGroupHomomorphisms( C2a, C2a, homs );   </span>
+&lt;mapping: (pre-)cat2-group with generating (pre-)cat1-groups:
+1 : [d12 =&gt; Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )]
+2 : [d12 =&gt; Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )] -&gt; (pre-)cat
+2-group with generating (pre-)cat1-groups:
+1 : [d12 =&gt; Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )]
+2 : [d12 =&gt; Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )] &gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">upmor := Cat1GroupMorphism( up, up, gamma, rho );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ltmor := Cat1GroupMorphism( left, left, gamma, xi );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mor2 := Cat2GroupMorphismByCat1GroupMorphisms( C2a, C2a, upmor, ltmor );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mor1 = mor2; </span>
+true
+
+</pre></div>
+
+<p><a id="X7D46CB517FCAA83B" name="X7D46CB517FCAA83B"></a></p>
+
+<h5>8.4-6 Cat2GroupOfCrossedSquare</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Cat2GroupOfCrossedSquare</code>( <var class="Arg">xsq</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CrossedSquareOfCat2Group</code>( <var class="Arg">CC</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>These functions provide for conversion between crossed squares and cat<span class="SimpleMath">\(^2\)</span>-groups. (They are the 3-dimensional equivalents of <code class="func">Cat1GroupOfXMod</code> (<a href="chap2_mj.html#X82F10A59867C765D"><span class="RefLink">2.5-3</span></a>) and <code class="func">XModOfCat1Group</code> (<a href="chap2_mj.html#X82F10A59867C765D"><span class="RefLink">2.5-3</span></a>).) The actor crossed square <code class="code">XSact</code> was constructed in section <code class="func">ActorCrossedSquare</code> (<a href="chap8_mj.html#X833362FE87ED3C48"><span class="RefLink">8.2-4</span></a>).</p>
+
+
+<div class="example"><pre>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">xsC2a := CrossedSquareOfCat2Group( C2a );</span>
 crossed square with crossed modules:
       up = [Group( () ) -&gt; Group( [ (1,4)(2,5)(3,6) ] )]
     left = [Group( () ) -&gt; Group( [ (1,3,5)(2,4,6) ] )]
    right = [Group( [ (1,4)(2,5)(3,6) ] ) -&gt; Group( [ (2,6)(3,5) ] )]
     down = [Group( [ (1,3,5)(2,4,6) ] ) -&gt; Group( [ (2,6)(3,5) ] )]
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IdGroup( xsC16 );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IdGroup( xsC2a );</span>
 [ [ 1, 1 ], [ 2, 1 ], [ 3, 1 ], [ 2, 1 ] ]
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( Source( Right2DimensionalGroup( XSact ) ), "c5:c4" );</span>
@@ -976,7 +1044,7 @@ crossed square with crossed modules:
 
 <p><a id="X82F896C7851294B7" name="X82F896C7851294B7"></a></p>
 
-<h5>8.4-6 Subdiagonal2DimensionalGroup</h5>
+<h5>8.4-7 Subdiagonal2DimensionalGroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Subdiagonal2DimensionalGroup</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>The diagonal of a crossed square is always a crossed module, but the diagonal of a cat<span class="SimpleMath">\(^2\)</span>-group need only be a pre-cat<span class="SimpleMath">\(^1\)</span>-group. There is, however, a sub-cat<span class="SimpleMath">\(^1\)</span>-group of this diagonal which, in the case of a cat<span class="SimpleMath">\(^2\)</span>-group constructed from a crossed square, is <span class="SimpleMath">\((P \ltimes L =&gt; P)\)</span>. (The name of this operation is very provisional.)</p>
@@ -984,24 +1052,24 @@ crossed square with crossed modules:
 
 <div class="example"><pre>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := SmallGroup( 24, 10 );; </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := G.1;; b := G.2;; c := G.3;; d := G.4;; o := One(G);; </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := Subgroup( G, [b,c] );; </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t1 := GroupHomomorphismByImages( G, R, [a,b,c,d], [o,b,c,o] );; </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e1 := GroupHomomorphismByImages( R, G, [b,c], [b,c] );; </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C1 := PreCat1GroupByTailHeadEmbedding( t1, t1, e1 );; </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := Subgroup( G, [a,c] );; </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t2 := GroupHomomorphismByImages( G, Q, [a,b,c,d], [a,o,c,o] );; </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e2 := GroupHomomorphismByImages( Q, G, [a,c], [a,c] );; </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C2 := PreCat1GroupByTailHeadEmbedding( t2, t2, e2 );; </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cat2 := PreCat2Group( C1, C2 );; </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">dg := Diagonal2DimensionalGroup( cat2 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G24 := SmallGroup( 24, 10 );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">w := G24.1;; x := G24.2;; y := G24.3;; z := G24.4;; o := One(G24);; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := Subgroup( G24, [x,y] );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">txy := GroupHomomorphismByImages( G24, R, [w,x,y,z], [o,x,y,o] );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">exy := GroupHomomorphismByImages( R, G24, [x,y], [x,y] );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C1xy := PreCat1GroupByTailHeadEmbedding( txy, txy, exy );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q := Subgroup( G24, [w,y] );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">twy := GroupHomomorphismByImages( G24, Q, [w,x,y,z], [w,o,y,o] );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ewy := GroupHomomorphismByImages( Q, G24, [w,y], [w,y] );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C1wy := PreCat1GroupByTailHeadEmbedding( twy, twy, ewy );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C2wxy := PreCat2Group( C1xy, C1xy );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">dg := Diagonal2DimensionalGroup( C2wxy );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCat1Group( dg ); </span>
 false
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sub := Subdiagonal2DimensionalGroup( cat2 );; </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCat1Group( sub );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C1sub := Subdiagonal2DimensionalGroup( C2wxy );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCat1Group( C1sub );</span>
 true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSub2DimensionalGroup( dg, sub );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSub2DimensionalGroup( dg, C1sub );</span>
 true
 
 </pre></div>
@@ -1020,7 +1088,7 @@ true
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllCat2GroupsWithImagesNumber</code>( <var class="Arg">G</var>, <var class="Arg">R</var>, <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllCat2GroupsWithImages</code>( <var class="Arg">G</var>, <var class="Arg">R</var>, <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllCat2GroupsWithImagesUpToIsomorphism</code>( <var class="Arg">G</var>, <var class="Arg">R</var>, <var class="Arg">Q</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>The iterator <code class="code">AllCat2GroupsWithImagesIterator(G)</code> iterates through all the cat<span class="SimpleMath">\(^2\)</span>-groups with source <code class="code">G</code> and generating cat<span class="SimpleMath">\(^1\)</span>-groups <code class="code">(G=&gt;R)</code> and <code class="code">(G=&gt;Q)</code>. The attribute <code class="code">AllCat2GroupsWithImagesNumber(G)</code> runs through this iterator to determine the number <span class="SimpleMath">\(n\)</span> of these cat<span class="SimpleMath">\(^2\)</span>-groups. The operation <code class="code">AllCat2GroupsWithImages(G)</code> returns a list containing these <span class="SimpleMath">\(n\)</span> cat<span class="SimpleMath">\(^2\)</span>-groups. Since these lists can get very long, this operation should only be used for simple cases. The operation <code class="code">AllCat2GroupsWith~ImagesUpToIsomorphism(G)</code> returns representatives of the isomorphism classes of these cat<span class="SimpleMath">\(^2\)</span>-groups.</p>
+<p>The iterator <code class="code">AllCat2GroupsWithImagesIterator(G)</code> iterates through all the cat<span class="SimpleMath">\(^2\)</span>-groups with source <code class="code">G</code> and generating cat<span class="SimpleMath">\(^1\)</span>-groups <code class="code">(G=&gt;R)</code> and <code class="code">(G=&gt;Q)</code>. The attribute <code class="code">AllCat2GroupsWithImagesNumber(G)</code> runs through this iterator to determine the number <span class="SimpleMath">\(n\)</span> of these cat<span class="SimpleMath">\(^2\)</span>-groups. The operation <code class="code">AllCat2GroupsWithImages(G)</code> returns a list containing these <span class="SimpleMath">\(n\)</span> cat<span class="SimpleMath">\(^2\)</span>-groups. Since these lists can get very long, this operation should only be used for simple cases. The operation <code class="code">AllCat2GroupsWithImagesUpToIsomorphism(G)</code> returns representatives of the isomorphism classes of these cat<span class="SimpleMath">\(^2\)</span>-groups.</p>
 
 
 <div class="example"><pre>
@@ -1031,49 +1099,115 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AllCat2GroupsWithImagesNumber( G8, A, A );</span>
 4
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">all := AllCat2GroupsWithImages( G8, A, A );;     </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for C in all do DisplayLeadMaps( C ); od;</span>
-(pre-)cat2-group with top group: [ (1,2), (3,4), (5,6) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for C2 in all do DisplayLeadMaps( C2 ); od;</span>
+(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ]
    up tail=head images: [ (1,2), (1,2), () ]
  left tail=head images: [ (1,2), (1,2), () ]
-(pre-)cat2-group with top group: [ (1,2), (3,4), (5,6) ]
+(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ]
    up tail=head images: [ (1,2), (), () ]
  left tail=head images: [ (1,2), (), () ]
-(pre-)cat2-group with top group: [ (1,2), (3,4), (5,6) ]
+(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ]
    up tail=head images: [ (1,2), (), (1,2) ]
  left tail=head images: [ (1,2), (), (1,2) ]
-(pre-)cat2-group with top group: [ (1,2), (3,4), (5,6) ]
+(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ]
    up tail=head images: [ (1,2), (1,2), (1,2) ]
  left tail=head images: [ (1,2), (1,2), (1,2) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AllCat2GroupsWithImagesNumber( G8, A, B );</span>
 16
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := AllCat2GroupsWithImagesUpToIsomorphism( G8, A, B );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for C in iso do DisplayLeadMaps( C ); od;</span>
-(pre-)cat2-group with top group: [ (1,2), (3,4), (5,6) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for C2 in iso do DisplayLeadMaps( C2 ); od;</span>
+(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ]
    up tail=head images: [ (1,2), (), () ]
  left tail=head images: [ (), (3,4), () ]
-(pre-)cat2-group with top group: [ (1,2), (3,4), (5,6) ]
+(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ]
    up tail=head images: [ (1,2), (), () ]
  left tail/head images: [ (), (3,4), () ], [ (), (3,4), (3,4) ]
-(pre-)cat2-group with top group: [ (1,2), (3,4), (5,6) ]
+(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ]
    up tail/head images: [ (1,2), (), () ], [ (1,2), (), (1,2) ]
  left tail/head images: [ (), (3,4), () ], [ (), (3,4), (3,4) ]
 
 </pre></div>
 
+<p><a id="X783F7FEB7B79B062" name="X783F7FEB7B79B062"></a></p>
+
+<h5>8.5-2 AllCat2GroupsWithFixedUp</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllCat2GroupsWithFixedUp</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllCat2GroupsWithFixedUpAndLeftRange</code>( <var class="Arg">C</var>, <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>The operation <code class="code">AllCat2GroupsWithFixedUp(C)</code> constructs all the cat<span class="SimpleMath">\(^2\)</span>-groups with a fixed <code class="code">Up2DimensionalGroup</code> <span class="SimpleMath">\(C\)</span>. In the second operation the user may also specify the range of the <code class="code">Left2DimensionalGroup</code>.</p>
+
+
+<div class="example"><pre>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">up := Up2DimensionalGroup( iso[1] );                </span>
+[Group( [ (1,2), (3,4), (5,6) ] )=&gt;Group( [ (1,2), (), () ] )]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AllCat2GroupsWithFixedUp( up );;                    </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length(last);                                       </span>
+28
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L := AllCat2GroupsWithFixedUpAndLeftRange( up, B );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for C in L do DisplayLeadMaps( C ); od;             </span>
+(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ]
+   up tail=head images: [ (1,2), (), () ]
+ left tail=head images: [ (), (3,4), () ]
+(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ]
+   up tail=head images: [ (1,2), (), () ]
+ left tail/head images: [ (), (3,4), () ], [ (), (3,4), (3,4) ]
+(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ]
+   up tail=head images: [ (1,2), (), () ]
+ left tail/head images: [ (), (3,4), (3,4) ], [ (), (3,4), () ]
+(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ]
+   up tail=head images: [ (1,2), (), () ]
+ left tail=head images: [ (), (3,4), (3,4) ]
+
+</pre></div>
+
+<p><a id="X84636E047CDF2DF3" name="X84636E047CDF2DF3"></a></p>
+
+<h5>8.5-3 AllCat2GroupsMatrix</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllCat2GroupsMatrix</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>The operation <code class="code">AllCat2GroupsMatrix(G)</code> constructs a symmetric matrix <span class="SimpleMath">\(M\)</span> with rows and columns labelled by the cat<span class="SimpleMath">\(^1\)</span>-groups <span class="SimpleMath">\(C_i\)</span> on <span class="SimpleMath">\(G\)</span>, where <span class="SimpleMath">\(M_{ij}\)</span> is <span class="SimpleMath">\(1\)</span> if <span class="SimpleMath">\(C_i,C_j\)</span> combine to form a cat<span class="SimpleMath">\(^2\)</span>-group, and <span class="SimpleMath">\(0\)</span> otherwise. The matrix is automatically printed out with dots in place of zeroes.</p>
+
+<p>In the example we see that the dihedral group <span class="SimpleMath">\(D_{12}\)</span> has <span class="SimpleMath">\(12\)</span> cat<span class="SimpleMath">\(^12\)</span>-groups and <span class="SimpleMath">\(41\)</span> cat<span class="SimpleMath">\(^2\)</span>-groups, <span class="SimpleMath">\(12\)</span> of which are symmetric. This operation is intended to be used to illustrate how cat<span class="SimpleMath">\(^2\)</span>-groups are formed, and should only be used with groups of low order.</p>
+
+<p>The attribute <code class="code">AllCat2GroupsNumber(G)</code> returns the number <span class="SimpleMath">\(n\)</span> of these cat<span class="SimpleMath">\(^2\)</span>-groups.</p>
+
+
+<div class="example"><pre>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AllCat2GroupsMatrix(d12);;                </span>
+number of cat2-groups found = 41
+1.....1..1.1
+.1.....1.1.1
+..1.....11.1
+...1....1.11
+....1.1...11
+.....1.1..11
+1...1.1..111
+.1...1.1.111
+..11....1111
+111...1111.1
+...111111.11
+111111111111
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AllCat2GroupsNumber(d12); </span>
+41
+
+</pre></div>
+
 <p><a id="X7EFCF9697E845B2C" name="X7EFCF9697E845B2C"></a></p>
 
-<h5>8.5-2 AllCat2GroupsIterator</h5>
+<h5>8.5-4 AllCat2GroupsIterator</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllCat2GroupsIterator</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllCat2GroupsNumber</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllCat2GroupsMatrix</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllCat2Groups</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllCat2GroupsUpToIsomorphism</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllCat2GroupFamilies</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CatnGroupNumbers</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CatnGroupLists</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>The iterator <code class="code">AllCat2GroupsIterator(G)</code> iterates through all the cat<span class="SimpleMath">\(^2\)</span>-groups with source <code class="code">G</code>. The attribute <code class="code">AllCat2GroupsNumber(G)</code> runs this iterator to count the number <span class="SimpleMath">\(n\)</span> of these cat<span class="SimpleMath">\(^2\)</span>-groups. The operation <code class="code">AllCat2Groups(G)</code> returns a list containing these <span class="SimpleMath">\(n\)</span> cat<span class="SimpleMath">\(^2\)</span>-groups. Since these lists can get very long, this operation should only be used for simple cases. The operation <code class="code">AllCat2GroupsUpToIsomorphism(G)</code> returns representatives of the isomorphism classes of these subgroups. The operation <code class="code">AllCat2GroupFamilies(G)</code> returns a list of lists. The <span class="SimpleMath">\(k\)</span>-th list contains the positions of the cat<span class="SimpleMath">\(^2\)</span>-groups in <code class="code">AllCat2Groups(G)</code> which are isomorphic to the <span class="SimpleMath">\(k\)</span>-th representative. So, for <code class="code">d12</code>, the <span class="SimpleMath">\(41\)</span> cat<span class="SimpleMath">\(^2\)</span>-groups form <span class="SimpleMath">\(10\)</span> classes, and the sizes of these classes are <code class="code">[6,6,3,6,6,2,6,3,2,1]</code>. Four of these classes contain symmetric cat<span class="SimpleMath">\(^2\)</span>-groups.</p>
+<p>The iterator <code class="code">AllCat2GroupsIterator(G)</code> iterates through all the cat<span class="SimpleMath">\(^2\)</span>-groups with source <code class="code">G</code>. The operation <code class="code">AllCat2Groups(G)</code> returns a list containing these <span class="SimpleMath">\(n\)</span> cat<span class="SimpleMath">\(^2\)</span>-groups. Since these lists can get very long, this operation should only be used for simple cases. The operation <code class="code">AllCat2GroupsUpToIsomorphism(G)</code> returns representatives of the isomorphism classes of these subgroups. The operation <code class="code">AllCat2GroupFamilies(G)</code> returns a list of lists. The <span class="SimpleMath">\(k\)</span>-th list contains the positions of the cat<span class="SimpleMath">\(^2\)</span>-groups in <code class="code">AllCat2Groups(G)</code> which are isomorphic to the <span class="SimpleMath">\(k\)</span>-th representative. So, for <code class="code">d12</code>, the <span class="SimpleMath">\(41\)</span> cat<span class="SimpleMath">\(^2\)</span>-groups form <span class="SimpleMath">\(10\)</span> classes, and the sizes of these classes are <code class="code">[6,6,6,6,3,6,3,2,2,1]</code>. Four of these classes contain symmetric cat<span class="SimpleMath">\(^2\)</span>-groups.</p>
 
-<p>The field <code class="code">CatnGroupNumbers(G).cat2</code> is the number of cat<span class="SimpleMath">\(^2\)</span>-groups on <span class="SimpleMath">\(G\)</span>, while <code class="code">CatnGroupNumbers(G).iso2</code> is the number of isomorphism classes of these cat<span class="SimpleMath">\(^2\)</span>-groups. Also <code class="code">CatnGroupNumbers(G).symm2</code> is the number of cat<span class="SimpleMath">\(^2\)</span>-groups whose <code class="code">Up2DimensionalGroup</code> is the same as the <code class="code">Left2DimensionalGroup</code>, while <code class="code">CatnGroupNumbers(G).siso2</code> is the number of isomorphism classes of these symmetric cat<span class="SimpleMath">\(^2\)</span>-groups.</p>
+<p>The field <code class="code">CatnGroupNumbers(G).cat2</code> is the number of cat<span class="SimpleMath">\(^2\)</span>-groups on <span class="SimpleMath">\(G\)</span>, while <code class="code">CatnGroupNumbers(G).iso2</code> is the number of isomorphism classes of these cat<span class="SimpleMath">\(^2\)</span>-groups. Also <code class="code">CatnGroupNumbers(G).symm</code> is the number of cat<span class="SimpleMath">\(^2\)</span>-groups whose <code class="code">Up2DimensionalGroup</code> is the same as the <code class="code">Left2DimensionalGroup</code>, while <code class="code">CatnGroupNumbers(G).siso</code> is the number of isomorphism classes of these symmetric cat<span class="SimpleMath">\(^2\)</span>-groups.</p>
 
 <p>Provided that <code class="code">CatnGroupLists(G).omit</code> is not set to <code class="code">true</code>, <em>sorted</em> lists of generating pairs, and of the classes they belong to, are added to the record <code class="code">CatnGroupLists</code>. For example <code class="code">[5,7]</code> in these lists for <code class="code">d12</code> indicates that there is a cat<span class="SimpleMath">\(^2\)</span>-group generated by the fifth and seventh cat<span class="SimpleMath">\(^1\)</span>-groups and that this is in the second class whose representative is <code class="code">[1,7]</code>. Classes <code class="code">[1,5,8,10]</code> contain symmetric cat<span class="SimpleMath">\(^2\)</span>-groups.</p>
 
@@ -1097,8 +1231,7 @@ true
   [ 36, 37, 38 ], [ 22, 29 ], [ 39, 40 ], [ 41 ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CatnGroupNumbers( d12 );</span>
 rec( cat1 := 12, cat2 := 41, idem := 21, iso1 := 4, iso2 := 10, 
-  isopredg := 0, predg := 0, siso1 := 4, siso2 := 4, symm1 := 12, symm2 := 12 
- )
+  isopredg := 0, predg := 0, siso := 4, symm := 12 )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CatnGroupLists( d12 );</span>
 rec( allcat2pos := [ 1, 7, 9, 16, 19, 22, 30, 36, 39, 41 ],
   cat2classes := 

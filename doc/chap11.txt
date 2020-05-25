@@ -67,9 +67,8 @@
     [4X[25Xgap>[125X [27XPrint( "X8: ", Size( X8 ), " : ", StructureDescription( X8 ), "\n" );  [127X[104X
     [4X[28XX8: [ 8, 168 ] : [ "C2 x C2 x C2", "PSL(3,2)" ][128X[104X
     [4X[25Xgap>[125X [27Xclasses := LoopClasses( X8 );;[127X[104X
-    [4X[28Xpositions of conjugacy classes in loop classes: [ 1, 2, 3, 4, 5, 6 ][128X[104X
     [4X[25Xgap>[125X [27XList( classes, c -> Length(c) );[127X[104X
-    [4X[28X[ 1, 21, 42, 56, 24, 24 ][128X[104X
+    [4X[28X[ 1, 21, 56, 42, 24, 24 ][128X[104X
     [4X[25Xgap>[125X [27XLX := LoopsXMod( X8, (1,2)(5,6) );;[127X[104X
     [4X[25Xgap>[125X [27XSize( LX ); [127X[104X
     [4X[28X[ 8, 64 ][128X[104X

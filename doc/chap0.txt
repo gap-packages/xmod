@@ -6,10 +6,10 @@
                        [1X Crossed Modules and Cat1-Groups [101X
   
   
-                                      2.79
+                                      2.81
   
   
-                                   4 May 2020
+                                  25 May 2020
   
   
                                  Chris Wensley
@@ -140,7 +140,7 @@
       2.4-1 Cat1Group
       2.4-2 Source
       2.4-3 DiagonalCat1Group
-      2.4-4 ReverseCat1Group
+      2.4-4 TransposeCat1Group
       2.4-5 Cat1GroupByPeifferQuotient
       2.4-6 SubCat1Group
       2.4-7 DirectProduct
@@ -150,8 +150,9 @@
       2.5-3 Cat1GroupOfXMod
     2.6 [33X[0;0YEnumerating cat[22X^1[122X-groups with a given source[133X
       2.6-1 AllCat1GroupsWithImageIterator
-      2.6-2 AllCat1GroupsIterator
-      2.6-3 CatnGroupNumbers
+      2.6-2 AllCat1GroupsMatrix
+      2.6-3 AllCat1GroupsIterator
+      2.6-4 CatnGroupNumbers
     2.7 [33X[0;0YSelection of a small cat[22X^1[122X-group[133X
       2.7-1 Cat1Select
       2.7-2 AllCat1DataGroupsBasic
@@ -248,14 +249,17 @@
       8.3-4 InclusionMorphismHigherDimensionalDomains
     8.4 [33X[0;0YDefinitions and constructions for cat[22X^2[122X-groups and their morphisms[133X
       8.4-1 Cat2Group
-      8.4-2 DisplayLeadMaps
-      8.4-3 Transpose3DimensionalGroup
-      8.4-4 Cat2GroupMorphism
-      8.4-5 Cat2GroupOfCrossedSquare
-      8.4-6 Subdiagonal2DimensionalGroup
+      8.4-2 DirectProduct
+      8.4-3 DisplayLeadMaps
+      8.4-4 Transpose3DimensionalGroup
+      8.4-5 Cat2GroupMorphism
+      8.4-6 Cat2GroupOfCrossedSquare
+      8.4-7 Subdiagonal2DimensionalGroup
     8.5 [33X[0;0YEnumerating cat[22X^2[122X-groups with a given source[133X
       8.5-1 AllCat2GroupsWithImagesIterator
-      8.5-2 AllCat2GroupsIterator
+      8.5-2 AllCat2GroupsWithFixedUp
+      8.5-3 AllCat2GroupsMatrix
+      8.5-4 AllCat2GroupsIterator
   9 [33X[0;0YCrossed cubes and Cat[22X^3[122X-groups[133X
     9.1 [33X[0;0YFunctions for (pre-)cat[22X^3[122X-groups[133X
       9.1-1 Cat3Group

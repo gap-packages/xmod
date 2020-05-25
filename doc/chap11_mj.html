@@ -87,9 +87,8 @@
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Print( "X8: ", Size( X8 ), " : ", StructureDescription( X8 ), "\n" );  </span>
 X8: [ 8, 168 ] : [ "C2 x C2 x C2", "PSL(3,2)" ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">classes := LoopClasses( X8 );;</span>
-positions of conjugacy classes in loop classes: [ 1, 2, 3, 4, 5, 6 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List( classes, c -&gt; Length(c) );</span>
-[ 1, 21, 42, 56, 24, 24 ]
+[ 1, 21, 56, 42, 24, 24 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LX := LoopsXMod( X8, (1,2)(5,6) );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size( LX ); </span>
 [ 8, 64 ]
