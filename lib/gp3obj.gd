@@ -203,6 +203,9 @@ DeclareOperation( "PreCat2GroupByPreCat1Groups", [ IsPreCat1Group,
 #O  AllCat2GroupsWithImages( <G> <R> <Q> ) 
 #O  AllCat2GroupsWithImagesIterator( <G> <R> <Q> ) 
 #F  DoAllCat2GroupsWithImagesIterator
+#O  AllCat2GroupsWithFixedUp( <G> <C> ) 
+#O  AllCat2GroupsWithFixedUpIterator( <G> <C> ) 
+#F  DoAllCat2GroupsWithFixedUpIterator
 #O  AllCat2GroupsWithImagesNumber( <G> <R> <Q> ) 
 #O  AllCat2GroupsWithImagesUpToIsomorphism( <G> <R> <Q> ) 
 ## 
@@ -215,6 +218,10 @@ DeclareOperation( "AllCat2GroupsWithImagesNumber",
     [ IsGroup, IsGroup, IsGroup ] ); 
 DeclareOperation( "AllCat2GroupsWithImagesUpToIsomorphism", 
     [ IsGroup, IsGroup, IsGroup ] ); 
+DeclareOperation( "AllCat2GroupsWithFixedUpAndLeftRange", 
+    [ IsPreCat1Group, IsGroup ] ); 
+DeclareOperation( "AllCat2GroupsWithFixedUp", 
+    [ IsPreCat1Group ] ); 
 
 #############################################################################
 ##

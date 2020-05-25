@@ -474,6 +474,43 @@ gap> for C2 in iso do DisplayLeadMaps( C2 ); od;
 </Example>
 
 <ManSection>
+   <Oper Name="AllCat2GroupsWithFixedUp"
+         Arg="C" />
+   <Oper Name="AllCat2GroupsWithFixedUpAndLeftRange"
+         Arg="C R" />
+<Description>
+The operation <C>AllCat2GroupsWithFixedUp(C)</C> constructs all the 
+cat<M>^2</M>-groups with a fixed <C>Up2DimensionalGroup</C> <M>C</M>. 
+In the second operation the user may also specify the range of the 
+<C>Left2DimensionalGroup</C>. 
+</Description> 
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> up := Up2DimensionalGroup( iso[1] );                
+[Group( [ (1,2), (3,4), (5,6) ] )=>Group( [ (1,2), (), () ] )]
+gap> AllCat2GroupsWithFixedUp( up );;                    
+gap> Length(last);                                       
+28
+gap> L := AllCat2GroupsWithFixedUpAndLeftRange( up, B );;
+gap> for C in L do DisplayLeadMaps( C ); od;             
+(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ]
+   up tail=head images: [ (1,2), (), () ]
+ left tail=head images: [ (), (3,4), () ]
+(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ]
+   up tail=head images: [ (1,2), (), () ]
+ left tail/head images: [ (), (3,4), () ], [ (), (3,4), (3,4) ]
+(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ]
+   up tail=head images: [ (1,2), (), () ]
+ left tail/head images: [ (), (3,4), (3,4) ], [ (), (3,4), () ]
+(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ]
+   up tail=head images: [ (1,2), (), () ]
+ left tail=head images: [ (), (3,4), (3,4) ]
+]]>
+</Example>
+
+<ManSection>
    <Attr Name="AllCat2GroupsMatrix"
          Arg="G" />
 <Description>

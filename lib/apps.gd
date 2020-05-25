@@ -12,5 +12,9 @@
 #O  AllLoopsXMod( <X0> ) 
 ##  
 DeclareOperation( "LoopClasses", [ IsPreXMod ] );
+DeclareOperation( "LoopClass", [ IsPreXMod, IsObject ] );
+DeclareOperation( "LoopClassOld", [ IsPreXMod, IsObject ] );
+DeclareOperation( "LoopClassesNew", [ IsPreXMod ] );
+DeclareOperation( "LoopClassRepresentatives", [ IsPreXMod ] );
 DeclareOperation( "LoopsXMod", [ IsPreXMod, IsObject ] );
 DeclareOperation( "AllLoopsXMod", [ IsPreXMod ] );
