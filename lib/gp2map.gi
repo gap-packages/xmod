@@ -5,7 +5,7 @@
 ##  This file installs methods for 2DimensionalMappings 
 ##  for crossed modules and cat1-groups. 
 ##
-#Y  Copyright (C) 2001-2020, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2020, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 
 ##############################################################################
@@ -771,15 +771,14 @@ end );
 
 ##############################################################################
 ##
-#M  IsomorphismPerm2DimensionalGroup . . . constructs isomorphic perm pre-xmod
-#M  IsomorphismPerm2DimensionalGroup . . . constructs isomorphic perm pre-cat1
+#M  IsomorphismPerm2DimensionalGroup . . . isomorphic perm pre-xmod & pre-cat1
 ##
 InstallMethod( IsomorphismPerm2DimensionalGroup,
      "generic method for pre-crossed modules", true, [ IsPreXMod ], 0,
 function( PM )
 
-    local shom, rhom, Psrc, Psgen, Qsrc, Qsgen, Prng, Prgen, Qrng, Qrgen, 
-          QM, iso;
+    local shom, ishom, rhom, irhom, Psrc, Psgen, Qsrc, Qsgen, 
+          Prng, Prgen, Qrng, Qrgen, QM, iso;
 
     if IsPermPreXMod( PM ) then
         return IdentityMapping( PM );
@@ -788,12 +787,13 @@ function( PM )
     if IsPermGroup( Psrc ) then
         shom := IdentityMapping( Psrc );
     else
-        Psgen := GeneratorsOfGroup( Psrc );
         shom := IsomorphismPermGroup( Psrc );
         Qsrc := Image( shom ); 
         shom := shom * SmallerDegreePermutationRepresentation( Qsrc );
-        Qsrc := ImagesSource( shom );
-        Qsgen := List( Psgen, s -> ImageElm( shom, s ) );
+        Qsrc := ImagesSource( shom ); 
+        Qsgen := SmallGeneratingSet( Qsrc ); 
+        ishom := InverseGeneralMapping( shom ); 
+        Psgen := List( Qsgen, g -> ImageElm( ishom, g ) ); 
         if HasName( Psrc ) then 
             SetName( Qsrc, Concatenation( "P", Name( Psrc ) ) ); 
         fi;
@@ -803,12 +803,13 @@ function( PM )
     if IsPermGroup( Prng ) then
         rhom := IdentityMapping( Prng );
     else
-        Prgen := GeneratorsOfGroup( Prng );
         rhom := IsomorphismPermGroup( Prng );
         Qrng := Image( rhom ); 
         rhom := rhom * SmallerDegreePermutationRepresentation( Qrng );
         Qrng := ImagesSource( rhom );
-        Qrgen := List( Prgen, r -> ImageElm( rhom, r ) );
+        Qrgen := SmallGeneratingSet ( Qrng ); 
+        irhom := InverseGeneralMapping( rhom ); 
+        Prgen := List( Qrgen, g -> ImageElm( irhom, g ) ); 
         if HasName( Prng ) then 
             SetName( Qrng, Concatenation( "P", Name( Prng ) ) ); 
         fi;
@@ -827,8 +828,8 @@ InstallMethod( IsomorphismPerm2DimensionalGroup,
      "generic method for pre-cat1-groups", true, [ IsPreCat1Group ], 0,
 function( PCG )
 
-    local shom, rhom, Psrc, Psgen, Qsrc, Qsgen, Prng, Prgen, Qrng, Qrgen, 
-          QCG, iso;
+    local shom, rhom, ishom, irhom, Psrc, Psgen, Qsrc, Qsgen, 
+          Prng, Prgen, Qrng, Qrgen, QCG, iso;
 
     if IsPermPreCat1Group( PCG ) then
         return IdentityMapping( PCG );
@@ -837,12 +838,13 @@ function( PCG )
     if IsPermGroup( Psrc ) then
         shom := IdentityMapping( Psrc );
     else
-        Psgen := GeneratorsOfGroup( Psrc );
         shom := IsomorphismPermGroup( Psrc );
         Qsrc := Image( shom ); 
         shom := shom * SmallerDegreePermutationRepresentation( Qsrc );
         Qsrc := ImagesSource( shom );
-        Qsgen := List( Psgen, s -> ImageElm( shom, s ) );
+        Qsgen := SmallGeneratingSet( Qsrc ); 
+        ishom := InverseGeneralMapping( shom ); 
+        Psgen := List( Qsgen, g -> ImageElm( ishom, g ) ); 
         shom := GroupHomomorphismByImages( Psrc, Qsrc, Psgen, Qsgen );
     fi;
     Prng := Range( PCG );
@@ -858,7 +860,9 @@ function( PCG )
             rhom := rhom * SmallerDegreePermutationRepresentation( Qrng );
         fi;
         Qrng := ImagesSource( rhom );
-        Qrgen := List( Prgen, r -> ImageElm( rhom, r ) );
+        Qrgen := SmallGeneratingSet( Qrng );
+        irhom := InverseGeneralMapping( rhom ); 
+        Prgen := List( Qrgen, g -> ImageElm( irhom, g ) ); 
         rhom := GroupHomomorphismByImages( Prng, Qrng, Prgen, Qrgen );
     fi;
     iso := IsomorphismByIsomorphisms( PCG, [ shom, rhom ] ); 

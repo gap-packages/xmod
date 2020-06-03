@@ -1,6 +1,10 @@
 # CHANGES to the 'XMod' package
 
-## 2.79 -> 2.79dev (25/05/2020) 
+## 2.81 -> 2.81dev (03/06/2020) 
+
+ * (30/05/20) added HAP chapter to the manual plus XMod <-> HAP functions 
+
+## 2.79 -> 2.81 (25/05/2020) 
 
  * (24/05/20) added AllCat2GroupsWithFixedUp(AndLeftRange) 
  * (10/05/20) split gp3objmap.tst into gp3xs.tst and gp3cat2.tst 
