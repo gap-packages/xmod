@@ -32,3 +32,9 @@ DeclareOperation( "IdCat1Group", [ IsCat1Group ] );
 ##
 DeclareOperation( "QuasiIsomorphCat1Group", [ IsCat1Group ] ); 
 
+##############################################################################
+##
+#P  IsPreCat1GroupQuasiIsomorphism( <precat1> )
+##
+DeclareProperty( "IsPreCat1QuasiIsomorphism", IsPreCat1GroupMorphism ); 
+
