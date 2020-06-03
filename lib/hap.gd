@@ -8,17 +8,27 @@
 
 ##############################################################################
 ##
-#O  HapToXMod( <C> )
-##  
-DeclareOperation( "HapToXMod", [ IsHapCatOneGroupRep ] );
+#O  Cat1GroupToHAP( <cat1> )
+#O  CatOneGroupToXMod( <cat1> ) 
+##
+DeclareOperation( "Cat1GroupToHAP", [ IsCat1Group ] ); 
+DeclareOperation( "CatOneGroupToXMod", [ IsHapCatOneGroupRep ] ); 
 
 ##############################################################################
 ##
-#A  Cat1HapVersion( <cat1> )
-#A  CatOneGroupXModVersion( <cat1> ) 
+#O  SmallCat1Group( <cat1> )
 ##
-DeclareAttribute( "Cat1GroupHapVersion", IsCat1Group ); 
-DeclareAttribute( "CatOneGroupXModVersion", IsHapCatOneGroup ); 
+DeclareOperation( "SmallCat1Group", [ IsPosInt, IsPosInt, IsPosInt ] ); 
 
-## the above does not work because IsHapOneCatOneGroup does not have 
-## IsAttributeStoringRep
+##############################################################################
+##
+#O  IdCat1Group( <cat1> ) 
+##
+DeclareOperation( "IdCat1Group", [ IsCat1Group ] ); 
+
+##############################################################################
+##
+#O  QuasiIsomorphCat1Group( <cat1> )
+##
+DeclareOperation( "QuasiIsomorphCat1Group", [ IsCat1Group ] ); 
+
