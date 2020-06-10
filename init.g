@@ -24,7 +24,6 @@ ReadPackage( "xmod", "lib/gpnmap.gd" );
 ReadPackage( "xmod", "lib/gp3obj.gd" ); 
 ReadPackage( "xmod", "lib/gp3map.gd" ); 
 ReadPackage( "xmod", "lib/gp4obj.gd" ); 
-ReadPackage( "xmod", "lib/cat1data.gd" );
 ReadPackage( "xmod", "lib/apps.gd" );
 ReadPackage( "xmod", "lib/gpgpd.gd" ); 
 ## ReadPackage( "xmod", "lib/natp.gd" ); 

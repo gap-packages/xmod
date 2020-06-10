@@ -139,25 +139,26 @@ A GNU General Public License declaration was added.
 </List> 
 
 <Subsection><Heading>AllCat1s</Heading>
-Version 2.21 contained major changes to the <Ref Oper="Cat1Select"/> operation: 
+Version <B>2.21</B> contained major changes to the <Ref Oper="Cat1Select"/> operation: 
 the list <C>CAT1_LIST</C> of cat1-structures in the data file 
 <F>cat1data.g</F> was changed from permutation groups to pc-groups, 
 with the generators of subgroups; images of the tail map; and images of 
 the head map being given as <C>ExtRepOfObj</C> of words in the generators. 
 <P/> 
-The <C>AllCat1s</C> function was reintroduced from the &GAP;3 version, 
-and renamed as the operation <Ref Oper="AllCat1DataGroupsBasic"/>. 
+The <C>AllCat1s</C> function was reintroduced from the &GAP3; version, 
+and renamed as the operation <C>AllCat1DataGroupsBasic</C>. 
 <P/> 
-In version 2.25 the data in <F>cat1data.g</F> was extended from groups 
+In version <B>2.25</B> the data in <F>cat1data.g</F> was extended from groups 
 of size up to <M>48</M> to groups of size up to <M>70</M>. 
 In particular, the <M>267</M> groups of size 64 give rise to a total 
 of <M>1275</M> cat1-groups. 
 The authors are indebted to Van Luyen Le in Galway for pointing out a number 
-of errors in the version of this list distributed with version 2.24 of this package.  
+of errors in the version of this list distributed with version <B>2.24</B> 
+of this package.  
 </Subsection>
 
 <Subsection><Heading>Versions 2.43 - 2.56</Heading>
-Version 2.43, released on 11th November 2015, included the following changes:  
+Version <B>2.43</B>, released on 11th November 2015, included the following changes:  
 <List>
 <Item> 
 The material on isoclinism in Chapter 4 was added. 
@@ -237,7 +238,7 @@ Implement <C>FreeXMods</C> and an operation <C>Isomorphism2dDomains</C>.
 Allow the construction of a group of morphisms of crossed modules.
 </Item>
 <Item> 
-Complete the conversion from Version 1 of the calculation of sections
+Complete the conversion from Version <B>1</B> of the calculation of sections
 using <C>EndoClasses</C>.
 </Item>
 <Item>
