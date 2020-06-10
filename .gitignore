@@ -21,6 +21,7 @@
 /doc/manual.pdf
 /doc/bib.xml.bib
 /expt/
+/removed/*
 /tst/allxmods.g
 /tst/apps.g
 /tst/c*.g
