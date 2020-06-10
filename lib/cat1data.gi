@@ -34,7 +34,7 @@
 
 ##############################################################################
 ##
-#M  AllCat1DataGroups . . . . . . . . . . . . . . . . . . . . . . . . for a group
+#M  AllCat1DataGroups . . . . . . . . . . . . . . . . . . . . . . for a group
 ##
 InstallGlobalFunction( AllCat1DataGroups, function( arg )
 
@@ -52,9 +52,9 @@ end );
 
 ##############################################################################
 ##
-#M  AllCat1DataGroupsBasic . . . . . . . . . . . . . . . . . . for a cyclic Pgroup
+#M  AllCat1DataGroupsBasic . . . . . . . . . . . . . . . . for a cyclic Pgroup
 ##
-InstallMethod( AllCat1DataGroupsBasic, "construct all cat1-groups on a given group", 
+InstallMethod( AllCat1DataGroupsBasic, "construct all cat1-groups on a group", 
     true, [ IsCyclic and IsPGroup ], 0,
 function( gp ) 
 
@@ -70,7 +70,7 @@ function( gp )
     return C; 
 end ); 
 
-InstallMethod( AllCat1DataGroupsBasic, "construct all cat1-groups on a given group", 
+InstallMethod( AllCat1DataGroupsBasic, "construct all cat1-groups on a group", 
     true, [ IsGroup ], 0,
 function( gp )
 

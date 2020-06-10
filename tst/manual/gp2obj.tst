@@ -444,41 +444,18 @@ rec( cat1 := 12, idem := 21, iso1 := 4, siso := 4, symm := 12 )
 
 ## Section 2.7.1
 gap> L18 := Cat1Select( 18 ); 
-Usage:  Cat1Select( size, gpnum, num );
-[ "D18", "C18", "C3 x S3", "(C3 x C3) : C2", "C6 x C3" ]
+Usage:  Cat1Select( size, gpnum, num );  where gpnum <= 5
+fail
 gap> L18_4 := Cat1Select( 18, 4 ); 
-Usage:  Cat1Select( size, gpnum, num );
-There are 4 cat1-structures for the group (C3 x C3) : C2.
-Using small generating set [ f1, f2, f2*f3 ] for source of homs.
-[ [range gens], [tail genimages], [head genimages] ] :-
-(1)  [ [ f1 ], [ f1, <identity> of ..., <identity> of ... ], 
-  [ f1, <identity> of ..., <identity> of ... ] ]
-(2)  [ [ f1, f3 ], [ f1, <identity> of ..., f3 ], 
-  [ f1, <identity> of ..., f3 ] ]
-(3)  [ [ f1, f3 ], [ f1, <identity> of ..., f3 ], 
-  [ f1, f3^2, <identity> of ... ] ]
-(4)  [ [ f1, f2, f2*f3 ],  tail = head = identity mapping ]
-4
-gap> B18 := Cat1Select( 18, 4, 3 );
+Usage:  Cat1Select( size, gpnum, num );  where num <= 4
+fail
+gap> B18 := Cat1Select( 18, 4, 2 );
 [(C3 x C3) : C2=>Group( [ f1, <identity> of ..., f3 ] )]
 gap> iso18 := IsomorphismPermObject( B18 );;
 gap> PB18 := Image( iso18 ); 
-[Group( [ (2,3)(5,6), (4,5,6), (1,2,3) ] )=>Group( [ (2,3)(5,6), (), (1,2,3) 
- ] )]
+[Group( [ (4,5,6), (1,2,3), (2,3)(5,6) ] )=>Group( [ (1,2,3), (2,3)(5,6) ] )]
 gap> Y18 := XModOfCat1Group( PB18 ); 
-[Group( [ (4,5,6) ] )->Group( [ (2,3)(5,6), (), (1,2,3) ] )]
-
-## Section 2.7.2 
-gap> gp := SmallGroup( 102, 2 ); 
-<pc group of size 102 with 3 generators>
-gap> StructureDescription( gp ); 
-"C3 x D34"
-gap> all := AllCat1DataGroupsBasic( gp );
-#I Edit last line of .../xmod/lib/nn.kk.out to end with ] ] ] ] ]
-[ [Group( [ f1, f2, f3 ] )=>Group( [ f1, <identity> of ..., <identity> of ... 
-     ] )], [Group( [ f1, f2, f3 ] )=>Group( [ f1, f2, <identity> of ... ] )], 
-  [Group( [ f1, f2, f3 ] )=>Group( [ f1, <identity> of ..., f3 ] )], 
-  [Group( [ f1, f2, f3 ] )=>Group( [ f1, f2, f3 ] )] ]
+[Group( [ (4,5,6) ] )->Group( [ (1,2,3), (2,3)(5,6) ] )]
 
 ## Section 2.8.1
 gap> IdGroup( X8 );

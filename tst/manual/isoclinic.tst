@@ -196,11 +196,11 @@ gap> IsoclinicRank( G );
 #### testing isoclinism of crossed modules #### 
 
 #### 4.3.1
-gap> C8 := Cat1Group( 16, 8, 1 );;
+gap> C8 := Cat1Select( 16, 8, 2 );;
 gap> X8 := XMod(C8);  IdGroup( X8 );
 [Group( [ f1*f2*f3, f3, f4 ] )->Group( [ f2, f2 ] )]
 [ [ 8, 1 ], [ 2, 1 ] ]
-gap> C9 := Cat1Group( 32, 9, 1 );
+gap> C9 := Cat1Select( 32, 9, 2 );
 [(C8 x C2) : C2=>Group( [ f2, f2 ] )]
 gap> X9 := XMod( C9 );  IdGroup( X9 );
 [Group( [ f1*f2*f3, f3, f4, f5 ] )->Group( [ f2, f2 ] )]

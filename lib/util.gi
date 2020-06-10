@@ -541,9 +541,9 @@ function( grp )
     local id, info1, info2, iso1, iso2, iso, inv1, inv2, inv, perm, pc, ispc; 
 
     if IsPermGroup( grp ) then 
-        return IsomorphismPcInfo( grp );
+        return IsomorphismPermInfo( grp );
     elif IsPcGroup( grp ) then 
-        return IsomorphismPermInfo( grp ); 
+        return IsomorphismPcInfo( grp ); 
     else 
         info1 := IsomorphismPermInfo( grp ); 
         perm := info1!.perm; 

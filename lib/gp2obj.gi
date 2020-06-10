@@ -15,9 +15,42 @@
 ##  CAT1_LIST_CLASS_SIZES  for groups of size <= CAT1_LIST_MAX_SIZE
 ##
 
-CAT1_LIST_MAX_SIZE := 70; 
+CAT1_LIST_MAX_SIZE := 60;  ## reduced from 70 (10/06/20)  
 CAT1_LIST_CLASS_SIZES := 
     List( [1..CAT1_LIST_MAX_SIZE], n -> NumberSmallGroups(n) ); 
+CAT1_LIST_NUMBERS := 
+[ [ 1 ], [ 2 ], [ 2 ], [ 2, 4 ], [ 2 ], [ 2, 4 ], [ 2 ], [ 2, 6, 3, 1, 6 ], 
+  [ 2, 4 ], [ 2, 4 ], [ 2 ], [ 2, 4, 2, 4, 8 ], [ 2 ], [ 2, 4 ], [ 4 ], 
+  [ 2, 5, 4, 3, 6, 2, 2, 2, 1, 12, 9, 3, 2, 9 ], [ 2 ], [ 2, 4, 4, 4, 8 ], 
+  [ 2 ], [ 2, 4, 2, 4, 8 ], [ 2, 4 ], [ 2, 4 ], [ 2 ], 
+  [ 2, 4, 1, 2, 4, 4, 6, 4, 12, 6, 2, 2, 4, 8, 12 ], [ 2, 4 ], [ 2, 4 ], 
+  [ 2, 6, 2, 2, 6 ], [ 2, 4, 4, 8 ], [ 2 ], [ 4, 4, 4, 8 ], [ 2 ], 
+  [ 2, 3, 8, 3, 4, 3, 1, 1, 2, 1, 2, 3, 3, 3, 1, 6, 2, 2, 2, 1, 14, 13, 11, 
+      6, 9, 3, 7, 6, 3, 2, 2, 1, 2, 5, 4, 12, 6, 2, 6, 6, 3, 2, 2, 1, 20, 18, 
+      6, 8, 5, 1, 12 ], [ 4 ], [ 2, 4 ], [ 4 ], 
+  [ 2, 4, 2, 4, 8, 4, 4, 8, 2, 4, 4, 8, 8, 16 ], [ 2 ], [ 2, 4 ], [ 2, 4 ], 
+  [ 2, 4, 2, 2, 4, 4, 6, 4, 12, 6, 2, 4, 8, 12 ], [ 2 ], [ 2, 4, 4, 4, 4, 8 ],
+  [ 2 ], [ 2, 4, 4, 8 ], [ 4, 8 ], [ 2, 4 ], [ 2 ], 
+  [ 2, 4, 2, 4, 4, 4, 4, 2, 6, 2, 6, 2, 6, 4, 2, 2, 2, 2, 6, 10, 8, 6, 12, 4, 
+      4, 4, 2, 1, 1, 2, 4, 3, 1, 6, 12, 12, 4, 6, 2, 2, 2, 12, 12, 24, 18, 6, 
+      4, 4, 8, 4, 12, 18 ], [ 2, 4 ], [ 2, 4, 4, 4, 8 ], [ 4 ], 
+  [ 2, 4, 2, 4, 8 ], [ 2 ], [ 2, 4, 4, 4, 3, 2, 6, 2, 12, 4, 4, 8, 8, 6, 12 ],
+  [ 2, 4 ], [ 2, 4, 2, 4, 4, 6, 4, 12, 6, 2, 2, 8, 12 ], [ 2, 4 ], [ 2, 4 ], 
+  [ 2 ], [ 4, 4, 4, 8, 1, 4, 4, 4, 4, 8, 8, 8, 16 ], [ 2 ], [ 2, 4 ], 
+  [ 2, 4, 4, 8 ], 
+  [ 2, 6, 4, 3, 3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 3, 3, 6, 3, 1, 3, 3, 1, 2, 1, 
+      2, 8, 3, 2, 4, 1, 2, 2, 2, 2, 2, 1, 1, 2, 1, 2, 1, 1, 1, 3, 1, 2, 3, 3, 
+      1, 6, 2, 2, 2, 1, 8, 11, 4, 15, 12, 8, 12, 4, 4, 3, 8, 7, 13, 1, 2, 5, 
+      9, 4, 5, 3, 3, 3, 1, 1, 1, 1, 1, 1, 26, 10, 8, 6, 14, 5, 2, 9, 2, 3, 3, 
+      1, 8, 5, 2, 1, 2, 1, 6, 2, 11, 4, 1, 10, 11, 5, 3, 3, 1, 6, 1, 2, 9, 6, 
+      6, 6, 6, 3, 3, 1, 3, 2, 1, 3, 3, 4, 3, 1, 4, 3, 1, 4, 1, 2, 1, 4, 2, 3, 
+      3, 3, 3, 1, 1, 6, 6, 3, 3, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+      1, 1, 2, 1, 2, 1, 1, 1, 8, 8, 4, 2, 3, 1, 4, 1, 4, 3, 12, 6, 2, 6, 6, 
+      3, 2, 2, 1, 31, 28, 24, 23, 33, 11, 9, 11, 1, 5, 20, 22, 11, 8, 11, 8, 
+      4, 6, 2, 14, 12, 9, 5, 7, 7, 1, 4, 3, 1, 1, 1, 1, 3, 4, 9, 7, 3, 3, 5, 
+      3, 4, 1, 1, 1, 1, 1, 1, 2, 1, 3, 3, 1, 1, 1, 21, 12, 8, 3, 12, 12, 6, 
+      8, 6, 3, 2, 2, 2, 1, 28, 30, 10, 17, 14, 3, 3, 16 ], [ 4 ], 
+  [ 4, 4, 4, 8 ], [ 2 ], [ 2, 4, 2, 4, 8 ], [ 4 ], [ 4, 4, 4, 8 ] ];
 CAT1_LIST_LOADED := false;
 CAT1_LIST := [ ];
 
@@ -1820,7 +1853,7 @@ end );
 
 #############################################################################
 ##
-#F  Cat1Select( <size>, <gpnum>, <num> )     cat1-group from data in CAT1_LIST
+#F  Cat1Select( <size>, <gpnum>, <num> )    cat1-group from data in CAT1_LIST
 ##
 InstallMethod( Cat1Select, "construct a cat1-group using data in file", 
     true, [ IsInt ], 0,
@@ -1838,17 +1871,31 @@ InstallMethod( Cat1Select, "construct a cat1-group using data in file", true,
     [ IsInt, IsInt, IsInt ], 0,
 function( size, gpnum, num )
 
-    local ok, type, norm, usage, usage2, maxsize, start, iso, count, comm, 
-           pos, pos2, names, i, j, k, ncat1, G, genG, fam, M, L, genR, R, 
-           imt, t, kert, imh, h, C1G, XC, i0;
+    local ok, type, norm, usage, maxsize, maxgpnum, maxnum, start, iso, 
+          count, comm, pos, pos2, names, i, j, k, nums, numa, num1, id, 
+          G, genG, fam, M, L, genR, R, imt, t, kert, imh, h, C1G, XC, i0;
 
+    ## the cat1-groups on G are ordered as follows: 
+    ## first comes G=>G 
+    ## then come the remaining nums with tail=head 
+    ## and the last of these is G=>I when G is commutative (k=2 or 1)
+    ## finally the numa with tail<>head 
     maxsize := CAT1_LIST_MAX_SIZE;
     usage := "Usage:  Cat1Select( size, gpnum, num );";
-    usage2 := "   where size <= CAT1_LIST_MAX_SIZE = ";
     if not ( ( size > 0 ) and ( size <= maxsize ) ) then
-        Print( usage, usage2, CAT1_LIST_MAX_SIZE, "\n" );
+        Print( usage, "  where size <= ", CAT1_LIST_MAX_SIZE, "\n" );
         return fail;
-    fi;
+    fi; 
+    maxgpnum := NumberSmallGroups( size ); 
+    if not ( ( gpnum > 0 ) and ( gpnum <= NumberSmallGroups( size ) ) ) then 
+        Print( usage, "  where gpnum <= ", maxgpnum, "\n" );
+        return fail;
+    fi; 
+    maxnum := CAT1_LIST_NUMBERS[size][gpnum]; 
+    if not ( ( num > 0 ) and ( num <= maxnum ) ) then 
+        Print( usage, "  where num <= ", maxnum, "\n" );
+        return fail;
+    fi; 
     if ( size = 1 ) then 
         if ( num = 0 ) then 
             Print( usage, "\nThere is only " ); 
@@ -1905,50 +1952,42 @@ function( size, gpnum, num )
     SetName( G, M[3] ); 
     comm := IsCommutative( G ); 
     if comm then 
-        ncat1 := Length( M[5] ) + 2; 
         k := 2; 
     else 
-        ncat1 := Length( M[5] ) + 1; 
         k := 1; 
     fi; 
+    nums := Length( M[5] ); 
+    if ( Length( M ) = 5 ) then 
+        numa := 0; 
+    else 
+        numa := Length( M[6] );
+    fi; 
+    num1 := k + nums + numa; 
     if IsPermGroup( G ) then 
-        return PermCat1Select( size, gpnum, num ); 
+        ## the only case is A5 = SmallGroup(60,5) 
+        id := IdentityMapping( G ); 
+        return PreCat1GroupByTailHeadEmbedding( id, id, id );  
     fi; 
     fam := FamilyObj( GeneratorsOfGroup( G )[1] ); 
     genG := List( M[4], e -> ObjByExtRep( fam, e ) ); 
-    if not ( ( num >= 1 ) and ( num <= ncat1 ) ) then
-        Print( usage, "\n" ); 
-        Print( "There are ", ncat1, " cat1-structures for the group ");
-        Print( G, ".\n" ); 
-        Print( "Using small generating set ", genG, " for source of homs.\n" ); 
-        Print( "[ [range gens]," ); 
-        Print( " [tail genimages], [head genimages] ]" );
-        Print( " :-\n" );
-        if comm then 
-            Print("(1)  [ ","[ ]",",  tail = head = zero mapping ]\n"); 
-        fi; 
-        for i in [1..ncat1-k] do 
-            if comm then i0 := i+1; else i0 := i; fi; 
-            L := M[5][i]; 
-            genR := List( L[1], e -> ObjByExtRep( fam, e ) ); 
-            imt := List( L[2], e -> ObjByExtRep( fam, e ) ); 
-            imh := List( L[3], e -> ObjByExtRep( fam, e ) ); 
-            Print( "(", i0, ")  ", [ genR, imt, imh ], "\n" );
-        od;
-        Print("(",ncat1,")  [ ",genG,",  tail = head = identity mapping ]\n"); 
-        return ncat1;
-    fi;
-    if ( num = ncat1 ) then
+    if ( num = 1 ) then
         t := IdentityMapping( G ); 
         h := ShallowCopy( t ); 
     else 
-        if ( ( num = 1 ) and IsCommutative( G ) ) then 
+        if ( IsCommutative( G ) and ( num = nums+2 ) ) then 
             R := TrivialSubgroup( G ); 
             SetName( R, "triv" ); 
             t := MappingToOne( G, R ); 
             h := ShallowCopy( t ); 
-        else
-            L := M[5][num-k+1]; 
+        elif ( num <= ( nums + k ) ) then 
+            L := M[5][num-1]; 
+            genR := List( L[1], e -> ObjByExtRep( fam, e ) );
+            R := Subgroup( G, genR );
+            imt := List( L[2], e -> ObjByExtRep( fam, e ) ); 
+            t := GroupHomomorphismByImages( G, R, genG, imt );
+            h := ShallowCopy( t );
+        else 
+            L := M[6][num-k-nums]; 
             genR := List( L[1], e -> ObjByExtRep( fam, e ) );
             R := Subgroup( G, genR );
             imt := List( L[2], e -> ObjByExtRep( fam, e ) ); 
@@ -1972,70 +2011,11 @@ InstallMethod( PermCat1Select, "construct a cat1-group using data in file",
     true, [ IsInt, IsInt, IsInt ], 0,
 function( size, gpnum, num )
 
-    local ok, type, norm, maxsize, start, iso, count, pos, pos2, names,
-           i, j, ncat1, G, genG, fam, M, L, genR, R, t, kert, h, C1G, XC;
+    local C, iso;
 
-    # find starting positions of iso classes of groups of size <= maxsize
-    maxsize := CAT1_LIST_MAX_SIZE;
-    iso := CAT1_LIST_CLASS_SIZES;
-    count := 1;
-    start := [ 1 ];
-    for j in iso do
-        count := count + j;
-        Add( start, count );
-    od;
-    Info( InfoXMod, 2, "  iso = ", iso, "\n  start = ", start );
-    if ( ( size < 1 ) or ( size > maxsize ) ) then
-        Error( "only groups of order up to ", maxsize, " in CAT1_LIST");
-        return false;
-    fi;
-    pos := start[ size ];
-    if ( size < maxsize ) then
-        pos2 := start[ size + 1 ] - 1;
-    else
-        pos2 := Length( CAT1_LIST );
-    fi;
-    names := List( [ pos..pos2], n -> CAT1_LIST[n][4] );
-    j := pos + gpnum - 1;
-    M := CAT1_LIST[j];
-    G  := Group(M[4], ( ));
-    SetName( G, M[3] );
-    ncat1 := Length( M[5] ) + 1;
-    genG := GeneratorsOfGroup( G );
-    if not ( ( num >= 1 ) and ( num <= ncat1 ) ) then
-        Print( "\nThere are ", ncat1, " cat1-structures for the group ");
-        Print( G, ".\n" ); 
-        Print( "[ [range gens], source & range names," ); 
-        Print( " [tail genimages], [head genimages] ]" );
-        Print( " :-\n" );
-        Print( "[ ", genG, ",  tail = head = identity mapping ]\n" ); 
-        for i in [2..ncat1] do
-            Print( M[5][i-1], "\n" );
-        od;
-        Print( "Group has generators ", genG, "\n" );
-        return ncat1;
-    fi;
-    if ( num = ncat1 ) then
-        L := [ genG, genG, genG ];
-    else
-        L := M[5][num-1];
-    fi;
-    genR := L[1];
-    R := Subgroup( G, genR ); 
-    if ( G = R ) then 
-        SetName( R, Name(G) ); 
-    fi; 
-    t := GroupHomomorphismByImages( G, R, genG, L[2] );
-    h := GroupHomomorphismByImages( G, R, genG, L[3] );
-    SetIsEndoMapping( t, true );
-    SetIsEndoMapping( h, true );
-    kert := Kernel( t ); 
-    C1G := PreCat1GroupWithIdentityEmbedding( t, h ); 
-    ok := IsCat1Group( C1G ); 
-    if ok then 
-        XC := XModOfCat1Group( C1G ); 
-    fi; 
-    return C1G; 
+    C := Cat1Select( size, gpnum, num ); 
+    iso := IsomorphismPermObject( C ); 
+    return ImagesSource( iso ); 
 end );
 
 #############################################################################
