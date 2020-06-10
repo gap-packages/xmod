@@ -44,8 +44,8 @@ true
 gap> IsCatnGroup( CC233 );
 true
 
-gap> CC5 := CatnGroup( [ Cat1Group(8,2,1), Cat1Group(8,2,2),
->          Cat1Group(8,2,4), Cat1Group(8,2,6), Cat1Group(8,2,6) ] );
+gap> CC5 := CatnGroup( [ Cat1Select(8,2,4), Cat1Select(8,2,3),
+>          Cat1Select(8,2,2), Cat1Select(8,2,1), Cat1Select(8,2,1) ] );
 (pre-)cat5-group with generating (pre-)cat1-groups:
 1 : [C4 x C2=>Group( [ <identity> of ..., <identity> of ..., <identity> of ... ] )]
 2 : [C4 x C2=>Group( [ <identity> of ..., f2 ] )]
@@ -148,10 +148,10 @@ Cat1-group [C4 x C2=>C4 x C2] :-
 : the kernel is trivial.
 : associated crossed module is [triv->C4 x C2]
 
-gap> CC6 := Cat2Group( Cat1Group(6,2,2), Cat1Group(6,2,3) );
+gap> CC6 := Cat2Group( Cat1Select(6,2,2), Cat1Select(6,2,3) );
 (pre-)cat2-group with generating (pre-)cat1-groups:
-1 : [C6=>Group( [ f1 ] )]
-2 : [C6=>Group( [ f2 ] )]
+1 : [C6=>Group( [ f2 ] )]
+2 : [C6=>Group( [ f1 ] )]
 
 gap> IsCat2Group( CC6 );
 true

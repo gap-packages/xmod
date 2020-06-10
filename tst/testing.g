@@ -13,8 +13,7 @@ pkgdir := DirectoriesPackageLibrary( pkgname, "tst/manual" );
 testmanual := 
     [ "gp2obj.tst",    "gp2map.tst",    "gp2up.tst",   "gp2act.tst", 
       "gp2ind.tst",    "isoclinic.tst", "gp3xsq.tst",  "gp3cat2.tst",  
-      "gp4objmap.tst", "gpd2obj.tst",   "util.tst",    "gpnobjmap.tst", 
-      "apps.tst" ];
+      "gp4objmap.tst", "gpd2obj.tst",   "util.tst",    "apps.tst" ];
 testresult := true;
 for ff in testmanual do
     fn := Filename( pkgdir, ff );
@@ -35,8 +34,8 @@ fi;
 pkgdir := DirectoriesPackageLibrary( pkgname, "tst/extra" );
 testextra := 
     [ "allxmods.tst",  "cat1data.tst",  "cat1mor.tst",  "coprod.tst", 
-      "d24.tst",       "induced.tst",   "issue9.tst",   "loops.tst", 
-      "others.tst" ];
+      "d24.tst",       "gpnobjmap.tst", "induced.tst",  "issue9.tst", 
+      "loops.tst",     "others.tst",    "smallids.tst"  ];
 testresult := true;
 for ff in testextra do
     fn := Filename( pkgdir, ff );

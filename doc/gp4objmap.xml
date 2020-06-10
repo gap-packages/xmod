@@ -321,15 +321,15 @@ cat<M>^1</M>-groups.
 <P/>
 <Example>
 <![CDATA[
-gap> PCn := PreCatnGroup( [ all1[5], all1[7], all1[11], all1[12] ] );
+gap> PC4 := PreCatnGroup( [ all1[5], all1[7], all1[11], all1[12] ] );
 (pre-)cat4-group with generating (pre-)cat1-groups:
 1 : [d12 => Group( [ (), (1,4)(2,3)(5,6) ] )]
 2 : [d12 => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )]
 3 : [d12 => Group( [ (1,5,3)(2,6,4), (1,4)(2,3)(5,6) ] )]
 4 : [d12 => Group( [ (1,2,3,4,5,6), (2,6)(3,5) ] )]
-gap> IsCatnGroup( PCn );                                             
+gap> IsCatnGroup( PC4 );                                             
 true
-gap> HigherDimension( PCn );
+gap> HigherDimension( PC4 );
 5
 ]]>
 </Example>
