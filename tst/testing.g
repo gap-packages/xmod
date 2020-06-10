@@ -33,7 +33,7 @@ fi;
 ## testing extra examples
 pkgdir := DirectoriesPackageLibrary( pkgname, "tst/extra" );
 testextra := 
-    [ "allxmods.tst",  "cat1data.tst",  "cat1mor.tst",  "coprod.tst", 
+    [ "allxmods.tst",  "cat1mor.tst",  "coprod.tst",    ## "cat1data.tst", 
       "d24.tst",       "gpnobjmap.tst", "induced.tst",  "issue9.tst", 
       "loops.tst",     "others.tst",    "smallids.tst"  ];
 testresult := true;

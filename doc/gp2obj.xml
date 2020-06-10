@@ -1287,20 +1287,42 @@ rec( cat1 := 12, idem := 21, iso1 := 4, siso := 4, symm := 12 )
 
 The <C>Cat1Group</C> function may also be used to select a cat<M>^1</M>-group 
 from a data file.
-All cat<M>^1</M>-structures on groups of size up to <M>70</M> 
+All cat<M>^1</M>-structures on groups of size up to <M>60</M> 
 (ordered according to the &GAP; 4 numbering of small groups) 
 are stored in a list in file <F>cat1data.g</F>.
-Global variables <C>CAT1&uscore;LIST&uscore;MAX&uscore;SIZE := 70</C> and
-<C>CAT1&uscore;LIST&uscore;CLASS&uscore;SIZES</C> are also stored. 
+Global variables <C>CAT1&uscore;LIST&uscore;MAX&uscore;SIZE := 60</C>,
+<Index>CAT1_LIST_MAX_SIZE</Index> 
+<C>CAT1&uscore;LIST&uscore;CLASS&uscore;SIZES</C> 
+and <C>CAT1&uscore;LIST&uscore;NUMBERS</C> are also stored. 
+<Index>CAT1_LIST_NUMBERS</Index> 
+The second of these just stores the number of isomorphism classes of 
+groups of size <C>size</C>. 
+The third stores the numbers of isomorphism classes of cat<M>^1</M>-groups 
+for each of these groups. 
 The data is read into the list <C>CAT1&uscore;LIST</C> 
 only when this function is called. 
+<P/> 
+This data was available in early versions of <Package>XMod</Package>
+with groups up to order <M>70</M> covered.  
+More recently a larger range of groups has become available in the package 
+<Package>HAP</Package>. 
+The authors are indebted to Van Luyen Le in Galway for pointing out a number 
+of errors in the version of this list distributed up to version 
+<B>2.24</B> of this package. 
+
 
 <ManSection>
    <Oper Name="Cat1Select"
          Arg="size gpnum num" />
 <Description>
 The function <C>Cat1Select</C> returns the cat<M>^1</M>-group 
-numbered <C>num</C> whose source is <C>SmallGroup(size,gpnum)</C>.
+numbered <C>num</C> whose source is the group 
+<C>G := SmallGroup(size,gpnum)</C>.
+When <M>|G| \leqslant 60</M> the data file in this package is used. 
+For larger groups <C>SmallCat1Group</C> (see <Ref Sect="sect-hap" />) 
+is called, accessing the datafile in package <Package>HAP</Package>. 
+<P/>
+
 <P/>
 The example below is the first case in which <M>t \neq h</M>
 and the associated conjugation crossed module
