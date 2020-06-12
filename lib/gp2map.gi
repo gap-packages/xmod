@@ -1521,38 +1521,28 @@ InstallMethod( XModMorphismOfCat1GroupMorphism, "for a cat1-group morphism",
     true, [ IsCat1GroupMorphism ], 0,
 function( phi )
 
-    local C1, C2, C1src, genC1src, e2, t2, proj2,
-          X1, X2, X1src, X1rng, X2src, X2rng,
-          genX1src, genX1rng, ek1, eksrc1, sphi, rphi, x,
-          imrphi, imsphi, im, images, smor, mor, info1, info2;
+    local C1, C2, X1, X2, S1, R1, S2, R2, t1, K1, genS1, gamma, rho, 
+          imsigma, sigma, mor;
 
     C1 := Source( phi );
     C2 := Range( phi );
-    C1src := Source( C1 );
     X1 := XModOfCat1Group( C1 );
     X2 := XModOfCat1Group( C2 );
-    X1src := Source( X1 );
-    X1rng := Range( X1 );
-    X2src := Source( X2 );
-    X2rng := Range( X2 );
-    ek1 := KernelEmbedding( C1 );
-    t2 := TailMap( C2 );
-    e2 := RangeEmbedding( C2 );
-    proj2 := Projection( Source( C2 ) );
-    genC1src := GeneratorsOfGroup( C1src );
-    genX1src := GeneratorsOfGroup( X1src );
-    genX1rng := GeneratorsOfGroup( X1rng );
-    sphi := SourceHom( phi );
-    rphi := RangeHom( phi );
-    imrphi := List( genX1rng, r -> ImageElm( rphi, r ) );
-#    imgen := List( gensrc1, x -> SemidirectProductElement( (), (), x ) );  
-    eksrc1 := List( genX1src, s -> ImageElm( ek1, s ) );
-    imsphi := List( eksrc1, g -> ImageElm( sphi, g ) );
-    im := List( imsphi, x -> ImageElm( sphi, x ) );
-    images := List( im, 
-        x -> ImageElm( proj2, ImageElm(e2,ImageElm(t2,x^-1)) * x ) );
-    smor := GroupHomomorphismByImages( X1src, X2src, genX1src, images );
-    mor := XModMorphismByGroupHomomorphisms( X1, X2, smor, rphi );
+    S1 := Source( X1 );
+    R1 := Range( X1 );
+    S2 := Source( X2 );
+    R2 := Range( X2 );
+    t1 := TailMap( C1 ); 
+    K1 := Kernel( t1 ); 
+    if not ( K1 = S1 ) then 
+        Error( "expercting Kernel(t1) = S1" ); 
+    fi; 
+    genS1 := GeneratorsOfGroup( S1 );
+    gamma := SourceHom( phi );
+    rho := RangeHom( phi );
+    imsigma := List( genS1, s -> ImageElm( gamma, s ) ); 
+    sigma := GroupHomomorphismByImages( S1, S2, genS1, imsigma ); 
+    mor := XModMorphismByGroupHomomorphisms( X1, X2, sigma, rho );
     SetXModMorphismOfCat1GroupMorphism( phi, mor );
     SetCat1GroupMorphismOfXModMorphism( mor, phi );
     return mor;
