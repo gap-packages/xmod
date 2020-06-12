@@ -96,8 +96,8 @@ gap> C3 := Cat1Group( t3, h1, e3 );;
 gap> imgamma := [ (4,5,6), (1,2,3), (2,3)(5,6) ];; 
 gap> gamma := GroupHomomorphismByImages( g18, g18, g18gens, imgamma );;
 gap> rho := IdentityMapping( s3a );; 
-gap> mor := Cat1GroupMorphism( C18, C3, gamma, rho );;
-gap> Display( mor );;
+gap> phi3 := Cat1GroupMorphism( C18, C3, gamma, rho );;
+gap> Display( phi3 );;
 Morphism of cat1-groups :- 
 : Source = [g18=>s3a] with generating sets:
   [ (1,2,3), (4,5,6), (2,3)(5,6) ]
@@ -111,10 +111,27 @@ Morphism of cat1-groups :-
   [ (7,8,9), (8,9) ]
 
 ## Section 3.3.2
+gap> phi5 := Cat1GroupMorphismOfXModMorphism( mor5 );
+[[(Aut(c5) |X c5)=>Aut(c5)] => [(Aut(c5) |X c5)=>Aut(c5)]]
+gap> mor3 := XModMorphismOfCat1GroupMorphism( phi3 );;
+gap> Display( mor3 );
+Morphism of crossed modules :- 
+: Source = xmod([g18=>s3a]) with generating sets:
+  [ (4,5,6) ]
+  [ (7,8,9), (8,9) ]
+:  Range = xmod([g18=>s3a]) with generating sets:
+  [ (1,2,3) ]
+  [ (7,8,9), (8,9) ]
+: Source Homomorphism maps source generators to:
+  [ (1,2,3) ]
+: Range Homomorphism maps range generators to:
+  [ (7,8,9), (8,9) ]
+
+## Section 3.3.3
 gap> iso8 := IsomorphismPerm2DimensionalGroup( C8 );
    [[G8=>d12] => [..]]
 
-## Section 3.3.3
+## Section 3.3.4
 gap> G := Group( (1,2,3,4)(5,6,7,8) );; 
 gap> H := Subgroup( G, [ (1,3)(2,4)(5,7)(6,8) ] );;
 gap> XG := XModByNormalSubgroup( G, H );

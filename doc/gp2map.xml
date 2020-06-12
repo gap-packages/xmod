@@ -264,8 +264,8 @@ gap> C3 := Cat1Group( t3, h1, e3 );;
 gap> imgamma := [ (4,5,6), (1,2,3), (2,3)(5,6) ];; 
 gap> gamma := GroupHomomorphismByImages( g18, g18, g18gens, imgamma );;
 gap> rho := IdentityMapping( s3a );; 
-gap> mor := Cat1GroupMorphism( C18, C3, gamma, rho );;
-gap> Display( mor );;
+gap> phi3 := Cat1GroupMorphism( C18, C3, gamma, rho );;
+gap> Display( phi3 );;
 Morphism of cat1-groups :- 
 : Source = [g18=>s3a] with generating sets:
   [ (1,2,3), (4,5,6), (2,3)(5,6) ]
@@ -279,6 +279,46 @@ Morphism of cat1-groups :-
   [ (7,8,9), (8,9) ]
 ]]>
 </Example>
+
+
+<ManSection>
+   <Attr Name="Cat1GroupMorphismOfXModMorphism"
+         Arg="IsXModMorphism" />
+   <Attr Name="XModMorphismOfCat1GroupMorphism"
+         Arg="IsCat1GroupMorphism" />
+<Description>
+If <M>(\sigma,\rho) : \calX_1 \to \calX_2</M> and <M>\calC_1,\calC_2</M> 
+are the cat<M>^1</M>-groups accociated to <M>\calX_1, \calX_2</M>, then
+the associated morphism of cat<M>^1</M>-groups is <M>(\gamma,\rho)</M> 
+where <M>\gamma(r_1,s_1) = (\rho r_1, \sigma s_1)</M>. 
+<P/>
+Similarly, given a morphism <M>(\gamma,\rho) : \calC_1 \to \calC_2</M> 
+of cat1-groups, the associated morphism of crossed modules is 
+<M>(\sigma,\rho) : \calX_1 \to \calX_2</M> 
+where <M>\sigma s_1 = \gamma(1,s_1)</M>. .
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> phi5 := Cat1GroupMorphismOfXModMorphism( mor5 );
+[[(Aut(c5) |X c5)=>Aut(c5)] => [(Aut(c5) |X c5)=>Aut(c5)]]
+gap> mor3 := XModMorphismOfCat1GroupMorphism( phi3 );;
+gap> Display( mor3 );
+Morphism of crossed modules :- 
+: Source = xmod([g18=>s3a]) with generating sets:
+  [ (4,5,6) ]
+  [ (7,8,9), (8,9) ]
+:  Range = xmod([g18=>s3a]) with generating sets:
+  [ (1,2,3) ]
+  [ (7,8,9), (8,9) ]
+: Source Homomorphism maps source generators to:
+  [ (1,2,3) ]
+: Range Homomorphism maps range generators to:
+  [ (7,8,9), (8,9) ]
+]]>
+</Example>
+
 
 <ManSection>
    <Func Name="IsomorphismPermObject" 
