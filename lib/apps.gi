@@ -116,7 +116,10 @@ function( X0, a )
         od; 
     od; 
     nPa := Length( elPa );
-    Print( "elPa has length ", nPa, " with elements ", elPa, "\n" );
+    Print( "elPa has length ", nPa, "\n" ); 
+    if ( InfoLevel( InfoXMod ) > 1 ) then 
+        Print( " with elements ", elPa, "\n" );
+    fi; 
     C0 := PreCat1GroupOfPreXMod( X0 ).precat1; 
     G0 := Source( C0 ); 
     e1 := Embedding( G0, 1 ); 

@@ -30,6 +30,7 @@
 /tst/i*.g
 /tst/loops.g
 /tst/others.g
+/tst/smallids.g
 /tst/testextra.g
 /tst/testmanual.g
 /tst/util.g
