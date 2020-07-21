@@ -1066,7 +1066,7 @@ function( L )
         return [ ]; 
     fi; 
     ob1 := L[1]; 
-    if not Is2DimensionalGroup( ob ) then 
+    if not Is2DimensionalGroup( ob1 ) then 
         return fail; 
     fi; 
     isxmod := IsPreXMod( ob1 ); 
