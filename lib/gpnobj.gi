@@ -12,10 +12,8 @@
 #M  IsHigherDimensionalGroup( <obj> )  . . . . . . . for 2-dimensional groups
 #M  HigherDimension( <obj> )  . . . .  . . . . . . . for 2-dimensional groups
 ##
-InstallImmediateMethod( IsHigherDimensionalGroup, Is2DimensionalGroup, 0, 
-    function( obj ) 
-    return true;
-end );
+## InstallTrueMethod( IsHigherDimensionalGroup, Is2DimensionalGroup ); 
+#? installing this method causes problems with printing!  
 
 InstallImmediateMethod( HigherDimension, Is2DimensionalGroup, 0, 
     function( obj ) 

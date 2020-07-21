@@ -48,7 +48,7 @@ CAT1_LIST_NUMBERS :=
       1, 1, 2, 1, 2, 1, 1, 1, 8, 8, 4, 2, 3, 1, 4, 1, 4, 3, 12, 6, 2, 6, 6, 
       3, 2, 2, 1, 31, 28, 24, 23, 33, 11, 9, 11, 1, 5, 20, 22, 11, 8, 11, 8, 
       4, 6, 2, 14, 12, 9, 5, 7, 7, 1, 4, 3, 1, 1, 1, 1, 3, 4, 9, 7, 3, 3, 5, 
-      3, 4, 1, 1, 1, 1, 1, 1, 2, 1, 3, 3, 1, 1, 1, 21, 12, 8, 3, 12, 12, 6, 
+      3, 4, 1, 1, 1, 1, 1, 1, 2, 1, 3, 3, 1, 1, 1, 20, 12, 8, 3, 12, 12, 6, 
       8, 6, 3, 2, 2, 2, 1, 28, 30, 10, 17, 14, 3, 3, 16 ], [ 4 ], 
   [ 4, 4, 4, 8 ], [ 2 ], [ 2, 4, 2, 4, 8 ], [ 4 ], [ 4, 4, 4, 8 ] ];
 CAT1_LIST_LOADED := false;
@@ -350,7 +350,7 @@ function( g2d )
     elif ( HasIsPreXModDomain( g2d ) and IsPreXModDomain( g2d ) ) then 
         Print( "[", Source( g2d ), "->", Range( g2d ), "]" ); 
     elif ( HasIsPreCat1Domain( g2d ) and IsPreCat1Domain( g2d ) ) then 
-        Print( "[", Source( g2d ), "=>", Range( g2d ), "]" );
+        Print( "[", Source( g2d ), " => ", Range( g2d ), "]" );
     else 
         TryNextMethod(); 
     fi;
@@ -558,7 +558,7 @@ function( dom )
     if ( HasIsPreXModDomain( dom ) and IsPreXModDomain( dom ) ) then 
         arrow := "->"; 
     elif ( HasIsPreCat1Domain( dom ) and IsPreCat1Domain( dom ) ) then 
-        arrow := "=>"; 
+        arrow := " => "; 
     else 
         arrow := "->-"; 
     fi; 
@@ -613,7 +613,8 @@ function( bdy, act )
     od;
     PX := PreXModObj( bdy, act ); 
     if not IsPreXMod( PX ) then 
-        Error( "PX fails to be a pre-crossed module" ); 
+        Info( InfoXMod, 1, "PX fails to be a pre-crossed module" ); 
+        return fail; 
     fi;
     return PX; 
 end );
@@ -766,14 +767,15 @@ end );
 
 ##############################################################################
 ##
-#M  PreCat1GroupOfPreXMod . . convert a pre-crossed module to a pre-cat1-group
+#M  PreCat1GroupRecordOfPreXMod . convert pre-crossed module to pre-cat1-group
 ##
-InstallMethod( PreCat1GroupOfPreXMod,
+InstallMethod( PreCat1GroupRecordOfPreXMod,
     "convert a pre-crossed module to a pre-cat1-group", true, [ IsPreXMod ], 0,
 function( X0 )
 
     local S0, genS0, R0, genR0, iso, Xact, Xbdy, one, imbdy, info, G, genG, 
-          t, h, f, eR, eS, imeR, imeS, projS, imt, imh, ime, imf, C, pcrec;
+          t, h, f, eR, eS, imeR, imeS, projS, imt, imh, ime, imf, C, 
+          mgiR, mgiS, pcrec;
 
     S0 := Source( X0 ); 
     genS0 := GeneratorsOfGroup( S0 ); 
@@ -786,21 +788,19 @@ function( X0 )
     Xbdy := Boundary( X0 );
     if IsTrivialAction2DimensionalGroup( X0 ) then
         Info( InfoXMod, 2, "Using direct product: ", R0, " x ", S0 );
-        G := DirectProduct( R0, S0 );
+        G := DirectProduct( R0, S0 ); 
+        genG := GeneratorsOfGroup( G ); 
         info := DirectProductInfo( G );
         if ( HasName( S0 ) and HasName( R0 ) ) then
             SetName( G, Concatenation( "(", Name(R0), " x ", Name(S0), ")" ) );
         fi;
-        genG := GeneratorsOfGroup( G );
-        imbdy := List( genS0, s -> ImageElm( Xbdy, s ) );
-        imt := Concatenation( genR0, List( genS0, s -> one ) );
-        imh := Concatenation( genR0, imbdy );
-        t := GroupHomomorphismByImages( G, R0, genG, imt );
-        h := GroupHomomorphismByImages( G, R0, genG, imh );
-        eR := Embedding( G, 1 );
-        eR := AsGroupGeneralMappingByImages( eR );
-        eS := Embedding( G, 2 );
-        eS := AsGroupGeneralMappingByImages( eS );
+        t := Projection( G, 1 );
+        projS := Projection( G, 2 );
+        f := projS * Xbdy; 
+        imh := List( genG, g -> ImageElm(t,g) * ImageElm(f,g) ); 
+        h := GroupHomomorphismByImages( G, R0, genG, imh ); 
+        eR := Embedding( G, 1 ); 
+        eS := Embedding( G, 2 ); 
     else
         Info( InfoXMod, 2, "Using semidirect product: ", R0, " |X ", S0 );
         G := SemidirectProduct( R0, Xact, S0 );
@@ -813,7 +813,7 @@ function( X0 )
         fi;
         genG := GeneratorsOfGroup( G );
         eR := Embedding( G, 1 );
-        imeR := List( genR0, r -> ImageElm( eR, r ) );
+        imeR := List( genR0, r -> ImageElm( eR, r ) ); 
         eS := Embedding( G, 2 );
         imeS := List( genS0, s -> ImageElm( eS, s ) );
         t := Projection( G );
@@ -825,11 +825,16 @@ function( X0 )
         imh := List( [ 1..Length( genG ) ],
             i -> imt[i] * ImageElm( Xbdy, projS[i] ) ); 
         h := GroupHomomorphismByImages( G, R0, genG, imh );
-    fi;
+    fi; 
     C := PreCat1GroupByTailHeadEmbedding( t, h, eR );
     if HasName( X0 ) then 
         SetName( C, Concatenation( "cat1(", Name( X0 ), ")" ) ); 
     fi; 
+    ## trying this out 13/06/20 
+    mgiR := MappingGeneratorsImages( eR ); 
+    eR := GroupHomomorphismByImages( Source(eR), Range(eR), mgiR[1], mgiR[2] ); 
+    mgiS := MappingGeneratorsImages( eS ); 
+    eS := GroupHomomorphismByImages( Source(eS), Range(eS), mgiS[1], mgiS[2] ); 
     pcrec := rec( precat1 := C, 
                   xmodRangeEmbedding := Image( eR ), 
                   xmodRangeEmbeddingIsomorphism := eR, 
@@ -882,9 +887,13 @@ function( bdy, act )
 
     local PM;
 
-    PM := PreXModByBoundaryAndAction( bdy, act );
+    PM := PreXModByBoundaryAndAction( bdy, act ); 
+    if ( PM = fail ) then 
+        return fail; 
+    fi;
     if not IsXMod( PM ) then
-        Error( "this boundary and action only defines a pre-crossed module" );
+        Info( InfoXMod, 1,  "these maps only define a pre-crossed module" );
+        return fail; 
     fi;
     return PM;
 end );
@@ -1101,7 +1110,7 @@ InstallMethod( XModOfCat1Group, "generic method for cat1-groups",
 function( C1 )
 
     local X1;
-    X1 := PreXModOfPreCat1Group( C1 );
+    X1 := PreXModRecordOfPreCat1Group( C1 ).prexmod;
     SetIsXMod( X1, true );
     SetXModOfCat1Group( C1, X1 );
     SetCat1GroupOfXMod( X1, C1 );
@@ -1118,7 +1127,7 @@ function( X1 )
 
     local PC1, C1;
 
-    PC1 := PreCat1GroupOfPreXMod( X1 ); 
+    PC1 := PreCat1GroupRecordOfPreXMod( X1 ); 
     C1 := PC1.precat1;
     SetXModOfCat1Group( C1, X1 );
     return C1;
@@ -1298,6 +1307,12 @@ end );
 ##
 #A  KernelCokernelXMod . . . . . ( ker(bdy) -> range/image(bdy) ) for an xmod 
 ##
+InstallMethod( KernelCokernelXMod, "kernel -> cokernel xmod for a cat1-group", 
+    true, [ IsCat1Group ], 0,
+function( C0 )
+    return KernelCokernelXMod( XModOfCat1Group( C0 ) );
+end ); 
+
 InstallMethod( KernelCokernelXMod, "kernel -> cokernel for an xmod", true,
     [ IsXMod ], 0,
 function( X0 )
@@ -1310,7 +1325,7 @@ function( X0 )
     bdy := Boundary( X0 );
     act := XModAction( X0 );
     K := Kernel( bdy );
-    J := Image( bdy );
+    J := ImagesSource( bdy );
     if ( J = R ) then ## trivial cokernel 
         C := Group( () ); 
         res := MappingToOne( K, C );
@@ -1319,7 +1334,7 @@ function( X0 )
     nat := NaturalHomomorphismByNormalSubgroup( R, J );
     F := FactorGroup( R, J ); 
     iso := IsomorphismPermGroup( F ); 
-    C := Image( iso );
+    C := Range( iso );
     mgi := MappingGeneratorsImages( iso );
     inv := GroupHomomorphismByImages( C, F, mgi[2], mgi[1] ); 
     genK := GeneratorsOfGroup( K ); 
@@ -1379,7 +1394,7 @@ InstallGlobalFunction( XMod, function( arg )
     # convert a cat1-group
     elif ( ( nargs = 1 ) and HasIsCat1Group( arg[1] ) 
            and IsCat1Group( arg[1] ) ) then
-        return PreXModOfPreCat1Group( arg[1] );
+        return PreXModRecordOfPreCat1Group( arg[1] ).prexmod;
 
     # group of automorphisms
     elif ( ( nargs = 1 ) and IsGroupOfAutomorphisms( arg[1] ) ) then
@@ -1640,11 +1655,11 @@ function( PM, Ssrc, Srng )
     Pact := XModAction( PM );
     Paut := Range( Pact );
     if not IsSubgroup( Psrc, Ssrc ) then
-        Print( "Ssrc is not a subgroup of Psrc\n" );
+        Info( InfoXMod, 1, "Ssrc is not a subgroup of Psrc" );
         return fail;
     fi;
     if not ( IsSubgroup( Prng, Srng ) ) then
-        Print( "Srng is not a subgroup of Prng\n" );
+        Info( InfoXMod, 1, "Srng is not a subgroup of Prng" );
         return fail;
     fi; 
     ssrc := Size( Ssrc );
@@ -1656,7 +1671,7 @@ function( PM, Ssrc, Srng )
     imgen := List( genSsrc, x -> ImageElm( Pbdy, x ) );
     imSsrc := Subgroup( Prng, imgen );
     if not IsSubgroup( Srng, imSsrc ) then
-        Info( InfoXMod, 2, "Pbdy(Ssrc) is not a subgroup of Srng" );
+        Info( InfoXMod, 2, "Pbdy(Ssrc) is not a subgroup of Srng" ); 
         return fail;
     fi; 
     trivsrc := ( Size( Ssrc ) = 1 );
@@ -1883,24 +1898,25 @@ function( size, gpnum, num )
     maxsize := CAT1_LIST_MAX_SIZE;
     usage := "Usage:  Cat1Select( size, gpnum, num );";
     if not ( ( size > 0 ) and ( size <= maxsize ) ) then
-        Print( usage, "  where size <= ", CAT1_LIST_MAX_SIZE, "\n" );
+        Info( InfoXMod, 1, usage, "  where size <= ", CAT1_LIST_MAX_SIZE );
         return fail;
     fi; 
     maxgpnum := NumberSmallGroups( size ); 
     if not ( ( gpnum > 0 ) and ( gpnum <= NumberSmallGroups( size ) ) ) then 
-        Print( usage, "  where gpnum <= ", maxgpnum, "\n" );
+        Info( InfoXMod, 1, usage, "  where gpnum <= ", maxgpnum );
         return fail;
     fi; 
     maxnum := CAT1_LIST_NUMBERS[size][gpnum]; 
     if not ( ( num > 0 ) and ( num <= maxnum ) ) then 
-        Print( usage, "  where num <= ", maxnum, "\n" );
+        Info( InfoXMod, 1, usage, "  where num <= ", maxnum );
         return fail;
     fi; 
     if ( size = 1 ) then 
         if ( num = 0 ) then 
-            Print( usage, "\nThere is only " ); 
-            Print( "the trivial cat1-structure on the trivial group.\n" ); 
-            Print( "(1)  [ [ ],  tail = head = zero mapping ]\n" ); 
+            Info( InfoXMod, 1, usage ); 
+            Info( InfoXMod, 1, 
+             "There is only the trivial cat1-structure on the trivial group." ); 
+            Info( InfoXMod, 1, "(1)  [ [ ],  tail = head = zero mapping ]" ); 
             return 1; 
         elif ( num = 1 ) then 
             G := SmallGroup( 1, 1 ); 
@@ -1934,13 +1950,13 @@ function( size, gpnum, num )
     fi;
     names := List( [ pos..pos2], n -> CAT1_LIST[n][3] );
     if not ( gpnum > 0 ) then
-        Print( usage, "\n" );
+        Info( InfoXMod, 1, usage );
         return names;
     fi;
     if ( gpnum > iso[size] ) then
         Print( "# isomorphism classes of groups of size ", size, 
                " is ", iso[size], ", less than ", gpnum, "\n" ); 
-        Print( usage, "\n" );
+        Info( InfoXMod, 1, usage );
         return names;
     fi;
     j := pos + gpnum - 1;
@@ -2141,13 +2157,13 @@ end );
 
 #############################################################################
 ##
-#M  PreXModOfPreCat1Group
+#M  PreXModRecordOfPreCat1Group
 ##
-InstallMethod( PreXModOfPreCat1Group, true, [ IsPreCat1Group ], 0,
+InstallMethod( PreXModRecordOfPreCat1Group, true, [ IsPreCat1Group ], 0,
 function( C1G )
  
     local Csrc, Crng, gensrc, genrng, genker, bdy, kert, innaut, autgen,
-           imautgen, idkert, a, aut, act, phi, j, r, PM, Cek, Cer, name; 
+          imautgen, idkert, a, aut, act, phi, j, r, PM, PMrec, Cek, Cer, name; 
 
     Csrc := Source( C1G );
     Crng := Range( C1G );
@@ -2199,13 +2215,16 @@ function( C1G )
     elif HasName( C1G ) then 
         SetName( PM, Concatenation( "xmod(", Name( C1G ), ")" ) ); 
     fi; 
-    SetPreCat1GroupOfPreXMod( PM, rec( 
+    ## need more fields here? 
+    PMrec := rec( 
+        prexmod := PM ); 
+    SetPreCat1GroupRecordOfPreXMod( PM, rec( 
         precat1 := C1G, 
         xmodSourceEmbedding := kert, 
-        xmodSourceEmbedddingIsomorphism := Cek, 
-        xmodRangeEmbedding := Image( Cer ), 
+        xmodSourceEmbeddingIsomorphism := Cek, 
+        xmodRangeEmbedding := Range( Cer ), 
         xmodRangeEmbeddingIsomorphism := Cer ) ); 
-    return PM;
+    return PMrec;
 end );
 
 #############################################################################

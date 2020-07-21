@@ -89,3 +89,9 @@ DeclareAttribute( "FacesOfHigherDimensionalGroup",
 ##
 DeclareGlobalFunction( "PreCatnGroup" );
 DeclareGlobalFunction( "CatnGroup" );
+
+#############################################################################
+##
+#O  IsomorphicRepresentatives( <arg> ) 
+##
+DeclareOperation( "IsomorphicRepresentatives", [ IsList ] );

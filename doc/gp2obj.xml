@@ -860,7 +860,8 @@ gap> C2 := Cat1GroupByPeifferQuotient( C );
 [Group( [ f1, f2 ] )=>c2]
 gap> StructureDescription( C2 );
 [ "S3", "C2" ]
-gap> XC := PreXModOfPreCat1Group( C );;
+gap> rec2 := PreXModRecordOfPreCat1Group( C );;
+gap> XC := rec2.prexmod;;
 gap> StructureDescription( XC );  
 [ "A4", "C2" ]
 gap> XC2 := XModByPeifferQuotient( XC );;
@@ -1035,9 +1036,9 @@ gap> TailMap( IPC5 ); RangeEmbedding( IPC5 );
          Arg="X0" />
    <Attr Name="XModOfCat1Group"
          Arg="C0" />
-   <Attr Name="PreCat1GroupOfPreXMod"
+   <Attr Name="PreCat1GroupRecordOfPreXMod"
          Arg="P0" />
-   <Attr Name="PreXModOfPreCat1Group"
+   <Attr Name="PreXModRecordOfPreCat1Group"
          Arg="P0" />
 <Description>
 The category of crossed modules is equivalent to the category of 
@@ -1063,7 +1064,7 @@ On the other hand, starting with a cat<M>^1</M>-group
 The action of  <M>R</M>  on  <M>S</M>  is conjugation in  <M>G</M>  via the embedding
 of  <M>R</M>  in  <M>G</M>.
 <P/>
-As from version 2.74, the attribute <C>PreCat1GroupOfPreXMod</C> 
+As from version 2.74, the attribute <C>PreCat1GroupRecordOfPreXMod</C> 
 of a pre-crossed modute <M>X = (\partial : S \to R)</M> 
 returns a record with fields 
 <List>
