@@ -539,96 +539,6 @@ function( T, G )
     return list;
 end );
 
-InstallMethod( AllXModsWithGroups0, "generic method for a pair of groups", 
-    true, [ IsGroup, IsGroup ], 0,
-function( T, G )
-
-    local list, A, allTG, allGA, b1, a1, obj;
-
-    list := [ ];
-    A := AutomorphismGroup(T); 
-    allTG := AllHomomorphisms(T,G);
-    allGA := AllHomomorphisms(G,A);
-    for b1 in allTG do  
-        for a1 in allGA do 
-            obj := PreXModObj( b1, a1 );  
-            if ( IsPreXMod( obj ) and IsXMod( obj ) ) then 
-                Add( list, obj );
-            fi;
-        od; 
-    od;
-    return list;
-end );
-
-InstallMethod( AllXModsWithGroups1, "generic method for a pair of groups", 
-    true, [ IsGroup, IsGroup ], 0,
-function( T, G )
-
-    local list, A, itTG, itGA, b1, a1, obj;
-
-    list := [ ];
-    A := AutomorphismGroup(T); 
-    itTG := Iterator( AllHomomorphismClasses(T,G) );
-    while not IsDoneIterator( itTG ) do 
-        b1 := NextIterator( itTG ); 
-        itGA := Iterator( AllHomomorphisms(G,A) );
-        while not IsDoneIterator( itGA ) do 
-            a1 := NextIterator( itGA ); 
-            obj := PreXModObj( b1, a1 );  
-            if ( IsPreXMod( obj ) and IsXMod( obj ) ) then 
-                Add( list, obj );
-            fi;
-        od; 
-    od;
-    return list;
-end );
-
-InstallMethod( AllXModsWithGroups2, "generic method for a pair of groups", 
-    true, [ IsGroup, IsGroup ], 0,
-function( T, G )
-
-    local list, A, itTG, itGA, b1, a1, obj;
-
-    list := [ ];
-    A := AutomorphismGroup(T); 
-    itTG := Iterator( AllHomomorphisms(T,G) );
-    while not IsDoneIterator( itTG ) do 
-        b1 := NextIterator( itTG ); 
-        itGA := Iterator( AllHomomorphismClasses(G,A) );
-        while not IsDoneIterator( itGA ) do 
-            a1 := NextIterator( itGA ); 
-            obj := PreXModObj( b1, a1 );  
-            if ( IsPreXMod( obj ) and IsXMod( obj ) ) then 
-                Add( list, obj );
-            fi;
-        od; 
-    od;
-    return list;
-end );
-
-InstallMethod( AllXModsWithGroups3, "generic method for a pair of groups", 
-    true, [ IsGroup, IsGroup ], 0,
-function( T, G )
-
-    local list, A, itTG, itGA, b1, a1, obj;
-
-    list := [ ];
-    A := AutomorphismGroup(T); 
-    itTG := Iterator( AllHomomorphismClasses(T,G) );
-    while not IsDoneIterator( itTG ) do 
-        b1 := NextIterator( itTG ); 
-        itGA := Iterator( AllHomomorphismClasses(G,A) );
-        while not IsDoneIterator( itGA ) do 
-            a1 := NextIterator( itGA ); 
-            obj := PreXModObj( b1, a1 );  
-            if ( IsPreXMod( obj ) and IsXMod( obj ) ) then 
-                Add( list, obj );
-            fi;
-        od; 
-    od;
-    return list;
-end );
-
 #############################################################################
 ##
 #F  AllXMods( <T>, <G> )             xmods with given source and range 
@@ -1105,28 +1015,94 @@ end );
 ##
 #M  AllXModsUpToIsomorphism . . .  . . all crossed modules up to isomorphism
 ##
-InstallMethod( AllXModsUpToIsomorphism, "generic method for list of xmods", 
-    true, [ IsList ], 0,
-function( allxmods )
+InstallMethod( AllXModsUpToIsomorphism, "generic method for a pair of groups", 
+    true, [ IsGroup, IsGroup ], 0,
+function( T, G )
 
-    local n, found, all, i, j, k, isolar, list;
+    local list, len, A, itTG, itGA, b1, a1, obj, found, i, ok;
 
-    n := Length( allxmods ); 
-    found := ListWithIdenticalEntries( n, 0 );
-    all := ShallowCopy( allxmods ); 
-    list := [];
-    for i in [1..n] do
-        if ( found[i] = 0 ) then
-            Add( list, allxmods[i] );
-            isolar := IsomorphicXModFamily( allxmods[i], all );
-            for j in isolar do 
-                k := Position( allxmods, all[j] ); 
-                found[k] := 1; 
-            od;
-        fi; 
-    od; 
+    list := [ ];
+    len := 0;
+    A := AutomorphismGroup(T); 
+    itTG := Iterator( AllHomomorphisms(T,G) );
+    while not IsDoneIterator( itTG ) do 
+        b1 := NextIterator( itTG ); 
+        itGA := Iterator( AllHomomorphisms(G,A) );
+        while not IsDoneIterator( itGA ) do 
+            a1 := NextIterator( itGA ); 
+            obj := PreXModByBoundaryAndAction( b1, a1 );  
+            if ( obj <> fail ) and IsXMod( obj ) then 
+                found := false; 
+                i := 0; 
+                while ( not found ) and ( i < len ) do 
+                    i := i+1; 
+                    ok := IsomorphismXMods( obj, list[i] ); 
+                    if ( ok <> fail ) then 
+                        found := true; 
+                    fi; 
+                od;
+                if not found then 
+                    len := len + 1;
+                    Add( list, obj ); 
+                fi; 
+            fi;
+        od; 
+    od;
     return list;
 end );
+
+#############################################################################
+##
+#M  IsomorphismClassRepresentatives2dGroups . . reps from a list of 2d-groups
+##
+InstallMethod( IsomorphismClassRepresentatives2dGroups, "for a 2d-group list", 
+    true, [ IsList ], 0,
+function( L )
+
+    local lenL, ob1, isxmod, list, len, j, obj, found, i, ok;
+
+    lenL := Length( L ); 
+    if ( lenL = 0 ) then 
+        return [ ]; 
+    fi; 
+    ob1 := L[1]; 
+    if not Is2DimensionalGroup( ob ) then 
+        return fail; 
+    fi; 
+    isxmod := IsPreXMod( ob1 ); 
+    if isxmod then 
+        if not ForAll( L, ob -> IsPreXMod( ob ) ) then 
+            return fail; 
+        fi; 
+    else 
+        if not ForAll( L, ob -> IsPreCat1Group( ob ) ) then 
+            return fail; 
+        fi; 
+    fi; 
+    list := [ ob1 ];
+    len := 1; 
+    for j in [2..lenL] do 
+        obj := L[j]; 
+        found := false; 
+        i := 0; 
+        while ( not found ) and ( i < len ) do 
+            i := i+1; 
+            if isxmod then 
+                ok := IsomorphismXMods( obj, list[i] ); 
+            else 
+                ok := IsomorphismCat1Groups( obj, list[i] ); 
+            fi; 
+            if ( ok <> fail ) then 
+                found := true; 
+            fi; 
+        od;
+        if not found then 
+            len := len + 1;
+            Add( list, obj ); 
+        fi; 
+    od;
+    return list;
+end ); 
 
 #############################################################################
 ##

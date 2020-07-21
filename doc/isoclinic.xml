@@ -420,32 +420,92 @@ gap> NilpotencyClassOf2DimensionalGroup( X24 );
 </Example>
 
 <ManSection>
+   <Oper Name="IsomorphismXMods"
+         Arg="X1 X2" />
+<Description>
+The function <C>IsomorphismXMods</C> computes an isomorphism 
+<M>\mu : \calX_1 \to \calX_2</M>, 
+provided one exists, or else returns <C>fail</C>. 
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> gend24 := GeneratorsOfGroup( d24 );;             
+gap> a := gend24[1];; b:= gend24[2];; 
+gap> J := Subgroup( d24, [a^2,b] ); 
+Group([ (1,3,5,7,9,11)(2,4,6,8,10,12), (2,12)(3,11)(4,10)(5,9)(6,8) ])
+gap> K := Subgroup( d24, [a^2,a*b] );
+Group([ (1,3,5,7,9,11)(2,4,6,8,10,12), (1,12)(2,11)(3,10)(4,9)(5,8)(6,7) ])
+gap> XJ := XModByNormalSubgroup( d24, J );;
+gap> XK := XModByNormalSubgroup( d24, K );;
+gap> iso := IsomorphismXMods( XJ, XK );;
+gap> SourceHom( iso );
+[ (1,3,5,7,9,11)(2,4,6,8,10,12), (2,12)(3,11)(4,10)(5,9)(6,8) ] -> 
+[ (1,3,5,7,9,11)(2,4,6,8,10,12), (1,12)(2,11)(3,10)(4,9)(5,8)(6,7) ]
+gap> RangeHom( iso ); 
+[ (1,2,3,4,5,6,7,8,9,10,11,12), (2,12)(3,11)(4,10)(5,9)(6,8) ] -> 
+[ (1,2,3,4,5,6,7,8,9,10,11,12), (1,12)(2,11)(3,10)(4,9)(5,8)(6,7) ]
+]]>
+</Example>
+
+<ManSection>
    <Func Name="AllXMods"
          Arg="args" />
+   <Oper Name="AllXModsWithGroups"
+         Arg="src rng" />
+   <Oper Name="AllXModsUpToIsomorphism"
+         Arg="src rng" />
+   <Oper Name="IsomorphismClassRepresentatives2dGroups"
+         Arg="L" />
 <Description>
-The global function <C>AllXMods</C> may be called in three ways:
-as <C>AllXMods(S,R)</C> to compute all crossed modules with chosen 
-source and range groups; 
-as <C>AllXMods([n,m])</C> to compute all crossed modules with a given size; 
-or as <C>AllXMods(ord)</C> to compute all crossed modules whose associated 
+The global function <C>AllXMods</C> may be called in three ways. 
+Firstly, as <C>AllXMods(S,R)</C> to compute all crossed modules with chosen 
+source and range groups: this calls <C>AllXModsWithGroups(S,R)</C>.  
+Secondly, <C>AllXMods([n,m])</C> computes all crossed modules with a 
+given size <C>[n,m]</C>. 
+Thirdly <C>AllXMods(ord)</C> to compute all crossed modules whose associated 
 cat1-groups have a given size <C>ord</C>. 
 <P/> 
-In the example we see that there are <M>4</M> crossed modules 
+The function <C>AllXModsUpToIsomorphism(S,R)</C> returns a list of 
+representatives of the isomorphism classes of crossed modules 
+with source <M>S</M> and range <M>R</M>. 
+<P/> 
+If <C>L</C> is a list returned by, for example, <C>AllXModsWithGroups(S,R)</C>, 
+then the isomorphism class representatives for this list is returned by 
+<C>IsomorphismClassRepresentatives2dGroups(L)</C>. This result is the same 
+as that given by <C>AllXModsUpToIsomorphism(S,R)</C>. 
+<P/>
+In the example we see that there are <M>4</M> crossed modules, 
+in <M>3</M> isomorphism classes, 
 <M>(C_6 \to S_3)</M>; forming a subset of the <M>17</M> crossed modules 
 with size <C>[6,6]</C>; and that these form a subset of the <M>205</M> 
 crossed modules whose cat1-group has size <M>36</M>. 
+
 There are <M>40</M> precrossed modules with size <C>[6,6]</C>. 
 </Description>
 </ManSection>
 <P/>
 <Example>
 <![CDATA[
-gap> xc6s3 := AllXMods( SmallGroup(6,2), SmallGroup(6,1) );;   
-gap> Length( xc6s3 );           
+gap> c6 := SmallGroup( 6, 2 );; 
+gap> s3 := SmallGroup( 6, 1 );; 
+gap> Ac6s3 := AllXMods( c6, s3 );;   
+gap> Length( Ac6s3 );           
 4
-gap> x66 := AllXMods( [6,6] );;   
-gap> Length( x66 );
+gap> Ic6s3 := AllXModsUpToIsomorphism( c6, s3 );; 
+gap> List( Ic6s3, obj -> IsTrivialAction2DimensionalGroup( obj ) ); 
+[ true, false, false ]
+gap> Kc6s3 := List( Ic6s3, obj -> KernelCokernelXMod( obj ) );; 
+gap> List( Kc6s3, obj -> IdGroup( obj ) );
+[ [ [ 6, 2 ], [ 6, 1 ] ], [ [ 6, 2 ], [ 6, 1 ] ], [ [ 2, 1 ], [ 2, 1 ] ] ]
+[ ]
+gap> A66 := AllXMods( [6,6] );;   
+gap> Length( A66 );
 17
+gap> IA66 := IsomorphismClassRepresentatives2dGroups( A66 );;
+gap> Length( IA66 );
+9
 gap> x36 := AllXMods( 36 );; 
 gap> Length( x36 ); 
 205
@@ -456,35 +516,6 @@ gap> Collected( size36 );
   [ [ 36, 1 ], 4 ] ]
 ]]>
 </Example>
-
-<ManSection>
-   <Oper Name="IsomorphismXMods"
-         Arg="X1 X2" />
-   <Oper Name="AllXModsUpToIsomorphism"
-         Arg="list" />
-<Description>
-The function <C>IsomorphismXMods</C> computes an isomorphism 
-<M>\mu : \calX_1 \to \calX_2</M>, 
-provided one exists, or else returns <C>fail</C>. 
-In the example below we see that the <M>17</M> crossed modules 
-of size <C>[6,6]</C> in <C>x66</C> (see the previous subsection) 
-fall into <M>9</M> isomorphism classes. 
-<P/>
-The function <C>AllXModsUpToIsomorphism</C> takes a list of crossed modules 
-and partitions them into isomorphism classes. 
-</Description>
-</ManSection>
-<P/>
-<Example>
-<![CDATA[
-gap> IsomorphismXMods( x66[1], x66[2] );
-[[Group( [ f1, f2 ] )->Group( [ f1, f2 ] )] => [Group( [ f1, f2 ] )->Group( 
-[ f1, f2 ] )]]
-gap> iso66 := AllXModsUpToIsomorphism( x66 );;  Length( iso66 ); 
-9 
-]]>
-</Example>
-
 
 </Section>
 
@@ -641,12 +672,12 @@ are isoclinic to the trivial crossed module.
 <P/>
 <Example>
 <![CDATA[
-gap> C8 := Cat1Select( 16, 8, 2 );;
+gap> C8 := Cat1Group( 16, 8, 2 );;
 gap> X8 := XMod(C8);  IdGroup( X8 );
 [Group( [ f1*f2*f3, f3, f4 ] )->Group( [ f2, f2 ] )]
 [ [ 8, 1 ], [ 2, 1 ] ]
-gap> C9 := Cat1Select( 32, 9, 2 );
-[(C8 x C2) : C2=>Group( [ f2, f2 ] )]
+gap> C9 := Cat1Group( 32, 9, 2 );
+[(C8 x C2) : C2 => Group( [ f2, f2 ] )]
 gap> X9 := XMod( C9 );  IdGroup( X9 );
 [Group( [ f1*f2*f3, f3, f4, f5 ] )->Group( [ f2, f2 ] )]
 [ [ 16, 5 ], [ 2, 1 ] ]
