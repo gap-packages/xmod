@@ -22,9 +22,11 @@ DeclareOperation( "SmallCat1Group", [ IsPosInt, IsPosInt, IsPosInt ] );
 
 ##############################################################################
 ##
-#O  IdCat1Group( <cat1> ) 
+#A  IdCat1Group( <cat1> ) 
+#A  IdQuasiCat1Group( <cat1> ) 
 ##
-DeclareOperation( "IdCat1Group", [ IsCat1Group ] ); 
+DeclareAttribute( "IdCat1Group", IsCat1Group ); 
+DeclareAttribute( "IdQuasiCat1Group", IsCat1Group ); 
 
 ##############################################################################
 ##

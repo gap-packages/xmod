@@ -37,12 +37,17 @@ InstallMethod( Cat1GroupToHAP, "for an XMod cat1-group", true,
     [ IsCat1Group ], 0,
 function( C )
 
-    local G;
+    local G, gens, t, h;
 
-    G := Objectify( HapCatOneGroup,
-             rec( sourceMap := TailMap( C ),
-                  targetMap := HeadMap( C ) ) ); 
-    return G; 
+    G := Source( C ); 
+    gens := GeneratorsOfGroup( G ); 
+    t := TailMap( C ) * RangeEmbedding( C ); 
+    h := HeadMap( C ) * RangeEmbedding( C ); 
+    return Objectify( HapCatOneGroup,
+        rec( sourceMap := GroupHomomorphismByImagesNC( G, G, gens,
+                              List( gens, g -> ImageElm( t, g ) ) ),
+             targetMap := GroupHomomorphismByImagesNC( G, G, gens,
+                              List( gens, g -> ImageElm( h, g) ) ) ) ); 
 end ); 
 
 ##############################################################################
@@ -52,9 +57,7 @@ end );
 InstallMethod( SmallCat1Group, "for 3 positive integers", true, 
     [ IsPosInt, IsPosInt, IsPosInt ], 0,
 function( n, i, j )
-
     local C; 
-
     C := SmallCatOneGroup( n, i, j ); 
     return CatOneGroupToXMod( C );
 end ); 
@@ -62,14 +65,20 @@ end );
 ##############################################################################
 ##
 #M  IdCat1Group( <cat1> )
+#M  IdQuasiCat1Group( <cat1> )
 ##  
 InstallMethod( IdCat1Group, "for a cat1-group", true, [ IsCat1Group ], 0,
 function( C )
-
     local B; 
-
     B := Cat1GroupToHAP( C ); 
     return IdCatOneGroup( B );
+end ); 
+
+InstallMethod( IdQuasiCat1Group, "for a cat1-group", true, [ IsCat1Group ], 0,
+function( C )
+    local B; 
+    B := Cat1GroupToHAP( C ); 
+    return IdQuasiCatOneGroup( B );
 end ); 
 
 ##############################################################################
@@ -79,9 +88,7 @@ end );
 InstallMethod( QuasiIsomorphCat1Group, "for a cat1-group", true, 
     [ IsCat1Group ], 0,
 function( C )
-
     local HC, HQ, Q; 
-
     HC := Cat1GroupToHAP( C ); 
     HQ := QuasiIsomorph( HC ); 
     Q := CatOneGroupToXMod( HQ ); 
