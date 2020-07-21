@@ -189,9 +189,9 @@ DeclareOperation( "XModByPullback", [ IsXMod, IsGroupHomomorphism ] );
 
 #############################################################################
 ##
-#A  KernelCokernelXMod( <xmod> )
+#A  KernelCokernelXMod( <2dgp> )
 ##
-DeclareAttribute( "KernelCokernelXMod", IsXMod );
+DeclareAttribute( "KernelCokernelXMod", Is2DimensionalGroup );
 
 #############################################################################
 ##
@@ -300,13 +300,13 @@ DeclareAttribute( "TransposeCat1Group", IsPreCat1Group );
 
 #############################################################################
 ##
-#A  PreXModOfPreCat1Group( <PCG> )
-#A  PreCat1GroupOfPreXMod( <PM> )
+#A  PreXModRecordOfPreCat1Group( <PCG> )
+#A  PreCat1GroupRecordOfPreXMod( <PM> )
 #A  XModOfCat1Group( <C1G> )
 #A  Cat1GroupOfXMod( <XM> )
 ##
-DeclareAttribute( "PreXModOfPreCat1Group", IsPreCat1Group );
-DeclareAttribute( "PreCat1GroupOfPreXMod", IsPreXMod );
+DeclareAttribute( "PreXModRecordOfPreCat1Group", IsPreCat1Group );
+DeclareAttribute( "PreCat1GroupRecordOfPreXMod", IsPreXMod );
 DeclareAttribute( "XModOfCat1Group", IsCat1Group );
 DeclareAttribute( "Cat1GroupOfXMod", IsXMod );
 
@@ -367,7 +367,7 @@ DeclareAttribute( "Coproduct2dInfo", Is2DimensionalDomain, "mutable" );
 #############################################################################
 ##
 #A  NormalSubXMods( <XM> )
-#A  NormalSubXCat1Groups( <C1G> )
+#A  NormalSubCat1Groups( <C1G> )
 ##
 DeclareAttribute( "NormalSubXMods", IsXMod );
 DeclareAttribute( "NormalSubCat1Groups", IsCat1Group );

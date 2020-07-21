@@ -93,11 +93,6 @@ DeclareOperation( "IsomorphismXMods",
 ##
 DeclareGlobalFunction( "AllXMods" );
 DeclareOperation( "AllXModsWithGroups", [ IsGroup, IsGroup ] );
-DeclareOperation( "AllXModsWithGroups0", [ IsGroup, IsGroup ] );
-DeclareOperation( "AllXModsWithGroups1", [ IsGroup, IsGroup ] );
-DeclareOperation( "AllXModsWithGroups2", [ IsGroup, IsGroup ] );
-DeclareOperation( "AllXModsWithGroups3", [ IsGroup, IsGroup ] );
-
 
 ############################################################################# 
 #####                FUNCTIONS FOR ISOCLINISM OF GROUPS                 ##### 
@@ -147,7 +142,8 @@ DeclareOperation( "IsomorphicXModFamily", [  Is2DimensionalGroup, IsList ] );
 ##
 #O AllXModsUpToIsomorphism . . . . . . all crossed modules up to isomorphism
 ##
-DeclareOperation( "AllXModsUpToIsomorphism", [ IsList ] );
+DeclareOperation( "AllXModsUpToIsomorphism", [ IsGroup, IsGroup ] ); 
+DeclareOperation( "IsomorphismClassRepresentatives2dGroups", [ IsList ] ); 
 
 #############################################################################
 ##

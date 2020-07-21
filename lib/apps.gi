@@ -116,8 +116,11 @@ function( X0, a )
         od; 
     od; 
     nPa := Length( elPa );
-    Print( "elPa has length ", nPa, " with elements ", elPa, "\n" );
-    C0 := PreCat1GroupOfPreXMod( X0 ).precat1; 
+    Print( "elPa has length ", nPa, "\n" ); 
+    if ( InfoLevel( InfoXMod ) > 1 ) then 
+        Print( " with elements ", elPa, "\n" );
+    fi; 
+    C0 := PreCat1GroupRecordOfPreXMod( X0 ).precat1; 
     G0 := Source( C0 ); 
     e1 := Embedding( G0, 1 ); 
     e2 := Embedding( G0, 2 );
@@ -297,7 +300,7 @@ InstallMethod( LoopsXMod, "for a crossed module and an element", true,
     [ IsPreXMod, IsObject ], 0, 
 function( X0, a ) 
 
-    local M0, genM0, lenM0, P0, bdy0, act0, aut0, acta, elPa, p, c, m, 
+    local M0, genM0, lenM0, P0, bdy0, act0, aut0, acta, elPa, p, c, m, rec0, 
           nPa, C0, G0, e1, e2, Pa, genPa, posPa, i, e, e2m, e1p, g, ngPa, 
           imda, j, pa, ma, bdy1, imact1, act1;
 
@@ -331,10 +334,18 @@ function( X0, a )
     nPa := Length( elPa );
     Info( InfoXMod, 2, "elPa has length ", nPa );
     Info( InfoXMod, 3, "with elements ", elPa );
-    C0 := PreCat1GroupOfPreXMod( X0 ).precat1; 
+    C0 := Cat1GroupOfXMod( X0 ); 
     G0 := Source( C0 ); 
-    e1 := Embedding( G0, 1 ); 
-    e2 := Embedding( G0, 2 );
+    if HasSemidirectProductInfo( G0 ) then 
+        e1 := Embedding( G0, 1 );
+        e2 := Embedding( G0, 2 );
+    elif HasPreCat1GroupRecordOfPreXMod( X0 ) then 
+        rec0 := PreCat1GroupRecordOfPreXMod( X0 ); 
+        e1 := rec0!.xmodRangeEmbeddingIsomorphism; 
+        e2 := rec0!.xmodSourceEmbeddingIsomorphism; 
+    else 
+        Error( "no way of defining e1, e2" ); 
+    fi; 
     Pa := Subgroup( G0, [ ] ); 
     genPa := [ ];
     posPa := [ ];

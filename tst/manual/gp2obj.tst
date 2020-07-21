@@ -305,7 +305,8 @@ gap> C2 := Cat1GroupByPeifferQuotient( C );
 [Group( [ f1, f2 ] )=>c2]
 gap> StructureDescription( C2 );
 [ "S3", "C2" ]
-gap> XC := PreXModOfPreCat1Group( C );;
+gap> rec2 := PreXModRecordOfPreCat1Group( C );;
+gap> XC := rec2.prexmod;;
 gap> StructureDescription( XC );  
 [ "A4", "C2" ]
 gap> XC2 := XModByPeifferQuotient( XC );;
@@ -443,12 +444,14 @@ gap> CatnGroupNumbers( d12 );
 rec( cat1 := 12, idem := 21, iso1 := 4, siso := 4, symm := 12 )
 
 ## Section 2.7.1
+gap> SetInfoLevel( InfoXMod, 1 );
 gap> L18 := Cat1Select( 18 ); 
-Usage:  Cat1Select( size, gpnum, num );  where gpnum <= 5
+#I  Usage:  Cat1Select( size, gpnum, num );  where gpnum <= 5
 fail
 gap> L18_4 := Cat1Select( 18, 4 ); 
-Usage:  Cat1Select( size, gpnum, num );  where num <= 4
+#I  Usage:  Cat1Select( size, gpnum, num );  where num <= 4
 fail
+gap> SetInfoLevel( InfoXMod, 0 );
 gap> B18 := Cat1Select( 18, 4, 2 );
 [(C3 x C3) : C2=>Group( [ f1, <identity> of ..., f3 ] )]
 gap> iso18 := IsomorphismPermObject( B18 );;

@@ -700,8 +700,8 @@ InstallMethod( IsomorphismByIsomorphisms, "generic method for pre-cat1-groups",
     true, [ IsPreCat1Group, IsList ], 0,
 function( PC, isos )
 
-    local G, R, t, h, e, isoG, isoR, mgiG, mgiR, invG, invR, 
-          G2, R2, t2, h2, e2, PC2, mor;
+    local G, R, t, h, e, isoG, isoR, mgiG, mgiR, 
+          G2, R2, imt2, t2, imh2, h2, ime2, e2, PC2, mor;
 
     G := Source( PC ); 
     R := Range( PC );
@@ -716,12 +716,13 @@ function( PC, isos )
     G2 := Range( isoG );
     R2 := Range( isoR ); 
     mgiG := MappingGeneratorsImages( isoG ); 
-    invG := GroupHomomorphismByImages( G2, G, mgiG[2], mgiG[1] ); 
     mgiR := MappingGeneratorsImages( isoR ); 
-    invR := GroupHomomorphismByImages( R2, R, mgiR[2], mgiR[1] ); 
-    t2 := CompositionMapping( isoR, t, invG ); 
-    h2 := CompositionMapping( isoR, h, invG );
-    e2 := CompositionMapping( isoG, e, invR );
+    imt2 := List( mgiG[1], g -> ImageElm( isoR, ImageElm( t, g ) ) ); 
+    t2 := GroupHomomorphismByImages( G2, R2, mgiG[2], imt2 ); 
+    imh2 := List( mgiG[1], g -> ImageElm( isoR, ImageElm( h, g ) ) ); 
+    h2 := GroupHomomorphismByImages( G2, R2, mgiG[2], imh2 ); 
+    ime2 := List( mgiR[1], r -> ImageElm( isoG, ImageElm( e, r ) ) ); 
+    e2 := GroupHomomorphismByImages( R2, G2, mgiR[2], ime2 ); 
     PC2 := PreCat1GroupByTailHeadEmbedding( t2, h2, e2 );
     mor := PreCat1GroupMorphism( PC, PC2, isoG, isoR ); 
     return mor; 
@@ -731,43 +732,50 @@ InstallMethod( IsomorphismByIsomorphisms, "generic method for pre-xmods",
     true, [ IsPreXMod, IsList ], 0,
 function( PM, isos )
 
-    local Psrc, Prng, Pbdy, Pact, Paut, Pautgen, siso, smgi, sinv, riso, 
-          rmgi, rinv, Qsrc, Qrng, Qbdy, Qaut, Qautgen, ahom, Qact, QM, iso; 
+    local Psrc, Prng, Pbdy, Pact, Paut, Pautgen, siso, smgi, riso, rmgi, 
+          Qsrc, Qrng, imQbdy, Qbdy, Qaut, len, Qautgen, i, a, ima, ahom, 
+          imQact, Qact, QM, iso; 
 
     Psrc := Source( PM ); 
     Prng := Range( PM );
     Pbdy := Boundary( PM );
     siso := isos[1];
-    Qsrc := ImagesSource( siso ); 
+    Qsrc := Range( siso ); 
     smgi := MappingGeneratorsImages( siso );  
-    sinv := GroupHomomorphismByImages( Qsrc, Psrc, smgi[2], smgi[1] ); 
     riso := isos[2]; 
-    Qrng := ImagesSource( riso );
+    Qrng := Range( riso );
     rmgi := MappingGeneratorsImages( riso );  
-    rinv := GroupHomomorphismByImages( Qrng, Prng, rmgi[2], rmgi[1] ); 
     if not ( ( Psrc = Source(siso) ) and ( Prng = Source(riso) ) ) then 
         Info( InfoXMod, 2, "groups of PM not sources of isomorphisms" ); 
         return fail; 
     fi; 
-    Qbdy := CompositionMapping( riso, Pbdy, sinv ); 
+    imQbdy := List( smgi[1], s -> ImageElm( riso, ImageElm( Pbdy, s ) ) ); 
+    Qbdy := GroupHomomorphismByImages( Qsrc, Qrng, smgi[2], imQbdy );  
     Pact := XModAction( PM );
     Paut := Range( Pact );
     Pautgen := GeneratorsOfGroup( Paut );
-    Qautgen := List( Pautgen, a -> CompositionMapping( siso, a, sinv ) );
-    Qaut := Group( Qautgen );
-    ahom := GroupHomomorphismByImages( Paut, Qaut, Pautgen, Qautgen );
-    Qact := CompositionMapping( ahom, Pact, rinv );
+    len := Length( Pautgen ); 
+    Qautgen := ListWithIdenticalEntries( len, 0 ); 
+    for i in [1..len] do 
+        a := Pautgen[i]; 
+        ima := List( smgi[1], s -> ImageElm( siso, ImageElm( a, s ) ) ); 
+        Qautgen[i] := GroupHomomorphismByImages( Qsrc, Qsrc, smgi[2], ima ); 
+    od; 
+    Qaut := Group( Qautgen ); 
+    ahom := GroupHomomorphismByImages( Paut, Qaut, Pautgen, Qautgen ); 
+    imQact := List( rmgi[1], r -> ImageElm( ahom, ImageElm( Pact, r ) ) ); 
+    Qact := GroupHomomorphismByImages( Qrng, Qaut, rmgi[2], imQact ); 
     QM := PreXModByBoundaryAndAction( Qbdy, Qact );
     iso := PreXModMorphismByGroupHomomorphisms( PM, QM, siso, riso ); 
     SetIsInjective( iso, true );
     SetIsSurjective( iso, true );
-    SetImagesSource( iso, QM );
+    SetRange( iso, QM );
     if ( HasIsXMod( PM ) and IsXMod( PM ) ) then 
         SetIsXMod( QM, true );
         SetIsXModMorphism( iso, true ); 
     fi;
     return iso;
-end );
+end ); 
 
 ##############################################################################
 ##
@@ -814,13 +822,12 @@ function( PM )
             SetName( Qrng, Concatenation( "P", Name( Prng ) ) ); 
         fi;
         rhom := GroupHomomorphismByImages( Prng, Qrng, Prgen, Qrgen );
-    fi; 
+    fi;
     iso := IsomorphismByIsomorphisms( PM, [ shom, rhom ] ); 
-    QM := ImagesSource( iso );
+    QM := Range( iso );
     if HasName( PM ) then
         SetName( QM, Concatenation( "P", Name( PM ) ) );
     fi;
-    iso := PreXModMorphism( PM, QM, shom, rhom );  
     return iso;
 end );
 
@@ -829,7 +836,7 @@ InstallMethod( IsomorphismPerm2DimensionalGroup,
 function( PCG )
 
     local shom, rhom, ishom, irhom, Psrc, Psgen, Qsrc, Qsgen, 
-          Prng, Prgen, Qrng, Qrgen, QCG, iso;
+          Prng, Prgen, Qrng, Qrgen, QCG, iso, mgi;
 
     if IsPermPreCat1Group( PCG ) then
         return IdentityMapping( PCG );
@@ -861,12 +868,14 @@ function( PCG )
         fi;
         Qrng := ImagesSource( rhom );
         Qrgen := SmallGeneratingSet( Qrng );
-        irhom := InverseGeneralMapping( rhom ); 
+        mgi := MappingGeneratorsImages( rhom ); 
+        irhom := GroupHomomorphismByImages( Qrng, Prng, mgi[2], mgi[1] );
+        ## irhom := InverseGeneralMapping( rhom ); 
         Prgen := List( Qrgen, g -> ImageElm( irhom, g ) ); 
         rhom := GroupHomomorphismByImages( Prng, Qrng, Prgen, Qrgen );
     fi;
     iso := IsomorphismByIsomorphisms( PCG, [ shom, rhom ] ); 
-    QCG := ImagesSource( iso ); 
+    QCG := Range( iso ); 
     if HasName( PCG ) then
         SetName( QCG, Concatenation( "Pc", Name( PCG ) ) );
     fi;
@@ -921,7 +930,7 @@ function( PM )
         rhom := GroupHomomorphismByImages( Prng, Qrng, Prgen, Qrgen );
     fi;
     iso := IsomorphismByIsomorphisms( PM, [ shom, rhom ] ); 
-    QM := ImagesSource( iso ); 
+    QM := Range( iso ); 
     if HasName( PM ) then
         SetName( QM, Concatenation( "Pc", Name( PM ) ) );
     fi;
@@ -966,7 +975,7 @@ function( PCG )
         rhom := GroupHomomorphismByImages( Prng, Qrng, Prgen, Qrgen );
     fi;
     iso := IsomorphismByIsomorphisms( PCG, [ shom, rhom ] ); 
-    QCG := ImagesSource( iso ); 
+    QCG := Range( iso ); 
     if HasName( PCG ) then
         SetName( QCG, Concatenation( "Pc", Name( PCG ) ) );
     fi;
@@ -1021,7 +1030,7 @@ function( PM )
         rhom := GroupHomomorphismByImages( Prng, Qrng, Prgen, Qrgen );
     fi;
     iso := IsomorphismByIsomorphisms( PM, [ shom, rhom ] ); 
-    QM := ImagesSource( iso ); 
+    QM := Range( iso ); 
     if HasName( PM ) then
         SetName( QM, Concatenation( "Pc", Name( PM ) ) );
     fi; 
@@ -1066,7 +1075,7 @@ function( PCG )
         rhom := GroupHomomorphismByImages( Prng, Qrng, Prgen, Qrgen );
     fi;
     iso := IsomorphismByIsomorphisms( PCG, [ shom, rhom ] ); 
-    QCG := ImagesSource( iso ); 
+    QCG := Range( iso ); 
     if HasName( PCG ) then
         SetName( QCG, Concatenation( "Fp", Name( PCG ) ) );
     fi;
@@ -1558,8 +1567,12 @@ function( mor )
 
     X1 := Source( mor );
     X2 := Range( mor );
-    rec1 := PreCat1GroupOfPreXMod( X1 );
-    rec2 := PreCat1GroupOfPreXMod( X2 );
+    rec1 := PreCat1GroupRecordOfPreXMod( X1 ); 
+    if ( X1 = X2 ) then 
+        rec2 := rec1; 
+    else 
+        rec2 := PreCat1GroupRecordOfPreXMod( X2 ); 
+    fi;
     C1 := rec1.precat1; 
     C2 := rec2.precat1; 
     G1 := Source( C1 ); 

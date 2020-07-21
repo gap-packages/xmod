@@ -1,7 +1,9 @@
 # CHANGES to the 'XMod' package
 
-## 2.81 -> 2.81dev (10/06/2020) 
+## 2.81 -> 2.81dev (21/07/2020) 
 
+ * (20/07/20) revised the function AllXModsUpToIsomorphism etc. 
+ * (15/06/20) renamed/revised PreXModRecordOfPreCat1Group (and conversely) 
  * (10/06/20) restructured cat1data.g so that the numbering agrees with HAP
  * (30/05/20) added HAP chapter to the manual plus XMod <-> HAP functions 
 
