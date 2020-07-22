@@ -2215,14 +2215,14 @@ function( C1G )
     elif HasName( C1G ) then 
         SetName( PM, Concatenation( "xmod(", Name( C1G ), ")" ) ); 
     fi; 
-    ## need more fields here? 
+    #? need more fields here? 
     PMrec := rec( 
         prexmod := PM ); 
     SetPreCat1GroupRecordOfPreXMod( PM, rec( 
         precat1 := C1G, 
         xmodSourceEmbedding := kert, 
         xmodSourceEmbeddingIsomorphism := Cek, 
-        xmodRangeEmbedding := Range( Cer ), 
+        xmodRangeEmbedding := Image( Cer ), 
         xmodRangeEmbeddingIsomorphism := Cer ) ); 
     return PMrec;
 end );
