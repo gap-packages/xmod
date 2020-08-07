@@ -96,12 +96,16 @@ DeclareGlobalFunction( "IsomorphismPermOrPcObject" );
 
 #############################################################################
 ##
+#P  IsSubEndoMapping( <map> )
+##
+DeclareProperty( "IsSubEndoMapping", IsGeneralMapping );
+
+#############################################################################
+##
 #O  MetacyclicGroup( <m>, <n>, <l> )
 ##
 DeclareOperation( "MetacyclicGroup", [ IsPosInt, IsPosInt, IsPosInt ] );
 
-#############################################################################
-##  17/07/07
 #############################################################################
 ##
 #O  AutomorphismsFixingSubgroups( G, H ) 

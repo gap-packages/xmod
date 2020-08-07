@@ -752,7 +752,7 @@ InstallGlobalFunction( PreCat1Group, function( arg )
         return PreCat1GroupWithIdentityEmbedding( arg[1], arg[1] );
     # two endomorphisms
     elif ( nargs=2 ) then
-        if ( IsEndoMapping( arg[1] ) and IsEndoMapping( arg[2] ) ) then
+        if ( IsSubEndoMapping( arg[1] ) and IsSubEndoMapping( arg[2] ) ) then
             return PreCat1GroupWithIdentityEmbedding( arg[1], arg[2] ); 
         elif ( Image( arg[1] ) = Source( arg[2] ) ) then 
             return PreCat1GroupByTailHeadEmbedding( arg[1], arg[1], arg[2] );
@@ -2977,8 +2977,8 @@ function( obj )
     rng := Range( obj );
     gensrc := GeneratorsOfGroup( src );
     if IsXMod( obj ) then
-        return ( IsNormal(rng,src) and
-                 ( gensrc = List( gensrc, s -> ImageElm( Boundary(obj), s ) ) ) );
+        return ( IsNormal( rng, src ) and
+            ( gensrc = List( gensrc, s -> ImageElm( Boundary(obj), s ) ) ) );
     elif IsCat1Group( obj ) then
         return IsNormalSubgroup2DimensionalGroup( XModOfCat1Group( obj ) );
     else
