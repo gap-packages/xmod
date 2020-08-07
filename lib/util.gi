@@ -616,6 +616,15 @@ end );
 
 ##############################################################################
 ##
+#M  IsSubEndoMapping
+##
+InstallMethod( IsSubEndoMapping, "for a map", true, [ IsGroupHomomorphism ], 0,
+function( map )
+    return IsSubgroup( Source( map ), Range( map ) ); 
+end );
+
+##############################################################################
+##
 #M  MetacyclicGroup
 ##
 InstallMethod( MetacyclicGroup, "for three positive integers", true,
@@ -636,8 +645,6 @@ function( m, n, l )
     return ImagesSource( iso );
 end );
 
-##############################################################################
-##  added  17/07/07
 ##############################################################################
 ##
 #M  AutomorphismsFixingSubgroups . . . . . for a group and a list of subgroups
