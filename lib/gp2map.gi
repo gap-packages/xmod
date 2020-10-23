@@ -1095,7 +1095,7 @@ function( C1G1, C1G2 )
     local sym1, sym2, ok1, ok2, C1, C2, end1, end2, iend2, mor, 
           G1, G2, sphi, isphi, R1, R2, rphi, mgirphi, R3, 
           t1, h1, t2, h2, t3, h3, C3, phi, autG2, iterG2, 
-          salpha, ralpha, isalpha, R4, t4, h4, C4, smor, rmor;
+          salpha, ralpha, mgira, isalpha, R4, t4, h4, C4, smor, rmor;
 
     ok1 := IsPreCat1GroupWithIdentityEmbedding( C1G1 ); 
     ok2 := IsPreCat1GroupWithIdentityEmbedding( C1G2 ); 
@@ -1163,7 +1163,9 @@ function( C1G1, C1G2 )
     while not IsDoneIterator( iterG2 ) do 
         salpha := NextIterator( iterG2 ); 
         ralpha := RestrictedMapping( salpha, R3 ); 
-        R4 := Image( ralpha, R3 ); 
+        R4 := Image( ralpha ); 
+        mgira := MappingGeneratorsImages( ralpha ); 
+        ralpha := GroupHomomorphismByImages( R3, R4, mgira[1], mgira[2] );
         isalpha := InverseGeneralMapping( salpha ); 
         t4 := isalpha * t3 * ralpha; 
         h4 := isalpha * h3 * ralpha; 
