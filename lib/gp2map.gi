@@ -655,7 +655,7 @@ end );
 #M  \*( <mor1>, <mor2> ) . . . . . . . . .  for 2 pre-crossed module morphisms
 ##
 InstallOtherMethod( \*, "for two morphisms of pre-crossed modules",
-    IsIdenticalObj, [ IsPreXModMorphism, IsPreXModMorphism ], 0,
+    IsIdenticalObj, [ Is2DimensionalMapping, Is2DimensionalMapping ], 0,
 function( mor1, mor2 )
 
     local comp;
@@ -1092,96 +1092,90 @@ InstallMethod( IsomorphismPreCat1Groups, "generic method for 2 pre-cat1-groups",
     true, [ IsPreCat1Group, IsPreCat1Group ], 0, 
 function( C1G1, C1G2 )
 
-    local G1, G2, R1, R2, phi, sphi, isphi, rphi, mgi, irphi, C1, C2, 
-          end1, send1, rend1, end2, iend2, send2, isend2, rend2, irend2, 
-          Q1, Q2, t1, h1, t2, h2, e1, e2, autG2, iterG, salpha, ralpha, isalpha, 
-          t3, h3, e3, Q3, C3, t4, h4, e4, Q4, C4, smor, rmor, mor;
+    local sym1, sym2, ok1, ok2, C1, C2, end1, end2, iend2, mor, 
+          G1, G2, sphi, isphi, R1, R2, rphi, mgirphi, R3, 
+          t1, h1, t2, h2, t3, h3, C3, phi, autG2, iterG2, 
+          salpha, ralpha, isalpha, R4, t4, h4, C4, smor, rmor;
 
-    G1 := Source( C1G1 ); 
-    G2 := Source( C1G2 ); 
+    ok1 := IsPreCat1GroupWithIdentityEmbedding( C1G1 ); 
+    ok2 := IsPreCat1GroupWithIdentityEmbedding( C1G2 ); 
+    C1 := C1G1; 
+    C2 := C1G2; 
+    if not ( ok1 and ok2 ) then 
+        if not ok1 then 
+            C1 := IsomorphicPreCat1GroupWithIdentityEmbedding( C1G1 ); 
+            end1 := IsomorphismToPreCat1GroupWithIdentityEmbedding( C1G1 ); 
+        else 
+            C1 := C1G1; 
+            end1 := IdentityMapping( C1 );
+        fi; 
+        if not ok2 then 
+            C2 := IsomorphicPreCat1GroupWithIdentityEmbedding( C1G2 ); 
+            end2 := IsomorphismToPreCat1GroupWithIdentityEmbedding( C1G2 ); 
+            iend2 := InverseGeneralMapping( end2 ); 
+        else 
+            C2 := C1G2; 
+            end2 := IdentityMapping( C2 ); 
+            iend2 := end2; 
+        fi; 
+        mor := IsomorphismPreCat1Groups( C1, C2 ); 
+        return end1 * mor * iend2;
+    fi; 
+    sym1 := IsSymmetric2DimensionalGroup( C1 ); 
+    sym2 := IsSymmetric2DimensionalGroup( C2 ); 
+    if ( sym1 <> sym2 ) then 
+        Info( InfoXMod, 2, "sym1 <> sym2" ); 
+        return fail; 
+    fi; 
+    G1 := Source( C1 ); 
+    G2 := Source( C2 ); 
     if not ( G1 = G2 ) then
         sphi := IsomorphismGroups( G1, G2 ); 
+        isphi := InverseGeneralMapping( sphi ); 
     else
-        sphi := IdentityMapping( G1 );
-    fi;
+        sphi := IdentityMapping( G1 ); 
+        isphi := IdentityMapping( G1 ); 
+    fi; 
     if ( sphi = fail ) then 
         Info( InfoXMod, 2, "G1,G2 not isomorphic" ); 
         return fail; 
     fi;
-    R1 := Range( C1G1 );
-    R2 := Range( C1G2 );
-    if not ( R1 = R2 ) then
-        rphi := IsomorphismGroups( R1, R2 );
-    else
-        rphi := IdentityMapping( R1 );
-    fi;
-    if ( rphi = fail ) then
-        Info( InfoXMod, 2, "R1,R2 not isomorphic" ); 
-        return fail;
-    fi; 
-    if not IsPreCat1GroupWithIdentityEmbedding( C1G1 ) then 
-        C1 := IsomorphicPreCat1GroupWithIdentityEmbedding( C1G1 ); 
-        end1 := IsomorphismToPreCat1GroupWithIdentityEmbedding( C1G1 ); 
-    else 
-        C1 := C1G1; 
-        end1 := IdentityMapping( C1 );
-    fi; 
-    if not IsPreCat1GroupWithIdentityEmbedding( C1G2 ) then 
-        C2 := IsomorphicPreCat1GroupWithIdentityEmbedding( C1G2 ); 
-        end2 := IsomorphismToPreCat1GroupWithIdentityEmbedding( C1G2 ); 
-        iend2 := InverseGeneralMapping( end2 ); 
-    else 
-        C2 := C1G2; 
-        end2 := IdentityMapping( C2 ); 
-    fi; 
-    send1 := SourceHom( end1 ); 
-    rend1 := RangeHom( end1 ); 
-    send2 := SourceHom( end2 ); 
-    rend2 := RangeHom( end2 ); 
-    isend2 := InverseGeneralMapping( send2 ); 
-    irend2 := InverseGeneralMapping( rend2 ); 
-    Q1 := Range( C1 ); 
-    Q2 := Range( C2 );
+    R1 := Range( C1 );
+    R2 := Range( C2 ); 
+    rphi := RestrictedMapping( sphi, R1 ); 
+    mgirphi := MappingGeneratorsImages( rphi ); 
+    R3 := Image( rphi ); 
+    rphi := GroupHomomorphismByImages( R1, R3, mgirphi[1], mgirphi[2] ); 
     t1 := TailMap( C1 );
     t2 := TailMap( C2 );
     h1 := HeadMap( C1 );
     h2 := HeadMap( C2 ); 
-    e1 := RangeEmbedding( C1 ); 
-    e2 := RangeEmbedding( C2 );
-    isphi := InverseGeneralMapping( sphi );
-    rphi := RestrictedMapping( sphi, Q1 ); 
-    mgi := MappingGeneratorsImages( rphi );
-    Q3 := Image( rphi ); 
-    rphi := GroupHomomorphismByImages( Q1, Q3, mgi[1], mgi[2] ); 
-    irphi := GroupHomomorphismByImages( Q3, Q1, mgi[2], mgi[1] ); 
     t3 := isphi * t1 * rphi; 
     h3 := isphi * h1 * rphi; 
-    e3 := irphi * e1 * sphi; 
-    if not ForAll( [t3,h3,e3], f -> IsGroupHomomorphism(f) ) then 
-        Info( InfoXMod, 2, "t3,h3,e3 not all homomorphisms" ); 
-        return fail; 
-    fi;
-    C3 := PreCat1GroupByTailHeadEmbedding( t3, h3, e3 ); 
+    if not ( IsGroupHomomorphism( t3 ) and 
+             IsGroupHomomorphism( h3 ) ) then 
+        Error( "t3,h3 fail to be group homomorphisms" ); 
+    fi; 
+    C3 := PreCat1GroupWithIdentityEmbedding( t3, h3 ); 
     phi := PreCat1GroupMorphism( C1, C3, sphi, rphi ); 
     autG2 := AutomorphismGroup( G2 ); 
-    iterG := Iterator( autG2 ); 
-    while not IsDoneIterator( iterG ) do 
-        salpha := NextIterator( iterG ); 
-        ralpha := RestrictedMapping( salpha, Q3 ); 
-        Q4 := Image( ralpha, Q3 );
-        isalpha := Inverse( salpha ); 
+    iterG2 := Iterator( autG2 ); 
+    while not IsDoneIterator( iterG2 ) do 
+        salpha := NextIterator( iterG2 ); 
+        ralpha := RestrictedMapping( salpha, R3 ); 
+        R4 := Image( ralpha, R3 ); 
+        isalpha := InverseGeneralMapping( salpha ); 
         t4 := isalpha * t3 * ralpha; 
         h4 := isalpha * h3 * ralpha; 
-        e4 := InclusionMappingGroups( G2, Q4 );
-        C4 := PreCat1GroupByTailHeadEmbedding( t4, h4, e4 ); 
+        C4 := PreCat1GroupWithIdentityEmbedding( t4, h4 ); 
         if ( C4 = C2 ) then  
-            smor := send1 * sphi * salpha * isend2;
-            rmor := rend1 * rphi * ralpha * irend2; 
-            mor := PreCat1GroupMorphism( C1G1, C1G2, smor, rmor ); 
+            smor := sphi * salpha;
+            rmor := rphi * ralpha; 
+            mor := PreCat1GroupMorphism( C1, C2, smor, rmor ); 
             return mor; 
         fi;
-    od;
-    Info( InfoXMod, 2, "no isomorphism found" ); 
+    od; 
+    Info( InfoXMod, 2, "tried all of autG2 without success" ); 
     return fail;
 end );          
 

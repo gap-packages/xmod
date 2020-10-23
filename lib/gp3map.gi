@@ -651,23 +651,38 @@ InstallMethod( IsomorphismPreCat2GroupsNoTranspose, "for 2 pre-cat2-groups",
     true, [ IsPreCat2Group, IsPreCat2Group ], 0,
 function( D1, D2 )
 
-    local up1, lt1, dn1, rt1, up2, lt2, dn2, rt2, 
-          G1, R1, Q1, P1, G2, R2, Q2, P2, 
+    local sym1, sym2, up1, lt1, dn1, rt1, up2, lt2, dn2, rt2,  
+          su1, su2, sl1, sl2, G1, R1, Q1, P1, G2, R2, Q2, P2, 
           t11, h11, e11, t22, h22, e22, 
           tau11, theta11, eps11, tau22, theta22, eps22, 
           t1, h1, e1, t2, h2, e2, 
           tau1, theta1, eps1, tau2, theta2, eps2, 
           phi, alpha, gamma, rho, sigma, pi, isoup, isolt, isort, isodn;
 
+    sym1 := IsSymmetric3DimensionalGroup( D1 ); 
+    sym2 := IsSymmetric3DimensionalGroup( D2 ); 
+    if not ( sym1 = sym2 ) then 
+        return fail; 
+    fi;
     up1 := Up2DimensionalGroup( D1 );
-    up2 := Up2DimensionalGroup( D2 );
+    up2 := Up2DimensionalGroup( D2 ); 
+    su1 := IsSymmetric2DimensionalGroup( up1 ); 
+    su2 := IsSymmetric2DimensionalGroup( up2 ); 
+    if not ( su1 = su2 ) then 
+        return fail; 
+    fi;
+    lt1 := Left2DimensionalGroup( D1 ); 
+    lt2 := Left2DimensionalGroup( D2 ); 
+    sl1 := IsSymmetric2DimensionalGroup( lt1 ); 
+    sl2 := IsSymmetric2DimensionalGroup( lt2 ); 
+    if not ( sl1 = sl2 ) then 
+        return fail; 
+    fi;
     isoup := IsomorphismPreCat1Groups( up1, up2 ); 
     if ( isoup = fail ) then 
         Info( InfoXMod, 2, "no isomorphism up1 -> up2" ); 
         return fail; 
     fi; 
-    lt1 := Left2DimensionalGroup( D1 ); 
-    lt2 := Left2DimensionalGroup( D2 ); 
     isolt := IsomorphismPreCat1Groups( lt1, lt2 ); 
     if ( isolt = fail ) then 
         Info( InfoXMod, 2, "no isomorphism lt1 -> lt2" ); 
