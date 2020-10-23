@@ -195,7 +195,7 @@
   [33X[1;0Y[29X[2XXModByAbelianModule[102X( [3Xabmod[103X ) [32X operation[133X
   
   [33X[0;0YA [13Xcrossed abelian module[113X has an abelian module as source and the zero map as
-  boundary. See section [14X12.2[114X for an example.[133X
+  boundary. See section [14X13.2[114X for an example.[133X
   
   [1X2.1-8 DirectProduct[101X
   
@@ -683,7 +683,8 @@
     [4X[28X[Group( [ f1, f2 ] )=>c2][128X[104X
     [4X[25Xgap>[125X [27XStructureDescription( C2 );[127X[104X
     [4X[28X[ "S3", "C2" ][128X[104X
-    [4X[25Xgap>[125X [27XXC := PreXModOfPreCat1Group( C );;[127X[104X
+    [4X[25Xgap>[125X [27Xrec2 := PreXModRecordOfPreCat1Group( C );;[127X[104X
+    [4X[25Xgap>[125X [27XXC := rec2.prexmod;;[127X[104X
     [4X[25Xgap>[125X [27XStructureDescription( XC );  [127X[104X
     [4X[28X[ "A4", "C2" ][128X[104X
     [4X[25Xgap>[125X [27XXC2 := XModByPeifferQuotient( XC );;[127X[104X
@@ -693,7 +694,7 @@
     [4X[25Xgap>[125X [27XStructureDescription( CXC2 );[127X[104X
     [4X[28X[ "S3", "C2" ][128X[104X
     [4X[25Xgap>[125X [27XIsomorphismCat1Groups( C2, CXC2 );[127X[104X
-    [4X[28X[[..] => [(..|X..)=>c2]][128X[104X
+    [4X[28X[[Group( [ f1, f2 ] ) => c2] => [(..|X..) => c2]][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
@@ -831,8 +832,8 @@
   
   [33X[1;0Y[29X[2XCat1GroupOfXMod[102X( [3XX0[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XXModOfCat1Group[102X( [3XC0[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XPreCat1GroupOfPreXMod[102X( [3XP0[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XPreXModOfPreCat1Group[102X( [3XP0[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XPreCat1GroupRecordOfPreXMod[102X( [3XP0[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XPreXModRecordOfPreCat1Group[102X( [3XP0[103X ) [32X attribute[133X
   
   [33X[0;0YThe   category   of  crossed  modules  is  equivalent  to  the  category  of
   cat[22X^1[122X-groups, and the functors between these two categories may be described
@@ -856,8 +857,8 @@
   define [22XS = ker t[122X, the range [22XR[122X is unchanged, and [22X∂ = h∣_S[122X. The action of [22XR[122X on
   [22XS[122X is conjugation in [22XG[122X via the embedding of [22XR[122X in [22XG[122X.[133X
   
-  [33X[0;0YAs  from  version 2.74, the attribute [10XPreCat1GroupOfPreXMod[110X of a pre-crossed
-  modute [22XX = (∂ : S -> R)[122X returns a record with fields[133X
+  [33X[0;0YAs  from  version  2.74,  the  attribute  [10XPreCat1GroupRecordOfPreXMod[110X  of  a
+  pre-crossed modute [22XX = (∂ : S -> R)[122X returns a record with fields[133X
   
   [30X    [33X[0;6Y[10X.precat1[110X,  the  pre-cat1-group [22XC = (e;t,h: G -> R)[122X of [22XX[122X, where [22XG = R ⋉
         S[122X;[133X
@@ -1030,46 +1031,43 @@
   [1X2.7 [33X[0;0YSelection of a small cat[22X^1[122X[101X[1X-group[133X[101X
   
   [33X[0;0YThe  [10XCat1Group[110X function may also be used to select a cat[22X^1[122X-group from a data
-  file.  All cat[22X^1[122X-structures on groups of size up to [22X70[122X (ordered according to
+  file.  All cat[22X^1[122X-structures on groups of size up to [22X60[122X (ordered according to
   the  [5XGAP[105X  4  numbering  of  small  groups)  are  stored  in  a  list in file
-  [11Xcat1data.g[111X.     Global    variables    [10XCAT1_LIST_MAX_SIZE    :=    70[110X    and
-  [10XCAT1_LIST_CLASS_SIZES[110X  are  also  stored.  The  data  is  read into the list
-  [10XCAT1_LIST[110X only when this function is called.[133X
+  [11Xcat1data.g[111X. Global variables [10XCAT1_LIST_MAX_SIZE := 60[110X, [10XCAT1_LIST_CLASS_SIZES[110X
+  and  [10XCAT1_LIST_NUMBERS[110X  are also stored. The second of these just stores the
+  number  of  isomorphism classes of groups of size [10Xsize[110X. The third stores the
+  numbers of isomorphism classes of cat[22X^1[122X-groups for each of these groups. The
+  data is read into the list [10XCAT1_LIST[110X only when this function is called.[133X
+  
+  [33X[0;0YThis data was available in early versions of [5XXMod[105X with groups up to order [22X70[122X
+  covered.  More recently a larger range of groups has become available in the
+  package [5XHAP[105X. The authors are indebted to Van Luyen Le in Galway for pointing
+  out a number of errors in the version of this list distributed up to version
+  [12X2.24[112X of this package.[133X
   
   [1X2.7-1 Cat1Select[101X
   
   [33X[1;0Y[29X[2XCat1Select[102X( [3Xsize[103X, [3Xgpnum[103X, [3Xnum[103X ) [32X operation[133X
   
-  [33X[0;0YThe  function  [10XCat1Select[110X  may  be  used  in  three ways. [10XCat1Select( size )[110X
-  returns  the  names  of  the  groups with this size, while [10XCat1Select( size,
-  gpnum )[110X prints a list of cat[22X^1[122X-structures for this chosen group. [10XCat1Select(
-  size, gpnum, num )[110X returns the chosen cat[22X^1[122X-group.[133X
+  [33X[0;0YThe function [10XCat1Select[110X returns the cat[22X^1[122X-group numbered [10Xnum[110X whose source is
+  the group [10XG := SmallGroup(size,gpnum)[110X. When [22X|G| leqslant 60[122X the data file in
+  this package is used. For larger groups [10XSmallCat1Group[110X (see [14X12.1[114X) is called,
+  accessing the datafile in package [5XHAP[105X.[133X
   
   [33X[0;0YThe  example  below  is  the  first  case  in which [22Xt ≠ h[122X and the associated
   conjugation crossed module is given by the normal subgroup [10Xc3[110X of [10Xs3[110X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27X## check the number of groups of size 18[127X[104X
     [4X[25Xgap>[125X [27XL18 := Cat1Select( 18 ); [127X[104X
-    [4X[28XUsage:  Cat1Select( size, gpnum, num );[128X[104X
-    [4X[28X[ "D18", "C18", "C3 x S3", "(C3 x C3) : C2", "C6 x C3" ][128X[104X
-    [4X[25Xgap>[125X [27X## check the number of cat1-structures on the fourth of these[127X[104X
+    [4X[28XUsage:  Cat1Select( size, gpnum, num );  where gpnum <= 5[128X[104X
+    [4X[28Xfail[128X[104X
+    [4X[25Xgap>[125X [27X## check the number of cat1-structures on the fourth group of order 18 [127X[104X
     [4X[25Xgap>[125X [27XCat1Select( 18, 4 );[127X[104X
-    [4X[28XUsage:  Cat1Select( size, gpnum, num );[128X[104X
-    [4X[28XThere are 4 cat1-structures for the group (C3 x C3) : C2.[128X[104X
-    [4X[28XUsing small generating set [ f1, f2, f2*f3 ] for source of homs.[128X[104X
-    [4X[28X[ [range gens], [tail genimages], [head genimages] ] :-[128X[104X
-    [4X[28X(1)  [ [ f1 ], [ f1, <identity> of ..., <identity> of ... ], [128X[104X
-    [4X[28X  [ f1, <identity> of ..., <identity> of ... ] ][128X[104X
-    [4X[28X(2)  [ [ f1, f3 ], [ f1, <identity> of ..., f3 ], [128X[104X
-    [4X[28X  [ f1, <identity> of ..., f3 ] ][128X[104X
-    [4X[28X(3)  [ [ f1, f3 ], [ f1, <identity> of ..., f3 ], [128X[104X
-    [4X[28X  [ f1, f3^2, <identity> of ... ] ][128X[104X
-    [4X[28X(4)  [ [ f1, f2, f2*f3 ],  tail = head = identity mapping ][128X[104X
-    [4X[28X4[128X[104X
-    [4X[25Xgap>[125X [27X## select the third of these cat1-structures [127X[104X
-    [4X[25Xgap>[125X [27XB18 := Cat1Select( 18, 4, 3 );[127X[104X
+    [4X[28XUsage:  Cat1Select( size, gpnum, num );  where num <= 4[128X[104X
+    [4X[28Xfail[128X[104X
+    [4X[25Xgap>[125X [27X## select the second of these cat1-structures [127X[104X
+    [4X[25Xgap>[125X [27XB18 := Cat1Select( 18, 4, 2 );[127X[104X
     [4X[28X[(C3 x C3) : C2=>Group( [ f1, <identity> of ..., f3 ] )][128X[104X
     [4X[25Xgap>[125X [27X## convert from a pc-cat1-group to a permutation cat1-group[127X[104X
     [4X[25Xgap>[125X [27Xiso18 := IsomorphismPermObject( B18 );;[127X[104X
@@ -1077,66 +1075,39 @@
     [4X[25Xgap>[125X [27XDisplay( PB18 );[127X[104X
     [4X[28XCat1-group :- [128X[104X
     [4X[28X: Source group has generators:[128X[104X
-    [4X[28X  [ (2,3)(5,6), (4,5,6), (1,2,3) ][128X[104X
+    [4X[28X  [ (4,5,6), (1,2,3), (2,3)(5,6) ][128X[104X
     [4X[28X: Range group has generators:[128X[104X
-    [4X[28X  [ (2,3), (), (1,2,3) ][128X[104X
+    [4X[28X  [ (1,2,3), (2,3)(5,6) ][128X[104X
     [4X[28X: tail homomorphism maps source generators to:[128X[104X
-    [4X[28X  [ (2,3), (), (1,2,3) ][128X[104X
+    [4X[28X  [ (), (1,2,3), (2,3)(5,6) ][128X[104X
     [4X[28X: head homomorphism maps source generators to:[128X[104X
-    [4X[28X  [ (2,3), (1,3,2), (1,2,3) ][128X[104X
+    [4X[28X  [ (), (1,2,3), (2,3)(5,6) ][128X[104X
     [4X[28X: range embedding maps range generators to:[128X[104X
-    [4X[28X  [ (2,3)(5,6), (), (1,2,3) ][128X[104X
+    [4X[28X  [ (1,2,3), (2,3)(5,6) ][128X[104X
     [4X[28X: kernel has generators:[128X[104X
     [4X[28X  [ (4,5,6) ][128X[104X
     [4X[28X: boundary homomorphism maps generators of kernel to:[128X[104X
-    [4X[28X  [ (1,3,2) ][128X[104X
+    [4X[28X  [ () ][128X[104X
     [4X[28X: kernel embedding maps generators of kernel to:[128X[104X
     [4X[28X  [ (4,5,6) ][128X[104X
+    [4X[28X: associated crossed module is [Group( [ (4,5,6) ] ) -> Group( [128X[104X
+    [4X[28X[ (1,2,3), (2,3)(5,6) ] )][128X[104X
     [4X[25Xgap>[125X [27Xconvert the result to the associated permutation crossed module [127X[104X
     [4X[25Xgap>[125X [27XY18 := XModOfCat1Group( PB18 );; [127X[104X
     [4X[25Xgap>[125X [27XDisplay( Y18 ); [127X[104X
-    [4X[28XCrossed module:- [128X[104X
+    [4X[28XCrossed module :- [128X[104X
     [4X[28X: Source group has generators:[128X[104X
     [4X[28X  [ (4,5,6) ][128X[104X
     [4X[28X: Range group has generators:[128X[104X
-    [4X[28X  [ (2,3), (), (1,2,3) ][128X[104X
+    [4X[28X  [ (1,2,3), (2,3)(5,6) ][128X[104X
     [4X[28X: Boundary homomorphism maps source generators to:[128X[104X
-    [4X[28X  [ (1,3,2) ][128X[104X
+    [4X[28X  [ () ][128X[104X
     [4X[28X: Action homomorphism maps range generators to automorphisms:[128X[104X
-    [4X[28X  (2,3) --> { source gens --> [ (4,6,5) ] }[128X[104X
-    [4X[28X  () --> { source gens --> [ (4,5,6) ] }[128X[104X
     [4X[28X  (1,2,3) --> { source gens --> [ (4,5,6) ] }[128X[104X
-    [4X[28X  These 3 automorphisms generate the group of automorphisms.[128X[104X
-    [4X[28X: associated cat1-group is [..=>..][128X[104X
-    [4X[28X[128X[104X
-  [4X[32X[104X
-  
-  [1X2.7-2 AllCat1DataGroupsBasic[101X
-  
-  [33X[1;0Y[29X[2XAllCat1DataGroupsBasic[102X( [3Xgp[103X ) [32X operation[133X
-  
-  [33X[0;0YFor  a  group  [22XG[122X of size greater than [22X70[122X which is reasonably straightforward
-  this  function may be used to construct a list of all cat[22X^1[122X-group structures
-  on  [22XG[122X.  The  operation also attempts to write output to a file in the folder
-  [11Xxmod/lib[111X.  (Other  operations in the file [11Xcat1data.gi[111X have been used to deal
-  with  the  more  complicated  groups  of  size  up  to [22X70[122X, but these are not
-  described here.)[133X
-  
-  [33X[0;0YVan Luyen Le has a more efficient algorithm, extending the data up to groups
-  of size 171, which is expected to appear in a future release of [5XHAP[105X.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27Xgp := SmallGroup( 102, 2 ); [127X[104X
-    [4X[28X<pc group of size 102 with 3 generators>[128X[104X
-    [4X[25Xgap>[125X [27XStructureDescription( gp ); [127X[104X
-    [4X[28X"C3 x D34"[128X[104X
-    [4X[25Xgap>[125X [27Xall := AllCat1DataGroupsBasic( gp );[127X[104X
-    [4X[28X#I Edit last line of .../xmod/lib/nn.kk.out to end with ] ] ] ] ][128X[104X
-    [4X[28X[ [Group( [ f1, f2, f3 ] )=>Group( [ f1, <identity> of ..., <identity> of ... [128X[104X
-    [4X[28X     ] )], [Group( [ f1, f2, f3 ] )=>Group( [ f1, f2, <identity> of ... ] )], [128X[104X
-    [4X[28X  [Group( [ f1, f2, f3 ] )=>Group( [ f1, <identity> of ..., f3 ] )], [128X[104X
-    [4X[28X  [Group( [ f1, f2, f3 ] )=>Group( [ f1, f2, f3 ] )] ][128X[104X
+    [4X[28X  (2,3)(5,6) --> { source gens --> [ (4,6,5) ] }[128X[104X
+    [4X[28X  These 2 automorphisms generate the group of automorphisms.[128X[104X
+    [4X[28X: associated cat1-group is [Group( [ (4,5,6), (1,2,3), (2,3)(5,6) [128X[104X
+    [4X[28X ] ) => Group( [ (1,2,3), (2,3)(5,6) ] )][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
@@ -1292,8 +1263,7 @@
     [4X[28X(11,12)>-(1,2)(4,5)(8,9)->(11,13)[128X[104X
     [4X[25Xgap>[125X [27Xe2^-1;[127X[104X
     [4X[28X(11,13)>-(1,3)(4,6)(7,9)->(12,13)[128X[104X
-    [4X[25Xgap>[125X [27Xobgp := ObjectGroup( gpd33, (11,12) );[127X[104X
-    [4X[28X<group with 1 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xobgp := ObjectGroup( gpd33, (11,12) );;[127X[104X
     [4X[25Xgap>[125X [27XGeneratorsOfGroup( obgp )[1];[127X[104X
     [4X[28X(11,13)>-( 1, 3)( 4, 6)( 7, 8)->(11,13)[128X[104X
     [4X[25Xgap>[125X [27XHomset( gpd33, (11,12), (11,13) );[127X[104X

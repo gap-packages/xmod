@@ -215,15 +215,15 @@
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XPCn := PreCatnGroup( [ all1[5], all1[7], all1[11], all1[12] ] );[127X[104X
+    [4X[25Xgap>[125X [27XPC4 := PreCatnGroup( [ all1[5], all1[7], all1[11], all1[12] ] );[127X[104X
     [4X[28X(pre-)cat4-group with generating (pre-)cat1-groups:[128X[104X
     [4X[28X1 : [d12 => Group( [ (), (1,4)(2,3)(5,6) ] )][128X[104X
     [4X[28X2 : [d12 => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )][128X[104X
     [4X[28X3 : [d12 => Group( [ (1,5,3)(2,6,4), (1,4)(2,3)(5,6) ] )][128X[104X
     [4X[28X4 : [d12 => Group( [ (1,2,3,4,5,6), (2,6)(3,5) ] )][128X[104X
-    [4X[25Xgap>[125X [27XIsCatnGroup( PCn );                                             [127X[104X
+    [4X[25Xgap>[125X [27XIsCatnGroup( PC4 );                                             [127X[104X
     [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XHigherDimension( PCn );[127X[104X
+    [4X[25Xgap>[125X [27XHigherDimension( PC4 );[127X[104X
     [4X[28X5[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X

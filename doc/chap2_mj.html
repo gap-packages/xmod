@@ -18,7 +18,7 @@
 <body class="chap2"  onload="jscontent()">
 
 
-<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap3_mj.html">[Next Chapter]</a>&nbsp;  </div>
 
@@ -85,7 +85,6 @@ Properties of cat<span class="SimpleMath">\(^1\)</span>-groups and pre-cat<span 
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7B8E67D880E380C8">2.7-1 Cat1Select</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X8768CDA180561393">2.7-2 AllCat1DataGroupsBasic</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2_mj.html#X8614CDCF8063117F">2.8 <span class="Heading">More functions for crossed modules and cat<span class="SimpleMath">\(^1\)</span>-groups</span></a>
 </span>
@@ -292,7 +291,7 @@ Group([ (1,2,3,4,5,6), (2,6)(3,5), (7,8), (8,9), (9,10) ])
 <h5>2.1-7 XModByAbelianModule</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; XModByAbelianModule</code>( <var class="Arg">abmod</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>A <em>crossed abelian module</em> has an abelian module as source and the zero map as boundary. See section <a href="chap12_mj.html#X852BD9CA84C2AFF0"><span class="RefLink">12.2</span></a> for an example.</p>
+<p>A <em>crossed abelian module</em> has an abelian module as source and the zero map as boundary. See section <a href="chap13_mj.html#X852BD9CA84C2AFF0"><span class="RefLink">13.2</span></a> for an example.</p>
 
 <p><a id="X81704DFB795C0D29" name="X81704DFB795C0D29"></a></p>
 
@@ -763,7 +762,8 @@ Group([ (1,3)(2,4), (1,2)(3,4) ])
 [Group( [ f1, f2 ] )=&gt;c2]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription( C2 );</span>
 [ "S3", "C2" ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">XC := PreXModOfPreCat1Group( C );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rec2 := PreXModRecordOfPreCat1Group( C );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">XC := rec2.prexmod;;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription( XC );  </span>
 [ "A4", "C2" ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">XC2 := XModByPeifferQuotient( XC );;</span>
@@ -773,7 +773,7 @@ Group([ (1,3)(2,4), (1,2)(3,4) ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription( CXC2 );</span>
 [ "S3", "C2" ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismCat1Groups( C2, CXC2 );</span>
-[[..] =&gt; [(..|X..)=&gt;c2]]
+[[Group( [ f1, f2 ] ) =&gt; c2] =&gt; [(..|X..) =&gt; c2]]
 
 </pre></div>
 
@@ -905,8 +905,8 @@ false
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Cat1GroupOfXMod</code>( <var class="Arg">X0</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; XModOfCat1Group</code>( <var class="Arg">C0</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PreCat1GroupOfPreXMod</code>( <var class="Arg">P0</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PreXModOfPreCat1Group</code>( <var class="Arg">P0</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PreCat1GroupRecordOfPreXMod</code>( <var class="Arg">P0</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PreXModRecordOfPreCat1Group</code>( <var class="Arg">P0</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>The category of crossed modules is equivalent to the category of cat<span class="SimpleMath">\(^1\)</span>-groups, and the functors between these two categories may be described as follows. Starting with the crossed module <span class="SimpleMath">\(\calX = (\partial : S \to R)\)</span> the group <span class="SimpleMath">\(G\)</span> is defined as the semidirect product <span class="SimpleMath">\(G = R \ltimes S\)</span> using the action from <span class="SimpleMath">\(\calX\)</span>, with multiplication rule</p>
 
 <p class="center">\[
@@ -921,7 +921,7 @@ t(r,s) = r, \quad h(r,s) = r (\partial s), \quad er = (r,1).
 
 <p>On the other hand, starting with a cat<span class="SimpleMath">\(^1\)</span>-group <span class="SimpleMath">\( \calC = (e;t,h : G \to R)\)</span>, we define <span class="SimpleMath">\( S = \ker t\)</span>, the range <span class="SimpleMath">\(R\)</span> is unchanged, and <span class="SimpleMath">\( \partial = h\!\mid_S \)</span>. The action of <span class="SimpleMath">\(R\)</span> on <span class="SimpleMath">\(S\)</span> is conjugation in <span class="SimpleMath">\(G\)</span> via the embedding of <span class="SimpleMath">\(R\)</span> in <span class="SimpleMath">\(G\)</span>.</p>
 
-<p>As from version 2.74, the attribute <code class="code">PreCat1GroupOfPreXMod</code> of a pre-crossed modute <span class="SimpleMath">\(X = (\partial : S \to R)\)</span> returns a record with fields</p>
+<p>As from version 2.74, the attribute <code class="code">PreCat1GroupRecordOfPreXMod</code> of a pre-crossed modute <span class="SimpleMath">\(X = (\partial : S \to R)\)</span> returns a record with fields</p>
 
 
 <ul>
@@ -1074,40 +1074,31 @@ rec( cat1 := 12, idem := 21, iso1 := 4, siso := 4, symm := 12 )
 
 <h4>2.7 <span class="Heading">Selection of a small cat<span class="SimpleMath">\(^1\)</span>-group</span></h4>
 
-<p>The <code class="code">Cat1Group</code> function may also be used to select a cat<span class="SimpleMath">\(^1\)</span>-group from a data file. All cat<span class="SimpleMath">\(^1\)</span>-structures on groups of size up to <span class="SimpleMath">\(70\)</span> (ordered according to the <strong class="pkg">GAP</strong> 4 numbering of small groups) are stored in a list in file <code class="file">cat1data.g</code>. Global variables <code class="code">CAT1_LIST_MAX_SIZE := 70</code> and <code class="code">CAT1_LIST_CLASS_SIZES</code> are also stored. The data is read into the list <code class="code">CAT1_LIST</code> only when this function is called.</p>
+<p>The <code class="code">Cat1Group</code> function may also be used to select a cat<span class="SimpleMath">\(^1\)</span>-group from a data file. All cat<span class="SimpleMath">\(^1\)</span>-structures on groups of size up to <span class="SimpleMath">\(60\)</span> (ordered according to the <strong class="pkg">GAP</strong> 4 numbering of small groups) are stored in a list in file <code class="file">cat1data.g</code>. Global variables <code class="code">CAT1_LIST_MAX_SIZE := 60</code>, <code class="code">CAT1_LIST_CLASS_SIZES</code> and <code class="code">CAT1_LIST_NUMBERS</code> are also stored. The second of these just stores the number of isomorphism classes of groups of size <code class="code">size</code>. The third stores the numbers of isomorphism classes of cat<span class="SimpleMath">\(^1\)</span>-groups for each of these groups. The data is read into the list <code class="code">CAT1_LIST</code> only when this function is called.</p>
+
+<p>This data was available in early versions of <strong class="pkg">XMod</strong> with groups up to order <span class="SimpleMath">\(70\)</span> covered. More recently a larger range of groups has become available in the package <strong class="pkg">HAP</strong>. The authors are indebted to Van Luyen Le in Galway for pointing out a number of errors in the version of this list distributed up to version <strong class="button">2.24</strong> of this package.</p>
 
 <p><a id="X7B8E67D880E380C8" name="X7B8E67D880E380C8"></a></p>
 
 <h5>2.7-1 Cat1Select</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Cat1Select</code>( <var class="Arg">size</var>, <var class="Arg">gpnum</var>, <var class="Arg">num</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>The function <code class="code">Cat1Select</code> may be used in three ways. <code class="code">Cat1Select( size )</code> returns the names of the groups with this size, while <code class="code">Cat1Select( size, gpnum )</code> prints a list of cat<span class="SimpleMath">\(^1\)</span>-structures for this chosen group. <code class="code">Cat1Select( size, gpnum, num )</code> returns the chosen cat<span class="SimpleMath">\(^1\)</span>-group.</p>
+<p>The function <code class="code">Cat1Select</code> returns the cat<span class="SimpleMath">\(^1\)</span>-group numbered <code class="code">num</code> whose source is the group <code class="code">G := SmallGroup(size,gpnum)</code>. When <span class="SimpleMath">\(|G| \leqslant 60\)</span> the data file in this package is used. For larger groups <code class="code">SmallCat1Group</code> (see <a href="chap12_mj.html#X865CE53A827FBE6F"><span class="RefLink">12.1</span></a>) is called, accessing the datafile in package <strong class="pkg">HAP</strong>.</p>
 
 <p>The example below is the first case in which <span class="SimpleMath">\(t \neq h\)</span> and the associated conjugation crossed module is given by the normal subgroup <code class="code">c3</code> of <code class="code">s3</code>.</p>
 
 
 <div class="example"><pre>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">## check the number of groups of size 18</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L18 := Cat1Select( 18 ); </span>
-Usage:  Cat1Select( size, gpnum, num );
-[ "D18", "C18", "C3 x S3", "(C3 x C3) : C2", "C6 x C3" ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">## check the number of cat1-structures on the fourth of these</span>
+Usage:  Cat1Select( size, gpnum, num );  where gpnum &lt;= 5
+fail
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">## check the number of cat1-structures on the fourth group of order 18 </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cat1Select( 18, 4 );</span>
-Usage:  Cat1Select( size, gpnum, num );
-There are 4 cat1-structures for the group (C3 x C3) : C2.
-Using small generating set [ f1, f2, f2*f3 ] for source of homs.
-[ [range gens], [tail genimages], [head genimages] ] :-
-(1)  [ [ f1 ], [ f1, &lt;identity&gt; of ..., &lt;identity&gt; of ... ], 
-  [ f1, &lt;identity&gt; of ..., &lt;identity&gt; of ... ] ]
-(2)  [ [ f1, f3 ], [ f1, &lt;identity&gt; of ..., f3 ], 
-  [ f1, &lt;identity&gt; of ..., f3 ] ]
-(3)  [ [ f1, f3 ], [ f1, &lt;identity&gt; of ..., f3 ], 
-  [ f1, f3^2, &lt;identity&gt; of ... ] ]
-(4)  [ [ f1, f2, f2*f3 ],  tail = head = identity mapping ]
-4
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">## select the third of these cat1-structures </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B18 := Cat1Select( 18, 4, 3 );</span>
+Usage:  Cat1Select( size, gpnum, num );  where num &lt;= 4
+fail
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">## select the second of these cat1-structures </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">B18 := Cat1Select( 18, 4, 2 );</span>
 [(C3 x C3) : C2=&gt;Group( [ f1, &lt;identity&gt; of ..., f3 ] )]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">## convert from a pc-cat1-group to a permutation cat1-group</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso18 := IsomorphismPermObject( B18 );;</span>
@@ -1115,62 +1106,39 @@ Using small generating set [ f1, f2, f2*f3 ] for source of homs.
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( PB18 );</span>
 Cat1-group :- 
 : Source group has generators:
-  [ (2,3)(5,6), (4,5,6), (1,2,3) ]
+  [ (4,5,6), (1,2,3), (2,3)(5,6) ]
 : Range group has generators:
-  [ (2,3), (), (1,2,3) ]
+  [ (1,2,3), (2,3)(5,6) ]
 : tail homomorphism maps source generators to:
-  [ (2,3), (), (1,2,3) ]
+  [ (), (1,2,3), (2,3)(5,6) ]
 : head homomorphism maps source generators to:
-  [ (2,3), (1,3,2), (1,2,3) ]
+  [ (), (1,2,3), (2,3)(5,6) ]
 : range embedding maps range generators to:
-  [ (2,3)(5,6), (), (1,2,3) ]
+  [ (1,2,3), (2,3)(5,6) ]
 : kernel has generators:
   [ (4,5,6) ]
 : boundary homomorphism maps generators of kernel to:
-  [ (1,3,2) ]
+  [ () ]
 : kernel embedding maps generators of kernel to:
   [ (4,5,6) ]
+: associated crossed module is [Group( [ (4,5,6) ] ) -&gt; Group( 
+[ (1,2,3), (2,3)(5,6) ] )]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">convert the result to the associated permutation crossed module </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y18 := XModOfCat1Group( PB18 );; </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Y18 ); </span>
-Crossed module:- 
+Crossed module :- 
 : Source group has generators:
   [ (4,5,6) ]
 : Range group has generators:
-  [ (2,3), (), (1,2,3) ]
+  [ (1,2,3), (2,3)(5,6) ]
 : Boundary homomorphism maps source generators to:
-  [ (1,3,2) ]
+  [ () ]
 : Action homomorphism maps range generators to automorphisms:
-  (2,3) --&gt; { source gens --&gt; [ (4,6,5) ] }
-  () --&gt; { source gens --&gt; [ (4,5,6) ] }
   (1,2,3) --&gt; { source gens --&gt; [ (4,5,6) ] }
-  These 3 automorphisms generate the group of automorphisms.
-: associated cat1-group is [..=&gt;..]
-
-</pre></div>
-
-<p><a id="X8768CDA180561393" name="X8768CDA180561393"></a></p>
-
-<h5>2.7-2 AllCat1DataGroupsBasic</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllCat1DataGroupsBasic</code>( <var class="Arg">gp</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>For a group <span class="SimpleMath">\(G\)</span> of size greater than <span class="SimpleMath">\(70\)</span> which is reasonably straightforward this function may be used to construct a list of all cat<span class="SimpleMath">\(^1\)</span>-group structures on <span class="SimpleMath">\(G\)</span>. The operation also attempts to write output to a file in the folder <code class="file">xmod/lib</code>. (Other operations in the file <code class="file">cat1data.gi</code> have been used to deal with the more complicated groups of size up to <span class="SimpleMath">\(70\)</span>, but these are not described here.)</p>
-
-<p>Van Luyen Le has a more efficient algorithm, extending the data up to groups of size 171, which is expected to appear in a future release of <strong class="pkg">HAP</strong>.</p>
-
-
-<div class="example"><pre>
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gp := SmallGroup( 102, 2 ); </span>
-&lt;pc group of size 102 with 3 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription( gp ); </span>
-"C3 x D34"
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">all := AllCat1DataGroupsBasic( gp );</span>
-#I Edit last line of .../xmod/lib/nn.kk.out to end with ] ] ] ] ]
-[ [Group( [ f1, f2, f3 ] )=&gt;Group( [ f1, &lt;identity&gt; of ..., &lt;identity&gt; of ... 
-     ] )], [Group( [ f1, f2, f3 ] )=&gt;Group( [ f1, f2, &lt;identity&gt; of ... ] )], 
-  [Group( [ f1, f2, f3 ] )=&gt;Group( [ f1, &lt;identity&gt; of ..., f3 ] )], 
-  [Group( [ f1, f2, f3 ] )=&gt;Group( [ f1, f2, f3 ] )] ]
+  (2,3)(5,6) --&gt; { source gens --&gt; [ (4,6,5) ] }
+  These 2 automorphisms generate the group of automorphisms.
+: associated cat1-group is [Group( [ (4,5,6), (1,2,3), (2,3)(5,6) 
+ ] ) =&gt; Group( [ (1,2,3), (2,3)(5,6) ] )]
 
 </pre></div>
 
@@ -1322,8 +1290,7 @@ groupoid with 2 pieces:
 (11,12)&gt;-(1,2)(4,5)(8,9)-&gt;(11,13)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e2^-1;</span>
 (11,13)&gt;-(1,3)(4,6)(7,9)-&gt;(12,13)
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">obgp := ObjectGroup( gpd33, (11,12) );</span>
-&lt;group with 1 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">obgp := ObjectGroup( gpd33, (11,12) );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GeneratorsOfGroup( obgp )[1];</span>
 (11,13)&gt;-( 1, 3)( 4, 6)( 7, 8)-&gt;(11,13)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Homset( gpd33, (11,12), (11,13) );</span>
@@ -1336,7 +1303,7 @@ groupoid with 2 pieces:
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap3_mj.html">[Next Chapter]</a>&nbsp;  </div>
 
 
-<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chap11_mj.html">11</a>  <a href="chap12_mj.html">12</a>  <a href="chap13_mj.html">13</a>  <a href="chap14_mj.html">14</a>  <a href="chapBib_mj.html">Bib</a>  <a href="chapInd_mj.html">Ind</a>  </div>
 
 <hr />
 <p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>

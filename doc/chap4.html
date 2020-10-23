@@ -15,7 +15,7 @@
 <body class="chap4"  onload="jscontent()">
 
 
-<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap3.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap5.html">[Next Chapter]</a>&nbsp;  </div>
 
@@ -35,8 +35,8 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X814D9E1E78EEE665">4.1-8 CentralQuotient</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7F4222757B0E08B6">4.1-9 IsAbelian2DimensionalGroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X87C524C08588AAC0">4.1-10 LowerCentralSeriesOfXMod</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X81EE2188863E6E85">4.1-11 AllXMods</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7C67623F797A0301">4.1-12 IsomorphismXMods</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7C67623F797A0301">4.1-11 IsomorphismXMods</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X81EE2188863E6E85">4.1-12 AllXMods</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X7B0D511A82FD945E">4.2 <span class="Heading">Isoclinism for groups</span></a>
 </span>
@@ -366,24 +366,71 @@ false
 
 </pre></div>
 
-<p><a id="X81EE2188863E6E85" name="X81EE2188863E6E85"></a></p>
+<p><a id="X7C67623F797A0301" name="X7C67623F797A0301"></a></p>
 
-<h5>4.1-11 AllXMods</h5>
+<h5>4.1-11 IsomorphismXMods</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllXMods</code>( <var class="Arg">args</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>The global function <code class="code">AllXMods</code> may be called in three ways: as <code class="code">AllXMods(S,R)</code> to compute all crossed modules with chosen source and range groups; as <code class="code">AllXMods([n,m])</code> to compute all crossed modules with a given size; or as <code class="code">AllXMods(ord)</code> to compute all crossed modules whose associated cat1-groups have a given size <code class="code">ord</code>.</p>
-
-<p>In the example we see that there are <span class="SimpleMath">4</span> crossed modules <span class="SimpleMath">(C_6 -&gt; S_3)</span>; forming a subset of the <span class="SimpleMath">17</span> crossed modules with size <code class="code">[6,6]</code>; and that these form a subset of the <span class="SimpleMath">205</span> crossed modules whose cat1-group has size <span class="SimpleMath">36</span>. There are <span class="SimpleMath">40</span> precrossed modules with size <code class="code">[6,6]</code>.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismXMods</code>( <var class="Arg">X1</var>, <var class="Arg">X2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>The function <code class="code">IsomorphismXMods</code> computes an isomorphism <span class="SimpleMath">μ : calX_1 -&gt; calX_2</span>, provided one exists, or else returns <code class="code">fail</code>.</p>
 
 
 <div class="example"><pre>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">xc6s3 := AllXMods( SmallGroup(6,2), SmallGroup(6,1) );;   </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length( xc6s3 );           </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gend24 := GeneratorsOfGroup( d24 );;             </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := gend24[1];; b:= gend24[2];; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">J := Subgroup( d24, [a^2,b] ); </span>
+Group([ (1,3,5,7,9,11)(2,4,6,8,10,12), (2,12)(3,11)(4,10)(5,9)(6,8) ])
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">K := Subgroup( d24, [a^2,a*b] );</span>
+Group([ (1,3,5,7,9,11)(2,4,6,8,10,12), (1,12)(2,11)(3,10)(4,9)(5,8)(6,7) ])
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">XJ := XModByNormalSubgroup( d24, J );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">XK := XModByNormalSubgroup( d24, K );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := IsomorphismXMods( XJ, XK );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SourceHom( iso );</span>
+[ (1,3,5,7,9,11)(2,4,6,8,10,12), (2,12)(3,11)(4,10)(5,9)(6,8) ] -&gt; 
+[ (1,3,5,7,9,11)(2,4,6,8,10,12), (1,12)(2,11)(3,10)(4,9)(5,8)(6,7) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RangeHom( iso ); </span>
+[ (1,2,3,4,5,6,7,8,9,10,11,12), (2,12)(3,11)(4,10)(5,9)(6,8) ] -&gt; 
+[ (1,2,3,4,5,6,7,8,9,10,11,12), (1,12)(2,11)(3,10)(4,9)(5,8)(6,7) ]
+
+</pre></div>
+
+<p><a id="X81EE2188863E6E85" name="X81EE2188863E6E85"></a></p>
+
+<h5>4.1-12 AllXMods</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllXMods</code>( <var class="Arg">args</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllXModsWithGroups</code>( <var class="Arg">src</var>, <var class="Arg">rng</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllXModsUpToIsomorphism</code>( <var class="Arg">src</var>, <var class="Arg">rng</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismClassRepresentatives2dGroups</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>The global function <code class="code">AllXMods</code> may be called in three ways. Firstly, as <code class="code">AllXMods(S,R)</code> to compute all crossed modules with chosen source and range groups: this calls <code class="code">AllXModsWithGroups(S,R)</code>. Secondly, <code class="code">AllXMods([n,m])</code> computes all crossed modules with a given size <code class="code">[n,m]</code>. Thirdly <code class="code">AllXMods(ord)</code> to compute all crossed modules whose associated cat1-groups have a given size <code class="code">ord</code>.</p>
+
+<p>The function <code class="code">AllXModsUpToIsomorphism(S,R)</code> returns a list of representatives of the isomorphism classes of crossed modules with source <span class="SimpleMath">S</span> and range <span class="SimpleMath">R</span>.</p>
+
+<p>If <code class="code">L</code> is a list returned by, for example, <code class="code">AllXModsWithGroups(S,R)</code>, then the isomorphism class representatives for this list is returned by <code class="code">IsomorphismClassRepresentatives2dGroups(L)</code>. This result is the same as that given by <code class="code">AllXModsUpToIsomorphism(S,R)</code>.</p>
+
+<p>In the example we see that there are <span class="SimpleMath">4</span> crossed modules, in <span class="SimpleMath">3</span> isomorphism classes, <span class="SimpleMath">(C_6 -&gt; S_3)</span>; forming a subset of the <span class="SimpleMath">17</span> crossed modules with size <code class="code">[6,6]</code>; and that these form a subset of the <span class="SimpleMath">205</span> crossed modules whose cat1-group has size <span class="SimpleMath">36</span>. There are <span class="SimpleMath">40</span> precrossed modules with size <code class="code">[6,6]</code>.</p>
+
+
+<div class="example"><pre>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">c6 := SmallGroup( 6, 2 );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s3 := SmallGroup( 6, 1 );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Ac6s3 := AllXMods( c6, s3 );;   </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length( Ac6s3 );           </span>
 4
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x66 := AllXMods( [6,6] );;   </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length( x66 );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Ic6s3 := AllXModsUpToIsomorphism( c6, s3 );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List( Ic6s3, obj -&gt; IsTrivialAction2DimensionalGroup( obj ) ); </span>
+[ true, false, false ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Kc6s3 := List( Ic6s3, obj -&gt; KernelCokernelXMod( obj ) );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List( Kc6s3, obj -&gt; IdGroup( obj ) );</span>
+[ [ [ 6, 2 ], [ 6, 1 ] ], [ [ 6, 2 ], [ 6, 1 ] ], [ [ 2, 1 ], [ 2, 1 ] ] ]
+[ ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">A66 := AllXMods( [6,6] );;   </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length( A66 );</span>
 17
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IA66 := IsomorphismClassRepresentatives2dGroups( A66 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length( IA66 );</span>
+9
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x36 := AllXMods( 36 );; </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length( x36 ); </span>
 205
@@ -392,27 +439,6 @@ false
 [ [ [ 1, 36 ], 14 ], [ [ 2, 18 ], 7 ], [ [ 3, 12 ], 21 ], [ [ 4, 9 ], 14 ], 
   [ [ 6, 6 ], 17 ], [ [ 9, 4 ], 102 ], [ [ 12, 3 ], 8 ], [ [ 18, 2 ], 18 ], 
   [ [ 36, 1 ], 4 ] ]
-
-</pre></div>
-
-<p><a id="X7C67623F797A0301" name="X7C67623F797A0301"></a></p>
-
-<h5>4.1-12 IsomorphismXMods</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismXMods</code>( <var class="Arg">X1</var>, <var class="Arg">X2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllXModsUpToIsomorphism</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>The function <code class="code">IsomorphismXMods</code> computes an isomorphism <span class="SimpleMath">μ : calX_1 -&gt; calX_2</span>, provided one exists, or else returns <code class="code">fail</code>. In the example below we see that the <span class="SimpleMath">17</span> crossed modules of size <code class="code">[6,6]</code> in <code class="code">x66</code> (see the previous subsection) fall into <span class="SimpleMath">9</span> isomorphism classes.</p>
-
-<p>The function <code class="code">AllXModsUpToIsomorphism</code> takes a list of crossed modules and partitions them into isomorphism classes.</p>
-
-
-<div class="example"><pre>
-
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismXMods( x66[1], x66[2] );</span>
-[[Group( [ f1, f2 ] )-&gt;Group( [ f1, f2 ] )] =&gt; [Group( [ f1, f2 ] )-&gt;Group( 
-[ f1, f2 ] )]]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso66 := AllXModsUpToIsomorphism( x66 );;  Length( iso66 ); </span>
-9 
 
 </pre></div>
 
@@ -519,12 +545,12 @@ false
 
 <div class="example"><pre>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C8 := Cat1Group( 16, 8, 1 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C8 := Cat1Group( 16, 8, 2 );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">X8 := XMod(C8);  IdGroup( X8 );</span>
 [Group( [ f1*f2*f3, f3, f4 ] )-&gt;Group( [ f2, f2 ] )]
 [ [ 8, 1 ], [ 2, 1 ] ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C9 := Cat1Group( 32, 9, 1 );</span>
-[(C8 x C2) : C2=&gt;Group( [ f2, f2 ] )]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C9 := Cat1Group( 32, 9, 2 );</span>
+[(C8 x C2) : C2 =&gt; Group( [ f2, f2 ] )]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">X9 := XMod( C9 );  IdGroup( X9 );</span>
 [Group( [ f1*f2*f3, f3, f4, f5 ] )-&gt;Group( [ f2, f2 ] )]
 [ [ 16, 5 ], [ 2, 1 ] ]
@@ -582,7 +608,7 @@ false
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap3.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap5.html">[Next Chapter]</a>&nbsp;  </div>
 
 
-<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <hr />
 <p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>

@@ -338,29 +338,80 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [1X4.1-11 AllXMods[101X
+  [1X4.1-11 IsomorphismXMods[101X
   
-  [33X[1;0Y[29X[2XAllXMods[102X( [3Xargs[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XIsomorphismXMods[102X( [3XX1[103X, [3XX2[103X ) [32X operation[133X
   
-  [33X[0;0YThe  global  function [10XAllXMods[110X may be called in three ways: as [10XAllXMods(S,R)[110X
-  to  compute  all  crossed  modules  with  chosen source and range groups; as
-  [10XAllXMods([n,m])[110X  to  compute  all  crossed  modules with a given size; or as
-  [10XAllXMods(ord)[110X  to  compute  all crossed modules whose associated cat1-groups
-  have a given size [10Xord[110X.[133X
-  
-  [33X[0;0YIn the example we see that there are [22X4[122X crossed modules [22X(C_6 -> S_3)[122X; forming
-  a  subset  of  the [22X17[122X crossed modules with size [10X[6,6][110X; and that these form a
-  subset of the [22X205[122X crossed modules whose cat1-group has size [22X36[122X. There are [22X40[122X
-  precrossed modules with size [10X[6,6][110X.[133X
+  [33X[0;0YThe  function [10XIsomorphismXMods[110X computes an isomorphism [22Xμ : calX_1 -> calX_2[122X,
+  provided one exists, or else returns [10Xfail[110X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27Xxc6s3 := AllXMods( SmallGroup(6,2), SmallGroup(6,1) );;   [127X[104X
-    [4X[25Xgap>[125X [27XLength( xc6s3 );           [127X[104X
+    [4X[25Xgap>[125X [27Xgend24 := GeneratorsOfGroup( d24 );;             [127X[104X
+    [4X[25Xgap>[125X [27Xa := gend24[1];; b:= gend24[2];; [127X[104X
+    [4X[25Xgap>[125X [27XJ := Subgroup( d24, [a^2,b] ); [127X[104X
+    [4X[28XGroup([ (1,3,5,7,9,11)(2,4,6,8,10,12), (2,12)(3,11)(4,10)(5,9)(6,8) ])[128X[104X
+    [4X[25Xgap>[125X [27XK := Subgroup( d24, [a^2,a*b] );[127X[104X
+    [4X[28XGroup([ (1,3,5,7,9,11)(2,4,6,8,10,12), (1,12)(2,11)(3,10)(4,9)(5,8)(6,7) ])[128X[104X
+    [4X[25Xgap>[125X [27XXJ := XModByNormalSubgroup( d24, J );;[127X[104X
+    [4X[25Xgap>[125X [27XXK := XModByNormalSubgroup( d24, K );;[127X[104X
+    [4X[25Xgap>[125X [27Xiso := IsomorphismXMods( XJ, XK );;[127X[104X
+    [4X[25Xgap>[125X [27XSourceHom( iso );[127X[104X
+    [4X[28X[ (1,3,5,7,9,11)(2,4,6,8,10,12), (2,12)(3,11)(4,10)(5,9)(6,8) ] -> [128X[104X
+    [4X[28X[ (1,3,5,7,9,11)(2,4,6,8,10,12), (1,12)(2,11)(3,10)(4,9)(5,8)(6,7) ][128X[104X
+    [4X[25Xgap>[125X [27XRangeHom( iso ); [127X[104X
+    [4X[28X[ (1,2,3,4,5,6,7,8,9,10,11,12), (2,12)(3,11)(4,10)(5,9)(6,8) ] -> [128X[104X
+    [4X[28X[ (1,2,3,4,5,6,7,8,9,10,11,12), (1,12)(2,11)(3,10)(4,9)(5,8)(6,7) ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X4.1-12 AllXMods[101X
+  
+  [33X[1;0Y[29X[2XAllXMods[102X( [3Xargs[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XAllXModsWithGroups[102X( [3Xsrc[103X, [3Xrng[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAllXModsUpToIsomorphism[102X( [3Xsrc[103X, [3Xrng[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsomorphismClassRepresentatives2dGroups[102X( [3XL[103X ) [32X operation[133X
+  
+  [33X[0;0YThe  global  function  [10XAllXMods[110X  may  be  called  in three ways. Firstly, as
+  [10XAllXMods(S,R)[110X  to  compute  all crossed modules with chosen source and range
+  groups:   this   calls  [10XAllXModsWithGroups(S,R)[110X.  Secondly,  [10XAllXMods([n,m])[110X
+  computes  all crossed modules with a given size [10X[n,m][110X. Thirdly [10XAllXMods(ord)[110X
+  to  compute  all  crossed  modules whose associated cat1-groups have a given
+  size [10Xord[110X.[133X
+  
+  [33X[0;0YThe  function [10XAllXModsUpToIsomorphism(S,R)[110X returns a list of representatives
+  of the isomorphism classes of crossed modules with source [22XS[122X and range [22XR[122X.[133X
+  
+  [33X[0;0YIf  [10XL[110X  is a list returned by, for example, [10XAllXModsWithGroups(S,R)[110X, then the
+  isomorphism   class   representatives   for   this   list   is  returned  by
+  [10XIsomorphismClassRepresentatives2dGroups(L)[110X.  This result is the same as that
+  given by [10XAllXModsUpToIsomorphism(S,R)[110X.[133X
+  
+  [33X[0;0YIn  the  example  we  see that there are [22X4[122X crossed modules, in [22X3[122X isomorphism
+  classes,  [22X(C_6 -> S_3)[122X; forming a subset of the [22X17[122X crossed modules with size
+  [10X[6,6][110X;  and  that  these  form  a  subset  of  the [22X205[122X crossed modules whose
+  cat1-group has size [22X36[122X. There are [22X40[122X precrossed modules with size [10X[6,6][110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xc6 := SmallGroup( 6, 2 );; [127X[104X
+    [4X[25Xgap>[125X [27Xs3 := SmallGroup( 6, 1 );; [127X[104X
+    [4X[25Xgap>[125X [27XAc6s3 := AllXMods( c6, s3 );;   [127X[104X
+    [4X[25Xgap>[125X [27XLength( Ac6s3 );           [127X[104X
     [4X[28X4[128X[104X
-    [4X[25Xgap>[125X [27Xx66 := AllXMods( [6,6] );;   [127X[104X
-    [4X[25Xgap>[125X [27XLength( x66 );[127X[104X
+    [4X[25Xgap>[125X [27XIc6s3 := AllXModsUpToIsomorphism( c6, s3 );; [127X[104X
+    [4X[25Xgap>[125X [27XList( Ic6s3, obj -> IsTrivialAction2DimensionalGroup( obj ) ); [127X[104X
+    [4X[28X[ true, false, false ][128X[104X
+    [4X[25Xgap>[125X [27XKc6s3 := List( Ic6s3, obj -> KernelCokernelXMod( obj ) );; [127X[104X
+    [4X[25Xgap>[125X [27XList( Kc6s3, obj -> IdGroup( obj ) );[127X[104X
+    [4X[28X[ [ [ 6, 2 ], [ 6, 1 ] ], [ [ 6, 2 ], [ 6, 1 ] ], [ [ 2, 1 ], [ 2, 1 ] ] ][128X[104X
+    [4X[28X[ ][128X[104X
+    [4X[25Xgap>[125X [27XA66 := AllXMods( [6,6] );;   [127X[104X
+    [4X[25Xgap>[125X [27XLength( A66 );[127X[104X
     [4X[28X17[128X[104X
+    [4X[25Xgap>[125X [27XIA66 := IsomorphismClassRepresentatives2dGroups( A66 );;[127X[104X
+    [4X[25Xgap>[125X [27XLength( IA66 );[127X[104X
+    [4X[28X9[128X[104X
     [4X[25Xgap>[125X [27Xx36 := AllXMods( 36 );; [127X[104X
     [4X[25Xgap>[125X [27XLength( x36 ); [127X[104X
     [4X[28X205[128X[104X
@@ -369,29 +420,6 @@
     [4X[28X[ [ [ 1, 36 ], 14 ], [ [ 2, 18 ], 7 ], [ [ 3, 12 ], 21 ], [ [ 4, 9 ], 14 ], [128X[104X
     [4X[28X  [ [ 6, 6 ], 17 ], [ [ 9, 4 ], 102 ], [ [ 12, 3 ], 8 ], [ [ 18, 2 ], 18 ], [128X[104X
     [4X[28X  [ [ 36, 1 ], 4 ] ][128X[104X
-    [4X[28X[128X[104X
-  [4X[32X[104X
-  
-  [1X4.1-12 IsomorphismXMods[101X
-  
-  [33X[1;0Y[29X[2XIsomorphismXMods[102X( [3XX1[103X, [3XX2[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XAllXModsUpToIsomorphism[102X( [3Xlist[103X ) [32X operation[133X
-  
-  [33X[0;0YThe  function [10XIsomorphismXMods[110X computes an isomorphism [22Xμ : calX_1 -> calX_2[122X,
-  provided  one exists, or else returns [10Xfail[110X. In the example below we see that
-  the  [22X17[122X  crossed  modules of size [10X[6,6][110X in [10Xx66[110X (see the previous subsection)
-  fall into [22X9[122X isomorphism classes.[133X
-  
-  [33X[0;0YThe  function  [10XAllXModsUpToIsomorphism[110X  takes  a list of crossed modules and
-  partitions them into isomorphism classes.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XIsomorphismXMods( x66[1], x66[2] );[127X[104X
-    [4X[28X[[Group( [ f1, f2 ] )->Group( [ f1, f2 ] )] => [Group( [ f1, f2 ] )->Group( [128X[104X
-    [4X[28X[ f1, f2 ] )]][128X[104X
-    [4X[25Xgap>[125X [27Xiso66 := AllXModsUpToIsomorphism( x66 );;  Length( iso66 ); [127X[104X
-    [4X[28X9 [128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
@@ -507,12 +535,12 @@
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XC8 := Cat1Group( 16, 8, 1 );;[127X[104X
+    [4X[25Xgap>[125X [27XC8 := Cat1Group( 16, 8, 2 );;[127X[104X
     [4X[25Xgap>[125X [27XX8 := XMod(C8);  IdGroup( X8 );[127X[104X
     [4X[28X[Group( [ f1*f2*f3, f3, f4 ] )->Group( [ f2, f2 ] )][128X[104X
     [4X[28X[ [ 8, 1 ], [ 2, 1 ] ][128X[104X
-    [4X[25Xgap>[125X [27XC9 := Cat1Group( 32, 9, 1 );[127X[104X
-    [4X[28X[(C8 x C2) : C2=>Group( [ f2, f2 ] )][128X[104X
+    [4X[25Xgap>[125X [27XC9 := Cat1Group( 32, 9, 2 );[127X[104X
+    [4X[28X[(C8 x C2) : C2 => Group( [ f2, f2 ] )][128X[104X
     [4X[25Xgap>[125X [27XX9 := XMod( C9 );  IdGroup( X9 );[127X[104X
     [4X[28X[Group( [ f1*f2*f3, f3, f4, f5 ] )->Group( [ f2, f2 ] )][128X[104X
     [4X[28X[ [ 16, 5 ], [ 2, 1 ] ][128X[104X

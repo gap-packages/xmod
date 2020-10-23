@@ -1,0 +1,208 @@
+  
+  [1X14 [33X[0;0YDevelopment history[133X[101X
+  
+  [33X[0;0YThis  chapter, which contains details of the major changes to the package as
+  it  develops,  was  first created in April 2002. Details of the changes from
+  [5XXMod[105X  1 to [5XXMod[105X 2.001 are far from complete. Starting with version 2.009 the
+  file [11XCHANGES[111X lists the minor changes as well as the more fundamental ones.[133X
+  
+  [33X[0;0YThe  inspiration  for  this  package  was  the  need,  in the mid-1990's, to
+  calculate  induced  crossed  modules  (see  [BW95], [BW96], [BW03]). [5XGAP[105X was
+  chosen  over  other  computational group theory systems because the code was
+  freely  available,  and  it was possible to modify the Tietze transformation
+  code so as to record the images of the original generators of a presentation
+  as  words  in  the  simplified  presentation. (These modifications are now a
+  standard part of the Tietze transformation package in [5XGAP[105X.)[133X
+  
+  
+  [1X14.1 [33X[0;0YChanges from version to version[133X[101X
+  
+  
+  [1X14.1-1 [33X[0;0YVersion 1 for [5XGAP[105X[101X[1X 3[133X[101X
+  
+  [33X[0;0YThe  first  version  of  [5XXMod[105X  became  an  accepted package for [5XGAP[105X 3.4.3 in
+  December 1996.[133X
+  
+  
+  [1X14.1-2 [33X[0;0YVersion 2[133X[101X
+  
+  [33X[0;0YConversion  of  [5XXMod[105X 1 from [5XGAP[105X 3.4.3 to the new [5XGAP[105X syntax began soon after
+  [5XGAP[105X  4  was  released,  and  had  a  lengthy  gestation.  The new [5XGAP[105X syntax
+  encouraged  a re-naming of many of the function names. An early decision was
+  to  introduce  generic  categories  [10X2dDomain[110X  for  (pre-)crossed modules and
+  (pre-)cat1-groups, and [10X2dMapping[110X for the various types of morphism. In 2.009
+  [10X3dDomain[110X  was  used  for  crossed squares and cat2-groups, and [10X3dMapping[110X for
+  their  morphisms.  A  generic  name  for  derivations  and  sections is also
+  required, and [10XUp2dMapping[110X is currently used.[133X
+  
+  
+  [1X14.1-3 [33X[0;0YVersion 2.001 for [5XGAP[105X[101X[1X 4[133X[101X
+  
+  [33X[0;0YThis  was  the  first  version of [5XXMod[105X for [5XGAP[105X 4, completed in April 2002 in
+  time  for  the  release of [5XGAP[105X 4.3. Functions for actors and induced crossed
+  modules  were  not  included,  nor many of the functions for derivations and
+  sections, for example [10XInnerDerivation[110X.[133X
+  
+  
+  [1X14.1-4 [33X[0;0YInduced crossed modules[133X[101X
+  
+  [33X[0;0YDuring  May  2002  converted  the code for induced crossed modules. (Induced
+  cat1-groups may be converted one day.)[133X
+  
+  
+  [1X14.1-5 [33X[0;0YVersions 2.002 -- 2.006[133X[101X
+  
+  [33X[0;0YVersion  2.004 of April 14th 2004 added the [2XCat1Select[102X ([14X2.7-1[114X) functionality
+  of version 1 to the [2XCat1Group[102X ([14X2.4-1[114X) function.[133X
+  
+  [33X[0;0YA  significant  addition  in  Version  2.005 was the conversion of the actor
+  crossed   module   functions   from   the   [11X3.4.4[111X   version.  This  included
+  [2XAutomorphismPermGroup[102X  ([14X6.1-1[114X)  for a crossed module; [2XWhiteheadXMod[102X ([14X6.1-2[114X);
+  [2XNorrieXMod[102X  ([14X6.1-2[114X);  [2XLueXMod[102X ([14X6.1-2[114X); [2XActorXMod[102X ([14X6.1-2[114X); [2XCentreXMod[102X ([14X4.1-7[114X)
+  of a crossed module; [2XInnerMorphism[102X ([14X6.1-3[114X); and [2XInnerActorXMod[102X ([14X6.1-3[114X).[133X
+  
+  
+  [1X14.1-6 [33X[0;0YVersions 2.007 -- 2.010[133X[101X
+  
+  [33X[0;0YThese versions contain changes made between September 2004 and October 2007.[133X
+  
+  [30X    [33X[0;6YAdded  basic  functions  for  crossed squares, considered as [10X3dObjects[110X
+        with  crossed  pairings,  and  their morphisms. Groups with two normal
+        subgroups,  and  the  actor  of  a  crossed  module,  provide standard
+        examples of crossed squares. (Cat2-groups are not yet implemented.)[133X
+  
+  [30X    [33X[0;6YConverted the documentation to the format of the [5XGAPDoc[105X package.[133X
+  
+  [30X    [33X[0;6YImproved   [2XAutomorphismPermGroup[102X  ([14X6.1-1[114X)  for  crossed  modules,  and
+        introduced a special method for conjugation crossed modules.[133X
+  
+  [30X    [33X[0;6YSubstantial   revisons   made   to   [2XXModByCentralExtension[102X   ([14X2.1-5[114X);
+        [2XNorrieXMod[102X   ([14X6.1-2[114X);   [2XLueXMod[102X   ([14X6.1-2[114X);   [2XActorXMod[102X   ([14X6.1-2[114X);  and
+        [2XInducedXModByCopower[102X ([14X7.2-1[114X).[133X
+  
+  [30X    [33X[0;6YVersion 2.010, of October 2007, was timed to coincide with the release
+        of  [5XGAP[105X  4.4.10,  and included a change of filenames; and correct file
+        protection codes.[133X
+  
+  
+  [1X14.2 [33X[0;0YVersions for [5XGAP[105X[101X[1X [4.5 .. 4.8][133X[101X
+  
+  [33X[0;0YVersion 2.19, released on 9th June 2012, included the following changes:[133X
+  
+  [30X    [33X[0;6YThe  file  [10Xmakedocrel.g[110X  was  copied,  with  appropriate changes, from
+        [5XGAPDoc[105X, and now provides the correct way to update the documentation.[133X
+  
+  [30X    [33X[0;6YThe first functions for crossed modules of groupoids were introduced.[133X
+  
+  [30X    [33X[0;6YA GNU General Public License declaration was added.[133X
+  
+  
+  [1X14.2-1 [33X[0;0YAllCat1s[133X[101X
+  
+  [33X[0;0YVersion  [12X2.21[112X  contained  major changes to the [2XCat1Select[102X ([14X2.7-1[114X) operation:
+  the  list  [10XCAT1_LIST[110X  of  cat1-structures  in  the  data file [11Xcat1data.g[111X was
+  changed  from  permutation  groups  to  pc-groups,  with  the  generators of
+  subgroups; images of the tail map; and images of the head map being given as
+  [10XExtRepOfObj[110X of words in the generators.[133X
+  
+  [33X[0;0YThe [10XAllCat1s[110X function was reintroduced from the UNKNOWNEntity(GAP3) version,
+  and renamed as the operation [10XAllCat1DataGroupsBasic[110X.[133X
+  
+  [33X[0;0YIn  version  [12X2.25[112X the data in [11Xcat1data.g[111X was extended from groups of size up
+  to  [22X48[122X  to groups of size up to [22X70[122X. In particular, the [22X267[122X groups of size 64
+  give  rise  to  a total of [22X1275[122X cat1-groups. The authors are indebted to Van
+  Luyen  Le  in  Galway  for pointing out a number of errors in the version of
+  this list distributed with version [12X2.24[112X of this package.[133X
+  
+  
+  [1X14.2-2 [33X[0;0YVersions 2.43 - 2.56[133X[101X
+  
+  [33X[0;0YVersion  [12X2.43[112X,  released  on  11th  November  2015,  included  the following
+  changes:[133X
+  
+  [30X    [33X[0;6YThe material on isoclinism in Chapter 4 was added.[133X
+  
+  [30X    [33X[0;6YThe         package         webpage         has        moved        to
+        [7Xhttp://pages.bangor.ac.uk/~mas023/chda/[107X.[133X
+  
+  [30X    [33X[0;6YA        GitHub        repository        was        started        at:
+        [7Xhttps://github.com/gap-packages/xmod[107X.[133X
+  
+  [30X    [33X[0;6YThe  section  on  [13XDistinct and Common Representatives[113X was moved to the
+        [5XUtils[105X package.[133X
+  
+  
+  [1X14.2-3 [33X[0;0YVersion 2.61[133X[101X
+  
+  [33X[0;0YMajor  changes  in names took place, with [10X2dDomain, 2dGroup, 2dMapping[110X, etc.
+  becoming  [10X2DimensionalDomain,  2DimensionalGroup, 2DimensionalMapping[110X, etc.,
+  and  similarly  for 3-dimensional versions. Also [10XHigherDimensionalDomain[110X and
+  related  categories,  domains,  properties,  attributes  and operations were
+  introduced.  At  the same time, functions for cat2-groups were introduced by
+  Alper Odabas.[133X
+  
+  
+  [1X14.2-4 [33X[0;0YVersion 2.63 - 2.74[133X[101X
+  
+  [30X    [33X[0;6YAdded an implementation of crossed modules of groupoids.[133X
+  
+  [30X    [33X[0;6YLots more work on crossed squares and cat2-groups.[133X
+  
+  [30X    [33X[0;6YAdded an implementation of group groupoids.[133X
+  
+  
+  [1X14.3 [33X[0;0YWhat needs doing next?[133X[101X
+  
+  [30X    [33X[0;6YSpeed up the calculation of Whitehead groups.[133X
+  
+  [30X    [33X[0;6YAdd more functions for [10X3dObjects[110X and implement [10Xcat2-groups[110X.[133X
+  
+  [30X    [33X[0;6YImprove  interaction with the package [5Xgroupoids[105X implementing the group
+        groupoid  version  of  a crossed module, and adding more functions for
+        crossed modules of groupoids.[133X
+  
+  [30X    [33X[0;6YAdd interaction with [5XIdRel[105X (and possibly [5XXRes[105X and [5Xnatp[105X) .[133X
+  
+  [30X    [33X[0;6YNeed   [10XInverseGeneralMapping[110X  for  morphisms  and  more  features  for
+        [10XFpXMods[110X, [10XPcXMods[110X, etc.[133X
+  
+  [30X    [33X[0;6YImplement actions of a crossed module.[133X
+  
+  [30X    [33X[0;6YImplement [10XFreeXMods[110X and an operation [10XIsomorphism2dDomains[110X.[133X
+  
+  [30X    [33X[0;6YAllow the construction of a group of morphisms of crossed modules.[133X
+  
+  [30X    [33X[0;6YComplete  the conversion from Version [12X1[112X of the calculation of sections
+        using [10XEndoClasses[110X.[133X
+  
+  [30X    [33X[0;6YMore crossed square constructions:[133X
+  
+        [30X    [33X[0;12YIf  [22XM,  N[122X  are  ordinary [22XP[122X-modules and [22XA[122X is an arbitrary abelian
+              group  on which [22XP[122X acts trivially, then there is a crossed square
+              with sides[133X
+  
+  
+  [24X            [33X[0;12Y0  : A \to N,\quad 0 : A \to M,\quad 0 : M \to P,\quad 0 : N \to
+              P.[133X
+  
+  [124X
+  
+        [30X    [33X[0;12YFor a group [22XL[122X, the automorphism crossed module [22XAct L = (ι : L ->
+              Aut  L)[122X splits to form the square with [22X(ι_1 : L -> Inn L)[122X on two
+              sides,  and [22X(ι_2 : Inn L -> Aut L)[122X on the other two sides, where
+              [22Xι_1[122X  maps  [22Xl  ∈  L[122X to the inner automorphism [22Xβ_l : L -> L, l^' ↦
+              l^-1l^'l[122X,  and  [22Xι_2[122X  is  the  inclusion  of  [22XInn L[122X in [22XAut L[122X. The
+              actions are standard, and the crossed pairing is[133X
+  
+  
+  [24X            [33X[0;12Y\boxtimes  \;:\;  \Inn\  L \times \Inn\ L \to L, \quad (\beta_l,
+              \beta_{l^{\prime}}) \;\mapsto\; [l, l^{\prime}]~.[133X
+  
+  [124X
+  
+  [30X    [33X[0;6YImprove the interaction with the [5XHAP[105X package.[133X
+  
+  [30X    [33X[0;6YImplement cat1-groups with objects.[133X
+  
+  [33X[0;0Y [133X
+  

@@ -189,8 +189,8 @@
     [4X[25Xgap>[125X [27Ximgamma := [ (4,5,6), (1,2,3), (2,3)(5,6) ];; [127X[104X
     [4X[25Xgap>[125X [27Xgamma := GroupHomomorphismByImages( g18, g18, g18gens, imgamma );;[127X[104X
     [4X[25Xgap>[125X [27Xrho := IdentityMapping( s3a );; [127X[104X
-    [4X[25Xgap>[125X [27Xmor := Cat1GroupMorphism( C18, C3, gamma, rho );;[127X[104X
-    [4X[25Xgap>[125X [27XDisplay( mor );;[127X[104X
+    [4X[25Xgap>[125X [27Xphi3 := Cat1GroupMorphism( C18, C3, gamma, rho );;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay( phi3 );;[127X[104X
     [4X[28XMorphism of cat1-groups :- [128X[104X
     [4X[28X: Source = [g18=>s3a] with generating sets:[128X[104X
     [4X[28X  [ (1,2,3), (4,5,6), (2,3)(5,6) ][128X[104X
@@ -205,7 +205,40 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [1X3.3-2 IsomorphismPermObject[101X
+  [1X3.3-2 Cat1GroupMorphismOfXModMorphism[101X
+  
+  [33X[1;0Y[29X[2XCat1GroupMorphismOfXModMorphism[102X( [3XIsXModMorphism[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XXModMorphismOfCat1GroupMorphism[102X( [3XIsCat1GroupMorphism[103X ) [32X attribute[133X
+  
+  [33X[0;0YIf  [22X(σ,ρ)  :  calX_1  ->  calX_2[122X  and  [22XcalC_1,calC_2[122X  are  the  cat[22X^1[122X-groups
+  accociated  to  [22XcalX_1, calX_2[122X, then the associated morphism of cat[22X^1[122X-groups
+  is [22X(γ,ρ)[122X where [22Xγ(r_1,s_1) = (ρ r_1, σ s_1)[122X.[133X
+  
+  [33X[0;0YSimilarly,  given  a  morphism  [22X(γ,ρ) : calC_1 -> calC_2[122X of cat1-groups, the
+  associated  morphism  of crossed modules is [22X(σ,ρ) : calX_1 -> calX_2[122X where [22Xσ
+  s_1 = γ(1,s_1)[122X. .[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xphi5 := Cat1GroupMorphismOfXModMorphism( mor5 );[127X[104X
+    [4X[28X[[(Aut(c5) |X c5)=>Aut(c5)] => [(Aut(c5) |X c5)=>Aut(c5)]][128X[104X
+    [4X[25Xgap>[125X [27Xmor3 := XModMorphismOfCat1GroupMorphism( phi3 );;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay( mor3 );[127X[104X
+    [4X[28XMorphism of crossed modules :- [128X[104X
+    [4X[28X: Source = xmod([g18=>s3a]) with generating sets:[128X[104X
+    [4X[28X  [ (4,5,6) ][128X[104X
+    [4X[28X  [ (7,8,9), (8,9) ][128X[104X
+    [4X[28X:  Range = xmod([g18=>s3a]) with generating sets:[128X[104X
+    [4X[28X  [ (1,2,3) ][128X[104X
+    [4X[28X  [ (7,8,9), (8,9) ][128X[104X
+    [4X[28X: Source Homomorphism maps source generators to:[128X[104X
+    [4X[28X  [ (1,2,3) ][128X[104X
+    [4X[28X: Range Homomorphism maps range generators to:[128X[104X
+    [4X[28X  [ (7,8,9), (8,9) ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X3.3-3 IsomorphismPermObject[101X
   
   [33X[1;0Y[29X[2XIsomorphismPermObject[102X( [3Xobj[103X ) [32X function[133X
   [33X[1;0Y[29X[2XIsomorphismPerm2DimensionalGroup[102X( [3X2DimensionalGroup[103X ) [32X attribute[133X
@@ -224,7 +257,7 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [1X3.3-3 SmallerDegreePermutationRepresentation2DimensionalGroup[101X
+  [1X3.3-4 SmallerDegreePermutationRepresentation2DimensionalGroup[101X
   
   [33X[1;0Y[29X[2XSmallerDegreePermutationRepresentation2DimensionalGroup[102X( [3XPerm2DimensionalGroup[103X ) [32X attribute[133X
   
