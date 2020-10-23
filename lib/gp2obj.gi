@@ -1317,8 +1317,8 @@ InstallMethod( KernelCokernelXMod, "kernel -> cokernel for an xmod", true,
     [ IsXMod ], 0,
 function( X0 )
 
-    local S, R, bdy, act, K, J, nat, F, iso, mgi, inv, C, genK, imres, res, 
-          genC, preC, imact, i, g, p, ap, im, autK, actC;
+    local S, R, bdy, act, K, J, nat, F, genK, imres, res, 
+          genF, preF, imact, i, g, p, ap, im, autK, actF;
 
     S := Source( X0 );
     R := Range( X0 ); 
@@ -1326,35 +1326,30 @@ function( X0 )
     act := XModAction( X0 );
     K := Kernel( bdy );
     J := ImagesSource( bdy );
-    if ( J = R ) then ## trivial cokernel 
-        C := Group( () ); 
-        res := MappingToOne( K, C );
-        return XModByTrivialAction( res );
-    fi; 
     nat := NaturalHomomorphismByNormalSubgroup( R, J );
     F := FactorGroup( R, J ); 
-    iso := IsomorphismPermGroup( F ); 
-    C := Range( iso );
-    mgi := MappingGeneratorsImages( iso );
-    inv := GroupHomomorphismByImages( C, F, mgi[2], mgi[1] ); 
     genK := GeneratorsOfGroup( K ); 
-    imres := List( genK, g -> Image( iso, Image( nat, Image( bdy, g ) ) ) );
-    res := GroupHomomorphismByImages( K, C, genK, imres ); 
-    genC := GeneratorsOfGroup( C ); 
-    preC := List( genC, 
-                  g -> PreImagesRepresentative( nat, ImageElm( inv, g ) ) ); 
-    imact := ShallowCopy( genC ); 
-    for i in [1..Length( genC )] do 
-        g := genC[i]; 
-        p := preC[i];
-        ap := ImageElm( act, p ); 
-        im := List( genK, k -> ImageElm( ap, k ) );
-        imact[i] := GroupHomomorphismByImages( K, K, genK, im ); 
-    od;
+    imres := List( genK, g -> Image( nat, Image( bdy, g ) ) );
+    res := GroupHomomorphismByImages( K, F, genK, imres ); 
+    genF := GeneratorsOfGroup( F ); 
+    preF := List( genF, g -> PreImagesRepresentative( nat, g ) ); 
+    imact := ShallowCopy( genF ); 
+    if ( genF = [ ] ) then 
+        genF := [ One( F ) ]; 
+        imact := [ IdentityMapping( K ) ]; 
+    else 
+        for i in [1..Length( genF )] do 
+            g := genF[i]; 
+            p := preF[i];
+            ap := ImageElm( act, p ); 
+            im := List( genK, k -> ImageElm( ap, k ) );
+            imact[i] := GroupHomomorphismByImages( K, K, genK, im ); 
+        od;
+    fi; 
     autK := Group( imact );
     SetIsGroupOfAutomorphisms( autK, true ); 
-    actC := GroupHomomorphismByImages( C, autK, genC, imact );  
-    return XModByBoundaryAndAction( res, actC );  
+    actF := GroupHomomorphismByImages( F, autK, genF, imact );  
+    return XModByBoundaryAndAction( res, actF ); 
 end );
 
 #############################################################################
@@ -1819,7 +1814,8 @@ end );
 
 #############################################################################
 ##
-#M  IsIdentityPreCat1Group
+#M  IsIdentityPreCat1Group( precat1 )
+#M  IsSymmetric2DimensionalGroup( obj ) 
 ##
 InstallMethod( IsIdentityPreCat1Group, "test a pre-cat1-group", true, 
     [ IsPreCat1Group ], 0,
@@ -1827,6 +1823,12 @@ function( C1G )
     return ( ( TailMap( C1G ) = IdentityMapping( Source( C1G ) ) ) and
              ( HeadMap( C1G ) = IdentityMapping( Source( C1G ) ) ) );
 end );
+
+InstallMethod( IsSymmetric2DimensionalGroup, "test a pre-cat1-group", true, 
+    [ IsPreCat1Group ], 0, 
+function( pc1 ) 
+    return ( TailMap( pc1 ) = HeadMap( pc1 ) ); 
+end ); 
 
 #############################################################################
 ##
@@ -2108,8 +2110,8 @@ function( et, eh )
 
     local G, gG, R, t, h, e;
 
-    if not ( IsEndoMapping( et ) and IsEndoMapping( eh ) ) then
-        Print( "et, eh must both be group endomorphisms \n" );
+    if not ( IsSubEndoMapping( et ) and IsSubEndoMapping( eh ) ) then
+        Print( "et, eh must both be group (sub-)endomorphisms \n" );
 		return fail;
     fi;
     if not ( Source( et ) = Source( eh ) ) then

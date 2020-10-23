@@ -138,50 +138,61 @@ end );
 
 #############################################################################
 ##
-#F  (Pre)Cat3Group( C2front, C2left )    cat3-group from two (pre)cat2-groups
-#F  (Pre)Cat3Group( XS )                 cat3-group from (pre)crossed cube
+#F  (Pre)Cat3Group( front, left )    cat3-group from two (pre)cat2-groups
+#F  (Pre)Cat3Group( front, uplt )    cat3-group from cat2 and cat1-groups
+#F  (Pre)Cat3Group( fup, flt, llt )  cat3-group from 3 cat1-groups
+#F  (Pre)Cat3Group( XS )             cat3-group from (pre)crossed cube
 ##
 InstallGlobalFunction( PreCat3Group, function( arg )
 
-    local nargs, C2f, C2l, C1fl, C1fl2, urdb, C3G, ok;
+    local nargs, front, left, Cfl, Clu, urdb, C3G, ok;
 
     nargs := Length( arg );
     if ( ( nargs < 1 ) or ( nargs > 3 ) ) then
-        Print( "standard usage: (Pre)Cat3Group( cat2, cat2 );\n" );
+        Print( "standard usage: (Pre)Cat3Group( front, up );\n" );
+        Print( "            or: (Pre)Cat3Group( front, up-left );\n" );
         Print( "            or: (Pre)Cat3Group( cat1, cat1, cat1 );\n" );
         Print( "            or: (Pre)Cat3Group( Xcube );\n" );
         return fail;
     fi; 
+    if not ForAll( arg, C -> HasHigherDimension(C) ) then 
+        Error( "each argument should have a higher dimension" ); 
+    fi;
     if ( nargs = 1 ) then 
             Error( "argument is not a pre-crossed cube" ); 
         ## C3G := PreCat3GroupOfPreCrossedcube( arg[1] );
     elif ( nargs = 3 ) then 
-        C2f := PreCat2Group( arg[1], arg[2] ); 
-        C2l := PreCat2Group( arg[2], arg[3] ); 
+        front := PreCat2Group( arg[1], arg[2] ); 
+        left := PreCat2Group( arg[2], arg[3] ); 
+    elif ( nargs = 2 ) and ( HigherDimension( arg[2] ) = 2 ) then 
+        front := arg[1]; 
+        Cfl := Left2DimensionalGroup( arg[1] ); 
+        left := PreCat2Group( Cfl, arg[2] ); 
     else 
-        C2f := arg[1]; 
-        C2l := arg[2]; 
+        front := arg[1]; 
+        left := arg[2]; 
     fi; 
-    if not IsPreCat2Group( C2f ) and IsPreCat2Group( C2l ) then 
-        Error( "C2f and C2l are not both pre-cat2-groups" ); 
+    if ( ( front = fail ) or (left = fail ) ) then 
+        return fail; 
+    fi;
+    if not IsPreCat2Group( front ) and IsPreCat2Group( left ) then 
+        Error( "front and left are not both pre-cat2-groups" ); 
     fi; 
-    C1fl := Left2DimensionalGroup( C2f ); 
-    C1fl2 := Up2DimensionalGroup( C2l ); 
-    ## if the two cat1-groups are unequal but isomorphic then make 
-    ## an isomorphic copy of .... ??? 
-    if not ( C1fl = C1fl2 ) then 
-        ## iso := IsomorphismGroups( S2, S1 ); 
-        Error( "C1fl <> C1fl2" ); 
+    Cfl := Left2DimensionalGroup( front ); 
+    Clu := Up2DimensionalGroup( left ); 
+    if not ( Cfl = Clu ) then 
+        Info( InfoXMod, 1, "Cfl <> Clu" ); 
+        return fail; 
     fi; 
-    urdb := DetermineRemainingCat2Groups( C2f, C2l ); 
+    urdb := DetermineRemainingCat2Groups( front, left ); 
     if ( urdb = fail ) then 
         Info( InfoXMod, 2, "failure with RemainingCat2Groups" ); 
         return fail; 
     fi;
     C3G := PreCat3GroupByPreCat2Groups( 
-               C2f, urdb[1], C2l, urdb[2], urdb[3], urdb[4] ); 
+               front, urdb[1], left, urdb[2], urdb[3], urdb[4] ); 
     if ( C3G = fail ) then 
-        return fail;   ## Error( "C3G fails to be a PreCat3Group" ); 
+        return fail; 
     fi;
     ok := IsPreCat3Group( C3G );
     if ok then 
@@ -197,12 +208,15 @@ InstallGlobalFunction( Cat3Group, function( arg )
     local nargs, C3G, ok; 
 
     nargs := Length( arg );
-    if ( nargs = 2 ) then 
-        C3G := PreCat3Group( arg[1], arg[2] ); 
-    elif ( nargs = 3 ) then 
+    if ( nargs = 3 ) then 
         C3G := PreCat3Group( arg[1], arg[2], arg[3] ); 
+    elif ( nargs = 2 ) then 
+        C3G := PreCat3Group( arg[1], arg[2] ); 
+    elif ( nargs = 1 ) then 
+        C3G := PreCat3Group( arg[1] ); 
     else 
         Print( "standard usage: (Pre)Cat3Group( cat2, cat2 );\n" );
+        Print( "            or: (Pre)Cat3Group( cat2, cat1 );\n" );
         Print( "            or: (Pre)Cat3Group( cat1, cat1, cat1 );\n" );
         Print( "            or: (Pre)Cat3Group( XCube );\n" );
         return fail; 

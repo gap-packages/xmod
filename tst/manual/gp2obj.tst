@@ -316,7 +316,7 @@ gap> CXC2 := Cat1GroupOfXMod( XC2 );;
 gap> StructureDescription( CXC2 );
 [ "S3", "C2" ]
 gap> IsomorphismCat1Groups( C2, CXC2 );
-[[..] => [(..|X..)=>c2]]
+[[Group( [ f1, f2 ] ) => c2] => [(..|X..) => c2]]
 
 ## Section 2.4.6
 gap> s3 := Subgroup( s4, [(2,3),(3,4)] );;

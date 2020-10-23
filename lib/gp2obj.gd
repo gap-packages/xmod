@@ -253,7 +253,8 @@ DeclareOperation( "SubCat1Group", [ IsCat1Group, IsGroup, IsGroup ] );
 #A  TrivialSubPreCat1Group( <obj> )
 #A  TrivialSubCat1Group( <obj> )
 #P  IsIdentityPreCat1Group( <obj> )
-#P  IsPreCat1GroupWithIdentityEmbedding( <obj> )
+#P  IsPreCat1GroupWithIdentityEmbedding( <obj> ) 
+#P  IsSymmetric2DimensionalGroup( <obj> )
 ##
 DeclareOperation( "TrivialSub2DimensionalGroup", [ Is2DimensionalGroup ] );
 DeclareAttribute( "TrivialSubPreXMod", IsPreXMod );
@@ -262,6 +263,7 @@ DeclareAttribute( "TrivialSubPreCat1Group", IsPreCat1Group );
 DeclareAttribute( "TrivialSubCat1Group", IsCat1Group );
 DeclareProperty( "IsIdentityPreCat1Group", IsPreCat1Group );
 DeclareProperty( "IsPreCat1GroupWithIdentityEmbedding", IsPreCat1Group ); 
+DeclareProperty( "IsSymmetric2DimensionalGroup", Is2DimensionalGroup ); 
 
 #############################################################################
 ##
