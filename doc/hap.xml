@@ -1,0 +1,97 @@
+<!-- ------------------------------------------------------------------- -->
+<!--                                                                     -->
+<!--  hap.xml               XMod documentation            Chris Wensley  -->
+<!--                                                        & Murat Alp  -->
+<!--  Copyright (C) 2001-2020, Chris Wensley et al,                      --> 
+<!--  School of Computer Science, Bangor University, U.K.                --> 
+<!--                                                                     -->
+<!-- ------------------------------------------------------------------- -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Chapter Label="chap-hap">
+<Heading>Interaction with HAP </Heading>
+
+This chapter describes functions which allow functions in the package 
+<Package>HAP</Package> to be called from <Package>XMod</Package>. 
+
+<Section Label="sect-hap"> 
+<Heading>Calling HAP functions</Heading> 
+
+In <Package>HAP</Package> a cat<M>^1</M>-group is called a 
+<C>CatOneGroup</C> and the traditional terms 
+<E>source</E> and <E>target</E> are used for the 
+<C>TailMap</C> and <C>HeadMap</C>. 
+A <C>CatOneGroup</C> is a record <C>C</C> with fields 
+<C>C!.sourceMap</C> and <C>C!.targetMap</C>. 
+
+<ManSection>
+   <Oper Name="SmallCat1Group"
+         Arg="n i j" />
+
+<Description>
+This operation calls the <Package>HAP</Package> function 
+<C>SmallCatOneGroup(n,i,j)</C> which returns a <C>CatOneGroup</C> 
+from the <Package>HAP</Package> database.  
+This is then converted into an <Package>XMod</Package> cat<M>^1</M>-group. 
+Note that the numbering is not the same as that used by the 
+<Package>XMod</Package> operation <C>Cat1Select</C>. 
+In the example <C>C12</C> is the converted form of <C>H12</C>.  
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> H12 := SmallCatOneGroup( 12, 4, 3 );
+Cat-1-group with underlying group Group( [ f1, f2, f3 ] ) . 
+gap> C12 := SmallCat1Group( 12, 4, 3 );
+[Group( [ f1, f2, f3 ] )=>Group( [ f1, f2, <identity> of ... ] )]
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="CatOneGroupToXMod"
+         Arg="C" />
+   <Oper Name="Cat1GroupToHAP"
+         Arg="C" />
+
+<Description>
+These two functions convert between the two alternative implementations. 
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> C12 := CatOneGroupToXMod( H12 );    
+[Group( [ f1, f2, f3 ] )=>Group( [ f1, f2, <identity> of ... ] )]
+gap> C18 := Cat1Select( 18, 4, 3 );
+[(C3 x C3) : C2=>Group( [ f1, <identity> of ..., f3 ] )]
+gap> H18 := Cat1GroupToHAP( C18 ); 
+Cat-1-group with underlying group (C3 x C3) : C2 . 
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="IdCat1Group"
+         Arg="C" />
+
+<Description>
+This function calls the <Package>HAP</Package> function <C>IdCatOneGroup</C> 
+on a cat<M>^1</M>-group <M>C</M>.  
+This returns <M>[n,i,j]</M> if the cat<M>^1</M>-group is the <M>j</M>-th 
+structure on the <C>SmallGroup(n,i)</C>. 
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> IdCatOneGroup( H18 ); 
+[ 18, 4, 4 ]
+gap> IdCat1Group( C18 ); 
+[ 18, 4, 4 ]
+]]>
+</Example>
+
+</Section> 
+
+</Chapter>
