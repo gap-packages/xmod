@@ -1097,6 +1097,9 @@ function( C1G1, C1G2 )
           t1, h1, t2, h2, t3, h3, C3, phi, autG2, iterG2, 
           salpha, ralpha, mgira, isalpha, R4, t4, h4, C4, smor, rmor;
 
+    if not ( Size( C1G1 ) = Size( C1G2 ) ) then 
+        return fail; 
+    fi; 
     ok1 := IsPreCat1GroupWithIdentityEmbedding( C1G1 ); 
     ok2 := IsPreCat1GroupWithIdentityEmbedding( C1G2 ); 
     C1 := C1G1; 

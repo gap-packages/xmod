@@ -659,6 +659,9 @@ function( D1, D2 )
           tau1, theta1, eps1, tau2, theta2, eps2, 
           phi, alpha, gamma, rho, sigma, pi, isoup, isolt, isort, isodn;
 
+    if not ( Size( D1 ) = Size( D2 ) ) then 
+        return fail; 
+    fi;
     sym1 := IsSymmetric3DimensionalGroup( D1 ); 
     sym2 := IsSymmetric3DimensionalGroup( D2 ); 
     if not ( sym1 = sym2 ) then 
