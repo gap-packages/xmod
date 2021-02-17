@@ -2,7 +2,7 @@
 ##
 #W  gp2map.tst                    XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2020, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2021, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 ##
@@ -170,6 +170,20 @@ gap> mor0 := XModMorphism( X8, X0, sigma0, rho0 );;
 gap> K0 := Kernel( mor0 );;
 gap> StructureDescription( K0 );
 [ "C12", "C6" ]
+
+## Section 3.5 
+gap> C18a := Cat1Select( 18, 4, 4 );;          
+gap> StructureDescription( C18a );             
+[ "(C3 x C3) : C2", "S3" ]
+gap> QuotientQuasiIsomorphism( C18a, true );   
+quo: [ f2 ][ f3 ], [ "1", "C2" ]
+[ [ 2, 1 ], [ 2, 1 ] ], [ 2, 1, 1 ]
+[ [ 2, 1, 1 ] ]
+gap> SubQuasiIsomorphism( C18a, false );
+[ [ 2, 1, 1 ], [ 2, 1, 1 ], [ 2, 1, 1 ] ]
+gap> L18a := QuasiIsomorphism( C18a, [18,4,4], false );
+[ [ 2, 1, 1 ], [ 18, 4, 4 ] ]
+
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 

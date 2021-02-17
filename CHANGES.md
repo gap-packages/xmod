@@ -1,7 +1,9 @@
 # CHANGES to the 'XMod' package
 
-## 2.82 -> 2.82dev (25/10/2020) 
+## 2.82 -> 2.83 (17/02/2021) 
 
+ * (17/02/21) added functins for quasi-isomorphisms - manual section 3.5
+ * (26/10/20) corrected \^ for morphisms of 2dimensinal groups 
  * (25/10/20) added examples/cpcpcp.g constructing 23 cat2-groups on (Cp)^3 
 
 ## 2.81 -> 2.82 (23/10/2020) 

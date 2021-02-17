@@ -199,6 +199,25 @@ with applications to homotopy <M>2</M>-types</title>
   <pages>117--136</pages>
 </article></entry>
 
+\bibitem{ellis:le} 
+G.~J. Ellis and V.~L. Le, 
+\newblock 
+{\em Homotopy $2$-types of low order}, 
+\newblock 
+Experimental Math.\/ {\bf 23} (2014) 383--389. 
+
+<entry id="EL"><article>
+  <author>
+    <name><first>G. J.</first><last>Ellis</last></name>
+    <name><first>V. L.</first><last>Le</last></name>
+  </author>  
+  <title>Homotopy 2-types of low order</title>
+  <journal>Experimental Math.</journal>
+  <year>2014</year>
+  <volume>23</volume>
+  <pages>383--389</pages>
+</article></entry>
+
 <entry id="G1"><article>
   <author>
     <name><first>N. D.</first><last>Gilbert</last></name>
@@ -246,6 +265,18 @@ with applications to homotopy <M>2</M>-types</title>
   <year>1982</year>
   <volume>24</volume>
   <pages>179--202</pages>
+</article></entry>
+
+<entry id="MW"><article>
+  <author>
+    <name><first>S.</first><last>Mac Lane</last></name>
+    <name><first>J. H. C.</first><last>Whitehead</last></name>
+  </author>  
+  <title>On the 3-type of a complex</title>
+  <journal>Proc. Nat. Acad. Sci. U.S.A.</journal>
+  <year>1950</year>
+  <volume>37</volume>
+  <pages>41--48</pages>
 </article></entry>
 
 <entry id="M1"><phdthesis>

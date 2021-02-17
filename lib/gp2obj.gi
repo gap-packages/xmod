@@ -2,7 +2,7 @@
 ##
 #W  gp2obj.gi                 GAP4 package `XMod'               Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2020, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2021, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 ##  This file contains generic methods for (pre-)crossed modules and
@@ -2644,6 +2644,7 @@ function( G )
     for C in AllCat1GroupsIterator( G ) do 
         if not ( C = fail ) then 
             i := i+1; 
+Print("i=",i,"\n");
             k := 0; 
             found := false; 
             while ( not found ) and ( k < numL ) do 
@@ -2656,6 +2657,7 @@ function( G )
             if not found then 
                 Add( L, C ); 
                 numL := numL + 1;
+Print( "numL=",numL,"\n");
             fi;
             if ( TailMap( C ) = HeadMap( C ) ) then 
                 symm := symm + 1; 

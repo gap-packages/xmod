@@ -7,8 +7,8 @@ SetPackageInfo( rec(
 
 PackageName := "XMod",
 Subtitle := "Crossed Modules and Cat1-Groups",
-Version := "2.82dev",
-Date := "25/10/2020", # dd/mm/yyyy format
+Version := "2.83",
+Date := "17/02/2021", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -112,7 +112,7 @@ Dependencies := rec(
                            ["AutPGrp", ">= 1.10.2"], 
                            ["SmallGrp", ">= 1.4.1" ] ], 
   SuggestedOtherPackages := [ ["AutoDoc", ">=2019.09.04"], 
-                              ["GAPDoc", ">= 1.6.2"] ],
+                              ["GAPDoc", ">= 1.6.3"] ],
   ExternalConditions := [ ]
 ),
 
@@ -139,7 +139,7 @@ Keywords := ["crossed module", "cat1-group", "derivation", "section",
 AutoDoc := rec(
     TitlePage := rec(
         Copyright := Concatenation(
-            "&copyright; 1996-2020, Chris Wensley et al. <P/>\n", 
+            "&copyright; 1996-2021, Chris Wensley et al. <P/>\n", 
             "The &XMod; package is free software; you can redistribute it ", 
             "and/or modify it under the terms of the GNU General ", 
             "Public License as published by the Free Software Foundation; ", 
