@@ -2644,7 +2644,6 @@ function( G )
     for C in AllCat1GroupsIterator( G ) do 
         if not ( C = fail ) then 
             i := i+1; 
-Print("i=",i,"\n");
             k := 0; 
             found := false; 
             while ( not found ) and ( k < numL ) do 
@@ -2657,7 +2656,6 @@ Print("i=",i,"\n");
             if not found then 
                 Add( L, C ); 
                 numL := numL + 1;
-Print( "numL=",numL,"\n");
             fi;
             if ( TailMap( C ) = HeadMap( C ) ) then 
                 symm := symm + 1; 
