@@ -6,10 +6,10 @@
                        [1X Crossed Modules and Cat1-Groups [101X
   
   
-                                      2.82
+                                      2.83
   
   
-                                23 October 2020
+                                17 February 2021
   
   
                                  Chris Wensley
@@ -93,7 +93,7 @@
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0Y© 1996-2020, Chris Wensley et al.[133X
+  [33X[0;0Y© 1996-2021, Chris Wensley et al.[133X
   
   [33X[0;0YThe  [5XXMod[105X package is free software; you can redistribute it and/or modify it
   under  the  terms of the GNU General Public License as published by the Free
@@ -178,6 +178,10 @@
     3.4 [33X[0;0YOperations on morphisms[133X
       3.4-1 CompositionMorphism
       3.4-2 Kernel
+    3.5 [33X[0;0YQuasi-isomorphisms[133X
+      3.5-1 QuotientQuasiIsomorphism
+      3.5-2 SubQuasiIsomorphism
+      3.5-3 QuasiIsomorphism
   4 [33X[0;0YIsoclinism of groups and crossed modules[133X
     4.1 [33X[0;0YMore operations for crossed modules[133X
       4.1-1 FactorPreXMod

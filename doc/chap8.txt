@@ -88,17 +88,15 @@
   
         [30X    [33X[0;12Y[22X(n ⊠ m)^p = (n^p ⊠ m^p)[122X.[133X
   
-  [30X    [33X[0;6Y[22Xddot∂_1  (n ⊠ m) = (m^-1)^n m quad mboxand quad ddot∂_2 (n ⊠ m) = n^-1
-        n^m[122X.[133X
+  [30X    [33X[0;6Y[22Xκ(n ⊠ m) = (m^-1)^n m quad mboxand quad λ(n ⊠ m) = n^-1 n^m[122X.[133X
   
-  [30X    [33X[0;6Y[22X(n  ⊠ ddot∂_1 l) = (l^-1)^n l quad mboxand quad (ddot∂_2 l ⊠ m) = l^-1
-        l^m[122X.[133X
+  [30X    [33X[0;6Y[22X(n ⊠ κ l) = (l^-1)^n l quad mboxand quad (λ l ⊠ m) = l^-1 l^m[122X.[133X
   
   [33X[0;0YNote that the actions of [22XM[122X on [22XN[122X and [22XN[122X on [22XM[122X via [22XP[122X are compatible since[133X
   
   
-  [24X[33X[0;6Y{n_1}^{(m^n)}        \;=\;        {n_1}^{\dot{\partial}_2(m^n)}        \;=\;
-  {n_1}^{n^{-1}(\dot{\partial}_2 m)n} \;=\; (({n_1}^{n^{-1}})^m)^n.[133X
+  [24X[33X[0;6Y{n_1}^{(m^n)}  \;=\;  {n_1}^{\mu(m^n)}  \;=\;  {n_1}^{n^{-1}(\mu  m)n} \;=\;
+  (({n_1}^{n^{-1}})^m)^n.[133X
   
   [124X
   
@@ -147,7 +145,7 @@
   
   [33X[0;0YWe  take  as  our example a simple, but significant case. We start with five
   crossed   modules   formed   from   subgroups   of   [22XD_8[122X   with   generators
-  [22X[(1,2,3,4),(3,4)[122X.  The result os a pre-crossed square which is [13Xnot[113X a crossed
+  [22X[(1,2,3,4),(3,4)[122X.  The result is a pre-crossed square which is [13Xnot[113X a crossed
   square.[133X
   
   [4X[32X  Example  [32X[104X
@@ -268,7 +266,7 @@
   Chapter 5 (see [2XActorXMod[102X ([14X6.1-2[114X)). The crossed pairing is given by[133X
   
   
-  [24X[33X[0;6Y\boxtimes \;:\; R \times W \,\to\, S, \quad (\chi,r) \,\mapsto\, \chi r~.[133X
+  [24X[33X[0;6Y\boxtimes \;:\; R \times W \,\to\, S, \quad (r,\chi) \,\mapsto\, \chi r~.[133X
   
   [124X
   
@@ -337,9 +335,9 @@
   
   [124X
   
-  [33X[0;0YThe  second  example uses the central extension crossed module [10XX12=(D12->S3)[110X
-  constructed  in  subsection  ([2XXModByCentralExtension[102X ([14X2.1-5[114X)), with pullback
-  group [10XD12xC2[110X.[133X
+  [33X[0;0YThe   second  example  below  uses  the  central  extension  crossed  module
+  [10XX12=(D12->S3)[110X  which  was  constructed in subsection ([2XXModByCentralExtension[102X
+  ([14X2.1-5[114X)), with pullback group [10XD12xC2[110X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X

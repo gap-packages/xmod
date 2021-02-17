@@ -173,18 +173,18 @@ and a crossed <span class="SimpleMath">n</span>-cube of groups</span></h4>
 </li>
 </ul>
 </li>
-<li><p><span class="SimpleMath">ddot∂_1 (n ⊠ m) = (m^-1)^n m quad mboxand quad ddot∂_2 (n ⊠ m) = n^-1 n^m</span>.</p>
+<li><p><span class="SimpleMath">κ(n ⊠ m) = (m^-1)^n m quad mboxand quad λ(n ⊠ m) = n^-1 n^m</span>.</p>
 
 </li>
-<li><p><span class="SimpleMath">(n ⊠ ddot∂_1 l) = (l^-1)^n l quad mboxand quad (ddot∂_2 l ⊠ m) = l^-1 l^m</span>.</p>
+<li><p><span class="SimpleMath">(n ⊠ κ l) = (l^-1)^n l quad mboxand quad (λ l ⊠ m) = l^-1 l^m</span>.</p>
 
 </li>
 </ul>
 <p>Note that the actions of <span class="SimpleMath">M</span> on <span class="SimpleMath">N</span> and <span class="SimpleMath">N</span> on <span class="SimpleMath">M</span> via <span class="SimpleMath">P</span> are compatible since</p>
 
 <p class="pcenter">
-{n_1}^{(m^n)} \;=\; {n_1}^{\dot{\partial}_2(m^n)} 
-              \;=\; {n_1}^{n^{-1}(\dot{\partial}_2 m)n}
+{n_1}^{(m^n)} \;=\; {n_1}^{\mu(m^n)} 
+              \;=\; {n_1}^{n^{-1}(\mu m)n}
 \;=\; (({n_1}^{n^{-1}})^m)^n.
 </p>
 
@@ -227,7 +227,7 @@ and a crossed <span class="SimpleMath">n</span>-cube of groups</span></h4>
 
 <p>The <code class="code">Display</code> function is used to print details of 3d-groups.</p>
 
-<p>We take as our example a simple, but significant case. We start with five crossed modules formed from subgroups of <span class="SimpleMath">D_8</span> with generators <span class="SimpleMath">[(1,2,3,4),(3,4)</span>. The result os a pre-crossed square which is <em>not</em> a crossed square.</p>
+<p>We take as our example a simple, but significant case. We start with five crossed modules formed from subgroups of <span class="SimpleMath">D_8</span> with generators <span class="SimpleMath">[(1,2,3,4),(3,4)</span>. The result is a pre-crossed square which is <em>not</em> a crossed square.</p>
 
 
 <div class="example"><pre>
@@ -343,7 +343,7 @@ true
 <p>The actor <span class="SimpleMath">calA(calX_0)</span> of a crossed module <span class="SimpleMath">calX_0</span> has been described in Chapter 5 (see <code class="func">ActorXMod</code> (<a href="chap6.html#X790EBC7C7D320C03"><span class="RefLink">6.1-2</span></a>)). The crossed pairing is given by</p>
 
 <p class="pcenter">
-\boxtimes \;:\;  R \times W \,\to\, S, \quad (\chi,r) \,\mapsto\, \chi r~.
+\boxtimes \;:\;  R \times W \,\to\, S, \quad (r,\chi) \,\mapsto\, \chi r~.
 </p>
 
 <p>This is implemented as <code class="code">ActorCrossedSquare(X0);</code>.</p>
@@ -406,7 +406,7 @@ c5:c4
 (n,m) \mapsto (n^{-1}n^{\mu m}, (m^{-1})^{\nu n}m) . 
 </p>
 
-<p>The second example uses the central extension crossed module <code class="code">X12=(D12-&gt;S3)</code> constructed in subsection (<code class="func">XModByCentralExtension</code> (<a href="chap2.html#X7D0F6FAA7AF69844"><span class="RefLink">2.1-5</span></a>)), with pullback group <code class="code">D12xC2</code>.</p>
+<p>The second example below uses the central extension crossed module <code class="code">X12=(D12-&gt;S3)</code> which was constructed in subsection (<code class="func">XModByCentralExtension</code> (<a href="chap2.html#X7D0F6FAA7AF69844"><span class="RefLink">2.1-5</span></a>)), with pullback group <code class="code">D12xC2</code>.</p>
 
 
 <div class="example"><pre>

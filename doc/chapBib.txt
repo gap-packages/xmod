@@ -41,6 +41,9 @@
   applications of induced crossed modules[117X, [18XJ. Symbolic Computation[118X, [19X35[119X (2003),
   59--72.
   
+  [[20XEL14[120X]  [16XEllis,  G.  J.  and  Le,  V.  L.[116X,  [17XHomotopy  2-types  of  low order[117X,
+  [18XExperimental Math.[118X, [19X23[119X (2014), 383--389.
+  
   [[20XEll84[120X]  [16XEllis,  G.[116X, [17XCrossed modules and their higher dimensional analogues[117X,
   Ph.D. thesis, University of Wales, Bangor (1984).
   
@@ -72,6 +75,9 @@
   
   [[20XLod82[120X] [16XLoday, J.-L.[116X, [17XSpaces with finitely many non-trivial homotopy groups[117X,
   [18XJ. App. Algebra[118X, [19X24[119X (1982), 179--202.
+  
+  [[20XMLW50[120X]  [16XMac  Lane,  S. and Whitehead, J. H. C.[116X, [17XOn the 3-type of a complex[117X,
+  [18XProc. Nat. Acad. Sci. U.S.A.[118X, [19X37[119X (1950), 41--48.
   
   [[20XMoo01[120X]  [16XMoore,  E. J.[116X, [17XGraphs of Groups: Word Computations and Free Crossed
   Resolutions[117X, Ph.D. thesis, University of Wales, Bangor (2001).

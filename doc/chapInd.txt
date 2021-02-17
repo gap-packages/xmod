@@ -325,6 +325,9 @@
   [2XPreXModRecordOfPreCat1Group[102X 2.5-3 
   [2XPrincipalDerivation[102X 5.1-2 
   [2XPrincipalDerivations[102X 5.2-3 
+  quasi isomorphisms 3.5 
+  [2XQuasiIsomorphism[102X 3.5-3 
+  [2XQuotientQuasiIsomorphism[102X 3.5-1 
   [2XRange[102X 8.3-2 
       for 2d-group mappings 3.1-1 
       for cat1-groups 2.4-2 
@@ -359,6 +362,7 @@
   [2XSubdiagonal2DimensionalGroup[102X 8.4-7 
   [2XSubPreCat1Group[102X 2.4-6 
   [2XSubPreXMod[102X 2.3-1 
+  [2XSubQuasiIsomorphism[102X 3.5-2 
   [2XSubXMod[102X 2.2-2 
   [2XTailMap[102X 2.4-2 
   [2XTranspose3DimensionalGroup[102X, for cat2-groups 8.4-4 

@@ -53,6 +53,13 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X811F886081AAB95F">3.4-1 CompositionMorphism</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X83C3A2478159DE76">3.4-2 Kernel</a></span>
 </div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3_mj.html#X79C47E3D7855A117">3.5 <span class="Heading">Quasi-isomorphisms</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X86F08B1981618400">3.5-1 QuotientQuasiIsomorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X7C4C1C587B8932A7">3.5-2 SubQuasiIsomorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3_mj.html#X83365AF2812E5C04">3.5-3 QuasiIsomorphism</a></span>
+</div></div>
 </div>
 
 <h3>3 <span class="Heading">2d-mappings</span></h3>
@@ -373,6 +380,81 @@ Group([ (19,20) ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription( K0 );</span>
 [ "C12", "C6" ]
 </pre></div>
+
+<p><a id="X79C47E3D7855A117" name="X79C47E3D7855A117"></a></p>
+
+<h4>3.5 <span class="Heading">Quasi-isomorphisms</span></h4>
+
+<p>A morphism of crossed modules <span class="SimpleMath">\( \phi : \calX = (\partial : S \to R) \to \calX' = (\partial' : S' \to R') \)</span> induces homomorphisms <span class="SimpleMath">\(\pi_1(\phi) : \pi_1(\partial) \to \pi_1(\partial')\)</span> and <span class="SimpleMath">\(\pi_2(\phi) : \pi_2(\partial) \to \pi_2(\partial')\)</span>. A morphism <span class="SimpleMath">\(\phi\)</span> is a <em>quasi-isomorphism</em> if both <span class="SimpleMath">\(\pi_1(\phi)\)</span> and <span class="SimpleMath">\(\pi_2(\phi)\)</span> are isomorphisms. Two crossed modules <span class="SimpleMath">\(\calX,\calX'\)</span> are <em>quasi-isomorphic</em> is there exists a sequence of quasi-isomorphisms</p>
+
+<p class="center">\[
+\calX ~=~ \calX_1 ~\leftrightarrow~ \calX_2 ~\leftrightarrow~ \calX_3 
+~\leftrightarrow~ \cdots ~\longleftrightarrow~ \calX_{\ell} ~=~ \calX'
+\]</p>
+
+<p>of length <span class="SimpleMath">\(\ell-1\)</span>. Here <span class="SimpleMath">\(\calX_i \leftrightarrow \calX_j\)</span> means that <em>either</em> <span class="SimpleMath">\(\calX_i \to \calX_j\)</span> <em>or</em> <span class="SimpleMath">\(\calX_j \to \calX_i\)</span>. When <span class="SimpleMath">\(\calX,\calX'\)</span> are quasi-isomorphic we write <span class="SimpleMath">\(\calX \simeq \calX'\)</span>. Clearly <span class="SimpleMath">\(\simeq\)</span> is an equivalence relation. Mac\ Lane and Whitehead in <a href="chapBib_mj.html#biBMW">[MLW50]</a> showed that there is a one-to-one correspondence between homotopy <span class="SimpleMath">\(2\)</span>-types and quasi-isomorphism classes. We say that <span class="SimpleMath">\(\calX\)</span> represents a <em>trivial</em> quasi-isomorphism class if <span class="SimpleMath">\(\partial=0\)</span>.</p>
+
+<p>Two cat<span class="SimpleMath">\(^1\)</span>-groups are quasi-isomorphic if their corresponding crossed modules are. The procedure for constructing a representative for the quasi-isomorphism class of a cat<span class="SimpleMath">\(^1\)</span>-group <span class="SimpleMath">\(\calC\)</span>, as described by Ellis and Le in <a href="chapBib_mj.html#biBEL">[EL14]</a>, is as follows. The <em>quotient process</em> consists of finding all normal sub-crossed modules <span class="SimpleMath">\(\calN\)</span> of the crossed module <span class="SimpleMath">\(\calX\)</span> associated to <span class="SimpleMath">\(\calC\)</span>; constructing the quotient crossed module morphisms <span class="SimpleMath">\(\nu : \calX \to \calX/\calN\)</span>; and converting these <span class="SimpleMath">\(\nu\)</span> to morphisms from <span class="SimpleMath">\(\calC\)</span>.</p>
+
+<p>The <em>sub-crossed module process</em> consists of finding all sub-crossed modules <span class="SimpleMath">\(\calS\)</span> of <span class="SimpleMath">\(\calX\)</span> such that the inclusion <span class="SimpleMath">\(\iota : \calS \to \calX\)</span> is a quasi-isomorphism; then converting <span class="SimpleMath">\(\iota\)</span> to a morphism to <span class="SimpleMath">\(\calC\)</span>.</p>
+
+<p>The procedure for finding all quasi-isomorphism reductions consists of repeating the quotient process, followed by the sub-crossed module process, until no further reductions are possible.</p>
+
+<p>It may happen that <span class="SimpleMath">\(\calC_1 \simeq \calC_2\)</span> without either having a quasi-isomorphism reduction. In this case it is necessary to find a suitable <span class="SimpleMath">\(\calC_3\)</span> with reductions <span class="SimpleMath">\(\calC_3 \to \calC_1\)</span> and <span class="SimpleMath">\(\calC_3 \to \calC_2\)</span>. No such automated process is available in <strong class="pkg">XMod</strong>.</p>
+
+<p>Functions for these computations were first implemented in the package <strong class="pkg">HAP</strong> and are available as <code class="code">QuotientQuasiIsomorph</code>, <code class="code">SubQuasiIsomorph</code> and <code class="code">QuasiIsomorph</code>.</p>
+
+<p><a id="X86F08B1981618400" name="X86F08B1981618400"></a></p>
+
+<h5>3.5-1 QuotientQuasiIsomorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuotientQuasiIsomorphism</code>( <var class="Arg">cat1</var>, <var class="Arg">bool</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>This function implements the quotient process. The second parameter is a boolean which, when true, causes the results of some intermediate calculations to be printed. The output shows the identity of the reduced cat1-group, if there is one.</p>
+
+
+<div class="example"><pre>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C18a := Cat1Select( 18, 4, 4 );;          </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription( C18a );             </span>
+[ "(C3 x C3) : C2", "S3" ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">QuotientQuasiIsomorphism( C18a, true );   </span>
+quo: [ f2 ][ f3 ], [ "1", "C2" ]
+[ [ 2, 1 ], [ 2, 1 ] ], [ 2, 1, 1 ]
+[ [ 2, 1, 1 ] ]
+
+</pre></div>
+
+<p><a id="X7C4C1C587B8932A7" name="X7C4C1C587B8932A7"></a></p>
+
+<h5>3.5-2 SubQuasiIsomorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SubQuasiIsomorphism</code>( <var class="Arg">cat1</var>, <var class="Arg">bool</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>This function implements the sub-crossed module process.</p>
+
+
+<div class="example"><pre>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SubQuasiIsomorphism( C18a, false );</span>
+[ [ 2, 1, 1 ], [ 2, 1, 1 ], [ 2, 1, 1 ] ]
+
+</pre></div>
+
+<p><a id="X83365AF2812E5C04" name="X83365AF2812E5C04"></a></p>
+
+<h5>3.5-3 QuasiIsomorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuasiIsomorphism</code>( <var class="Arg">cat1</var>, <var class="Arg">list</var>, <var class="Arg">bool</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>This function implements the general process.</p>
+
+
+<div class="example"><pre>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">L18a := QuasiIsomorphism( C18a, [18,4,4], false );</span>
+[ [ 2, 1, 1 ], [ 18, 4, 4 ] ]
+
+</pre></div>
+
+<p>The logs above show that <code class="code">C18a</code> has just one normal sub-crossed module <span class="SimpleMath">\(\calN\)</span> leading to a reduction, and that there are three sub-crossed modules <span class="SimpleMath">\(\calS\)</span> all giving the same reduction. The conclusion is that <code class="code">C18a</code> is quasi-isomorphic to the identity cat1-group on the cyclic group of order <span class="SimpleMath">\(2\)</span>.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap2_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap4_mj.html">[Next Chapter]</a>&nbsp;  </div>

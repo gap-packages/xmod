@@ -334,3 +334,102 @@
     [4X[28X[ "C12", "C6" ][128X[104X
   [4X[32X[104X
   
+  
+  [1X3.5 [33X[0;0YQuasi-isomorphisms[133X[101X
+  
+  [33X[0;0YA morphism of crossed modules [22Xϕ : calX = (∂ : S -> R) -> calX' = (∂' : S' ->
+  R')[122X  induces homomorphisms [22Xπ_1(ϕ) : π_1(∂) -> π_1(∂')[122X and [22Xπ_2(ϕ) : π_2(∂) ->
+  π_2(∂')[122X.  A  morphism [22Xϕ[122X is a [13Xquasi-isomorphism[113X if both [22Xπ_1(ϕ)[122X and [22Xπ_2(ϕ)[122X are
+  isomorphisms.  Two  crossed modules [22XcalX,calX'[122X are [13Xquasi-isomorphic[113X is there
+  exists a sequence of quasi-isomorphisms[133X
+  
+  
+  [24X[33X[0;6Y\calX   ~=~  \calX_1  ~\leftrightarrow~  \calX_2  ~\leftrightarrow~  \calX_3
+  ~\leftrightarrow~ \cdots ~\longleftrightarrow~ \calX_{\ell} ~=~ \calX'[133X
+  
+  [124X
+  
+  [33X[0;0Yof  length  [22Xℓ-1[122X.  Here [22XcalX_i ↔ calX_j[122X means that [13Xeither[113X [22XcalX_i -> calX_j[122X [13Xor[113X
+  [22XcalX_j  ->  calX_i[122X.  When  [22XcalX,calX'[122X  are  quasi-isomorphic we write [22XcalX ≃
+  calX'[122X.  Clearly  [22X≃[122X  is  an  equivalence relation. Mac\ Lane and Whitehead in
+  [MLW50]  showed  that  there is a one-to-one correspondence between homotopy
+  [22X2[122X-types and quasi-isomorphism classes. We say that [22XcalX[122X represents a [13Xtrivial[113X
+  quasi-isomorphism class if [22X∂=0[122X.[133X
+  
+  [33X[0;0YTwo cat[22X^1[122X-groups are quasi-isomorphic if their corresponding crossed modules
+  are.   The   procedure   for   constructing   a   representative   for   the
+  quasi-isomorphism  class of a cat[22X^1[122X-group [22XcalC[122X, as described by Ellis and Le
+  in  [EL14],  is  as  follows.  The  [13Xquotient process[113X consists of finding all
+  normal  sub-crossed  modules  [22XcalN[122X  of the crossed module [22XcalX[122X associated to
+  [22XcalC[122X;  constructing  the  quotient  crossed  module  morphisms  [22Xν  : calX ->
+  calX/calN[122X; and converting these [22Xν[122X to morphisms from [22XcalC[122X.[133X
+  
+  [33X[0;0YThe  [13Xsub-crossed  module process[113X consists of finding all sub-crossed modules
+  [22XcalS[122X   of   [22XcalX[122X   such   that   the  inclusion  [22Xι  :  calS  ->  calX[122X  is  a
+  quasi-isomorphism; then converting [22Xι[122X to a morphism to [22XcalC[122X.[133X
+  
+  [33X[0;0YThe  procedure  for  finding  all  quasi-isomorphism  reductions consists of
+  repeating  the quotient process, followed by the sub-crossed module process,
+  until no further reductions are possible.[133X
+  
+  [33X[0;0YIt may happen that [22XcalC_1 ≃ calC_2[122X without either having a quasi-isomorphism
+  reduction.  In  this  case  it  is  necessary to find a suitable [22XcalC_3[122X with
+  reductions  [22XcalC_3 -> calC_1[122X and [22XcalC_3 -> calC_2[122X. No such automated process
+  is available in [5XXMod[105X.[133X
+  
+  [33X[0;0YFunctions  for  these computations were first implemented in the package [5XHAP[105X
+  and   are   available   as   [10XQuotientQuasiIsomorph[110X,   [10XSubQuasiIsomorph[110X   and
+  [10XQuasiIsomorph[110X.[133X
+  
+  [1X3.5-1 QuotientQuasiIsomorphism[101X
+  
+  [33X[1;0Y[29X[2XQuotientQuasiIsomorphism[102X( [3Xcat1[103X, [3Xbool[103X ) [32X operation[133X
+  
+  [33X[0;0YThis  function  implements  the  quotient process. The second parameter is a
+  boolean   which,   when  true,  causes  the  results  of  some  intermediate
+  calculations  to  be  printed.  The output shows the identity of the reduced
+  cat1-group, if there is one.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XC18a := Cat1Select( 18, 4, 4 );;          [127X[104X
+    [4X[25Xgap>[125X [27XStructureDescription( C18a );             [127X[104X
+    [4X[28X[ "(C3 x C3) : C2", "S3" ][128X[104X
+    [4X[25Xgap>[125X [27XQuotientQuasiIsomorphism( C18a, true );   [127X[104X
+    [4X[28Xquo: [ f2 ][ f3 ], [ "1", "C2" ][128X[104X
+    [4X[28X[ [ 2, 1 ], [ 2, 1 ] ], [ 2, 1, 1 ][128X[104X
+    [4X[28X[ [ 2, 1, 1 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X3.5-2 SubQuasiIsomorphism[101X
+  
+  [33X[1;0Y[29X[2XSubQuasiIsomorphism[102X( [3Xcat1[103X, [3Xbool[103X ) [32X operation[133X
+  
+  [33X[0;0YThis function implements the sub-crossed module process.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSubQuasiIsomorphism( C18a, false );[127X[104X
+    [4X[28X[ [ 2, 1, 1 ], [ 2, 1, 1 ], [ 2, 1, 1 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X3.5-3 QuasiIsomorphism[101X
+  
+  [33X[1;0Y[29X[2XQuasiIsomorphism[102X( [3Xcat1[103X, [3Xlist[103X, [3Xbool[103X ) [32X operation[133X
+  
+  [33X[0;0YThis function implements the general process.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XL18a := QuasiIsomorphism( C18a, [18,4,4], false );[127X[104X
+    [4X[28X[ [ 2, 1, 1 ], [ 18, 4, 4 ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe  logs  above  show that [10XC18a[110X has just one normal sub-crossed module [22XcalN[122X
+  leading  to  a  reduction, and that there are three sub-crossed modules [22XcalS[122X
+  all   giving   the   same   reduction.   The  conclusion  is  that  [10XC18a[110X  is
+  quasi-isomorphic to the identity cat1-group on the cyclic group of order [22X2[122X.[133X
+  
