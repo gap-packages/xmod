@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2map.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  Copyright (C) 1996-2020, Chris Wensley et al,                      --> 
+<!--  Copyright (C) 1996-2021, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -435,6 +435,130 @@ gap> K0 := Kernel( mor0 );;
 gap> StructureDescription( K0 );
 [ "C12", "C6" ]
 ]]></Example>
+
+</Section>
+
+<Section Label="sect-quasi-iso">
+<Heading>Quasi-isomorphisms</Heading>
+<Index>quasi isomorphisms</Index>
+
+A morphism of crossed modules 
+<M>
+\phi : \calX = (\partial : S \to R) \to \calX' = (\partial' : S' \to R')
+</M>
+induces homomorphisms 
+<M>\pi_1(\phi) : \pi_1(\partial) \to \pi_1(\partial')</M> 
+and <M>\pi_2(\phi) : \pi_2(\partial) \to \pi_2(\partial')</M>. 
+A morphism <M>\phi</M> is a <E>quasi-isomorphism</E> 
+if both <M>\pi_1(\phi)</M> and <M>\pi_2(\phi)</M> are isomorphisms. 
+Two crossed modules <M>\calX,\calX'</M> are <E>quasi-isomorphic</E> 
+is there exists a sequence of quasi-isomorphisms 
+<Display>
+\calX ~=~ \calX_1 ~\leftrightarrow~ \calX_2 ~\leftrightarrow~ \calX_3 
+~\leftrightarrow~ \cdots ~\longleftrightarrow~ \calX_{\ell} ~=~ \calX'
+</Display>
+of length <M>\ell-1</M>. 
+Here <M>\calX_i \leftrightarrow \calX_j</M> means that 
+<E>either</E> <M>\calX_i \to \calX_j</M> <E>or</E> <M>\calX_j \to \calX_i</M>. 
+When <M>\calX,\calX'</M> are quasi-isomorphic 
+we write <M>\calX \simeq \calX'</M>. 
+Clearly <M>\simeq</M> is an equivalence relation. 
+Mac\ Lane and Whitehead in <Cite Key="MW" /> showed that there is a one-to-one 
+correspondence between homotopy <M>2</M>-types and quasi-isomorphism classes. 
+We say that <M>\calX</M> represents a <E>trivial</E> quasi-isomorphism class 
+if <M>\partial=0</M>. 
+<P/> 
+Two cat<M>^1</M>-groups are quasi-isomorphic if their corresponding 
+crossed modules are. 
+The procedure for constructing a representative for the 
+quasi-isomorphism class of a cat<M>^1</M>-group <M>\calC</M>, 
+as described by Ellis and Le in <Cite Key="EL" />, is as follows. 
+The <E>quotient process</E> consists of finding all normal sub-crossed modules 
+<M>\calN</M> of the crossed module <M>\calX</M> associated to <M>\calC</M>; 
+constructing the quotient crossed module morphisms 
+<M>\nu : \calX \to \calX/\calN</M>; 
+and converting these <M>\nu</M> to morphisms from <M>\calC</M>. 
+<P/> 
+The <E>sub-crossed module process</E> consists of finding all 
+sub-crossed modules <M>\calS</M> of <M>\calX</M> 
+such that the inclusion <M>\iota : \calS \to \calX</M> 
+is a quasi-isomorphism; then converting 
+<M>\iota</M> to a morphism to <M>\calC</M>. 
+<P/> 
+The procedure for finding all quasi-isomorphism reductions 
+consists of repeating the quotient process, 
+followed by the sub-crossed module process, 
+until no further reductions are possible. 
+<P/> 
+It may happen that <M>\calC_1 \simeq \calC_2</M> without either having 
+a quasi-isomorphism reduction.  In this case it is necessary to find 
+a suitable <M>\calC_3</M> with reductions <M>\calC_3 \to \calC_1</M> 
+and <M>\calC_3 \to \calC_2</M>. 
+No such automated process is available in <Package>XMod</Package>. 
+<P/> 
+Functions for these computations were first implemented in the 
+package <Package>HAP</Package> and are available as 
+<C>QuotientQuasiIsomorph</C>, <C>SubQuasiIsomorph</C> 
+and <C>QuasiIsomorph</C>. 
+
+<ManSection>
+   <Oper Name="QuotientQuasiIsomorphism"
+         Arg="cat1 bool" />
+<Description>
+This function implements the quotient process. 
+The second parameter is a boolean which, when true, 
+causes the results of some intermediate calculations to be printed. 
+The output shows the identity of the reduced cat1-group, if there is one. 
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> C18a := Cat1Select( 18, 4, 4 );;          
+gap> StructureDescription( C18a );             
+[ "(C3 x C3) : C2", "S3" ]
+gap> QuotientQuasiIsomorphism( C18a, true );   
+quo: [ f2 ][ f3 ], [ "1", "C2" ]
+[ [ 2, 1 ], [ 2, 1 ] ], [ 2, 1, 1 ]
+[ [ 2, 1, 1 ] ]
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="SubQuasiIsomorphism"
+         Arg="cat1 bool" />
+<Description>
+This function implements the sub-crossed module process. 
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> SubQuasiIsomorphism( C18a, false );
+[ [ 2, 1, 1 ], [ 2, 1, 1 ], [ 2, 1, 1 ] ]
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="QuasiIsomorphism"
+         Arg="cat1 list bool" />
+<Description>
+This function implements the general process. 
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> L18a := QuasiIsomorphism( C18a, [18,4,4], false );
+[ [ 2, 1, 1 ], [ 18, 4, 4 ] ]
+]]>
+</Example>
+
+The logs above show that <C>C18a</C> has just one normal sub-crossed module 
+<M>\calN</M> leading to a reduction, and that there are three sub-crossed 
+modules <M>\calS</M> all giving the same reduction. 
+The conclusion is that <C>C18a</C> is quasi-isomorphic to the identity 
+cat1-group on the cyclic group of order <M>2</M>. 
 
 </Section>
 

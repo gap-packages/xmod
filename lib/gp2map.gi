@@ -5,7 +5,7 @@
 ##  This file installs methods for 2DimensionalMappings 
 ##  for crossed modules and cat1-groups. 
 ##
-#Y  Copyright (C) 2001-2020, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2021, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 
 ##############################################################################
@@ -675,21 +675,41 @@ function( map, n )
 
     local pow, i, ok;
 
-    if not ( Source( map ) = Range( map ) ) then
-        return fail;
-    elif ( n = 1 ) then
-        return map;
-    elif ( n = -1 ) then
+    if ( n = 1 ) then
+        return map; 
+    elif ( n = 0 ) then 
+        return fail; 
+    elif ( n > 1 ) then 
+        if not ( Source( map ) = Range( map ) ) then 
+            Info( InfoXMod, 1, "unequal source and range" ); 
+            return fail; 
+        fi; 
+        pow := map;
+        for i in [2..n] do
+            pow := CompositionMorphism( pow, map );
+        od;
+        return pow;
+    else 
         ok := IsBijective( map );
-        return InverseGeneralMapping( map );
-    elif ( n < -1 ) then
-        return InverseGeneralMapping( map^(-n) );
+        if not ok then 
+            Info( InfoXMod, 1, "map not bijective" ); 
+            return fail; 
+        else 
+            pow := InverseGeneralMapping( map ); 
+            if ( n = -1 ) then 
+                return pow; 
+            else 
+                if not ( Source( map ) = Range( map ) ) then 
+                    Info( InfoXMod, 1, "unequal source and range" ); 
+                    return fail; 
+                fi; 
+                for i in [2..-n] do
+                    pow := CompositionMorphism( pow, map );
+                od;
+                return pow;
+            fi;
+        fi; 
     fi;
-    pow := map;
-    for i in [2..n] do
-        pow := CompositionMorphism( pow, map );
-    od;
-    return pow;
 end );
 
 ##############################################################################
@@ -1712,4 +1732,227 @@ function( C1G1, C1G2 )
         od;
     od;    
     return mors; 
+end );
+
+##############################################################################
+##
+#M  SubQuasiIsomorphism( <cat1>, <print> )
+##  
+InstallMethod( SubQuasiIsomorphism, "for a cat1-group", true, 
+    [ IsCat1Group, IsBool ], 0, 
+function( C1, show ) 
+
+    local tot, ids, maps, G1, R1, X1, S1, bdy1, LS, CLS, LR, CLR, K1, idK1, 
+          KS1, KR1, nat1, J1, CP, P, genP, CQ, Q, genQ, X2, bdy2, K2, idK2, 
+          KP, KQ, J2, isoK, C2, incX, incP, incQ, alpha, beta, 
+          genKQ, imKQ, imgamma, gamma, nat2, preKQ, incC, G2, gen2, idgp, idcat; 
+
+    tot := 0; 
+    ids := [ ];
+    maps := [ ]; 
+    G1 := Source( C1 ); 
+    R1 := Range( C1 ); 
+    X1 := XModOfCat1Group( C1 ); 
+    S1 := Source( X1 ); 
+    bdy1 := Boundary( X1 ); 
+    K1 := KernelCokernelXMod( X1 ); 
+    KS1 := Source( K1 ); 
+    KR1 := Range( K1 ); 
+    nat1 := NaturalHomomorphism( KR1 ); 
+    J1 := ImagesSource( bdy1 ); 
+    LS := LatticeSubgroups( S1 ); 
+    CLS := ConjugacyClassesSubgroups( LS );
+    LR := LatticeSubgroups( R1 ); 
+    CLR := ConjugacyClassesSubgroups( LR );
+    idK1 := IdGroup( K1 ); 
+    for CP in CLS do 
+       for P in CP do 
+          for CQ in CLR do 
+             for Q in CQ do 
+                if not ( ( P = S1 ) and ( Q = R1 ) ) then 
+                   X2 := SubXMod( X1, P, Q ); 
+                   if ( X2 <> fail ) then 
+                      bdy2 := Boundary( X2 ); 
+                      K2 := KernelCokernelXMod( X2 );             
+                      idK2 := IdGroup( K2 ); 
+                      if ( idK2 = idK1 ) then 
+                          KP := Source( K2 ); 
+                          KQ := Range( K2 ); 
+                          J2 := ImagesSource( bdy2 ); 
+                          genP := GeneratorsOfGroup( P ); 
+                          genQ := GeneratorsOfGroup( Q ); 
+                          if show then 
+                              Print( "sub: ", genP, genQ, ", " ); 
+                          fi; 
+                          incX := InclusionMorphism2DimensionalDomains(X1,X2); 
+                          incP := SourceHom( incX ); 
+                          incQ := RangeHom( incX ); 
+                          alpha := InclusionMappingGroups( KS1, KP ); 
+                          beta := InclusionMappingGroups( J1, J2 ); 
+                          nat2 := NaturalHomomorphism( KQ ); 
+                          genKQ := GeneratorsOfGroup( KQ ); 
+                          preKQ := List( genKQ, 
+                                     g -> PreImagesRepresentative( nat2, g ) ); 
+                          imgamma := List( preKQ, 
+                                     g -> Image( nat1, Image( incQ, g ) ) ); 
+                          gamma := GroupHomomorphismByImages( 
+                                       KQ, KR1, genKQ, imgamma ); 
+                          isoK := PreXModMorphismByGroupHomomorphisms( 
+                                       K2, K1, alpha, gamma ); 
+                          if IsBijective( isoK ) then 
+                              C2 := Cat1GroupOfXMod( X2 ); 
+                              incC := Cat1GroupMorphismOfXModMorphism( incX );                       
+                              G2 := Source( C2 ); 
+                              gen2 := GeneratorsOfGroup( G2 ); 
+                              idgp := IdGroup( C2 ); 
+                              idcat := IdCat1Group( C2 ); 
+                              if show then 
+                                  Print( idgp, ", ", idcat, "\n" ); 
+                              fi; 
+                              tot := tot + 1;
+                              Add( ids, idcat ); 
+                              Add( maps, incC ); 
+                          fi; 
+                      fi; 
+                   fi;
+                fi;
+             od; 
+          od; 
+       od; 
+    od; 
+    return ids; 
+end ); 
+
+##############################################################################
+##
+#M  QuotientQuasiIsomorphism( <cat1>, <print> )
+##  
+InstallMethod( QuotientQuasiIsomorphism, "for a cat1-group", true, 
+    [ IsCat1Group, IsBool ], 0, 
+function( C1, show ) 
+
+    local tot, ids, G1, R1, X1, idX1, S1, bdy1, LS, LR, K1, KS1, KR1, 
+          nat1, J1, idK1, P, genP, Q, genQ, X2, bdy2, natX, natP, natQ, 
+          F2, FP, FQ, bdyF, K2, idK2, J2, KP, KQ, natKQ, JF, genKS1, 
+          imKS1, alpha, natKR1, genKR1, preKR1, im1KR1, im2KR1, gamma, isoK, 
+          C2, natC, G2, gen2, idgp, idcat, maps; 
+
+    tot := 0; 
+    ids := [ ];
+    maps := [ ]; 
+    G1 := Source( C1 ); 
+    R1 := Range( C1 ); 
+    X1 := XModOfCat1Group( C1 ); 
+    idX1 := IdentityMapping( X1 ); 
+    S1 := Source( X1 ); 
+    bdy1 := Boundary( X1 ); 
+    K1 := KernelCokernelXMod( X1 ); 
+    KS1 := Source( K1 ); 
+    KR1 := Range( K1 ); 
+    nat1 := NaturalHomomorphism( KR1 ); 
+    J1 := ImagesSource( bdy1 ); 
+    LS := NormalSubgroups( S1 ); 
+    LR := NormalSubgroups( R1 ); 
+    idK1 := IdGroup( K1 ); 
+    for P in LS do 
+        for Q in LR do 
+            if not ( ( Size(P) = 1 ) and ( Size(Q) = 1 ) ) then 
+                X2 := SubXMod( X1, P, Q ); 
+                if ( X2 <> fail ) and IsNormal( X1, X2 ) then 
+                    bdy2 := Boundary( X2 ); 
+                    genP := GeneratorsOfGroup( P ); 
+                    genQ := GeneratorsOfGroup( Q ); 
+                    natX := NaturalMorphismByNormalSubPreXMod( X1, X2 ); 
+                    natP := SourceHom( natX ); 
+                    natQ := RangeHom( natX ); 
+                    F2 := Range( natX ); 
+                    FP := Source( F2 ); 
+                    FQ := Range( F2 ); 
+                    bdyF := Boundary( F2 ); 
+                    K2 := KernelCokernelXMod( F2 );             
+                    idK2 := IdGroup( K2 ); 
+                    J2 := ImagesSource( bdy2 ); 
+                    if ( idK2 = idK1 ) then 
+                        KP := Source( K2 ); 
+                        KQ := Range( K2 ); 
+                        natKQ := NaturalHomomorphism( KQ );
+                        JF := ImagesSource( bdyF ); 
+                        if show then 
+                            Print( "quo: ", genP, genQ, ", ", 
+                                   StructureDescription( K2 ), "\n" ); 
+                        fi; 
+                        genKS1 := GeneratorsOfGroup( KS1 ); 
+                        imKS1 := List( genKS1, g -> ImageElm( natP, g ) ); 
+                        alpha := GroupHomomorphismByImages( 
+                                     KS1, KP, genKS1, imKS1 ); 
+                        natKR1 := NaturalHomomorphism( KR1 );
+                        genKR1 := GeneratorsOfGroup( KR1 );
+                        preKR1 := List( genKR1, 
+                                    g -> PreImagesRepresentative( natKR1, g ) ); 
+                        im1KR1 := List( preKR1, g -> ImageElm( natQ, g ) ); 
+                        natKQ := NaturalHomomorphism( KQ ); 
+                        im2KR1 := List( im1KR1, g -> ImageElm( natKQ, g ) ); 
+                        gamma := GroupHomomorphismByImages( 
+                                    KR1, KQ, genKR1, im2KR1 ); 
+                        isoK := PreXModMorphismByGroupHomomorphisms( 
+                                    K1, K2, alpha, gamma ); 
+                        if IsBijective( isoK ) then 
+                            natC := Cat1GroupMorphismOfXModMorphism( natX ); 
+                            C2 := Range( natC ); 
+                            G2 := Source( C2 ); 
+                            gen2 := GeneratorsOfGroup( G2 ); 
+                            idgp := IdGroup( C2 ); 
+                            idcat := IdCat1Group( C2 ); 
+                            if idcat = "not known" then
+                                Display( XModOfCat1Group(C2) ); 
+                            fi; 
+                            if show then 
+                                Print( idgp, ", ", idcat, "\n" ); 
+                            fi; 
+                            tot := tot + 1;
+                            Add( ids, idcat ); 
+                            Add( maps, natC ); 
+                        fi;
+                    fi; 
+                fi; 
+            fi; 
+        od; 
+    od; 
+    return ids; 
+end ); 
+
+##############################################################################
+##
+#M  QuasiIsomorphism( <cat1>, <id>, <print> )
+##  
+InstallMethod( QuasiIsomorphism, "for a cat1-group", true, 
+    [ IsCat1Group, IsList, IsBool ], 0, 
+function( C, id, show ) 
+
+    local ids, maps, K, smor, qmor, D, idQ; 
+
+    ## deal with trivial cases first 
+    ids := [ id ]; 
+    K := KernelCokernelXMod( C ); 
+    if Product( Size(K) ) = ids[1][1] then 
+        return [ IdentityMapping( C ) ]; 
+    fi; 
+    qmor := QuotientQuasiIsomorphism( C, show ); 
+    smor := SubQuasiIsomorphism( C, show ); 
+    ## maps := Concatenation( qmor[1], smor[1] ); 
+    ids := Set( Concatenation( ids, qmor, smor ) ); 
+    ## Print( "combined ids", ids, "\n" );
+    return ids; 
+end );
+
+InstallMethod( QuasiIsomorphism, "for a crossed module", true, 
+    [ IsXMod, IsList, IsBool ], 0, 
+function( X0, idX, show ) 
+
+    local C, id, D;
+
+    C := Cat1GroupOfXMod( X0 ); 
+    id := IdCat1Group( C );
+    D :=  QuasiIsomorphism( C, id, show );
+    return XModOfCat1Group( D );
 end );

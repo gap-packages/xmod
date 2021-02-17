@@ -27,6 +27,7 @@ AutoDoc( rec(
             \newcommand{\calM}{\mathcal{M}}
             \newcommand{\calN}{\mathcal{N}}
             \newcommand{\calP}{\mathcal{P}}
+            \newcommand{\calQ}{\mathcal{Q}}
             \newcommand{\calS}{\mathcal{S}}
             \newcommand{\calW}{\mathcal{W}}
             \newcommand{\calX}{\mathcal{X}}

@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp3xsq.xml            XMod documentation            Chris Wensley  -->
 <!--                                                                     -->
-<!--  Copyright (C) 1996-2020, Chris Wensley et al,                      --> 
+<!--  Copyright (C) 1996-2021, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -130,21 +130,21 @@ crossed modules of <M>\calS</M>.
   </List>
 </Item>
 <Item>
-<M>\ddot{\partial}_1 (n \boxtimes m) \;=\; (m^{-1})^{n}\;m 
+<M>\kappa(n \boxtimes m) \;=\; (m^{-1})^{n}\;m 
 \quad \mbox{and} \quad
-\ddot{\partial}_2 (n \boxtimes m) \;=\; n^{-1}\;n^{m}</M>.
+\lambda(n \boxtimes m) \;=\; n^{-1}\;n^{m}</M>.
 </Item>
 <Item>
-<M>(n \boxtimes \ddot{\partial}_1 l) \;=\; (l^{-1})^{n}\;l
+<M>(n \boxtimes \kappa l) \;=\; (l^{-1})^{n}\;l
 \quad \mbox{and} \quad
-(\ddot{\partial}_2 l \boxtimes m) \;=\; l^{-1}\;l^m</M>.
+(\lambda l \boxtimes m) \;=\; l^{-1}\;l^m</M>.
 </Item>
 </List>
 Note that the actions of <M>M</M> on <M>N</M> and <M>N</M> on <M>M</M> 
 via <M>P</M> are compatible since
 <Display>
-{n_1}^{(m^n)} \;=\; {n_1}^{\dot{\partial}_2(m^n)} 
-              \;=\; {n_1}^{n^{-1}(\dot{\partial}_2 m)n}
+{n_1}^{(m^n)} \;=\; {n_1}^{\mu(m^n)} 
+              \;=\; {n_1}^{n^{-1}(\mu m)n}
 \;=\; (({n_1}^{n^{-1}})^m)^n.
 </Display>
 <P/>
@@ -213,7 +213,7 @@ The <C>Display</C> function is used to print details of 3d-groups.
 We take as our example a simple, but significant case. 
 We start with five crossed modules formed from subgroups of 
 <M>D_8</M> with generators <M>[(1,2,3,4),(3,4)</M>. 
-The result os a pre-crossed square which is <E>not</E> a crossed square. 
+The result is a pre-crossed square which is <E>not</E> a crossed square. 
 </Description>
 </ManSection>
 <P/>
@@ -340,7 +340,7 @@ The actor <M>\calA(\calX_0)</M> of a crossed module
 (see <Ref Func="ActorXMod" />). 
 The crossed pairing is given by 
 <Display>
-\boxtimes \;:\;  R \times W \,\to\, S, \quad (\chi,r) \,\mapsto\, \chi r~.
+\boxtimes \;:\;  R \times W \,\to\, S, \quad (r,\chi) \,\mapsto\, \chi r~.
 </Display>
 This is implemented as <C>ActorCrossedSquare(X0);</C>.
 </Description>
@@ -416,8 +416,8 @@ The crossed pairing is given by:
 (n,m) \mapsto (n^{-1}n^{\mu m}, (m^{-1})^{\nu n}m) . 
 </Display>  
 <P/>
-The second example uses the central extension crossed module 
-<C>X12=(D12->S3)</C> constructed in subsection 
+The second example below uses the central extension crossed module 
+<C>X12=(D12->S3)</C> which was constructed in subsection 
 (<Ref Func="XModByCentralExtension" />), with pullback group <C>D12xC2</C>.  
 </Description>
 </ManSection>

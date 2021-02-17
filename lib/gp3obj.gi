@@ -5,7 +5,7 @@
 ##  This file implements generic methods for (pre-)crossed squares 
 ##  and (pre-)cat2-groups.
 ##
-#Y  Copyright (C) 2001-2020, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2021, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
     
 #############################################################################
@@ -836,7 +836,7 @@ InstallMethod( CrossedSquareByAutomorphismGroup, "G -> Inn(G) -> Aut(G)",
     true, [ IsGroup ], 0,
 function( G )
 
-    local genG, innG, up, autG, lt, dg, xp, XS;
+    local genG, innG, up, autG, dn, dg, xp, XS;
 
     genG := GeneratorsOfGroup( G ); 
     innG := InnerAutomorphismsByNormalSubgroup( G, G );
@@ -853,10 +853,10 @@ function( G )
         Error( "innG is not a subgroup of autG" ); 
     fi;
     dg := XModByAutomorphismGroup( G ); 
-    lt := XModByNormalSubgroup( autG, innG );
+    dn := XModByNormalSubgroup( autG, innG );
     ##  define the pairing 
     xp := CrossedPairingByConjugators( innG );
-    XS := PreCrossedSquareObj( up, up, lt, lt, dg, xp );
+    XS := PreCrossedSquareObj( up, up, dn, dn, dg, xp );
 ##    SetIsCrossedSquare( XS, true );
     if not IsCrossedSquare( XS ) then 
         Error( "XS fails to be a crossed square by automorphism group" ); 
@@ -1872,7 +1872,7 @@ function ( up, R )
 end ); 
 
 InstallMethod( AllCat2GroupsWithFixedUp, 
-    "for a group and and a cat1-group", [ IsPreCat1Group ], 0, 
+    "for a cat1-group", [ IsPreCat1Group ], 0, 
 function ( up ) 
 
     local G, L0, C1, C2, iter; 
