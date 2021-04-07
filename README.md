@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/gap-packages/xmod.svg?branch=master)](https://travis-ci.com/gap-packages/xmod)
+[![Build Status](https://github.com/gap-packages/xmod/workflows/CI/badge.svg?branch=master)](https://github.com/gap-packages/xmod/actions?query=workflow%3ACI+branch%3Amaster)
 [![Code Coverage](https://codecov.io/github/gap-packages/xmod/coverage.svg?branch=master&token=)](https://codecov.io/gh/gap-packages/xmod)
 
 # The GAP 4 package 'XMod' 
