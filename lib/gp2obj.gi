@@ -876,6 +876,13 @@ function( XM )
     return true;
 end );
 
+InstallOtherMethod( IsXMod, "generic method for pre-cat1-groups", true, 
+    [ IsPreCat1Group ], 0,
+function( C0 )
+    Print( "this is a pre-cat1-group, not a pre-crossed module\n" ); 
+    return false; 
+end ); 
+
 #############################################################################
 ##
 #M  XModByBoundaryAndAction
@@ -1786,7 +1793,7 @@ end );
 ##
 #M  IsCat1Group                  check that the second cat1-group axiom holds
 ##
-InstallMethod( IsCat1Group, "generic method for crossed modules", true, 
+InstallMethod( IsCat1Group, "generic method for pre-cat1-groups", true, 
     [ IsPreCat1Group ], 0,
 function( C1G )
 
@@ -1811,6 +1818,13 @@ function( C1G )
     fi;
     return true;
 end );
+
+InstallOtherMethod( IsCat1Group, "generic method for pre-xmods", true, 
+    [ IsPreXMod ], 0,
+function( X0 )
+    Print( "this is a pre-crossed module, not a pre-cat1-group\n" ); 
+    return false; 
+end ); 
 
 #############################################################################
 ##

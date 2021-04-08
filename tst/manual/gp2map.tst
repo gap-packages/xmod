@@ -176,8 +176,10 @@ gap> C18a := Cat1Select( 18, 4, 4 );;
 gap> StructureDescription( C18a );             
 [ "(C3 x C3) : C2", "S3" ]
 gap> QuotientQuasiIsomorphism( C18a, true );   
-quo: [ f2 ][ f3 ], [ "1", "C2" ]
-[ [ 2, 1 ], [ 2, 1 ] ], [ 2, 1, 1 ]
+kernel-cokernel: [ "1", "C2" ]
+(quo:) normal subxmod: [ "C3", "C3" ]
+[ [ 2, 1 ], [ 2, 1 ] ], [ 2, 1, 1 ], [ "C2", "C2" ]
+bdy2: [ [ f2 ], [ f3^2 ] ]
 [ [ 2, 1, 1 ] ]
 gap> SubQuasiIsomorphism( C18a, false );
 [ [ 2, 1, 1 ], [ 2, 1, 1 ], [ 2, 1, 1 ] ]
