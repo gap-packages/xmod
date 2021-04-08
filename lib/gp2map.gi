@@ -1142,6 +1142,9 @@ function( C1G1, C1G2 )
             iend2 := end2; 
         fi; 
         mor := IsomorphismPreCat1Groups( C1, C2 ); 
+        if ( mor = fail ) then 
+            return fail; 
+        fi; 
         return end1 * mor * iend2;
     fi; 
     sym1 := IsSymmetric2DimensionalGroup( C1 ); 
@@ -1154,15 +1157,15 @@ function( C1G1, C1G2 )
     G2 := Source( C2 ); 
     if not ( G1 = G2 ) then
         sphi := IsomorphismGroups( G1, G2 ); 
+        if ( sphi = fail ) then 
+            Info( InfoXMod, 2, "G1, G2 not isomorphic" ); 
+            return fail; 
+        fi; 
         isphi := InverseGeneralMapping( sphi ); 
     else
         sphi := IdentityMapping( G1 ); 
         isphi := IdentityMapping( G1 ); 
     fi; 
-    if ( sphi = fail ) then 
-        Info( InfoXMod, 2, "G1,G2 not isomorphic" ); 
-        return fail; 
-    fi;
     R1 := Range( C1 );
     R2 := Range( C2 ); 
     rphi := RestrictedMapping( sphi, R1 ); 
@@ -1765,6 +1768,9 @@ function( C1, show )
     LR := LatticeSubgroups( R1 ); 
     CLR := ConjugacyClassesSubgroups( LR );
     idK1 := IdGroup( K1 ); 
+    if show then 
+        Print( "kernel-cokernel: ", StructureDescription( K1 ), "\n" );
+    fi; 
     for CP in CLS do 
        for P in CP do 
           for CQ in CLR do 
@@ -1781,9 +1787,6 @@ function( C1, show )
                           J2 := ImagesSource( bdy2 ); 
                           genP := GeneratorsOfGroup( P ); 
                           genQ := GeneratorsOfGroup( Q ); 
-                          if show then 
-                              Print( "sub: ", genP, genQ, ", " ); 
-                          fi; 
                           incX := InclusionMorphism2DimensionalDomains(X1,X2); 
                           incP := SourceHom( incX ); 
                           incQ := RangeHom( incX ); 
@@ -1800,6 +1803,10 @@ function( C1, show )
                           isoK := PreXModMorphismByGroupHomomorphisms( 
                                        K2, K1, alpha, gamma ); 
                           if IsBijective( isoK ) then 
+                              if show then 
+                                  Print( "(sub:) sub-xmod: ", 
+                                         StructureDescription(X2), "\n" ); 
+                              fi; 
                               C2 := Cat1GroupOfXMod( X2 ); 
                               incC := Cat1GroupMorphismOfXModMorphism( incX );                       
                               G2 := Source( C2 ); 
@@ -1807,7 +1814,10 @@ function( C1, show )
                               idgp := IdGroup( C2 ); 
                               idcat := IdCat1Group( C2 ); 
                               if show then 
-                                  Print( idgp, ", ", idcat, "\n" ); 
+                                  Print( idgp, ", ", idcat, ", ", 
+                                         StructureDescription( C2 ), "\n" ); 
+                                  Print( "bdy2: ", 
+                                         MappingGeneratorsImages(bdy2), "\n");
                               fi; 
                               tot := tot + 1;
                               Add( ids, idcat ); 
@@ -1854,6 +1864,9 @@ function( C1, show )
     LS := NormalSubgroups( S1 ); 
     LR := NormalSubgroups( R1 ); 
     idK1 := IdGroup( K1 ); 
+    if show then 
+        Print( "kernel-cokernel: ", StructureDescription( K1 ), "\n" );
+    fi; 
     for P in LS do 
         for Q in LR do 
             if not ( ( Size(P) = 1 ) and ( Size(Q) = 1 ) ) then 
@@ -1877,10 +1890,6 @@ function( C1, show )
                         KQ := Range( K2 ); 
                         natKQ := NaturalHomomorphism( KQ );
                         JF := ImagesSource( bdyF ); 
-                        if show then 
-                            Print( "quo: ", genP, genQ, ", ", 
-                                   StructureDescription( K2 ), "\n" ); 
-                        fi; 
                         genKS1 := GeneratorsOfGroup( KS1 ); 
                         imKS1 := List( genKS1, g -> ImageElm( natP, g ) ); 
                         alpha := GroupHomomorphismByImages( 
@@ -1897,6 +1906,10 @@ function( C1, show )
                         isoK := PreXModMorphismByGroupHomomorphisms( 
                                     K1, K2, alpha, gamma ); 
                         if IsBijective( isoK ) then 
+                            if show then 
+                                Print( "(quo:) normal subxmod: ", 
+                                       StructureDescription( X2 ), "\n" ); 
+                            fi; 
                             natC := Cat1GroupMorphismOfXModMorphism( natX ); 
                             C2 := Range( natC ); 
                             G2 := Source( C2 ); 
@@ -1907,7 +1920,10 @@ function( C1, show )
                                 Display( XModOfCat1Group(C2) ); 
                             fi; 
                             if show then 
-                                Print( idgp, ", ", idcat, "\n" ); 
+                                Print( idgp, ", ", idcat, ", ", 
+                                       StructureDescription(C2), "\n" ); 
+                                Print( "bdy2: ", 
+                                       MappingGeneratorsImages(bdy2), "\n" );
                             fi; 
                             tot := tot + 1;
                             Add( ids, idcat ); 
