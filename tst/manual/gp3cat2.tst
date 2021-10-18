@@ -2,7 +2,7 @@
 ##
 #W  gp3cat2.tst                   XMOD test file                Chris Wensley
 ##
-#Y  Copyright (C) 2001-2020, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2021, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 gap> START_TEST( "XMod package: gp3cat2.tst" );
@@ -194,7 +194,7 @@ gap> for C2 in iso do DisplayLeadMaps( C2 ); od;
 
 # Section 8.5.2
 gap> up := Up2DimensionalGroup( iso[1] );                
-[Group( [ (1,2), (3,4), (5,6) ] )=>Group( [ (1,2), (), () ] )]
+[Group( [ (1,2), (3,4), (5,6) ] ) => Group( [ (1,2), (), () ] )]
 gap> AllCat2GroupsWithFixedUp( up );;                    
 gap> Length(last);                                       
 28
