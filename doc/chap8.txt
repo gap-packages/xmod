@@ -1118,7 +1118,7 @@
   [22XC_i,C_j[122X  combine  to  form  a  cat[22X^2[122X-group,  and  [22X0[122X otherwise. The matrix is
   automatically printed out with dots in place of zeroes.[133X
   
-  [33X[0;0YIn  the example we see that the dihedral group [22XD_12[122X has [22X12[122X cat[22X^12[122X-groups and
+  [33X[0;0YIn  the  example we see that the dihedral group [22XD_12[122X has [22X12[122X cat[22X^1[122X-groups and
   [22X41[122X cat[22X^2[122X-groups, [22X12[122X of which are symmetric. This operation is intended to be
   used to illustrate how cat[22X^2[122X-groups are formed, and should only be used with
   groups of low order.[133X

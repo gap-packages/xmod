@@ -122,8 +122,7 @@
   
   [30X    [33X[0;6YThe material on isoclinism in Chapter 4 was added.[133X
   
-  [30X    [33X[0;6YThe         package         webpage         has        moved        to
-        [7Xhttp://pages.bangor.ac.uk/~mas023/chda/[107X.[133X
+  [30X    [33X[0;6YThe package webpage has moved to [7Xhttps://github.com/cdwensley[107X.[133X
   
   [30X    [33X[0;6YA        GitHub        repository        was        started        at:
         [7Xhttps://github.com/gap-packages/xmod[107X.[133X

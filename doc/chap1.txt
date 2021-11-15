@@ -149,6 +149,5 @@
   [4X[32X[104X
   
   [33X[0;0YAdditional  information can be found on the [13XComputational Higher-dimensional
-  Discrete                 Algebra[113X                 website                 at:
-  [7Xhttp://pages.bangor.ac.uk/~mas023/chda/intro.html[107X.[133X
+  Discrete Algebra[113X website at: [7Xhttps://github.com/cdwensley[107X.[133X
   

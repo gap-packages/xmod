@@ -910,12 +910,12 @@
   [10XAllSubgroupsIterator(G)[110X  provided  by  the [5XUtils[105X package, and then using the
   iterator [10XAllCat1GroupsWithImageIterator(G,R)[110X.[133X
   
-  [1X2.6-1 AllCat1GroupsWithImageIterator[101X
+  [1X2.6-1 AllCat1GroupsWithImage[101X
   
+  [33X[1;0Y[29X[2XAllCat1GroupsWithImage[102X( [3XG[103X, [3XR[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XAllCat1GroupsWithImageIterator[102X( [3XG[103X, [3XR[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XAllCat1GroupsWithImageNumber[102X( [3XG[103X, [3XR[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XAllCat1GroupsWithImageUpToIsomorphism[102X( [3XG[103X, [3XR[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XAllCat1GroupsWithImage[102X( [3XG[103X, [3XR[103X ) [32X operation[133X
   
   [33X[0;0YThe  iterator  [10XAllCat1GroupsWithImageIterator(G,R)[110X  iterates through all the
   cat[22X^1[122X-groups    with    source    [10XG[110X    and    range    [22XR[122X.    The   attribute
@@ -944,22 +944,25 @@
   
   [33X[0;0YThe  operation  [10XAllCat1GroupsMatrix(G)[110X  constructs a symmetric matrix [22XM[122X with
   rows  and  columns  labelled by the idempotent endomorphisms [22Xe_i[122X on [22XG[122X, where
-  [22XM_ij[122X  is  [22X2[122X  if [22Xe_i,e_j[122X combine to form a cat[22X^1[122X-group; [22X1[122X if they only form a
-  pre-cat[22X^1[122X-group;  and  [22X0[122X  otherwise. The matrix is automatically printed out
-  with dots in place of zeroes.[133X
+  [22XM_ij  =  2[122X  if  [22Xe_i,e_j[122X combine to form a cat[22X^1[122X-group; [22XM_ij = 1[122X if they only
+  form  a pre-cat[22X^1[122X-group; and [22XM_ij = 0[122X otherwise. The matrix is automatically
+  printed out with dots in place of zeroes.[133X
   
   [33X[0;0YIn  the  example we see that the group [22XQD_16[122X has [22X10[122X idempotent endomorphisms
-  and  [22X5[122X  cat[22X12[122X-groups,  all  of  which  are  symmetric([22Xt=h)[122X,  and a further [22X9[122X
-  pre-cat[22X^1[122X-groups.  (A  cat[22X^1[122X-group and its transpose are not counted twice.)
-  This  operation  is  intended  to be used to illustrate how cat[22X^2[122X-groups are
-  formed, and should only be used with groups of low order.[133X
+  and  [22X5[122X  cat[22X^1[122X-groups,  all  of  which  are  symmetric ([22Xt=h[122X), and a further [22X9[122X
+  pre-cat[22X^1[122X-groups, [22X5[122X of which are symmetric. (A cat[22X^1[122X-group and its transpose
+  are  not counted twice.) This operation is intended to be used to illustrate
+  how  cat[22X^1[122X-groups  are  formed,  and  should only be used with groups of low
+  order.[133X
   
   [33X[0;0YThe   attribute   [10XAllCat1GroupsNumber(G)[110X  returns  the  number  [22Xn[122X  of  these
   cat[22X^1[122X-groups.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XAllCat1GroupsMatrix( G );;                 [127X[104X
+    [4X[25Xgap>[125X [27Xqd16 := SmallGroup( 16, 8 );; [127X[104X
+    [4X[25Xgap>[125X [27XAllCat1GroupsMatrix( qd16 );;                 [127X[104X
+    [4X[28Xnumber of idempotent endomorphisms found = 10[128X[104X
     [4X[28Xnumber of cat1-groups found = 5[128X[104X
     [4X[28Xnumber of additional pre-cat1-groups found = 9[128X[104X
     [4X[28X1.........[128X[104X

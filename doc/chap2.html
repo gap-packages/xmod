@@ -73,7 +73,7 @@ Properties of cat<span class="SimpleMath">^1</span>-groups and pre-cat<span clas
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X80D6CB4080417BFA">2.6 <span class="Heading">Enumerating cat<span class="SimpleMath">^1</span>-groups with a given source</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7A1B967D7B6273F4">2.6-1 AllCat1GroupsWithImageIterator</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7BDEBBF17CE6A6D4">2.6-1 AllCat1GroupsWithImage</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7FBFC8C87FC1AC5A">2.6-2 AllCat1GroupsMatrix</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7FEB2FCE7D9ADA85">2.6-3 AllCat1GroupsIterator</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7C6346A17FEEDFA1">2.6-4 CatnGroupNumbers</a></span>
@@ -973,14 +973,14 @@ Crossed module X([G8=&gt;d12]) :-
 
 <p>As the size of a group <span class="SimpleMath">G</span> increases, the number of cat<span class="SimpleMath">^1</span>-groups with source <span class="SimpleMath">G</span> increases rapidly. However, one is usually only interested in the isomorphism classes of cat<span class="SimpleMath">^1</span>-groups with source <span class="SimpleMath">G</span>. An iterator <code class="code">AllCat1GroupsIterator</code> is provided, which runs through the various cat<span class="SimpleMath">^1</span>-groups. This iterator finds, for each subgroup <span class="SimpleMath">R</span> of <span class="SimpleMath">G</span>, the cat<span class="SimpleMath">^1</span>-groups with range <span class="SimpleMath">R</span>. It does this by running through the <code class="code">AllSubgroupsIterator(G)</code> provided by the <strong class="pkg">Utils</strong> package, and then using the iterator <code class="code">AllCat1GroupsWithImageIterator(G,R)</code>.</p>
 
-<p><a id="X7A1B967D7B6273F4" name="X7A1B967D7B6273F4"></a></p>
+<p><a id="X7BDEBBF17CE6A6D4" name="X7BDEBBF17CE6A6D4"></a></p>
 
-<h5>2.6-1 AllCat1GroupsWithImageIterator</h5>
+<h5>2.6-1 AllCat1GroupsWithImage</h5>
 
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllCat1GroupsWithImage</code>( <var class="Arg">G</var>, <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllCat1GroupsWithImageIterator</code>( <var class="Arg">G</var>, <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllCat1GroupsWithImageNumber</code>( <var class="Arg">G</var>, <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllCat1GroupsWithImageUpToIsomorphism</code>( <var class="Arg">G</var>, <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllCat1GroupsWithImage</code>( <var class="Arg">G</var>, <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>The iterator <code class="code">AllCat1GroupsWithImageIterator(G,R)</code> iterates through all the cat<span class="SimpleMath">^1</span>-groups with source <code class="code">G</code> and range <span class="SimpleMath">R</span>. The attribute <code class="code">AllCat1GroupsWithImageNumber(G)</code> runs through this iterator to count the number <span class="SimpleMath">n_R</span> of these cat<span class="SimpleMath">^1</span>-groups. The operation <code class="code">AllCat1GroupsWithImage(G)</code> returns a list containing these <span class="SimpleMath">n_R</span> cat<span class="SimpleMath">^1</span>-groups. Since these lists can get very long, this operation should only be used for simple cases. The operation <code class="code">AllCat1GroupsWithImageUpToIsomorphism(G)</code> returns representatives of the isomorphism classes of these cat<span class="SimpleMath">^1</span>-groups.</p>
 
 
@@ -1001,16 +1001,18 @@ Group([ (1,2,3,4,5,6), (2,6)(3,5) ])
 <h5>2.6-2 AllCat1GroupsMatrix</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllCat1GroupsMatrix</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>The operation <code class="code">AllCat1GroupsMatrix(G)</code> constructs a symmetric matrix <span class="SimpleMath">M</span> with rows and columns labelled by the idempotent endomorphisms <span class="SimpleMath">e_i</span> on <span class="SimpleMath">G</span>, where <span class="SimpleMath">M_ij</span> is <span class="SimpleMath">2</span> if <span class="SimpleMath">e_i,e_j</span> combine to form a cat<span class="SimpleMath">^1</span>-group; <span class="SimpleMath">1</span> if they only form a pre-cat<span class="SimpleMath">^1</span>-group; and <span class="SimpleMath">0</span> otherwise. The matrix is automatically printed out with dots in place of zeroes.</p>
+<p>The operation <code class="code">AllCat1GroupsMatrix(G)</code> constructs a symmetric matrix <span class="SimpleMath">M</span> with rows and columns labelled by the idempotent endomorphisms <span class="SimpleMath">e_i</span> on <span class="SimpleMath">G</span>, where <span class="SimpleMath">M_ij = 2</span> if <span class="SimpleMath">e_i,e_j</span> combine to form a cat<span class="SimpleMath">^1</span>-group; <span class="SimpleMath">M_ij = 1</span> if they only form a pre-cat<span class="SimpleMath">^1</span>-group; and <span class="SimpleMath">M_ij = 0</span> otherwise. The matrix is automatically printed out with dots in place of zeroes.</p>
 
-<p>In the example we see that the group <span class="SimpleMath">QD_16</span> has <span class="SimpleMath">10</span> idempotent endomorphisms and <span class="SimpleMath">5</span> cat<span class="SimpleMath">12</span>-groups, all of which are symmetric(<span class="SimpleMath">t=h)</span>, and a further <span class="SimpleMath">9</span> pre-cat<span class="SimpleMath">^1</span>-groups. (A cat<span class="SimpleMath">^1</span>-group and its transpose are not counted twice.) This operation is intended to be used to illustrate how cat<span class="SimpleMath">^2</span>-groups are formed, and should only be used with groups of low order.</p>
+<p>In the example we see that the group <span class="SimpleMath">QD_16</span> has <span class="SimpleMath">10</span> idempotent endomorphisms and <span class="SimpleMath">5</span> cat<span class="SimpleMath">^1</span>-groups, all of which are symmetric (<span class="SimpleMath">t=h</span>), and a further <span class="SimpleMath">9</span> pre-cat<span class="SimpleMath">^1</span>-groups, <span class="SimpleMath">5</span> of which are symmetric. (A cat<span class="SimpleMath">^1</span>-group and its transpose are not counted twice.) This operation is intended to be used to illustrate how cat<span class="SimpleMath">^1</span>-groups are formed, and should only be used with groups of low order.</p>
 
 <p>The attribute <code class="code">AllCat1GroupsNumber(G)</code> returns the number <span class="SimpleMath">n</span> of these cat<span class="SimpleMath">^1</span>-groups.</p>
 
 
 <div class="example"><pre>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AllCat1GroupsMatrix( G );;                 </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">qd16 := SmallGroup( 16, 8 );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AllCat1GroupsMatrix( qd16 );;                 </span>
+number of idempotent endomorphisms found = 10
 number of cat1-groups found = 5
 number of additional pre-cat1-groups found = 9
 1.........
