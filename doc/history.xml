@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  history.xml           XMod documentation            Chris Wensley  -->
 <!--                                                                     -->
-<!--  Copyright (C) 1996-2020, Murat Alp and Chris Wensley,              --> 
+<!--  Copyright (C) 1996-2021, Murat Alp and Chris Wensley,              --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -165,7 +165,7 @@ The material on isoclinism in Chapter 4 was added.
 </Item>
 <Item>
 The package webpage has moved to 
-<URL>http://pages.bangor.ac.uk/~mas023/chda/</URL>. 
+<URL>https://github.com/cdwensley</URL>. 
 </Item>
 <Item>
 A GitHub repository was started at: 

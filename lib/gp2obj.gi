@@ -2610,7 +2610,8 @@ function( G )
         for j in [1..i-1] do 
             M[i][j] := M[j][i]; 
         od; 
-    od;
+    od; 
+    Print( "number of idempotent endomorphisms found = ", eps, "\n" ); 
     Print( "number of cat1-groups found = ", ctot, "\n" ); 
     if ( ptot > 0 ) then 
         Print( "number of additional pre-cat1-groups found = ", ptot, "\n" ); 
@@ -2627,6 +2628,13 @@ function( G )
         od;
         Print( "\n" );
     od; 
+    InitCatnGroupRecords( G ); 
+    if not IsBound( CatnGroupNumbers( G ).idem ) then 
+        CatnGroupNumbers( G ).idem := eps; 
+    fi; 
+    if not IsBound( CatnGroupNumbers( G ).cat1 ) then 
+        CatnGroupNumbers( G ).cat1 := ctot; 
+    fi; 
     return M; 
 end ); 
 

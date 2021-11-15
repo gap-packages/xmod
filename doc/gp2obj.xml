@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2obj.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  Copyright (C) 1996-2020, Chris Wensley et al,                      --> 
+<!--  Copyright (C) 1996-2021, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -1135,13 +1135,13 @@ provided by the <Package>Utils</Package> package,
 and then using the iterator <C>AllCat1GroupsWithImageIterator(G,R)</C>. 
 
 <ManSection>
+   <Oper Name="AllCat1GroupsWithImage"
+         Arg="G R" />
    <Oper Name="AllCat1GroupsWithImageIterator"
          Arg="G R" />
    <Attr Name="AllCat1GroupsWithImageNumber"
          Arg="G R" />
    <Oper Name="AllCat1GroupsWithImageUpToIsomorphism"
-         Arg="G R" />
-   <Oper Name="AllCat1GroupsWithImage"
          Arg="G R" />
 <Description>
 The iterator <C>AllCat1GroupsWithImageIterator(G,R)</C> 
@@ -1175,18 +1175,19 @@ gap> L12 := AllCat1GroupsWithImage( d12, c2 );
 <Description>
 The operation <C>AllCat1GroupsMatrix(G)</C> constructs a symmetric matrix 
 <M>M</M> with rows and columns labelled by the idempotent endomorphisms 
-<M>e_i</M> on <M>G</M>, where <M>M_{ij}</M> is 
-<M>2</M> if <M>e_i,e_j</M> combine to form a cat<M>^1</M>-group; 
-<M>1</M> if they only form a pre-cat<M>^1</M>-group; 
-and <M>0</M> otherwise.  The matrix is automatically printed out 
-with dots in place of zeroes. 
+<M>e_i</M> on <M>G</M>, where <M>M_{ij} = 2</M> 
+if <M>e_i,e_j</M> combine to form a cat<M>^1</M>-group; 
+<M>M_{ij} = 1</M> if they only form a pre-cat<M>^1</M>-group; 
+and <M>M_{ij} = 0</M> otherwise.  
+The matrix is automatically printed out with dots in place of zeroes. 
 <P/> 
 In the example we see that the group <M>QD_{16}</M> 
-has <M>10</M> idempotent endomorphisms and <M>5</M> cat<M>12</M>-groups, 
-all of which are symmetric(<M>t=h)</M>, 
-and a further <M>9</M> pre-cat<M>^1</M>-groups. 
+has <M>10</M> idempotent endomorphisms and <M>5</M> cat<M>^1</M>-groups, 
+all of which are symmetric (<M>t=h</M>), 
+and a further <M>9</M> pre-cat<M>^1</M>-groups, 
+<M>5</M> of which are symmetric. 
 (A cat<M>^1</M>-group and its transpose are not counted twice.) 
-This operation is intended to be used to illustrate how cat<M>^2</M>-groups 
+This operation is intended to be used to illustrate how cat<M>^1</M>-groups 
 are formed, and should only be used with groups of low order. 
 <P/> 
 The attribute <C>AllCat1GroupsNumber(G)</C> returns the  
@@ -1196,7 +1197,9 @@ number <M>n</M> of these cat<M>^1</M>-groups.
 <P/>
 <Example>
 <![CDATA[
-gap> AllCat1GroupsMatrix( G );;                 
+gap> qd16 := SmallGroup( 16, 8 );; 
+gap> AllCat1GroupsMatrix( qd16 );;                 
+number of idempotent endomorphisms found = 10
 number of cat1-groups found = 5
 number of additional pre-cat1-groups found = 9
 1.........

@@ -2,7 +2,7 @@
 ##
 #W  gp2obj.tst                    XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2020, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2021, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 gap> START_TEST( "XMod package: gp2obj.tst" );
@@ -430,6 +430,23 @@ gap> L12 := AllCat1GroupsWithImage( d12, c2 );
 [ [d12=>Group( [ (), (1,6)(2,5)(3,4) ] )] ]
 
 ## Section 2.6.2
+gap> qd16 := SmallGroup( 16, 8 );; 
+gap> AllCat1GroupsMatrix( qd16 );;                 
+number of idempotent endomorphisms found = 10
+number of cat1-groups found = 5
+number of additional pre-cat1-groups found = 9
+1.........
+.21.......
+.11.......
+...21.....
+...11.....
+.....21...
+.....11...
+.......21.
+.......11.
+.........2
+
+## Section 2.6.3
 gap> iter := AllCat1GroupsIterator( d12 );;
 gap> AllCat1GroupsNumber( d12 );
 12
@@ -439,7 +456,7 @@ gap> iso12 := AllCat1GroupsUpToIsomorphism( d12 );
   [d12=>Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )], 
   [d12=>Group( [ (1,2,3,4,5,6), (2,6)(3,5) ] )] ]
 
-## Section 2.6.3
+## Section 2.6.4
 gap> CatnGroupNumbers( d12 );
 rec( cat1 := 12, idem := 21, iso1 := 4, siso := 4, symm := 12 )
 

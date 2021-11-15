@@ -1,7 +1,8 @@
 # CHANGES to the 'XMod' package
 
-## 2.83 -> 2.83dev (08/04/2021) 
+## 2.83 -> 2.84 (15/11/2021) 
 
+ * (15/11/21) moved the package homepage to https://github.com/cdwensley
  * (08/04/21) Switch CI to use GitHub Actions 
 
 ## 2.82 -> 2.83 (17/02/2021) 
