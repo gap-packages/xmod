@@ -1761,8 +1761,9 @@ function( C1, show )
     K1 := KernelCokernelXMod( X1 ); 
     KS1 := Source( K1 ); 
     KR1 := Range( K1 ); 
-    nat1 := NaturalHomomorphism( KR1 ); 
     J1 := ImagesSource( bdy1 ); 
+    nat1 := NaturalHomomorphismByNormalSubgroup( R1, J1 ); 
+    KR1 := Image( nat1, R1 ); 
     LS := LatticeSubgroups( S1 ); 
     CLS := ConjugacyClassesSubgroups( LS );
     LR := LatticeSubgroups( R1 ); 
@@ -1792,7 +1793,7 @@ function( C1, show )
                           incQ := RangeHom( incX ); 
                           alpha := InclusionMappingGroups( KS1, KP ); 
                           beta := InclusionMappingGroups( J1, J2 ); 
-                          nat2 := NaturalHomomorphism( KQ ); 
+                          nat2 := NaturalHomomorphismByNormalSubgroup( Q, J2 ); 
                           genKQ := GeneratorsOfGroup( KQ ); 
                           preKQ := List( genKQ, 
                                      g -> PreImagesRepresentative( nat2, g ) ); 
@@ -1859,8 +1860,8 @@ function( C1, show )
     K1 := KernelCokernelXMod( X1 ); 
     KS1 := Source( K1 ); 
     KR1 := Range( K1 ); 
-    nat1 := NaturalHomomorphism( KR1 ); 
     J1 := ImagesSource( bdy1 ); 
+    nat1 := NaturalHomomorphismByNormalSubgroup( R1, J1 ); 
     LS := NormalSubgroups( S1 ); 
     LR := NormalSubgroups( R1 ); 
     idK1 := IdGroup( K1 ); 
@@ -1888,18 +1889,18 @@ function( C1, show )
                     if ( idK2 = idK1 ) then 
                         KP := Source( K2 ); 
                         KQ := Range( K2 ); 
-                        natKQ := NaturalHomomorphism( KQ );
                         JF := ImagesSource( bdyF ); 
+                        natKQ := NaturalHomomorphismByNormalSubgroup( FQ, JF );
                         genKS1 := GeneratorsOfGroup( KS1 ); 
                         imKS1 := List( genKS1, g -> ImageElm( natP, g ) ); 
                         alpha := GroupHomomorphismByImages( 
                                      KS1, KP, genKS1, imKS1 ); 
-                        natKR1 := NaturalHomomorphism( KR1 );
+                        natKR1 := NaturalHomomorphismByNormalSubgroup( R1, J1 );
                         genKR1 := GeneratorsOfGroup( KR1 );
                         preKR1 := List( genKR1, 
                                     g -> PreImagesRepresentative( natKR1, g ) ); 
                         im1KR1 := List( preKR1, g -> ImageElm( natQ, g ) ); 
-                        natKQ := NaturalHomomorphism( KQ ); 
+                        natKQ := NaturalHomomorphismByNormalSubgroup( FQ, JF ); 
                         im2KR1 := List( im1KR1, g -> ImageElm( natKQ, g ) ); 
                         gamma := GroupHomomorphismByImages( 
                                     KR1, KQ, genKR1, im2KR1 ); 

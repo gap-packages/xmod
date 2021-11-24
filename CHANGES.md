@@ -1,14 +1,18 @@
 # CHANGES to the 'XMod' package
 
+## 2.84 -> 2.84dev (24/11/2021) 
+
+ * (24/11/21) NaturalHomomorphism -> NaturalHomomorphismByNormalSubgoup 
+
 ## 2.83 -> 2.84 (15/11/2021) 
 
- * (15/11/21) moved the package homepage to https://github.com/cdwensley
+ * (15/11/21) corrected address for CDW: https://github.com/cdwensley
  * (08/04/21) Switch CI to use GitHub Actions 
 
 ## 2.82 -> 2.83 (17/02/2021) 
 
  * (17/02/21) added functions for quasi-isomorphisms - manual section 3.5
- * (26/10/20) corrected \^ for morphisms of 2dimensinal groups 
+ * (26/10/20) corrected \^ for morphisms of 2dimensional groups 
  * (25/10/20) added examples/cpcpcp.g constructing 23 cat2-groups on (Cp)^3 
 
 ## 2.81 -> 2.82 (23/10/2020) 
