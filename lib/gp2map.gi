@@ -669,7 +669,7 @@ end );
 ##
 #M  \^( <mor>, <int> ) . . . . . . . . . . . . . . . for a 2DimensionalMapping
 ##
-InstallOtherMethod( POW, "for a 2d mapping", true, 
+InstallOtherMethod( \^, "for a 2d mapping", true,
     [ Is2DimensionalMapping, IsInt ], 0,
 function( map, n )
 
