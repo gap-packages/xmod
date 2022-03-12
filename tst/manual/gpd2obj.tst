@@ -2,7 +2,7 @@
 ##
 #W  gpd2obj.tst                   XMOD test file                Chris Wensley
 ##
-#Y  Copyright (C) 2001-2020, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2022, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 gap> START_TEST( "XMod package: gpd2obj.tst" );
@@ -39,11 +39,12 @@ gap> Cs4 := Range( CX4 );;
 ## Subsection 10.1.2 
 gap> IsXModWithObjects( DX4 ); 
 true
-gap> KnownPropertiesOfObject( DX4 ); 
-[ "CanEasilyCompareElements", "CanEasilySortElements", "IsDuplicateFree", 
-  "IsGeneratorsOfSemigroup", "IsSinglePieceDomain", 
-  "IsDirectProductWithCompleteDigraphDomain", "IsPreXModWithObjects", 
-  "IsXModWithObjects" ]
+gap> K := [ "CanEasilyCompareElements", "CanEasilySortElements", 
+>           "IsDuplicateFree", "IsAssociative", "IsGeneratorsOfSemigroup", 
+>           "IsSinglePieceDomain", "IsDirectProductWithCompleteDigraphDomain", 
+>           "IsPreXModWithObjects", "IsXModWithObjects" ];; 
+gap> ForAll( K, p -> p in KnownPropertiesOfObject( DX4 ) ); 
+true
 
 ## Subsection 10.1.3 
 gap> IsPermPreXModWithObjects( CX4 );
