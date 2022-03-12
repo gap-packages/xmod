@@ -38,7 +38,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X7F6E650E85384C25">14.1-6 <span class="Heading">Versions 2.007 -- 2.010</span></a>
 </span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X7865E5857F2DC4D5">14.2 <span class="Heading">Versions for <strong class="pkg">GAP</strong> [4.5 .. 4.8]</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X821A76C778540C6B">14.2 <span class="Heading">Versions for <strong class="pkg">GAP</strong> [4.5 .. 4.11]</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X794BBE42839F2E18">14.2-1 <span class="Heading">AllCat1s</span></a>
@@ -48,6 +48,8 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X8715310378F0F8D2">14.2-3 <span class="Heading">Version 2.61</span></a>
 </span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X87993A637E468792">14.2-4 <span class="Heading">Version 2.63 - 2.74</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14.html#X8581897A7EB46273">14.2-5 <span class="Heading">Version 2.75 - 2.85</span></a>
 </span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14.html#X83D1530487593182">14.3 <span class="Heading">What needs doing next?</span></a>
@@ -121,9 +123,9 @@
 
 </li>
 </ul>
-<p><a id="X7865E5857F2DC4D5" name="X7865E5857F2DC4D5"></a></p>
+<p><a id="X821A76C778540C6B" name="X821A76C778540C6B"></a></p>
 
-<h4>14.2 <span class="Heading">Versions for <strong class="pkg">GAP</strong> [4.5 .. 4.8]</span></h4>
+<h4>14.2 <span class="Heading">Versions for <strong class="pkg">GAP</strong> [4.5 .. 4.11]</span></h4>
 
 <p>Version 2.19, released on 9th June 2012, included the following changes:</p>
 
@@ -145,7 +147,7 @@
 
 <p>Version <strong class="button">2.21</strong> contained major changes to the <code class="func">Cat1Select</code> (<a href="chap2.html#X7B8E67D880E380C8"><span class="RefLink">2.7-1</span></a>) operation: the list <code class="code">CAT1_LIST</code> of cat1-structures in the data file <code class="file">cat1data.g</code> was changed from permutation groups to pc-groups, with the generators of subgroups; images of the tail map; and images of the head map being given as <code class="code">ExtRepOfObj</code> of words in the generators.</p>
 
-<p>The <code class="code">AllCat1s</code> function was reintroduced from the UNKNOWNEntity(GAP3) version, and renamed as the operation <code class="code">AllCat1DataGroupsBasic</code>.</p>
+<p>The <code class="code">AllCat1s</code> function was reintroduced from the <strong class="pkg">GAP</strong>3 version, and renamed as the operation <code class="code">AllCat1DataGroupsBasic</code>.</p>
 
 <p>In version <strong class="button">2.25</strong> the data in <code class="file">cat1data.g</code> was extended from groups of size up to <span class="SimpleMath">48</span> to groups of size up to <span class="SimpleMath">70</span>. In particular, the <span class="SimpleMath">267</span> groups of size 64 give rise to a total of <span class="SimpleMath">1275</span> cat1-groups. The authors are indebted to Van Luyen Le in Galway for pointing out a number of errors in the version of this list distributed with version <strong class="button">2.24</strong> of this package.</p>
 
@@ -189,6 +191,19 @@
 
 </li>
 <li><p>Added an implementation of group groupoids.</p>
+
+</li>
+</ul>
+<p><a id="X8581897A7EB46273" name="X8581897A7EB46273"></a></p>
+
+<h5>14.2-5 <span class="Heading">Version 2.75 - 2.85</span></h5>
+
+
+<ul>
+<li><p>Added conversion functions between <strong class="pkg">XMod</strong> and <strong class="pkg">Hap</strong> and a new chapter in the manual about these functions.</p>
+
+</li>
+<li><p>Added functions for quasi-isomorphisms.</p>
 
 </li>
 </ul>

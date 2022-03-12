@@ -1034,7 +1034,6 @@ number of additional pre-cat1-groups found = 9
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllCat1GroupsIterator</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllCat1GroupsUpToIsomorphism</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllCat1GroupsMatrix</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllCat1Groups</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>The iterator <code class="code">AllCat1GroupsIterator(G)</code> iterates through all the cat<span class="SimpleMath">^1</span>-groups with source <code class="code">G</code>. The operation <code class="code">AllCat1Groups(G)</code> returns a list containing these <span class="SimpleMath">n</span> cat<span class="SimpleMath">^1</span>-groups. Since these lists can get very long, this operation should only be used for simple cases. The operation <code class="code">AllCat1GroupsUpToIsomorphism(G)</code> returns representatives of the isomorphism classes of these subgroups.</p>
 
@@ -1221,7 +1220,7 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">aut := Group( [a] );; </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">act := GroupHomomorphismByImages( s3, aut, [(11,12),(12,13)], [a,a] );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">X33 := XModByBoundaryAndAction( bdy, act );; </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C33 := Cat1GroupOfXMod( X33 ).precat1;; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">C33 := Cat1GroupOfXMod( X33 );; </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G33 := Source( C33 );; </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gpd33 := GroupGroupoid( C33 ); </span>
 groupoid with 2 pieces:

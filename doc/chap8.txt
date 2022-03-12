@@ -1150,7 +1150,6 @@
   [1X8.5-4 AllCat2GroupsIterator[101X
   
   [33X[1;0Y[29X[2XAllCat2GroupsIterator[102X( [3XG[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XAllCat2GroupsMatrix[102X( [3XG[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XAllCat2Groups[102X( [3XG[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XAllCat2GroupsUpToIsomorphism[102X( [3XG[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XAllCat2GroupFamilies[102X( [3XG[103X ) [32X operation[133X

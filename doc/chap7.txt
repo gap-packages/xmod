@@ -28,7 +28,7 @@
   
   [33X[0;0YIn  the  example  the  structure  descriptions of the precrossed module, the
   Peiffer   subgroup,  and  the  resulting  coproduct  are  printed  out  when
-  [10XInfoLevel(InfoXMod}[110X  is  at  least  [22X1[122X.  The  coproduct  comes  supplied with
+  [10XInfoLevel(InfoXMod)[110X  is  at  least  [22X1[122X.  The  coproduct  comes  supplied with
   attribute  [10XCoproductInfo[110X,  which includes the embedding morphisms of the two
   factors.[133X
   

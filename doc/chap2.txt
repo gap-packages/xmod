@@ -982,7 +982,6 @@
   
   [33X[1;0Y[29X[2XAllCat1GroupsIterator[102X( [3XG[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XAllCat1GroupsUpToIsomorphism[102X( [3XG[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XAllCat1GroupsMatrix[102X( [3XG[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XAllCat1Groups[102X( [3XG[103X ) [32X operation[133X
   
   [33X[0;0YThe  iterator [10XAllCat1GroupsIterator(G)[110X iterates through all the cat[22X^1[122X-groups
@@ -1205,7 +1204,7 @@
     [4X[25Xgap>[125X [27Xaut := Group( [a] );; [127X[104X
     [4X[25Xgap>[125X [27Xact := GroupHomomorphismByImages( s3, aut, [(11,12),(12,13)], [a,a] );;[127X[104X
     [4X[25Xgap>[125X [27XX33 := XModByBoundaryAndAction( bdy, act );; [127X[104X
-    [4X[25Xgap>[125X [27XC33 := Cat1GroupOfXMod( X33 ).precat1;; [127X[104X
+    [4X[25Xgap>[125X [27XC33 := Cat1GroupOfXMod( X33 );; [127X[104X
     [4X[25Xgap>[125X [27XG33 := Source( C33 );; [127X[104X
     [4X[25Xgap>[125X [27Xgpd33 := GroupGroupoid( C33 ); [127X[104X
     [4X[28Xgroupoid with 2 pieces:[128X[104X

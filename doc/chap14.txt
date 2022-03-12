@@ -85,7 +85,7 @@
         protection codes.[133X
   
   
-  [1X14.2 [33X[0;0YVersions for [5XGAP[105X[101X[1X [4.5 .. 4.8][133X[101X
+  [1X14.2 [33X[0;0YVersions for [5XGAP[105X[101X[1X [4.5 .. 4.11][133X[101X
   
   [33X[0;0YVersion 2.19, released on 9th June 2012, included the following changes:[133X
   
@@ -105,8 +105,8 @@
   subgroups; images of the tail map; and images of the head map being given as
   [10XExtRepOfObj[110X of words in the generators.[133X
   
-  [33X[0;0YThe [10XAllCat1s[110X function was reintroduced from the UNKNOWNEntity(GAP3) version,
-  and renamed as the operation [10XAllCat1DataGroupsBasic[110X.[133X
+  [33X[0;0YThe [10XAllCat1s[110X function was reintroduced from the [5XGAP[105X3 version, and renamed as
+  the operation [10XAllCat1DataGroupsBasic[110X.[133X
   
   [33X[0;0YIn  version  [12X2.25[112X the data in [11Xcat1data.g[111X was extended from groups of size up
   to  [22X48[122X  to groups of size up to [22X70[122X. In particular, the [22X267[122X groups of size 64
@@ -148,6 +148,14 @@
   [30X    [33X[0;6YLots more work on crossed squares and cat2-groups.[133X
   
   [30X    [33X[0;6YAdded an implementation of group groupoids.[133X
+  
+  
+  [1X14.2-5 [33X[0;0YVersion 2.75 - 2.85[133X[101X
+  
+  [30X    [33X[0;6YAdded  conversion  functions between [5XXMod[105X and [5XHap[105X and a new chapter in
+        the manual about these functions.[133X
+  
+  [30X    [33X[0;6YAdded functions for quasi-isomorphisms.[133X
   
   
   [1X14.3 [33X[0;0YWhat needs doing next?[133X[101X

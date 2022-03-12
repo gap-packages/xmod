@@ -7,8 +7,8 @@ SetPackageInfo( rec(
 
 PackageName := "XMod",
 Subtitle := "Crossed Modules and Cat1-Groups",
-Version := "2.84",
-Date := "15/11/2021", # dd/mm/yyyy format
+Version := "2.85",
+Date := "12/03/2022", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -106,13 +106,13 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">=4.11.0",
-  NeededOtherPackages := [ ["Utils", ">= 0.69"], 
+  NeededOtherPackages := [ ["utils", ">= 0.69"], 
                            ["groupoids", ">= 1.68"], 
-                           ["Hap", ">= 1.25"],
+                           ["HAP", ">= 1.29"],
                            ["AutPGrp", ">= 1.10.2"], 
-                           ["SmallGrp", ">= 1.4.1" ] ], 
-  SuggestedOtherPackages := [ ["AutoDoc", ">=2019.09.04"], 
-                              ["GAPDoc", ">= 1.6.3"] ],
+                           ["SmallGrp", ">= 1.4.2" ] ], 
+  SuggestedOtherPackages := [ ["AutoDoc", ">=2020.08.11"], 
+                              ["GAPDoc", ">= 1.6.4"] ],
   ExternalConditions := [ ]
 ),
 
@@ -139,7 +139,7 @@ Keywords := ["crossed module", "cat1-group", "derivation", "section",
 AutoDoc := rec(
     TitlePage := rec(
         Copyright := Concatenation(
-            "&copyright; 1996-2021, Chris Wensley et al. <P/>\n", 
+            "&copyright; 1996-2022, Chris Wensley et al. <P/>\n", 
             "The &XMod; package is free software; you can redistribute it ", 
             "and/or modify it under the terms of the GNU General ", 
             "Public License as published by the Free Software Foundation; ", 
@@ -174,7 +174,7 @@ AutoDoc := rec(
             "<P/>\n", 
             "&XMod; was originally implemented in 1996 using the &GAP;3 ", 
             "language, when the second author was studying for a Ph.D. ", 
-            "<Cite Key='A1'/> in Bangor.\n", 
+            "<Cite Key='A1'/> at Bangor.\n", 
             "<P/>\n", 
             "In April 2002 the first and third parts were converted ", 
             "to &GAP;4, the pre-structures were added, ", 

@@ -6,10 +6,10 @@
                        [1X Crossed Modules and Cat1-Groups [101X
   
   
-                                      2.84
+                                      2.85
   
   
-                                15 November 2021
+                                 12 March 2022
   
   
                                  Chris Wensley
@@ -75,7 +75,7 @@
   [30X    [33X[0;6Ycrossed modules of finite groupoids (experimental version).[133X
   
   [33X[0;0Y[5XXMod[105X  was  originally  implemented in 1996 using the [5XGAP[105X3 language, when the
-  second author was studying for a Ph.D. [Alp97] in Bangor.[133X
+  second author was studying for a Ph.D. [Alp97] at Bangor.[133X
   
   [33X[0;0YIn  April  2002  the  first  and  third  parts  were  converted to [5XGAP[105X4, the
   pre-structures  were  added,  and  version 2.001 was released. The final two
@@ -93,7 +93,7 @@
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0Y© 1996-2021, Chris Wensley et al.[133X
+  [33X[0;0Y© 1996-2022, Chris Wensley et al.[133X
   
   [33X[0;0YThe  [5XXMod[105X package is free software; you can redistribute it and/or modify it
   under  the  terms of the GNU General Public License as published by the Free
@@ -301,11 +301,12 @@
       14.1-4 [33X[0;0YInduced crossed modules[133X
       14.1-5 [33X[0;0YVersions 2.002 -- 2.006[133X
       14.1-6 [33X[0;0YVersions 2.007 -- 2.010[133X
-    14.2 [33X[0;0YVersions for [5XGAP[105X [4.5 .. 4.8][133X
+    14.2 [33X[0;0YVersions for [5XGAP[105X [4.5 .. 4.11][133X
       14.2-1 [33X[0;0YAllCat1s[133X
       14.2-2 [33X[0;0YVersions 2.43 - 2.56[133X
       14.2-3 [33X[0;0YVersion 2.61[133X
       14.2-4 [33X[0;0YVersion 2.63 - 2.74[133X
+      14.2-5 [33X[0;0YVersion 2.75 - 2.85[133X
     14.3 [33X[0;0YWhat needs doing next?[133X
   
   

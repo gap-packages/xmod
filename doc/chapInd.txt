@@ -20,7 +20,7 @@
   [2XActorXMod[102X 6.1-2 
   [2XAllCat1Groups[102X 2.6-3 
   [2XAllCat1GroupsIterator[102X 2.6-3 
-  [2XAllCat1GroupsMatrix[102X 2.6-2  2.6-3 
+  [2XAllCat1GroupsMatrix[102X 2.6-2 
   [2XAllCat1GroupsUpToIsomorphism[102X 2.6-3 
   [2XAllCat1GroupsWithImage[102X 2.6-1 
   [2XAllCat1GroupsWithImageIterator[102X 2.6-1 
@@ -29,7 +29,7 @@
   [2XAllCat2GroupFamilies[102X 8.5-4 
   [2XAllCat2Groups[102X 8.5-4 
   [2XAllCat2GroupsIterator[102X 8.5-4 
-  [2XAllCat2GroupsMatrix[102X 8.5-3  8.5-4 
+  [2XAllCat2GroupsMatrix[102X 8.5-3 
   [2XAllCat2GroupsUpToIsomorphism[102X 8.5-4 
   [2XAllCat2GroupsWithFixedUp[102X 8.5-2 
   [2XAllCat2GroupsWithFixedUpAndLeftRange[102X 8.5-2 
