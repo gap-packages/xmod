@@ -174,7 +174,7 @@ AutoDoc := rec(
             "<P/>\n", 
             "&XMod; was originally implemented in 1996 using the &GAP;3 ", 
             "language, when the second author was studying for a Ph.D. ", 
-            "<Cite Key='A1'/> in Bangor.\n", 
+            "<Cite Key='A1'/> at Bangor.\n", 
             "<P/>\n", 
             "In April 2002 the first and third parts were converted ", 
             "to &GAP;4, the pre-structures were added, ", 
