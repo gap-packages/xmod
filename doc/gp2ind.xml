@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2ind.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  Copyright (C) 2001-2020, Chris Wensley et al,                      --> 
+<!--  Copyright (C) 2001-2022, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -46,7 +46,7 @@ crossed module <M>\calX_1 \circ \calX_2</M>.
 <P/>
 In the example the structure descriptions of the precrossed module, 
 the Peiffer subgroup, and the resulting coproduct are printed out 
-when <C>InfoLevel(InfoXMod}</C> is at least <M>1</M>. 
+when <C>InfoLevel(InfoXMod)</C> is at least <M>1</M>. 
 The coproduct comes supplied with attribute <C>CoproductInfo</C>, 
 which includes the embedding morphisms of the two factors. 
 </Description>

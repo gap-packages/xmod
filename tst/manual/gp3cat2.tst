@@ -2,7 +2,7 @@
 ##
 #W  gp3cat2.tst                   XMOD test file                Chris Wensley
 ##
-#Y  Copyright (C) 2001-2021, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2022, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 gap> START_TEST( "XMod package: gp3cat2.tst" );
@@ -115,13 +115,7 @@ true
 
 
 # Section 8.4.6 
-gap> xsC2a := CrossedSquareOfCat2Group( C2a );
-crossed square with crossed modules:
-      up = [Group( () ) -> Group( [ (1,4)(2,5)(3,6) ] )]
-    left = [Group( () ) -> Group( [ (1,3,5)(2,4,6) ] )]
-   right = [Group( [ (1,4)(2,5)(3,6) ] ) -> Group( [ (2,6)(3,5) ] )]
-    down = [Group( [ (1,3,5)(2,4,6) ] ) -> Group( [ (2,6)(3,5) ] )]
-
+gap> xsC2a := CrossedSquareOfCat2Group( C2a );;
 gap> IdGroup( xsC2a );
 [ [ 1, 1 ], [ 2, 1 ], [ 3, 1 ], [ 2, 1 ] ]
 
@@ -159,25 +153,13 @@ gap> IsSub2DimensionalGroup( dg, C1sub );
 true
 
 # Section 8.5.1
-gap> G8 := Group( (1,2), (3,4), (5,6) );;
+gap> G8 := Group( (1,2), (3,4), (5,6) );;  SetName( G8, "G8" ); 
 gap> A := Subgroup( G8, [ (1,2) ] );; 
 gap> B := Subgroup( G8, [ (3,4) ] );;
 gap> AllCat2GroupsWithImagesNumber( G8, A, A );
 4
 gap> all := AllCat2GroupsWithImages( G8, A, A );;     
-gap> for C2 in all do DisplayLeadMaps( C2 ); od;
-(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ]
-   up tail=head images: [ (1,2), (1,2), () ]
- left tail=head images: [ (1,2), (1,2), () ]
-(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ]
-   up tail=head images: [ (1,2), (), () ]
- left tail=head images: [ (1,2), (), () ]
-(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ]
-   up tail=head images: [ (1,2), (), (1,2) ]
- left tail=head images: [ (1,2), (), (1,2) ]
-(pre-)cat2-group with up-left group: [ (1,2), (3,4), (5,6) ]
-   up tail=head images: [ (1,2), (1,2), (1,2) ]
- left tail=head images: [ (1,2), (1,2), (1,2) ]
+gap> ## for C2 in all do DisplayLeadMaps( C2 ); od;
 gap> AllCat2GroupsWithImagesNumber( G8, A, B );
 16
 gap> iso := AllCat2GroupsWithImagesUpToIsomorphism( G8, A, B );;
@@ -193,8 +175,7 @@ gap> for C2 in iso do DisplayLeadMaps( C2 ); od;
  left tail/head images: [ (), (3,4), () ], [ (), (3,4), (3,4) ]
 
 # Section 8.5.2
-gap> up := Up2DimensionalGroup( iso[1] );                
-[Group( [ (1,2), (3,4), (5,6) ] ) => Group( [ (1,2), (), () ] )]
+gap> up := Up2DimensionalGroup( iso[1] );;                
 gap> AllCat2GroupsWithFixedUp( up );;                    
 gap> Length(last);                                       
 28

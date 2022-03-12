@@ -2,7 +2,7 @@
 ##
 #W  gp2obj.tst                    XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2021, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2022, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 gap> START_TEST( "XMod package: gp2obj.tst" );
@@ -501,15 +501,16 @@ gap> act := GroupHomomorphismByImages( s3, aut, [(11,12),(12,13)], [a,a] );;
 gap> X33 := XModByBoundaryAndAction( bdy, act );; 
 gap> C33 := Cat1GroupOfXMod( X33 );; 
 gap> G33 := Source( C33 );; 
-gap> gpd33 := GroupGroupoid( C33 ); 
-groupoid with 2 pieces:
-1:  single piece groupoid with rays: < Group( [ ()>-(4,5,6)(7,9,8)->() ] ), 
-[ (), (11,12,13), (11,13,12) ], [ ()>-()->(), ()>-(7,8,9)->(11,12,13), 
-  ()>-(7,9,8)->(11,13,12) ] >
-2:  single piece groupoid with rays: < Group( 
-[ (12,13)>-(2,3)(4,6)(7,8)->(12,13) ] ), [ (12,13), (11,12), (11,13) ], 
-[ (12,13)>-(2,3)(5,6)(8,9)->(12,13), (12,13)>-(2,3)(5,6)(7,9)->(11,13), 
-  (12,13)>-(2,3)(5,6)(7,8)->(11,12) ] >
+gap> gpd33 := GroupGroupoid( C33 );;
+gap> ObjectList( gpd33 );
+[ (), (12,13), (11,12), (11,12,13), (11,13,12), (11,13) ]
+gap> p1 := Pieces( gpd33 )[1];; 
+gap> Set( RaysOfGroupoid( p1 ) );  
+[ ()>-()->(), ()>-(7,8,9)->(11,12,13), ()>-(7,9,8)->(11,13,12) ]
+gap> p2 := Pieces( gpd33 )[2];; 
+gap> Set( RaysOfGroupoid( p2 ) );  
+[ (12,13)>-(2,3)(5,6)(8,9)->(12,13), (12,13)>-(2,3)(5,6)(7,8)->(11,12), 
+  (12,13)>-(2,3)(5,6)(7,9)->(11,13) ]
 
 ## Section 2.9.2 
 gap> piece2 := Pieces( gpd33 )[2];;
@@ -530,12 +531,9 @@ gap> e1*e2;
 (11,12)>-(1,2)(4,5)(8,9)->(11,13)
 gap> e2^-1;
 (11,13)>-(1,3)(4,6)(7,9)->(12,13)
-gap> obgp := ObjectGroup( gpd33, (11,12) );;
-gap> GeneratorsOfGroup( obgp )[1];
-(11,13)>-( 1, 3)( 4, 6)( 7, 8)->(11,13)
-gap> Homset( gpd33, (11,12), (11,13) );
-<homset (11,12) -> (11,13) with head group Group( 
-[ (11,12)>-( 1, 2)( 4, 6)( 7, 8)->(11,12) ] )>
+gap> ## obgp := ObjectGroup( gpd33, (11,12) );;
+gap> ## GeneratorsOfGroup( obgp )[1];
+gap> ## Homset( gpd33, (11,12), (11,13) );
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 

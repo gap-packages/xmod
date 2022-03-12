@@ -121,7 +121,7 @@ and correct file protection codes. </Item>
 </Section> 
 
 
-<Section><Heading>Versions for &GAP; [4.5 .. 4.8]</Heading>
+<Section><Heading>Versions for &GAP; [4.5 .. 4.11]</Heading>
 
 Version 2.19, released on 9th June 2012, included the following changes:  
 <List>
@@ -145,7 +145,7 @@ the list <C>CAT1_LIST</C> of cat1-structures in the data file
 with the generators of subgroups; images of the tail map; and images of 
 the head map being given as <C>ExtRepOfObj</C> of words in the generators. 
 <P/> 
-The <C>AllCat1s</C> function was reintroduced from the &GAP3; version, 
+The <C>AllCat1s</C> function was reintroduced from the &GAP;3 version, 
 and renamed as the operation <C>AllCat1DataGroupsBasic</C>. 
 <P/> 
 In version <B>2.25</B> the data in <F>cat1data.g</F> was extended from groups 
@@ -199,6 +199,19 @@ Lots more work on crossed squares and cat2-groups.
 </Item>
 <Item>
 Added an implementation of group groupoids. 
+</Item>
+</List> 
+</Subsection>
+
+
+<Subsection><Heading>Version 2.75 - 2.85</Heading>
+<List>
+<Item>
+Added conversion functions between &XMod; and <Package>Hap</Package> 
+and a new chapter in the manual about these functions. 
+</Item>
+<Item>
+Added functions for quasi-isomorphisms. 
 </Item>
 </List> 
 </Subsection>
