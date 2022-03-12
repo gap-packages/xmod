@@ -106,13 +106,13 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">=4.11.0",
-  NeededOtherPackages := [ ["Utils", ">= 0.69"], 
+  NeededOtherPackages := [ ["utils", ">= 0.69"], 
                            ["groupoids", ">= 1.68"], 
-                           ["Hap", ">= 1.25"],
+                           ["HAP", ">= 1.29"],
                            ["AutPGrp", ">= 1.10.2"], 
-                           ["SmallGrp", ">= 1.4.1" ] ], 
-  SuggestedOtherPackages := [ ["AutoDoc", ">=2019.09.04"], 
-                              ["GAPDoc", ">= 1.6.3"] ],
+                           ["SmallGrp", ">= 1.4.2" ] ], 
+  SuggestedOtherPackages := [ ["AutoDoc", ">=2020.08.11"], 
+                              ["GAPDoc", ">= 1.6.4"] ],
   ExternalConditions := [ ]
 ),
 

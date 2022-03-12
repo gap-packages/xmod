@@ -40,7 +40,7 @@ gap> Cs4 := Range( CX4 );;
 gap> IsXModWithObjects( DX4 ); 
 true
 gap> K := [ "CanEasilyCompareElements", "CanEasilySortElements", 
->           "IsDuplicateFree", "IsAssociative", "IsGeneratorsOfSemigroup", 
+>           "IsDuplicateFree", "IsGeneratorsOfSemigroup", 
 >           "IsSinglePieceDomain", "IsDirectProductWithCompleteDigraphDomain", 
 >           "IsPreXModWithObjects", "IsXModWithObjects" ];; 
 gap> ForAll( K, p -> p in KnownPropertiesOfObject( DX4 ) ); 
