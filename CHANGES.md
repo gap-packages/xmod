@@ -1,6 +1,8 @@
 # CHANGES to the 'XMod' package
 
-## 2.85 -> 2.85dev (12/03/2022) 
+## 2.85 -> 2.86 (14/03/2022) 
+
+ * (14/03/22) moved d24.tst to tst/failing temporarily 
 
 ## 2.84 -> 2.85 (12/03/2022) 
 
