@@ -24,7 +24,7 @@
   <year>2017</year>
   <other type="note">
     GAP package, 
-    <URL>http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/index.html</URL>
+    <URL>https://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/index.html</URL>
   </other>
 </manual></entry>
 
@@ -240,7 +240,7 @@ Experimental Math.\/ {\bf 23} (2014) 383--389.
   <year>2016</year>
   <volume></volume>
   <pages>1--17</pages>
-  <note>http://dx.doi.org/10.1016/j.jsc.2015.08.006</note>
+  <note>https://doi.org/10.1016/j.jsc.2015.08.006</note>
 </article></entry>
 
 <entry id="JNO"><article>
