@@ -38,10 +38,10 @@ For details, see <http://www.gnu.org/licenses/gpl.html>
 
     true
 
- * The file manual.pdf is in the `doc' subdirectory.
+ * The file manual.pdf is in the `doc` subdirectory.
 
 ## Contact
 
 If you have a question relating to 'XMod', encounter any problems, or have a suggestion for extending the package in any way, please 
- * email: `c.d.wensley@bangor.ac.uk` 
+ * email: <c.d.wensley@bangor.ac.uk>
  * or report an issue at: <https://github.com/gap-packages/xmod/issues/new> 
