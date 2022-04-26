@@ -1,4 +1,5 @@
 *.log
+
 /doc/chap*.html
 /doc/chap*.txt
 /doc/*.css
@@ -18,10 +19,16 @@
 /doc/*.six
 /doc/*.tex
 /doc/*.toc
+
 /doc/manual.pdf
 /doc/bib.xml.bib
+/doc/_*.xml
+/doc/title.xml
+/doc/xmod.xml
+
 /expt/
 /removed/*
+
 /tst/allxmods.g
 /tst/apps.g
 /tst/c*.g
