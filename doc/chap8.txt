@@ -182,7 +182,22 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [1X8.2-2 CrossedSquareByNormalSubgroups[101X
+  [1X8.2-2 Size3d[101X
+  
+  [33X[1;0Y[29X[2XSize3d[102X( [3XXS[103X ) [32X attribute[133X
+  
+  [33X[0;0YJust  as  [10XSize2d[110X was used in place of [10XSize[110X for crossed modules, so [10XSize3d[110X is
+  used  for  crossed  squares:  [10XSize3d(  XS  )[110X  returns  a  four-element  list
+  containing the sizes of the four groups at the corners of the square.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSize3d( PXS ); [127X[104X
+    [4X[28X[ 2, 2, 2, 1 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X8.2-3 CrossedSquareByNormalSubgroups[101X
   
   [33X[1;0Y[29X[2XCrossedSquareByNormalSubgroups[102X( [3XL[103X, [3XM[103X, [3XN[103X, [3XP[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XCrossedPairingByCommutators[102X( [3XN[103X, [3XM[103X, [3XL[103X ) [32X operation[133X
@@ -223,7 +238,7 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [1X8.2-3 CrossedSquareByNormalSubXMod[101X
+  [1X8.2-4 CrossedSquareByNormalSubXMod[101X
   
   [33X[1;0Y[29X[2XCrossedSquareByNormalSubXMod[102X( [3XX0[103X, [3XX1[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XCrossedPairingBySingleXModAction[102X( [3XX0[103X, [3XX1[103X ) [32X operation[133X
@@ -257,7 +272,7 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [1X8.2-4 ActorCrossedSquare[101X
+  [1X8.2-5 ActorCrossedSquare[101X
   
   [33X[1;0Y[29X[2XActorCrossedSquare[102X( [3XX0[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XCrossedPairingByDerivations[102X( [3XX0[103X ) [32X operation[133X
@@ -290,7 +305,7 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [1X8.2-5 CrossedSquareByAutomorphismGroup[101X
+  [1X8.2-6 CrossedSquareByAutomorphismGroup[101X
   
   [33X[1;0Y[29X[2XCrossedSquareByAutomorphismGroup[102X( [3XG[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XCrossedPairingByConjugators[102X( [3XG[103X ) [32X operation[133X
@@ -319,7 +334,7 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [1X8.2-6 CrossedSquareByPullback[101X
+  [1X8.2-7 CrossedSquareByPullback[101X
   
   [33X[1;0Y[29X[2XCrossedSquareByPullback[102X( [3XX1[103X, [3XX2[103X ) [32X operation[133X
   
@@ -358,7 +373,7 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [1X8.2-7 CrossedSquareByXModSplitting[101X
+  [1X8.2-8 CrossedSquareByXModSplitting[101X
   
   [33X[1;0Y[29X[2XCrossedSquareByXModSplitting[102X( [3XX0[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XCrossedPairingByPreImages[102X( [3XX1[103X, [3XX2[103X ) [32X operation[133X
@@ -403,7 +418,7 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [1X8.2-8 CrossedSquare[101X
+  [1X8.2-9 CrossedSquare[101X
   
   [33X[1;0Y[29X[2XCrossedSquare[102X( [3Xargs[103X ) [32X function[133X
   
@@ -432,7 +447,7 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [1X8.2-9 Transpose3DimensionalGroup[101X
+  [1X8.2-10 Transpose3DimensionalGroup[101X
   
   [33X[1;0Y[29X[2XTranspose3DimensionalGroup[102X( [3XS0[103X ) [32X attribute[133X
   
@@ -456,7 +471,7 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [1X8.2-10 CentralQuotient[101X
+  [1X8.2-11 CentralQuotient[101X
   
   [33X[1;0Y[29X[2XCentralQuotient[102X( [3XX0[103X ) [32X attribute[133X
   
@@ -493,7 +508,7 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [1X8.2-11 IsCrossedSquare[101X
+  [1X8.2-12 IsCrossedSquare[101X
   
   [33X[1;0Y[29X[2XIsCrossedSquare[102X( [3Xobj[103X ) [32X property[133X
   [33X[1;0Y[29X[2XIsPreCrossedSquare[102X( [3Xobj[103X ) [32X property[133X
@@ -505,7 +520,7 @@
   [33X[0;0YThese  are  the  basic  properties  for  3d-groups,  and  crossed squares in
   particular.[133X
   
-  [1X8.2-12 Up2DimensionalGroup[101X
+  [1X8.2-13 Up2DimensionalGroup[101X
   
   [33X[1;0Y[29X[2XUp2DimensionalGroup[102X( [3XXS[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XLeft2DimensionalGroup[102X( [3XXS[103X ) [32X attribute[133X
@@ -539,7 +554,7 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [1X8.2-13 IsSymmetric3DimensionalGroup[101X
+  [1X8.2-14 IsSymmetric3DimensionalGroup[101X
   
   [33X[1;0Y[29X[2XIsSymmetric3DimensionalGroup[102X( [3Xobj[103X ) [32X property[133X
   [33X[1;0Y[29X[2XIsAbelian3DimensionalGroup[102X( [3Xobj[103X ) [32X property[133X
@@ -552,7 +567,7 @@
   particular.  A  3d-group is [13Xsymmetric[113X if its [10XUp2DimensionalGroup[110X is equal to
   its [10XLeft2DimensionalGroup[110X.[133X
   
-  [1X8.2-14 CrossedPairing[101X
+  [1X8.2-15 CrossedPairing[101X
   
   [33X[1;0Y[29X[2XCrossedPairing[102X( [3XXS[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XCrossedPairingMap[102X( [3Xxpair[103X ) [32X attribute[133X
@@ -771,6 +786,11 @@
   
   [33X[0;0Ywhere [22Xker t = (ker ddott, ker dott)[122X, and similarly for [22Xker h[122X.[133X
   
+  [33X[0;0YA  recent  paper  [13XComputing  3-Dimensional  Groups  :L  Crossed  Squares and
+  Cat2-Groups[113X,  by Arvasi, Odabas and Wensley [AOWar], contains tables listing
+  the numbers of isomorphism classes of cat2-groups on groups of order at most
+  30 – a total of 1007 cat2-groups.[133X
+  
   [1X8.4-1 Cat2Group[101X
   
   [33X[1;0Y[29X[2XCat2Group[102X( [3Xargs[103X ) [32X function[133X
@@ -947,7 +967,7 @@
   [33X[0;0YThese   functions   provide  for  conversion  between  crossed  squares  and
   cat[22X^2[122X-groups.  (They  are  the  3-dimensional equivalents of [2XCat1GroupOfXMod[102X
   ([14X2.5-3[114X)  and  [2XXModOfCat1Group[102X  ([14X2.5-3[114X).)  The actor crossed square [10XXSact[110X was
-  constructed in section [2XActorCrossedSquare[102X ([14X8.2-4[114X).[133X
+  constructed in section [2XActorCrossedSquare[102X ([14X8.2-5[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
@@ -970,7 +990,7 @@
     [4X[28X(pre-)cat2-group with generating (pre-)cat1-groups:[128X[104X
     [4X[28X1 : [((c5:c4 |X c5:c4) |X (d20 |X d10a))=>(c5:c4 |X c5:c4)][128X[104X
     [4X[28X2 : [((c5:c4 |X c5:c4) |X (d20 |X d10a))=>(c5:c4 |X d20)][128X[104X
-    [4X[25Xgap>[125X [27XSize( C2act );[127X[104X
+    [4X[25Xgap>[125X [27XSize3d( C2act );[127X[104X
     [4X[28X[ 80000, 400, 400, 20 ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X

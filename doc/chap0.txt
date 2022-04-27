@@ -6,10 +6,10 @@
                        [1X Crossed Modules and Cat1-Groups [101X
   
   
-                                      2.86
+                                      2.87
   
   
-                                 14 March 2022
+                                 27 April 2022
   
   
                                  Chris Wensley
@@ -128,7 +128,8 @@
       2.1-8 DirectProduct
       2.1-9 Source
       2.1-10 ImageElmXModAction
-      2.1-11 Size
+      2.1-11 Size2d
+      2.1-12 Name
     2.2 [33X[0;0YProperties of crossed modules[133X
       2.2-1 IsXMod
       2.2-2 SubXMod
@@ -233,19 +234,20 @@
     8.1 [33X[0;0YDefinition of a crossed square and a crossed [22Xn[122X-cube of groups[133X
     8.2 [33X[0;0YConstructions for crossed squares[133X
       8.2-1 CrossedSquareByXMods
-      8.2-2 CrossedSquareByNormalSubgroups
-      8.2-3 CrossedSquareByNormalSubXMod
-      8.2-4 ActorCrossedSquare
-      8.2-5 CrossedSquareByAutomorphismGroup
-      8.2-6 CrossedSquareByPullback
-      8.2-7 CrossedSquareByXModSplitting
-      8.2-8 CrossedSquare
-      8.2-9 Transpose3DimensionalGroup
-      8.2-10 CentralQuotient
-      8.2-11 IsCrossedSquare
-      8.2-12 Up2DimensionalGroup
-      8.2-13 IsSymmetric3DimensionalGroup
-      8.2-14 CrossedPairing
+      8.2-2 Size3d
+      8.2-3 CrossedSquareByNormalSubgroups
+      8.2-4 CrossedSquareByNormalSubXMod
+      8.2-5 ActorCrossedSquare
+      8.2-6 CrossedSquareByAutomorphismGroup
+      8.2-7 CrossedSquareByPullback
+      8.2-8 CrossedSquareByXModSplitting
+      8.2-9 CrossedSquare
+      8.2-10 Transpose3DimensionalGroup
+      8.2-11 CentralQuotient
+      8.2-12 IsCrossedSquare
+      8.2-13 Up2DimensionalGroup
+      8.2-14 IsSymmetric3DimensionalGroup
+      8.2-15 CrossedPairing
     8.3 [33X[0;0YMorphisms of crossed squares[133X
       8.3-1 CrossedSquareMorphism
       8.3-2 Source
@@ -307,6 +309,7 @@
       14.2-3 [33X[0;0YVersion 2.61[133X
       14.2-4 [33X[0;0YVersion 2.63 - 2.74[133X
       14.2-5 [33X[0;0YVersion 2.75 - 2.85[133X
+      14.2-6 [33X[0;0YVersion 2.86 - 2.87[133X
     14.3 [33X[0;0YWhat needs doing next?[133X
   
   

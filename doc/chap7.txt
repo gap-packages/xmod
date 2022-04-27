@@ -171,7 +171,7 @@
     [4X[25Xgap>[125X [27Xiota45 := iso4 * inc45;; [127X[104X
     [4X[25Xgap>[125X [27XindX8 := InducedXMod( X8, iota45 );[127X[104X
     [4X[28Xi*(X8)[128X[104X
-    [4X[25Xgap>[125X [27XSize( indX8 );[127X[104X
+    [4X[25Xgap>[125X [27XSize2d( indX8 );[127X[104X
     [4X[28X[ 120, 120 ][128X[104X
     [4X[25Xgap>[125X [27XStructureDescription( indX8 );          [127X[104X
     [4X[28X[ "SL(2,5)", "S5" ][128X[104X

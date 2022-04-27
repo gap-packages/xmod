@@ -274,31 +274,47 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [1X2.1-11 Size[101X
+  [1X2.1-11 Size2d[101X
   
-  [33X[1;0Y[29X[2XSize[102X( [3XX0[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XSize2d[102X( [3XX0[103X ) [32X attribute[133X
+  
+  [33X[0;0YThe  standard  operation [10XSize[110X cannot be used for crossed modules because the
+  size  of  a  collection  is required to be a number, and we wish to return a
+  list. [10XSize2d( X0 )[110X returns the two-element list, [10X[ Size( Source(X0) ), Size(
+  Range(X0) ) ][110X.[133X
+  
+  [33X[0;0YIn  the  simple  example  below,  [10XX5[110X  is  the  automorphism  crossed  module
+  constructed in subsection [2XXModByAutomorphismGroup[102X ([14X2.1-4[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XSize2d( X5 ); [127X[104X
+    [4X[28X[ 5, 4 ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X2.1-12 Name[101X
+  
   [33X[1;0Y[29X[2XName[102X( [3XX0[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XIdGroup[102X( [3XX0[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XExternalSetXMod[102X( [3XX0[103X ) [32X attribute[133X
   
-  [33X[0;0YMore  familiar  attributes are [10XName[110X, [10XSize[110X and [10XIdGroup[110X. The name is formed by
-  concatenating  the  names of the source and range (if these exist). [10XSize[110X and
-  [10XIdGroup[110X return two-element lists.[133X
+  [33X[0;0YMore  familiar  attributes  are  [10XName[110X  and  [10XIdGroup[110X.  The  name is formed by
+  concatenating  the  names of the source and range (if these exist). [10XIdGroup(
+  X0  )[110X returns a two-element list [10X[ IdGroup( Source(X0) ), IdGroup( Range(X0)
+  ) ][110X.[133X
   
   [33X[0;0YThe [2XExternalSetXMod[102X for a crossed module is the source group considered as a
   G-set of the range group using the crossed module action.[133X
   
   [33X[0;0YThe [10XDisplay[110X function is used to print details of 2d-groups.[133X
   
-  [33X[0;0YIn  the  simple  example  below,  [10XX5[110X  is  the  automorphism  crossed  module
-  constructed   in   subsection  [2XXModByAutomorphismGroup[102X  ([14X2.1-4[114X).  The  [10XPrint[110X
-  statements  at  the  end  of  the  example  list the [5XGAP[105X representations and
-  attributes of [10XX5[110X.[133X
+  [33X[0;0YThe  [10XPrint[110X statements at the end of the example list the [5XGAP[105X representations
+  and attributes of [10XX5[110X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XSize( X5 );  IdGroup( X5 ); [127X[104X
-    [4X[28X[ 5, 4 ][128X[104X
+    [4X[25Xgap>[125X [27XIdGroup( X5 ); [127X[104X
     [4X[28X[ [ 5, 1 ], [ 4, 1 ] ][128X[104X
     [4X[25Xgap>[125X [27Xext := ExternalSetXMod( X5 ); [127X[104X
     [4X[28X<xset:[ (), (5,6,7,8,9), (5,7,9,6,8), (5,8,6,9,7), (5,9,8,7,6) ]>[128X[104X
@@ -308,10 +324,10 @@
     [4X[28X[ (5,6,7,8,9) ] -> [ (5,9,8,7,6) ][128X[104X
     [4X[25Xgap>[125X [27XImageElmXModAction( X5, (5,7,9,6,8), a );[127X[104X
     [4X[28X(5,8,6,9,7)[128X[104X
-    [4X[25Xgap>[125X [27XRepresentationsOfObject( X5 );[127X[104X
+    [4X[25Xgap>[125X [27XPrint( RepresentationsOfObject(X5), "\n" );[127X[104X
     [4X[28X[ "IsComponentObjectRep", "IsAttributeStoringRep", "IsPreXModObj" ][128X[104X
-    [4X[25Xgap>[125X [27XKnownAttributesOfObject( X5);[127X[104X
-    [4X[28X[ "Name", "Size", "Range", "Source", "IdGroup", "Boundary", "XModAction", [128X[104X
+    [4X[25Xgap>[125X [27XPrint( KnownAttributesOfObject(X5), "\n" );[127X[104X
+    [4X[28X[ "Name", "Range", "Source", "IdGroup", "Boundary", "Size2d", "XModAction", [128X[104X
     [4X[28X  "ExternalSetXMod", "HigherDimension" ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
@@ -348,11 +364,15 @@
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XKnownPropertiesOfObject( X5 );[127X[104X
-    [4X[28X[ "IsEmpty", "IsTrivial", "IsNonTrivial", "IsFinite", [128X[104X
-    [4X[28X  "CanEasilyCompareElements", "CanEasilySortElements", "IsDuplicateFree", [128X[104X
-    [4X[28X  "IsGeneratorsOfSemigroup", "IsPreXModDomain", "IsPreXMod", "IsXMod", [128X[104X
-    [4X[28X  "IsAutomorphismGroup2DimensionalGroup" ][128X[104X
+    [4X[25Xgap>[125X [27X[ IsTrivial( X5 ),  IsNonTrivial( X5 ),  IsFinite( X5 ) ];[127X[104X
+    [4X[28X[ false, true, true ][128X[104X
+    [4X[25Xgap>[125X [27XkpoX5 := KnownPropertiesOfObject(X5);;[127X[104X
+    [4X[25Xgap>[125X [27XForAll( [ "IsTrivial", "IsNonTrivial", "IsFinite", [127X[104X
+    [4X[25X>[125X [27X "CanEasilyCompareElements", "CanEasilySortElements", "IsDuplicateFree", [127X[104X
+    [4X[25X>[125X [27X "IsGeneratorsOfSemigroup", "IsPreXModDomain", "IsPreXMod", "IsXMod", [127X[104X
+    [4X[25X>[125X [27X "IsAutomorphismGroup2DimensionalGroup" ], [127X[104X
+    [4X[25X>[125X [27X s -> s in kpoX5 ); [127X[104X
+    [4X[28Xtrue[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
@@ -416,9 +436,11 @@
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27Xd8d8 := Group( (1,2,3,4), (1,3), (5,6,7,8), (5,7) );;[127X[104X
     [4X[25Xgap>[125X [27XX88 := XModByAutomorphismGroup( d8d8 );;[127X[104X
-    [4X[25Xgap>[125X [27XSize( X88 );[127X[104X
+    [4X[25Xgap>[125X [27XSize2d( X88 );[127X[104X
     [4X[28X[ 64, 2048 ][128X[104X
     [4X[25Xgap>[125X [27XY88 := KernelCokernelXMod( X88 );;[127X[104X
+    [4X[25Xgap>[125X [27XIdGroup(Y88);[127X[104X
+    [4X[28X[ [ 4, 2 ], [ 128, 928 ] ][128X[104X
     [4X[25Xgap>[125X [27XStructureDescription( Y88 );[127X[104X
     [4X[28X[ "C2 x C2", "(D8 x D8) : C2" ] [128X[104X
     [4X[28X[128X[104X
@@ -564,7 +586,7 @@
   [33X[1;0Y[29X[2XKernelEmbedding[102X( [3XC[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XBoundary[102X( [3XC[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XName[102X( [3XC[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XSize[102X( [3XC[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XSize2d[102X( [3XC[103X ) [32X attribute[133X
   
   [33X[0;0YThese are the attributes of a cat[22X^1[122X-group [22XcalC[122X in this implementation.[133X
   
@@ -591,7 +613,7 @@
     [4X[28X[ (4,5,6) ] -> [ (4,5,6) ][128X[104X
     [4X[25Xgap>[125X [27XName( C18 );[127X[104X
     [4X[28X"[g18=>s3a]"[128X[104X
-    [4X[25Xgap>[125X [27XSize( C18 );[127X[104X
+    [4X[25Xgap>[125X [27XSize2d( C18 );[127X[104X
     [4X[28X[ 18, 6 ][128X[104X
     [4X[25Xgap>[125X [27XStructureDescription( C18 );[127X[104X
     [4X[28X[ "(C3 x C3) : C2", "S3" ][128X[104X

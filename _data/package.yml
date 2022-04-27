@@ -1,7 +1,7 @@
 name: XMod
-version: "2.86"
+version: "2.87"
 license: "GPL-2.0-or-later"
-date: 2022-03-14
+date: 2022-04-27
 description: |
     Crossed Modules and Cat1-Groups
 
@@ -22,7 +22,7 @@ GAP: ">=4.11.0"
 
 needed-pkgs:
     - name: "utils"
-      version: ">= 0.69"
+      version: ">= 0.71"
       url: "https://gap-packages.github.io/utils"
     - name: "groupoids"
       version: ">= 1.68"
@@ -51,7 +51,7 @@ packageinfo: https://gap-packages.github.io/xmod/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/gap-packages/xmod/releases/download/v2.86/XMod-2.86.tar.gz
+      url: https://github.com/gap-packages/xmod/releases/download/v2.87/XMod-2.87.tar.gz
 
 abstract: |
     The <span class="pkgname">XMod</span> package provides a collection   of functions for computing with crossed modules and cat1-groups, their derivations and sections, morphisms of these structures, and higher-dimensional generalisations.
@@ -65,7 +65,7 @@ citeas: |
     <p class='BibEntry'>
     [<span class='BibKey'>WAOU22</span>]   <b class='BibAuthor'>Wensley, C., Alp, M., Odabas, A. and Uslu, E. O.</b>,
      <i class='BibTitle'>XMod, Crossed Modules and Cat1-Groups,
-             Version 2.86</i>
+             Version 2.87</i>
      (<span class='BibYear'>2022</span>)<br />
     (<span class='BibNote'>Refereed GAP package</span>),
     <span class='BibHowpublished'><a href="https://gap-packages.github.io/xmod/">https://gap-packages.github.io/xmod/</a></span>.
@@ -73,11 +73,11 @@ citeas: |
     
 
 bibtex: |
-    @misc{ XMod2.86,
+    @misc{ XMod2.87,
       author =           {Wensley, C. and Alp, M. and Odabas, A. and Uslu, E. O.},
       title =            {{XMod},  Crossed  Modules  and  Cat1-Groups, {V}ersion
-                          2.86},
-      month =            {Mar},
+                          2.87},
+      month =            {Apr},
       year =             {2022},
       note =             {Refereed GAP package},
       howpublished =     {\href           {https://gap-packages.github.io/xmod/}

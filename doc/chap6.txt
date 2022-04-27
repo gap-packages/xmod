@@ -61,7 +61,7 @@
   χ  ∘  ρ^-1[122X,  and  this determines the action for the actor. In fact the four
   groups  [22XS, W, R, A[122X, the homomorphisms between them, and the various actions,
   give  five  crossed modules forming a [13Xcrossed square[113X (see [2XActorCrossedSquare[102X
-  ([14X8.2-4[114X)).[133X
+  ([14X8.2-5[114X)).[133X
   
   [30X    [33X[0;6Y[22XcalW(calX)  =  (η : S -> W),~[122X the Whitehead crossed module of [22XcalX[122X, at
         the top,[133X

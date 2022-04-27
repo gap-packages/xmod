@@ -38,7 +38,8 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X81704DFB795C0D29">2.1-8 DirectProduct</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X790248A67CB9C33A">2.1-9 Source</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7AF6602C87845F1D">2.1-10 ImageElmXModAction</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7DCC43E47B1764F2">2.1-11 Size</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7846A7D37957B89E">2.1-11 Size2d</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X85516B19803C01C0">2.1-12 Name</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2_mj.html#X7CF622538749FE73">2.2 <span class="Heading">Properties of crossed modules</span></a>
 </span>
@@ -371,27 +372,42 @@ rec(
 
 </pre></div>
 
-<p><a id="X7DCC43E47B1764F2" name="X7DCC43E47B1764F2"></a></p>
+<p><a id="X7846A7D37957B89E" name="X7846A7D37957B89E"></a></p>
 
-<h5>2.1-11 Size</h5>
+<h5>2.1-11 Size2d</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Size</code>( <var class="Arg">X0</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Size2d</code>( <var class="Arg">X0</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>The standard operation <code class="code">Size</code> cannot be used for crossed modules because the size of a collection is required to be a number, and we wish to return a list. <code class="code">Size2d( X0 )</code> returns the two-element list, <code class="code">[ Size( Source(X0) ), Size( Range(X0) ) ]</code>.</p>
+
+<p>In the simple example below, <code class="code">X5</code> is the automorphism crossed module constructed in subsection <code class="func">XModByAutomorphismGroup</code> (<a href="chap2_mj.html#X78B14FDA817CCEEF"><span class="RefLink">2.1-4</span></a>).</p>
+
+
+<div class="example"><pre>
+
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size2d( X5 ); </span>
+[ 5, 4 ]
+
+</pre></div>
+
+<p><a id="X85516B19803C01C0" name="X85516B19803C01C0"></a></p>
+
+<h5>2.1-12 Name</h5>
+
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Name</code>( <var class="Arg">X0</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IdGroup</code>( <var class="Arg">X0</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExternalSetXMod</code>( <var class="Arg">X0</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>More familiar attributes are <code class="code">Name</code>, <code class="code">Size</code> and <code class="code">IdGroup</code>. The name is formed by concatenating the names of the source and range (if these exist). <code class="code">Size</code> and <code class="code">IdGroup</code> return two-element lists.</p>
+<p>More familiar attributes are <code class="code">Name</code> and <code class="code">IdGroup</code>. The name is formed by concatenating the names of the source and range (if these exist). <code class="code">IdGroup( X0 )</code> returns a two-element list <code class="code">[ IdGroup( Source(X0) ), IdGroup( Range(X0) ) ]</code>.</p>
 
 <p>The <code class="func">ExternalSetXMod</code> for a crossed module is the source group considered as a G-set of the range group using the crossed module action.</p>
 
 <p>The <code class="code">Display</code> function is used to print details of 2d-groups.</p>
 
-<p>In the simple example below, <code class="code">X5</code> is the automorphism crossed module constructed in subsection <code class="func">XModByAutomorphismGroup</code> (<a href="chap2_mj.html#X78B14FDA817CCEEF"><span class="RefLink">2.1-4</span></a>). The <code class="code">Print</code> statements at the end of the example list the <strong class="pkg">GAP</strong> representations and attributes of <code class="code">X5</code>.</p>
+<p>The <code class="code">Print</code> statements at the end of the example list the <strong class="pkg">GAP</strong> representations and attributes of <code class="code">X5</code>.</p>
 
 
 <div class="example"><pre>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size( X5 );  IdGroup( X5 ); </span>
-[ 5, 4 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IdGroup( X5 ); </span>
 [ [ 5, 1 ], [ 4, 1 ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ext := ExternalSetXMod( X5 ); </span>
 &lt;xset:[ (), (5,6,7,8,9), (5,7,9,6,8), (5,8,6,9,7), (5,9,8,7,6) ]&gt;
@@ -401,10 +417,10 @@ rec(
 [ (5,6,7,8,9) ] -&gt; [ (5,9,8,7,6) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ImageElmXModAction( X5, (5,7,9,6,8), a );</span>
 (5,8,6,9,7)
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RepresentationsOfObject( X5 );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Print( RepresentationsOfObject(X5), "\n" );</span>
 [ "IsComponentObjectRep", "IsAttributeStoringRep", "IsPreXModObj" ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">KnownAttributesOfObject( X5);</span>
-[ "Name", "Size", "Range", "Source", "IdGroup", "Boundary", "XModAction", 
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Print( KnownAttributesOfObject(X5), "\n" );</span>
+[ "Name", "Range", "Source", "IdGroup", "Boundary", "Size2d", "XModAction", 
   "ExternalSetXMod", "HigherDimension" ]
 
 </pre></div>
@@ -431,11 +447,15 @@ rec(
 
 <div class="example"><pre>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">KnownPropertiesOfObject( X5 );</span>
-[ "IsEmpty", "IsTrivial", "IsNonTrivial", "IsFinite", 
-  "CanEasilyCompareElements", "CanEasilySortElements", "IsDuplicateFree", 
-  "IsGeneratorsOfSemigroup", "IsPreXModDomain", "IsPreXMod", "IsXMod", 
-  "IsAutomorphismGroup2DimensionalGroup" ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[ IsTrivial( X5 ),  IsNonTrivial( X5 ),  IsFinite( X5 ) ];</span>
+[ false, true, true ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">kpoX5 := KnownPropertiesOfObject(X5);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ForAll( [ "IsTrivial", "IsNonTrivial", "IsFinite", </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> "CanEasilyCompareElements", "CanEasilySortElements", "IsDuplicateFree", </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> "IsGeneratorsOfSemigroup", "IsPreXModDomain", "IsPreXMod", "IsXMod", </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> "IsAutomorphismGroup2DimensionalGroup" ], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> s -&gt; s in kpoX5 ); </span>
+true
 
 </pre></div>
 
@@ -500,9 +520,11 @@ true
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">d8d8 := Group( (1,2,3,4), (1,3), (5,6,7,8), (5,7) );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">X88 := XModByAutomorphismGroup( d8d8 );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size( X88 );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size2d( X88 );</span>
 [ 64, 2048 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y88 := KernelCokernelXMod( X88 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IdGroup(Y88);</span>
+[ [ 4, 2 ], [ 128, 928 ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription( Y88 );</span>
 [ "C2 x C2", "(D8 x D8) : C2" ] 
 
@@ -651,7 +673,7 @@ Group([ (1,2), (3,4) ])
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KernelEmbedding</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Boundary</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Name</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Size</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Size2d</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>These are the attributes of a cat<span class="SimpleMath">\(^1\)</span>-group <span class="SimpleMath">\(\calC\)</span> in this implementation.</p>
 
 <p>The maps <span class="SimpleMath">\(t,h\)</span> are often referred to as the <em>source</em> and <em>target</em>, but we choose to call them the <em>tail</em> and <em>head</em> of <span class="SimpleMath">\(\calC\)</span>, because <em>source</em> is the <strong class="pkg">GAP</strong> term for the domain of a function. The <code class="code">RangeEmbedding</code> is the embedding of <code class="code">R</code> in <code class="code">G</code>, the <code class="code">KernelEmbedding</code> is the inclusion of the kernel of <code class="code">t</code> in <code class="code">G</code>, and the <code class="code">Boundary</code> is the restriction of <code class="code">h</code> to the kernel of <code class="code">t</code>. It is frequently the case that <span class="SimpleMath">\(t=h\)</span>, but not in the example <code class="code">C18</code> above.</p>
@@ -673,7 +695,7 @@ Group([ (4,5,6) ])
 [ (4,5,6) ] -&gt; [ (4,5,6) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Name( C18 );</span>
 "[g18=&gt;s3a]"
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size( C18 );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size2d( C18 );</span>
 [ 18, 6 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription( C18 );</span>
 [ "(C3 x C3) : C2", "S3" ]

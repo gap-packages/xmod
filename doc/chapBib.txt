@@ -6,6 +6,10 @@
   computational  group  theory[117X,  Ph.D.  thesis,  University  of  Wales, Bangor
   (1997).
   
+  [[20XAOWar[120X]  [16XArvasi,  Z., Odabas, A. and Wensley, C. D.[116X, [17XComputing 3-Dimensional
+  Groups  :  Crossed  Squares  and Cat2-groups[117X, [18XJ. Symbolic Computation[118X, [19X[119X ((to
+  appear)), .
+  
   [[20XAW00[120X]  [16XAlp, M. and Wensley, C. D.[116X, [17XEnumeration of cat1-groups of low order[117X,
   [18XInt. J. Algebra and Computation[118X, [19X10[119X (2000), 407--424.
   
@@ -64,14 +68,14 @@
   
   [[20XIOU16[120X]  [16XIlgaz,  E.,  Odabas,  A.  and  Uslu,  E.  O.[116X, [17XIsoclinism of crossed
   modules[117X,       [18XJ.       Symb.       Comput.[118X,       [19X[119X      (2016),      1--17,
-  ((http://dx.doi.org/10.1016/j.jsc.2015.08.006)).
+  ((https://doi.org/10.1016/j.jsc.2015.08.006)).
   
   [[20XJNO90[120X]  [16XJames,  R.,  Newman,  M. F. and O'Brien, E. A.[116X, [17XThe groups of order
   128[117X, [18XJ. Algebra[118X, [19X129[119X (1990), 136--158.
   
   [[20XLN17[120X]  [16XLübeck,  F.  and  Neunhöffer,  M.[116X, [17XGAPDoc (version 1.6)[117X, RWTH Aachen
   (2017),                   ((                   GAP                  package,
-  http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/index.html )).
+  https://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/index.html )).
   
   [[20XLod82[120X] [16XLoday, J.-L.[116X, [17XSpaces with finitely many non-trivial homotopy groups[117X,
   [18XJ. App. Algebra[118X, [19X24[119X (1982), 179--202.

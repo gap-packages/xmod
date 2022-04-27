@@ -27,7 +27,7 @@ it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 2 of the License, or
 (at your option) any later version. 
 
-For details, see <http://www.gnu.org/licenses/gpl.html> 
+For details, see <https://www.gnu.org/licenses/gpl.html>
 
 ## Installation
 
@@ -38,10 +38,10 @@ For details, see <http://www.gnu.org/licenses/gpl.html>
 
     true
 
- * The file manual.pdf is in the `doc' subdirectory.
+ * The file manual.pdf is in the `doc` subdirectory.
 
 ## Contact
 
 If you have a question relating to 'XMod', encounter any problems, or have a suggestion for extending the package in any way, please 
- * email: `c.d.wensley@bangor.ac.uk` 
+ * email: <c.d.wensley@bangor.ac.uk>
  * or report an issue at: <https://github.com/gap-packages/xmod/issues/new> 

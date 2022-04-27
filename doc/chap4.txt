@@ -31,7 +31,7 @@
     [4X[25Xgap>[125X [27Xd24 := DihedralGroup( IsPermGroup, 24 );; [127X[104X
     [4X[25Xgap>[125X [27XSetName( d24, "d24" );[127X[104X
     [4X[25Xgap>[125X [27XY24 := XModByAutomorphismGroup( d24 );; [127X[104X
-    [4X[25Xgap>[125X [27XSize( Y24 );[127X[104X
+    [4X[25Xgap>[125X [27XSize2d( Y24 );[127X[104X
     [4X[28X[ 24, 48 ][128X[104X
     [4X[25Xgap>[125X [27XX24 := Image( IsomorphismPerm2DimensionalGroup( Y24 ) );[127X[104X
     [4X[28X[d24->Group([ (2,4), (1,2,3,4), (6,7), (5,6,7) ])][128X[104X
@@ -44,7 +44,7 @@
     [4X[28X[Group( [ f2*f4^2, f3*f4 ] )->Group( [ f3, f4, f5 ] )][128X[104X
     [4X[25Xgap>[125X [27Xnat1 := NaturalMorphismByNormalSubPreXMod( X24, Xn1 );; [127X[104X
     [4X[25Xgap>[125X [27XQn1 := FactorPreXMod( X24, Xn1 );; [127X[104X
-    [4X[25Xgap>[125X [27X[ Size( Xn1 ), Size( Qn1 ) ];[127X[104X
+    [4X[25Xgap>[125X [27X[ Size2d( Xn1 ), Size2d( Qn1 ) ];[127X[104X
     [4X[28X[ [ 4, 8 ], [ 6, 6 ] ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
@@ -415,7 +415,7 @@
     [4X[25Xgap>[125X [27Xx36 := AllXMods( 36 );; [127X[104X
     [4X[25Xgap>[125X [27XLength( x36 ); [127X[104X
     [4X[28X205[128X[104X
-    [4X[25Xgap>[125X [27Xsize36 := List( x36, x -> [ Size(Source(x)), Size(Range(x)) ] );;[127X[104X
+    [4X[25Xgap>[125X [27Xsize36 := List( x36, x -> Size2d( x ) );;[127X[104X
     [4X[25Xgap>[125X [27XCollected( size36 );[127X[104X
     [4X[28X[ [ [ 1, 36 ], 14 ], [ [ 2, 18 ], 7 ], [ [ 3, 12 ], 21 ], [ [ 4, 9 ], 14 ], [128X[104X
     [4X[28X  [ [ 6, 6 ], 17 ], [ [ 9, 4 ], 102 ], [ [ 12, 3 ], 8 ], [ [ 18, 2 ], 18 ], [128X[104X
