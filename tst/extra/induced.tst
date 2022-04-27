@@ -2,7 +2,7 @@
 ##
 #W  induced.tst                 GAP4 package `XMod'              Chris Wensley
 ##  
-#Y  Copyright (C) 2001-2020, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2022, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 
 gap> START_TEST( "XMod package: induced.tst" );
@@ -41,7 +41,7 @@ gap> iota := GroupHomomorphismByImages( c2, c6,
 gap> indc4c2c6 := InducedXModByCopower( X4, iota, [ ] );; 
 gap> StructureDescription( indc4c2c6 ); 
 [ "C4 x C4 x C4", "C6" ]
-gap> Size( indc4c2c6 );
+gap> Size2d( indc4c2c6 );
 [ 64, 6 ]
 gap> indsrc := Source( indc4c2c6 );; 
 gap> gensrc := GeneratorsOfGroup( indsrc );; 
@@ -81,7 +81,7 @@ gap> iota8 := iso8 * surj4;;
 gap> ind8 := InducedXModBySurjection( AX8, iota8 );; 
 gap> StructureDescription( ind8 ); 
 [ "C2 x C2", "S3" ]
-gap> Size( ind8 );
+gap> Size2d( ind8 );
 [ 4, 6 ]
 gap> n := 5;; 
 gap> c2n := CyclicGroup( 2*n );; 
@@ -231,7 +231,7 @@ gap> a4 := Group( (1,2,3), (2,3,4) );;
 gap> SetName( a4, "a4" ); 
 gap> monoa4 := GroupHomomorphismByImages( c3, a4, [c^2], [(2,3,4)] );;  
 gap> ind4 := InducedXMod( X6, monoa4, [ ] );; 
-gap> Size( ind4 );
+gap> Size2d( ind4 );
 [ 48, 12 ]
 gap> StructureDescription( ind4 );
 [ "C2 x SL(2,3)", "A4" ]

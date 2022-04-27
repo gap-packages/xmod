@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.gi               GAP4 package `XMod'                Alper Odabas
 #W                                                                & Enver Uslu
-#Y  Copyright (C) 2001-2020, Chris Wensley et al 
+#Y  Copyright (C) 2001-2022, Chris Wensley et al 
 #Y   
 ##  This file contains generic methods for finding isoclinism classes 
 ##  of crossed modules. 
@@ -278,7 +278,7 @@ function( XM, SH, RK)
     K := Range(RK);
     SR := Intersection(S,R);
     HK := Intersection(H,K);
-    return SubXMod(XM,SR,HK);
+    return SubXMod(XM,SR,HK); 
 end );
 
 #############################################################################
@@ -439,7 +439,7 @@ end );
 InstallMethod( IsFaithful2DimensionalGroup, 
     "generic method for crossed modules", true, [ IsXMod ], 0,
 function( XM )
-    return ( Size( StabilizerSubgroupXMod( XM, Source( XM ), Range( XM ) ) ) = 1 ); 
+    return ( Size( StabilizerSubgroupXMod( XM, Source(XM), Range(XM) ) ) = 1 ); 
 end );
 
 #############################################################################
@@ -454,7 +454,7 @@ function( XM )
 
     S := LowerCentralSeries( XM );
     n := Length(S);
-    if ( Size(S[n]) = [1,1] ) then
+    if ( Size2d(S[n]) = [1,1] ) then
         sonuc := true;
     else
         sonuc := false;
@@ -1131,7 +1131,7 @@ function( XM )
 
     local size, ZXMod, DXMod, QXMod, KXMod, m1, m2, l1, l2;
 
-    size := Size( XM );
+    size := Size2d( XM );
     if not ( IsPrimePowerInt(size[1]) and IsPrimePowerInt(size[2]) ) then 
         return fail; 
     fi;
@@ -1139,8 +1139,8 @@ function( XM )
     DXMod := DerivedSubXMod( XM );
     QXMod := FactorPreXMod( XM, ZXMod );
     KXMod := IntersectionSubXMods( XM, ZXMod, DXMod );
-    m1 := Size( QXMod );
-    m2 := Size( KXMod );
+    m1 := Size2d( QXMod );
+    m2 := Size2d( KXMod );
     l1 := Tau( m1[1] ) + Tau( m2[1] ) - 2;
     l2 := Tau( m1[2] ) + Tau( m2[2] ) - 2;
     return [l1,l2];
@@ -1148,7 +1148,7 @@ end );
 
 InstallMethod( IsoclinicMiddleLength, "generic method for groups", true, 
     [ IsGroup ], 0,
-function(G)
+function( G )
 
     local ZG, DG, QG, KG; 
 
@@ -1168,7 +1168,7 @@ function( XM )
 
     local size, ZXMod, DXMod, QXMod, KXMod;
 
-    size := Size( XM );
+    size := Size2d( XM );
     if not ( IsPrimePowerInt(size[1]) and IsPrimePowerInt(size[2]) ) then 
         Info( InfoXMod, 1, "not a crossed module of prime power order" ); 
         return fail; 
@@ -1177,7 +1177,7 @@ function( XM )
     DXMod := DerivedSubXMod( XM );
     KXMod := IntersectionSubXMods( XM, ZXMod, DXMod );
     QXMod := FactorPreXMod( DXMod, KXMod );
-    size := Size( QXMod ); 
+    size := Size2d( QXMod ); 
     return [ Tau(size[1])-1, Tau(size[2])-1 ];
 end );
 
@@ -1202,12 +1202,12 @@ Print("-------------------------------------------------------------------------
 Print( Length(sinif), "\t", IsoclinicRank( XM ), "\t", 
        IsoclinicMiddleLength( XM ), "\t",
        NilpotencyClassOf2DimensionalGroup( XM ), "\t", 
-       Size( FactorPreXMod( XM, CentreXMod( XM ) ) ) );    
+       Size2d( FactorPreXMod( XM, CentreXMod( XM ) ) ) );    
 
     if Length(B) > 1 then
         for i in [2..Length(B)] do
             Print( "\t" );
-            Print( Size( B[i] ) );  
+            Print( Size2d( B[i] ) );  
         od;
     fi;
 Print("\n---------------------------------------------------------------------------------------------------------------------------------- \n");

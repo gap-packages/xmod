@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  history.xml           XMod documentation            Chris Wensley  -->
 <!--                                                                     -->
-<!--  Copyright (C) 1996-2021, Murat Alp and Chris Wensley,              --> 
+<!--  Copyright (C) 1996-2022, Murat Alp and Chris Wensley,              --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -215,6 +215,16 @@ Added functions for quasi-isomorphisms.
 </Item>
 </List> 
 </Subsection>
+
+<Subsection><Heading>Version 2.86 - 2.87</Heading>
+<List>
+<Item>
+Added attributes <C>Size2d</C> for 2d-objects and <C>Size3d</C> for 3d-objects 
+since lists are inappropriate values for the standard function <C>Size</C>.  
+</Item>
+</List> 
+</Subsection>
+
 </Section> 
 
 

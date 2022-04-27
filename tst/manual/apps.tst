@@ -2,7 +2,7 @@
 ##
 #W  apps.tst                    GAP4 package `XMod'              Chris Wensley
 ##  
-#Y  Copyright (C) 2001-2020, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2022, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 
 gap> START_TEST( "XMod package: apps.tst" );
@@ -17,13 +17,13 @@ gap> SetName( k8, "k8" );
 gap> Y8 := XModByAutomorphismGroup( k8 );; 
 gap> X8 := Image( IsomorphismPerm2DimensionalGroup( Y8 ) );;
 gap> SetName( X8, "X8" );
-gap> Print( "X8: ", Size( X8 ), " : ", StructureDescription( X8 ), "\n" );  
+gap> Print( "X8: ", Size2d( X8 ), " : ", StructureDescription( X8 ), "\n" );  
 X8: [ 8, 168 ] : [ "C2 x C2 x C2", "PSL(3,2)" ]
 gap> classes := LoopClasses( X8 );;
 gap> List( classes, c -> Length(c) );
 [ 1, 21, 56, 42, 24, 24 ]
 gap> LX := LoopsXMod( X8, (1,2)(5,6) );;
-gap> Size( LX ); 
+gap> Size2d( LX ); 
 [ 8, 64 ]
 gap> IdGroup( LX );
 [ [ 8, 5 ], [ 64, 138 ] ]

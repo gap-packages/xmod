@@ -119,6 +119,11 @@ subject to the following conditions:
 </Display>
 where <M>\ker t = (\ker \ddot{t},\ \ker \dot{t})</M>, 
 and similarly for <M>\ker h</M>. 
+<P/> 
+A recent paper 
+<E>Computing 3-Dimensional Groups :L Crossed Squares and Cat2-Groups</E>, 
+by Arvasi, Odabas and Wensley <Cite Key="AOW"/>, 
+contains tables listing the numbers of isomorphism classes of cat2-groups on groups of order at most 30 – a total of 1007 cat2-groups.
 
 <ManSection Label="cat2-group">
    <Func Name="Cat2Group"
@@ -349,7 +354,7 @@ gap> C2act := Cat2GroupOfCrossedSquare( XSact );
 (pre-)cat2-group with generating (pre-)cat1-groups:
 1 : [((c5:c4 |X c5:c4) |X (d20 |X d10a))=>(c5:c4 |X c5:c4)]
 2 : [((c5:c4 |X c5:c4) |X (d20 |X d10a))=>(c5:c4 |X d20)]
-gap> Size( C2act );
+gap> Size3d( C2act );
 [ 80000, 400, 400, 20 ]
 ]]>
 </Example>

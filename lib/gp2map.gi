@@ -5,7 +5,7 @@
 ##  This file installs methods for 2DimensionalMappings 
 ##  for crossed modules and cat1-groups. 
 ##
-#Y  Copyright (C) 2001-2021, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2022, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 
 ##############################################################################
@@ -1117,7 +1117,7 @@ function( C1G1, C1G2 )
           t1, h1, t2, h2, t3, h3, C3, phi, autG2, iterG2, 
           salpha, ralpha, mgira, isalpha, R4, t4, h4, C4, smor, rmor;
 
-    if not ( Size( C1G1 ) = Size( C1G2 ) ) then 
+    if not ( Size2d( C1G1 ) = Size2d( C1G2 ) ) then 
         return fail; 
     fi; 
     ok1 := IsPreCat1GroupWithIdentityEmbedding( C1G1 ); 
@@ -1951,7 +1951,7 @@ function( C, id, show )
     ## deal with trivial cases first 
     ids := [ id ]; 
     K := KernelCokernelXMod( C ); 
-    if Product( Size(K) ) = ids[1][1] then 
+    if Product( Size2d(K) ) = ids[1][1] then 
         return [ IdentityMapping( C ) ]; 
     fi; 
     qmor := QuotientQuasiIsomorphism( C, show ); 

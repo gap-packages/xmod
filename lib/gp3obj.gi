@@ -5,7 +5,7 @@
 ##  This file implements generic methods for (pre-)crossed squares 
 ##  and (pre-)cat2-groups.
 ##
-#Y  Copyright (C) 2001-2021, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2022, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
     
 #############################################################################
@@ -445,7 +445,7 @@ function( up, lt, rt, dn, dg, xp )
       Diagonal2DimensionalGroup, dg,
       CrossedPairing, xp, 
       HigherDimension, 3, 
-      IsHigherDimensionalGroup, true );
+      Is3DimensionalGroup, true );
     if not IsPreCrossedSquare( PS ) then
         Info( InfoXMod, 1, "Warning: not a pre-crossed square." );
     fi; 
@@ -905,16 +905,23 @@ end );
 
 #############################################################################
 ##
-#M  Size . . . . . . . . . . . . . . . . . . . . .  for a 3-dimensional group
+#M  Size3d . . . . . . . . . . . . . . . . . . . .  for a 3-dimensional group
 ##
-InstallOtherMethod( Size, "method for a 3-dimensional group", true, 
-    [ IsHigherDimensionalGroup ], 0,
+InstallMethod( Size3d, "method for a 3d-object", true, 
+    [ Is3DimensionalDomain ], 0,
 function( PS ) 
     return [ Size( Source( Up2DimensionalGroup( PS ) ) ), 
              Size( Range( Up2DimensionalGroup( PS ) ) ),
              Size( Source( Down2DimensionalGroup( PS ) ) ),
              Size( Range( Down2DimensionalGroup( PS ) ) ) ]; 
 end ); 
+
+InstallOtherMethod( Size, "generic method for a 3d-object", 
+    [ Is3DimensionalDomain ], 0, 
+function ( obj )
+    Error( "use operation Size3d for 3d-objects" );
+    return fail; 
+end );
 
 #############################################################################
 ##

@@ -5,7 +5,7 @@
 ##  This file implements functions for 3Dimensional Mappings for 
 ##  (pre-)crossed squares and (pre-)cat2-groups. 
 ##
-#Y  Copyright (C) 2001-2020, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2022, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 #############################################################################
@@ -659,7 +659,7 @@ function( D1, D2 )
           tau1, theta1, eps1, tau2, theta2, eps2, 
           phi, alpha, gamma, rho, sigma, pi, isoup, isolt, isort, isodn;
 
-    if not ( Size( D1 ) = Size( D2 ) ) then 
+    if not ( Size3d( D1 ) = Size3d( D2 ) ) then 
         return fail; 
     fi;
     sym1 := IsSymmetric3DimensionalGroup( D1 ); 
