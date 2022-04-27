@@ -128,7 +128,7 @@ gap> C2act := Cat2GroupOfCrossedSquare( XSact );
 (pre-)cat2-group with generating (pre-)cat1-groups:
 1 : [((c5:c4 |X c5:c4) |X (d20 |X d10a))=>(c5:c4 |X c5:c4)]
 2 : [((c5:c4 |X c5:c4) |X (d20 |X d10a))=>(c5:c4 |X d20)]
-gap> Size( C2act );
+gap> Size3d( C2act );
 [ 80000, 400, 400, 20 ]
 
 # Section 8.4.7

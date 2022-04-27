@@ -2,7 +2,7 @@
 ##
 #W  gp2ind.tst                    XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2020, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2022, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 gap> START_TEST( "XMod package: gp2ind.tst" );
@@ -91,7 +91,7 @@ gap> inc45 := InclusionMappingGroups( s5, s4 );;
 gap> iota45 := iso4 * inc45;; 
 gap> indX8 := InducedXMod( X8, iota45 );
 i*(X8)
-gap> Size( indX8 );
+gap> Size2d( indX8 );
 [ 120, 120 ]
 gap> StructureDescription( indX8 );          
 [ "SL(2,5)", "S5" ]

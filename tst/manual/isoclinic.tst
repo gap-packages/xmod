@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.tst                 XMOD test file                 Alper Odabas
 #W                                                               & Enver Uslu
-#Y  Copyright (C) 2001-2020, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2022, Chris Wensley et al, 
 ##
 gap> START_TEST( "XMod package: isoclinic.tst" );
 gap> saved_infolevel_xmod := InfoLevel( InfoXMod );; 
@@ -17,7 +17,7 @@ gap> d24 := DihedralGroup( IsPermGroup, 24 );;
 gap> SetName( d24, "d24" );
 gap> Y24 := XModByAutomorphismGroup( d24 ); 
 [d24->Aut(d24)]
-gap> Size( Y24 );
+gap> Size2d( Y24 );
 [ 24, 48 ]
 gap> X24i := Image( IsomorphismPerm2DimensionalGroup( Y24 ) );;
 gap> R24i := Range( X24i );; 
@@ -37,7 +37,7 @@ gap> IdGroup( Xn1 );
 [ [ 4, 1 ], [ 8, 3 ] ]
 gap> nat1 := NaturalMorphismByNormalSubPreXMod( X24, Xn1 );; 
 gap> Qn1 := FactorPreXMod( X24, Xn1 );; 
-gap> [ Size( Xn1 ), Size( Qn1 ) ];
+gap> [ Size2d( Xn1 ), Size2d( Qn1 ) ];
 [ [ 4, 8 ], [ 6, 6 ] ]
 
 #### 4.1.2
@@ -181,7 +181,7 @@ gap> Length( IA66 );
 gap> x36 := AllXMods( 36 );; 
 gap> Length( x36 ); 
 205
-gap> size36 := List( x36, x -> [ Size(Source(x)), Size(Range(x)) ] );;
+gap> size36 := List( x36, x -> Size2d( x ) );;
 gap> Collected( size36 );
 [ [ [ 1, 36 ], 14 ], [ [ 2, 18 ], 7 ], [ [ 3, 12 ], 21 ], [ [ 4, 9 ], 14 ], 
   [ [ 6, 6 ], 17 ], [ [ 9, 4 ], 102 ], [ [ 12, 3 ], 8 ], [ [ 18, 2 ], 18 ], 

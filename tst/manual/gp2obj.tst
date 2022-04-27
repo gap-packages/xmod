@@ -134,8 +134,10 @@ gap> ImageElmXModAction( X12, (1,2,3,4,5,6), (8,9) );
 (1,6,5,4,3,2)
 
 ## Section 2.1.11
-gap> Size( X5 );
+gap> Size2d( X5 );
 [ 5, 4 ]
+
+## Section 2.1.12
 gap> IdGroup( X5 ); 
 [ [ 5, 1 ], [ 4, 1 ] ]
 gap> ext := ExternalSetXMod( X5 ); 
@@ -149,12 +151,14 @@ gap> ImageElmXModAction( X5, (5,7,9,6,8), a );
 gap> Print( RepresentationsOfObject(X5), "\n" );
 [ "IsComponentObjectRep", "IsAttributeStoringRep", "IsPreXModObj" ]
 gap> Print( KnownAttributesOfObject(X5), "\n" );
-[ "Name", "Size", "Range", "Source", "IdGroup", "Boundary", "XModAction", 
+[ "Name", "Range", "Source", "IdGroup", "Boundary", "Size2d", "XModAction", 
   "ExternalSetXMod", "HigherDimension" ]
 
-## Section 2.2.1
+## Section 2.2.1 
+gap> [ IsTrivial( X5 ),  IsNonTrivial( X5 ),  IsFinite( X5 ) ];
+[ false, true, true ]
 gap> kpoX5 := KnownPropertiesOfObject(X5);;
-gap> ForAll( [ "IsEmpty", "IsTrivial", "IsNonTrivial", "IsFinite", 
+gap> ForAll( [ "IsTrivial", "IsNonTrivial", "IsFinite", 
 >  "CanEasilyCompareElements", "CanEasilySortElements", "IsDuplicateFree", 
 >  "IsGeneratorsOfSemigroup", "IsPreXModDomain", "IsPreXMod", "IsXMod", 
 >  "IsAutomorphismGroup2DimensionalGroup" ], 
@@ -179,11 +183,13 @@ gap> Length( NX4 );
 ## Section 2.2.3
 gap> d8d8 := Group( (1,2,3,4), (1,3), (5,6,7,8), (5,7) );;
 gap> X88 := XModByAutomorphismGroup( d8d8 );;
-gap> Size( X88 );
+gap> Size2d( X88 );
 [ 64, 2048 ]
 gap> Y88 := KernelCokernelXMod( X88 );;
 gap> IdGroup(Y88);
 [ [ 4, 2 ], [ 128, 928 ] ]
+gap> StructureDescription( Y88 );
+[ "C2 x C2", "(D8 x D8) : C2" ] 
 
 ## Section 2.3.1
 gap> b1 := (11,12,13,14,15,16,17,18);;  b2 := (12,18)(13,17)(14,16);;
@@ -249,7 +255,7 @@ gap> KernelEmbedding( C18 );
 [ (4,5,6) ] -> [ (4,5,6) ]
 gap> Name( C18 );
 "[g18=>s3a]"
-gap> Size( C18 );
+gap> Size2d( C18 );
 [ 18, 6 ]
 gap> StructureDescription( C18 );
 [ "(C3 x C3) : C2", "S3" ]

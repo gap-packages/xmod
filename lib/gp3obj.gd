@@ -2,7 +2,7 @@
 ##
 ##  gp3obj.gd                 GAP4 package `XMod'                Chris Wensley
 ##                                                                Alper Odabas
-#Y  Copyright (C) 2001-2020, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2022, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file declares generic methods for (pre-)crossed squares and
@@ -17,6 +17,12 @@
 DeclareProperty( "IsPerm3DimensionalGroup", IsHigherDimensionalGroup );
 DeclareProperty( "IsFp3DimensionalGroup", IsHigherDimensionalGroup );
 DeclareProperty( "IsPc3DimensionalGroup", IsHigherDimensionalGroup );
+
+#############################################################################
+## 
+#A  Size3d( <obj> ) 
+##
+DeclareAttribute( "Size3d", Is3DimensionalDomain ); 
 
 #############################################################################
 ##

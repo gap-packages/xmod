@@ -18,6 +18,12 @@ InstallTrueMethod( Is2DimensionalDomain, IsPreXModDomain );
 InstallTrueMethod( Is2DimensionalDomain, IsPreCat1Domain );
 
 #############################################################################
+## 
+#A  Size2d( <obj> ) 
+##
+DeclareAttribute( "Size2d", Is2DimensionalDomain ); 
+
+#############################################################################
 ##
 #R  IsPreXModObj( <obj> )
 ##    A pre-crossed module is a group homomorphism which preserves an action

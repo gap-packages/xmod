@@ -2,7 +2,7 @@
 ##
 #W  gp2obj.gi                 GAP4 package `XMod'               Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2021, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2022, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 ##  This file contains generic methods for (pre-)crossed modules and
@@ -53,6 +53,47 @@ CAT1_LIST_NUMBERS :=
   [ 4, 4, 4, 8 ], [ 2 ], [ 2, 4, 2, 4, 8 ], [ 4 ], [ 4, 4, 4, 8 ] ];
 CAT1_LIST_LOADED := false;
 CAT1_LIST := [ ];
+
+##############################################################################
+##
+#M  Size2d( <D> )  . . . . . . . . . . . . . .  size of a 2-dimensional domain
+##
+InstallMethod( Size2d, "generic method for a 2d-object", true, 
+    [ Is2DimensionalDomain ], 0,
+function ( obj )
+    return [ Size( Source( obj ) ), Size( Range( obj ) ) ];
+end );
+
+InstallOtherMethod( Size, "generic method for a 2d-object", 
+    [ Is2DimensionalDomain ], 0, 
+function ( obj )
+    Error( "use operation Size2d for 2d-objects" );
+    return fail; 
+end );
+
+##############################################################################
+##
+#M  IsTrivial( <D> )  . . . . . . . . . . . . . . . for a 2-dimensional domain
+#M  IsNonTrivial( <D> ) . . . . . . . . . . . . . . for a 2-dimensional domain
+#M  IsFinite( <D> ) . . . . . . . . . . . . . . . . for a 2-dimensional domain
+##
+InstallMethod( IsTrivial, "generic method for a 2d-object", true, 
+    [ Is2DimensionalDomain ], 0,
+function ( obj )
+    return Size2d( obj ) = [ 1, 1 ];
+end );
+
+InstallMethod( IsNonTrivial, "generic method for a 2d-object", true, 
+    [ Is2DimensionalDomain ], 0,
+function ( obj )
+    return Size2d( obj ) <> [ 1, 1 ];
+end );
+
+InstallMethod( IsFinite, "generic method for a 2d-object", true, 
+    [ Is2DimensionalDomain ], 0,
+function ( obj )
+    return ( Size2d(obj)[1] < infinity ) and ( Size2d(obj)[2] < infinity );
+end );
 
 ##############################################################################
 ##
@@ -175,16 +216,6 @@ InstallMethod( \=, "generic method for two pre-crossed modules",
 function ( P, Q )
     return ( ( Boundary(P) = Boundary(Q) )
          and ( XModAction(P) = XModAction(Q) ) );
-end );
-
-##############################################################################
-##
-#M  Size( <P> )  . . . . . . . . . . . . . . . . size for a pre-crossed module
-##
-InstallOtherMethod( Size, "generic method for a 2d-object", 
-    [ Is2DimensionalDomain ], 20,
-function ( obj )
-    return [ Size( Source( obj ) ), Size( Range( obj ) ) ];
 end );
 
 #############################################################################
@@ -1734,7 +1765,7 @@ function( XM, Ssrc, Srng )
     fi;
     if not IsXMod( SM ) then
         Error( "the result is only a pre-crossed module" );
-    fi;
+    fi; 
     return SM;
 end );
 
