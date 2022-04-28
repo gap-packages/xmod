@@ -1,6 +1,6 @@
 # CHANGES to the 'XMod' package
 
-## 2.86 -> 2.87 (27/04/2022) 
+## 2.86 -> 2.88 (28/04/2022) 
 
  * (27/04/22) introduced Size2d for 2d-objects and Size3d for 3d-objects 
               added the Arvasi/Odabas/Wensley paper to the list of references
