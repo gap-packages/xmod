@@ -6,10 +6,10 @@
                        [1X Crossed Modules and Cat1-Groups [101X
   
   
-                                      2.87
+                                      2.88
   
   
-                                 27 April 2022
+                                 28 April 2022
   
   
                                  Chris Wensley
