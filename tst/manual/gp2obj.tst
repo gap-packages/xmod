@@ -148,11 +148,18 @@ gap> a := GeneratorsOfGroup( Range( X5 ) )[1]^2;
 [ (5,6,7,8,9) ] -> [ (5,9,8,7,6) ]
 gap> ImageElmXModAction( X5, (5,7,9,6,8), a );
 (5,8,6,9,7)
-gap> Print( RepresentationsOfObject(X5), "\n" );
+gap> Print( RepresentationsOfObject( X5 ), "\n" );
 [ "IsComponentObjectRep", "IsAttributeStoringRep", "IsPreXModObj" ]
-gap> Print( KnownAttributesOfObject(X5), "\n" );
-[ "Name", "Range", "Source", "IdGroup", "Boundary", "Size2d", "XModAction", 
-  "ExternalSetXMod", "HigherDimension" ]
+
+## gap> Print( KnownAttributesOfObject(X5), "\n" );
+## [ "Name", "Range", "Source", "IdGroup", "Boundary", "Size2d", "XModAction", 
+##   "ExternalSetXMod", "HigherDimension" ]
+
+gap> kpaX5 := KnownAttributesOfObject( X5 );; 
+gap> ForAll( [ "Name", "Range", "Source", "IdGroup", "Boundary", "Size2d", 
+>             "XModAction", "ExternalSetXMod", "HigherDimension" ], 
+>   a -> a in kpaX5 ); 
+true
 
 ## Section 2.2.1 
 gap> [ IsTrivial( X5 ),  IsNonTrivial( X5 ),  IsFinite( X5 ) ];
@@ -188,8 +195,9 @@ gap> Size2d( X88 );
 gap> Y88 := KernelCokernelXMod( X88 );;
 gap> IdGroup(Y88);
 [ [ 4, 2 ], [ 128, 928 ] ]
-gap> StructureDescription( Y88 );
-[ "C2 x C2", "(D8 x D8) : C2" ] 
+
+## gap> StructureDescription( Y88 );
+## [ "C2 x C2", "(D8 x D8) : C2" ] or [ "C2 x C2", "(C2 x D8) : D8" ] 
 
 ## Section 2.3.1
 gap> b1 := (11,12,13,14,15,16,17,18);;  b2 := (12,18)(13,17)(14,16);;
