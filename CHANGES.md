@@ -1,5 +1,7 @@
 # CHANGES to the 'XMod' package
 
+## 2.88 -> 2.88dev (29/04/2022) 
+
 ## 2.86 -> 2.88 (28/04/2022) 
 
  * (27/04/22) introduced Size2d for 2d-objects and Size3d for 3d-objects 

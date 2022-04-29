@@ -151,26 +151,22 @@ gap> ImageElmXModAction( X5, (5,7,9,6,8), a );
 gap> Print( RepresentationsOfObject( X5 ), "\n" );
 [ "IsComponentObjectRep", "IsAttributeStoringRep", "IsPreXModObj" ]
 
-## gap> Print( KnownAttributesOfObject(X5), "\n" );
-## [ "Name", "Range", "Source", "IdGroup", "Boundary", "Size2d", "XModAction", 
-##   "ExternalSetXMod", "HigherDimension" ]
-
-gap> kpaX5 := KnownAttributesOfObject( X5 );; 
-gap> ForAll( [ "Name", "Range", "Source", "IdGroup", "Boundary", "Size2d", 
->             "XModAction", "ExternalSetXMod", "HigherDimension" ], 
->   a -> a in kpaX5 ); 
-true
+gap> kpa := KnownAttributesOfObject( X5 );; 
+gap> Set( kpa ); 
+[ "Boundary", "ExternalSetXMod", "HigherDimension", "IdGroup", "Name", 
+  "Range", "Size2d", "Source", "XModAction" ]
 
 ## Section 2.2.1 
 gap> [ IsTrivial( X5 ),  IsNonTrivial( X5 ),  IsFinite( X5 ) ];
 [ false, true, true ]
-gap> kpoX5 := KnownPropertiesOfObject(X5);;
-gap> ForAll( [ "IsTrivial", "IsNonTrivial", "IsFinite", 
->  "CanEasilyCompareElements", "CanEasilySortElements", "IsDuplicateFree", 
->  "IsGeneratorsOfSemigroup", "IsPreXModDomain", "IsPreXMod", "IsXMod", 
->  "IsAutomorphismGroup2DimensionalGroup" ], 
->  s -> s in kpoX5 ); 
-true
+gap> IsAssociative( X5 ); 
+true 
+gap> kpo := KnownPropertiesOfObject( X5 );;
+gap> Set( kpo );
+[ "CanEasilyCompareElements", "CanEasilySortElements", "IsAssociative", 
+  "IsAutomorphismGroup2DimensionalGroup", "IsDuplicateFree", "IsFinite", 
+  "IsGeneratorsOfSemigroup", "IsNonTrivial", "IsPreXMod", "IsPreXModDomain", 
+  "IsTrivial", "IsXMod" ]
 
 ## Section 2.2.2
 gap> s4 := Group( (1,2), (2,3), (3,4) );; 
