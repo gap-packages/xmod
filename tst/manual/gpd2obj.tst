@@ -39,9 +39,11 @@ gap> Cs4 := Range( CX4 );;
 ## Subsection 10.1.2 
 gap> IsXModWithObjects( DX4 ); 
 true
+gap> IsAssociative( DX4 ); 
+true
 gap> kpo := KnownPropertiesOfObject( DX4 );; 
 gap> Set( kpo ); 
-[ "CanEasilyCompareElements", "CanEasilySortElements", 
+[ "CanEasilyCompareElements", "CanEasilySortElements", "IsAssociative", 
   "IsDirectProductWithCompleteDigraphDomain", "IsDuplicateFree", 
   "IsGeneratorsOfSemigroup", "IsPreXModWithObjects", "IsSinglePieceDomain", 
   "IsXModWithObjects" ]

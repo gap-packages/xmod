@@ -76,6 +76,7 @@ end );
 #M  IsTrivial( <D> )  . . . . . . . . . . . . . . . for a 2-dimensional domain
 #M  IsNonTrivial( <D> ) . . . . . . . . . . . . . . for a 2-dimensional domain
 #M  IsFinite( <D> ) . . . . . . . . . . . . . . . . for a 2-dimensional domain
+#M  IsAssociative( <XM> ) . . . . . . . . . . . . . for a 2-dimensional domain
 ##
 InstallMethod( IsTrivial, "generic method for a 2d-object", true, 
     [ Is2DimensionalDomain ], 0,
@@ -93,6 +94,12 @@ InstallMethod( IsFinite, "generic method for a 2d-object", true,
     [ Is2DimensionalDomain ], 0,
 function ( obj )
     return ( Size2d(obj)[1] < infinity ) and ( Size2d(obj)[2] < infinity );
+end );
+
+InstallOtherMethod( IsAssociative, "generic method for 2d-objects", true,
+    [ Is2DimensionalDomain ], 0,
+function( XM )
+    return IsAssociative( Source(XM) ) and IsAssociative( Range(XM) ); 
 end );
 
 ##############################################################################

@@ -159,9 +159,11 @@ gap> Set( kpa );
 ## Section 2.2.1 
 gap> [ IsTrivial( X5 ),  IsNonTrivial( X5 ),  IsFinite( X5 ) ];
 [ false, true, true ]
+gap> IsAssociative( X5 ); 
+true 
 gap> kpo := KnownPropertiesOfObject( X5 );;
 gap> Set( kpo );
-[ "CanEasilyCompareElements", "CanEasilySortElements", 
+[ "CanEasilyCompareElements", "CanEasilySortElements", "IsAssociative", 
   "IsAutomorphismGroup2DimensionalGroup", "IsDuplicateFree", "IsFinite", 
   "IsGeneratorsOfSemigroup", "IsNonTrivial", "IsPreXMod", "IsPreXModDomain", 
   "IsTrivial", "IsXMod" ]
