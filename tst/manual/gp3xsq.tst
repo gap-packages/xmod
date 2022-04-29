@@ -261,12 +261,12 @@ Morphism of crossed squares :-
   [ ( 1, 2, 3, 4, 5, 6, 7, 8, 9,10), ( 1, 3)( 4,10)( 5, 9)( 6, 8) ] ]
 gap> IsAutomorphismHigherDimensionalDomain( autoconj );
 true
-gap> KnownPropertiesOfObject( autoconj );
-[ "CanEasilyCompareElements", "CanEasilySortElements", "IsTotal", 
-  "IsSingleValued", "IsInjective", "IsSurjective", 
-  "IsPreCrossedSquareMorphism", "IsCrossedSquareMorphism", 
-  "IsEndomorphismHigherDimensionalDomain", 
-  "IsAutomorphismHigherDimensionalDomain" ]
+gap> kpo := KnownPropertiesOfObject( autoconj );;
+gap> Set( kpo );
+[ "CanEasilyCompareElements", "CanEasilySortElements", 
+  "IsAutomorphismHigherDimensionalDomain", "IsCrossedSquareMorphism", 
+  "IsEndomorphismHigherDimensionalDomain", "IsInjective", 
+  "IsPreCrossedSquareMorphism", "IsSingleValued", "IsSurjective", "IsTotal" ]
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 

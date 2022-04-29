@@ -2,7 +2,7 @@
 ##
 #W  gp2map.tst                    XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2021, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2022, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 ##
@@ -65,13 +65,15 @@ gap> Order( mor5 );
 2
 gap> RepresentationsOfObject( mor5 );
 [ "IsComponentObjectRep", "IsAttributeStoringRep", "Is2DimensionalMappingRep" ]
-gap> KnownPropertiesOfObject( mor5 );
-[ "CanEasilyCompareElements", "CanEasilySortElements", "IsTotal", 
-  "IsSingleValued", "IsInjective", "IsSurjective", "RespectsMultiplication", 
-  "IsPreXModMorphism", "IsXModMorphism", "IsEndomorphism2DimensionalDomain", 
-  "IsAutomorphism2DimensionalDomain" ]
-gap> KnownAttributesOfObject( mor5 );
-[ "Name", "Order", "Range", "Source", "SourceHom", "RangeHom" ]
+gap> kpo := KnownPropertiesOfObject( mor5 );; 
+gap> Set( kpo ); 
+[ "CanEasilyCompareElements", "CanEasilySortElements", 
+  "IsAutomorphism2DimensionalDomain", "IsEndomorphism2DimensionalDomain", 
+  "IsInjective", "IsPreXModMorphism", "IsSingleValued", "IsSurjective", 
+  "IsTotal", "IsXModMorphism", "RespectsMultiplication" ]
+gap> kao := KnownAttributesOfObject( mor5 );;
+gap> Set( kao ); 
+[ "Name", "Order", "Range", "RangeHom", "Source", "SourceHom" ]
 
 ## Section 3.2.4
 gap> q8 := SmallGroup(8,4);;   ## quaternion group 

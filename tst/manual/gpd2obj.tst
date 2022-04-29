@@ -39,12 +39,12 @@ gap> Cs4 := Range( CX4 );;
 ## Subsection 10.1.2 
 gap> IsXModWithObjects( DX4 ); 
 true
-gap> K := [ "CanEasilyCompareElements", "CanEasilySortElements", 
->           "IsDuplicateFree", "IsGeneratorsOfSemigroup", 
->           "IsSinglePieceDomain", "IsDirectProductWithCompleteDigraphDomain", 
->           "IsPreXModWithObjects", "IsXModWithObjects" ];; 
-gap> ForAll( K, p -> p in KnownPropertiesOfObject( DX4 ) ); 
-true
+gap> kpo := KnownPropertiesOfObject( DX4 );; 
+gap> Set( kpo ); 
+[ "CanEasilyCompareElements", "CanEasilySortElements", 
+  "IsDirectProductWithCompleteDigraphDomain", "IsDuplicateFree", 
+  "IsGeneratorsOfSemigroup", "IsPreXModWithObjects", "IsSinglePieceDomain", 
+  "IsXModWithObjects" ]
 
 ## Subsection 10.1.3 
 gap> IsPermPreXModWithObjects( CX4 );
@@ -55,7 +55,8 @@ gap> IsFpPreXModWithObjects( CX4 );
 false
 
 ## Subsection 10.1.4 
-gap> Set( KnownAttributesOfObject( CX4 ) );
+gap> kao := KnownAttributesOfObject( CX4 );; 
+gap> Set( kao ); 
 [ "Boundary", "ObjectList", "Range", "Root2dGroup", "Source", "XModAction" ]
 gap> Root2dGroup( CX4 ); 
 [a4->s4]
