@@ -13,6 +13,18 @@ gap> SetInfoLevel( InfoGroupoids, 0 );;
 
 gap> SetAssertionLevel(3); 
 
+## make independent of gp3xsq.tst 
+gap> d20 := DihedralGroup( IsPermGroup, 20 );;
+gap> gend20 := GeneratorsOfGroup( d20 );; 
+gap> p1 := gend20[1];;  p2 := gend20[2];;  p12 := p1*p2;; 
+gap> d10a := Subgroup( d20, [ p1^2, p2 ] );;
+gap> d10b := Subgroup( d20, [ p1^2, p12 ] );;
+gap> c5d := Subgroup( d20, [ p1^2 ] );;
+gap> SetName( d20, "d20" );  SetName( d10a, "d10a" ); 
+gap> SetName( d10b, "d10b" );  SetName( c5d, "c5d" ); 
+gap> XSconj := CrossedSquareByNormalSubgroups( c5d, d10a, d10b, d20 );;
+
+## 
 gap> s3 := SmallGroup( 6, 1 );;
 gap> homs := AllHomomorphisms( s3, s3 );;
 gap> idem := Filtered( homs, i -> CompositionMapping(i,i) = i );
@@ -157,40 +169,41 @@ gap> IsCat2Group( CC6 );
 true
 
 ## now producing an error (13/01/20)
-## gap> xsCC6 := CrossedSquareOfCat2Group( CC6 );;
-## gap> IsCrossedSquare( xsCC6 );
-## true
+gap> xsCC6 := CrossedSquareOfCat2Group( CC6 );
+crossed square with crossed modules:
+      up = [Group( () ) -> Group( [ (3,4,5) ] )]
+    left = [Group( () ) -> Group( [ (), (1,2) ] )]
+   right = [Group( [ (3,4,5) ] ) -> Group( () )]
+    down = [Group( [ (), (1,2) ] ) -> Group( () )]
 
+gap> IsCrossedSquare( xsCC6 );
+true
 
-## gap> CCconj := Cat2GroupOfCrossedSquare( XSconj );
-## gap> IsCat2Group( CCconj );
-## true
+gap> CCconj := Cat2GroupOfCrossedSquare( XSconj );
+(pre-)cat2-group with generating (pre-)cat1-groups:
+1 : [((d20 |X d10a) |X (d10b |X c5d)) => (d20 |X d10a)]
+2 : [((d20 |X d10a) |X (d10b |X c5d)) => (d20 |X d10b)]
+gap> IsCat2Group( CCconj );
+true
 
-## gap> idCC233 := IdentityMapping( CC233 );
-## <mapping: cat3-group with generating (pre-)cat1-groups:
-## 1 : [Group( [ f1, f2 ] ) => Group( [ f1, <identity> of ... ] )]
-## 2 : [Group( [ f1, f2 ] ) => Group( [ f1, f2 ] )]
-## 3 : [Group( [ f1, f2 ] ) => Group( [ f1, f2 ] )] -> cat
-## 3-group with generating (pre-)cat1-groups:
-## 1 : [Group( [ f1, f2 ] ) => Group( [ f1, <identity> of ... ] )]
-## 2 : [Group( [ f1, f2 ] ) => Group( [ f1, f2 ] )]
-## 3 : [Group( [ f1, f2 ] ) => Group( [ f1, f2 ] )] >
-## gap> Display( idCC233 );
-## Morphism of pre-cat3-groups :- 
-## : Source has cat3-group with generating (pre-)cat1-groups:
-## 1 : [Group( [ f1, f2 ] ) => Group( [ f1, <identity> of ... ] )]
-## 2 : [Group( [ f1, f2 ] ) => Group( [ f1, f2 ] )]
-## 3 : [Group( [ f1, f2 ] ) => Group( [ f1, f2 ] )]
-## : Range has cat3-group with generating (pre-)cat1-groups:
-## 1 : [Group( [ f1, f2 ] ) => Group( [ f1, <identity> of ... ] )]
-## 2 : [Group( [ f1, f2 ] ) => Group( [ f1, f2 ] )]
-## 3 : [Group( [ f1, f2 ] ) => Group( [ f1, f2 ] )]
-## : MappingGeneratorsImages for the source homomorphisms:
-## 1 : [ [ f1, f2 ], [ f1, f2 ] ]
-## 2 : [ [ f1, f2 ], [ f1, f2 ] ]
-## 3 : [ [ f1, f2 ], [ f1, f2 ] ]
-## gap> IsBijective( idCC233 );
-## true
+gap> idCC233 := IdentityMapping( CC233 );;
+WARNING: further checks are needed here
+gap> Display( idCC233 );
+Morphism of pre-cat3-groups :- 
+: Source has (pre-)cat3-group with generating (pre-)cat1-groups:
+1 : [Group( [ f1, f2 ] ) => Group( [ f1, <identity> of ... ] )]
+2 : [Group( [ f1, f2 ] ) => Group( [ f1, f2 ] )]
+3 : [Group( [ f1, f2 ] ) => Group( [ f1, f2 ] )]
+: Range has (pre-)cat3-group with generating (pre-)cat1-groups:
+1 : [Group( [ f1, f2 ] ) => Group( [ f1, <identity> of ... ] )]
+2 : [Group( [ f1, f2 ] ) => Group( [ f1, f2 ] )]
+3 : [Group( [ f1, f2 ] ) => Group( [ f1, f2 ] )]
+: MappingGeneratorsImages for the source homomorphisms:
+1 : [ [ f1, f2 ], [ f1, f2 ] ]
+2 : [ [ f1, f2 ], [ f1, f2 ] ]
+3 : [ [ f1, f2 ], [ f1, f2 ] ]
+gap> IsBijective( idCC233 );
+true
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 
