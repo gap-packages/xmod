@@ -2373,11 +2373,19 @@ end );
 ##
 InstallMethod( DiagonalCat1Group, "cat1-group from a list of generators",
     true, [ IsList ], 0,
-function( gen1 )
+function( gens )
 
-    local m, m2, lgen, gen2, gen3, gen4, i, p, L1, len1, L2, L3, L4, j, 
-           G, R, genG, one, ids, t, h, e, C;
+    local gp, iso, gen1, m, m2, lgen, gen2, gen3, gen4, i, p, L1, len1, 
+          L2, L3, L4, j, G, R, genG, one, ids, t, h, e, C;
 
+    gp := Group( gens ); 
+    if not IsPermGroup( gp ) then 
+        iso := IsomorphismPermGroup( gp ); 
+        gen1 := List( gens, g -> ImageElm( iso, g ) ); 
+        Info ( InfoXMod, 1, "converting to permutation group" ); 
+    else 
+        gen1 := gens; 
+    fi; 
     m := Maximum( List( gen1, g -> LargestMovedPoint(g) ) ); 
     m2 := m+m; 
     lgen := Length( gen1 ); 
@@ -2412,7 +2420,16 @@ function( gen1 )
     e := GroupHomomorphismByImages( R, G, gen3, gen4 ); 
     C := PreCat1GroupByTailHeadEmbedding( t, h, e ); 
     return C;
-end );
+end ); 
+
+InstallOtherMethod( DiagonalCat1Group, "cat1-group from a group",
+    true, [ IsPermGroup ], 0,
+function( gp )
+    local gens; 
+    gens := GeneratorsOfGroup( gp ); 
+    Info( InfoXMod, 1, "using generators ", gens ); 
+    return DiagonalCat1Group( gens ); 
+end ); 
 
 ##############################################################################
 ##
