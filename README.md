@@ -51,6 +51,7 @@ Once these prerequisites are in place, proceed as follows:
     true
 
  * The file manual.pdf is in the `doc` subdirectory.
+ * To run the test file read `testall.g` from the `tst` subdirectory. 
 
 ## Contact
 
