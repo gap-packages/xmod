@@ -1,7 +1,7 @@
 [![Build Status](https://github.com/gap-packages/xmod/workflows/CI/badge.svg?branch=master)](https://github.com/gap-packages/xmod/actions?query=workflow%3ACI+branch%3Amaster)
 [![Code Coverage](https://codecov.io/github/gap-packages/xmod/coverage.svg?branch=master&token=)](https://codecov.io/gh/gap-packages/xmod)
 
-# The GAP 4 package <XMod> 
+# The GAP 4 package XMod 
 
 ## Introduction 
 
@@ -13,16 +13,16 @@ Functions for crossed squares and cat2-groups have been added during 2019/20.
 
 ## Distribution
 
- * The 'XMod' package is distributed with the accepted GAP packages, see: 
+ * The XMod package is distributed with the accepted GAP packages, see: 
      <https://www.gap-system.org/Packages/xmod.html>
  * It may also be obtained from the GitHub repository at:
      <https://gap-packages.github.io/xmod/> 
 
 ## Copyright
 
-The 'XMod' package is Copyright {\copyright} Chris Wensley et al, 1997--2022. 
+The XMod package is Copyright {\copyright} Chris Wensley et al, 1997--2022. 
 
-'XMod' is free software; you can redistribute it and/or modify
+XMod is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 2 of the License, or
 (at your option) any later version. 
@@ -33,13 +33,13 @@ For details, see <https://www.gnu.org/licenses/gpl.html>
 
 It is assumed that you have a recent working copy of GAP, and that this contains a full set of packages in the `pkg` directory, compiled as appropriate. 
 
-'XMod' specifies a number of needed packages, such as 'groupoids', 'utils'  and 'HAP', and some suggested packages, such as 'GAPDoc'.  These in turn need or suggest other packages.  Some of these are loaded automatically when GAP starts. 
+XMod specifies a number of needed packages, such as groupoids, utils  and HAP, and some suggested packages, such as GAPDoc.  These in turn need or suggest other packages.  Some of these are loaded automatically when GAP starts. 
 
-The full list of packages which are loaded (in addition to those loaded automatically by GAP) when 'XMod' is loaded is as follows: 
- * 'Congruence'; 'datastructures'; 'Digraphs'; 'EDIM'; 'ferret'; 'GRAPE'; 'groupoids'; 'HAP'; 'HAPcryst'; 'images'; 'nq'; 'polymaking'; 'Semigroups'; and 'singular'. 
+The full list of packages which are loaded (in addition to those loaded automatically by GAP) when XMod is loaded is as follows: 
+ * Congruence; datastructures; Digraphs; EDIM; ferret; GRAPE; groupoids; HAP; HAPcryst; images; nq; polymaking; Semigroups; and singular. 
 
-'XMod' does not require any compilation, but those in the list above which require compilation are as follows: 
- * 'datastructures'; 'digraphs'; 'EDIM'; 'GRAPE'; 'HAP'; 'nq'; and 'Semigroups]. 
+XMod does not require any compilation, but those in the list above which require compilation are as follows: 
+ * datastructures; digraphs; EDIM; GRAPE; HAP; nq; and Semigroups. 
 
 Once these prerequisites are in place, proceed as follows: 
 
@@ -54,6 +54,6 @@ Once these prerequisites are in place, proceed as follows:
 
 ## Contact
 
-If you have a question relating to 'XMod', encounter any problems, or have a suggestion for extending the package in any way, please 
+If you have a question relating to XMod, encounter any problems, or have a suggestion for extending the package in any way, please 
  * email: <c.d.wensley@bangor.ac.uk>
  * or report an issue at: <https://github.com/gap-packages/xmod/issues/new> 
