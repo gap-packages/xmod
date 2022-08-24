@@ -42,16 +42,20 @@ Crossed module [c3->s3] :-
   These 2 automorphisms generate the group of automorphisms.
 : associated cat1-group is [g18=>s3]
 
-gap> imchi1 := [ (), (1,2,3)(4,6,5) ];;
-gap> chi1 := DerivationByImages( X3, imchi1 );
+gap> R3 := Range( X3 );;
+gap> StrongGeneratorsStabChain( StabChain( R3 ) );
+[ (4,5,6), (2,3)(5,6) ]
+gap> chi1 := DerivationByImages( X3, [ (), (1,2,3)(4,6,5) ] );
 DerivationByImages( s3, c3, [ (4,5,6), (2,3)(5,6) ], 
 [ (), (1,2,3)(4,6,5) ] )
 gap> [ IsUp2DimensionalMapping( chi1 ), IsDerivation( chi1 ) ];
 [ true, true ]
-gap> UpImagePositions( chi1 );
-[ 1, 1, 1, 2, 2, 2 ]
 gap> UpGeneratorImages( chi1 ); 
 [ (), (1,2,3)(4,6,5) ]
+gap> UpImagePositions( chi1 );
+[ 1, 1, 1, 2, 2, 2 ]
+gap> DerivationImage( chi1, (2,3)(4,5) );
+(1,2,3)(4,6,5)
 
 ## Section 5.1.2
 gap> eta := PrincipalDerivation( X3, (1,2,3)(4,6,5) );

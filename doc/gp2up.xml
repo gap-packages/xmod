@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2up.xml             XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  Copyright (C) 2001-2020, Chris Wensley et al,                      --> 
+<!--  Copyright (C) 2001-2022, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -78,23 +78,34 @@ in terms of the corresponding derivation  <M>\chi</M>  of
    <Prop Name="IsDerivation"
          Arg="map" />
    <Prop Name="IsUp2DimensionalMapping"
-         Arg="map" />
-   <Attr Name="UpImagePositions"
          Arg="chi" />
    <Attr Name="UpGeneratorImages"
          Arg="chi" />
+   <Attr Name="UpImagePositions"
+         Arg="chi" />
+   <Oper Name="DerivationImage" 
+         Arg="chi r" />
 <Description>
-Derivations are stored like group homomorphisms by specifying the images
-of a generating set.  
-Images of the remaining elements may then be obtained using axiom 
-<M>{\bf Der\ 1}</M>.  
+A derivation <M>\chi</M> is stored like a group homomorphisms 
+by specifying the images of the generating set 
+<C>StrongGeneratorsStabChain( StabChain(R) )</C> of the range <M>R</M>. 
+This set of images is stored as the attribute <C>UpGeneratorImages</C> 
+of <M>\chi</M>. 
 The function <C>IsDerivation</C> is automatically called to 
 check that this procedure is well-defined.
 <P/>
+Images of the remaining elements may be obtained using axiom 
+<M>{\bf Der\ 1}</M>. 
+<C>UpImagePositions(chi)</C> is the list of the images under <M>\chi</M> 
+of <C>Elements(R)</C> and 
+<C>DerivationImage(chi,r)</C> returns <M>\chi r</M>. 
+<P/> 
 In the following example a cat1-group <C>C3</C> and the associated 
 crossed module  <C>X3</C>  are constructed, 
 where <C>X3</C> is isomorphic to the inclusion of the normal
-cyclic group <C>c3</C> in the symmetric group <C>s3</C>.
+cyclic group <C>c3</C> in the symmetric group <C>s3</C>. 
+The derivation <M>\chi_1</M> maps <C>c3</C> to the identity 
+and the other <M>3</M> elements to <M>(1,2,3)(4,6,5)</M>. 
 </Description>
 </ManSection>
 <P/>
@@ -114,16 +125,20 @@ gap> C3 := Cat1Group( t, h, e );
 gap> SetName( Kernel(t), "c3" );;
 gap> X3 := XModOfCat1Group( C3 );
 [c3->s3]
-gap> imchi1 := [ (), (1,2,3)(4,6,5) ];;
-gap> chi1 := DerivationByImages( X3, imchi1 );
+gap> R3 := Range( X3 );;
+gap> StrongGeneratorsStabChain( StabChain( R3 ) );
+[ (4,5,6), (2,3)(5,6) ]
+gap> chi1 := DerivationByImages( X3, [ (), (1,2,3)(4,6,5) ] );
 DerivationByImages( s3, c3, [ (4,5,6), (2,3)(5,6) ], 
 [ (), (1,2,3)(4,6,5) ] )
 gap> [ IsUp2DimensionalMapping( chi1 ), IsDerivation( chi1 ) ];
 [ true, true ]
-gap> UpImagePositions( chi1 );
-[ 1, 1, 1, 2, 2, 2 ]
 gap> UpGeneratorImages( chi1 ); 
 [ (), (1,2,3)(4,6,5) ]
+gap> UpImagePositions( chi1 );
+[ 1, 1, 1, 2, 2, 2 ]
+gap> DerivationImage( chi1, (2,3)(4,5) );
+(1,2,3)(4,6,5)
 ]]>
 </Example>
 

@@ -36,8 +36,8 @@ function( L )
     fi;
     ok := ( ( Source( src ) = Source( shom ) ) 
             and (  Range( src ) = Source( rhom ) ) 
-            and IsSubgroup( Source( rng ), Range( shom ) ) 
-            and IsSubgroup(  Range( rng ), Range( rhom ) ) );
+            and IsSubgroup( Source( rng ), ImagesSource( shom ) ) 
+            and IsSubgroup(  Range( rng ), ImagesSource( rhom ) ) );
     if not ok then
         Info( InfoXMod, 2, "sources and ranges do not match" );
         return false;

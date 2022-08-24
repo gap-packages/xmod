@@ -1,6 +1,8 @@
 # CHANGES to the 'XMod' package
 
-## 2.88 -> 2.88dev (29/04/2022) 
+## 2.88 -> 2.88dev (24/08/2022) 
+
+ * (24/08/22) manual: documented DerivationImage; corrected CrossDiagonalActions
 
 ## 2.86 -> 2.88 (28/04/2022) 
 
