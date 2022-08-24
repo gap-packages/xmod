@@ -5,7 +5,7 @@
 ##
 ##  This file contains declarations for UpMappings, Derivations and Sections
 ##
-#Y  Copyright (C) 2001-2018, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2022, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 ##############################################################################
