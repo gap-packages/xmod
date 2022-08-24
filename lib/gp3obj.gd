@@ -66,24 +66,8 @@ DeclareOperation( "CrossedPairingByPreImages", [ IsXMod, IsXMod ] );
 
 #############################################################################
 ##
-#P  IsTrivialAction3DimensionalGroup( <obj> ) 
-#P  IsNormalSub3DimensionalGroup( <obj> ) 
-#P  IsAutomorphismGroup3DimensionalGroup( <XS> ) 
-#P  IsCentralExtension3DimensionalGroup( <XS> ) 
-#P  IsAbelianSquare3DimensionalGroup( <obj> ) 
-##
-DeclareProperty( "IsTrivialAction3DimensionalGroup", 
-    IsHigherDimensionalGroup );
-DeclareProperty( "IsNormalSub3DimensionalGroup", 
-    IsHigherDimensionalGroup );
-DeclareProperty( "IsCentralExtension3DimensionalGroup", 
-    IsHigherDimensionalGroup );
-DeclareProperty( "IsAutomorphismGroup3DimensionalGroup", 
-    IsHigherDimensionalGroup );
-DeclareProperty( "IsAbelian3DimensionalGroup", 
-    IsHigherDimensionalGroup );
-DeclareProperty( "IsSymmetric3DimensionalGroup", 
-    IsHigherDimensionalGroup );
+#P  IsSymmetric3DimensionalGroup( <obj> ) 
+DeclareProperty( "IsSymmetric3DimensionalGroup", IsHigherDimensionalGroup );
 
 #############################################################################
 ##
