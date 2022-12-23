@@ -8,7 +8,7 @@ SetPackageInfo( rec(
 PackageName := "XMod",
 Subtitle := "Crossed Modules and Cat1-Groups",
 Version := "2.88dev",
-Date := "24/08/2022", # dd/mm/yyyy format
+Date := "23/12/2022", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -17,18 +17,9 @@ Persons := [
     FirstNames    := "Chris",
     IsAuthor      := true,
     IsMaintainer  := true,
-    Email         := "c.d.wensley@bangor.ac.uk",
+    Email         := "cdwensley.maths@btinternet.com",
     WWWHome       := "https://github.com/cdwensley",
-    PostalAddress := Concatenation( [
-                      "Dr. C.D. Wensley\n",
-                      "School of Computer Science and Electronic Engineering\n",
-                      "Bangor University\n",
-                      "Dean Street\n",
-                      "Bangor\n",
-                      "Gwynedd LL57 1UT\n",
-                      "UK"] ),
-    Place         := "Llanfairfechan",
-    Institution   := "Bangor University"
+    Place         := "Llanfairfechan"
   ),
   rec(
     LastName      := "Alp",
@@ -106,13 +97,12 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">=4.11.0",
-  NeededOtherPackages := [ ["utils", ">= 0.71"], 
+  NeededOtherPackages := [ ["utils", ">= 0.69"], 
                            ["groupoids", ">= 1.68"], 
                            ["HAP", ">= 1.29"],
                            ["AutPGrp", ">= 1.10.2"], 
                            ["SmallGrp", ">= 1.4.2" ] ], 
-  SuggestedOtherPackages := [ ["AutoDoc", ">=2020.08.11"], 
-                              ["GAPDoc", ">= 1.6.4"] ],
+  SuggestedOtherPackages := [ ],
   ExternalConditions := [ ]
 ),
 
