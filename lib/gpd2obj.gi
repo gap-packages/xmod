@@ -2,7 +2,7 @@
 ##
 #W  gpd2obj.gi                 GAP4 package `XMod'               Chris Wensley
 ##
-#Y  Copyright (C) 2001-2020, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2022, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 #############################################################################
@@ -409,8 +409,8 @@ end );
 #O  PrintObj( <pxwo> ) . . print details of a precrossed module of groupoids
 #O  ViewObj( <pxwo> ) . . print details of a precrossed module of groupoids
 ##
-InstallMethod( PrintObj, "method for prexmods and precat2groups", true, 
-    [ Is2DimensionalGroupWithObjects ], 0,
+InstallMethod( PrintObj, "method for prexmods and precat2groups with objects", 
+    true, [ Is2DimensionalGroupWithObjects ], 0,
 function ( pxwo )
 
     local len, pieces, i, p, type; 
