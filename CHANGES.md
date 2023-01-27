@@ -1,6 +1,6 @@
 # CHANGES to the 'XMod' package
 
-## 2.88 -> 2.88dev (24/08/2022) 
+## 2.88 -> 2.88dev (27/01/2023) 
  * (23/12/22) changed email address and other personal details 
  * (24/08/22) manual: documented DerivationImage; corrected CrossDiagonalActions
 
