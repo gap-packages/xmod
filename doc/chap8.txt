@@ -526,7 +526,7 @@
   [33X[1;0Y[29X[2XLeft2DimensionalGroup[102X( [3XXS[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XDown2DimensionalGroup[102X( [3XXS[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XRight2DimensionalGroup[102X( [3XXS[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XDiagonalAction[102X( [3XXS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XCrossDiagonalActions[102X( [3XXS[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XDiagonal2DimensionalGroup[102X( [3XXS[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XName[102X( [3XS0[103X ) [32X method[133X
   

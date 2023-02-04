@@ -51,18 +51,25 @@
   
   [33X[1;0Y[29X[2XDerivationByImages[102X( [3XX0[103X, [3Xims[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XIsDerivation[102X( [3Xmap[103X ) [32X property[133X
-  [33X[1;0Y[29X[2XIsUp2DimensionalMapping[102X( [3Xmap[103X ) [32X property[133X
-  [33X[1;0Y[29X[2XUpImagePositions[102X( [3Xchi[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XIsUp2DimensionalMapping[102X( [3Xchi[103X ) [32X property[133X
   [33X[1;0Y[29X[2XUpGeneratorImages[102X( [3Xchi[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XUpImagePositions[102X( [3Xchi[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XDerivationImage[102X( [3Xchi[103X, [3Xr[103X ) [32X operation[133X
   
-  [33X[0;0YDerivations  are stored like group homomorphisms by specifying the images of
-  a  generating  set.  Images  of  the remaining elements may then be obtained
-  using  axiom  [22XDer  1[122X.  The  function [10XIsDerivation[110X is automatically called to
-  check that this procedure is well-defined.[133X
+  [33X[0;0YA derivation [22Xχ[122X is stored like a group homomorphisms by specifying the images
+  of the generating set [10XStrongGeneratorsStabChain( StabChain(R) )[110X of the range
+  [22XR[122X. This set of images is stored as the attribute [10XUpGeneratorImages[110X of [22Xχ[122X. The
+  function  [10XIsDerivation[110X  is automatically called to check that this procedure
+  is well-defined.[133X
+  
+  [33X[0;0YImages  of  the  remaining  elements  may  be  obtained  using  axiom [22XDer 1[122X.
+  [10XUpImagePositions(chi)[110X  is  the list of the images under [22Xχ[122X of [10XElements(R)[110X and
+  [10XDerivationImage(chi,r)[110X returns [22Xχ r[122X.[133X
   
   [33X[0;0YIn  the  following example a cat1-group [10XC3[110X and the associated crossed module
   [10XX3[110X  are  constructed,  where [10XX3[110X is isomorphic to the inclusion of the normal
-  cyclic group [10Xc3[110X in the symmetric group [10Xs3[110X.[133X
+  cyclic group [10Xc3[110X in the symmetric group [10Xs3[110X. The derivation [22Xχ_1[122X maps [10Xc3[110X to the
+  identity and the other [22X3[122X elements to [22X(1,2,3)(4,6,5)[122X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
@@ -80,16 +87,20 @@
     [4X[25Xgap>[125X [27XSetName( Kernel(t), "c3" );;[127X[104X
     [4X[25Xgap>[125X [27XX3 := XModOfCat1Group( C3 );[127X[104X
     [4X[28X[c3->s3][128X[104X
-    [4X[25Xgap>[125X [27Ximchi1 := [ (), (1,2,3)(4,6,5) ];;[127X[104X
-    [4X[25Xgap>[125X [27Xchi1 := DerivationByImages( X3, imchi1 );[127X[104X
+    [4X[25Xgap>[125X [27XR3 := Range( X3 );;[127X[104X
+    [4X[25Xgap>[125X [27XStrongGeneratorsStabChain( StabChain( R3 ) );[127X[104X
+    [4X[28X[ (4,5,6), (2,3)(5,6) ][128X[104X
+    [4X[25Xgap>[125X [27Xchi1 := DerivationByImages( X3, [ (), (1,2,3)(4,6,5) ] );[127X[104X
     [4X[28XDerivationByImages( s3, c3, [ (4,5,6), (2,3)(5,6) ], [128X[104X
     [4X[28X[ (), (1,2,3)(4,6,5) ] )[128X[104X
     [4X[25Xgap>[125X [27X[ IsUp2DimensionalMapping( chi1 ), IsDerivation( chi1 ) ];[127X[104X
     [4X[28X[ true, true ][128X[104X
-    [4X[25Xgap>[125X [27XUpImagePositions( chi1 );[127X[104X
-    [4X[28X[ 1, 1, 1, 2, 2, 2 ][128X[104X
     [4X[25Xgap>[125X [27XUpGeneratorImages( chi1 ); [127X[104X
     [4X[28X[ (), (1,2,3)(4,6,5) ][128X[104X
+    [4X[25Xgap>[125X [27XUpImagePositions( chi1 );[127X[104X
+    [4X[28X[ 1, 1, 1, 2, 2, 2 ][128X[104X
+    [4X[25Xgap>[125X [27XDerivationImage( chi1, (2,3)(4,5) );[127X[104X
+    [4X[28X(1,2,3)(4,6,5)[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   

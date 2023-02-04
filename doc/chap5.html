@@ -86,12 +86,15 @@
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DerivationByImages</code>( <var class="Arg">X0</var>, <var class="Arg">ims</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsDerivation</code>( <var class="Arg">map</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsUp2DimensionalMapping</code>( <var class="Arg">map</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UpImagePositions</code>( <var class="Arg">chi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsUp2DimensionalMapping</code>( <var class="Arg">chi</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UpGeneratorImages</code>( <var class="Arg">chi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>Derivations are stored like group homomorphisms by specifying the images of a generating set. Images of the remaining elements may then be obtained using axiom <span class="SimpleMath">Der 1</span>. The function <code class="code">IsDerivation</code> is automatically called to check that this procedure is well-defined.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UpImagePositions</code>( <var class="Arg">chi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DerivationImage</code>( <var class="Arg">chi</var>, <var class="Arg">r</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>A derivation <span class="SimpleMath">χ</span> is stored like a group homomorphisms by specifying the images of the generating set <code class="code">StrongGeneratorsStabChain( StabChain(R) )</code> of the range <span class="SimpleMath">R</span>. This set of images is stored as the attribute <code class="code">UpGeneratorImages</code> of <span class="SimpleMath">χ</span>. The function <code class="code">IsDerivation</code> is automatically called to check that this procedure is well-defined.</p>
 
-<p>In the following example a cat1-group <code class="code">C3</code> and the associated crossed module <code class="code">X3</code> are constructed, where <code class="code">X3</code> is isomorphic to the inclusion of the normal cyclic group <code class="code">c3</code> in the symmetric group <code class="code">s3</code>.</p>
+<p>Images of the remaining elements may be obtained using axiom <span class="SimpleMath">Der 1</span>. <code class="code">UpImagePositions(chi)</code> is the list of the images under <span class="SimpleMath">χ</span> of <code class="code">Elements(R)</code> and <code class="code">DerivationImage(chi,r)</code> returns <span class="SimpleMath">χ r</span>.</p>
+
+<p>In the following example a cat1-group <code class="code">C3</code> and the associated crossed module <code class="code">X3</code> are constructed, where <code class="code">X3</code> is isomorphic to the inclusion of the normal cyclic group <code class="code">c3</code> in the symmetric group <code class="code">s3</code>. The derivation <span class="SimpleMath">χ_1</span> maps <code class="code">c3</code> to the identity and the other <span class="SimpleMath">3</span> elements to <span class="SimpleMath">(1,2,3)(4,6,5)</span>.</p>
 
 
 <div class="example"><pre>
@@ -110,16 +113,20 @@
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( Kernel(t), "c3" );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">X3 := XModOfCat1Group( C3 );</span>
 [c3-&gt;s3]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">imchi1 := [ (), (1,2,3)(4,6,5) ];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">chi1 := DerivationByImages( X3, imchi1 );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R3 := Range( X3 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StrongGeneratorsStabChain( StabChain( R3 ) );</span>
+[ (4,5,6), (2,3)(5,6) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">chi1 := DerivationByImages( X3, [ (), (1,2,3)(4,6,5) ] );</span>
 DerivationByImages( s3, c3, [ (4,5,6), (2,3)(5,6) ], 
 [ (), (1,2,3)(4,6,5) ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[ IsUp2DimensionalMapping( chi1 ), IsDerivation( chi1 ) ];</span>
 [ true, true ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">UpImagePositions( chi1 );</span>
-[ 1, 1, 1, 2, 2, 2 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">UpGeneratorImages( chi1 ); </span>
 [ (), (1,2,3)(4,6,5) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">UpImagePositions( chi1 );</span>
+[ 1, 1, 1, 2, 2, 2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DerivationImage( chi1, (2,3)(4,5) );</span>
+(1,2,3)(4,6,5)
 
 </pre></div>
 

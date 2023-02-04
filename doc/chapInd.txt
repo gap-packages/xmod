@@ -91,6 +91,7 @@
   [2XCoproductInfo[102X 7.1-1 
   [2XCoproductXMod[102X 7.1-1 
   [2XCrossActionSubgroup[102X 4.1-4 
+  [2XCrossDiagonalActions[102X 8.2-13 
   crossed module 2.1 
   crossed module morphism 3.1 
   crossed module of groupoids 10. 
@@ -120,9 +121,9 @@
   [2XDerivationByImages[102X 5.1-1 
   [2XDerivationBySection[102X 5.1-3 
   [2XDerivationClass[102X 5.2-1 
+  [2XDerivationImage[102X 5.1-1 
   [2XDerivedSubXMod[102X 4.1-5 
   [2XDiagonal2DimensionalGroup[102X 8.2-13 
-  [2XDiagonalAction[102X 8.2-13 
   [2XDiagonalCat1Group[102X 2.4-3 
   [2XDirectProduct[102X 8.4-2 
       for cat1-groups 2.4-7 
@@ -335,6 +336,7 @@
   [2XRangeEmbedding[102X 2.4-2 
   [2XRangeHom[102X 3.1-1 
   regular derivation 5.1 
+  [2XRegularActionHomomorphism2DimensionalGroup[102X, for pre-cat1 morphisms 3.3-3 
   [2XRegularDerivations[102X 5.2-2 
   [2XRegularSections[102X 5.2-4 
   restriction mapping 13.1 

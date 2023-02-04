@@ -291,7 +291,10 @@ Morphism of crossed modules :-
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismPerm2DimensionalGroup</code>( <var class="Arg">2DimensionalGroup</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismFp2DimensionalGroup</code>( <var class="Arg">2DimensionalGroup</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismPc2DimensionalGroup</code>( <var class="Arg">2DimensionalGroup</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RegularActionHomomorphism2DimensionalGroup</code>( <var class="Arg">2DimensionalGroup</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>The global function <code class="code">IsomorphismPermObject</code> calls <code class="code">IsomorphismPerm2DimensionalGroup</code>, which constructs a morphism whose <code class="func">SourceHom</code> (<a href="chap3.html#X7FFD094F7FFB1F17"><span class="RefLink">3.1-1</span></a>) and <code class="func">RangeHom</code> (<a href="chap3.html#X7FFD094F7FFB1F17"><span class="RefLink">3.1-1</span></a>) are calculated using <code class="code">IsomorphismPermGroup</code> on the source and range.</p>
+
+<p>The global function <code class="code">RegularActionHomomorphism2DimensionalGroup</code> is similar, but uses <code class="code">RegularActionHomomorphism</code> in place of <code class="code">IsomorphismPermGroup</code>.</p>
 
 
 <div class="example"><pre>

@@ -244,11 +244,15 @@
   [33X[1;0Y[29X[2XIsomorphismPerm2DimensionalGroup[102X( [3X2DimensionalGroup[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XIsomorphismFp2DimensionalGroup[102X( [3X2DimensionalGroup[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XIsomorphismPc2DimensionalGroup[102X( [3X2DimensionalGroup[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XRegularActionHomomorphism2DimensionalGroup[102X( [3X2DimensionalGroup[103X ) [32X attribute[133X
   
   [33X[0;0YThe         global        function        [10XIsomorphismPermObject[110X        calls
   [10XIsomorphismPerm2DimensionalGroup[110X,   which   constructs   a   morphism  whose
   [2XSourceHom[102X    ([14X3.1-1[114X)    and    [2XRangeHom[102X   ([14X3.1-1[114X)   are   calculated   using
   [10XIsomorphismPermGroup[110X on the source and range.[133X
+  
+  [33X[0;0YThe  global  function [10XRegularActionHomomorphism2DimensionalGroup[110X is similar,
+  but uses [10XRegularActionHomomorphism[110X in place of [10XIsomorphismPermGroup[110X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X

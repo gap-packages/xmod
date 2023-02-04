@@ -56,26 +56,26 @@
   117--136.
   
   [[20XGH17[120X]  [16XGutsche,  S. and Horn, M.[116X, [17XAutoDoc - Generate documentation from GAP
-  source    code    (Version    2017.09.15)[117X    (2017),    ((    GAP   package,
-  https://github.com/gap-packages/AutoDoc )).
+  source    code    (Version    2017.09.15)[117X    (2017),    (    GAP    package,
+  https://github.com/gap-packages/AutoDoc ).
   
   [[20XGil90[120X]  [16XGilbert,  N.  D.[116X,  [17XDerivations,  automorphisms and crossed modules[117X,
   [18XComm. in Algebra[118X, [19X18[119X (1990), 2703--2734.
   
   [[20XHor17[120X] [16XHorn, M.[116X, [17XGitHubPagesForGAP - Template for easily using GitHub Pages
-  within    GAP    packages    (Version   0.2)[117X   (2017),   ((   GAP   package,
-  https://gap-system.github.io/GitHubPagesForGAP/ )).
+  within    GAP    packages    (Version    0.2)[117X   (2017),   (   GAP   package,
+  https://gap-system.github.io/GitHubPagesForGAP/ ).
   
   [[20XIOU16[120X]  [16XIlgaz,  E.,  Odabas,  A.  and  Uslu,  E.  O.[116X, [17XIsoclinism of crossed
   modules[117X,       [18XJ.       Symb.       Comput.[118X,       [19X[119X      (2016),      1--17,
-  ((https://doi.org/10.1016/j.jsc.2015.08.006)).
+  (https://doi.org/10.1016/j.jsc.2015.08.006).
   
   [[20XJNO90[120X]  [16XJames,  R.,  Newman,  M. F. and O'Brien, E. A.[116X, [17XThe groups of order
   128[117X, [18XJ. Algebra[118X, [19X129[119X (1990), 136--158.
   
   [[20XLN17[120X]  [16XLübeck,  F.  and  Neunhöffer,  M.[116X, [17XGAPDoc (version 1.6)[117X, RWTH Aachen
-  (2017),                   ((                   GAP                  package,
-  https://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/index.html )).
+  (2017),                   (                   GAP                   package,
+  https://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/index.html ).
   
   [[20XLod82[120X] [16XLoday, J.-L.[116X, [17XSpaces with finitely many non-trivial homotopy groups[117X,
   [18XJ. App. Algebra[118X, [19X24[119X (1982), 179--202.

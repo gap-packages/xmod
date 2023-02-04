@@ -34,7 +34,7 @@
 
 <h3>10 <span class="Heading">Crossed modules of groupoids</span></h3>
 
-<p>The material documented in this chapter is experimental, and is likely to be changed very soon.</p>
+<p>The material documented in this chapter is experimental, and is likely to be changed in due course.</p>
 
 <p><a id="X847F4ED77F50528C" name="X847F4ED77F50528C"></a></p>
 
@@ -60,17 +60,19 @@
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( a4, "a4" );</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">X4 := XModByNormalSubgroup( s4, a4 );; </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DX4 := SinglePiecePreXModWithObjects( X4, [-9,-8,-7], true );</span>
-precrossed module with source groupoid:
-homogeneous, discrete groupoid: &lt; a4, [ -9, -8, -7 ] &gt;
-and range groupoid:
-single piece groupoid: &lt; s4, [ -9, -8, -7 ] &gt;
+single piece crossed module with objects
+  source groupoid:
+    homogeneous, discrete groupoid: &lt; a4, [ -9, -8, -7 ] &gt;
+  and range groupoid:
+    single piece groupoid: &lt; s4, [ -9, -8, -7 ] &gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Da4 := Source( DX4 );; </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Ds4 := Range( DX4 );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CX4 := SinglePiecePreXModWithObjects( X4, [-9,-8,-7], false );</span>
-precrossed module with source groupoid:
-single piece groupoid: &lt; a4, [ -9, -8, -7 ] &gt;
-and range groupoid:
-single piece groupoid: &lt; s4, [ -9, -8, -7 ] &gt;
+single piece crossed module with objects
+  source groupoid:
+    single piece groupoid: &lt; a4, [ -9, -8, -7 ] &gt;
+  and range groupoid:
+    single piece groupoid: &lt; s4, [ -9, -8, -7 ] &gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Ca4 := Source( CX4 );; </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cs4 := Range( CX4 );;</span>
 
@@ -88,13 +90,10 @@ single piece groupoid: &lt; s4, [ -9, -8, -7 ] &gt;
 
 <div class="example"><pre>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsXModWithObjects( DX4 ); </span>
-true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">KnownPropertiesOfObject( DX4 ); </span>
-[ "CanEasilyCompareElements", "CanEasilySortElements", "IsDuplicateFree", 
-  "IsGeneratorsOfSemigroup", "IsSinglePieceDomain", 
-  "IsDirectProductWithCompleteDigraphDomain", "IsPreXModWithObjects", 
-  "IsXModWithObjects" ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Set( KnownPropertiesOfObject( DX4 ) ); </span>
+[ "CanEasilyCompareElements", "CanEasilySortElements", "IsAssociative", 
+  "IsDirectProductWithCompleteDigraphDomain", "IsDuplicateFree", 
+  "IsGeneratorsOfSemigroup", "IsPreXModWithObjects", "IsSinglePieceDomain", 
 
 </pre></div>
 
@@ -132,22 +131,24 @@ false
 
 <div class="example"><pre>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Set( KnownAttributesOfObject( CX4 ) );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Set( KnownAttributesOfObject( CX4 ) ); </span>
 [ "Boundary", "ObjectList", "Range", "Root2dGroup", "Source", "XModAction" ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Root2dGroup( CX4 ); </span>
 [a4-&gt;s4]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">act := XModAction( CX4 );; </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r := Arrow( Cs4, (1,2,3,4), -7, -8 );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size( Range( act ) ); </span>
+20736
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r := Arrow( Cs4, (1,2,3,4), -4, -5 );; </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ImageElm( act, r );            </span>
 [groupoid homomorphism : 
-[ [ [(1,2,3) : -9 -&gt; -9], [(2,3,4) : -9 -&gt; -9], [() : -9 -&gt; -8], 
-      [() : -9 -&gt; -7] ], 
-  [ [(2,3,4) : -9 -&gt; -9], [(1,3,4) : -9 -&gt; -9], [() : -9 -&gt; -7], 
-      [() : -9 -&gt; -8] ] ] : 0 -&gt; 0]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s := Arrow( Ca4, (1,2,4), -8, -8 );;</span>
+[ [ [(1,2,3) : -6 -&gt; -6], [(2,3,4) : -6 -&gt; -6], [() : -6 -&gt; -5], 
+      [() : -6 -&gt; -4] ], 
+  [ [(2,3,4) : -6 -&gt; -6], [(1,3,4) : -6 -&gt; -6], [() : -6 -&gt; -4], 
+      [() : -6 -&gt; -5] ] ] : 0 -&gt; 0]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s := Arrow( Ca4, (1,2,4), -5, -5 );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">##  calculate s^r </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ims := ImageElmXModAction( CX4, s, r );</span>
-[(1,2,3) : -7 -&gt; -7]
+[(1,2,3) : -4 -&gt; -4]
 
 </pre></div>
 

@@ -158,7 +158,7 @@
   [30X    [33X[0;6YAdded functions for quasi-isomorphisms.[133X
   
   
-  [1X14.2-6 [33X[0;0YVersion 2.86 - 2.87[133X[101X
+  [1X14.2-6 [33X[0;0YVersion 2.86 - 2.88[133X[101X
   
   [30X    [33X[0;6YAdded attributes [10XSize2d[110X for 2d-objects and [10XSize3d[110X for 3d-objects since
         lists are inappropriate values for the standard function [10XSize[110X.[133X
@@ -216,6 +216,4 @@
   [30X    [33X[0;6YImprove the interaction with the [5XHAP[105X package.[133X
   
   [30X    [33X[0;6YImplement cat1-groups with objects.[133X
-  
-  [33X[0;0Y [133X
   
