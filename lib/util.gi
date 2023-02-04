@@ -616,6 +616,21 @@ end );
 
 ##############################################################################
 ##
+#M  RegularActionHomomorphisObject( <obj> ) 
+##
+InstallGlobalFunction( RegularActionHomomorphismObject, function( obj )
+    if IsGroup( obj ) then
+        return RegularActionHomomorphism( obj );
+    elif ( HasIsPreXMod( obj ) and IsPreXMod( obj ) ) or 
+         ( HasIsPreCat1Group( obj ) and IsPreCat1Group( obj ) ) then 
+        return RegularActionHomomorphism2DimensionalGroup( obj );
+    else
+        return fail;
+    fi;
+end );
+
+##############################################################################
+##
 #M  IsSubEndoMapping
 ##
 InstallMethod( IsSubEndoMapping, "for a map", true, [ IsGroupHomomorphism ], 0,

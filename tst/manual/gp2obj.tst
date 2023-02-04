@@ -2,7 +2,7 @@
 ##
 #W  gp2obj.tst                    XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2022, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2023, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 gap> START_TEST( "XMod package: gp2obj.tst" );
@@ -481,11 +481,13 @@ fail
 gap> SetInfoLevel( InfoXMod, 0 );
 gap> B18 := Cat1Select( 18, 4, 2 );
 [(C3 x C3) : C2=>Group( [ f1, <identity> of ..., f3 ] )]
-gap> iso18 := IsomorphismPermObject( B18 );;
-gap> PB18 := Image( iso18 ); 
-[Group( [ (4,5,6), (1,2,3), (2,3)(5,6) ] )=>Group( [ (1,2,3), (2,3)(5,6) ] )]
-gap> Y18 := XModOfCat1Group( PB18 ); 
-[Group( [ (4,5,6) ] )->Group( [ (1,2,3), (2,3)(5,6) ] )]
+gap> reg18 := RegularActionHomomorphismObject( B18 );;
+gap> MappingGeneratorsImages( reg18 );
+[ [ [ f2, f3, f1 ], [ (4,5,6), (1,2,3), (2,3)(5,6) ] ], 
+  [ [ f3, f1 ], [ (1,3,5)(2,4,6), (1,2)(3,6)(4,5) ] ] ]
+gap> regB18 := Image( reg18 );; 
+gap> Y18 := XModOfCat1Group( regB18 ); 
+[Group( [ (4,5,6) ] )->Group( [ (1,3,5)(2,4,6), (1,2)(3,6)(4,5) ] )]
 
 ## Section 2.8.1
 gap> IdGroup( X8 );
