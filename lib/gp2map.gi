@@ -905,6 +905,81 @@ end );
 
 ##############################################################################
 ##
+#M  RegularActionHomomorphism2DimensionalGroup . isomorphic pre-xmod & pre-cat1
+##
+InstallMethod( RegularActionHomomorphism2DimensionalGroup,
+     "generic method for pre-crossed modules", true, [ IsPreXMod ], 0,
+function( PM )
+
+    local shom, ishom, rhom, irhom, Psrc, Psgen, Qsrc, Qsgen, 
+          Prng, Prgen, Qrng, Qrgen, QM, iso;
+
+    Psrc := Source( PM );
+    shom := RegularActionHomomorphism( Psrc );
+    Qsrc := Image( shom ); 
+    Qsrc := ImagesSource( shom ); 
+    Qsgen := SmallGeneratingSet( Qsrc ); 
+    ishom := InverseGeneralMapping( shom ); 
+    Psgen := List( Qsgen, g -> ImageElm( ishom, g ) ); 
+    if HasName( Psrc ) then 
+        SetName( Qsrc, Concatenation( "Reg", Name( Psrc ) ) ); 
+    fi;
+    shom := GroupHomomorphismByImages( Psrc, Qsrc, Psgen, Qsgen );
+    Prng := Range( PM );
+    rhom := RegularActionHomomorphism( Prng );
+    Qrng := Image( rhom ); 
+    Qrng := ImagesSource( rhom );
+    Qrgen := SmallGeneratingSet ( Qrng ); 
+    irhom := InverseGeneralMapping( rhom ); 
+    Prgen := List( Qrgen, g -> ImageElm( irhom, g ) ); 
+    if HasName( Prng ) then 
+        SetName( Qrng, Concatenation( "Reg", Name( Prng ) ) ); 
+    fi;
+    rhom := GroupHomomorphismByImages( Prng, Qrng, Prgen, Qrgen );
+    iso := IsomorphismByIsomorphisms( PM, [ shom, rhom ] ); 
+    QM := Range( iso );
+    if HasName( PM ) then
+        SetName( QM, Concatenation( "Reg", Name( PM ) ) );
+    fi;
+    return iso;
+end );
+
+InstallMethod( RegularActionHomomorphism2DimensionalGroup,
+     "generic method for pre-cat1-groups", true, [ IsPreCat1Group ], 0,
+function( PCG )
+
+    local shom, rhom, ishom, irhom, Psrc, Psgen, Qsrc, Qsgen, 
+          Prng, Prgen, Qrng, Qrgen, QCG, iso, mgi;
+
+    Psrc := Source( PCG );
+    shom := RegularActionHomomorphism( Psrc );
+    Qsrc := Image( shom ); 
+    shom := shom * SmallerDegreePermutationRepresentation( Qsrc );
+    Qsrc := ImagesSource( shom );
+    Qsgen := SmallGeneratingSet( Qsrc ); 
+    ishom := InverseGeneralMapping( shom ); 
+    Psgen := List( Qsgen, g -> ImageElm( ishom, g ) ); 
+    shom := GroupHomomorphismByImages( Psrc, Qsrc, Psgen, Qsgen );
+    Prng := Range( PCG );
+    Prgen := GeneratorsOfGroup( Prng ); 
+    rhom := RegularActionHomomorphism( Prng );
+    Qrng := ImagesSource( rhom );
+    Qrgen := SmallGeneratingSet( Qrng );
+    mgi := MappingGeneratorsImages( rhom ); 
+    irhom := GroupHomomorphismByImages( Qrng, Prng, mgi[2], mgi[1] );
+    Prgen := List( Qrgen, g -> ImageElm( irhom, g ) ); 
+    rhom := GroupHomomorphismByImages( Prng, Qrng, Prgen, Qrgen );
+    iso := IsomorphismByIsomorphisms( PCG, [ shom, rhom ] ); 
+    QCG := Range( iso ); 
+    if HasName( PCG ) then
+        SetName( QCG, Concatenation( "Reg", Name( PCG ) ) );
+    fi;
+    iso := PreCat1GroupMorphism( PCG, QCG, shom, rhom ); 
+    return iso;
+end );
+
+##############################################################################
+##
 #M  IsomorphismPc2DimensionalGroup . . . . . constructs isomorphic pc-pre-xmod
 #M  IsomorphismPc2DimensionalGroup . . . . . constructs isomorphic pc-pre-cat1
 ##

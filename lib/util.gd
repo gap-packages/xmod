@@ -96,6 +96,12 @@ DeclareGlobalFunction( "IsomorphismPermOrPcObject" );
 
 #############################################################################
 ##
+#F  RegularActionHomomorphismObject( <obj> )
+##
+DeclareGlobalFunction( "RegularActionHomomorphismObject" );
+
+#############################################################################
+##
 #P  IsSubEndoMapping( <map> )
 ##
 DeclareProperty( "IsSubEndoMapping", IsGeneralMapping );

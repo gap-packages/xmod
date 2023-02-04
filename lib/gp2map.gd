@@ -108,11 +108,14 @@ DeclareAttribute( "Cat1GroupMorphismOfXModMorphism", IsXModMorphism );
 #A  IsomorphismPerm2DimensionalGroup( <obj> )
 #A  IsomorphismFp2DimensionalGroup( <obj> )
 #A  IsomorphismPc2DimensionalGroup( <obj> )
+#A  RegularActionHomomorphism2DimensionalGroup( <obj> )
 ##
 DeclareOperation( "IsomorphismByIsomorphisms", [ IsObject, IsList ] );
 DeclareAttribute( "IsomorphismPerm2DimensionalGroup", Is2DimensionalGroup );
 DeclareAttribute( "IsomorphismFp2DimensionalGroup", Is2DimensionalGroup );
 DeclareAttribute( "IsomorphismPc2DimensionalGroup", Is2DimensionalGroup );
+DeclareAttribute( "RegularActionHomomorphism2DimensionalGroup", 
+                       Is2DimensionalGroup ); 
 
 #############################################################################
 ##
