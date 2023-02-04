@@ -1,6 +1,7 @@
 # CHANGES to the 'XMod' package
 
-## 2.88 -> 2.88dev (27/01/2023) 
+## 2.88 -> 2.89 (04/02/2023) 
+ * (03/02/23) added RegularActionHomomorphism2DimensionalGroup 
  * (23/12/22) changed email address and other personal details 
  * (24/08/22) manual: documented DerivationImage; corrected CrossDiagonalActions
 
