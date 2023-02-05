@@ -659,6 +659,30 @@ end );
 
 #############################################################################
 ##
+#M  PreXModWithTrivialRange
+##
+InstallMethod( PreXModWithTrivialRange, "pre-crossed module from two groups",
+    true, [ IsGroup, IsGroup ], 0,
+function( G, H )
+
+    local genG, bdy, act, aut, triv, id, one;
+
+    one := One( H ); 
+    triv := Subgroup( H, [ one ] ); 
+    genG := GeneratorsOfGroup( G ); 
+    id := IdentityMapping( G ); 
+    aut := Group( [ id ] ); 
+    act := GroupHomomorphismByImages( triv, aut, [ one ], [ id ] );
+    bdy := GroupHomomorphismByImages( G, triv, genG, List( genG, g -> one ) ); 
+    if IsAbelian( G ) then 
+        return XModByBoundaryAndAction( bdy, act ); 
+    else
+        return PreXModByBoundaryAndAction( bdy, act ); 
+    fi; 
+end ); 
+
+#############################################################################
+##
 #M  IsPreCat1Group            check that the first pre-cat1-group axiom holds
 ##
 InstallMethod( IsPreCat1Group, "generic method for 2dim-group", true, 

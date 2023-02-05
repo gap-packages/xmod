@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2obj.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  Copyright (C) 1996-2022, Chris Wensley et al,                      --> 
+<!--  Copyright (C) 1996-2023, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -575,11 +575,18 @@ gap> StructureDescription( Y88 );
 <ManSection>
    <Oper Name="PreXModByBoundaryAndAction"
          Arg="bdy act" />
+   <Oper Name="PreXModWithTrivialAction"
+         Arg="src rng" />
    <Oper Name="SubPreXMod"
          Arg="X0 src rng" />
 <Description>
 If axiom  <M>{\bf XMod\ 2}</M> is <E>not</E> satisfied, 
 the corresponding structure is known as a <E>pre-crossed module</E>.
+<P/> 
+A special case of this operation is when the range is a trivial group 
+(not necessarily a subgroup of the source), 
+and so the action is trivial. 
+This case will be used when constructing a special type of double groupoid. 
 </Description>
 </ManSection>
 <P/>
@@ -598,6 +605,18 @@ gap> P16 := PreXModByBoundaryAndAction( bdy16, act16 );
 [d16->sk4]
 gap> IsXMod( P16 );
 false
+gap> Q16 := PreXModWithTrivialRange( d16, d16 ); 
+[d16->Group( [ () ] )]
+gap> SQ16 := SubPreXMod( Q16, sk4, Group( [()] ) );; 
+gap> Display(SQ16);
+Crossed module :- 
+: Source group has generators:
+  [ (11,15)(12,16)(13,17)(14,18), (12,18)(13,17)(14,16) ]
+: Range group has generators:
+  [ () ]
+: Boundary homomorphism maps source generators to:
+  [ (), () ]
+  The automorphism group is trivial
 ]]>
 </Example>
 
