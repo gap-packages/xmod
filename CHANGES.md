@@ -1,5 +1,8 @@
 # CHANGES to the 'XMod' package
 
+## 2.89 -> 2.89dev (04/02/2023) 
+ * (05/02/23) added PreXModWithTrivialRange 
+
 ## 2.88 -> 2.89 (04/02/2023) 
  * (01/02/23) added RegularActionHomomorphism(Object/2DimensionalGroup) 
  * (23/12/22) changed email address and other personal details 

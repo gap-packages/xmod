@@ -209,6 +209,10 @@ gap> P16 := PreXModByBoundaryAndAction( bdy16, act16 );
 [d16->sk4]
 gap> IsXMod( P16 );
 false
+gap> Q16 := PreXModWithTrivialRange( d16, d16 ); 
+[d16->Group( [ () ] )]
+gap> SQ16 := SubPreXMod( Q16, sk4, Group( [()] ) ); 
+[sk4->Group( [ () ] )]
 
 ## Section 2.3.2
 gap> P := PeifferSubgroup( P16 );
