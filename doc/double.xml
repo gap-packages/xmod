@@ -165,7 +165,7 @@ and, for our pre-crossed module, the <C>X12</C>,
 isomorphic to <M>(D_{12} \to S_3)</M>, 
 constructed using <Ref Oper="XModByCentralExtension"/>.
 The source of <C>X12</C> has generating set 
-<M>\left{ g = (11,12,13,14,15,16),~ h = (12,16)(13,15) \right}</M>. 
+<M>\left\{ g = (11,12,13,14,15,16),~ h = (12,16)(13,15) \right\}</M>.
 We check that the two ways of computing the product of four squares 
 below agree.
 
@@ -241,12 +241,12 @@ gap> sq1 := SquareOfArrows( D1, g*h, a1, d1, e1, b1 );
 gap> sq2 := SquareOfArrows( D1, g^2, a2, e1, f1, b2 );;  
 gap> sq3 := SquareOfArrows( D1, g, b1, d2, e2, c1 );;
 gap> sq4 := SquareOfArrows( D1, h, b2, e2, f2, c2 );;
-gap> ## then form two horizantal and two vertical products:
+gap> ## then form two horizontal and two vertical products:
 gap> sq12 := LeftRightProduct( D1, sq1, sq2 );;
 gap> sq34 := LeftRightProduct( D1, sq3, sq4 );;
 gap> sq13 := UpDownProduct( D1, sq1, sq3 );; 
 gap> sq24 := UpDownProduct( D1, sq2, sq4 );; 
-gap> ¢¢ combine in two ways to get a single square:
+gap> ## combine in two ways to get a single square:
 gap> sq1324 := LeftRightProduct( D1, sq13, sq24 );
 [-6] ---- (7,9,8) ---> [-4]
   |                         |
