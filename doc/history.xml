@@ -121,7 +121,7 @@ and correct file protection codes. </Item>
 </Section> 
 
 
-<Section><Heading>Versions for &GAP; [4.5 .. 4.11]</Heading>
+<Section><Heading>Versions for &GAP; [4.5 .. 4.12]</Heading>
 
 Version 2.19, released on 9th June 2012, included the following changes:  
 <List>
@@ -189,7 +189,7 @@ At the same time, functions for cat2-groups were introduced by Alper Odabas.
 </Subsection>
 
 
-<Subsection><Heading>Version 2.63 - 2.74</Heading>
+<Subsection><Heading>Versions 2.63 - 2.74</Heading>
 <List>
 <Item>
 Added an implementation of crossed modules of groupoids. 
@@ -204,7 +204,7 @@ Added an implementation of group groupoids.
 </Subsection>
 
 
-<Subsection><Heading>Version 2.75 - 2.85</Heading>
+<Subsection><Heading>Versions 2.75 - 2.85</Heading>
 <List>
 <Item>
 Added conversion functions between &XMod; and <Package>Hap</Package> 
@@ -216,11 +216,14 @@ Added functions for quasi-isomorphisms.
 </List> 
 </Subsection>
 
-<Subsection><Heading>Version 2.86 - 2.88</Heading>
+<Subsection><Heading>Versions 2.86 - 2.91</Heading>
 <List>
 <Item>
 Added attributes <C>Size2d</C> for 2d-objects and <C>Size3d</C> for 3d-objects 
 since lists are inappropriate values for the standard function <C>Size</C>.  
+</Item>
+<Item>
+Added <C>PreXModWithTrivialRange</C> and started work on double groupoids. 
 </Item>
 </List> 
 </Subsection>
@@ -298,6 +301,9 @@ Improve the interaction with the <Package>HAP</Package> package.
 </Item>
 <Item>
 Implement cat1-groups with objects. 
+</Item>
+<Item>
+Lots more work on double groupoids.
 </Item>
 </List>
 
