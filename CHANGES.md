@@ -1,13 +1,15 @@
 # CHANGES to the 'XMod' package
 
 ## 2.89 -> 2.91 (13/02/2023) 
- * (09/02/23) added chapter on double groupoids 
+ * (09/02/23) added chapter on double groupoids with operations 
+              EnhancedBasicDoubleGroupoid, DoubleGroupooidWithZeroBoundary
  * (05/02/23) added PreXModWithTrivialRange 
 
 ## 2.88 -> 2.89 (04/02/2023) 
  * (01/02/23) added RegularActionHomomorphism(Object/2DimensionalGroup) 
  * (23/12/22) changed email address and other personal details 
- * (24/08/22) manual: documented DerivationImage; corrected CrossDiagonalActions
+ * (24/08/22) manual: documented DerivationImage; 
+              corrected CrossDiagonalActions
 
 ## 2.86 -> 2.88 (28/04/2022) 
  * (27/04/22) introduced Size2d for 2d-objects and Size3d for 3d-objects 
