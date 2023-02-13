@@ -575,7 +575,7 @@ gap> StructureDescription( Y88 );
 <ManSection>
    <Oper Name="PreXModByBoundaryAndAction"
          Arg="bdy act" />
-   <Oper Name="PreXModWithTrivialAction"
+   <Oper Name="PreXModWithTrivialRange"
          Arg="src rng" />
    <Oper Name="SubPreXMod"
          Arg="X0 src rng" />
@@ -586,7 +586,8 @@ the corresponding structure is known as a <E>pre-crossed module</E>.
 A special case of this operation is when the range is a trivial group 
 (not necessarily a subgroup of the source), 
 and so the action is trivial. 
-This case will be used when constructing a special type of double groupoid. 
+This case will be used when constructing a special type of double groupoid
+in Chapter <Ref Chap='chap-double' />.
 </Description>
 </ManSection>
 <P/>

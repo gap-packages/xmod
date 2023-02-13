@@ -1,6 +1,7 @@
 # CHANGES to the 'XMod' package
 
-## 2.89 -> 2.89dev (04/02/2023) 
+## 2.89 -> 2.91 (13/02/2023) 
+ * (09/02/23) added chapter on double groupoids 
  * (05/02/23) added PreXModWithTrivialRange 
 
 ## 2.88 -> 2.89 (04/02/2023) 
