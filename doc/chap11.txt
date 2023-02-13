@@ -1,90 +1,294 @@
   
-  [1X11 [33X[0;0YApplications[133X[101X
+  [1X11 [33X[0;0YDouble Groupoids[133X[101X
   
-  [33X[0;0YThis  chapter was added in April 2018 for version 2.66 of [5XXMod[105X. Initially it
-  describes  crossed  modules  for  free loop spaces. Further applications may
-  arise in due course.[133X
+  [33X[0;0YA  [13Xdouble groupoid[113X is a [13Xdouble category[113X in which all the category structures
+  are  groupoids.  There is also a pre-crossed module associated to the double
+  groupoid.  In a double groupoid, as well as objects and arrows we need a set
+  of  [13Xsquares[113X.  A  square  is  bounded  by four arrows, two horizantal and two
+  vertical,  and  there  is  a  [13Xhorizantal[113X  groupoid  structure and a [13Xvertical[113X
+  groupoid  structure  on  these  squares.  An  element  of  the source of the
+  pre-crossed  module  is  located  at the centre of the square, and its image
+  under the boundary map is equal to the boundary of the square.[133X
+  
+  [33X[0;0YThe  double  groupoids  constructed here are special in that all four arrows
+  come from the same groupoid. We call these [13Xedge-symmetric[113X double groupoids.[133X
+  
+  [33X[0;0YIt is assumed in this chapter that the reader is familiar with constructions
+  for    groupoids    given    in    the    [5XGroupoids[105X    package,    such   as
+  [10XSinglePieceBasicDoubleGroupoid[110X.  Such  groupoids are [13Xbasic[113X, in that there is
+  no pre-crossed module involvement.[133X
+  
+  [33X[0;0YThis chapter is experimental, and will be extended as soon as possible.[133X
   
   
-  [1X11.1 [33X[0;0YFree Loop Spaces[133X[101X
+  [1X11.1 [33X[0;0YDouble groupoid squares[133X[101X
   
-  [33X[0;0YThese  functions have been used to produce examples for Ronald Brown's paper
-  [13XCrossed  modules,  and the homotopy [22X2[122X-type of a free loop space[113X [Bro18]. The
-  relevant theorem in that paper is as follows.[133X
+  [33X[0;0YLet  [22XG[122X  be  a  groupoid  with object set [22XΩ[122X. Let [22X□[122X be the set of squares with
+  objects  from  [22XΩ[122X at each corner; plus two vertical arrows and two horizantal
+  arrows  from  Arr[22X(G)[122X.  Further,  let  [22XcalP  =  (∂ : S -> R)[122X be a pre-crossed
+  module, and let [22Xm_1 ∈ S[122X be placed at the centre of the square. The following
+  picture illustrates the situation:[133X
   
-  [33X[0;0Y[12XTheorem 2.1[112X [13X Let [22XcalM = (∂ : M -> P)[122X be a crossed module of groups and let [22XX
-  =  BcalM[122X  be  the  classifying space of [22XcalM[122X. Then the components of [22XLX[122X, the
-  free  loop space on [22XX[122X, are determined by equivalence classes of elements [22Xa ∈
-  P[122X  where  [22Xa,a'[122X are equivalent if and only if there are elements [22Xm ∈ M, p ∈ P[122X
-  such that [22Xa'= p + a - ∂ m - p[122X. [113X[133X
   
-  [33X[0;0Y[13X  Further  the  homotopy  [22X2[122X-type  of  a  component  of  [22XLX[122X given by [22Xa ∈ P[122X is
-  determined  by  the  crossed  module  of groups [22XLcalM[a] = (∂_a : M -> P(a))[122X
-  where: [113X[133X
+  [24X[33X[0;6Y\vcenter{\xymatrix  @=4pc{  u_1 \ar[r]^{a_1} \ar[d]_{d_1}\ar@{}[dr] |{m_1} &
+  u_2 \ar[d]^{e_1} \\ v_1 \ar[r]_{b_1} & v_2 }}[133X
   
-  [30X    [33X[0;6Y[13X  [22XP(a)[122X  is  the  subgroup of the cat[22X^1[122X-group [22XG = P ⋉ M[122X such that [22X∂ m =
-        [p,a] = -p-a+p+a[122X; [113X[133X
+  [124X
   
-  [30X    [33X[0;6Y[13X [22X∂_a(m) = (∂ m, m^-1m^a)[122X for [22Xm ∈ M[122X; [113X[133X
+  [33X[0;0YWe  think  of  the square being [13Xbased[113X at the bottom, right-hand corner, [22Xv_2[122X.
+  The  [13Xboundary[113X  of  the  square  is  the loop [22X(v_2, b_1^-1d_1^-1a_1e_1,v_2) =
+  (v_2,p_1,v_2)[122X. The [13Xboundary condition[113X which [22Xm_1[122X has to satisfy is that [22X∂ m_1
+  = p_1[122X. When defining a [13Xhorizantal composition[113X, as illustrated by[133X
   
-  [30X    [33X[0;6Y[13X  the action of [22XP(a)[122X on [22XM[122X is given by [22Xn^(p,m) = n^p[122X for [22Xn ∈ M, (p,m) ∈
-        P(a)[122X. [113X[133X
   
-  [33X[0;0Y[13X In particular [22Xπ_1(LX,a)[122X is isomorphic to [22Xmathrmcokernel(∂_a)[122X, and [22Xπ_2(LX,a)
-  ≅  π_2(X,*)^bara}[122X,  the elements of [22Xπ_2(X,*)[122X fixed under the action of [22Xbara[122X,
-  the class of [22Xa[122X in [22Xπ_1(X,*)[122X. [113X[133X
+  [24X[33X[0;6Y\vcenter{\xymatrix  @=4pc{  u_1 \ar[r]^{a_1} \ar[d]_{d_1} \ar@{}[dr]|{m_1} &
+  u_2   \ar[r]^{a_2}   \ar[d]^{e_1}   \ar@{}[dr]|{m_2}   &   u_3  \ar[d]^{f_1}
+  \ar@{}[dr]|=  & u_1 \ar[r]^{a_1a_2} \ar[d]_{d_1} \ar@{}[dr]|{m_1^{b_2}m_2} &
+  u_3  \ar[d]^{f_1}  \\  v_1  \ar[r]_{b_1}  &  v_2  \ar[r]_{b_2}  &  v_3 & v_1
+  \ar[r]_{b_1b_2} & v_3 }}[133X
   
-  [33X[0;0Y[13X   There   is   an   exact   sequence   [22Xπ  stackrelϕ->  π  ->  π_1(LX,a)  ->
-  C_bara}(π_1(X,*))  ->  1[122X,  in  which [22Xπ = π_2(X,*)[122X, and [22Xϕ[122X is the morphism [22Xm ↦
-  m^-1m^a[122X. [113X[133X
+  [124X
   
-  [1X11.1-1 LoopClasses[101X
+  [33X[0;0Ywe  have  to  move [22Xm_1[122X, based at [22Xv_2[122X, to the new base [22Xv_3[122X, and we do this by
+  using  the  action  of the pre-crossed module of [22Xb_2[122X on [22Xm_1[122X. Notice that the
+  boundary  condition  is  satisfied, since the first pre-crossed module axiom
+  applies:[133X
   
-  [33X[1;0Y[29X[2XLoopClasses[102X( [3XM[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XLoopsXMod[102X( [3XM[103X, [3Xa[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XAllLoopsXMod[102X( [3XM[103X ) [32X operation[133X
   
-  [33X[0;0YThe  operation  [10XLoopClasses[110X  computes  the equivalence classes [22X[a][122X described
-  above. These are all unions of conjugacy classes.[133X
+  [24X[33X[0;6Y\partial(m_1^{b_2}m_2)    ~=~   \partial(m_1^{b_2})   (\partial   m_2)   ~=~
+  b_2^{-1}(b_1^{-1}d_1^{-1}a_1e_1)b_2(b_2^{-1}e_1^{-1}a_2f_1)              ~=~
+  (b_1b_2)^{-1}d_1^{-1}(a_1a_2)f_1.[133X
   
-  [33X[0;0YThe   operation   [10XLoopsXMod(M,a)[110X  calculates  the  crossed  module  [22XLcalM[a][122X
-  described in the theorem.[133X
+  [124X
   
-  [33X[0;0YThe  operation  [10XAllLoopsXMod(M)[110X  returns  a list of crossed modules, one for
-  each equivalence class of elements [22X[a] ⊆ P[122X.[133X
+  [33X[0;0YSimilarly, vertical composition is illustrated by[133X
   
-  [33X[0;0YIn  the example below the automorphism crossed module [10XX8[110X has [22XM ≅ C_2^3[122X and [22XP
-  =  PSL(3,2)[122X  is the automorphism group of [22XM[122X. There are [22X6[122X equivalence classes
-  which,  in  this case, are identical with the conjugacy classes. For each [22XLX[122X
-  calculated, the [2XIdGroup[102X ([14X2.8-1[114X) is printed out.[133X
+  
+  [24X[33X[0;6Y\vcenter{\xymatrix @=2pc{ u_1 \ar[rr]^{a_1} \ar[dd]_{d_1} \ar@{}[ddrr]|{m_1}
+  &&  u_2  \ar[dd]^{e_1}  &  & && \\ && & & u_1 \ar[rr]^{a_1} \ar[dd]_{d_1d_2}
+  \ar@{}[ddrr]|{m_3m_1^{e_2}}  &&  u_2  \ar[dd]^{e_1e_2}  \\ v_1 \ar[rr]_{b_1}
+  \ar[dd]_{d_2}  \ar@{}[ddrr]|{m_3}  && v_2 \ar[dd]^{e_2} &=& && \\ && & & w_1
+  \ar[rr]_{c_1} && w_2 \\ w_1 \ar[rr]_{c_1} && w_2 }}[133X
+  
+  [124X
+  
+  [33X[0;0YAgain the boundary condition is satisfied:[133X
+  
+  
+  [24X[33X[0;6Y\partial(m_3m_1^{e_2})    ~=~   (\partial   m_3)   \partial(m_1^{e_2})   ~=~
+  (c_1^{-1}d_2^{-1}b_1e_2)e_2^{-1}(b_1^{-1}d_1^{-1}a_1e_1)e_2              ~=~
+  c_1^{-1}(d_1d_2)^{-1}a_1(e_1e_2).[133X
+  
+  [124X
+  
+  [33X[0;0YThese two compositions commute, so we may construct products such as:[133X
+  
+  
+  [24X[33X[0;6Y\vcenter{\xymatrix @=2pc{ u_1 \ar[rr]^{a_1} \ar[dd]_{d_1} \ar@{}[ddrr]|{m_1}
+  && u_2 \ar[rr]^{a_2} \ar[dd]|{e_1} \ar@{}[ddrr]|{m_2} && u_3 \ar[dd]^{f_1} &
+  &    &&&   \\   &&   &&   &   &   u_1   \ar[rrr]^{a_1a_2}   \ar[dd]_{d_1d_2}
+  \ar@{}[ddrrr]|{m_3^{c_2}m_4\left(m_1^{b_2}m_2\right)^{f_2}}      &&&     u_3
+  \ar[dd]^{f_1f_2}  \\  v_1  \ar[rr]|{b_1} \ar[dd]_{d_2} \ar@{}[ddrr]|{m_3} &&
+  v_2  \ar[rr]|{b_2} \ar[dd]|{e_2} \ar@{}[ddrr]|{m_4} && v_3 \ar[dd]^{f_2} &=&
+  &&&  \\ && && & & w_1 \ar[rrr]_{c_1c_2 } &&& w_3 \\ w_1 \ar[rr]_{c_1} && w_2
+  \ar[rr]_{c_2} && w_3 }}[133X
+  
+  [124X
+  
+  [33X[0;0Ywhere[133X
+  
+  
+  [24X[33X[0;6Ym_3^{c_2}m_4  (m_1^{b_2}m_2)^{f_2} ~=~ (m_3m_1^{e_2})^{c_2} m_4m_2^{f_2} ~=~
+  (c_1c_2)^{-1}(d_1d_2)^{-1}(a_1a_2)(f_1f_2).[133X
+  
+  [124X
+  
+  [33X[0;0YFor  an  example  we  take for our groupoid the product of the group [22XS_3 = ⟨
+  (7,8),  (7,9)  ⟩[122X  with  the  complete  graph  on  [22X[-6  ...  -1][122X and, for our
+  pre-crossed  module, the [10XX12[110X, isomorphic to [22X(D_12 -> S_3)[122X, constructed using
+  [2XXModByCentralExtension[102X  ([14X2.1-5[114X).  The  source  of [10XX12[110X has generating set [22Xg =
+  (11,12,13,14,15,16),~  h  =  (12,16)(13,15)[122X.  We  check that the two ways of
+  computing the product of four squares below agree.[133X
+  
+  
+  [24X[33X[0;6Y\vcenter{\xymatrix     @=2pc{     -6     \ar[rr]^{(7,8)}     \ar[dd]_{(7,9)}
+  \ar@{}[ddrr]|{gh}  &&  -5 \ar[rr]^{(8,9)} \ar[dd]|{(8,9)} \ar@{}[ddrr]|{g^2}
+  &&  -4  \ar[dd]^{(7,8)}  &  &  &&&  \\  &&  &&  &  &  -6  \ar[rrr]^{(7,9,8)}
+  \ar[dd]_{(7,8,9)}      \ar@{}[ddrrr]|{(11,15,13)(12,16,14)}      &&&      -4
+  \ar[dd]^{(7,9,8)}  \\  -1 \ar[rr]|{(7,8,9)} \ar[dd]_{(8,9)} \ar@{}[ddrr]|{g}
+  &&    -3    \ar[rr]|{(7,9)}   \ar[dd]|{(7,9,8)}   \ar@{}[ddrr]|{h}   &&   -4
+  \ar[dd]^{(8,9)}  &=&  &&&  \\  &&  && & & -2 \ar[rrr]_{(7,9,8)} &&& -3 \\ -2
+  \ar[rr]_{(7,9)} && -2 \ar[rr]_{(7,8)} && -3 }}[133X
+  
+  [124X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XSetName( k8, "k8" ); [127X[104X
-    [4X[25Xgap>[125X [27XY8 := XModByAutomorphismGroup( k8 );; [127X[104X
-    [4X[25Xgap>[125X [27XX8 := Image( IsomorphismPerm2DimensionalGroup( Y8 ) );;[127X[104X
-    [4X[25Xgap>[125X [27XSetName( X8, "X8" );[127X[104X
-    [4X[25Xgap>[125X [27XPrint( "X8: ", Size( X8 ), " : ", StructureDescription( X8 ), "\n" );  [127X[104X
-    [4X[28XX8: [ 8, 168 ] : [ "C2 x C2 x C2", "PSL(3,2)" ][128X[104X
-    [4X[25Xgap>[125X [27Xclasses := LoopClasses( X8 );;[127X[104X
-    [4X[25Xgap>[125X [27XList( classes, c -> Length(c) );[127X[104X
-    [4X[28X[ 1, 21, 56, 42, 24, 24 ][128X[104X
-    [4X[25Xgap>[125X [27XLX := LoopsXMod( X8, (1,2)(5,6) );;[127X[104X
-    [4X[25Xgap>[125X [27XSize2d( LX ); [127X[104X
-    [4X[28X[ 8, 64 ][128X[104X
-    [4X[25Xgap>[125X [27XIdGroup( LX );[127X[104X
-    [4X[28X[ [ 8, 5 ], [ 64, 138 ] ][128X[104X
-    [4X[25Xgap>[125X [27XSetInfoLevel( InfoXMod, 1 );[127X[104X
-    [4X[25Xgap>[125X [27XLX8 := AllLoopsXMod( X8 );;[127X[104X
-    [4X[28X#I  LoopsXMod with a = (),  IdGroup = [ [ 8, 5 ], [ 1344, 11686 ] ][128X[104X
-    [4X[28X#I  LoopsXMod with a = (4,5)(6,7),  IdGroup = [ [ 8, 5 ], [ 64, 138 ] ][128X[104X
-    [4X[28X#I  LoopsXMod with a = (2,3)(4,6,5,7),  IdGroup = [ [ 8, 5 ], [ 32, 6 ] ][128X[104X
-    [4X[28X#I  LoopsXMod with a = (2,4,6)(3,5,7),  IdGroup = [ [ 8, 5 ], [ 24, 13 ] ][128X[104X
-    [4X[28X#I  LoopsXMod with a = (1,2,4,3,6,7,5),  IdGroup = [ [ 8, 5 ], [ 56, 11 ] ][128X[104X
-    [4X[28X#I  LoopsXMod with a = (1,2,4,5,7,3,6),  IdGroup = [ [ 8, 5 ], [ 56, 11 ] ][128X[104X
-    [4X[25Xgap>[125X [27Xiso := IsomorphismGroups( Range( LX ), Range( LX8[2] ) );;[127X[104X
-    [4X[25Xgap>[125X [27Xiso = fail;[127X[104X
-    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xg := (11,12,13,14,15,16);;  h := (12,16)(13,15);;[127X[104X
+    [4X[25Xgap>[125X [27Xgend12 := [ g, h ];;[127X[104X
+    [4X[25Xgap>[125X [27Xd12 := Group( gend12 );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( d12, "d12" ); [127X[104X
+    [4X[25Xgap>[125X [27Xgens3 := [ (7,8,9), (8,9) ];;[127X[104X
+    [4X[25Xgap>[125X [27Xs3 := Group( gens3 );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( s3, "s3" ); [127X[104X
+    [4X[25Xgap>[125X [27Xpr12 := GroupHomomorphismByImages( d12, s3, gend12, gens3 );;[127X[104X
+    [4X[25Xgap>[125X [27XX12 := XModByCentralExtension( pr12 );; [127X[104X
+    [4X[25Xgap>[125X [27XSetName( X12, "X12" ); [127X[104X
+    [4X[25Xgap>[125X [27XDisplay( X12 ); [127X[104X
+    [4X[28X[128X[104X
+    [4X[28XCrossed module X12 :- [128X[104X
+    [4X[28X: Source group d12 has generators:[128X[104X
+    [4X[28X  [ (11,12,13,14,15,16), (12,16)(13,15) ][128X[104X
+    [4X[28X: Range group s3 has generators:[128X[104X
+    [4X[28X  [ (7,8,9), (8,9) ][128X[104X
+    [4X[28X: Boundary homomorphism maps source generators to:[128X[104X
+    [4X[28X  [ (7,8,9), (8,9) ][128X[104X
+    [4X[28X: Action homomorphism maps range generators to automorphisms:[128X[104X
+    [4X[28X  (7,8,9) --> { source gens --> [ (11,12,13,14,15,16), (11,13)(14,16) ] }[128X[104X
+    [4X[28X  (8,9) --> { source gens --> [ (11,16,15,14,13,12), (12,16)(13,15) ] }[128X[104X
+    [4X[28X  These 2 automorphisms generate the group of automorphisms.[128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XGs3 := Groupoid( s3, [-6..-1] );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( Gs3, "Gs3" ); [127X[104X
+    [4X[25Xgap>[125X [27XD1 := SinglePieceDoubleGroupoid( Gs3, X12 );; [127X[104X
+    [4X[25Xgap>[125X [27XD1!.groupoid;[127X[104X
+    [4X[28XGs3[128X[104X
+    [4X[25Xgap>[125X [27XD1!.prexmod;[127X[104X
+    [4X[28XX12[128X[104X
+    [4X[25Xgap>[125X [27Xa1 := Arrow(Gs3,(7,8),-6,-5);;    a2 := Arrow(Gs3,(8,9),-5,-4);;[127X[104X
+    [4X[25Xgap>[125X [27Xb1 := Arrow(Gs3,(7,8,9),-1,-3);;  b2 := Arrow(Gs3,(7,9),-3,-4 );; [127X[104X
+    [4X[25Xgap>[125X [27Xc1 := Arrow(Gs3,(7,9),-2,-2);;    c2 := Arrow(Gs3,(7,8),-2,-3);; [127X[104X
+    [4X[25Xgap>[125X [27Xd1 := Arrow(Gs3,(7,9),-6,-1);;    d2 := Arrow(Gs3,(8,9),-1,-2);; [127X[104X
+    [4X[25Xgap>[125X [27Xe1 := Arrow(Gs3,(8,9),-5,-3);;    e2 := Arrow(Gs3,(7,9,8),-3,-2);; [127X[104X
+    [4X[25Xgap>[125X [27Xf1 := Arrow(Gs3,(7,8),-4,-4);;    f2 := Arrow(Gs3,(8,9),-4,-3);; [127X[104X
+    [4X[25Xgap>[125X [27X## now define four squares [127X[104X
+    [4X[25Xgap>[125X [27Xsq1 := SquareOfArrows( D1, g*h, a1, d1, e1, b1 ); [127X[104X
+    [4X[28X[-6] ---- (7,8) ---> [-5][128X[104X
+    [4X[28X  |                         |[128X[104X
+    [4X[28X(7,9)    (11,16)(12,15)(13,14)    (8,9)[128X[104X
+    [4X[28X  V                         V[128X[104X
+    [4X[28X[-1] ---- (7,8,9) ---> [-3][128X[104X
+    [4X[25Xgap>[125X [27Xsq2 := SquareOfArrows( D1, g^2, a2, e1, f1, b2 );;  [127X[104X
+    [4X[25Xgap>[125X [27Xsq3 := SquareOfArrows( D1, g, b1, d2, e2, c1 );;[127X[104X
+    [4X[25Xgap>[125X [27Xsq4 := SquareOfArrows( D1, h, b2, e2, f2, c2 );;[127X[104X
+    [4X[25Xgap>[125X [27X## then form two horizantal and two vertical products:[127X[104X
+    [4X[25Xgap>[125X [27Xsq12 := LeftRightProduct( D1, sq1, sq2 );;[127X[104X
+    [4X[25Xgap>[125X [27Xsq34 := LeftRightProduct( D1, sq3, sq4 );;[127X[104X
+    [4X[25Xgap>[125X [27Xsq13 := UpDownProduct( D1, sq1, sq3 );; [127X[104X
+    [4X[25Xgap>[125X [27Xsq24 := UpDownProduct( D1, sq2, sq4 );; [127X[104X
+    [4X[25Xgap>[125X [27X¢¢ combine in two ways to get a single square:[127X[104X
+    [4X[25Xgap>[125X [27Xsq1324 := LeftRightProduct( D1, sq13, sq24 );[127X[104X
+    [4X[28X[-6] ---- (7,9,8) ---> [-4][128X[104X
+    [4X[28X  |                         |[128X[104X
+    [4X[28X(7,8,9)    (11,15,13)(12,16,14)    (7,9,8)[128X[104X
+    [4X[28X  V                         V[128X[104X
+    [4X[28X[-2] ---- (7,9,8) ---> [-3][128X[104X
+    [4X[25Xgap>[125X [27Xsq1234 := UpDownProduct( D1, sq12, sq34 );;[127X[104X
+    [4X[25Xgap>[125X [27Xsq1324 = sq1234;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X11.2 [33X[0;0YBasic double groupoids[133X[101X
+  
+  [33X[0;0YAs  mentioned  earlier,  double  groupoids  were introduced in the [5XGroupoids[105X
+  package,  but  these  were  [13Xbasic  double groupoids[113X, without any pre-crossed
+  module.  The  element of a square was simply its boundary. Here we introduce
+  an  operation  which  converts  such  a  basic double groupoid into the more
+  general case considered in this package.[133X
+  
+  [1X11.2-1 EnhancedBasicDoubleGroupoid[101X
+  
+  [33X[1;0Y[29X[2XEnhancedBasicDoubleGroupoid[102X( [3Xbdg[103X ) [32X operation[133X
+  
+  [33X[0;0YWe  need  to  add  a  pre-crossed  module to the definition of such a double
+  groupoid.  We  choose  [22X(G  -> G)[122X where [22XG[122X is the root group of the underlying
+  groupoid.  (This  is  only  valid for groupoids which are the direct product
+  with  a  complete  graph.)  The  example  is  taken  from section 7.1 of the
+  [5XGroupoids[105X  package,  converting  basic  [10XB0[110X to [10XD0[110X, and we check that the same
+  square is produced in each case.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xg := (1,2,3,4);;  h := (1,3);;[127X[104X
+    [4X[25Xgap>[125X [27Xgend8 := [ g, h ];;[127X[104X
+    [4X[25Xgap>[125X [27Xd8 := Group( gend8 );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( d8, "d8" ); [127X[104X
+    [4X[25Xgap>[125X [27XGd8 := Groupoid( d8, [-9..-7] );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( Gd8, "Gd8" ); [127X[104X
+    [4X[25Xgap>[125X [27XB0 := SinglePieceBasicDoubleGroupoid( Gd8 );; [127X[104X
+    [4X[25Xgap>[125X [27XB0!.groupoid;[127X[104X
+    [4X[28XGd8[128X[104X
+    [4X[25Xgap>[125X [27XB0!.objects;[127X[104X
+    [4X[28X[ -9 .. -7 ][128X[104X
+    [4X[25Xgap>[125X [27Xa0 := Arrow(Gd8,(),-9,-7);;         b0 := Arrow(Gd8,(2,4),-9,-8);;  [127X[104X
+    [4X[25Xgap>[125X [27Xd0 := Arrow(Gd8,g,-9,-9);;          e0 := Arrow(Gd8,(1,3),-7,-8);;      [127X[104X
+    [4X[25Xgap>[125X [27Xbdy0 := b0![1]^-1 * d0![1]^-1 * a0![1] * e0![1];; [127X[104X
+    [4X[25Xgap>[125X [27Xbsq0 := SquareOfArrows( B0, bdy0, a0, d0, e0, b0 ); [127X[104X
+    [4X[28X[-9] ---- () ---> [-7][128X[104X
+    [4X[28X  |                         |[128X[104X
+    [4X[28X(1,2,3,4)    (1,4,3,2)    (1,3)[128X[104X
+    [4X[28X  V                         V[128X[104X
+    [4X[28X[-9] ---- (2,4) ---> [-8][128X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XD0 := EnhancedBasicDoubleGroupoid( B0 );;[127X[104X
+    [4X[25Xgap>[125X [27XD0!.prexmod;[127X[104X
+    [4X[28X[d8->d8][128X[104X
+    [4X[25Xgap>[125X [27Xbsq0 = SquareOfArrows( D0, bdy0, a0, d0, e0, b0 ); [127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X11.3 [33X[0;0YCommutative double groupoids[133X[101X
+  
+  [33X[0;0YA double groupoid square[133X
+  
+  
+  [24X[33X[0;6Y\vcenter{\xymatrix @=4pc{ u_1 \ar[r]^{a_1} \ar[d]_{d_1}\ar@{}[dr] |{1} & u_2
+  \ar[d]^{e_1} \\ v_1 \ar[r]_{b_1} & v_2 }}[133X
+  
+  [124X
+  
+  [33X[0;0Yis  [13Xcommutative[113X  if  [22Xa_1e_1  =  d_1b_1[122X, which means that its boundary is the
+  identity.  So  a  double groupoid which consists only of commutative squares
+  must  have  a  pre-crossed  module  with  zero boundary. Commutative squares
+  compose horizantally and vertically provided only that they have the correct
+  common arrow.[133X
+  
+  [1X11.3-1 DoubleGroupoidWithZeroBoundary[101X
+  
+  [33X[1;0Y[29X[2XDoubleGroupoidWithZeroBoundary[102X( [3Xgpd[103X, [3Xsrc[103X ) [32X operation[133X
+  
+  [33X[0;0YThe  data for a double groupoid of commutative squares therefore consists of
+  a    groupoid   and   a   source   group.   We   may   use   the   operation
+  [2XPreXModWithTrivialRange[102X ([14X2.3-1[114X) to provide a pre-crossed module. We take for
+  our  example the groupoid [10XGd8[110X and the pre-crossed module [10XQ16[110X of section [14X2.3[114X.
+  We introduce a new right arrow to construct a square which commutes.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XD16 := DoubleGroupoidWithZeroBoundary( Gs3, d16 );;[127X[104X
+    [4X[25Xgap>[125X [27XD16!.prexmod;[127X[104X
+    [4X[28X[d16->Group( [ () ] )][128X[104X
+    [4X[25Xgap>[125X [27Xe16 := Arrow( Gs3, (7,9,8), -5, -3 );;[127X[104X
+    [4X[25Xgap>[125X [27Xsq16 := SquareOfArrows( D16, (), a1, d1, e16, b1 );[127X[104X
+    [4X[28X[-6] ---- (7,8) ---> [-5][128X[104X
+    [4X[28X  |                         |[128X[104X
+    [4X[28X(7,9)    ()    (7,9,8)[128X[104X
+    [4X[28X  V                         V[128X[104X
+    [4X[28X[-1] ---- (7,8,9) ---> [-3][128X[104X
+    [4X[25Xgap>[125X [27XD16 := DoubleGroupoidWithZeroBoundary( Gs3, d16 );;[127X[104X
+    [4X[25Xgap>[125X [27XD16!.prexmod;[127X[104X
+    [4X[28X[d16->Group( [ () ] )][128X[104X
+    [4X[25Xgap>[125X [27Xe16 := Arrow( Gs3, (7,9,8), -5, -3 );;[127X[104X
+    [4X[25Xgap>[125X [27Xsq16 := SquareOfArrows( D16, (), a1, d1, e16, b1 );[127X[104X
+    [4X[28X[-6] ---- (7,8) ---> [-5][128X[104X
+    [4X[28X  |                         |[128X[104X
+    [4X[28X(7,9)    ()    (7,9,8)[128X[104X
+    [4X[28X  V                         V[128X[104X
+    [4X[28X[-1] ---- (7,8,9) ---> [-3][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   

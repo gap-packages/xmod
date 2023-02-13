@@ -15,7 +15,7 @@
 <body class="chap2"  onload="jscontent()">
 
 
-<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap3.html">[Next Chapter]</a>&nbsp;  </div>
 
@@ -289,7 +289,7 @@ Group([ (1,2,3,4,5,6), (2,6)(3,5), (7,8), (8,9), (9,10) ])
 <h5>2.1-7 XModByAbelianModule</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; XModByAbelianModule</code>( <var class="Arg">abmod</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>A <em>crossed abelian module</em> has an abelian module as source and the zero map as boundary. See section <a href="chap13.html#X852BD9CA84C2AFF0"><span class="RefLink">13.2</span></a> for an example.</p>
+<p>A <em>crossed abelian module</em> has an abelian module as source and the zero map as boundary. See section <a href="chap14.html#X852BD9CA84C2AFF0"><span class="RefLink">14.2</span></a> for an example.</p>
 
 <p><a id="X81704DFB795C0D29" name="X81704DFB795C0D29"></a></p>
 
@@ -536,8 +536,11 @@ true
 <h5>2.3-1 PreXModByBoundaryAndAction</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PreXModByBoundaryAndAction</code>( <var class="Arg">bdy</var>, <var class="Arg">act</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PreXModWithTrivialRange</code>( <var class="Arg">src</var>, <var class="Arg">rng</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SubPreXMod</code>( <var class="Arg">X0</var>, <var class="Arg">src</var>, <var class="Arg">rng</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>If axiom <span class="SimpleMath">XMod 2</span> is <em>not</em> satisfied, the corresponding structure is known as a <em>pre-crossed module</em>.</p>
+
+<p>A special case of this operation is when the range is a trivial group (not necessarily a subgroup of the source), and so the action is trivial. This case will be used when constructing a special type of double groupoid in Chapter <a href="chap11.html#X83B7E8A287C9284A"><span class="RefLink">11</span></a>.</p>
 
 
 <div class="example"><pre>
@@ -555,6 +558,18 @@ true
 [d16-&gt;sk4]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsXMod( P16 );</span>
 false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Q16 := PreXModWithTrivialRange( d16, d16 ); </span>
+[d16-&gt;Group( [ () ] )]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SQ16 := SubPreXMod( Q16, sk4, Group( [()] ) );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display(SQ16);</span>
+Crossed module :- 
+: Source group has generators:
+  [ (11,15)(12,16)(13,17)(14,18), (12,18)(13,17)(14,16) ]
+: Range group has generators:
+  [ () ]
+: Boundary homomorphism maps source generators to:
+  [ (), () ]
+  The automorphism group is trivial
 
 </pre></div>
 
@@ -1103,7 +1118,7 @@ rec( cat1 := 12, idem := 21, iso1 := 4, siso := 4, symm := 12 )
 <h5>2.7-1 Cat1Select</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Cat1Select</code>( <var class="Arg">size</var>, <var class="Arg">gpnum</var>, <var class="Arg">num</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>The function <code class="code">Cat1Select</code> returns the cat<span class="SimpleMath">^1</span>-group numbered <code class="code">num</code> whose source is the group <code class="code">G := SmallGroup(size,gpnum)</code>. When <span class="SimpleMath">|G| leqslant 60</span> the data file in this package is used. For larger groups <code class="code">SmallCat1Group</code> (see <a href="chap12.html#X865CE53A827FBE6F"><span class="RefLink">12.1</span></a>) is called, accessing the datafile in package <strong class="pkg">HAP</strong>.</p>
+<p>The function <code class="code">Cat1Select</code> returns the cat<span class="SimpleMath">^1</span>-group numbered <code class="code">num</code> whose source is the group <code class="code">G := SmallGroup(size,gpnum)</code>. When <span class="SimpleMath">|G| leqslant 60</span> the data file in this package is used. For larger groups <code class="code">SmallCat1Group</code> (see <a href="chap13.html#X865CE53A827FBE6F"><span class="RefLink">13.1</span></a>) is called, accessing the datafile in package <strong class="pkg">HAP</strong>.</p>
 
 <p>The example below is the first case in which <span class="SimpleMath">t ≠ h</span> and the associated conjugation crossed module is given by the normal subgroup <code class="code">c3</code> of <code class="code">s3</code>.</p>
 
@@ -1323,7 +1338,7 @@ groupoid with 2 pieces:
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap3.html">[Next Chapter]</a>&nbsp;  </div>
 
 
-<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <hr />
 <p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>

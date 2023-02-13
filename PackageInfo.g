@@ -7,8 +7,8 @@ SetPackageInfo( rec(
 
 PackageName := "XMod",
 Subtitle := "Crossed Modules and Cat1-Groups",
-Version := "2.88",
-Date := "28/04/2022", # dd/mm/yyyy format
+Version := "2.91",
+Date := "13/02/2023", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -17,18 +17,9 @@ Persons := [
     FirstNames    := "Chris",
     IsAuthor      := true,
     IsMaintainer  := true,
-    Email         := "c.d.wensley@bangor.ac.uk",
+    Email         := "cdwensley.maths@btinternet.com",
     WWWHome       := "https://github.com/cdwensley",
-    PostalAddress := Concatenation( [
-                      "Dr. C.D. Wensley\n",
-                      "School of Computer Science and Electronic Engineering\n",
-                      "Bangor University\n",
-                      "Dean Street\n",
-                      "Bangor\n",
-                      "Gwynedd LL57 1UT\n",
-                      "UK"] ),
-    Place         := "Llanfairfechan",
-    Institution   := "Bangor University"
+    Place         := "Llanfairfechan"
   ),
   rec(
     LastName      := "Alp",
@@ -97,7 +88,7 @@ and higher-dimensional generalisations.",
 PackageDoc := rec(
   BookName  := "XMod",
   ArchiveURLSubset := ["doc"],
-  HTMLStart := "doc/chap0.html",
+  HTMLStart := "doc/chap0_mj.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
   LongTitle := "Crossed Modules and Cat1-Groups in GAP",
@@ -106,13 +97,12 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">=4.11.0",
-  NeededOtherPackages := [ ["utils", ">= 0.71"], 
-                           ["groupoids", ">= 1.68"], 
+  NeededOtherPackages := [ ["utils", ">= 0.81"], 
+                           ["groupoids", ">= 1.73"], 
                            ["HAP", ">= 1.29"],
                            ["AutPGrp", ">= 1.10.2"], 
                            ["SmallGrp", ">= 1.4.2" ] ], 
-  SuggestedOtherPackages := [ ["AutoDoc", ">=2020.08.11"], 
-                              ["GAPDoc", ">= 1.6.4"] ],
+  SuggestedOtherPackages := [ ],
   ExternalConditions := [ ]
 ),
 
@@ -139,7 +129,7 @@ Keywords := ["crossed module", "cat1-group", "derivation", "section",
 AutoDoc := rec(
     TitlePage := rec(
         Copyright := Concatenation(
-            "&copyright; 1996-2022, Chris Wensley et al. <P/>\n", 
+            "&copyright; 1996-2023, Chris Wensley et al. <P/>\n", 
             "The &XMod; package is free software; you can redistribute it ", 
             "and/or modify it under the terms of the GNU General ", 
             "Public License as published by the Free Software Foundation; ", 

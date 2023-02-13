@@ -195,7 +195,7 @@
   [33X[1;0Y[29X[2XXModByAbelianModule[102X( [3Xabmod[103X ) [32X operation[133X
   
   [33X[0;0YA [13Xcrossed abelian module[113X has an abelian module as source and the zero map as
-  boundary. See section [14X13.2[114X for an example.[133X
+  boundary. See section [14X14.2[114X for an example.[133X
   
   [1X2.1-8 DirectProduct[101X
   
@@ -452,10 +452,16 @@
   [1X2.3-1 PreXModByBoundaryAndAction[101X
   
   [33X[1;0Y[29X[2XPreXModByBoundaryAndAction[102X( [3Xbdy[103X, [3Xact[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPreXModWithTrivialRange[102X( [3Xsrc[103X, [3Xrng[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XSubPreXMod[102X( [3XX0[103X, [3Xsrc[103X, [3Xrng[103X ) [32X operation[133X
   
   [33X[0;0YIf  axiom [22XXMod 2[122X is [13Xnot[113X satisfied, the corresponding structure is known as a
   [13Xpre-crossed module[113X.[133X
+  
+  [33X[0;0YA  special  case of this operation is when the range is a trivial group (not
+  necessarily  a  subgroup  of the source), and so the action is trivial. This
+  case  will  be  used  when constructing a special type of double groupoid in
+  Chapter [14X11[114X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
@@ -472,6 +478,18 @@
     [4X[28X[d16->sk4][128X[104X
     [4X[25Xgap>[125X [27XIsXMod( P16 );[127X[104X
     [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XQ16 := PreXModWithTrivialRange( d16, d16 ); [127X[104X
+    [4X[28X[d16->Group( [ () ] )][128X[104X
+    [4X[25Xgap>[125X [27XSQ16 := SubPreXMod( Q16, sk4, Group( [()] ) );; [127X[104X
+    [4X[25Xgap>[125X [27XDisplay(SQ16);[127X[104X
+    [4X[28XCrossed module :- [128X[104X
+    [4X[28X: Source group has generators:[128X[104X
+    [4X[28X  [ (11,15)(12,16)(13,17)(14,18), (12,18)(13,17)(14,16) ][128X[104X
+    [4X[28X: Range group has generators:[128X[104X
+    [4X[28X  [ () ][128X[104X
+    [4X[28X: Boundary homomorphism maps source generators to:[128X[104X
+    [4X[28X  [ (), () ][128X[104X
+    [4X[28X  The automorphism group is trivial[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
@@ -1075,7 +1093,7 @@
   
   [33X[0;0YThe function [10XCat1Select[110X returns the cat[22X^1[122X-group numbered [10Xnum[110X whose source is
   the group [10XG := SmallGroup(size,gpnum)[110X. When [22X|G| leqslant 60[122X the data file in
-  this package is used. For larger groups [10XSmallCat1Group[110X (see [14X12.1[114X) is called,
+  this package is used. For larger groups [10XSmallCat1Group[110X (see [14X13.1[114X) is called,
   accessing the datafile in package [5XHAP[105X.[133X
   
   [33X[0;0YThe  example  below  is  the  first  case  in which [22Xt ≠ h[122X and the associated

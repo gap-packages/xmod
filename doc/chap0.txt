@@ -6,10 +6,10 @@
                        [1X Crossed Modules and Cat1-Groups [101X
   
   
-                                    2.88dev
+                                      2.91
   
   
-                                1 February 2023
+                                13 February 2023
   
   
                                  Chris Wensley
@@ -271,37 +271,43 @@
       10.1-2 IsXModWithObjects
       10.1-3 IsPermPreXModWithObjects
       10.1-4 Root2dGroup
-  11 [33X[0;0YApplications[133X
-    11.1 [33X[0;0YFree Loop Spaces[133X
-      11.1-1 LoopClasses
-  12 [33X[0;0YInteraction with HAP[133X
-    12.1 [33X[0;0YCalling HAP functions[133X
-      12.1-1 SmallCat1Group
-      12.1-2 CatOneGroupToXMod
-      12.1-3 IdCat1Group
-  13 [33X[0;0YUtility functions[133X
-    13.1 [33X[0;0YMappings[133X
-      13.1-1 InclusionMappingGroups
-      13.1-2 InnerAutomorphismsByNormalSubgroup
-      13.1-3 IsGroupOfAutomorphisms
-    13.2 [33X[0;0YAbelian Modules[133X
-      13.2-1 AbelianModuleObject
-  14 [33X[0;0YDevelopment history[133X
-    14.1 [33X[0;0YChanges from version to version[133X
-      14.1-1 [33X[0;0YVersion 1 for [5XGAP[105X 3[133X
-      14.1-2 [33X[0;0YVersion 2[133X
-      14.1-3 [33X[0;0YVersion 2.001 for [5XGAP[105X 4[133X
-      14.1-4 [33X[0;0YInduced crossed modules[133X
-      14.1-5 [33X[0;0YVersions 2.002 -- 2.006[133X
-      14.1-6 [33X[0;0YVersions 2.007 -- 2.010[133X
-    14.2 [33X[0;0YVersions for [5XGAP[105X [4.5 .. 4.11][133X
-      14.2-1 [33X[0;0YAllCat1s[133X
-      14.2-2 [33X[0;0YVersions 2.43 - 2.56[133X
-      14.2-3 [33X[0;0YVersion 2.61[133X
-      14.2-4 [33X[0;0YVersion 2.63 - 2.74[133X
-      14.2-5 [33X[0;0YVersion 2.75 - 2.85[133X
-      14.2-6 [33X[0;0YVersion 2.86 - 2.88[133X
-    14.3 [33X[0;0YWhat needs doing next?[133X
+  11 [33X[0;0YDouble Groupoids[133X
+    11.1 [33X[0;0YDouble groupoid squares[133X
+    11.2 [33X[0;0YBasic double groupoids[133X
+      11.2-1 EnhancedBasicDoubleGroupoid
+    11.3 [33X[0;0YCommutative double groupoids[133X
+      11.3-1 DoubleGroupoidWithZeroBoundary
+  12 [33X[0;0YApplications[133X
+    12.1 [33X[0;0YFree Loop Spaces[133X
+      12.1-1 LoopClasses
+  13 [33X[0;0YInteraction with HAP[133X
+    13.1 [33X[0;0YCalling HAP functions[133X
+      13.1-1 SmallCat1Group
+      13.1-2 CatOneGroupToXMod
+      13.1-3 IdCat1Group
+  14 [33X[0;0YUtility functions[133X
+    14.1 [33X[0;0YMappings[133X
+      14.1-1 InclusionMappingGroups
+      14.1-2 InnerAutomorphismsByNormalSubgroup
+      14.1-3 IsGroupOfAutomorphisms
+    14.2 [33X[0;0YAbelian Modules[133X
+      14.2-1 AbelianModuleObject
+  15 [33X[0;0YDevelopment history[133X
+    15.1 [33X[0;0YChanges from version to version[133X
+      15.1-1 [33X[0;0YVersion 1 for [5XGAP[105X 3[133X
+      15.1-2 [33X[0;0YVersion 2[133X
+      15.1-3 [33X[0;0YVersion 2.001 for [5XGAP[105X 4[133X
+      15.1-4 [33X[0;0YInduced crossed modules[133X
+      15.1-5 [33X[0;0YVersions 2.002 -- 2.006[133X
+      15.1-6 [33X[0;0YVersions 2.007 -- 2.010[133X
+    15.2 [33X[0;0YVersions for [5XGAP[105X [4.5 .. 4.12][133X
+      15.2-1 [33X[0;0YAllCat1s[133X
+      15.2-2 [33X[0;0YVersions 2.43 - 2.56[133X
+      15.2-3 [33X[0;0YVersion 2.61[133X
+      15.2-4 [33X[0;0YVersions 2.63 - 2.74[133X
+      15.2-5 [33X[0;0YVersions 2.75 - 2.85[133X
+      15.2-6 [33X[0;0YVersions 2.86 - 2.91[133X
+    15.3 [33X[0;0YWhat needs doing next?[133X
   
   
   [32X
