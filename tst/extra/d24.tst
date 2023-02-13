@@ -2,7 +2,7 @@
 ##
 #W  d24.tst                       XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2020, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2023, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 gap> START_TEST( "XMod package: d24.tst" );
@@ -24,12 +24,12 @@ gap> xs24 := CrossedSquareByNormalSubgroups( c6, d12a, d12b, d24 );
 [ d12b -> d24 ]
 gap> cxs24 := PreCat2GroupOfPreCrossedSquare( xs24 ); 
 (pre-)cat2-group with generating (pre-)cat1-groups:
-1 : [((d24 |X d12a) |X (d12b |X c6))=>(d24 |X d12a)]
-2 : [((d24 |X d12a) |X (d12b |X c6))=>(d24 |X d12b)]
+1 : [((d24 |X d12a) |X (d12b |X c6)) => (d24 |X d12a)]
+2 : [((d24 |X d12a) |X (d12b |X c6)) => (d24 |X d12b)]
 gap> IsCat2Group( cxs24 );
 true
 gap> diag := Diagonal2DimensionalGroup( cxs24 );
-[((d24 |X d12a) |X (d12b |X c6))=>d24]
+[((d24 |X d12a) |X (d12b |X c6)) => d24]
 gap> ## another example of a cat2-group whose diagonal is only a pre-cat1-group 
 gap> IsCat1Group( diag );
 false
