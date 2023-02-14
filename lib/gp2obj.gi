@@ -2,7 +2,7 @@
 ##
 #W  gp2obj.gi                 GAP4 package `XMod'               Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2022, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2023, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 ##  This file contains generic methods for (pre-)crossed modules and
@@ -1873,6 +1873,9 @@ function( C1G )
     kerth := CommutatorSubgroup( kert, kerh );
     if not ( Size( kerth ) = 1 ) then
         Info( InfoXMod, 1, "condition  [kert,kerh] = 1  is not satisfied"); 
+        Info( InfoXMod, 4, " kert = ", kert, " has Id ", IdGroup(kert) ); 
+        Info( InfoXMod, 4, " kerh = ", kerh, " has Id ", IdGroup(kerh) ); 
+        Info( InfoXMod, 4, "kerth = ", kerth, " has Id ", IdGroup(kerth) ); 
         return false;
     fi;
     if not ( ( Source( f ) = kerC ) and ( Range( f ) = Csrc ) ) then
@@ -2391,7 +2394,7 @@ function( PC )
     return C1G;
 end );
 
-##############################################################################
+#############################################################################
 ##
 #M  DiagonalCat1Group . . . . . . cat1-group of the form (GxG => G) with t<>h
 ##
@@ -2455,15 +2458,15 @@ function( gp )
     return DiagonalCat1Group( gens ); 
 end ); 
 
-##############################################################################
+#############################################################################
 ##
-#M  AllCat1GroupsWithImage  . . . . . . cat1-group structures with given range
-#O  AllCat1GroupsWithImageIterator( <gp> )  . . iterator for the previous list
-#M  AllCat1GroupsWithImageNumber . . . . .  # cat1-groups with specified range
+#M  AllCat1GroupsWithImage  . . . . . cat1-group structures with given range
+#O  AllCat1GroupsWithImageIterator( <gp> )  . iterator for the previous list
+#M  AllCat1GroupsWithImageNumber . . . .  # cat1-groups with specified range
 #F  NextIterator_AllCat1GroupsWithImage( <iter> ) 
 #F  IsDoneIterator_AllCat1GroupsWithImage( <iter> ) 
 #F  ShallowCopy_AllCat1GroupsWithImage( <iter> ) 
-#M  AllCat1GroupsWithImageUpToIsomorphism  . . . . . iso class reps for G => R
+#M  AllCat1GroupsWithImageUpToIsomorphism  . . . . iso class reps for G => R
 ##
 BindGlobal( "NextIterator_AllCat1GroupsWithImage", function ( iter ) 
 

@@ -1,7 +1,7 @@
 # CHANGES to the 'XMod' package
 
-## 2.89 -> 2.91 (13/02/2023) 
- * (09/02/23) added chapter on double groupoids with operations 
+## 2.89 -> 2.91 (14/02/2023) 
+ * (09/02/23) added a chapter on double groupoids with operations 
               EnhancedBasicDoubleGroupoid, DoubleGroupooidWithZeroBoundary
  * (05/02/23) added PreXModWithTrivialRange 
 

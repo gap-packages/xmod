@@ -31,6 +31,12 @@ true
 gap> diag := Diagonal2DimensionalGroup( cxs24 );
 [((d24 |X d12a) |X (d12b |X c6)) => d24]
 gap> ## another example of a cat2-group whose diagonal is only a pre-cat1-group 
+gap> t := TailMap( diag );;  kert := Kernel( t );; 
+gap> h := HeadMap( diag );;  kerh := Kernel( h );; 
+gap> kerth := CommutatorSubgroup( kert, kerh );;
+gap> StructureDescription( kerth );
+"C6 x C6"
+gap> ## a nontrivial kerth means that diag is not a cat1-group 
 gap> IsCat1Group( diag );
 false
 

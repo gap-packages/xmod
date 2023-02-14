@@ -1,11 +1,11 @@
-##############################################################################
+#############################################################################
 ##
-#W  gp3obj.gi                   GAP4 package `XMod'              Chris Wensley
-##                                                                Alper Odabas
+#W  gp3obj.gi                   GAP4 package `XMod'            Chris Wensley
+##                                                              Alper Odabas
 ##  This file implements generic methods for (pre-)crossed squares 
 ##  and (pre-)cat2-groups.
 ##
-#Y  Copyright (C) 2001-2022, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2023, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
     
 #############################################################################
@@ -44,7 +44,7 @@ function( obj )
              and IsPcGroup( Diagonal2DimensionalGroup(obj) ) );
 end );
 
-##############################################################################
+#############################################################################
 ##
 #M  IsCrossedPairing
 #M  CrossedPairingObj( [<src1>,<src2>],<rng>,<map> ) .. make a crossed pairing
@@ -92,7 +92,7 @@ function ( xp, elm )
     return ImageElmMapping2ArgumentsByFunction( CrossedPairingMap(xp), elm );
 end );
 
-##############################################################################
+#############################################################################
 ##
 #M  CrossedPairingByCommutators( <grp>, <grp>, <grp> ) . . . . . make an xpair
 ##
@@ -111,7 +111,7 @@ function( N, M, L )
     return xp;
 end );
 
-##############################################################################
+#############################################################################
 ##
 #M  CrossedPairingByConjugators( <grp> ) . . . make an xpair : Inn(M)^2 -> M 
 ##
@@ -136,7 +136,7 @@ function( innM )
     return xp;
 end );
 
-##############################################################################
+#############################################################################
 ##
 #M  CrossedPairingByDerivations( <xmod> ) . . .  make an actor crossed pairing
 ##
@@ -161,7 +161,7 @@ function( X0 )
     return CrossedPairingObj( [RX,WX], SX, map );
 end );
 
-##############################################################################
+#############################################################################
 ##
 #M  CrossedPairingByPreImages( <xmod>, <xmod> ) . . . inner autos -> x-pairing 
 ##
@@ -190,7 +190,7 @@ function( up, lt )
     return xp;
 end );
 
-##############################################################################
+#############################################################################
 ##
 #M  CrossedPairingBySingleXModAction( <xmod>, <subxmod> ) . action -> x-pairing 
 #M  PrincipalCrossedPairing( <xmod > )   
@@ -424,10 +424,10 @@ function( XS )
     return true;
 end );
 
-##############################################################################
+#############################################################################
 ##
 #M  PreCrossedSquareObj ( <up>, <left>, <right>, <down>, <diag>, <pair> ) 
-##                                               . . . make a PreCrossedSquare
+##                                          . . . make a PreCrossedSquare
 ##
 InstallMethod( PreCrossedSquareObj, "for prexmods, action and pairing", true,
     [ IsPreXMod, IsPreXMod, IsPreXMod, IsPreXMod, IsObject, IsObject ], 0,
@@ -454,8 +454,9 @@ end );
 
 ###############################################################################
 ##
-#F  PreCrossedSquare( <up>, <lt>, <rt>, <dn>, <dg>, <xp> ) 5 prexmods + pairing
-#F  PreCrossedSquare( <PC2> )  . . . . . . . . . . . . . . for a pre-cat2-group
+#F  PreCrossedSquare( <up>, <lt>, <rt>, <dn>, <dg>, <xp> ) 
+##                    . . . . . . . . . . . comprising 5 prexmods + pairing
+#F  PreCrossedSquare( <PC2> )  . . . . . . . . . . . . for a pre-cat2-group
 ##
 InstallGlobalFunction( PreCrossedSquare, function( arg )
 
@@ -478,8 +479,8 @@ InstallGlobalFunction( PreCrossedSquare, function( arg )
     fi; 
     if not ok then 
         Print( "standard usage for the function PreCrossedSquare:\n" );  
-        Print( "    PreCrossedSquare( <up>, <lt>, <rt>, <dn>, <dg>, <xp> );\n" ); 
-        Print( "             for 5 pre-crossed modules and a crossed pairing\n" );
+        Print( "    PreCrossedSquare(<up>,<lt>,<rt>,<dn>,<dg>,<xp>);\n" ); 
+        Print( "    for 5 pre-crossed modules and a crossed pairing\n" );
         Print( "or: PreCrossedSquare( <PC2G> );  for a pre-cat2-group> );\n" );
         return fail;
     fi;
@@ -549,7 +550,7 @@ InstallGlobalFunction( CrossedSquare, function( arg )
     return XS;
 end );
 
-##############################################################################
+#############################################################################
 ##
 #M  PreCrossedSquareByPreXMods . . pre-crossed square from 5 pre-xmods + xpair
 #M  CrossedSquareByXMods . . . . . . . . . crossed square from 5 xmods + xpair
@@ -601,9 +602,9 @@ function( up, left, right, down, diag, xp )
     return XS;
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  CrossedSquareByNormalSubgroups . . . crossed square from normal L,M,N in P
+#M  CrossedSquareByNormalSubgroups . . crossed square from normal L,M,N in P
 ##
 InstallMethod( CrossedSquareByNormalSubgroups, "conjugation crossed square",
     true, [ IsGroup, IsGroup, IsGroup, IsGroup ], 0,
@@ -611,7 +612,7 @@ function( L, M, N, P )
 
     local XS, up, lt, rt, dn, dg, xp, diag;
 
-    if not ( IsNormal( P, M ) and IsNormal( P, N ) and IsNormal( L, P ) ) then
+    if not ( IsNormal(P,M) and IsNormal(P,N) and IsNormal(L,P) ) then
         Error( "M,N,L fail to be normal subgroups of P" ); 
     fi;
     if not ( IsNormal( M, L ) and IsNormal( N, L ) ) then
@@ -651,9 +652,9 @@ function( M, N, P )
     return CrossedSquareByNormalSubgroups( L, M, N, P ); 
 end );
 
-###############################################################################
+#############################################################################
 ##
-#M  CrossedSquareByNormalSubXMod . crossed square from xmod and normal subxmod 
+#M  CrossedSquareByNormalSubXMod . crossed square from xmod + normal subxmod 
 ##
 InstallMethod( CrossedSquareByNormalSubXMod, "for an xmod and normal subxmod", 
     true, [ IsXMod, IsXMod ], 0,
@@ -679,11 +680,12 @@ function( rt, lt )
     return XS;
 end );
 
-###############################################################################
+#############################################################################
 ##
-#M  CrossedSquareByXModSplitting . . . xsq by surjection followed by injection
+#M  CrossedSquareByXModSplitting . . xsq by surjection followed by injection
 ##
-InstallMethod( CrossedSquareByXModSplitting, "for an xmod", true, [ IsXMod ], 0,
+InstallMethod( CrossedSquareByXModSplitting, "for an xmod", true, 
+    [ IsXMod ], 0,
 function( X0 )
 
     local S, R, bdy, Q, up, dn, xp, XS;
@@ -701,8 +703,7 @@ function( X0 )
     fi; 
     return XS;
 end );
-
-##############################################################################
+#############################################################################
 ##
 #M  CrossedSquareByPullback . . . . . . . . for two xmods with a common range 
 ##
@@ -804,11 +805,12 @@ function( dn, rt )
     return XS;
 end );
 
-###############################################################################
+#############################################################################
 ##
-#M  ActorCrossedSquare . . . create a crossed square from an xmod and its actor
+#M  ActorCrossedSquare . . create a crossed square from an xmod and its actor
 ##
-InstallMethod( ActorCrossedSquare, "actor crossed square", true, [ IsXMod ], 0,
+InstallMethod( ActorCrossedSquare, "actor crossed square", true, 
+    [ IsXMod ], 0,
 function( X0 )
 
     local XS, WX, LX, NX, AX, xp;
@@ -828,9 +830,9 @@ function( X0 )
     return XS;
 end );
 
-###############################################################################
+#############################################################################
 ##
-#M  CrossedSquareByAutomorphismGroup . . . crossed square G -> Inn(G) -> Aut(G)
+#M  CrossedSquareByAutomorphismGroup . . crossed square G -> Inn(G) -> Aut(G)
 ##
 InstallMethod( CrossedSquareByAutomorphismGroup, "G -> Inn(G) -> Aut(G)", 
     true, [ IsGroup ], 0,
@@ -949,13 +951,13 @@ function( PS )
              StructureDescription( Range( Down2DimensionalGroup( PS ) ) ) ]; 
 end ); 
 
-##############################################################################
+#############################################################################
 ##
 #M  \=( <dom1>, <dom2> ) . . . . . . . . . . test if two 3d-objects are equal
 ##
 InstallMethod( \=,
-    "generic method for two 3d-domains",
-    IsIdenticalObj, [ IsHigherDimensionalGroup, IsHigherDimensionalGroup ], 0,
+    "generic method for two 3d-domains", IsIdenticalObj, 
+    [ IsHigherDimensionalGroup, IsHigherDimensionalGroup ], 0,
 function ( dom1, dom2 ) 
     if not ( ( HigherDimension( dom1 ) = 3 ) 
            and ( HigherDimension( dom2 ) = 3 ) ) then 
@@ -1228,7 +1230,7 @@ function( P )
     return ok; 
 end ); 
 
-##############################################################################
+#############################################################################
 ##
 #M  PreCat2GroupObj( [<up>,<left>,<right>,<down>,<diag>] ) 
 ##
@@ -1259,8 +1261,8 @@ end );
 
 #############################################################################
 ##
-#F  (Pre)Cat2Group( [ up, lt (,diag) )   cat2-group from 2/3 (pre)cat1-groups
-#F  (Pre)Cat2Group( XS )                 cat2-group from (pre)crossed square
+#F  (Pre)Cat2Group( [ up, lt (,diag) )  cat2-group from 2/3 (pre)cat1-groups
+#F  (Pre)Cat2Group( XS )                cat2-group from (pre)crossed square
 ##
 InstallGlobalFunction( PreCat2Group, function( arg )
 
@@ -1297,7 +1299,7 @@ InstallGlobalFunction( PreCat2Group, function( arg )
             Info( InfoXMod, 2, "failure determining remaining cat1-groups" ); 
             return fail; 
         fi;
-        C2G := PreCat2GroupByPreCat1Groups( up, left, drd[1], drd[2], drd[3] ); 
+        C2G := PreCat2GroupByPreCat1Groups( up,left,drd[1],drd[2],drd[3] ); 
         if ( C2G = fail ) then 
             return fail;   ## Error( "C2G fails to be a PreCat2Group" ); 
         fi; 
@@ -1324,9 +1326,9 @@ InstallGlobalFunction( Cat2Group, function( arg )
     fi; 
 end ); 
 
-##############################################################################
+#############################################################################
 ##
-#M  DetermineRemainingCat1Groups . . . . . . . . . . . . for 2 pre-cat1-groups
+#M  DetermineRemainingCat1Groups . . . . . . . . . . . for 2 pre-cat1-groups
 ## 
 InstallMethod( DetermineRemainingCat1Groups, "for up, left pre-cat1-groups", 
     true, [ IsPreCat1Group, IsPreCat1Group ], 0,
@@ -1397,9 +1399,9 @@ function( up, left )
     return [ right, down, diag ]; 
 end ); 
 
-##############################################################################
+#############################################################################
 ##
-#M  PreCat2GroupByPreCat1Groups . . . . . . . . . . . for five pre-cat1-groups
+#M  PreCat2GroupByPreCat1Groups . . . . . . . . . . for five pre-cat1-groups
 ## 
 InstallMethod( PreCat2GroupByPreCat1Groups, "for five pre-cat1-groups", 
     true, [ IsPreCat1Group, IsPreCat1Group, IsPreCat1Group, 
@@ -1453,7 +1455,7 @@ function( up, left, right, down, diag )
     return PC2;
 end ); 
 
-##############################################################################
+#############################################################################
 ##
 #M  Subdiagonal2DimensionalGroup . . . . . . . . . . . . for a pre-cat2-group
 ## 
@@ -1483,7 +1485,7 @@ function( cat2 )
     return sdg;
 end ); 
 
-##############################################################################
+#############################################################################
 ## 
 #M  DirectProductOp . . . . . . . . . . . . . . . . . for two pre-cat2-groups 
 ## 
@@ -1695,11 +1697,11 @@ end );
 
 #############################################################################
 ##
-#M  AllCat2GroupsWithImagesIterator . . . cat2-groups with given up,left range
+#M  AllCat2GroupsWithImagesIterator . . .at2-groups with given up,left range
 #M  DoAllCat2GroupsWithImagesIterator 
-#M  AllCat2GroupsWithImages . . . cat2-groups with specified range for up,left
-#M  AllCat2GroupsWithImagesNumber . . # cat2-groups with specified up,left gps
-#M  AllCat2GroupsWithImagesUpToIsomorphism . . . iso class reps of cat2-groups
+#M  AllCat2GroupsWithImages . . cat2-groups with specified range for up,left
+#M  AllCat2GroupsWithImagesNumber . # cat2-groups with specified up,left gps
+#M  AllCat2GroupsWithImagesUpToIsomorphism . . iso class reps of cat2-groups
 ##
 BindGlobal( "NextIterator_AllCat2GroupsWithImages", function ( iter ) 
 
@@ -1897,16 +1899,16 @@ function ( up )
     return L0; 
 end ); 
 
-##############################################################################
+#############################################################################
 ##
-#M  AllCat2Groups . . . . . . . list of cat2-group structures on a given group
-#O  AllCat2GroupsIterator( <gp> ) . . . . . . . iterator for the previous list
+#M  AllCat2Groups . . . . . . list of cat2-group structures on a given group
+#O  AllCat2GroupsIterator( <gp> ) . . . . . . iterator for the previous list
 #F  NextIterator_AllCat2Groups( <iter> ) 
 #F  IsDoneIterator_AllCat2Groups( <iter> ) 
 #F  ShallowCopy_AllCat2Groups( <iter> ) 
-#M  AllCat2GroupsMatrix  . . . . . . . . . 0-1 matrix indexed by AllCat1Groups
-#A  AllCat2GroupsNumber( <gp> ) . . . . . . . . .  number of these cat2-groups
-#M  AllCat2GroupsUpToIsomorphism . . . iso class reps of cat2-group structures
+#M  AllCat2GroupsMatrix  . . . . . . . . 0-1 matrix indexed by AllCat1Groups
+#A  AllCat2GroupsNumber( <gp> ) . . . . . . . .  number of these cat2-groups
+#M  AllCat2GroupsUpToIsomorphism . . iso class reps of cat2-group structures
 ##
 BindGlobal( "NextIterator_AllCat2Groups", function ( iter ) 
     local pair, next; 
@@ -2163,10 +2165,10 @@ function( G )
     return classes; 
 end ); 
 
-##############################################################################
+#############################################################################
 ##
-#M  TableRowForCat1Groups   . . . . . . . . cat1-structure data for a group G
-#M  TableRowForCat2Groups   . . . . . . . . cat2-structure data for a group G
+#M  TableRowForCat1Groups  . . . . . . . . cat1-structure data for a group G
+#M  TableRowForCat2Groups  . . . . . . . . cat2-structure data for a group G
 ##
 InstallMethod( TableRowForCat1Groups, "for a group G", true, [ IsGroup ], 0,
 function( G )
@@ -2238,7 +2240,7 @@ function( G )
     return B;
 end );
 
-##############################################################################
+#############################################################################
 ##
 #M  ConjugationActionForCrossedSquare 
 ##  . . . . conjugation action for crossed square from cat2-group
@@ -2348,19 +2350,19 @@ function( XS )
  
     local up, left, right, down, diag, L, M, N, P, genL, genM, genN, genP, 
           kappa, lambda, nu, mu, 
-          act_up, act_lt, act_dn, act_rt, act_dg, xpair, 
-          Cup, NxL, genNxL, e1NxL, e2NxL, Cleft, MxL, genMxL, e1MxL, e2MxL, 
-          Cdown, PxM, genPxM, e1PxM, e2PxM, Cright, PxN, genPxN, e1PxN, e2PxN, 
+          act_up, act_lt, act_dn, act_rt, act_dg, xpair, Cup, Cdown, 
+          NxL, genNxL, e1NxL, e2NxL, Cleft, MxL, genMxL, e1MxL, e2MxL, 
+          PxM, genPxM, e1PxM, e2PxM, Cright, PxN, genPxN, e1PxN, e2PxN, 
           MxLbyP, MxLbyN, autgenMxL, autMxL, actPNML, NxLbyP, NxLbyM, 
           autgenNxL, autNxL, actPMNL, imPNML, bdyPNML, XPNML, CPNML, PNML, 
           e1PNML, e2PNML, genPNML, imPMNL, bdyPMNL, XPMNL, CPMNL, PMNL, 
           e1PMNL, e2PMNL, genPMNL, imiso, iso, inv, iminv, tup, hup, eup, 
           C2PNML, tlt, hlt, elt, tdn, hdn, edn, trt, hrt, ert, tdi, hdi, edi, 
-          PC, Cdiag, imnukappa, nukappa, morCleftCright, immulambda, mulambda, 
-          morCupCdown; 
+          PC, Cdiag, imnukappa, nukappa, morCleftCright, 
+          immulambda, mulambda, morCupCdown; 
 
-    Info( InfoXMod, 1, "these conversion functions are under development\n" ); 
-
+    Info( InfoXMod, 1, 
+          "these conversion functions are under development\n" ); 
     up := Up2DimensionalGroup( XS );
     left := Left2DimensionalGroup( XS );
     right := Right2DimensionalGroup( XS );
@@ -2577,9 +2579,9 @@ function( XS )
     return C2;
 end );
     
-##############################################################################
+#############################################################################
 ##
-#M  Transpose3DimensionalGroup . . transpose of a crossed square or cat2-group 
+#M  Transpose3DimensionalGroup .   transpose of a crossed square or cat2-group 
 ##
 InstallMethod( Transpose3DimensionalGroup, "transposed crossed square", true, 
     [ IsCrossedSquare ], 0,
@@ -2613,10 +2615,10 @@ function( C2G )
                Diagonal2DimensionalGroup( C2G ) );
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  LeftRightMorphism . . . . . . . . . . . . . . . . for a precrossed square
-#M  UpDownMorphism  . . . . . . . . . . . . . . . . . for a precrossed square
+#M  LeftRightMorphism  . . . . . . . . . . . . . . . for a precrossed square
+#M  UpDownMorphism . . . . . . . . . . . . . . . . . for a precrossed square
 ## 
 InstallMethod( LeftRightMorphism, "for a precrossed square", true,
     [ IsPreCrossedSquare ], 0,
@@ -2636,9 +2638,9 @@ function( s )
            Boundary( Right2DimensionalGroup(s) ) ); 
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  IsSymmetric3DimensionalGroup . . . . check whether a 3d-group is symmetric
+#M  IsSymmetric3DimensionalGroup . . . check whether a 3d-group is symmetric
 ##
 InstallMethod( IsSymmetric3DimensionalGroup, 
     "generic method for 3d-groups", true, [ IsHigherDimensionalGroup ], 0,
