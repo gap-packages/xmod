@@ -1,16 +1,16 @@
-##############################################################################
+#############################################################################
 ##
-#W  gp2map.gi                  GAP4 package `XMod'               Chris Wensley
-#W                                                                 & Murat Alp
+#W  gp2map.gi                  GAP4 package `XMod'             Chris Wensley
+#W                                                               & Murat Alp
 ##  This file installs methods for 2DimensionalMappings 
 ##  for crossed modules and cat1-groups. 
 ##
-#Y  Copyright (C) 2001-2022, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2023, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 
-##############################################################################
+#############################################################################
 ##
-#M  Is2DimensionalGroupMorphismData( <list> ) . . . . . . . . . . 2d-group map 
+#M  Is2DimensionalGroupMorphismData( <list> ) . . . . . . . . . 2d-group map 
 ##
 ##  this functions tests that boundaries are ok but no checks on actions 
 ##
@@ -84,9 +84,9 @@ function( L )
     return true; 
 end ); 
 
-##############################################################################
+#############################################################################
 ##
-#M  Make2DimensionalGroupMorphism( <list> ) . . . . . . . . . . . 2d-group map 
+#M  Make2DimensionalGroupMorphism( <list> ) . . . . . . . . . . 2d-group map 
 ##
 InstallMethod( Make2DimensionalGroupMorphism,
     "for list [ 2d-group, 2d-group, homomorphism, homomorphism ]", true,
@@ -337,9 +337,9 @@ function( mor )
     Print( "  ", List( genrng, r -> ImageElm( morrng, r ) ), "\n" );
 end ); 
 
-##############################################################################
+#############################################################################
 ##
-#M  CompositionMorphism  . . . . . . . . . . . . for two 2Dimensional-mappings
+#M  CompositionMorphism  . . . . . . . . . . . for two 2Dimensional-mappings
 ##
 InstallOtherMethod( CompositionMorphism, "generic method for 2d-mappings",
     IsIdenticalObj, [ Is2DimensionalMapping, Is2DimensionalMapping ], 0,
@@ -360,7 +360,7 @@ function( mor2, mor1 )
              and IsPreCat1GroupMorphism( mor2 ) ) then
             SetIsPreCat1GroupMorphism( comp, true );
         fi;
-        if ( IsCat1GroupMorphism( mor1 ) and IsCat1GroupMorphism( mor2 ) ) then
+        if ( IsCat1GroupMorphism(mor1) and IsCat1GroupMorphism(mor2) ) then
             SetIsCat1GroupMorphism( comp, true );
         fi;
     else
@@ -375,9 +375,9 @@ function( mor2, mor1 )
     return comp;
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  InverseGeneralMapping . . . . . . . . . . . . . for a 2Dimensional-mapping
+#M  InverseGeneralMapping . . . . . . . . . . . . for a 2Dimensional-mapping
 ## 
 InstallOtherMethod( InverseGeneralMapping, "generic method for 2d-mapping",
     true, [ Is2DimensionalMapping ], 0, 
@@ -408,7 +408,7 @@ function( mor )
     return inv;
 end );
 
-##############################################################################
+#############################################################################
 ##
 #M  IdentityMapping( <obj> )
 ##
@@ -429,7 +429,7 @@ function( obj )
     fi;
 end );
 
-##############################################################################
+#############################################################################
 ##
 #M  InclusionMorphism2DimensionalDomains( <obj>, <sub> )
 ##
@@ -450,7 +450,7 @@ function( obj, sub )
     fi;
 end );
 
-##############################################################################
+#############################################################################
 ##
 #F  PreXModMorphism( <src>,<rng>,<srchom>,<rnghom> ) pre-crossed mod morphism
 ##
@@ -473,9 +473,9 @@ InstallGlobalFunction( PreXModMorphism, function( arg )
     return mor;
 end );
 
-###############################################################################
+#############################################################################
 ##
-#F  XModMorphism( <src>, <rng>, <srchom>, <rnghom> )    crossed module morphism
+#F  XModMorphism( <src>, <rng>, <srchom>, <rnghom> )  crossed module morphism
 ##
 ##  (need to extend to other sets of parameters)
 ##
@@ -495,9 +495,9 @@ InstallGlobalFunction( XModMorphism, function( arg )
     return fail;
 end );
 
-###############################################################################
+#############################################################################
 ##
-#F  PreCat1GroupMorphism( <src>,<rng>,<srchom>,<rnghom> ) pre-cat1-grp morphism
+#F  PreCat1GroupMorphism( <src>,<rng>,<srchom>,<rnghom> ) 
 ##
 ##  (need to extend to other sets of parameters)
 ##
@@ -519,9 +519,9 @@ InstallGlobalFunction( PreCat1GroupMorphism, function( arg )
     return fail;
 end );
 
-###############################################################################
+#############################################################################
 ##
-#F  Cat1GroupMorphism( <src>, <rng>, <srchom>, <rnghom> )        cat1-group morphism
+#F  Cat1GroupMorphism( <src>, <rng>, <srchom>, <rnghom> ) 
 ##
 ##  (need to extend to other sets of parameters)
 ##
@@ -537,11 +537,12 @@ InstallGlobalFunction( Cat1GroupMorphism, function( arg )
         return Cat1GroupMorphismByGroupHomomorphisms( arg[1], arg[2], arg[3], arg[4] );
     fi;
     # alternatives not allowed
-    Info( InfoXMod, 2, "usage: Cat1GroupMorphism( src, rng, srchom, rnghom );" );
+    Info( InfoXMod, 2, 
+          "usage: Cat1GroupMorphism( src, rng, srchom, rnghom );" );
     return fail;
 end );
 
-##############################################################################
+#############################################################################
 ##
 #M  XModMorphismByGroupHomomorphisms( <Xs>, <Xr>, <hsrc>, <hrng> ) 
 ##  . . . make an xmod morphism
@@ -560,9 +561,9 @@ function( src, rng, srchom, rnghom )
     return mor;
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  InnerAutomorphismXMod( <XM>, <r> ) . . . . . . . .  conjugation of an xmod
+#M  InnerAutomorphismXMod( <XM>, <r> ) . . . . . . .  conjugation of an xmod
 ##
 InstallMethod( InnerAutomorphismXMod, "method for crossed modules", true,
     [ IsPreXMod, IsMultiplicativeElementWithInverse ], 0,
@@ -572,7 +573,8 @@ function( XM, r )
 
     Xrng := Range( XM );
     if not ( r in Xrng ) then
-        Info( InfoXMod, 2, "conjugating element must be in the range group" );
+        Info( InfoXMod, 2, 
+              "conjugating element must be in the range group" );
         return fail;
     fi;
     Xsrc := Source( XM );
@@ -586,9 +588,9 @@ function( XM, r )
     return XModMorphismByGroupHomomorphisms( XM, XM, shom, rhom );
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  InnerAutomorphismCat1Group( <C1G>, <r> ) . . . conjugation of a cat1-group
+#M  InnerAutomorphismCat1Group( <C1G>, <r> ) . . conjugation of a cat1-group
 ##
 InstallMethod( InnerAutomorphismCat1Group, "method for cat1-groups", true,
     [ IsPreCat1Group, IsMultiplicativeElementWithInverse ], 0,
@@ -598,7 +600,8 @@ function( C1G, r )
 
     Crng := Range( C1G );
     if not ( r in Crng ) then
-        Info( InfoXMod, 2, "conjugating element must be in the range group" );
+        Info( InfoXMod, 2, 
+              "conjugating element must be in the range group" );
         return fail;
     fi;
     Csrc := Source( C1G );
@@ -650,9 +653,9 @@ function( mor )
     fi;
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  \*( <mor1>, <mor2> ) . . . . . . . . .  for 2 pre-crossed module morphisms
+#M  \*( <mor1>, <mor2> ) . . . . . . . . for 2 pre-crossed module morphisms
 ##
 InstallOtherMethod( \*, "for two morphisms of pre-crossed modules",
     IsIdenticalObj, [ Is2DimensionalMapping, Is2DimensionalMapping ], 0,
@@ -665,9 +668,9 @@ function( mor1, mor2 )
     return comp;
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  \^( <mor>, <int> ) . . . . . . . . . . . . . . . for a 2DimensionalMapping
+#M  \^( <mor>, <int> ) . . . . . . . . . . . . . . for a 2DimensionalMapping
 ##
 InstallOtherMethod( \^, "for a 2d mapping", true,
     [ Is2DimensionalMapping, IsInt ], 0,
@@ -712,9 +715,9 @@ function( map, n )
     fi;
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  IsomorphismByIsomorphisms . . . . . . constructs isomorphic pre-cat1-group
+#M  IsomorphismByIsomorphisms . . . . . constructs isomorphic pre-cat1-group
 ##
 InstallMethod( IsomorphismByIsomorphisms, "generic method for pre-cat1-groups", 
     true, [ IsPreCat1Group, IsList ], 0,
@@ -797,9 +800,9 @@ function( PM, isos )
     return iso;
 end ); 
 
-##############################################################################
+#############################################################################
 ##
-#M  IsomorphismPerm2DimensionalGroup . . . isomorphic perm pre-xmod & pre-cat1
+#M  IsomorphismPerm2DimensionalGroup . . isomorphic perm pre-xmod & pre-cat1
 ##
 InstallMethod( IsomorphismPerm2DimensionalGroup,
      "generic method for pre-crossed modules", true, [ IsPreXMod ], 0,
@@ -903,9 +906,9 @@ function( PCG )
     return iso;
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  RegularActionHomomorphism2DimensionalGroup . isomorphic pre-xmod & pre-cat1
+#M  RegularActionHomomorphism2DimensionalGroup . isomorphic pre-xmod & -cat1
 ##
 InstallMethod( RegularActionHomomorphism2DimensionalGroup,
      "generic method for pre-crossed modules", true, [ IsPreXMod ], 0,
@@ -978,10 +981,10 @@ function( PCG )
     return iso;
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  IsomorphismPc2DimensionalGroup . . . . . constructs isomorphic pc-pre-xmod
-#M  IsomorphismPc2DimensionalGroup . . . . . constructs isomorphic pc-pre-cat1
+#M  IsomorphismPc2DimensionalGroup . . . . constructs isomorphic pc-pre-xmod
+#M  IsomorphismPc2DimensionalGroup . . . . constructs isomorphic pc-pre-cat1
 ##
 InstallMethod( IsomorphismPc2DimensionalGroup,
      "generic method for pre-crossed modules", true, [ IsPreXMod ], 0,
@@ -1078,10 +1081,10 @@ function( PCG )
     return iso;
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  IsomorphismFp2DimensionalGroup . . . . . constructs isomorphic fp-pre-xmod
-#M  IsomorphismFp2DimensionalGroup . . . . . constructs isomorphic fp-pre-cat1
+#M  IsomorphismFp2DimensionalGroup . . . . constructs isomorphic fp-pre-xmod
+#M  IsomorphismFp2DimensionalGroup . . . . constructs isomorphic fp-pre-cat1
 ##
 InstallMethod( IsomorphismPc2DimensionalGroup,
      "generic method for pre-crossed modules", true, [ IsPreXMod ], 0,
@@ -1178,13 +1181,14 @@ function( PCG )
     return iso;
 end );
 
-###############################################################################
+#############################################################################
 ##
-#M  IsomorphismPreCat1Groups . . isomorphism between a pair of pre-cat1-groups 
-#M  IsomorphismCat1Groups  . . . isomorphism between a pair of cat1-groups 
+#M  IsomorphismPreCat1Groups . isomorphism between a pair of pre-cat1-groups 
+#M  IsomorphismCat1Groups  . . isomorphism between a pair of cat1-groups 
 ##
-InstallMethod( IsomorphismPreCat1Groups, "generic method for 2 pre-cat1-groups", 
-    true, [ IsPreCat1Group, IsPreCat1Group ], 0, 
+InstallMethod( IsomorphismPreCat1Groups, 
+    "generic method for 2 pre-cat1-groups", true, 
+    [ IsPreCat1Group, IsPreCat1Group ], 0, 
 function( C1G1, C1G2 )
 
     local sym1, sym2, ok1, ok2, C1, C2, end1, end2, iend2, mor, 
@@ -1301,7 +1305,7 @@ end );
 
 #############################################################################
 ##
-#M  Name                                                       for a pre-xmod
+#M  Name                                                      for a pre-xmod
 ##
 InstallMethod( Name, "method for a 2d-mapping", true, 
     [ Is2DimensionalMapping ], 0,
@@ -1324,7 +1328,7 @@ function( mor )
     return name;
 end );
 
-###############################################################################
+#############################################################################
 ##
 #M  PreXModMorphismByGroupHomomorphisms( <P>, <Q>, <hsrc>, <hrng> ) 
 ##  . . . make a prexmod morphism
@@ -1362,13 +1366,14 @@ function( src, rng, srchom, rnghom )
     return mor;
 end );
 
-##############################################################################
+#############################################################################
 ##
 #M  PreCat1GroupMorphismByGroupHomomorphisms( <P>, <Q>, <hsrc>, <hrng> ) 
 ##
 InstallMethod( PreCat1GroupMorphismByGroupHomomorphisms,
     "for pre-cat1-group, pre-cat1-group, homomorphism, homomorphism,", true,
-    [IsPreCat1Group,IsPreCat1Group,IsGroupHomomorphism,IsGroupHomomorphism], 0,
+    [IsPreCat1Group,IsPreCat1Group,IsGroupHomomorphism,IsGroupHomomorphism], 
+    0,
 function( src, rng, srchom, rnghom )
 
     local filter, fam, mor, ok, nsrc, nrng, name;
@@ -1396,10 +1401,12 @@ end );
 
 #############################################################################
 ##
-#M  Cat1GroupMorphismByGroupHomomorphisms( <Cs>, <Cr>, <hsrc>, <hrng> ) . . . make cat1 morphism
+#M  Cat1GroupMorphismByGroupHomomorphisms( <Cs>, <Cr>, <hsrc>, <hrng> ) 
+##      . . . make cat1 morphism
 ##
 InstallMethod( Cat1GroupMorphismByGroupHomomorphisms, "for 2 cat1s and 2 homomorphisms", true,
-    [ IsCat1Group, IsCat1Group, IsGroupHomomorphism, IsGroupHomomorphism ], 0,
+    [ IsCat1Group, IsCat1Group, IsGroupHomomorphism, IsGroupHomomorphism ], 
+    0,
 function( src, rng, srchom, rnghom )
 
     local mor, ok;
@@ -1467,62 +1474,62 @@ function( C1G )
     h := HeadMap( C1G );
     e := RangeEmbedding( C1G );
     im := List( gensrc, 
-        g -> ImageElm( e, ImageElm(h,g) )*g^-1*ImageElm( e, ImageElm(t,g) ) );
+        g -> ImageElm(e,ImageElm(h,g)) * g^-1 * ImageElm(e,ImageElm(t,g)) );
     shom := GroupHomomorphismByImages( src, src, gensrc, im );
     rhom := IdentityMapping( Range( C1G ) );
     return PreCat1GroupMorphismByGroupHomomorphisms( C1G, rev, shom, rhom );
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  IsInjective( map ) . . . . . . . . . . . . . .  for a 2Dimensional-mapping
+#M  IsInjective( map ) . . . . . . . . . . . . . for a 2Dimensional-mapping
 ##
 InstallOtherMethod( IsInjective,
     "method for a 2d-mapping", true, [ Is2DimensionalMapping ], 0,
     map -> (     IsInjective( SourceHom( map ) )
              and IsInjective( RangeHom( map ) ) )  );
 
-##############################################################################
+#############################################################################
 ##
-#M  IsSurjective( map ) . . . . . . . . . . . . . . for a 2Dimensional-mapping
+#M  IsSurjective( map ) . . . . . . . . . . . . for a 2Dimensional-mapping
 ##
 InstallOtherMethod( IsSurjective,
     "method for a 2d-mapping", true, [ Is2DimensionalMapping ], 0,
     map -> (     IsSurjective( SourceHom( map ) )
              and IsSurjective( RangeHom( map ) ) )  );
 
-##############################################################################
+#############################################################################
 ##
-#M  IsSingleValued( map ) . . . . . . . . . . . . . for a 2Dimensional-mapping
+#M  IsSingleValued( map ) . . . . . . . . . . .  for a 2Dimensional-mapping
 ##
 InstallOtherMethod( IsSingleValued,
     "method for a 2d-mapping", true, [ Is2DimensionalMapping ], 0,
     map -> (     IsSingleValued( SourceHom( map ) )
              and IsSingleValued( RangeHom( map ) ) )  );
 
-##############################################################################
+#############################################################################
 ##
-#M  IsTotal( map ) . . . . . . . . . . . . . . . .  for a 2Dimensional-mapping
+#M  IsTotal( map ) . . . . . . . . . . . . . . . for a 2Dimensional-mapping
 ##
 InstallOtherMethod( IsTotal,
     "method for a 2d-mapping", true, [ Is2DimensionalMapping ], 0,
     map -> (     IsTotal( SourceHom( map ) )
              and IsTotal( RangeHom( map ) ) )  );
 
-##############################################################################
+#############################################################################
 ##
-#M  IsBijective( map ) . . . . . . . . . . . . . .  for a 2Dimensional-mapping
+#M  IsBijective( map ) . . . . . . . . . . . . . for a 2Dimensional-mapping
 ##
 InstallOtherMethod( IsBijective,
     "method for a 2d-mapping", true, [ Is2DimensionalMapping ], 0,
     map -> (     IsBijective( SourceHom( map ) )
              and IsBijective( RangeHom( map ) ) )  );
 
-##############################################################################
+#############################################################################
 ##
-#M  IsEndomorphism2DimensionalDomain( map ) . . . . for a 2Dimensional-mapping
+#M  IsEndomorphism2DimensionalDomain( map ) . .  for a 2Dimensional-mapping
 #?  temporary fix 08/01/04  ---  need to check correctness
-#M  IsAutomorphism2DimensionalDomain( map ) . . . . for a 2Dimensional-mapping
+#M  IsAutomorphism2DimensionalDomain( map ) . .  for a 2Dimensional-mapping
 ##
 InstallMethod( IsEndomorphism2DimensionalDomain, 
     "method for a 2d-mapping", true, [ Is2DimensionalMapping ], 0,
@@ -1533,13 +1540,12 @@ InstallMethod( IsAutomorphism2DimensionalDomain,
     "method for a 2d-mapping", true, [ Is2DimensionalMapping ], 0,
     map ->  IsEndomorphism2DimensionalDomain( map ) and IsBijective( map ) );
 
-##############################################################################
+#############################################################################
 ##
-#M  IsSourceMorphism( mor ) . . . . . . . . . . . . . . . for an xmod morphism
+#M  IsSourceMorphism( mor ) . . . . . . . . . . . . . . for an xmod morphism
 ##
 InstallMethod( IsSourceMorphism,
-    "method for a morphism of crossed modules",
-    true,
+    "method for a morphism of crossed modules", true,
     [ IsXModMorphism ], 0,
 function( mor )
 
@@ -1551,9 +1557,9 @@ function( mor )
              ( RangeHom( mor ) = IdentityMapping( Srng ) ) );
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  Kernel . . . . . . of morphisms of pre-crossed modules and pre-cat1-groups
+#M  Kernel . . . . . of morphisms of pre-crossed modules and pre-cat1-groups
 ##
 InstallOtherMethod( Kernel, "generic method for 2d-mappings",
      true, [ Is2DimensionalMapping ], 0,
@@ -1571,9 +1577,9 @@ function( map )
     return K;
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  PreXModBySourceHom        top PreXMod from a morphism of crossed P-modules
+#M  PreXModBySourceHom . . . top PreXMod from a morphism of crossed P-modules
 ##
 InstallMethod( PreXModBySourceHom, "for a pre-crossed module morphism",
     true, [ IsPreXModMorphism ], 0,
@@ -1699,7 +1705,7 @@ function( mor )
     return phi; 
 end );
 
-##############################################################################
+#############################################################################
 ##
 #F  SmallerDegreePermutationRepresentation2DimensionalGroup( <obj> )
 ##
@@ -1722,7 +1728,7 @@ function( obj )
     fi;
 end ); 
 
-##############################################################################
+#############################################################################
 ##
 #M  IsomorphismXModByNormalSubgroup
 ##
@@ -1750,9 +1756,9 @@ function( X0 )
     fi;
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  Order . . . . . . . . . . . . . . . . . . . . . for a 2Dimensional-mapping
+#M  Order . . . . . . . . . . . . . . . . . . . . for a 2Dimensional-mapping
 ##
 InstallOtherMethod( Order, "generic method for 2d-mapping",
     true, [ Is2DimensionalMapping ], 0,
@@ -1767,10 +1773,11 @@ end );
 
 #############################################################################
 ##
-#M  ImagesSource( <mor> ) . . . . . . . . for pre-xmod and pre-cat1 morphisms
+#M  ImagesSource( <mor> ) . . . . . . . for pre-xmod and pre-cat1 morphisms
 ##
-InstallOtherMethod( ImagesSource, "image for a pre-xmod or pre-cat1 morphism", 
-    true, [ Is2DimensionalMapping ], 0, 
+InstallOtherMethod( ImagesSource, 
+    "image for a pre-xmod or pre-cat1 morphism", true, 
+    [ Is2DimensionalMapping ], 0, 
 function( mor )
     
     local Shom, Rhom, imS, imR, sub;
@@ -1783,9 +1790,9 @@ function( mor )
     return sub;
 end );
 
-###############################################################################
+#############################################################################
 ##
-#M  AllCat1GroupMorphisms  . . . . . . morphisms from one cat1-group to another 
+#M  AllCat1GroupMorphisms  . . . . morphisms from one cat1-group to another 
 ##
 InstallMethod( AllCat1GroupMorphisms, "for two cat1-groups", true, 
     [ IsCat1Group, IsCat1Group ], 0,
@@ -1812,7 +1819,7 @@ function( C1G1, C1G2 )
     return mors; 
 end );
 
-##############################################################################
+#############################################################################
 ##
 #M  SubQuasiIsomorphism( <cat1>, <print> )
 ##  
@@ -1822,8 +1829,8 @@ function( C1, show )
 
     local tot, ids, maps, G1, R1, X1, S1, bdy1, LS, CLS, LR, CLR, K1, idK1, 
           KS1, KR1, nat1, J1, CP, P, genP, CQ, Q, genQ, X2, bdy2, K2, idK2, 
-          KP, KQ, J2, isoK, C2, incX, incP, incQ, alpha, beta, 
-          genKQ, imKQ, imgamma, gamma, nat2, preKQ, incC, G2, gen2, idgp, idcat; 
+          KP, KQ, J2, isoK, C2, incX, incP, incQ, alpha, beta, genKQ, imKQ, 
+          imgamma, gamma, nat2, preKQ, incC, G2, gen2, idgp, idcat; 
 
     tot := 0; 
     ids := [ ];
@@ -1858,47 +1865,47 @@ function( C1, show )
                       K2 := KernelCokernelXMod( X2 );             
                       idK2 := IdGroup( K2 ); 
                       if ( idK2 = idK1 ) then 
-                          KP := Source( K2 ); 
-                          KQ := Range( K2 ); 
-                          J2 := ImagesSource( bdy2 ); 
-                          genP := GeneratorsOfGroup( P ); 
-                          genQ := GeneratorsOfGroup( Q ); 
-                          incX := InclusionMorphism2DimensionalDomains(X1,X2); 
-                          incP := SourceHom( incX ); 
-                          incQ := RangeHom( incX ); 
-                          alpha := InclusionMappingGroups( KS1, KP ); 
-                          beta := InclusionMappingGroups( J1, J2 ); 
-                          nat2 := NaturalHomomorphismByNormalSubgroup( Q, J2 ); 
-                          genKQ := GeneratorsOfGroup( KQ ); 
-                          preKQ := List( genKQ, 
-                                     g -> PreImagesRepresentative( nat2, g ) ); 
-                          imgamma := List( preKQ, 
-                                     g -> Image( nat1, Image( incQ, g ) ) ); 
-                          gamma := GroupHomomorphismByImages( 
+                         KP := Source( K2 ); 
+                         KQ := Range( K2 ); 
+                         J2 := ImagesSource( bdy2 ); 
+                         genP := GeneratorsOfGroup( P ); 
+                         genQ := GeneratorsOfGroup( Q ); 
+                         incX := InclusionMorphism2DimensionalDomains(X1,X2); 
+                         incP := SourceHom( incX ); 
+                         incQ := RangeHom( incX ); 
+                         alpha := InclusionMappingGroups( KS1, KP ); 
+                         beta := InclusionMappingGroups( J1, J2 ); 
+                         nat2 := NaturalHomomorphismByNormalSubgroup(Q,J2); 
+                         genKQ := GeneratorsOfGroup( KQ ); 
+                         preKQ := List( genKQ, 
+                                  g -> PreImagesRepresentativeNC(nat2,g) ); 
+                         imgamma := List( preKQ, 
+                                    g -> Image( nat1, Image( incQ, g ) ) ); 
+                         gamma := GroupHomomorphismByImages( 
                                        KQ, KR1, genKQ, imgamma ); 
-                          isoK := PreXModMorphismByGroupHomomorphisms( 
+                         isoK := PreXModMorphismByGroupHomomorphisms( 
                                        K2, K1, alpha, gamma ); 
-                          if IsBijective( isoK ) then 
-                              if show then 
-                                  Print( "(sub:) sub-xmod: ", 
-                                         StructureDescription(X2), "\n" ); 
-                              fi; 
-                              C2 := Cat1GroupOfXMod( X2 ); 
-                              incC := Cat1GroupMorphismOfXModMorphism( incX );                       
-                              G2 := Source( C2 ); 
-                              gen2 := GeneratorsOfGroup( G2 ); 
-                              idgp := IdGroup( C2 ); 
-                              idcat := IdCat1Group( C2 ); 
-                              if show then 
-                                  Print( idgp, ", ", idcat, ", ", 
-                                         StructureDescription( C2 ), "\n" ); 
-                                  Print( "bdy2: ", 
-                                         MappingGeneratorsImages(bdy2), "\n");
-                              fi; 
-                              tot := tot + 1;
-                              Add( ids, idcat ); 
-                              Add( maps, incC ); 
-                          fi; 
+                         if IsBijective( isoK ) then 
+                            if show then 
+                               Print( "(sub:) sub-xmod: ", 
+                                      StructureDescription(X2), "\n" ); 
+                            fi; 
+                            C2 := Cat1GroupOfXMod( X2 ); 
+                            incC := Cat1GroupMorphismOfXModMorphism( incX );                       
+                            G2 := Source( C2 ); 
+                            gen2 := GeneratorsOfGroup( G2 ); 
+                            idgp := IdGroup( C2 ); 
+                            idcat := IdCat1Group( C2 ); 
+                            if show then 
+                               Print( idgp, ", ", idcat, ", ", 
+                                      StructureDescription( C2 ), "\n" ); 
+                               Print( "bdy2: ", 
+                                      MappingGeneratorsImages(bdy2), "\n");
+                            fi; 
+                            tot := tot + 1;
+                            Add( ids, idcat ); 
+                            Add( maps, incC ); 
+                         fi; 
                       fi; 
                    fi;
                 fi;
@@ -1909,7 +1916,7 @@ function( C1, show )
     return ids; 
 end ); 
 
-##############################################################################
+#############################################################################
 ##
 #M  QuotientQuasiIsomorphism( <cat1>, <print> )
 ##  
@@ -1944,76 +1951,76 @@ function( C1, show )
         Print( "kernel-cokernel: ", StructureDescription( K1 ), "\n" );
     fi; 
     for P in LS do 
-        for Q in LR do 
-            if not ( ( Size(P) = 1 ) and ( Size(Q) = 1 ) ) then 
-                X2 := SubXMod( X1, P, Q ); 
-                if ( X2 <> fail ) and IsNormal( X1, X2 ) then 
-                    bdy2 := Boundary( X2 ); 
-                    genP := GeneratorsOfGroup( P ); 
-                    genQ := GeneratorsOfGroup( Q ); 
-                    natX := NaturalMorphismByNormalSubPreXMod( X1, X2 ); 
-                    natP := SourceHom( natX ); 
-                    natQ := RangeHom( natX ); 
-                    F2 := Range( natX ); 
-                    FP := Source( F2 ); 
-                    FQ := Range( F2 ); 
-                    bdyF := Boundary( F2 ); 
-                    K2 := KernelCokernelXMod( F2 );             
-                    idK2 := IdGroup( K2 ); 
-                    J2 := ImagesSource( bdy2 ); 
-                    if ( idK2 = idK1 ) then 
-                        KP := Source( K2 ); 
-                        KQ := Range( K2 ); 
-                        JF := ImagesSource( bdyF ); 
-                        natKQ := NaturalHomomorphismByNormalSubgroup( FQ, JF );
-                        genKS1 := GeneratorsOfGroup( KS1 ); 
-                        imKS1 := List( genKS1, g -> ImageElm( natP, g ) ); 
-                        alpha := GroupHomomorphismByImages( 
-                                     KS1, KP, genKS1, imKS1 ); 
-                        natKR1 := NaturalHomomorphismByNormalSubgroup( R1, J1 );
-                        genKR1 := GeneratorsOfGroup( KR1 );
-                        preKR1 := List( genKR1, 
-                                    g -> PreImagesRepresentative( natKR1, g ) ); 
-                        im1KR1 := List( preKR1, g -> ImageElm( natQ, g ) ); 
-                        natKQ := NaturalHomomorphismByNormalSubgroup( FQ, JF ); 
-                        im2KR1 := List( im1KR1, g -> ImageElm( natKQ, g ) ); 
-                        gamma := GroupHomomorphismByImages( 
-                                    KR1, KQ, genKR1, im2KR1 ); 
-                        isoK := PreXModMorphismByGroupHomomorphisms( 
-                                    K1, K2, alpha, gamma ); 
-                        if IsBijective( isoK ) then 
-                            if show then 
-                                Print( "(quo:) normal subxmod: ", 
-                                       StructureDescription( X2 ), "\n" ); 
-                            fi; 
-                            natC := Cat1GroupMorphismOfXModMorphism( natX ); 
-                            C2 := Range( natC ); 
-                            G2 := Source( C2 ); 
-                            gen2 := GeneratorsOfGroup( G2 ); 
-                            idgp := IdGroup( C2 ); 
-                            idcat := IdCat1Group( C2 ); 
-                            if idcat = "not known" then
-                                Display( XModOfCat1Group(C2) ); 
-                            fi; 
-                            if show then 
-                                Print( idgp, ", ", idcat, ", ", 
-                                       StructureDescription(C2), "\n" ); 
-                                Print( "bdy2: ", 
-                                       MappingGeneratorsImages(bdy2), "\n" );
-                            fi; 
-                            tot := tot + 1;
-                            Add( ids, idcat ); 
-                            Add( maps, natC ); 
-                        fi;
-                    fi; 
+       for Q in LR do 
+          if not ( ( Size(P) = 1 ) and ( Size(Q) = 1 ) ) then 
+             X2 := SubXMod( X1, P, Q ); 
+             if ( X2 <> fail ) and IsNormal( X1, X2 ) then 
+                bdy2 := Boundary( X2 ); 
+                genP := GeneratorsOfGroup( P ); 
+                genQ := GeneratorsOfGroup( Q ); 
+                natX := NaturalMorphismByNormalSubPreXMod( X1, X2 ); 
+                natP := SourceHom( natX ); 
+                natQ := RangeHom( natX ); 
+                F2 := Range( natX ); 
+                FP := Source( F2 ); 
+                FQ := Range( F2 ); 
+                bdyF := Boundary( F2 ); 
+                K2 := KernelCokernelXMod( F2 );             
+                idK2 := IdGroup( K2 ); 
+                J2 := ImagesSource( bdy2 ); 
+                if ( idK2 = idK1 ) then 
+                   KP := Source( K2 ); 
+                   KQ := Range( K2 ); 
+                   JF := ImagesSource( bdyF ); 
+                   natKQ := NaturalHomomorphismByNormalSubgroup( FQ, JF );
+                   genKS1 := GeneratorsOfGroup( KS1 ); 
+                   imKS1 := List( genKS1, g -> ImageElm( natP, g ) ); 
+                   alpha := GroupHomomorphismByImages( 
+                                KS1, KP, genKS1, imKS1 ); 
+                   natKR1 := NaturalHomomorphismByNormalSubgroup( R1, J1 );
+                   genKR1 := GeneratorsOfGroup( KR1 );
+                   preKR1 := List( genKR1, 
+                               g -> PreImagesRepresentativeNC( natKR1, g ) ); 
+                   im1KR1 := List( preKR1, g -> ImageElm( natQ, g ) ); 
+                   natKQ := NaturalHomomorphismByNormalSubgroup( FQ, JF ); 
+                   im2KR1 := List( im1KR1, g -> ImageElm( natKQ, g ) ); 
+                   gamma := GroupHomomorphismByImages( 
+                               KR1, KQ, genKR1, im2KR1 ); 
+                   isoK := PreXModMorphismByGroupHomomorphisms( 
+                               K1, K2, alpha, gamma ); 
+                   if IsBijective( isoK ) then 
+                      if show then 
+                          Print( "(quo:) normal subxmod: ", 
+                                 StructureDescription( X2 ), "\n" ); 
+                      fi; 
+                      natC := Cat1GroupMorphismOfXModMorphism( natX ); 
+                      C2 := Range( natC ); 
+                      G2 := Source( C2 ); 
+                      gen2 := GeneratorsOfGroup( G2 ); 
+                      idgp := IdGroup( C2 ); 
+                      idcat := IdCat1Group( C2 ); 
+                      if idcat = "not known" then
+                         Display( XModOfCat1Group(C2) ); 
+                      fi; 
+                      if show then 
+                         Print( idgp, ", ", idcat, ", ", 
+                                StructureDescription(C2), "\n" ); 
+                         Print( "bdy2: ", 
+                                MappingGeneratorsImages(bdy2), "\n" );
+                      fi; 
+                      tot := tot + 1;
+                      Add( ids, idcat ); 
+                      Add( maps, natC ); 
+                   fi;
                 fi; 
-            fi; 
-        od; 
+             fi; 
+          fi; 
+       od; 
     od; 
     return ids; 
 end ); 
 
-##############################################################################
+#############################################################################
 ##
 #M  QuasiIsomorphism( <cat1>, <id>, <print> )
 ##  

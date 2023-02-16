@@ -26,7 +26,6 @@ jobs:
         gap-branch:
           - master
           - stable-4.12
-          - stable-4.11
 
     steps:
       - uses: actions/checkout@v3

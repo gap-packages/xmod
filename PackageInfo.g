@@ -7,7 +7,7 @@ SetPackageInfo( rec(
 
 PackageName := "XMod",
 Subtitle := "Crossed Modules and Cat1-Groups",
-Version := "2.91",
+Version := "2.91dev",
 Date := "16/02/2023", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 

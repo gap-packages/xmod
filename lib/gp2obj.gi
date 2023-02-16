@@ -54,9 +54,9 @@ CAT1_LIST_NUMBERS :=
 CAT1_LIST_LOADED := false;
 CAT1_LIST := [ ];
 
-##############################################################################
+#############################################################################
 ##
-#M  Size2d( <D> )  . . . . . . . . . . . . . .  size of a 2-dimensional domain
+#M  Size2d( <D> )  . . . . . . . . . . . . .  size of a 2-dimensional domain
 ##
 InstallMethod( Size2d, "generic method for a 2d-object", true, 
     [ Is2DimensionalDomain ], 0,
@@ -71,12 +71,12 @@ function ( obj )
     return fail; 
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  IsTrivial( <D> )  . . . . . . . . . . . . . . . for a 2-dimensional domain
-#M  IsNonTrivial( <D> ) . . . . . . . . . . . . . . for a 2-dimensional domain
-#M  IsFinite( <D> ) . . . . . . . . . . . . . . . . for a 2-dimensional domain
-#M  IsAssociative( <XM> ) . . . . . . . . . . . . . for a 2-dimensional domain
+#M  IsTrivial( <D> )  . . . . . . . . . . . . . . for a 2-dimensional domain
+#M  IsNonTrivial( <D> ) . . . . . . . . . . . . . for a 2-dimensional domain
+#M  IsFinite( <D> ) . . . . . . . . . . . . . . . for a 2-dimensional domain
+#M  IsAssociative( <XM> ) . . . . . . . . . . . . for a 2-dimensional domain
 ##
 InstallMethod( IsTrivial, "generic method for a 2d-object", true, 
     [ Is2DimensionalDomain ], 0,
@@ -102,14 +102,14 @@ function( XM )
     return IsAssociative( Source(XM) ) and IsAssociative( Range(XM) ); 
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  IsPerm2DimensionalGroup . . check whether source and range are perm groups
+#M  IsPerm2DimensionalGroup . check whether source and range are perm groups
 #M  IsFp2DimensionalGroup . . . check whether source and range are fp groups
 #M  IsPc2DimensionalGroup . . . check whether source and range are pc groups
 ##
-InstallMethod( IsPerm2DimensionalGroup, "generic method for 2d-group objects",
-    true, [ Is2DimensionalGroup ], 0,
+InstallMethod( IsPerm2DimensionalGroup, 
+    "generic method for 2d-group objects", true, [ Is2DimensionalGroup ], 0,
 function( obj )
     return ( IsPermGroup( Source( obj ) ) and IsPermGroup( Range( obj ) ) );
 end );
@@ -214,9 +214,9 @@ function( P )
     return true;
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  \=( <P>, <Q> )  . . . . . . . .  test if two pre-crossed modules are equal
+#M  \=( <P>, <Q> )  . . . . . . .  test if two pre-crossed modules are equal
 ##
 InstallMethod( \=, "generic method for two pre-crossed modules",
     IsIdenticalObj, [ IsPreXMod, IsPreXMod ], 0,
@@ -241,9 +241,9 @@ function( PM )
     return ForAll( genrng, r -> ( ImageElm( act, r ) = onesrc ) );
 end );
 
-###############################################################################
+#############################################################################
 ##
-#M  IsCentralExtension2DimensionalGroup( <xmod> ) . . . . . . check the axioms
+#M  IsCentralExtension2DimensionalGroup( <xmod> ) . . . . . check the axioms
 ##
 InstallMethod( IsCentralExtension2DimensionalGroup, "for an xmod",
     true, [ IsXMod ], 0,
@@ -263,7 +263,7 @@ function( X0 )
     act := XModAction( X0 ); 
     genS := GeneratorsOfGroup( S );
     genR := GeneratorsOfGroup( R );
-    preR := List( genR, r -> PreImagesRepresentative( bdy, r ) ); 
+    preR := List( genR, r -> PreImagesRepresentativeNC( bdy, r ) ); 
     len := Length( genR ); 
     for i in [1..len] do 
         r := genR[i];
@@ -278,9 +278,9 @@ function( X0 )
     return true; 
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  PreXModObj( <bdy>, <act> ) . . . . . . . . . . . make a pre-crossed module
+#M  PreXModObj( <bdy>, <act> ) . . . . . . . . . . make a pre-crossed module
 ##
 InstallMethod( PreXModObj, "for homomorphism and action", true,
     [ IsGroupHomomorphism, IsGroupHomomorphism ], 0,
@@ -366,7 +366,7 @@ end );
 #############################################################################
 ##
 #M  String, ViewString, PrintString, ViewObj, PrintObj 
-##  . . . . . . . . . . . . . . . . . . . . . . . for two-dimensional domains 
+##  . . . . . . . . . . . . . . . . . . . . . . for two-dimensional domains 
 ##
 InstallMethod( String, "for a 2d-domain", true, [ Is2DimensionalDomain ], 0, 
 function( g2d ) 
@@ -394,7 +394,7 @@ function( g2d )
     fi;
 end );
 
-InstallMethod( PrintObj, "for a 2d-domain", true, [ Is2DimensionalDomain ], 0,
+InstallMethod( PrintObj, "for a 2d-domain", true, [Is2DimensionalDomain], 0,
 function( g2d )
     if HasName( g2d ) then
         Print( Name( g2d ), "\n" );
@@ -501,7 +501,7 @@ function( g2d )
             Print( " range generators to automorphisms:\n" );
             for i in [1..len] do
                 Print( "  ", genrng[i], " --> { source gens --> " );
-                Print( List( gensrc, s -> ImageElm( imact[i], s ) ), " }\n" );
+                Print( List( gensrc, s -> ImageElm(imact[i],s) ), " }\n" );
             od;
         fi;
         if triv then
@@ -544,7 +544,8 @@ function( g2d )
             Print( "  ", imk, "\n" );
         fi;
     fi; 
-    if ( HasIsXMod( g2d ) and IsXMod( g2d ) and HasCat1GroupOfXMod( g2d ) ) then
+    if ( HasIsXMod( g2d ) and IsXMod( g2d ) 
+         and HasCat1GroupOfXMod( g2d ) ) then
         Print( ": associated cat1-group is ", 
                Cat1GroupOfXMod( g2d ), "\n" );
     elif ( HasIsCat1Group( g2d ) and IsCat1Group( g2d ) 
@@ -557,8 +558,8 @@ end );
 
 #############################################################################
 ##
-#M  IdGroup . . . . . . . . . . . . . . . . . . . . for a 2Dimensional-domain
-#M  StructureDescription  . . . . . . . . . . . . . for a 2Dimensional-domain
+#M  IdGroup . . . . . . . . . . . . . . . . . . . for a 2Dimensional-domain
+#M  StructureDescription  . . . . . . . . . . . . for a 2Dimensional-domain
 ##
 InstallOtherMethod( IdGroup, "method for a 2d-domain", true, 
     [ Is2DimensionalDomain ], 0,
@@ -575,7 +576,7 @@ end );
 
 #############################################################################
 ##
-#M  Name . . . . . . . . . . . . . . . . . . . . .  for a 2Dimensional-domain
+#M  Name . . . . . . . . . . . . . . . . . . . .  for a 2Dimensional-domain
 ##
 InstallMethod( Name, "method for a 2d-domain", true, 
     [ Is2DimensionalDomain ], 0,
@@ -713,9 +714,9 @@ function( C1G )
     return true;
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  \=( <C1>, <C2> ) . . . . . . . . . . test if two pre-cat1-groups are equal
+#M  \=( <C1>, <C2> ) . . . . . . . . . test if two pre-cat1-groups are equal
 ##
 InstallMethod( \=, "generic method for pre-cat1-groups",
     IsIdenticalObj, [ IsPreCat1Group, IsPreCat1Group ], 0,
@@ -724,9 +725,9 @@ function( C1, C2 )
              and ( RangeEmbedding(C1) = RangeEmbedding(C2) ) );
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  PreCat1Obj . . . . . . . . . . . . . . . . . . . . . make a pre-cat1-group
+#M  PreCat1Obj . . . . . . . . . . . . . . . . . . . . make a pre-cat1-group
 ##
 InstallMethod( PreCat1Obj, "for tail, head, embedding", true,
     [ IsGroupHomomorphism, IsGroupHomomorphism, IsGroupHomomorphism ], 0,
@@ -776,15 +777,15 @@ function( t, h, e )
     return C1G;
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  Elements( <P> )  . . . . . . . . . . . . elements for a pre-crossed module
+#M  Elements( <P> )  . . . . . . . . . . . elements for a pre-crossed module
 ##
 ##  replaced by Enumerator ???
 
 #############################################################################
 ##
-#M  TransposeCat1Group                                     for a pre-cat1-group
+#M  TransposeCat1Group                                  for a pre-cat1-group
 ##
 InstallMethod( TransposeCat1Group, "method for a cat1-group", true, 
     [ IsPreCat1Group ], 0,
@@ -832,7 +833,8 @@ end );
 #M  PreCat1GroupRecordOfPreXMod . convert pre-crossed module to pre-cat1-group
 ##
 InstallMethod( PreCat1GroupRecordOfPreXMod,
-    "convert a pre-crossed module to a pre-cat1-group", true, [ IsPreXMod ], 0,
+    "convert a pre-crossed module to a pre-cat1-group", true, 
+    [ IsPreXMod ], 0,
 function( X0 )
 
     local S0, genS0, R0, genR0, iso, Xact, Xbdy, one, imbdy, info, G, genG, 
@@ -883,7 +885,7 @@ function( X0 )
         t := GroupHomomorphismByImages( G, R0, genG, imt );
         projS := List( imt, r -> ImageElm( eR, r^-1 ) );
         projS := List( [ 1..Length( genG ) ], i -> projS[i] * genG[i] );
-        projS := List( projS, x -> PreImagesRepresentative( eS, x ) );
+        projS := List( projS, x -> PreImagesRepresentativeNC( eS, x ) );
         imh := List( [ 1..Length( genG ) ],
             i -> imt[i] * ImageElm( Xbdy, projS[i] ) ); 
         h := GroupHomomorphismByImages( G, R0, genG, imh );
@@ -894,9 +896,11 @@ function( X0 )
     fi; 
     ## trying this out 13/06/20 
     mgiR := MappingGeneratorsImages( eR ); 
-    eR := GroupHomomorphismByImages( Source(eR), Range(eR), mgiR[1], mgiR[2] ); 
+    eR := GroupHomomorphismByImages( 
+              Source(eR), Range(eR), mgiR[1], mgiR[2] ); 
     mgiS := MappingGeneratorsImages( eS ); 
-    eS := GroupHomomorphismByImages( Source(eS), Range(eS), mgiS[1], mgiS[2] ); 
+    eS := GroupHomomorphismByImages( 
+              Source(eS), Range(eS), mgiS[1], mgiS[2] ); 
     pcrec := rec( precat1 := C, 
                   xmodRangeEmbedding := Image( eR ), 
                   xmodRangeEmbeddingIsomorphism := eR, 
@@ -910,7 +914,7 @@ end );
 
 #############################################################################
 ##
-#M  IsXMod . . . . . . . . . check that the second crossed module axiom holds
+#M  IsXMod . . . . . . . . check that the second crossed module axiom holds
 ##
 InstallMethod( IsXMod, "generic method for pre-crossed modules",
     true, [ IsPreXMod ], 0,
@@ -930,7 +934,8 @@ function( XM )
             if ( z2 <> w2 ) then
                 Info( InfoXMod, 2,
                       "CM2) fails at  x2 = ", x2, ",  y2 = ", y2, "\n",
-                      "x2^(hom(y2)) = ", z2, "\n","      x2^y2 = ", w2, "\n" );
+                      "x2^(hom(y2)) = ", z2, "\n",
+                      "      x2^y2 = ", w2, "\n" );
                 return false;
             fi;
         od;
@@ -991,9 +996,9 @@ function( f )
     return XM;
 end );
 
-##############################################################################
+#############################################################################
 ##
-#F  XModByNormalSubgroup            create a crossed module from normal N in G
+#F  XModByNormalSubgroup         create a crossed module from normal N in G
 ##
 InstallMethod( XModByNormalSubgroup, "conjugation crossed module",
     true, [ IsGroup, IsGroup ], 0,
@@ -1081,7 +1086,7 @@ end );
 
 #############################################################################
 ##
-#M  XModByAbelianModule( <abmod> )      crossed module  [zero : abmod -> grp]
+#M  XModByAbelianModule( <abmod> )     crossed module  [zero : abmod -> grp]
 ##
 InstallMethod( XModByAbelianModule, "abelian module crossed module", true, 
     [ IsAbelianModule ], 0,
@@ -1095,7 +1100,7 @@ end );
 
 #############################################################################
 ##
-#M  XModByGroupOfAutomorphisms                       crossed module  [G -> A]
+#M  XModByGroupOfAutomorphisms                     crossed module  [G -> A]
 ##
 InstallMethod( XModByGroupOfAutomorphisms, "automorphism crossed module",
     true, [ IsGroup, IsGroup ], 0,
@@ -1140,8 +1145,8 @@ end );
 
 #############################################################################
 ##
-#M  XModByAutomorphismGroup( <G> )               crossed module [G -> Aut(G)]
-#M  XModByInnerAutomorphismGroup( <G> )          crossed module [G -> Inn(G)]
+#M  XModByAutomorphismGroup( <G> )             crossed module [G -> Aut(G)]
+#M  XModByInnerAutomorphismGroup( <G> )        crossed module [G -> Inn(G)]
 ##
 InstallMethod( XModByAutomorphismGroup, "automorphism xmod of a group",
     true, [ IsGroup ], 0,
@@ -1170,7 +1175,7 @@ function( G )
     return XModByGroupOfAutomorphisms( G, A );
 end );
 
-##############################################################################
+#############################################################################
 ##
 #M  XModOfCat1Group
 ##
@@ -1186,7 +1191,7 @@ function( C1 )
     return X1;
 end );
 
-##############################################################################
+#############################################################################
 ##
 #M  Cat1GroupOfXMod
 ##
@@ -1202,12 +1207,12 @@ function( X1 )
     return C1;
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  PeifferSubgroupPreXMod . . . . . normally generated by Peiffer commutators
+#M  PeifferSubgroupPreXMod . . . . normally generated by Peiffer commutators
 ##
-InstallMethod( PeifferSubgroupPreXMod, "generic method for pre-crossed xmods",
-    true, [ IsPreXMod ], 0,
+InstallMethod( PeifferSubgroupPreXMod, 
+    "generic method for pre-crossed xmods", true, [ IsPreXMod ], 0,
 function( PM )
 
     local Pf, s1, s2, a1, src, gensrc, comm, bdy, act, ok, XPf;
@@ -1237,9 +1242,9 @@ function( PM )
     return Pf;
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  PeifferSubgroupPreCat1Group . . . . commutator of kernels of tail and head
+#M  PeifferSubgroupPreCat1Group . . . commutator of kernels of tail and head
 ##
 InstallMethod( PeifferSubgroupPreCat1Group, 
     "generic method for pre-cat1-groups", true, [ IsPreCat1Group ], 0,
@@ -1257,7 +1262,7 @@ function( PCG )
     return Pf;
 end );
 
-##############################################################################
+#############################################################################
 ##
 #M  PeifferSubgroup . . . . . . . . 
 ##
@@ -1287,10 +1292,9 @@ function( obj )
         return fail;
     fi;
 end );
-
 ##############################################################################
 ##
-#A  XModByPeifferQuotient . . . . . . . xmod from prexmod and Peiffer subgroup
+#A  XModByPeifferQuotient . . . . . xmod from prexmod and Peiffer subgroup
 ##
 InstallMethod( XModByPeifferQuotient, 
     "crossed module from a pre-crossed module and Peiffer subgroup", true,
@@ -1321,9 +1325,9 @@ function( PM )
     return FM; 
 end );
     
-##############################################################################
+#############################################################################
 ##
-#O  XModByPullback . . . . . . . . xmod from an xmod and a group homomorphism
+#O  XModByPullback . . . . . . . xmod from an xmod and a group homomorphism
 ##
 InstallMethod( XModByPullback, 
     "crossed module from a crossed module and a group homomorphism", true,
@@ -1372,12 +1376,12 @@ function( X0, nu )
     return X1; 
 end );
     
-##############################################################################
+#############################################################################
 ##
-#A  KernelCokernelXMod . . . . . ( ker(bdy) -> range/image(bdy) ) for an xmod 
+#A  KernelCokernelXMod . . . . ( ker(bdy) -> range/image(bdy) ) for an xmod 
 ##
-InstallMethod( KernelCokernelXMod, "kernel -> cokernel xmod for a cat1-group", 
-    true, [ IsCat1Group ], 0,
+InstallMethod( KernelCokernelXMod, 
+    "kernel -> cokernel xmod for a cat1-group", true, [ IsCat1Group ], 0,
 function( C0 )
     return KernelCokernelXMod( XModOfCat1Group( C0 ) );
 end ); 
@@ -1401,7 +1405,7 @@ function( X0 )
     imres := List( genK, g -> Image( nat, Image( bdy, g ) ) );
     res := GroupHomomorphismByImages( K, F, genK, imres ); 
     genF := GeneratorsOfGroup( F ); 
-    preF := List( genF, g -> PreImagesRepresentative( nat, g ) ); 
+    preF := List( genF, g -> PreImagesRepresentativeNC( nat, g ) ); 
     imact := ShallowCopy( genF ); 
     if ( genF = [ ] ) then 
         genF := [ One( F ) ]; 
@@ -1477,7 +1481,7 @@ InstallGlobalFunction( XMod, function( arg )
     Error( "usage: XMod( bdy, act );  or  XMod( G, N );" );
 end );
 
-##############################################################################
+#############################################################################
 ##
 #M  IsSubPreXMod
 ##
@@ -1534,7 +1538,7 @@ function( PM, SM )
     return true;
 end );
 
-##############################################################################
+#############################################################################
 ##
 #M  IsSubXMod( <XM>, <SM> )
 ##
@@ -1548,7 +1552,7 @@ function( XM, SM )
     return IsSubPreXMod( XM, SM );
 end );
 
-##############################################################################
+#############################################################################
 ##
 #M  IsSubPreCat1Group
 ##
@@ -1603,7 +1607,7 @@ function( C0, S0 )
     return true;
 end );
 
-##############################################################################
+#############################################################################
 ##
 #M  IsSubCat1Group( <C1>, <S1> )
 ##
@@ -1617,7 +1621,7 @@ function( C1, S1 )
     return IsSubPreCat1Group( C1, S1 );
 end );
 
-##############################################################################
+#############################################################################
 ##
 #M  IsNormalSub2DimensionalDomain( <XM>, <SM> )
 ##
@@ -1664,9 +1668,9 @@ function( X0, X1 )
     return true;
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  Sub2DimensionalGroup . .  creates Sub2bObject from Ssrc<=Osrc & Srng<=Orng
+#M  Sub2DimensionalGroup . creates Sub2bObject from Ssrc<=Osrc & Srng<=Orng
 ##
 InstallMethod( Sub2DimensionalGroup, "generic method for 2d-objects", true,
     [ Is2DimensionalGroup, IsGroup, IsGroup ], 0,
@@ -1684,9 +1688,9 @@ function( obj, src, rng )
     fi;
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  IsSub2DimensionalGroup . . . tests whethere sub is a sub-structure of obj
+#M  IsSub2DimensionalGroup . . tests whethere sub is a sub-structure of obj
 ##
 InstallMethod( IsSub2DimensionalGroup, "generic method for 2d-objects", true,
     [ Is2DimensionalGroup, Is2DimensionalGroup ], 0,
@@ -1699,10 +1703,9 @@ function( obj, sub )
         return fail; 
     fi;
 end );
-
 ##############################################################################
 ##
-#M  SubPreXMod                 creates SubPreXMod from Ssrc<=Psrc & Srng<=Prng
+#M  SubPreXMod             creates SubPreXMod from Ssrc<=Psrc & Srng<=Prng
 ##
 InstallMethod( SubPreXMod, "generic method for pre-crossed modules", true,
     [ IsPreXMod, IsGroup, IsGroup ], 0,
@@ -1781,9 +1784,9 @@ function( PM, Ssrc, Srng )
     return SM;
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  SubXMod . . . . . . . . . . . creates SubXMod from Ssrc<=Psrc & Srng<=Prng
+#M  SubXMod . . . . . . . . . creates SubXMod from Ssrc<=Psrc & Srng<=Prng
 ##
 InstallMethod( SubXMod, "generic method for crossed modules", true,
     [ IsXMod, IsGroup, IsGroup ], 0,
@@ -1800,9 +1803,9 @@ function( XM, Ssrc, Srng )
     return SM;
 end );
 
-###############################################################################
+#############################################################################
 ##
-#M  SubPreCat1Group . .  created from PreCat1Group and a subgroup of the source
+#M  SubPreCat1Group . created from PreCat1Group and a subgroup of the source
 ##
 InstallMethod( SubPreCat1Group, "generic method for (pre-)cat1-groups", true,
     [ IsPreCat1Group, IsGroup, IsGroup ], 0,
@@ -1835,9 +1838,9 @@ function( C, G, R )
     return SC;
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  SubCat1Group . . creates SubCat1Group from Cat1Group and subgroup of source
+#M  SubCat1Group . creates SubCat1Group from Cat1Group and subgroup of source
 ##
 InstallMethod( SubCat1Group, "generic method for cat1-groups", true,
     [ IsCat1Group, IsGroup, IsGroup ], 0,
@@ -2204,14 +2207,17 @@ function( et, eh )
     fi;
     R := Image( et );
     gG := GeneratorsOfGroup( G );
-    t := GroupHomomorphismByImages( G, R, gG, List( gG, g->ImageElm(et,g) ) );
-    h := GroupHomomorphismByImages( G, R, gG, List( gG, g->ImageElm(eh,g) ) );
+    t := GroupHomomorphismByImages( 
+             G, R, gG, List( gG, g->ImageElm(et,g) ) );
+    h := GroupHomomorphismByImages( 
+             G, R, gG, List( gG, g->ImageElm(eh,g) ) );
     e := InclusionMappingGroups( G, R );
     return PreCat1GroupByTailHeadEmbedding( t, h, e ); 
 end );
 
 InstallMethod( IsomorphicPreCat1GroupWithIdentityEmbedding,
-    "convert cat1-group to one with endomorphisms", true, [ IsPreCat1Group ], 0,
+    "convert cat1-group to one with endomorphisms", true, 
+    [ IsPreCat1Group ], 0,
 function( C1G )
 
     local e, t, h, R, genR, te, he, sigma, rho, EC1G, ER, genER, iso;
@@ -2243,8 +2249,9 @@ end );
 InstallMethod( PreXModRecordOfPreCat1Group, true, [ IsPreCat1Group ], 0,
 function( C1G )
  
-    local Csrc, Crng, gensrc, genrng, genker, bdy, kert, innaut, autgen,
-          imautgen, idkert, a, aut, act, phi, j, r, PM, PMrec, Cek, Cer, name; 
+    local Csrc, Crng, gensrc, genrng, genker, bdy, kert, innaut, 
+          autgen, imautgen, idkert, a, aut, act, phi, j, r, PM, 
+          PMrec, Cek, Cer, name; 
 
     Csrc := Source( C1G );
     Crng := Range( C1G );
@@ -2270,7 +2277,7 @@ function( C1G )
             imautgen := List( genker, s -> ImageElm( Cek, s ) );
             imautgen := List( imautgen, g -> g^( ImageElm( Cer, r ) ) );
             imautgen := List( imautgen,
-                              g -> PreImagesRepresentative( Cek, g ) );
+                              g -> PreImagesRepresentativeNC( Cek, g ) );
             a := GroupHomomorphismByImages( kert, kert, genker, imautgen );
             Add( autgen, a );
         od;
@@ -2318,7 +2325,7 @@ InstallOtherMethod( Source,
     [ IsPreCat1Group ], 0,
     C1G -> Source( TailMap( C1G ) ) );
 
-##############################################################################
+#############################################################################
 ##
 #M  Range( C1G ) . . . . . . . . . . . . . . . . . . . . . for a cat1-group
 ##
@@ -2328,7 +2335,7 @@ InstallOtherMethod( Range,
     [ IsPreCat1Group ], 0,
     C1G -> Range( TailMap( C1G ) ) );
 
-##############################################################################
+#############################################################################
 ##
 #M  Kernel( C1G ) . . . . . . . . . . . . . . . . . . . for a pre-cat1-group
 ##
@@ -2346,15 +2353,15 @@ InstallOtherMethod( Boundary,
 
 #############################################################################
 ##
-#M  KernelEmbedding( C1G ) . . .  . . . . . . . . . . . . .  for a cat1-group
+#M  KernelEmbedding( C1G ) . . .  . . . . . . . . . . . . . for a cat1-group
 ##
 InstallMethod( KernelEmbedding,
     "method for a pre-cat1-group", true, [ IsPreCat1Group ], 0,
     C1G -> InclusionMappingGroups( Source( C1G ), Kernel( C1G ) ) );
 
-##############################################################################
+#############################################################################
 ##
-#M  Cat1GroupByPeifferQuotient . . . . cat1 from pre-cat1 and Peiffer subgroup
+#M  Cat1GroupByPeifferQuotient . . . cat1 from pre-cat1 and Peiffer subgroup
 ##
 InstallMethod( Cat1GroupByPeifferQuotient, 
                "cat1-group from a pre-cat1-group and Peiffer subgroup",
@@ -2380,7 +2387,7 @@ function( PC )
     quot := Image( nat );
     qgen := GeneratorsOfGroup( quot );
     # construct the head, tail and embedding
-    pqgen := List( qgen, q -> PreImagesRepresentative( nat, q ) );
+    pqgen := List( qgen, q -> PreImagesRepresentativeNC( nat, q ) );
     tpqgen := List( pqgen, p -> ImageElm( PCt, p ) );
     tail := GroupHomomorphismByImages( quot, PCrng, qgen, tpqgen );
     hpqgen := List( pqgen, p -> ImageElm( PCh, p ) );
@@ -2577,16 +2584,16 @@ function( G, R )
     return n; 
 end ); 
 
-##############################################################################
+#############################################################################
 ##
-#M  AllCat1Groups . . . . . . . list of cat1-group structures on a given group
-#O  AllCat1GroupsIterator( <gp> ) . . . . . . . iterator for the previous list
+#M  AllCat1Groups . . . . . . list of cat1-group structures on a given group
+#O  AllCat1GroupsIterator( <gp> ) . . . . . . iterator for the previous list
 #F  NextIterator_AllCat1Groups( <iter> ) 
 #F  IsDoneIterator_AllCat1Groups( <iter> ) 
 #F  ShallowCopy_AllCat1Groups( <iter> ) 
-#M  AllCat1GroupsMatrix  . . . . . . . . . 0-1-2 matrix indexed by projections
-#A  AllCat1GroupsNumber( <gp> ) . . . . . . . . .  number of these cat1-groups
-#M  AllCat1GroupsUpToIsomorphism . . . iso class reps of cat1-group structures
+#M  AllCat1GroupsMatrix  . . . . . . . . 0-1-2 matrix indexed by projections
+#A  AllCat1GroupsNumber( <gp> ) . . . . . . . .  number of these cat1-groups
+#M  AllCat1GroupsUpToIsomorphism . . iso class reps of cat1-group structures
 ##
 BindGlobal( "NextIterator_AllCat1Groups", function ( iter ) 
     local R, C; 
@@ -2826,9 +2833,9 @@ end );
 
 #############################################################################
 ##
-#M  DirectProductInfo( <obj> ) . . . . . . . . . . . . . . . . for 2d-objects
-#M  Coproduct2dInfo( <obj> ) . . . . . . . . . . . . . . . . . for 2d-objects
-#M  DirectProductOp(  )  . . . . . .  (bdy1 x bdy2) : (S1 x S2) --> (R1 x R2)
+#M  DirectProductInfo( <obj> ) . . . . . . . . . . . . . . . for 2d-objects
+#M  Coproduct2dInfo( <obj> ) . . . . . . . . . . . . . . . . for 2d-objects
+#M  DirectProductOp(  )  . . . . .  (bdy1 x bdy2) : (S1 x S2) --> (R1 x R2)
 ##
 InstallOtherMethod( DirectProductInfo, "generic method for 2d-objects", true, 
     [ Is2DimensionalDomain ], 0,
@@ -2916,8 +2923,8 @@ function( list, X1 )
     return X0;
 end );
 
-##############################################################################
-
+#############################################################################
+## 
 InstallOtherMethod( DirectProductOp,
     "method for pre-cat1-groups", true, [ IsList, IsPreCat1Group ], 0,
 function( list, C1 )
@@ -2991,10 +2998,10 @@ function( list, C1 )
     return C0;
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  Embedding . . . . for direct products of (pre-)xmods and (pre-)cat1-groups
-#M  Projection  . . . and also (pre)-cat2-groups and others 
+#M  Embedding . . . for direct products of (pre-)xmods and (pre-)cat1-groups
+#M  Projection  . . and also (pre)-cat2-groups and others 
 ##
 InstallOtherMethod( Embedding, "generic method for (pre-)xmods & (pre-)cat1s",
     true, [ HasHigherDimension, IsPosInt ], 0,
@@ -3024,7 +3031,7 @@ function( D, i )
     fi;
 end );
 
-##############################################################################
+#############################################################################
 ##
 #M  TrivialSub2DimensionalGroup . . . . . . . . . .  of a 2d-object
 #M  TrivialSubPreXMod  . . . . . . . . . . . . . . . of a pre-crossed module
@@ -3071,9 +3078,9 @@ function( obj )
     return TrivialSub2DimensionalGroup( obj );
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  IsNormalSubgroup2DimensionalGroup . . . . . . . . for 2Dimensional-objects
+#M  IsNormalSubgroup2DimensionalGroup . . . . . . . for 2Dimensional-objects
 ##
 InstallMethod( IsNormalSubgroup2DimensionalGroup, 
     "for crossed modules and cat1-groups", [ Is2DimensionalGroup ], 0,
@@ -3092,9 +3099,9 @@ function( obj )
     fi;
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  IsNormal . . . . . . . . . . . . . . . . . . . .  for 2Dimensional-objects
+#M  IsNormal . . . . . . . . . . . . . . . . . . .  for 2Dimensional-objects
 ##
 InstallOtherMethod( IsNormal, "for precrossed modules", IsIdenticalObj,
     [ IsPreXMod, IsPreXMod ], 0,
@@ -3130,9 +3137,9 @@ function( XM, SM )
     return true;
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  NormalSubXMods  .  . . . . . . . . . . . . . . . . .  for a crossed module
+#M  NormalSubXMods  .  . . . . . . . . . . . . . . . .  for a crossed module
 ##
 InstallMethod( NormalSubXMods, "for a crossed module", true, [ IsXMod ], 0,
 function( XM )
@@ -3164,9 +3171,9 @@ function( XM )
     return norm;
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  InitCatnGroupRecords . . . . . . . . . . . . . . . . . . . . . for a group 
+#M  InitCatnGroupRecords . . . . . . . . . . . . . . . . . . . . for a group 
 ##
 InstallMethod( InitCatnGroupRecords, "for a group", true, [ IsGroup ], 0,
 function( G )
