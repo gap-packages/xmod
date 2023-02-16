@@ -9,12 +9,13 @@ gap> START_TEST( "XMod package: d24.tst" );
 gap> saved_infolevel_xmod := InfoLevel( InfoXMod );; 
 gap> SetInfoLevel( InfoXMod, 0 );
 
-gap> d24 := DihedralGroup( IsPermGroup, 24 );;
+gap> a := (1,2,3,4,5,6,7,8,9,10,11,12);; 
+gap> b := (2,12)(3,11)(4,10)(5,9)(6,8);;
+gap> d24 := Group( a, b );;
 gap> SetName( d24, "d24" );
-gap> norm := NormalSubgroups( d24 );; 
-gap> d12a := norm[3];; 
+gap> d12a := Subgroup( d24, [ a^2, b ] );; 
 gap> SetName( d12a, "d12a" ); 
-gap> d12b := norm[4];; 
+gap> d12b := Subgroup( d24, [ a^2, a*b ] );; 
 gap> SetName( d12b, "d12b" ); 
 gap> c6 := Intersection( d12a, d12b );; 
 gap> SetName( c6, "c6" ); 

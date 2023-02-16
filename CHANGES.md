@@ -1,6 +1,7 @@
 # CHANGES to the 'XMod' package
 
-## 2.89 -> 2.91 (14/02/2023) 
+## 2.89 -> 2.91 (16/02/2023) 
+ * (16/02/23) revised tst/extra/d24.tst so that it works with option -A 
  * (09/02/23) added a chapter on double groupoids with operations 
               EnhancedBasicDoubleGroupoid, DoubleGroupooidWithZeroBoundary
  * (05/02/23) added PreXModWithTrivialRange 
