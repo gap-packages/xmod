@@ -5,6 +5,10 @@
 #Y  Copyright (C) 2001-2023, Chris Wensley et al,  
 ##
 
+if not IsBound( PreImagesRepresentativeNC ) then 
+    BindGlobal( "PreImagesRepresentativeNC", PreImagesRepresentative ); 
+fi; 
+
 ##  read the function declarations
 
 ReadPackage( "xmod", "lib/util.gd" );

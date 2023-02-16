@@ -1,13 +1,13 @@
-##############################################################################
+#############################################################################
 ##
-#W  gp2ind.gi                      XMOD Package                  Chris Wensley
+#W  gp2ind.gi                      XMOD Package                Chris Wensley
 ##
-#Y  Copyright (C) 2001-2022, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2023, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file implements functions for induced crossed modules. 
 
-##############################################################################
+#############################################################################
 ##
 #M  CoproductXMod( <xmod>, <xmod> ) . . . . . . . . . . coproduct of two xmods
 ##
@@ -27,7 +27,7 @@ function( X1, X2 )
         x := ImageElm( proj, g );
         x1 := ImageElm( emb1, x ); 
         y1 := x1^-1 * g;
-        y := PreImagesRepresentative( emb2, y1 );
+        y := PreImagesRepresentativeNC( emb2, y1 );
         if not ( g = x1 * ImageElm( emb2, y ) ) then 
             Error( "problem with factoring g" ); 
         fi;
@@ -158,7 +158,7 @@ function( LX )
     return C2; 
 end ); 
 
-##############################################################################
+#############################################################################
 ##
 #F  InducedXMod( <xmod>, <hom> [, <trans>] )            crossed module induced
 #F  InducedXMod( <grp>, <grp>, <grp> [, <trans>] )       by group homomorphism 
@@ -245,7 +245,7 @@ InstallGlobalFunction( InducedXMod, function( arg )
     return IX;
 end );
 
-##############################################################################
+#############################################################################
 ##
 #M  InducedXModFromTrivialSource( <xmod>, <hom> ) . . . induced xmod
 ##
@@ -281,7 +281,7 @@ function( X0, iota )
     return IX;
 end );
 
-##############################################################################
+#############################################################################
 ##
 #M  InducedXModFromTrivialRange( <xmod>, <hom> ) . . . induced xmod
 ##
@@ -351,7 +351,7 @@ function( X0, iota )
     return IX;
 end );
 
-##############################################################################
+#############################################################################
 ##
 #M  InducedXModByCopower( <xmod>, <hom>, <trans> ) . . . induced xmod
 ##
@@ -493,7 +493,7 @@ function( X0, iota, trans )
     
     genFN :=  [ ];
     for n1 in genN do
-        n2 := PreImagesRepresentative( fp2gM, n1 );
+        n2 := PreImagesRepresentativeNC( fp2gM, n1 );
         m1 := ImageElm( g2fpM, n1 ); 
         l1 := Length( m1 );
         l2 := Length( n2 );
@@ -894,7 +894,7 @@ function( X0, iota )
     Info( InfoXMod, 2, "displacement group generators: ", genH ); 
     Q := Range( iota );
     genQ := GeneratorsOfGroup( Q );
-    preQ := List( genQ, q -> PreImagesRepresentative( iota, q ) );
+    preQ := List( genQ, q -> PreImagesRepresentativeNC( iota, q ) );
     rcos := RightCosets( S, H );
     reps := List( rcos, r -> Representative( r ) );
     Info( InfoXMod, 2, "reps = ", reps ); 
@@ -961,9 +961,9 @@ end );
 ##
 InstallGlobalFunction( AllInducedXMods, function( arg )
 
-    local nargs, rrange,nrange, usage, L, lenL, reps, nreps, r, i, j, k, a, b,  
-          norm, nnorm, n, sizes, keep, coll, Q, P, M, id, XQ, SQ, num, line, 
-          all, descrip, Msd, Psd, Qsd, SQsd, Ksd; 
+    local nargs, rrange,nrange, usage, L, lenL, reps, nreps, r, i, j, k, 
+          a, b, norm, nnorm, n, sizes, keep, coll, Q, P, M, id, XQ, SQ, 
+          num, line, all, descrip, Msd, Psd, Qsd, SQsd, Ksd; 
 
     all := [ ];
     descrip := [ ]; 
@@ -1060,7 +1060,7 @@ InstallGlobalFunction( AllInducedXMods, function( arg )
     return all;
 end );
 
-###############################################################################
+#############################################################################
 ##
 #M  InducedCat1Data( <cat1>, <hom>, <trans> ) . . 
 ##
@@ -1161,7 +1161,7 @@ local Q, R, G,                    # 3 permutation groups
     return ICGinfo;
 end );
 
-###############################################################################
+#############################################################################
 ##
 #M  InducedCat1GroupByFreeProduct( <list> ) . . 
 ##
@@ -1351,7 +1351,7 @@ function( info )
     return IC;
 end );
 
-###############################################################################
+#############################################################################
 ##
 #F  InducedCat1Group( <arg> ) . . . . . . . . . . . . . . . induced cat1-groups
 ##
@@ -1397,7 +1397,7 @@ InstallGlobalFunction( InducedCat1Group, function( arg )
     return IC;
 end );
 
-###############################################################################
+#############################################################################
 ##
 #M  AllInducedCat1Groups( <grp> ) . . induced cat1-groups
 ##

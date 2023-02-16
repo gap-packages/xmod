@@ -10,12 +10,13 @@
     
 #############################################################################
 ##
-#M  IsPerm3DimensionalGroup . .  check whether the 4 sides are perm 2d-groups
-#M  IsFp3DimensionalGroup . . . .  check whether the 4 sides are fp 2d-groups
-#M  IsPc3DimensionalGroup . . . .  check whether the 4 sides are pc 2d-groups
+#M  IsPerm3DimensionalGroup . . check whether the 4 sides are perm 2d-groups
+#M  IsFp3DimensionalGroup . . . . check whether the 4 sides are fp 2d-groups
+#M  IsPc3DimensionalGroup . . . . check whether the 4 sides are pc 2d-groups
 ##
-InstallMethod( IsPerm3DimensionalGroup, "generic method for 3d-group objects",
-    true, [ IsHigherDimensionalGroup ], 0,
+InstallMethod( IsPerm3DimensionalGroup, 
+    "generic method for 3d-group objects", true, 
+    [ IsHigherDimensionalGroup ], 0,
 function( obj )
     return ( IsPermGroup( Up2DimensionalGroup(obj) ) 
              and IsPermGroup( Left2DimensionalGroup(obj) ) 
@@ -47,7 +48,7 @@ end );
 #############################################################################
 ##
 #M  IsCrossedPairing
-#M  CrossedPairingObj( [<src1>,<src2>],<rng>,<map> ) .. make a crossed pairing
+#M  CrossedPairingObj( [<src1>,<src2>],<rng>,<map> ) . make a crossed pairing
 ##
 InstallMethod( IsCrossedPairing, "generic method for mappings", true, 
     [ IsGeneralMapping ], 0,
@@ -115,7 +116,7 @@ end );
 ##
 #M  CrossedPairingByConjugators( <grp> ) . . . make an xpair : Inn(M)^2 -> M 
 ##
-InstallMethod( CrossedPairingByConjugators, "for an inner automorphism group", 
+InstallMethod( CrossedPairingByConjugators, "for inner automorphism group", 
     true, [ IsGroup ], 0,
 function( innM )
 
@@ -138,7 +139,7 @@ end );
 
 #############################################################################
 ##
-#M  CrossedPairingByDerivations( <xmod> ) . . .  make an actor crossed pairing
+#M  CrossedPairingByDerivations( <xmod> ) . . make an actor crossed pairing
 ##
 InstallMethod( CrossedPairingByDerivations, "for a crossed module", true,
     [ IsXMod ], 0,
@@ -163,7 +164,7 @@ end );
 
 #############################################################################
 ##
-#M  CrossedPairingByPreImages( <xmod>, <xmod> ) . . . inner autos -> x-pairing 
+#M  CrossedPairingByPreImages( <xmod>, <xmod> ) . . inner autos -> x-pairing 
 ##
 InstallMethod( CrossedPairingByPreImages, "for two crossed modules", 
     true, [ IsXMod, IsXMod ], 0,
@@ -182,8 +183,8 @@ function( up, lt )
     map := Mapping2ArgumentsByFunction( [N,M], L, 
                function( c ) 
                    local lm, ln;
-                   lm := PreImagesRepresentative( kappa, c[2] ); 
-                   ln := PreImagesRepresentative( lambda, c[1] ); 
+                   lm := PreImagesRepresentativeNC( kappa, c[2] ); 
+                   ln := PreImagesRepresentativeNC( lambda, c[1] ); 
                    return Comm( ln, lm ); 
                end );
     xp := CrossedPairingObj( [N,M], L, map );
@@ -192,11 +193,12 @@ end );
 
 #############################################################################
 ##
-#M  CrossedPairingBySingleXModAction( <xmod>, <subxmod> ) . action -> x-pairing 
+#M  CrossedPairingBySingleXModAction( <xmod>, <subxmod> ) 
+##      . . . . . . . . . . . . . . . . action -> x-pairing 
 #M  PrincipalCrossedPairing( <xmod > )   
 ##
-InstallMethod( CrossedPairingBySingleXModAction, "for xmod and normal subxmod", 
-    true, [ IsXMod, IsXMod ], 0,
+InstallMethod( CrossedPairingBySingleXModAction, 
+    "for xmod and normal subxmod", true, [ IsXMod, IsXMod ], 0,
 function( rt, lt )
 
     local M, L, N, act, map, xp;
@@ -210,7 +212,7 @@ function( rt, lt )
     act := XModAction( rt );
     map := Mapping2ArgumentsByFunction( [N,M], L, 
                function( c ) 
-                   return ImageElm( ImageElm( act, c[1] ), c[2]^(-1) ) * c[2];
+                   return ImageElm( ImageElm(act,c[1]), c[2]^(-1) ) * c[2];
                end );
     xp := CrossedPairingObj( [N,M], L, map );
     return xp;
@@ -287,7 +289,7 @@ end );
 
 ############################################################################# 
 ##
-#M  IsCrossedSquare . . . . . . . . check all the axioms for a crossed square
+#M  IsCrossedSquare . . . . . . . check all the axioms for a crossed square
 ##
 InstallMethod( IsCrossedSquare, "generic method for a crossed square", 
     true, [ IsHigherDimensionalGroup ], 0,
@@ -351,7 +353,8 @@ function( XS )
                 y := ImageElm( an, ImageElmCrossedPairing( xp, [n,m] ) ); 
                 z := ImageElmCrossedPairing( xp, [n2,m] ); 
                 if not x = y * z then 
-                    Info( InfoXMod, 2, "n1,n2,m crossed pairing axiom fails" ); 
+                    Info( InfoXMod, 2, 
+                          "n1,n2,m crossed pairing axiom fails" ); 
                     return false; 
                 fi; 
             od;
@@ -364,7 +367,8 @@ function( XS )
                 am := ImageElm( actup, m2 ); 
                 y := ImageElm( am, ImageElmCrossedPairing( xp, [n,m] ) ); 
                 if not x = ImageElmCrossedPairing( xp, [n,m2] ) * y then 
-                    Info( InfoXMod, 2, "n,m1,m2 crossed pairing axiom fails" ); 
+                    Info( InfoXMod, 2, 
+                          "n,m1,m2 crossed pairing axiom fails" ); 
                     return false; 
                 fi; 
             od;
@@ -378,7 +382,7 @@ function( XS )
             for m in genM do 
                 if not ImageElm( apdg, ImageElmCrossedPairing( xp, [n,m] ) ) 
                      = ImageElmCrossedPairing( xp, 
-                           [ ImageElm( apdn, n ), ImageElm( aprt, m ) ] ) then
+                           [ ImageElm(apdn,n), ImageElm(aprt,m) ] ) then
                     Info( InfoXMod, 2, "n,m,p crossed pairing axiom fails" ); 
                     return false; 
                 fi; 
@@ -393,7 +397,8 @@ function( XS )
             nboxm := ImageElmCrossedPairing( xp, [n,m] ); 
             if not ImageElm( lambda, nboxm ) = n^(-1) * ImageElm( am, n ) 
                and ImageElm( kappa, nboxm ) = ImageElm( an, m^(-1) ) * m then 
-                Info( InfoXMod, 2,  "kappa,lambda do not map nboxm correctly" ); 
+                Info( InfoXMod, 2,  
+                      "kappa,lambda do not map nboxm correctly" ); 
                 return false; 
             fi; 
         od;
@@ -452,7 +457,7 @@ function( up, lt, rt, dn, dg, xp )
     return PS;
 end );
 
-###############################################################################
+#############################################################################
 ##
 #F  PreCrossedSquare( <up>, <lt>, <rt>, <dn>, <dg>, <xp> ) 
 ##                    . . . . . . . . . . . comprising 5 prexmods + pairing
@@ -552,12 +557,13 @@ end );
 
 #############################################################################
 ##
-#M  PreCrossedSquareByPreXMods . . pre-crossed square from 5 pre-xmods + xpair
-#M  CrossedSquareByXMods . . . . . . . . . crossed square from 5 xmods + xpair
+#M  PreCrossedSquareByPreXMods . pre-crossed square from 5 pre-xmods + xpair
+#M  CrossedSquareByXMods . . . . . . . . crossed square from 5 xmods + xpair
 ##
-InstallMethod( PreCrossedSquareByPreXMods, "default pre-crossed square", true, 
-    [ IsPreXMod, IsPreXMod, IsPreXMod, IsPreXMod, IsPreXMod, IsCrossedPairing ],  
-    0,
+InstallMethod( PreCrossedSquareByPreXMods, "default pre-crossed square", 
+    true, 
+    [ IsPreXMod, IsPreXMod, IsPreXMod, 
+      IsPreXMod, IsPreXMod, IsCrossedPairing ], 0,
 function( up, left, right, down, diag, xp )
 
     local L, M, N, P, kappa, lambda, mu, nu, delta, PXS; 
@@ -656,8 +662,8 @@ end );
 ##
 #M  CrossedSquareByNormalSubXMod . crossed square from xmod + normal subxmod 
 ##
-InstallMethod( CrossedSquareByNormalSubXMod, "for an xmod and normal subxmod", 
-    true, [ IsXMod, IsXMod ], 0,
+InstallMethod( CrossedSquareByNormalSubXMod, 
+    "for an xmod and normal subxmod", true, [ IsXMod, IsXMod ], 0,
 function( rt, lt )
 
     local M, L, up, P, N, dn, xp, dg, XS;
@@ -702,7 +708,8 @@ function( X0 )
         Error( "XS fails to be a crossed square by xmod splitting" ); 
     fi; 
     return XS;
-end );
+end ); 
+
 #############################################################################
 ##
 #M  CrossedSquareByPullback . . . . . . . . for two xmods with a common range 
@@ -732,7 +739,8 @@ function( dn, rt )
     lenL := Length( genL );
     Linfo := PullbackInfo( L ); 
     if HasName(M) and HasName(N) and HasName(P) then 
-        SetName( L, Concatenation("(",Name(N)," x_",Name(P)," ",Name(M),")") ); 
+        SetName( L, Concatenation( "(", Name(N), " x_", Name(P), 
+                                   " ", Name(M), ")" ) ); 
     fi;
     dp := Linfo!.directProduct; 
     dpinfo := DirectProductInfo( dp ); 
@@ -868,7 +876,7 @@ end );
 
 #############################################################################
 ##
-#M  Name . . . . . . . . . . . . . . . . . . . . .  for a 3-dimensional group 
+#M  Name . . . . . . . . . . . . . . . . . . . . . for a 3-dimensional group 
 ##
 InstallOtherMethod( Name, "method for a pre-crossed square", true, 
     [ IsHigherDimensionalGroup ], 0,
@@ -998,7 +1006,8 @@ function( g3d )
     if HasName( g3d ) then
         Print( Name( g3d ), "\n" );
     else
-        if ( HasIsPreCrossedSquare( g3d ) and IsPreCrossedSquare( g3d ) ) then 
+        if ( HasIsPreCrossedSquare( g3d ) 
+             and IsPreCrossedSquare( g3d ) ) then 
             ispsq := true; 
             arrow := " -> "; 
         else 
@@ -1053,8 +1062,8 @@ function( g3d )
     fi;
 end );
 
-InstallMethod( ViewObj, "method for a 3d-group", true, [ IsPreCrossedSquare ], 
-    0, PrintObj ); 
+InstallMethod( ViewObj, "method for a 3d-group", true, 
+    [ IsPreCrossedSquare ], 0, PrintObj ); 
 
 #############################################################################
 ##
@@ -1553,7 +1562,8 @@ function( list, A )
     mhuB := MappingGeneratorsImages( HeadMap( upB ) ); 
     mhuB := [ List( mhuB[1], x -> ImageElm( eG2, x ) ), 
               List( mhuB[2], x -> ImageElm( eR2, x ) ) ];
-    mhuC := [ Concatenation(mhuA[1],mhuB[1]), Concatenation(mhuA[2],mhuB[2]) ];
+    mhuC := [ Concatenation(mhuA[1],mhuB[1]), 
+              Concatenation(mhuA[2],mhuB[2]) ];
     huC := GroupHomomorphismByImages( G, R, mhuC[1], mhuC[2] ); 
     meuA := MappingGeneratorsImages( RangeEmbedding( upA ) ); 
     meuA := [ List( meuA[1], x -> ImageElm( eR1, x ) ), 
@@ -1561,7 +1571,8 @@ function( list, A )
     meuB := MappingGeneratorsImages( RangeEmbedding( upB ) ); 
     meuB := [ List( meuB[1], x -> ImageElm( eR2, x ) ), 
               List( meuB[2], x -> ImageElm( eG2, x ) ) ];
-    meuC := [ Concatenation(meuA[1],meuB[1]), Concatenation(meuA[2],meuB[2]) ];
+    meuC := [ Concatenation(meuA[1],meuB[1]), 
+              Concatenation(meuA[2],meuB[2]) ];
     euC := GroupHomomorphismByImages( R, G, meuC[1], meuC[2] ); 
     upC := PreCat1GroupByTailHeadEmbedding( tuC, huC, euC );
     ## construct the left cat2-group for C
@@ -1571,7 +1582,8 @@ function( list, A )
     mtlB := MappingGeneratorsImages( TailMap( ltB ) ); 
     mtlB := [ List( mtlB[1], x -> ImageElm( eG2, x ) ), 
               List( mtlB[2], x -> ImageElm( eQ2, x ) ) ];
-    mtlC := [ Concatenation(mtlA[1],mtlB[1]), Concatenation(mtlA[2],mtlB[2]) ];
+    mtlC := [ Concatenation(mtlA[1],mtlB[1]), 
+              Concatenation(mtlA[2],mtlB[2]) ];
     tlC := GroupHomomorphismByImages( G, Q, mtlC[1], mtlC[2] ); 
     mhlA := MappingGeneratorsImages( HeadMap( ltA ) ); 
     mhlA := [ List( mhlA[1], x -> ImageElm( eG1, x ) ), 
@@ -1579,7 +1591,8 @@ function( list, A )
     mhlB := MappingGeneratorsImages( HeadMap( ltB ) ); 
     mhlB := [ List( mhlB[1], x -> ImageElm( eG2, x ) ), 
               List( mhlB[2], x -> ImageElm( eQ2, x ) ) ];
-    mhlC := [ Concatenation(mhlA[1],mhlB[1]), Concatenation(mhlA[2],mhlB[2]) ];
+    mhlC := [ Concatenation(mhlA[1],mhlB[1]), 
+              Concatenation(mhlA[2],mhlB[2]) ];
     hlC := GroupHomomorphismByImages( G, Q, mhlC[1], mhlC[2] ); 
     melA := MappingGeneratorsImages( RangeEmbedding( ltA ) ); 
     melA := [ List( melA[1], x -> ImageElm( eQ1, x ) ), 
@@ -1587,7 +1600,8 @@ function( list, A )
     melB := MappingGeneratorsImages( RangeEmbedding( ltB ) ); 
     melB := [ List( melB[1], x -> ImageElm( eQ2, x ) ), 
               List( melB[2], x -> ImageElm( eG2, x ) ) ];
-    melC := [ Concatenation(melA[1],melB[1]), Concatenation(melA[2],melB[2]) ];
+    melC := [ Concatenation(melA[1],melB[1]), 
+              Concatenation(melA[2],melB[2]) ];
     elC := GroupHomomorphismByImages( Q, G, melC[1], melC[2] ); 
     ltC := PreCat1GroupByTailHeadEmbedding( tlC, hlC, elC );
     ## construct the right cat2-group for C
@@ -1597,7 +1611,8 @@ function( list, A )
     mtrB := MappingGeneratorsImages( TailMap( rtB ) ); 
     mtrB := [ List( mtrB[1], x -> ImageElm( eR2, x ) ), 
               List( mtrB[2], x -> ImageElm( eP2, x ) ) ];
-    mtrC := [ Concatenation(mtrA[1],mtrB[1]), Concatenation(mtrA[2],mtrB[2]) ];
+    mtrC := [ Concatenation(mtrA[1],mtrB[1]), 
+              Concatenation(mtrA[2],mtrB[2]) ];
     trC := GroupHomomorphismByImages( R, P, mtrC[1], mtrC[2] ); 
     mhrA := MappingGeneratorsImages( HeadMap( rtA ) ); 
     mhrA := [ List( mhrA[1], x -> ImageElm( eR1, x ) ), 
@@ -1605,7 +1620,8 @@ function( list, A )
     mhrB := MappingGeneratorsImages( HeadMap( rtB ) ); 
     mhrB := [ List( mhrB[1], x -> ImageElm( eR2, x ) ), 
               List( mhrB[2], x -> ImageElm( eP2, x ) ) ];
-    mhrC := [ Concatenation(mhrA[1],mhrB[1]), Concatenation(mhrA[2],mhrB[2]) ];
+    mhrC := [ Concatenation(mhrA[1],mhrB[1]), 
+              Concatenation(mhrA[2],mhrB[2]) ];
     hrC := GroupHomomorphismByImages( R, P, mhrC[1], mhrC[2] ); 
     merA := MappingGeneratorsImages( RangeEmbedding( rtA ) ); 
     merA := [ List( merA[1], x -> ImageElm( eP1, x ) ), 
@@ -1613,7 +1629,8 @@ function( list, A )
     merB := MappingGeneratorsImages( RangeEmbedding( rtB ) ); 
     merB := [ List( merB[1], x -> ImageElm( eP2, x ) ), 
               List( merB[2], x -> ImageElm( eR2, x ) ) ];
-    merC := [ Concatenation(merA[1],merB[1]), Concatenation(merA[2],merB[2]) ];
+    merC := [ Concatenation(merA[1],merB[1]), 
+              Concatenation(merA[2],merB[2]) ];
     erC := GroupHomomorphismByImages( P, R, merC[1], merC[2] ); 
     rtC := PreCat1GroupByTailHeadEmbedding( trC, hrC, erC );
     ## construct the down cat2-group for C
@@ -1623,7 +1640,8 @@ function( list, A )
     mtdB := MappingGeneratorsImages( TailMap( dnB ) ); 
     mtdB := [ List( mtdB[1], x -> ImageElm( eQ2, x ) ), 
               List( mtdB[2], x -> ImageElm( eP2, x ) ) ];
-    mtdC := [ Concatenation(mtdA[1],mtdB[1]), Concatenation(mtdA[2],mtdB[2]) ];
+    mtdC := [ Concatenation(mtdA[1],mtdB[1]), 
+              Concatenation(mtdA[2],mtdB[2]) ];
     tdC := GroupHomomorphismByImages( Q, P, mtdC[1], mtdC[2] ); 
     mhdA := MappingGeneratorsImages( HeadMap( dnA ) ); 
     mhdA := [ List( mhdA[1], x -> ImageElm( eQ1, x ) ), 
@@ -1631,7 +1649,8 @@ function( list, A )
     mhdB := MappingGeneratorsImages( HeadMap( dnB ) ); 
     mhdB := [ List( mhdB[1], x -> ImageElm( eQ2, x ) ), 
               List( mhdB[2], x -> ImageElm( eP2, x ) ) ];
-    mhdC := [ Concatenation(mhdA[1],mhdB[1]), Concatenation(mhdA[2],mhdB[2]) ];
+    mhdC := [ Concatenation(mhdA[1],mhdB[1]), 
+              Concatenation(mhdA[2],mhdB[2]) ];
     hdC := GroupHomomorphismByImages( Q, P, mhdC[1], mhdC[2] ); 
     medA := MappingGeneratorsImages( RangeEmbedding( dnA ) ); 
     medA := [ List( medA[1], x -> ImageElm( eP1, x ) ), 
@@ -1639,7 +1658,8 @@ function( list, A )
     medB := MappingGeneratorsImages( RangeEmbedding( dnB ) ); 
     medB := [ List( medB[1], x -> ImageElm( eP2, x ) ), 
               List( medB[2], x -> ImageElm( eQ2, x ) ) ];
-    medC := [ Concatenation(medA[1],medB[1]), Concatenation(medA[2],medB[2]) ];
+    medC := [ Concatenation(medA[1],medB[1]), 
+              Concatenation(medA[2],medB[2]) ];
     edC := GroupHomomorphismByImages( P, Q, medC[1], medC[2] ); 
     dnC := PreCat1GroupByTailHeadEmbedding( tdC, hdC, edC );
     ## construct the diagonal cat2-group for C
@@ -1649,7 +1669,8 @@ function( list, A )
     mtgB := MappingGeneratorsImages( TailMap( dgB ) ); 
     mtgB := [ List( mtgB[1], x -> ImageElm( eG2, x ) ), 
               List( mtgB[2], x -> ImageElm( eP2, x ) ) ];
-    mtgC := [ Concatenation(mtgA[1],mtgB[1]), Concatenation(mtgA[2],mtgB[2]) ];
+    mtgC := [ Concatenation(mtgA[1],mtgB[1]), 
+              Concatenation(mtgA[2],mtgB[2]) ];
     tgC := GroupHomomorphismByImages( G, P, mtgC[1], mtgC[2] ); 
     mhgA := MappingGeneratorsImages( HeadMap( dgA ) ); 
     mhgA := [ List( mhgA[1], x -> ImageElm( eG1, x ) ), 
@@ -1657,7 +1678,8 @@ function( list, A )
     mhgB := MappingGeneratorsImages( HeadMap( dgB ) ); 
     mhgB := [ List( mhgB[1], x -> ImageElm( eG2, x ) ), 
               List( mhgB[2], x -> ImageElm( eP2, x ) ) ];
-    mhgC := [ Concatenation(mhgA[1],mhgB[1]), Concatenation(mhgA[2],mhgB[2]) ];
+    mhgC := [ Concatenation(mhgA[1],mhgB[1]), 
+              Concatenation(mhgA[2],mhgB[2]) ];
     hgC := GroupHomomorphismByImages( G, P, mhgC[1], mhgC[2] ); 
     megA := MappingGeneratorsImages( RangeEmbedding( dgA ) ); 
     megA := [ List( megA[1], x -> ImageElm( eP1, x ) ), 
@@ -1665,7 +1687,8 @@ function( list, A )
     megB := MappingGeneratorsImages( RangeEmbedding( dgB ) ); 
     megB := [ List( megB[1], x -> ImageElm( eP2, x ) ), 
               List( megB[2], x -> ImageElm( eG2, x ) ) ];
-    megC := [ Concatenation(megA[1],megB[1]), Concatenation(megA[2],megB[2]) ];
+    megC := [ Concatenation(megA[1],megB[1]), 
+              Concatenation(megA[2],megB[2]) ];
     egC := GroupHomomorphismByImages( P, G, megC[1], megC[2] ); 
     dgC := PreCat1GroupByTailHeadEmbedding( tgC, hgC, egC );
     C := PreCat2GroupByPreCat1Groups( upC, ltC, rtC, dnC, dgC ); 
@@ -2101,7 +2124,8 @@ function( G )
                 fi; 
                 if not omit then 
                     Add( classes, 
-                      [ [ Position(all1,genC[1]), Position(all1,genC[2]) ] ] );
+                      [ [ Position( all1, genC[1] ), 
+                          Position( all1, genC[2] ) ] ] );
                 fi; 
             fi;
         fi;
@@ -2581,7 +2605,7 @@ end );
     
 #############################################################################
 ##
-#M  Transpose3DimensionalGroup .   transpose of a crossed square or cat2-group 
+#M  Transpose3DimensionalGroup . transpose of a crossed square or cat2-group 
 ##
 InstallMethod( Transpose3DimensionalGroup, "transposed crossed square", true, 
     [ IsCrossedSquare ], 0,
@@ -2647,6 +2671,8 @@ InstallMethod( IsSymmetric3DimensionalGroup,
 function( XS )
     return IsHigherDimensionalGroup( XS ) 
            and HigherDimension( XS ) = 3 
-           and ( Up2DimensionalGroup( XS ) = Left2DimensionalGroup( XS ) ) 
-           and ( Right2DimensionalGroup( XS ) = Down2DimensionalGroup( XS ) );
+           and ( Up2DimensionalGroup( XS ) 
+                 = Left2DimensionalGroup( XS ) ) 
+           and ( Right2DimensionalGroup( XS ) 
+                 = Down2DimensionalGroup( XS ) );
 end );

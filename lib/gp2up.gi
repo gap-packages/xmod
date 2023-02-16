@@ -1,17 +1,17 @@
-##############################################################################
+#############################################################################
 ##
-#W  gp2up.gi                    GAP4 package `XMod'              Chris Wensley
-#W                                                                 & Murat Alp
+#W  gp2up.gi                  GAP4 package `XMod'              Chris Wensley
+#W                                                               & Murat Alp
 ##
-##  This file contains implementations of UpMappings, Derivations and Sections
+##  This file contains implementations of UpMappings, Derivations & Sections
 ##
-#Y  Copyright (C) 2001-2022, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2023, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 ##############################################################################
 ##
-#M  Source( <map> )  . . . . . . . . . . . . . . . . . . source for up-mapping
-#M  Range( <map> )  . . . . . . . . . . . . . . . . . . . range for up-mapping
+#M  Source( <map> )  . . . . . . . . . . . . . . . . source for up-mapping
+#M  Range( <map> )  . . . . . . . . . . . . . . . . . range for up-mapping
 ##
 InstallOtherMethod( Source, "generic method for an up-mapping",
     [ IsUp2DimensionalMapping ], 0,
@@ -25,9 +25,9 @@ function ( map )
     return Range( Object2d( map ) );
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  \=( <u1>, <u2> )  . . . . . . . test if two derivations|sections are equal
+#M  \=( <u1>, <u2> )  . . . . . . test if two derivations|sections are equal
 ##
 InstallMethod( \=,
     "generic method for two upmappings",
@@ -114,9 +114,9 @@ function( chi )
     return true;
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  IsSection                    tests the section axioms for a pre-cat1-group
+#M  IsSection                  tests the section axioms for a pre-cat1-group
 ##
 InstallMethod( IsSection, "generic method for section of cat1-group",
     true, [ IsUp2DimensionalMapping ], 0,
@@ -148,9 +148,9 @@ function( xi )
     return ok;
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  SourceEndomorphism                                        for an upmapping
+#M  SourceEndomorphism                                    for an upmapping
 ##
 InstallMethod( SourceEndomorphism, "method for an upmapping", true,
     [ IsUp2DimensionalMapping ], 0,
@@ -178,9 +178,9 @@ function( u )
     fi;
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  RangeEndomorphism                                         for an upmapping
+#M  RangeEndomorphism                                     for an upmapping
 ##
 InstallMethod( RangeEndomorphism, "method for an upmapping", true,
     [ IsUp2DimensionalMapping ], 0,
@@ -210,7 +210,7 @@ end );
 
 #############################################################################
 ##
-#M  Object2dEndomorphism                                     for an upmapping
+#M  Object2dEndomorphism                                   for an upmapping
 ##
 InstallMethod( Object2dEndomorphism, "method for an upmapping", true,
     [ IsUp2DimensionalMapping ], 0,
@@ -229,13 +229,13 @@ function( u )
     fi;
 end );
 
-##############################################################################
+#############################################################################
 ##                               Derivations                                ##
-##############################################################################
+#############################################################################
 
-##############################################################################
+#############################################################################
 ##
-#M  DerivationByImages                                     sets up the mapping
+#M  DerivationByImages                                 sets up the mapping
 ##
 InstallMethod( DerivationByImages, "method for a crossed module", true,
     [ IsXMod, IsHomogeneousList ], 0,
@@ -300,12 +300,13 @@ end );
 InstallMethod( ViewObj, "method for a derivation", true, [ IsDerivation ], 
     0, PrintObj );
 
-##############################################################################
+#############################################################################
 ##
-#M  DerivationImage                  image of  r \in R  by the derivation  chi
+#M  DerivationImage               image of  r \in R  by the derivation  chi
 ##
-InstallMethod( DerivationImage, "method for a derivation and a group element",
-    true, [ IsDerivation, IsObject ], 0,
+InstallMethod( DerivationImage, 
+    "method for a derivation and a group element", true, 
+    [ IsDerivation, IsObject ], 0,
 function( chi, r )
 
     local XM, S, R, stgR, imchi, elR, elS, ngR, genrng, j, g, s, u, v,
@@ -350,9 +351,9 @@ function( chi, r )
     return u;
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  UpImagePositions                  returns list of positions of chi(r) in S
+#M  UpImagePositions              returns list of positions of chi(r) in S
 ##
 InstallMethod( UpImagePositions, "method for a derivation", true,
     [ IsDerivation ], 0,
@@ -392,10 +393,10 @@ function( chi )
     return L;
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  IdentityDerivation                 derivation which maps R to the identity
-#M  IdentitySection                        this section is the range embedding
+#M  IdentityDerivation             derivation which maps R to the identity
+#M  IdentitySection                    this section is the range embedding
 ##
 InstallMethod( IdentityDerivation, "method for a crossed module", true, 
     [ IsXMod ], 0,
@@ -415,10 +416,10 @@ function( C )
     return SectionByHomomorphism( C, RangeEmbedding( C ) ); 
 end ); 
 
-##############################################################################
+#############################################################################
 ##
-#M  PrincipalDerivation            derivation determined by a choice of s in S
-#M  PrincipalDerivations      list of principal derivations without duplicates
+#M  PrincipalDerivation         derivation determined by a choice of s in S
+#M  PrincipalDerivations   list of principal derivations without duplicates
 ##
 InstallMethod( PrincipalDerivation, "method for xmod and source element", 
     true, [ IsXMod, IsObject ], 0,
@@ -467,9 +468,9 @@ function( XM )
     return MonoidOfUp2DimensionalMappingsObj( XM, L, "principal" );
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  CompositeDerivation                 Whitehead composite of two derivations
+#M  CompositeDerivation              Whitehead composite of two derivations
 ##
 InstallMethod( CompositeDerivation, "method for two derivations", true,
     [ IsDerivation, IsDerivation ], 0,
@@ -477,9 +478,9 @@ function( chi, chj )
     return WhiteheadProduct( chj, chi );
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  WhiteheadProduct                    Whitehead composite of two derivations
+#M  WhiteheadProduct                 Whitehead composite of two derivations
 ##
 InstallMethod( WhiteheadProduct, "method for two derivations", true,
     [ IsDerivation, IsDerivation ], 0,
@@ -545,9 +546,9 @@ function( xi, xj )
     return SectionByHomomorphism( C, comp );
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  \*( <chi1>, <chi2> ) . . . . . . . . . . . . . . . . . . for 2 derivations
+#M  \*( <chi1>, <chi2> ) . . . . . . . . . . . . . . . . for 2 derivations
 ##
 InstallOtherMethod( \*, "for two derivations of crossed modules",
     IsIdenticalObj, [ IsDerivation, IsDerivation ], 0,
@@ -556,9 +557,9 @@ Print( "***** best to replace * with WhiteheadProduct ??? *****\n" );
     return WhiteheadProduct( chi1, chi2 );
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  WhiteheadOrder           order of a derivation using the Whitehead product
+#M  WhiteheadOrder       order of a derivation using the Whitehead product
 ##
 InstallMethod( WhiteheadOrder, "method for a derivation or section", true, 
     [ IsUp2DimensionalMapping ], 0,
@@ -584,9 +585,9 @@ function( up )
     return n; 
 end ); 
 
-##############################################################################
+#############################################################################
 ##
-#M  IsRegularDerivation               test whether a derivation has an inverse
+#M  IsRegularDerivation           test whether a derivation has an inverse
 ##
 InstallMethod( IsRegularDerivation, "method for derivations", true,
     [ IsDerivation ], 0,
@@ -609,8 +610,8 @@ end );
 
 #############################################################################
 ##
-#M  InverseDerivations      Finds all semigroup inverses Xj for derivation Xi
-##                                                i.e.  XiXjXi=Xi & XjXiXj=Xj
+#M  InverseDerivations     Finds all semigroup inverses Xj for derivation Xi
+##                                               i.e.  XiXjXi=Xi & XjXiXj=Xj
 InstallMethod( InverseDerivations, "method for a derivation", true,
     [ IsDerivation ], 0,
 function( chi )
@@ -636,9 +637,9 @@ function( chi )
     return inv;
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  ListInverseDerivations               List all inverses for each derivation
+#M  ListInverseDerivations            List all inverses for each derivation
 ##
 InstallMethod( ListInverseDerivations, "method for a crossed module", true,
     [ IsXMod ], 0,
@@ -657,13 +658,13 @@ function( XM )
     return M;
 end );
 
-##############################################################################
-##                                 Sections                                 ##
-##############################################################################
+############################################################################
+##                                 Sections                               ##
+############################################################################
 
-##############################################################################
+############################################################################
 ##
-#M  SectionByHomomorphism                 converts a homomorphism to a section
+#M  SectionByHomomorphism              converts a homomorphism to a section
 ##
 InstallMethod( SectionByHomomorphism, "method for a cat1-group", true,
     [ IsPreCat1Group, IsGroupHomomorphism ], 0,
@@ -712,17 +713,17 @@ function( xi )
     local obj;
 
     obj := Object2d( xi );
-    Print( "SectionByHomomorphism( ", Range( obj ), ", ", Source( obj ), ", ",
-        GeneratorsOfGroup( Range( obj ) ), ", ", UpGeneratorImages( xi ), 
-        " )" );
+    Print( "SectionByHomomorphism( ", Range( obj ), 
+           ", ", Source( obj ), ", ", GeneratorsOfGroup( Range( obj ) ), 
+           ", ", UpGeneratorImages( xi ), " )" );
 end ); 
 
 InstallMethod( ViewObj, "method for a section", true, [ IsSection ], 
     0, PrintObj ); 
 
-##############################################################################
+#############################################################################
 ##
-#M  SectionByDerivation . .  the cat1-group section determined by a derivation
+#M  SectionByDerivation .  the cat1-group section determined by a derivation
 ##
 InstallMethod( SectionByDerivation, "method for a derivation", true,
     [ IsDerivation ], 0,
@@ -753,9 +754,9 @@ function( chi )
     return xi;
 end ); 
 
-##############################################################################
+#############################################################################
 ##
-#M  DerivationBySection      construct xmod derivation from cat1-group section
+#M  DerivationBySection   construct xmod derivation from cat1-group section
 ##
 InstallMethod( DerivationBySection, "method for a section", true,
     [ IsSection ], 0,
@@ -780,16 +781,16 @@ function( xi )
         r := stgR[i];
         er := ImageElm( eR, r );
         s := er^(-1) * imxi[i];
-        imchi[i] := PreImagesRepresentative( eK, s );
+        imchi[i] := PreImagesRepresentativeNC( eK, s );
         Info( InfoXMod, 2, "In xi->chi :- ", [ i, r, er, s] );
     od;
     chi := DerivationByImages( XM, imchi );
     return chi;
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  CompositeSection                       Whitehead composite of two sections
+#M  CompositeSection                     Whitehead composite of two sections
 ##
 InstallMethod( CompositeSection, "method for two sections", true,
     [ IsSection, IsSection ], 0,
@@ -798,12 +799,11 @@ function( xi, xj )
 end );
 
 
-###############################################################################
-##                    Monoids of Derivations and Sections                    ##
-###############################################################################
+#############################################################################
+##                    Monoids of Derivations and Sections                  ##
+#############################################################################
 
-
-###############################################################################
+#############################################################################
 ##
 #M  MonoidOfUp2DimensionalMappingsObj( <obj>, <ims>, <str> ) 
 ##
@@ -829,10 +829,10 @@ function( obj, images, str )
     return mon;
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  PrintObj( <mon> )                  prints regular/all derivations/sections 
-#M  ViewObj( <mon> )                    views regular/all derivations/sections 
+#M  PrintObj( <mon> )              prints regular/all derivations/sections 
+#M  ViewObj( <mon> )                views regular/all derivations/sections 
 ##
 InstallMethod( PrintObj, "for IsMonoidOfUp2DimensionalMappings", true,
     [ IsMonoidOfUp2DimensionalMappings ], 0,
@@ -851,9 +851,9 @@ end );
 InstallMethod( ViewObj, "for IsMonoidOfUp2DimensionalMappings", true,
     [ IsMonoidOfUp2DimensionalMappings ], 0, PrintObj ); 
 
-##############################################################################
+#############################################################################
 ##
-#M  Size( <mon> )                         for regular/all derivations/sections 
+#M  Size( <mon> )                     for regular/all derivations/sections 
 ##
 InstallOtherMethod( Size, "for IsMonoidOfUp2DimensionalMappings", true,
     [ IsMonoidOfUp2DimensionalMappings ], 0,
@@ -861,9 +861,9 @@ function( mon )
     return Length( ImagesList( mon ) ); 
 end ); 
 
-##############################################################################
+#############################################################################
 ##
-#M  ImagesTable                      returns list of lists of DerivationImages
+#M  ImagesTable                  returns list of lists of DerivationImages
 ##
 InstallMethod( ImagesTable, "method for crossed module derivations", true,
     [ IsMonoidOfDerivations ], 0,
@@ -882,9 +882,9 @@ function( D )
     return T;
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  BacktrackDerivationsJ          recursive function for BacktrackDerivations
+#M  BacktrackDerivationsJ       recursive function for BacktrackDerivations
 ##
 InstallMethod( BacktrackDerivationsJ, "method for a crossed module", true,
     [ IsXMod, IsHomogeneousList, IsHomogeneousList, IsHomogeneousList,
@@ -901,7 +901,8 @@ function( XM, subs, imrho, imchi, j, str )
     k := Length( stgrng );
     bdy := Boundary( XM );
     if ( k < j ) then
-        # complete list of images found: if a derivation, add to genimagesList
+        # complete list of images found: 
+        # if a derivation, add to genimagesList
         imchi := ShallowCopy( imchi );
         derivgen := [ imchi ];
         chi := DerivationByImages( XM, imchi );
@@ -949,9 +950,9 @@ function( XM, subs, imrho, imchi, j, str )
     return derivgen;
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  BacktrackDerivations            recursive construction for all derivations
+#M  BacktrackDerivations         recursive construction for all derivations
 ##
 InstallMethod( BacktrackDerivations, "method for a crossed module", true,
     [ IsXMod, IsString ], 0,
@@ -974,9 +975,9 @@ function( XM, str )
     return derivrec;
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  RegularDerivations    find all invertible derivations for a crossed module
+#M  RegularDerivations  find all invertible derivations for a crossed module
 ##
 InstallMethod( RegularDerivations, "method for a crossed module", true, 
     [ IsXMod ], 0,
@@ -988,9 +989,9 @@ function( XM )
     return BacktrackDerivations( XM, "regular" );
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  AllDerivations                   find all derivations for a crossed module
+#M  AllDerivations                find all derivations for a crossed module
 ##
 InstallMethod( AllDerivations, "method for a crossed module", true, 
     [ IsXMod ], 0,
@@ -1002,9 +1003,9 @@ function( XM )
     return BacktrackDerivations( XM, "all" );
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  WhiteheadMonoidTable( XM )                table of products of derivations
+#M  WhiteheadMonoidTable( XM )             table of products of derivations
 ##
 InstallMethod( WhiteheadMonoidTable, "method for a crossed module", true,
     [ IsXMod ], 0,
@@ -1031,9 +1032,9 @@ function( XM )
     return M;
 end );
 
-###############################################################################
+#############################################################################
 ##
-#M  WhiteheadGroupTable( XM )          table of products of regular derivations
+#M  WhiteheadGroupTable( XM )      table of products of regular derivations
 ##
 InstallMethod( WhiteheadGroupTable, "method for a crossed module", true,
     [ IsXMod ], 0,
@@ -1061,9 +1062,9 @@ function( XM )
     return M;
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  WhiteheadPermGroup( XM )                  perm rep for the Whitehead group
+#M  WhiteheadPermGroup( XM )               perm rep for the Whitehead group
 ##
 ##  (08/01/04)  wish to use SmallerDegreePermutationRepresentation
 ##
@@ -1091,14 +1092,14 @@ function( XM )
     return grp1;
 end );
 
-###############################################################################
+#############################################################################
 ##
-#M  WhiteheadTransformationMonoid( XM )               trans rep for the Whitehead monoid
+#M  WhiteheadTransformationMonoid( XM ) . trans rep for the Whitehead monoid
 ##
 #?  this needs some more work
 ##
-InstallMethod( WhiteheadTransformationMonoid, "method for a crossed module", true,
-    [ IsXMod ], 0,
+InstallMethod( WhiteheadTransformationMonoid, "method for a crossed module", 
+     true, [ IsXMod ], 0,
 function( XM )
 
     local tab, j, t, mon, gens, it;

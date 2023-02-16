@@ -1,8 +1,8 @@
-##############################################################################
+#############################################################################
 ##
-#W  isoclinic.gi               GAP4 package `XMod'                Alper Odabas
-#W                                                                & Enver Uslu
-#Y  Copyright (C) 2001-2022, Chris Wensley et al 
+#W  isoclinic.gi             GAP4 package `XMod'                Alper Odabas
+#W                                                              & Enver Uslu
+#Y  Copyright (C) 2001-2023, Chris Wensley et al 
 #Y   
 ##  This file contains generic methods for finding isoclinism classes 
 ##  of crossed modules. 
@@ -96,7 +96,8 @@ function( XM, YM )
     rngY := Range( YM  ); 
     genR := GeneratorsOfGroup( rngY ); 
     actY := XModAction( YM );
-    ext := ExternalSet( rngY, srcX, genR, List( genR, g -> ImageElm(actY,g) ) ); 
+    ext := ExternalSet( rngY, srcX, genR, List( genR, 
+               g -> ImageElm( actY, g ) ) ); 
     orb := Orbits( ExternalSetXMod( XM ) );  
     elts := Concatenation( Filtered( orb, o -> Length(o) = 1) ); 
     fix := Subgroup( srcX, elts ); 
@@ -260,7 +261,7 @@ end );
 
 #############################################################################
 ##
-#M  IntersectionSubXMods  . . . . intersection of subcrossed modules SH and RK
+#M  IntersectionSubXMods  . . . intersection of subcrossed modules SH and RK
 ##
 InstallMethod( IntersectionSubXMods, "generic method for crossed modules", 
     true, [ IsXMod, IsXMod, IsXMod ], 0,
@@ -283,7 +284,7 @@ end );
 
 #############################################################################
 ##
-#M  NaturalMorphismByNormalSubPreXMod . . . . . the quotient prexmod morphism
+#M  NaturalMorphismByNormalSubPreXMod . . . . the quotient prexmod morphism
 ##
 InstallMethod( NaturalMorphismByNormalSubPreXMod, 
     "generic method for crossed modules", true, [ IsPreXMod, IsPreXMod ], 0,
@@ -303,7 +304,7 @@ function( XM, SM )
     Q := Image( nhomQ ); 
     sgQ := SmallGeneratingSet( Q ); 
     Q := GroupWithGenerators( sgQ, One(Q) );           # T/S bölüm grubu 
-    psgQ := List( sgQ, q -> PreImagesRepresentative( nhomQ, q ) );
+    psgQ := List( sgQ, q -> PreImagesRepresentativeNC( nhomQ, q ) );
     G := Range( XM );
     H := Range( SM );
     if IsTrivial( H ) then 
@@ -316,7 +317,7 @@ function( XM, SM )
         F := Image( nhomF ); 
         sgF := SmallGeneratingSet( F ); 
         F := GroupWithGenerators( sgF, One(F) );       # G/H bölüm grubu
-        psgF := List( sgF, f -> PreImagesRepresentative( nhomF, f ) ); 
+        psgF := List( sgF, f -> PreImagesRepresentativeNC( nhomF, f ) ); 
     fi; 
     imbdy := List( psgQ, t -> ImageElm( nhomF, ImageElm( bdyX, t ) ) );
     bdy := GroupHomomorphismByImages( Q, F, sgQ, imbdy ); 
@@ -345,7 +346,7 @@ end );
 
 #############################################################################
 ##
-#M  FactorPreXMod  . . . . . . . . . . . . . . the quotient precrossed module
+#M  FactorPreXMod  . . . . . . . . . . . . . the quotient precrossed module
 ##
 InstallMethod( FactorPreXMod, "generic method for precrossed modules", true, 
     [ IsPreXMod, IsPreXMod ], 0,
@@ -385,7 +386,7 @@ end );
 
 #############################################################################
 ##
-#M  LowerCentralSeries  . . . . . . . . . the lower central series of an xmod
+#M  LowerCentralSeries  . . . . . . . . the lower central series of an xmod
 ##
 InstallOtherMethod( LowerCentralSeries, "generic method for crossed modules", 
     true, [ IsXMod ], 0,
@@ -464,7 +465,8 @@ end );
 
 #############################################################################
 ##
-#M  NilpotencyClassOf2DimensionalGroup . nilpotency degree of a crossed module
+#M  NilpotencyClassOf2DimensionalGroup 
+##      . . . . nilpotency degree of a crossed module
 ##
 InstallMethod( NilpotencyClassOf2DimensionalGroup, 
     "generic method for crossed modules", true, [ IsXMod ], 0,
@@ -479,7 +481,7 @@ end );
 
 #############################################################################
 ##
-#M  IsomorphismXMods  . . check that the given crossed modules are isomorphic
+#M  IsomorphismXMods . . check that the given crossed modules are isomorphic
 ##
 InstallMethod( IsomorphismXMods, "generic method for crossed modules", true, 
     [ Is2DimensionalGroup, Is2DimensionalGroup ], 0,
@@ -558,7 +560,8 @@ InstallGlobalFunction( AllXMods, function( arg )
     elif ( nargs = 1 ) then 
         a := arg[1]; 
         ## given size 
-        if ( IsList(a) and (Length(a)=2) and IsInt(a[1]) and IsInt(a[2]) ) then 
+        if ( IsList( a ) and ( Length(a) = 2 ) 
+             and IsInt( a[1] ) and IsInt( a[2] ) ) then 
             list := [ ]; 
             s1 := NumberSmallGroups( a[1] ); 
             for j1 in [1..s1] do
@@ -584,15 +587,16 @@ InstallGlobalFunction( AllXMods, function( arg )
 end );
 
 
-############################################################################# 
-#####                FUNCTIONS FOR ISOCLINISM OF GROUPS                 ##### 
-############################################################################# 
+############################################################################ 
+#####                FUNCTIONS FOR ISOCLINISM OF GROUPS                ##### 
+############################################################################ 
 
-#############################################################################
+############################################################################
 ##
-#M IsStemDomain . . . check that the centre is a subgroup of the derived group
+#M IsStemDomain . . check that the centre is a subgroup of the derived group
 ## 
-InstallMethod( IsStemDomain, "generic method for groups", true, [ IsGroup ], 0,
+InstallMethod( IsStemDomain, "generic method for groups", true, 
+    [ IsGroup ], 0,
 function(G)
     return IsSubgroup( DerivedSubgroup(G), Centre(G) );
 end );
@@ -714,7 +718,7 @@ function( lt )
              function(c) 
                local a, l;
                a := ImageElm( actlt, c[1] ); 
-               l := PreImagesRepresentative( kappa, c[2] );  
+               l := PreImagesRepresentativeNC( kappa, c[2] );  
                return ImageElm( a, l^(-1) ) * l; 
              end );
     xp := CrossedPairingObj( [N,M], L, map );
@@ -728,7 +732,7 @@ end );
 
 #############################################################################
 ##
-#M AreIsoclinicDomains . . . . . . . . . . . for two domains: groups or xmods
+#M AreIsoclinicDomains . . . . . . . . . . for two domains: groups or xmods
 ## 
 InstallMethod( AreIsoclinicDomains, "generic method for two groups or xmods", 
     true, [ IsDomain, IsDomain ], 0,
@@ -748,9 +752,9 @@ function( D1, D2 )
     fi; 
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M Isoclinism . . . . . . . . . . . . . . . . . . . . . . . . . . . for groups
+#M Isoclinism . . . . . . . . . . . . . . . . . . . . . . . . . for groups
 ## 
 InstallMethod( Isoclinism, "generic method for two groups", true, 
     [ IsGroup, IsGroup ], 0,
@@ -798,16 +802,16 @@ function( G1, G2 )
             while ( ok and ( p1 < lsgQ1 ) ) do 
                 p1 := p1+1; 
                 q1 := sgQ1[p1]; 
-                g1 := PreImagesRepresentative( nhom1, q1 );
+                g1 := PreImagesRepresentativeNC( nhom1, q1 );
                 iq1 := ImageElm( i, q1 );
-                h1 := PreImagesRepresentative( nhom2, iq1 );
+                h1 := PreImagesRepresentativeNC( nhom2, iq1 );
                 p2 := 0;
                 while ( ok and ( p2 < lsgQ1 ) ) do 
                     p2 := p2+1;
                     q2 := sgQ1[p2];
-                    g2 := PreImagesRepresentative( nhom1, q2 );
+                    g2 := PreImagesRepresentativeNC( nhom1, q2 );
                     iq2 := ImageElm( i, q2 ); 
-                    h2 := PreImagesRepresentative( nhom2, iq2 );            
+                    h2 := PreImagesRepresentativeNC( nhom2, iq2 );            
                     gor1 := ImageElm( j, Comm(g1,g2) );    
                     gor2 := Comm( h1, h2 );
                     ok := ( gor1 = gor2 ); 
@@ -852,11 +856,11 @@ function(G)
 end );
 
 
-############################################################################# 
-#####            FUNCTIONS FOR ISOCLINISM OF CROSSED MODULES            ##### 
-############################################################################# 
+############################################################################ 
+#####            FUNCTIONS FOR ISOCLINISM OF CROSSED MODULES           ##### 
+############################################################################ 
 
-#############################################################################
+############################################################################
 ##
 #M IsStemDomain . check that the centre xmod is a subxmod of the derived xmod
 ## 
@@ -899,7 +903,8 @@ function( X1, X2 )
     ## check condition 1 : require Q1 ~ Q2 
     isoQ := IsomorphismXMods( Q1, Q2 ); 
     if ( isoQ = fail ) then 
-        Info( InfoXMod, 1, "factor crossed modules X/ZX are not isomorphic" );
+        Info( InfoXMod, 1, 
+              "factor crossed modules X/ZX are not isomorphic" );
         return fail; 
     fi;
 
@@ -933,16 +938,16 @@ function( X1, X2 )
             while ( ok and ( p1 < lsgRQ1 ) ) do
                 p1 := p1+1;
                 r1 := sgRQ1[p1];
-                x1 := PreImagesRepresentative( rhom1, r1 );
+                x1 := PreImagesRepresentativeNC( rhom1, r1 );
                 ir1 := ImageElm( ri, r1 ); 
-                d1 := PreImagesRepresentative( rhom2, ir1 );
+                d1 := PreImagesRepresentativeNC( rhom2, ir1 );
                 p2 := 0;
                 while ( ok and ( p2 < lsgRQ1 ) ) do
                     p2 := p2+1;
                     r2 := sgRQ1[p2];
-                    x2 := PreImagesRepresentative( rhom1, r2 );
+                    x2 := PreImagesRepresentativeNC( rhom1, r2 );
                     ir2 := ImageElm( ri, r2 ); 
-                    d2 := PreImagesRepresentative( rhom2, ir2 );
+                    d2 := PreImagesRepresentativeNC( rhom2, ir2 );
                     gor1 := ImageElm( rj, Comm(x1,x2) );
                     gor2 := Comm( d1, d2 );
                     ok := ( gor1 = gor2 ); 
@@ -951,9 +956,9 @@ function( X1, X2 )
                 while ( ok and ( p3 < lsgSQ1 ) ) do 
                     p3 := p3+1;
                     s1 := sgSQ1[p3];
-                    y1 := PreImagesRepresentative( shom1, s1 );
+                    y1 := PreImagesRepresentativeNC( shom1, s1 );
                     is1 := ImageElm( si, s1 );
-                    e1 := PreImagesRepresentative( shom2, is1 );
+                    e1 := PreImagesRepresentativeNC( shom2, is1 );
                     gor1 := ImageElm( sj, Displacement( actX1, x1, y1 ) ); 
                     gor2 := Displacement( actX2, d1, e1 );
                     ok := ( gor1 = gor2 ); 
