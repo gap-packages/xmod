@@ -21,7 +21,7 @@ gap> SetName( XAq8, "XAq8" );  SetName( Z8, "Z8" );
 gap> XZ8 := CoproductXMod( XAq8, Z8 );; 
 
 gap> AXAq8 := AutomorphismPermGroup( XAq8 );; 
-gap> StructureDescription( AXAq88 ); 
+gap> StructureDescription( AXAq8 ); 
 "S4"
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
