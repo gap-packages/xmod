@@ -286,6 +286,15 @@ end );
 InstallMethod( WhiteheadXMod, "Whitehead crossed module", true, 
     [ IsXMod ], 0, 
 function( XM )
+    local  XP, iso; 
+    iso := IsomorphismPerm2DimensionalGroup( XM ); 
+    XP := Range( iso ); 
+    return WhiteheadXMod( XP ); 
+end ); 
+
+InstallMethod( WhiteheadXMod, "Whitehead crossed module", true, 
+    [ IsPermXMod ], 0, 
+function( XM )
     local S, genS, reg, imreg, W, WT, posW, nposW, genW, imiota,
           s, chi, poschi, iota, autS, genchi, j, sigma, ima, a, 
           imact, act, WX, name;
@@ -306,13 +315,20 @@ function( XM )
         poschi := Position( imreg, UpGeneratorImages( chi ) );
         Add( imiota, PermList( WT[poschi] ) );
     od;
-    iota := GroupHomomorphismByImages( S, W, genS, imiota );
+    iota := GroupHomomorphismByImages( S, W, genS, imiota ); 
+    if ( InfoLevel( InfoXMod ) >= 2 ) then 
+        Print( "iota in WhiteheadXMod:\n" ); 
+        Display( iota ); 
+    fi; 
     ##  ????? should this be a general mapping ????????????????????
     if not IsGroupHomomorphism( iota ) then
         Error( "Whitehead boundary fails to be a homomorphism" );
     fi;
     # now calculate the action homomorphism
     autS := AutomorphismGroup( S );
+    if ( InfoLevel( InfoXMod ) >= 2 ) then 
+        Print( "autS in WhiteheadXMod: ", StructureDescription(autS), "\n" ); 
+    fi; 
     genchi := WhiteheadGroupGeneratingDerivations( XM );
     ##  (05/03/07)  allow for the case that W is trivial 
     if ( genchi = [ ] ) then
@@ -466,12 +482,19 @@ function( XM )
     return LX;
 end );
 
-
 #############################################################################
 ##
 #M  ActorXMod( <XM> ) 
 ##
 InstallMethod( ActorXMod, "actor crossed module", true, [ IsXMod ], 0, 
+function( XM )
+    local XP, iso; 
+    iso := IsomorphismPerm2DimensionalGroup( XM ); 
+    XP := Range( iso ); 
+    return ActorXMod( XP ); 
+end );
+
+InstallMethod( ActorXMod, "actor crossed module", true, [ IsPermXMod ], 0, 
 function( XM )
 
     local D, L, W, eW, P, genP, genpos, ngW, genW, invW, imdelta, 
@@ -479,9 +502,6 @@ function( XM )
           i, j, k, mor, imsrc, imrng, delta, GA, nGA, imact, rho, invrho, 
           impos, chi, chj, imgen, phi, id, aut, act, ActX, name;
 
-    if not IsPermXMod( XM ) then 
-        Error( "ActorXMod only implemented for permutation xmods" ); 
-    fi;
     D := RegularDerivations( XM );
     L := ImagesList( D );
     W := WhiteheadPermGroup( XM );
@@ -573,6 +593,14 @@ end );
 ##
 #M  InnerMorphism( <XM> )
 ##
+InstallMethod( InnerMorphism, "inner morphism of xmod", true, [ IsXMod ], 0, 
+function( XM )
+    local XP, iso; 
+    iso := IsomorphismPerm2DimensionalGroup( XM ); 
+    XP := Range( iso ); 
+    return InnerMorphism( XP ); 
+end );
+
 InstallMethod( InnerMorphism, "inner morphism of xmod", true,
     [ IsPermXMod ], 0, 
 function( XM )
@@ -601,6 +629,15 @@ end );
 ##
 #M  InnerActorXMod( <XM> )
 ##
+InstallMethod( InnerActorXMod, "inner actor crossed module", true, 
+    [ IsXMod ], 0, 
+function( XM )
+    local XP, iso; 
+    iso := IsomorphismPerm2DimensionalGroup( XM ); 
+    XP := Range( iso ); 
+    return InnerActorXMod( XP ); 
+end );
+
 InstallMethod( InnerActorXMod, "inner actor crossed module", true,
     [ IsPermXMod ], 0, 
 function( XM )

@@ -2,7 +2,7 @@
 ##
 #W  gp2map.tst                    XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2022, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2023, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 ##
@@ -77,19 +77,19 @@ gap> Set( kao );
 
 ## Section 3.2.4
 gap> q8 := SmallGroup(8,4);;   ## quaternion group 
-gap> Xq8 := XModByAutomorphismGroup( q8 );
+gap> XAq8 := XModByAutomorphismGroup( q8 );
 [Group( [ f1, f2, f3 ] )->Group( [ Pcgs([ f1, f2, f3 ]) -> [ f1*f2, f2, f3 ], 
   Pcgs([ f1, f2, f3 ]) -> [ f2, f1*f2, f3 ], 
   Pcgs([ f1, f2, f3 ]) -> [ f1*f3, f2, f3 ], 
   Pcgs([ f1, f2, f3 ]) -> [ f1, f2*f3, f3 ] ] )]
-gap> iso := IsomorphismPerm2DimensionalGroup( Xq8 );;
-gap> Yq8 := Image( iso );;
+gap> iso := IsomorphismPerm2DimensionalGroup( XAq8 );;
+gap> YAq8 := Image( iso );;
 gap> s4 := SymmetricGroup(4);; 
-gap> isos4 := IsomorphismGroups( Range(Yq8), s4 );;
-gap> id := IdentityMapping( Source( Yq8 ) );; 
+gap> isos4 := IsomorphismGroups( Range(YAq8), s4 );;
+gap> id := IdentityMapping( Source( YAq8 ) );; 
 gap> IsBijective( id );;  IsBijective( isos4 );;
-gap> mor := IsomorphismByIsomorphisms( Yq8, [id,isos4] );;
-gap> Zq8 := Image( mor );;
+gap> mor := IsomorphismByIsomorphisms( YAq8, [id,isos4] );;
+gap> ZAq8 := Image( mor );;
 
 ## Section 3.3.1
 gap> t3 := GroupHomomorphismByImages(g18,s3a,g18gens,[(),(7,8,9),(8,9)]);;     

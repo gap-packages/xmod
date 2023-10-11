@@ -2,7 +2,7 @@
 ##
 #W  gp2ind.tst                    XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2022, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2023, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 gap> START_TEST( "XMod package: gp2ind.tst" );
@@ -24,37 +24,37 @@ gap> SetName( d16, "d16" );
 
 ## Section 7.1.1
 gap> q8 := Group( (1,2,3,4)(5,8,7,6), (1,5,3,7)(2,6,4,8) );;
-gap> X8 := XModByAutomorphismGroup( q8 );;
-gap> s4b := Range( X8 );; 
+gap> XAq8 := XModByAutomorphismGroup( q8 );;
+gap> s4b := Range( XAq8 );; 
 gap> SetName( q8, "q8" );  SetName( s4b, "s4b" ); 
 gap> a := q8.1;;  b := q8.2;; 
 gap> alpha := GroupHomomorphismByImages( q8, q8, [a,b], [a^-1,b] );;
 gap> beta := GroupHomomorphismByImages( q8, q8, [a,b], [a,b^-1] );;
 gap> k4b := Subgroup( s4b, [ alpha, beta ] );;  SetName( k4b, "k4b" );
 gap> Z8 := XModByNormalSubgroup( s4b, k4b );;
-gap> SetName( X8, "X8" );  SetName( Z8, "Z8" );  
+gap> SetName( XAq8, "XAq8" );  SetName( Z8, "Z8" );  
 gap> SetInfoLevel( InfoXMod, 1 ); 
-gap> XZ8 := CoproductXMod( X8, Z8 );
+gap> XZ8 := CoproductXMod( XAq8, Z8 );
 #I  prexmod is [ [ 32, 47 ], [ 24, 12 ] ]
 #I  peiffer subgroup is C2, [ 2, 1 ]
 #I  the coproduct is [ "C2 x C2 x C2 x C2", "S4" ], [ [ 16, 14 ], [ 24, 12 ] ]
 [Group( [ f1, f2, f3, f4 ] )->s4b]
 gap> SetName( XZ8, "XZ8" ); 
 gap> info := CoproductInfo( XZ8 );
-rec( embeddings := [ [X8 => XZ8], [Z8 => XZ8] ], xmods := [ X8, Z8 ] )
+rec( embeddings := [ [XAq8 => XZ8], [Z8 => XZ8] ], xmods := [ XAq8, Z8 ] )
 gap> SetInfoLevel( InfoXMod, 0 ); 
-gap> Y := CoproductXMod( [ X8, X8, Z8, Z8 ] );
+gap> Y := CoproductXMod( [ XAq8, XAq8, Z8, Z8 ] );
 [Group( [ f1, f2, f3, f4, f5, f6, f7, f8 ] )->s4b]
 gap> StructureDescription( Y );          
 [ "C2 x C2 x C2 x C2 x C2 x C2 x C2 x C2", "S4" ]
 gap> CoproductInfo( Y );
 rec( 
   embeddings := 
-    [ [X8 => [Group( [ f1, f2, f3, f4, f5, f6, f7, f8 ] ) -> s4b]], 
-      [X8 => [Group( [ f1, f2, f3, f4, f5, f6, f7, f8 ] ) -> s4b]], 
+    [ [XAq8 => [Group( [ f1, f2, f3, f4, f5, f6, f7, f8 ] ) -> s4b]], 
+      [XAq8 => [Group( [ f1, f2, f3, f4, f5, f6, f7, f8 ] ) -> s4b]], 
       [Z8 => [Group( [ f1, f2, f3, f4, f5, f6, f7, f8 ] ) -> s4b]], 
       [Z8 => [Group( [ f1, f2, f3, f4, f5, f6, f7, f8 ] ) -> s4b]] ], 
-  xmods := [ X8, X8, Z8, Z8 ] )
+  xmods := [ XAq8, XAq8, Z8, Z8 ] )
 
 ## Section 7.2.1 : Example 1
 gap> s4gens := GeneratorsOfGroup( s4 );
@@ -89,11 +89,11 @@ gap> s5 := Group( (1,2,3,4,5), (4,5) );;
 gap> SetName( s5, "s5" ); 
 gap> inc45 := InclusionMappingGroups( s5, s4 );;
 gap> iota45 := iso4 * inc45;; 
-gap> indX8 := InducedXMod( X8, iota45 );
-i*(X8)
-gap> Size2d( indX8 );
+gap> indXAq8 := InducedXMod( XAq8, iota45 );
+i*(XAq8)
+gap> Size2d( indXAq8 );
 [ 120, 120 ]
-gap> StructureDescription( indX8 );          
+gap> StructureDescription( indXAq8 );          
 [ "SL(2,5)", "S5" ]
 
 ## Section 7.2.1 : Example 2 
