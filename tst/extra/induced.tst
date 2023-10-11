@@ -2,7 +2,7 @@
 ##
 #W  induced.tst                 GAP4 package `XMod'              Chris Wensley
 ##  
-#Y  Copyright (C) 2001-2022, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2023, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 
 gap> START_TEST( "XMod package: induced.tst" );
@@ -67,8 +67,8 @@ Crossed module i*([c4a->PAut(c4a)]) :-
   This automorphism generates the group of automorphisms.
 
 gap> q8 := Group( (1,2,3,4)(5,8,7,6), (1,5,3,7)(2,6,4,8) );; 
-gap> AX8 := XModByAutomorphismGroup( q8 );; 
-gap> s4a := Range( AX8 );; 
+gap> XAq8 := XModByAutomorphismGroup( q8 );; 
+gap> s4a := Range( XAq8 );; 
 gap> gens4b := [ (11,12), (12,13), (13,14) ];; 
 gap> s4b := Group( gens4b );; 
 gap> SetName( s4b, "s4b" ); 
@@ -78,7 +78,7 @@ gap> SetName( s3b, "s3b" );
 gap> surj4 := GroupHomomorphismByImages( s4b, s3b, gens4b, 
 >                 [ (5,6), (6,7), (5,6) ] );; 
 gap> iota8 := iso8 * surj4;; 
-gap> ind8 := InducedXModBySurjection( AX8, iota8 );; 
+gap> ind8 := InducedXModBySurjection( XAq8, iota8 );; 
 gap> StructureDescription( ind8 ); 
 [ "C2 x C2", "S3" ]
 gap> Size2d( ind8 );

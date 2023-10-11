@@ -2,7 +2,7 @@
 ##
 #W  gp2act.tst                    XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2020, Chris Wensley, et al
+#Y  Copyright (C) 2001-2023, Chris Wensley, et al
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 gap> START_TEST( "XMod package: gp2act.tst" );
@@ -118,21 +118,16 @@ Crossed module Actor[c3->s3] :-
   (1,2)(3,4)(6,7) --> { source gens --> [ (1,3,2)(4,6,5), (1,4)(2,6)(3,5) ] }
   These 2 automorphisms generate the group of automorphisms.
 
-gap> IAX3 := InnerActorXMod( X3 );;  
-gap> Display( IAX3 );
-
-Crossed module InnerActor[c3->s3] :- 
-: Source group has generators:
-  [ (1,2,3)(4,5,6) ]
-: Range group has generators:
-  [ (5,6,7), (1,2)(3,4)(6,7) ]
-: Boundary homomorphism maps source generators to:
-  [ (5,7,6) ]
-: Action homomorphism maps range generators to automorphisms:
-  (5,6,7) --> { source gens --> [ (1,2,3)(4,5,6) ] }
-  (1,2)(3,4)(6,7) --> { source gens --> [ (1,3,2)(4,6,5) ] }
-  These 2 automorphisms generate the group of automorphisms.
-
+gap> q8 := Group( (1,2,3,4)(5,8,7,6), (1,5,3,7)(2,6,4,8) );;
+gap> XAq8 := XModByAutomorphismGroup( q8 );; 
+gap> StructureDescription( WhiteheadXMod( XAq8 ) ); 
+[ "Q8", "C2 x C2 x C2" ]
+gap> StructureDescription( LueXMod( XAq8 ) );      
+[ "Q8", "S4" ]
+gap> StructureDescription( NorrieXMod( XAq8 ) );
+[ "S4", "S4" ]
+gap> StructureDescription( ActorXMod( XAq8 ) ); 
+[ "C2 x C2 x C2", "S4" ]
 
 ## Section 6.1.3
 gap> IMX3 := InnerMorphism( X3 );; 
@@ -152,6 +147,21 @@ gap> IsInjective( IMX3 );
 true
 gap> ZX3 := XModCentre( X3 ); 
 [Group( () )->Group( () )]
+
+gap> IAX3 := InnerActorXMod( X3 );;  
+gap> Display( IAX3 );
+
+Crossed module InnerActor[c3->s3] :- 
+: Source group has generators:
+  [ (1,2,3)(4,5,6) ]
+: Range group has generators:
+  [ (5,6,7), (1,2)(3,4)(6,7) ]
+: Boundary homomorphism maps source generators to:
+  [ (5,7,6) ]
+: Action homomorphism maps range generators to automorphisms:
+  (5,6,7) --> { source gens --> [ (1,2,3)(4,5,6) ] }
+  (1,2)(3,4)(6,7) --> { source gens --> [ (1,3,2)(4,6,5) ] }
+  These 2 automorphisms generate the group of automorphisms.
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 
