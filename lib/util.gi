@@ -2,7 +2,7 @@
 ##
 #W  util.gi                    GAP4 package `XMod'               Chris Wensley
 #W                                                                 & Murat Alp
-#Y  Copyright (C) 2001-2020, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2024, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 ##############################################################################
@@ -237,7 +237,7 @@ InstallGlobalFunction( TzPartition, function( T )
             fi;
         fi;
     od;
-    commpairs := List( commpairs, L -> Set( L ) );
+    commpairs := List( commpairs, Set );
     if ( ( TzOptions(T).printLevel > 1 ) and ( comm2 > 0 ) ) then
         Print( "There were ", comm2, " commutators found in phase 1\n" );
     fi;
@@ -249,7 +249,7 @@ InstallGlobalFunction( TzPartition, function( T )
             r := rels[j];
             lr := Length( r );
             if ( lr > 1 ) then
-                freq := Collected( List( r, x -> AbsInt( x ) ) );
+                freq := Collected( List( r, AbsInt ) );
                 fnum := Length( freq );
                 for x in [1..fnum] do
                     L := freq[x];
@@ -270,7 +270,7 @@ InstallGlobalFunction( TzPartition, function( T )
                 od;
             fi;
         od;
-    comm2 := Sum( List( commpairs, L -> Length( L ) ) )/2;
+    comm2 := Sum( List( commpairs, Length ) )/2;
     if ( ( TzOptions(T).printLevel > 1 ) and ( comm2 > comm1 ) ) then
         Print( "There were ", comm2 - comm1 );
         Print( " commutators found in phase 2\n" );
@@ -430,7 +430,7 @@ InstallGlobalFunction( FactorsPresentation, function( arg )
             posn := Filtered( [1..len], k -> fac[k]=i );
             Add( subrels, rel{posn} );
         od;
-        sublen := List( subrels, L -> Length( L ) );
+        sublen := List( subrels, Length );
         subflags := List( chosen[i], k -> flags[k] );
         F[i].printLevel := printlevel;
         subT := F[i].tietze;
@@ -697,7 +697,7 @@ function( G, H )
     subG :=  Subgroup( autG, gensub ); 
     while not stop do 
         stop := true; 
-        reps := List( RightCosets( autG, subG ), c -> Representative(c) ); 
+        reps := List( RightCosets( autG, subG ), Representative ); 
         numrep := Length( reps ); 
         i := 1; 
         found := false; 
@@ -705,7 +705,8 @@ function( G, H )
             i := i+1; 
             r := reps[i]; 
             ok := ForAll( H, J -> 
-                  ForAll( List(GeneratorsOfGroup(J),j->j^r in J), x->x=true) );
+                  ForAll( List( GeneratorsOfGroup(J), j->j^r in J ), 
+                              x -> x=true ) );
             if ok then 
                 found := true; 
                 stop := false; 

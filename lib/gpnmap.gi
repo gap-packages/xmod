@@ -5,7 +5,7 @@
 ##  This file implements functions for Higher Dimensional Mappings for 
 ##  (pre-)catn-groups. 
 ##
-#Y  Copyright (C) 2001-2020, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2024, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 ##############################################################################
@@ -93,12 +93,12 @@ function( mor )
     fi;
     genPC := GeneratingCat1Groups( PC ); 
     genQC := GeneratingCat1Groups( QC ); 
-    srcPC := List( genPC, x -> Source(x) );
-    srcQC := List( genQC, x -> Source(x) );
-    rngPC := List( genPC, x -> Range(x) );
-    rngQC := List( genQC, x -> Range(x) );
-    rnghoms := List( 2dmor, x -> RangeHom(x) );
-    srchoms := List( 2dmor, x -> SourceHom(x) ); 
+    srcPC := List( genPC, Source );
+    srcQC := List( genQC, Source );
+    rngPC := List( genPC, Range );
+    rngQC := List( genQC, Range );
+    rnghoms := List( 2dmor, RangeHom );
+    srchoms := List( 2dmor, SourceHom ); 
     for x in [1..Length(genPC)] do 
         if ( Source( srchoms[x] ) <> srcPC[x] ) then 
             Info( InfoXMod, 1, x, "a : ", Source(rnghoms[x]), 
@@ -196,7 +196,7 @@ function( map )
     local mors, imors;
     
     mors := ListOf2DimensionalMappings( map );
-    imors := List( mors, f -> MappingGeneratorsImages(f) );
+    imors := List( mors, MappingGeneratorsImages );
     return imors;
 end );
 
@@ -282,7 +282,7 @@ function( obj )
     if ( dim < 4 ) then 
         Error( "should be using method for low dimensions" ); 
     else 
-        idmaps := List( GeneratingCat1Groups( obj ), C -> IdentityMapping(C) ); 
+        idmaps := List( GeneratingCat1Groups( obj ), IdentityMapping ); 
         return PreCatnGroupMorphismByMorphisms( obj, obj, idmaps ); 
     fi;
 end );
@@ -410,7 +410,7 @@ function( mor )
        Info( InfoXMod, 2, "Parameter is not an automorphism" );
        return fail;
     fi;
-       return  Lcm( List(2d_maps, f -> Order(f) ) );
+       return  Lcm( List(2d_maps, Order ) );
 end );
 
 ##############################################################################

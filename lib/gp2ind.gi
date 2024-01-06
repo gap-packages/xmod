@@ -2,7 +2,7 @@
 ##
 #W  gp2ind.gi                      XMOD Package                Chris Wensley
 ##
-#Y  Copyright (C) 2001-2023, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2024, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file implements functions for induced crossed modules. 
@@ -748,9 +748,9 @@ function( X0, iota, trans )
         ## (21/01/10, 06/07/10) changed this condition - also changed below 
         if ( Size( series[1] ) < 2000 ) then 
             if ( RemInt( Size(series[1]), 128 ) <> 0 ) then 
-                idseries := List( series, g -> StructureDescription( g ) ); 
+                idseries := List( series, StructureDescription ); 
             else 
-                idseries := List( series, g -> IdGroup( g ) ); 
+                idseries := List( series, IdGroup ); 
             fi; 
             Info( InfoXMod, 2, "CompositionSeries for induced group:" );
             Info( InfoXMod, 2, idseries, "\n" ); 
@@ -896,7 +896,7 @@ function( X0, iota )
     genQ := GeneratorsOfGroup( Q );
     preQ := List( genQ, q -> PreImagesRepresentativeNC( iota, q ) );
     rcos := RightCosets( S, H );
-    reps := List( rcos, r -> Representative( r ) );
+    reps := List( rcos, Representative );
     Info( InfoXMod, 2, "reps = ", reps ); 
     imb := List( genS, r -> ImageElm( iota, ImageElm( bdy, r ) ) );
     PI := Action( S, rcos, OnRight ); 
@@ -974,8 +974,8 @@ InstallGlobalFunction( AllInducedXMods, function( arg )
     L := LatticeSubgroups( Q ); 
     norm := NormalSubgroups( Q );
     Info( InfoXMod, 2, "normal subgroups of Q: ", norm );
-    reps := Reversed( List( ConjugacyClassesSubgroups( L ), 
-                      c -> Representative( c ) ) );
+    reps := Reversed( List( ConjugacyClassesSubgroups( L ),  
+                            Representative ) );
     nreps := Length( reps );
     Info( InfoXMod, 2, "non-trivial reps = ", [2..nreps-1] );
     for r in [ 1 .. nreps-1 ] do
@@ -1000,7 +1000,7 @@ InstallGlobalFunction( AllInducedXMods, function( arg )
         Psd := StructureDescription( P ); 
         norm := NormalSubgroups( P );
         # find representatives of conjugacy classes in Q
-        sizes := List( norm, n -> Size( n ) );
+        sizes := List( norm, Size );
         coll := Collected( sizes );
         keep := List( norm, n -> true );
         k := 1;
@@ -1411,7 +1411,7 @@ InstallGlobalFunction( AllInducedCat1Groups, function( args )
     Q := args[1]; 
     L := LatticeSubgroups( Q );
     reps := Reversed( List( ConjugacyClassesSubgroups(L), 
-                      c -> Representative( c ) ) );
+                      Representative ) );
     nreps := Length( reps );
     Print( "non-trivial reps = ", [2..nreps-1], "\n" );
     for r in [ 2 .. nreps-1 ] do
@@ -1432,7 +1432,7 @@ InstallGlobalFunction( AllInducedCat1Groups, function( args )
         P := reps[r];
         norm := NormalSubgroups( P );
         # find representatives of conjugacy classes in Q
-        sizes := List( norm, n -> Size( n ) );
+        sizes := List( norm, Size );
         coll := Collected( sizes );
         keep := List( norm, n -> true );
         k := 1;

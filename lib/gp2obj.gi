@@ -2,7 +2,7 @@
 ##
 #W  gp2obj.gi                 GAP4 package `XMod'               Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2023, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2024, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 ##  This file contains generic methods for (pre-)crossed modules and
@@ -17,7 +17,7 @@
 
 CAT1_LIST_MAX_SIZE := 60;  ## reduced from 70 (10/06/20)  
 CAT1_LIST_CLASS_SIZES := 
-    List( [1..CAT1_LIST_MAX_SIZE], n -> NumberSmallGroups(n) ); 
+    List( [1..CAT1_LIST_MAX_SIZE], NumberSmallGroups ); 
 CAT1_LIST_NUMBERS := 
 [ [ 1 ], [ 2 ], [ 2 ], [ 2, 4 ], [ 2 ], [ 2, 4 ], [ 2 ], [ 2, 6, 3, 1, 6 ], 
   [ 2, 4 ], [ 2, 4 ], [ 2 ], [ 2, 4, 2, 4, 8 ], [ 2 ], [ 2, 4 ], [ 4 ], 
@@ -2775,7 +2775,7 @@ function( G )
     od; 
     if not IsBound( CatnGroupNumbers( G ).idem ) then 
         images := IdempotentEndomorphismsData( G ).images; 
-        lens := List( images, L -> Length( L ) ); 
+        lens := List( images, Length ); 
         CatnGroupNumbers( G ).idem := Sum( lens ); 
     fi; 
     if not IsBound( CatnGroupNumbers( G ).cat1 ) then 

@@ -2,7 +2,7 @@
 ##
 #W  apps.gi                    GAP4 package `XMod'               Chris Wensley
 ##
-#Y  Copyright (C) 2001-2020, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2024, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 ##############################################################################
@@ -197,7 +197,7 @@ function( X0 )
     bdy0 := Boundary( X0 ); 
     Q0 := Image( bdy0 ); 
     if IsAbelian( P0 ) then 
-        return List( RightCosets( P0, Q0 ), c -> Representative(c) ); 
+        return List( RightCosets( P0, Q0 ), Representative ); 
     fi;
     iterM0 := Iterator( M0 ); 
 ##    elM0 := Elements( M0 ); 
@@ -230,7 +230,7 @@ function( X0 )
         fi; 
     od; 
     if not IsAbelian( P0 ) then 
-        conj := List( ConjugacyClasses( P0 ), c -> Elements( c ) ); 
+        conj := List( ConjugacyClasses( P0 ), Elements ); 
         numj := Length( conj ); 
         pos := ListWithIdenticalEntries( numj, 0 ); 
         for i in [1..numj] do 
@@ -264,7 +264,7 @@ function( X0 )
     bdy0 := Boundary( X0 ); 
     Q0 := Image( bdy0 ); 
     if IsAbelian( P0 ) then 
-        return List( RightCosets( P0, Q0 ), c -> Representative(c) ); 
+        return List( RightCosets( P0, Q0 ), Representative ); 
     fi;
     iterM0 := Iterator( M0 ); 
 ##    elM0 := Elements( M0 ); 
@@ -315,9 +315,9 @@ function( X0, a )
         Error( "element a not in the range group P0" ); 
     fi; 
     Info( InfoXMod, 3, "M0: ", Elements(M0) ); 
-    Info( InfoXMod, 3, List( Elements(M0), g -> Order(g) ) );
+    Info( InfoXMod, 3, List( Elements(M0), Order ) );
     Info( InfoXMod, 3, "P0: ", Elements(P0) ); 
-    Info( InfoXMod, 3, List( Elements(P0), g -> Order(g) ) );
+    Info( InfoXMod, 3, List( Elements(P0), Order ) );
     bdy0 := Boundary( X0 ); 
     act0 := XModAction( X0 ); 
     aut0 := Range( act0 ); 
@@ -422,15 +422,15 @@ function( X0 )
     imbdy0 := ImagesSource( bdy0 ); 
     Q0 := P0/imbdy0; 
     conjP0 := ConjugacyClasses( P0 ); 
-    repsP0 := List( conjP0, c -> Representative( c ) ); 
-    eltsP0 := List( conjP0, c -> Elements(c) ); 
+    repsP0 := List( conjP0, Representative ); 
+    eltsP0 := List( conjP0, Elements ); 
     nclP0 := Length( conjP0 ); 
     if ( InfoLevel( InfoXMod ) > 1 ) then 
         Print( "#I  Size(P0) = ", Size(P0), "\n" ); 
         Print( "#I  imgenM0 = ", imgenM0, "\n" );   #? this is not used 
         Print( "#I  cokernel of boundary has IdGroup ", IdGroup(Q0), "\n" ); 
         Print( "#I  conjugacy class sizes, reps and orders:classes for P :-\n" ); 
-        Print( "#I  ", List( conjP0, c -> Size(c) ), "\n" ); 
+        Print( "#I  ", List( conjP0, Size ), "\n" ); 
         Print( "#I  repsP0 = ", repsP0, "\n" ); 
     fi;
     if ( InfoLevel( InfoXMod ) > 2 ) then 

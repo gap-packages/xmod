@@ -2,7 +2,7 @@
 ##
 #W  gpgpd.gi                   GAP4 package `XMod'              Chris Wensley
 ##
-#Y  Copyright (C) 2001-2020, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2024, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 #############################################################################
@@ -129,7 +129,7 @@ function( C )
     bdy := RestrictedMapping( h, kert ); 
     imbdy := Image( bdy );
     cosbdy := RightCosets( R, imbdy ); 
-    repbdy := List( cosbdy, c -> Representative(c) ); 
+    repbdy := List( cosbdy, Representative ); 
     np := Length( repbdy );
     Info( InfoXMod, 1, "repbdy = ", repbdy ); 
     eR := Image( e, R );
@@ -141,7 +141,7 @@ function( C )
     Info( InfoXMod, 1, "loopgp generators: ", loopgp ); 
     loopgp := GroupWithGenerators( loopgp );
     cosgp := RightCosets( kert, kerth ); 
-    repsgp := List( cosgp, c -> Representative(c) ); 
+    repsgp := List( cosgp, Representative ); 
     L1 := List( repsgp, g -> g*eroot ); 
     obs := List( repsgp, g -> ImageElm( h, g ) );
     rays1 := List( L1, g -> GroupGroupoidElement( C, root, g ) ); 
