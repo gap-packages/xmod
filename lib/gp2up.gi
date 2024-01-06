@@ -5,7 +5,7 @@
 ##
 ##  This file contains implementations of UpMappings, Derivations & Sections
 ##
-#Y  Copyright (C) 2001-2023, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2024, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 ##############################################################################
@@ -1077,7 +1077,7 @@ function( XM )
     reg := RegularDerivations( XM );
     tab := WhiteheadGroupTable( XM );
     im := ImagesList( reg );
-    gens := List( tab, row -> PermList( row ) );
+    gens := List( tab, PermList );
     grp := Group( gens );
     strgens := StrongGeneratorsStabChain( StabChain( grp ) );
     pos := List( strgens, g -> Position( gens, g ) );
