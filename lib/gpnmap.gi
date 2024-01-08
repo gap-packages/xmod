@@ -431,7 +431,7 @@ function( map )
     else 
         2d_maps := ListOf2DimensionalMappings(map); 
     fi; 
-    ok := ForAll( 2d_maps, f -> IsInjective(f) );
+    ok := ForAll( 2d_maps, IsInjective );
     if not ok then
         return false;
     fi;    
@@ -456,7 +456,7 @@ function( map )
     else 
         2d_maps := ListOf2DimensionalMappings(map); 
     fi; 
-    ok := ForAll( 2d_maps, f -> IsSurjective(f) );
+    ok := ForAll( 2d_maps, IsSurjective );
     if not ok then
         return false;
     fi;    
@@ -481,7 +481,7 @@ function( map )
     else 
         2d_maps := ListOf2DimensionalMappings(map); 
     fi; 
-    ok := ForAll( 2d_maps, f -> IsSingleValued(f) );
+    ok := ForAll( 2d_maps, IsSingleValued );
     if not ok then
         return false;
     fi;    
@@ -506,7 +506,7 @@ function( map )
     else 
         2d_maps := ListOf2DimensionalMappings(map); 
     fi; 
-    ok := ForAll( 2d_maps, f -> IsTotal(f) );
+    ok := ForAll( 2d_maps, IsTotal );
     if not ok then
         return false;
     fi;    
@@ -531,7 +531,7 @@ function( map )
     else 
         2d_maps := ListOf2DimensionalMappings(map); 
     fi; 
-    ok := ForAll( 2d_maps, f -> IsBijective(f) );
+    ok := ForAll( 2d_maps, IsBijective );
     if not ok then
         return false;
     fi;    
@@ -558,7 +558,7 @@ function( map )
     else 
         2d_maps := ListOf2DimensionalMappings(map); 
     fi; 
-    ok := ForAll( 2d_maps, f -> IsEndomorphism2DimensionalDomain( f ) );
+    ok := ForAll( 2d_maps, IsEndomorphism2DimensionalDomain );
     if not ok then
         return false;
     fi;    

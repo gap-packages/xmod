@@ -5,7 +5,7 @@
 ##  This file implements generic methods for (pre-)crossed cubes 
 ##  and (pre-)cat3-groups.
 ##
-#Y  Copyright (C) 2001-2020, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2024, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
     
 ##############################################################################
@@ -155,7 +155,7 @@ InstallGlobalFunction( PreCat3Group, function( arg )
         Print( "            or: (Pre)Cat3Group( Xcube );\n" );
         return fail;
     fi; 
-    if not ForAll( arg, C -> HasHigherDimension(C) ) then 
+    if not ForAll( arg, HasHigherDimension ) then 
         Error( "each argument should have a higher dimension" ); 
     fi;
     if ( nargs = 1 ) then 

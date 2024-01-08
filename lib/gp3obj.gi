@@ -5,7 +5,7 @@
 ##  This file implements generic methods for (pre-)crossed squares 
 ##  and (pre-)cat2-groups.
 ##
-#Y  Copyright (C) 2001-2023, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2024, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
     
 #############################################################################
@@ -123,7 +123,7 @@ function( innM )
     local gens, M, map, xp;
 
     gens := GeneratorsOfGroup( innM ); 
-    if not ForAll( gens, g -> HasConjugatorOfConjugatorIsomorphism(g) ) then 
+    if not ForAll( gens, HasConjugatorOfConjugatorIsomorphism ) then 
         Error( "innM is not a group of inner automorphisms" ); 
     fi;
     M := Source( gens[1] );
@@ -533,7 +533,7 @@ InstallGlobalFunction( CrossedSquare, function( arg )
         else 
             ok := false; 
         fi;
-    elif ( nargs = 4 ) and ForAll( arg, a -> IsGroup(a) ) then
+    elif ( nargs = 4 ) and ForAll( arg, IsGroup ) then
         XS := CrossedSquareByNormalSubgroups(arg[1],arg[2],arg[3],arg[4]);
     elif ( nargs = 6  ) then
         XS := CrossedSquareByXMods(arg[1],arg[2],arg[3],arg[4],arg[5],arg[6]);
