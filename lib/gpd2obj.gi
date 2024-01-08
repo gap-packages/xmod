@@ -2,7 +2,7 @@
 ##
 #W  gpd2obj.gi                 GAP4 package `XMod'               Chris Wensley
 ##
-#Y  Copyright (C) 2001-2022, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2024, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 #############################################################################
@@ -28,7 +28,7 @@ InstallGlobalFunction( PreXModWithObjects, function( arg )
     nargs := Length( arg ); 
     # list of pieces
     if ( ( nargs = 1 ) and IsList( arg[1] ) 
-         and  ForAll( arg[1], G -> IsPreXModWithObjects(G) ) ) then
+         and  ForAll( arg[1], IsPreXModWithObjects ) ) then
         Info( InfoXMod, 2, "ByUnion" );
         return UnionOfPiecesOp( arg[1], arg[1][1] );
     # prexmod plus single object 

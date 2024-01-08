@@ -5,7 +5,7 @@
 ##  This file implements functions for 3Dimensional Mappings for 
 ##  (pre-)crossed squares and (pre-)cat2-groups. 
 ##
-#Y  Copyright (C) 2001-2022, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2024, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 #############################################################################
@@ -261,20 +261,20 @@ InstallGlobalFunction( CrossedSquareMorphism, function( arg )
         if  ok and IsList( list ) and ( Length( list ) = 4 ) then 
             f := list[1]; 
             if HasIsGroupHomomorphism(f) and IsGroupHomomorphism(f) then 
-                if ForAll( list, m -> IsGroupHomomorphism(m) ) then 
+                if ForAll( list, IsGroupHomomorphism ) then 
                     ishom := true;
                 else 
                     ok := false; 
                 fi; 
             elif isxs and HasIsXModMorphism( f ) and IsXModMorphism( f ) then 
-                if ForAll( list, m -> IsXModMorphism(m) ) then 
+                if ForAll( list, IsXModMorphism ) then 
                     ishom := false;
                 else 
                     ok := false; 
                 fi;
             elif (not isxs) and HasIsCat1GroupMorphism( f ) 
                             and IsCat1GroupMorphism( f ) then 
-                if ForAll( list, m -> IsCat1GroupMorphism(m) ) then 
+                if ForAll( list, IsCat1GroupMorphism ) then 
                     ishom := false;
                 else 
                     ok := false; 
@@ -313,7 +313,7 @@ function( src, rng, list )
     local mor, ok;
 
     if not ( Length( list ) = 4 ) and 
-           ForAll( list, m -> IsPreXModMorphism(m) ) then 
+           ForAll( list, IsPreXModMorphism ) then 
         Error( "third argument should be a list of 4 pre-xmod-morphisms" ); 
     fi; 
     mor := MakeHigherDimensionalGroupMorphism( src, rng, list );
@@ -338,7 +338,7 @@ function( xs1, xs2, list )
           L2, M2, N2, P2, l, m, n, p, upmor, ltmor, dnmor, rtmor, mor, ok;
 
     if not ( Length( list ) = 4 ) and 
-           ForAll( list, m -> IsGroupHomomorphism(m) ) then 
+           ForAll( list, IsGroupHomomorphism ) then 
         Error( "third argument should be a list of 4 group homomorphisms" ); 
     fi; 
     up1 := Up2DimensionalGroup( xs1 ); 
@@ -399,7 +399,7 @@ function( src, rng, list )
     local mor, ok;
 
     if not ( Length( list ) = 4 ) and 
-           ForAll( list, m -> IsXModMorphism(m) ) then 
+           ForAll( list, IsXModMorphism ) then 
         Error( "third argument should be a list of xmod morphisms" ); 
     fi; 
     mor := PreCrossedSquareMorphismByPreXModMorphisms( src, rng, list );
@@ -422,7 +422,7 @@ function( src, rng, list )
     local mor, ok;
 
     if not ( Length( list ) = 4 ) and 
-           ForAll( list, m -> IsGroupHomomorphism(m) ) then 
+           ForAll( list, IsGroupHomomorphism ) then 
         Error( "third argument should be a list of xmod morphisms" ); 
     fi; 
     mor := PreCrossedSquareMorphismByGroupHomomorphisms( src, rng, list );
@@ -564,7 +564,7 @@ function( C1, C2, homs )
     if not ( Length( homs ) = 4 ) then 
         Error( "expecting 4 group homomorphisms" ); 
     fi; 
-    if not ForAll( homs, h -> IsGroupHomomorphism( h ) ) then 
+    if not ForAll( homs, IsGroupHomomorphism ) then 
         Error( "expecting 4 group homomorphisms" ); 
     fi; 
     gamma := homs[1]; 
