@@ -1,6 +1,7 @@
 # CHANGES to the 'XMod' package
 
-## 2.91 -> 2.91dev (16/02/2023) 
+## 2.91 -> 2.92 (23/01/2024)
+ * (11/10/23) methods for WhiteheadXMod etc for xmods which arent perm xmods
  * (16/02/23) now using the NC version of PreImagesRepresentative 
 
 ## 2.89 -> 2.91 (16/02/2023) 
