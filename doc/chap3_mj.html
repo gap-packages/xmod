@@ -176,21 +176,21 @@ true
 <div class="example"><pre>
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">q8 := SmallGroup(8,4);;   ## quaternion group </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Xq8 := XModByAutomorphismGroup( q8 );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">XAq8 := XModByAutomorphismGroup( q8 );</span>
 [Group( [ f1, f2, f3 ] )-&gt;Group( [ Pcgs([ f1, f2, f3 ]) -&gt; [ f1*f2, f2, f3 ], 
   Pcgs([ f1, f2, f3 ]) -&gt; [ f2, f1*f2, f3 ], 
   Pcgs([ f1, f2, f3 ]) -&gt; [ f1*f3, f2, f3 ], 
   Pcgs([ f1, f2, f3 ]) -&gt; [ f1, f2*f3, f3 ] ] )]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := IsomorphismPerm2DimensionalGroup( Xq8 );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Yq8 := Image( iso );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := IsomorphismPerm2DimensionalGroup( XAq8 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">YAq8 := Image( iso );</span>
 [Group( [ (1,2,4,6)(3,8,7,5), (1,3,4,7)(2,5,6,8), (1,4)(2,6)(3,7)(5,8) 
  ] )-&gt;Group( [ (1,3,4,6), (1,2,3)(4,5,6), (1,4)(3,6), (2,5)(3,6) ] )]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s4 := SymmetricGroup(4);; </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">isos4 := IsomorphismGroups( Range(Yq8), s4 );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">id := IdentityMapping( Source( Yq8 ) );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">isos4 := IsomorphismGroups( Range(YAq8), s4 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">id := IdentityMapping( Source( YAq8 ) );; </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsBijective( id );;  IsBijective( isos4 );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mor := IsomorphismByIsomorphisms( Yq8, [id,isos4] );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Zq8 := Image( mor );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mor := IsomorphismByIsomorphisms( YAq8, [id,isos4] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ZAq8 := Image( mor );</span>
 [Group( [ (1,2,4,6)(3,8,7,5), (1,3,4,7)(2,5,6,8), (1,4)(2,6)(3,7)(5,8) 
  ] )-&gt;SymmetricGroup( [ 1 .. 4 ] )]
 

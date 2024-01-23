@@ -124,21 +124,21 @@
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27Xq8 := SmallGroup(8,4);;   ## quaternion group [127X[104X
-    [4X[25Xgap>[125X [27XXq8 := XModByAutomorphismGroup( q8 );[127X[104X
+    [4X[25Xgap>[125X [27XXAq8 := XModByAutomorphismGroup( q8 );[127X[104X
     [4X[28X[Group( [ f1, f2, f3 ] )->Group( [ Pcgs([ f1, f2, f3 ]) -> [ f1*f2, f2, f3 ], [128X[104X
     [4X[28X  Pcgs([ f1, f2, f3 ]) -> [ f2, f1*f2, f3 ], [128X[104X
     [4X[28X  Pcgs([ f1, f2, f3 ]) -> [ f1*f3, f2, f3 ], [128X[104X
     [4X[28X  Pcgs([ f1, f2, f3 ]) -> [ f1, f2*f3, f3 ] ] )][128X[104X
-    [4X[25Xgap>[125X [27Xiso := IsomorphismPerm2DimensionalGroup( Xq8 );;[127X[104X
-    [4X[25Xgap>[125X [27XYq8 := Image( iso );[127X[104X
+    [4X[25Xgap>[125X [27Xiso := IsomorphismPerm2DimensionalGroup( XAq8 );;[127X[104X
+    [4X[25Xgap>[125X [27XYAq8 := Image( iso );[127X[104X
     [4X[28X[Group( [ (1,2,4,6)(3,8,7,5), (1,3,4,7)(2,5,6,8), (1,4)(2,6)(3,7)(5,8) [128X[104X
     [4X[28X ] )->Group( [ (1,3,4,6), (1,2,3)(4,5,6), (1,4)(3,6), (2,5)(3,6) ] )][128X[104X
     [4X[25Xgap>[125X [27Xs4 := SymmetricGroup(4);; [127X[104X
-    [4X[25Xgap>[125X [27Xisos4 := IsomorphismGroups( Range(Yq8), s4 );;[127X[104X
-    [4X[25Xgap>[125X [27Xid := IdentityMapping( Source( Yq8 ) );; [127X[104X
+    [4X[25Xgap>[125X [27Xisos4 := IsomorphismGroups( Range(YAq8), s4 );;[127X[104X
+    [4X[25Xgap>[125X [27Xid := IdentityMapping( Source( YAq8 ) );; [127X[104X
     [4X[25Xgap>[125X [27XIsBijective( id );;  IsBijective( isos4 );;[127X[104X
-    [4X[25Xgap>[125X [27Xmor := IsomorphismByIsomorphisms( Yq8, [id,isos4] );;[127X[104X
-    [4X[25Xgap>[125X [27XZq8 := Image( mor );[127X[104X
+    [4X[25Xgap>[125X [27Xmor := IsomorphismByIsomorphisms( YAq8, [id,isos4] );;[127X[104X
+    [4X[25Xgap>[125X [27XZAq8 := Image( mor );[127X[104X
     [4X[28X[Group( [ (1,2,4,6)(3,8,7,5), (1,3,4,7)(2,5,6,8), (1,4)(2,6)(3,7)(5,8) [128X[104X
     [4X[28X ] )->SymmetricGroup( [ 1 .. 4 ] )][128X[104X
     [4X[28X[128X[104X

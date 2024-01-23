@@ -69,24 +69,24 @@
 <div class="example"><pre>
 
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">q8 := Group( (1,2,3,4)(5,8,7,6), (1,5,3,7)(2,6,4,8) );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">X8 := XModByAutomorphismGroup( q8 );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s4b := Range( X8 );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">XAq8 := XModByAutomorphismGroup( q8 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s4b := Range( XAq8 );; </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( q8, "q8" );  SetName( s4b, "s4b" ); </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := q8.1;;  b := q8.2;; </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">alpha := GroupHomomorphismByImages( q8, q8, [a,b], [a^-1,b] );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">beta := GroupHomomorphismByImages( q8, q8, [a,b], [a,b^-1] );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">k4b := Subgroup( s4b, [ alpha, beta ] );;  SetName( k4b, "k4b" );</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Z8 := XModByNormalSubgroup( s4b, k4b );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( X8, "X8" );  SetName( Z8, "Z8" );  </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( XAq8, "XAq8" );  SetName( Z8, "Z8" );  </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetInfoLevel( InfoXMod, 1 ); </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">XZ8 := CoproductXMod( X8, Z8 );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">XZ8 := CoproductXMod( XAq8, Z8 );</span>
 #I  prexmod is [ [ 32, 47 ], [ 24, 12 ] ]
 #I  peiffer subgroup is C2, [ 2, 1 ]
 #I  the coproduct is [ "C2 x C2 x C2 x C2", "S4" ], [ [ 16, 14 ], [ 24, 12 ] ]
 [Group( [ f1, f2, f3, f4 ] )-&gt;s4b]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( XZ8, "XZ8" ); </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">info := CoproductInfo( XZ8 );</span>
-rec( embeddings := [ [X8 =&gt; XZ8], [Z8 =&gt; XZ8] ], xmods := [ X8, Z8 ] )
+rec( embeddings := [ [XAq8 =&gt; XZ8], [Z8 =&gt; XZ8] ], xmods := [ XAq8, Z8 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetInfoLevel( InfoXMod, 0 ); </span>
 
 </pre></div>
@@ -104,18 +104,18 @@ rec( embeddings := [ [X8 =&gt; XZ8], [Z8 =&gt; XZ8] ], xmods := [ X8, Z8 ] )
 
 <div class="example"><pre>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y := CoproductXMod( [ X8, X8, Z8, Z8 ] );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y := CoproductXMod( [ XAq8, XAq8, Z8, Z8 ] );</span>
 [Group( [ f1, f2, f3, f4, f5, f6, f7, f8 ] )-&gt;s4b]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription( Y );          </span>
 [ "C2 x C2 x C2 x C2 x C2 x C2 x C2 x C2", "S4" ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CoproductInfo( Y );</span>
 rec( 
   embeddings := 
-    [ [X8 =&gt; [Group( [ f1, f2, f3, f4, f5, f6, f7, f8 ] ) -&gt; s4b]], 
-      [X8 =&gt; [Group( [ f1, f2, f3, f4, f5, f6, f7, f8 ] ) -&gt; s4b]], 
+    [ [XAq8 =&gt; [Group( [ f1, f2, f3, f4, f5, f6, f7, f8 ] ) -&gt; s4b]], 
+      [XAq8 =&gt; [Group( [ f1, f2, f3, f4, f5, f6, f7, f8 ] ) -&gt; s4b]], 
       [Z8 =&gt; [Group( [ f1, f2, f3, f4, f5, f6, f7, f8 ] ) -&gt; s4b]], 
       [Z8 =&gt; [Group( [ f1, f2, f3, f4, f5, f6, f7, f8 ] ) -&gt; s4b]] ], 
-  xmods := [ X8, X8, Z8, Z8 ] )
+  xmods := [ XAq8, XAq8, Z8, Z8 ] )
 
 </pre></div>
 
@@ -169,7 +169,7 @@ Crossed module [a4/ker-&gt;s3b] :-
 
 </pre></div>
 
-<p>For a second, injective example we take for <span class="SimpleMath">\(\calX\)</span> the automorphism crossed module <code class="code">X8</code> of <code class="func">CoproductXMod</code> (<a href="chap7_mj.html#X7C01F5D98046E44B"><span class="RefLink">7.1-1</span></a>), and for <span class="SimpleMath">\(\iota\)</span> an inclusion of <code class="code">s4b</code> in <code class="code">s5</code>. The resulting source group is <code class="code">SL(2,5)</code>.</p>
+<p>For a second, injective example we take for <span class="SimpleMath">\(\calX\)</span> the automorphism crossed module <code class="code">XAq8</code> of <code class="func">CoproductXMod</code> (<a href="chap7_mj.html#X7C01F5D98046E44B"><span class="RefLink">7.1-1</span></a>), and for <span class="SimpleMath">\(\iota\)</span> an inclusion of <code class="code">s4b</code> in <code class="code">s5</code>. The resulting source group is <code class="code">SL(2,5)</code>.</p>
 
 
 <div class="example"><pre>
@@ -179,11 +179,11 @@ Crossed module [a4/ker-&gt;s3b] :-
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( s5, "s5" ); </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">inc45 := InclusionMappingGroups( s5, s4 );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iota45 := iso4 * inc45;; </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">indX8 := InducedXMod( X8, iota45 );</span>
-i*(X8)
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size2d( indX8 );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">indXAq8 := InducedXMod( XAq8, iota45 );</span>
+i*(XAq8)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size2d( indXAq8 );</span>
 [ 120, 120 ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription( indX8 );          </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription( indXAq8 );          </span>
 [ "SL(2,5)", "S5" ]
 
 </pre></div>

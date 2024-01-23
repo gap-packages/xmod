@@ -35,24 +35,24 @@
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27Xq8 := Group( (1,2,3,4)(5,8,7,6), (1,5,3,7)(2,6,4,8) );;[127X[104X
-    [4X[25Xgap>[125X [27XX8 := XModByAutomorphismGroup( q8 );;[127X[104X
-    [4X[25Xgap>[125X [27Xs4b := Range( X8 );; [127X[104X
+    [4X[25Xgap>[125X [27XXAq8 := XModByAutomorphismGroup( q8 );;[127X[104X
+    [4X[25Xgap>[125X [27Xs4b := Range( XAq8 );; [127X[104X
     [4X[25Xgap>[125X [27XSetName( q8, "q8" );  SetName( s4b, "s4b" ); [127X[104X
     [4X[25Xgap>[125X [27Xa := q8.1;;  b := q8.2;; [127X[104X
     [4X[25Xgap>[125X [27Xalpha := GroupHomomorphismByImages( q8, q8, [a,b], [a^-1,b] );;[127X[104X
     [4X[25Xgap>[125X [27Xbeta := GroupHomomorphismByImages( q8, q8, [a,b], [a,b^-1] );;[127X[104X
     [4X[25Xgap>[125X [27Xk4b := Subgroup( s4b, [ alpha, beta ] );;  SetName( k4b, "k4b" );[127X[104X
     [4X[25Xgap>[125X [27XZ8 := XModByNormalSubgroup( s4b, k4b );;[127X[104X
-    [4X[25Xgap>[125X [27XSetName( X8, "X8" );  SetName( Z8, "Z8" );  [127X[104X
+    [4X[25Xgap>[125X [27XSetName( XAq8, "XAq8" );  SetName( Z8, "Z8" );  [127X[104X
     [4X[25Xgap>[125X [27XSetInfoLevel( InfoXMod, 1 ); [127X[104X
-    [4X[25Xgap>[125X [27XXZ8 := CoproductXMod( X8, Z8 );[127X[104X
+    [4X[25Xgap>[125X [27XXZ8 := CoproductXMod( XAq8, Z8 );[127X[104X
     [4X[28X#I  prexmod is [ [ 32, 47 ], [ 24, 12 ] ][128X[104X
     [4X[28X#I  peiffer subgroup is C2, [ 2, 1 ][128X[104X
     [4X[28X#I  the coproduct is [ "C2 x C2 x C2 x C2", "S4" ], [ [ 16, 14 ], [ 24, 12 ] ][128X[104X
     [4X[28X[Group( [ f1, f2, f3, f4 ] )->s4b][128X[104X
     [4X[25Xgap>[125X [27XSetName( XZ8, "XZ8" ); [127X[104X
     [4X[25Xgap>[125X [27Xinfo := CoproductInfo( XZ8 );[127X[104X
-    [4X[28Xrec( embeddings := [ [X8 => XZ8], [Z8 => XZ8] ], xmods := [ X8, Z8 ] )[128X[104X
+    [4X[28Xrec( embeddings := [ [XAq8 => XZ8], [Z8 => XZ8] ], xmods := [ XAq8, Z8 ] )[128X[104X
     [4X[25Xgap>[125X [27XSetInfoLevel( InfoXMod, 0 ); [127X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
@@ -72,18 +72,18 @@
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XY := CoproductXMod( [ X8, X8, Z8, Z8 ] );[127X[104X
+    [4X[25Xgap>[125X [27XY := CoproductXMod( [ XAq8, XAq8, Z8, Z8 ] );[127X[104X
     [4X[28X[Group( [ f1, f2, f3, f4, f5, f6, f7, f8 ] )->s4b][128X[104X
     [4X[25Xgap>[125X [27XStructureDescription( Y );          [127X[104X
     [4X[28X[ "C2 x C2 x C2 x C2 x C2 x C2 x C2 x C2", "S4" ][128X[104X
     [4X[25Xgap>[125X [27XCoproductInfo( Y );[127X[104X
     [4X[28Xrec( [128X[104X
     [4X[28X  embeddings := [128X[104X
-    [4X[28X    [ [X8 => [Group( [ f1, f2, f3, f4, f5, f6, f7, f8 ] ) -> s4b]], [128X[104X
-    [4X[28X      [X8 => [Group( [ f1, f2, f3, f4, f5, f6, f7, f8 ] ) -> s4b]], [128X[104X
+    [4X[28X    [ [XAq8 => [Group( [ f1, f2, f3, f4, f5, f6, f7, f8 ] ) -> s4b]], [128X[104X
+    [4X[28X      [XAq8 => [Group( [ f1, f2, f3, f4, f5, f6, f7, f8 ] ) -> s4b]], [128X[104X
     [4X[28X      [Z8 => [Group( [ f1, f2, f3, f4, f5, f6, f7, f8 ] ) -> s4b]], [128X[104X
     [4X[28X      [Z8 => [Group( [ f1, f2, f3, f4, f5, f6, f7, f8 ] ) -> s4b]] ], [128X[104X
-    [4X[28X  xmods := [ X8, X8, Z8, Z8 ] )[128X[104X
+    [4X[28X  xmods := [ XAq8, XAq8, Z8, Z8 ] )[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
@@ -159,8 +159,8 @@
   [4X[32X[104X
   
   [33X[0;0YFor  a  second,  injective example we take for [22XcalX[122X the automorphism crossed
-  module [10XX8[110X of [2XCoproductXMod[102X ([14X7.1-1[114X), and for [22Xι[122X an inclusion of [10Xs4b[110X in [10Xs5[110X. The
-  resulting source group is [10XSL(2,5)[110X.[133X
+  module  [10XXAq8[110X  of [2XCoproductXMod[102X ([14X7.1-1[114X), and for [22Xι[122X an inclusion of [10Xs4b[110X in [10Xs5[110X.
+  The resulting source group is [10XSL(2,5)[110X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
@@ -169,11 +169,11 @@
     [4X[25Xgap>[125X [27XSetName( s5, "s5" ); [127X[104X
     [4X[25Xgap>[125X [27Xinc45 := InclusionMappingGroups( s5, s4 );;[127X[104X
     [4X[25Xgap>[125X [27Xiota45 := iso4 * inc45;; [127X[104X
-    [4X[25Xgap>[125X [27XindX8 := InducedXMod( X8, iota45 );[127X[104X
-    [4X[28Xi*(X8)[128X[104X
-    [4X[25Xgap>[125X [27XSize2d( indX8 );[127X[104X
+    [4X[25Xgap>[125X [27XindXAq8 := InducedXMod( XAq8, iota45 );[127X[104X
+    [4X[28Xi*(XAq8)[128X[104X
+    [4X[25Xgap>[125X [27XSize2d( indXAq8 );[127X[104X
     [4X[28X[ 120, 120 ][128X[104X
-    [4X[25Xgap>[125X [27XStructureDescription( indX8 );          [127X[104X
+    [4X[25Xgap>[125X [27XStructureDescription( indXAq8 );          [127X[104X
     [4X[28X[ "SL(2,5)", "S5" ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X

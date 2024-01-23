@@ -6,10 +6,10 @@
                        [1X Crossed Modules and Cat1-Groups [101X
   
   
-                                      2.91
+                                      2.92
   
   
-                                16 February 2023
+                                23 January 2024
   
   
                                  Chris Wensley
@@ -84,7 +84,7 @@
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0Y© 1996-2023, Chris Wensley et al.[133X
+  [33X[0;0Y© 1996-2024, Chris Wensley et al.[133X
   
   [33X[0;0YThe  [5XXMod[105X package is free software; you can redistribute it and/or modify it
   under  the  terms of the GNU General Public License as published by the Free
