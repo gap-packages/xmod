@@ -182,7 +182,7 @@ AutoDoc := rec(
             "Please submit an issue at ", 
             "<URL>https://github.com/gap-packages/xmod/issues/</URL> ", 
             "or send an email to the first author at ", 
-            "<Email>c.d.wensley@bangor.ac.uk</Email>. \n", 
+            "<Email>cdwensley@btinternet.com</Email>. \n", 
             "<P/>\n"
             ), 
         Acknowledgements := Concatenation( 
