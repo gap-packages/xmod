@@ -79,7 +79,7 @@
   
   [33X[0;0YBug reports, suggestions and comments are, of course, welcome. Please submit
   an issue at [7Xhttps://github.com/gap-packages/xmod/issues/[107X or send an email to
-  the first author at [7Xmailto:c.d.wensley@bangor.ac.uk[107X.[133X
+  the first author at [7Xmailto:cdwensley@btinternet.com[107X.[133X
   
   
   -------------------------------------------------------
