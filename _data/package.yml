@@ -67,16 +67,13 @@ citeas: |
 bibtex: |
     @misc{ XMod2.92,
       author =           {Wensley, C. and Alp, M. and Odabas, A. and Uslu, E. O.},
-      title =            {{XMod},  Crossed  Modules  and  Cat1-Groups, {V}ersion
-                          2.92},
+      title =            {{XMod}, Crossed Modules and Cat1-Groups, {V}ersion 2.92},
       month =            {Jan},
       year =             {2024},
       note =             {Refereed GAP package},
-      howpublished =     {\href           {https://gap-packages.github.io/xmod/}
-                          {\texttt{https://gap-packages.github.io/}\discretionary
-                          {}{}{}\texttt{xmod/}}},
-      keywords =         {crossed   module;   cat1-group;  derivation;  section;
-                          actor; crossed square},
+      howpublished =     {\href                                                {https://gap-packages.github.io/xmod/}
+                          {\texttt{https://gap-packages.github.io/}\discretionary {}{}{}\texttt{xmod/}}},
+      keywords =         {crossed module; cat1-group; derivation; section; actor; crossed square},
       printedkey =       {WAOU24}
     }
 
