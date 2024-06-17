@@ -120,10 +120,12 @@ subject to the following conditions:
 where <M>\ker t = (\ker \ddot{t},\ \ker \dot{t})</M>, 
 and similarly for <M>\ker h</M>. 
 <P/> 
-A recent paper 
-<E>Computing 3-Dimensional Groups :L Crossed Squares and Cat2-Groups</E>, 
+In a recent paper 
+<E>Computing 3-Dimensional Groups : Crossed Squares and Cat2-Groups</E>, 
 by Arvasi, Odabas and Wensley <Cite Key="AOW"/>, 
-contains tables listing the numbers of isomorphism classes of cat2-groups on groups of order at most 30 – a total of 1007 cat2-groups.
+there are tables listing the numbers of isomorphism classes of 
+cat<M>^2</M>-groups on groups of order at most <M>30</M> – 
+a total of <M>1007</M> cat<M>^2</M>-groups.
 
 <ManSection Label="cat2-group">
    <Func Name="Cat2Group"
