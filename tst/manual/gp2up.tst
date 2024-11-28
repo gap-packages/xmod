@@ -2,7 +2,7 @@
 ##
 #W  gp2up.tst                     XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2020, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2024, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 gap> START_TEST( "XMod package: gp2up.tst" );
@@ -26,22 +26,8 @@ gap> e := GroupHomomorphismByImages( s3, g18, [g2,g3], [g2,g3] );;
 gap> C3 := Cat1Group( t, h, e );
 [g18=>s3]
 gap> SetName( Kernel(t), "c3" );;
-gap> X3 := XModOfCat1Group( C3 );;
-gap> Display( X3 );
-
-Crossed module [c3->s3] :- 
-: Source group has generators:
-  [ (1,2,3)(4,6,5) ]
-: Range group has generators:
-  [ (4,5,6), (2,3)(5,6) ]
-: Boundary homomorphism maps source generators to:
-  [ (4,6,5) ]
-: Action homomorphism maps range generators to automorphisms:
-  (4,5,6) --> { source gens --> [ (1,2,3)(4,6,5) ] }
-  (2,3)(5,6) --> { source gens --> [ (1,3,2)(4,5,6) ] }
-  These 2 automorphisms generate the group of automorphisms.
-: associated cat1-group is [g18=>s3]
-
+gap> X3 := XModOfCat1Group( C3 );
+[c3->s3]
 gap> R3 := Range( X3 );;
 gap> StrongGeneratorsStabChain( StabChain( R3 ) );
 [ (4,5,6), (2,3)(5,6) ]
@@ -50,6 +36,8 @@ DerivationByImages( s3, c3, [ (4,5,6), (2,3)(5,6) ],
 [ (), (1,2,3)(4,6,5) ] )
 gap> [ IsUp2DimensionalMapping( chi1 ), IsDerivation( chi1 ) ];
 [ true, true ]
+gap> Object2d( chi1 );
+[c3->s3]
 gap> UpGeneratorImages( chi1 ); 
 [ (), (1,2,3)(4,6,5) ]
 gap> UpImagePositions( chi1 );
@@ -69,6 +57,12 @@ SectionByHomomorphism( s3, g18, [ (4,5,6), (2,3)(5,6) ],
 [ (1,3,2)(4,6,5), (1,2)(4,6) ] )
 gap> [ IsUp2DimensionalMapping( xi2 ), IsSection( xi2 ) ];
 [ true, true ]
+gap> Object2d( xi2 );
+[g18 => s3]
+gap> UpHomomorphism( xi2 );         
+[ (4,5,6), (2,3)(5,6) ] -> [ (1,3,2)(4,6,5), (1,2)(4,6) ]
+gap> UpGeneratorImages( xi2 );
+[ (1,3,2)(4,6,5), (1,2)(4,6) ]
 gap> chi2 := DerivationBySection( xi2 );
 DerivationByImages( s3, c3, [ (4,5,6), (2,3)(5,6) ], 
 [ (1,3,2)(4,5,6), (1,2,3)(4,6,5) ] )
@@ -79,7 +73,7 @@ SectionByHomomorphism( s3, g18, [ (4,5,6), (2,3)(5,6) ],
 ## Section 5.1.4
 gap> IdentityDerivation( X3 ); 
 DerivationByImages( s3, c3, [ (4,5,6), (2,3)(5,6) ], [ (), () ] )
-gap> IdentitySection(C3);     
+gap> IdentitySection( C3 );     
 SectionByHomomorphism( s3, g18, [ (4,5,6), (2,3)(5,6) ], 
 [ (4,5,6), (2,3)(5,6) ] )
 
@@ -129,6 +123,8 @@ gap> Perform( wmt3, Display );
 [ 7, 7, 7, 7, 7, 7, 7, 7, 7 ]
 [ 8, 8, 8, 8, 8, 8, 8, 8, 8 ]
 [ 9, 9, 9, 9, 9, 9, 9, 9, 9 ]
+
+## Section 5.2.2
 gap> wtm3 := WhiteheadTransformationMonoid( X3 );
 <transformation monoid of degree 9 with 3 generators>
 gap> GeneratorsOfMonoid( wtm3 ); 
@@ -136,7 +132,7 @@ gap> GeneratorsOfMonoid( wtm3 );
   Transformation( [ 4, 6, 5, 1, 3, 2, 7, 9, 8 ] ), 
   Transformation( [ 7, 7, 7, 7, 7, 7, 7, 7, 7 ] ) ]
 
-## Section 5.2.2
+## Section 5.2.3
 gap> reg3 := RegularDerivations( X3 );
 monoid of derivations with images list:
 [ (), () ]
@@ -145,6 +141,8 @@ monoid of derivations with images list:
 [ (1,3,2)(4,5,6), () ]
 [ (1,3,2)(4,5,6), (1,3,2)(4,5,6) ]
 [ (1,3,2)(4,5,6), (1,2,3)(4,6,5) ]
+gap> DerivationClass( reg3 );
+"regular"
 gap> wgt3 := WhiteheadGroupTable( X3 );; 
 gap> Perform( wgt3, Display );
 [ 1, 2, 3, 4, 5, 6 ]
@@ -154,14 +152,72 @@ gap> Perform( wgt3, Display );
 [ 5, 4, 6, 2, 1, 3 ]
 [ 6, 5, 4, 3, 2, 1 ]
 gap> wpg3 := WhiteheadPermGroup( X3 );
+Group([ (1,2,3), (1,2) ])
+gap> IsWhiteheadPermGroup( wpg3 );
+true
+gap> Object2d( wpg3 );
+[c3->s3]
+gap> WhiteheadRegularGroup( X3 );
 Group([ (1,2,3)(4,5,6), (1,4)(2,6)(3,5) ])
+gap> MappingGeneratorsImages( WhiteheadGroupIsomorphism( X3 ) );
+[ [ (1,2,3)(4,5,6), (1,4)(2,6)(3,5) ], [ (1,2,3), (1,2) ] ]
 
-## Section 5.2.3
+## Section 5.2.4
 gap> PDX3 := PrincipalDerivations( X3 );
 monoid of derivations with images list:
 [ (), () ]
 [ (), (1,3,2)(4,5,6) ]
 [ (), (1,2,3)(4,6,5) ]
+gap> PDSX3 := PrincipalDerivationSubgroup( X3 );
+Group([ (1,2,3) ])
+gap> Whom3 := WhiteheadHomomorphism( X3 );
+[ (1,2,3)(4,6,5) ] -> [ (1,2,3) ]
+
+## Section 5.3.1
+gap> sigma2 := SourceEndomorphism( chi2 );
+[ (1,2,3)(4,6,5) ] -> [ (1,3,2)(4,5,6) ]
+
+## Section 5.3.2
+gap> rho2 := RangeEndomorphism( chi2 );
+[ (4,5,6), (2,3)(5,6) ] -> [ (4,6,5), (2,3)(4,6) ]
+
+## Section 5.3.3
+gap> end2 := Object2dEndomorphism( chi2 );;
+gap> Display( end2 );
+Morphism of crossed modules :- 
+: Source = [c3->s3] with generating sets:
+  [ (1,2,3)(4,6,5) ]
+  [ (4,5,6), (2,3)(5,6) ]
+: Range = Source
+: Source Homomorphism maps source generators to:
+  [ (1,3,2)(4,5,6) ]
+: Range Homomorphism maps range generators to:
+  [ (4,6,5), (2,3)(4,6) ]
+
+## Section 5.3.4
+gap> Delta2 := WhiteheadHomomorphism( X3 );
+[ (1,2,3)(4,6,5) ] -> [ (1,2,3) ]
+
+## Section 5.4.1
+gap> AllSections( C3 );
+monoid of sections with images list:
+[ (4,5,6), (2,3)(5,6) ]
+[ (4,5,6), (1,3)(4,5) ]
+[ (4,5,6), (1,2)(4,6) ]
+[ (1,3,2)(4,6,5), (2,3)(5,6) ]
+[ (1,3,2)(4,6,5), (1,3)(4,5) ]
+[ (1,3,2)(4,6,5), (1,2)(4,6) ]
+[ (1,2,3), (2,3)(5,6) ]
+[ (1,2,3), (1,3)(4,5) ]
+[ (1,2,3), (1,2)(4,6) ]
+gap> RegularSections( C3 );         
+monoid of sections with images list:
+[ (4,5,6), (2,3)(5,6) ]
+[ (4,5,6), (1,3)(4,5) ]
+[ (4,5,6), (1,2)(4,6) ]
+[ (1,3,2)(4,6,5), (2,3)(5,6) ]
+[ (1,3,2)(4,6,5), (1,3)(4,5) ]
+[ (1,3,2)(4,6,5), (1,2)(4,6) ]
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 

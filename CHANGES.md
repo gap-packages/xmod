@@ -1,7 +1,18 @@
-# CHANGES to the 'XMod' package
+ # CHANGES to the 'XMod' package
+
+## 2.92 -> 2.92dev (20/11/2024)
+ * (20/11/24) added AutomorphismPermGroup method for cat1-groups
+              renamed PermAutomorphismAsXModMorphism as
+              PermAutomorphismAs2dGroupMorphism and added cat1-group method
+              added WhiteheadRegularGroup and WhiteheadGroupIsomorphism
+              removed the unused CompositeDerivation (= WhiteheadProduct)
+              removed the unused (List)InverseDerivations
+              renamed WhiteheadGroupGeneratingDerivations as ...UpMappings
+              added WhiteheadGroupInverseIsomorphism
+              fixed error in CrossedPairingByDerivations
 
 ## 2.91 -> 2.92 (23/01/2024)
- * (11/10/23) methods for WhiteheadXMod etc for xmods which arent perm xmods
+ * (11/10/23) methods for WhiteheadXMod etc for xmods which are not perm
  * (16/02/23) now using the NC version of PreImagesRepresentative 
 
 ## 2.89 -> 2.91 (16/02/2023) 

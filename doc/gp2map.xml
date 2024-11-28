@@ -1,8 +1,8 @@
-<!-- ------------------------------------------------------------------- -->
+cat<M>^1</M>-group<!-- ------------------------------------------------------------------- -->
 <!--                                                                     -->
 <!--  gp2map.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  Copyright (C) 1996-2023, Chris Wensley et al,                      --> 
+<!--  Copyright (C) 1996-2024, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -18,7 +18,7 @@
 <Index>morphism of 2d-group</Index>
 <Index>crossed module morphism</Index>
 This chapter describes morphisms of (pre-)crossed modules
-and (pre-)cat1-groups.
+and (pre-)cat<M>^1</M>-groups.
 
 <ManSection>
    <Attr Name="Source"
@@ -171,7 +171,7 @@ Be sure to test <C>IsBijective</C> for the two functions
 <P/> 
 Using <Ref Oper="IsomorphismByIsomorphisms"/> with a pair of isomorphisms 
 obtained using <C>IsomorphismPermGroup</C> or <C>IsomorphismPcGroup</C>, 
-we may construct a crossed module or a cat1-group of permutation groups 
+we may construct a crossed module or a cat<M>^1</M>-group of permutation groups 
 or pc-groups.  
 </Description>
 </ManSection>
@@ -216,9 +216,9 @@ where <M>\kappa</M> is the projection from <M>L</M> to <M>M</M>.
 
 
 <Section Label="sect-mor-pre-cat1">
-<Heading>Morphisms of pre-cat1-groups</Heading>
+<Heading>Morphisms of pre-cat<M>^1</M>-groups</Heading>
 
-A morphism of pre-cat1-groups from 
+A morphism of pre-cat<M>^1</M>-groups from 
 <M>\calC_1 = (e_1;t_1,h_1 : G_1 \to R_1)</M>
 to  <M>\calC_2 = (e_2;t_2,h_2 : G_2 \to R_2)</M>  
 is a pair  <M>(\gamma, \rho)</M>  where
@@ -250,7 +250,7 @@ e_2 \circ \rho ~=~ \gamma \circ e_1.
    <Attr Name="IdentityMapping"
          Arg="C1" Label="for precat1-morphisms" />
 <Description>
-For an example we form a second cat1-group <Code>C2=[g18=>s3a]</Code>, 
+For an example we form a second cat<M>^1</M>-group <Code>C2=[g18=>s3a]</Code>, 
 similar to <C>C1</C> in <Ref Sect="mansect-cat1"/>, 
 then construct an isomorphism <M>(\gamma,\rho)</M> between them. 
 </Description>
@@ -293,7 +293,7 @@ the associated morphism of cat<M>^1</M>-groups is <M>(\gamma,\rho)</M>
 where <M>\gamma(r_1,s_1) = (\rho r_1, \sigma s_1)</M>. 
 <P/>
 Similarly, given a morphism <M>(\gamma,\rho) : \calC_1 \to \calC_2</M> 
-of cat1-groups, the associated morphism of crossed modules is 
+of cat<M>^1</M>-groups, the associated morphism of crossed modules is 
 <M>(\sigma,\rho) : \calX_1 \to \calX_2</M> 
 where <M>\sigma s_1 = \gamma(1,s_1)</M>. .
 </Description>
@@ -514,7 +514,7 @@ and <C>QuasiIsomorph</C>.
 This function implements the quotient process. 
 The second parameter is a boolean which, when true, 
 causes the results of some intermediate calculations to be printed. 
-The output shows the identity of the reduced cat1-group, if there is one. 
+The output shows the identity of the reduced cat<M>^1</M>-group, if there is one. 
 </Description>
 </ManSection>
 <P/>
@@ -564,7 +564,7 @@ The logs above show that <C>C18a</C> has just one normal sub-crossed module
 <M>\calN</M> leading to a reduction, and that there are three sub-crossed 
 modules <M>\calS</M> all giving the same reduction. 
 The conclusion is that <C>C18a</C> is quasi-isomorphic to the identity 
-cat1-group on the cyclic group of order <M>2</M>. 
+cat<M>^1</M>-group on the cyclic group of order <M>2</M>. 
 
 </Section>
 

@@ -95,7 +95,7 @@ end );
 
 #############################################################################
 ##
-#M  CrossedPairingByCommutators( <grp>, <grp>, <grp> ) . . . . . make an xpair
+#M  CrossedPairingByCommutators( <grp>, <grp>, <grp> ) . . . . make an xpair
 ##
 InstallMethod( CrossedPairingByCommutators, "for three groups", true,
     [ IsGroup, IsGroup, IsGroup ], 0,
@@ -145,21 +145,24 @@ InstallMethod( CrossedPairingByDerivations, "for a crossed module", true,
     [ IsXMod ], 0,
 function( X0 )
 
-    local SX, RX, WX, reg, imlist, map;
+    local SX, RX, Winv, WR, eWR, WP, reg, imlist, map;
 
     SX := Source( X0 );
     RX := Range( X0 );
-    WX := WhiteheadPermGroup( X0 );
+    Winv := WhiteheadGroupInverseIsomorphism( X0 );
+    WR := WhiteheadRegularGroup( X0 );
+    eWR := Elements( WR );
+    WP := WhiteheadPermGroup( X0 );
     reg := RegularDerivations( X0 );
     imlist := ImagesList( reg );
-    map := Mapping2ArgumentsByFunction( [RX,WX], SX, 
+    map := Mapping2ArgumentsByFunction( [RX,WP], SX, 
                function(t) 
                    local pos, chi;
-                   pos := Position( Elements( WX ), t[2] );
+                   pos := Position( eWR, Image( Winv, t[2] ) ); 
                    chi := DerivationByImages( X0, imlist[pos] ); 
                    return DerivationImage( chi, t[1] ); 
                end );
-    return CrossedPairingObj( [RX,WX], SX, map );
+    return CrossedPairingObj( [RX,WP], SX, map );
 end );
 
 #############################################################################
@@ -296,7 +299,7 @@ InstallMethod( IsCrossedSquare, "generic method for a crossed square",
 function( XS )
 
     local up, lt, rt, dn, L, M, N, P, kappa, lambda, mu, nu, 
-          lambdanu, kappamu, autu, autl, actdg, dg, ok, morud, morlr, 
+          autu, autl, actdg, dg, ok, morud, morlr, 
           genL, genM, genN, genP, actup, actlt, actrt, actdn, l, p, 
           xp, x, y, z, m, n, m2, n2, am, an, apdg, aprt, apdn, nboxm;
 
@@ -366,7 +369,8 @@ function( XS )
                 x := ImageElmCrossedPairing( xp, [ n, m*m2 ] ); 
                 am := ImageElm( actup, m2 ); 
                 y := ImageElm( am, ImageElmCrossedPairing( xp, [n,m] ) ); 
-                if not x = ImageElmCrossedPairing( xp, [n,m2] ) * y then 
+                if not x = ImageElmCrossedPairing( xp, [n,m2] ) * y then
+## Error("here");
                     Info( InfoXMod, 2, 
                           "n,m1,m2 crossed pairing axiom fails" ); 
                     return false; 
@@ -832,6 +836,7 @@ function( X0 )
     ## XS := PreCrossedSquareObj( X0, WX, NX, AX, da, xp );
     XS := PreCrossedSquareObj( WX, X0, AX, NX, LX, xp );
 ##    SetIsCrossedSquare( XS, true );
+## Error("here");
     if not IsCrossedSquare( XS ) then 
         Error( "XS fails to be an actor crossed square" ); 
     fi; 

@@ -442,15 +442,15 @@ function( g2d )
     genrng := GeneratorsOfGroup( rng ); 
     if ( HasIsPreXMod( g2d ) and IsPreXMod( g2d ) ) then 
         if ( HasIsXMod( g2d ) and IsXMod( g2d ) ) then
-            Print( "\nCrossed module " );
+            Print( "Crossed module " );
         else
-            Print( "\nPre-crossed module " );
+            Print( "Pre-crossed module " );
         fi; 
     elif ( HasIsPreCat1Group( g2d ) and IsPreCat1Group( g2d ) ) then 
         if ( HasIsCat1Group( g2d ) and IsCat1Group( g2d ) ) then 
-            Print( "\nCat1-group " );
+            Print( "Cat1-group " );
         else
-            Print( "\nPre-cat1-group " ); 
+            Print( "Pre-cat1-group " ); 
         fi; 
     else 
         Print( "WARNING: neither a PreXMod nor a PreCat1Group" ); 
@@ -553,7 +553,6 @@ function( g2d )
         Print( ": associated crossed module is ", 
                XModOfCat1Group( g2d ), "\n" );
     fi;
-    Print( "\n" );
 end ); 
 
 #############################################################################
@@ -946,7 +945,8 @@ end );
 InstallOtherMethod( IsXMod, "generic method for pre-cat1-groups", true, 
     [ IsPreCat1Group ], 0,
 function( C0 )
-    Print( "this is a pre-cat1-group, not a pre-crossed module\n" ); 
+    Info( InfoXMod, 1, 
+          "this is a pre-cat1-group, not a pre-crossed module" ); 
     return false; 
 end ); 
 

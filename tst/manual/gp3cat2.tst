@@ -2,7 +2,7 @@
 ##
 #W  gp3cat2.tst                   XMOD test file                Chris Wensley
 ##
-#Y  Copyright (C) 2001-2022, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2024, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 gap> START_TEST( "XMod package: gp3cat2.tst" );

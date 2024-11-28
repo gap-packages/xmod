@@ -367,18 +367,18 @@ This is implemented as <C>ActorCrossedSquare(X0);</C>.
 <Example>
 <![CDATA[
 gap> XSact := ActorCrossedSquare( X20 );
-crossed square with:
+crossed square with crossed modules:
       up = Whitehead[d10a->d20]
     left = [d10a->d20]
    right = Actor[d10a->d20]
     down = Norrie[d10a->d20]
-gap> W := Range( Up2DimensionalGroup( XSact ) ); 
-c5:c4
-gap> w1 := GeneratorsOfGroup( W )[1];
-(1,2)(3,4)(5,18)(6,17)(7,20)(8,19)(9,14)(10,13)(11,16)(12,15)
+gap> W := Range( Up2DimensionalGroup( XSact ) );
+Group([ (2,5)(3,4), (2,3,5,4), (1,4,2,5,3) ])
+gap> StructureDescription( W );
+"C5 : C4"
 gap> xpa := CrossedPairing( XSact );;
-gap> ImageElmCrossedPairing( xpa, [ p1, w1 ] );
-(1,9,7,5,3)(2,10,8,6,4)
+gap> ImageElmCrossedPairing( xpa, [ p1, (2,3,5,4) ] );
+(1,7,3,9,5)(2,8,4,10,6)
 ]]>
 </Example>
 

@@ -1,7 +1,7 @@
-##############################################################################
+#############################################################################
 ##
-#W  gp3map.gi                    GAP4package `XMod'              Chris Wensley
-##                                                                Alper Odabas
+#W  gp3map.gi                    GAP4package `XMod'             Chris Wensley
+##                                                               Alper Odabas
 ##  This file implements functions for 3Dimensional Mappings for 
 ##  (pre-)crossed squares and (pre-)cat2-groups. 
 ##
@@ -233,7 +233,7 @@ function( mor )
     Print( ": down-right: ", MappingGeneratorsImages(RangeHom(downmor)),"\n");
 end ); 
 
-##############################################################################
+#############################################################################
 ##
 #F  CrossedSquareMorphism( <src>, <rng>, <list> ) 
 ##
@@ -301,7 +301,7 @@ InstallGlobalFunction( CrossedSquareMorphism, function( arg )
     return fail;
 end );
 
-###############################################################################
+#############################################################################
 ##
 #M  PreCrossedSquareMorphismByPreXModMorphisms( <src>, <rng>, <list of mors> ) 
 ##
@@ -325,9 +325,9 @@ function( src, rng, list )
     return mor;
 end );
 
-###############################################################################
+#############################################################################
 ##
-#M  PreCrossedSquareMorphismByGroupHomomorphisms( <src>, <rng>, <list of homs> ) 
+#M  PreCrossedSquareMorphismByGroupHomomorphisms( <src>, <rng>, <homs list> ) 
 ##
 InstallMethod( PreCrossedSquareMorphismByGroupHomomorphisms,
     "for two pre-crossed squares and four group homomorphisms,", true,
@@ -387,7 +387,7 @@ function( xs1, xs2, list )
     return mor;
 end );
 
-##############################################################################
+#############################################################################
 ##
 #M  CrossedSquareMorphismByXModMorphisms( <Xs>, <Xr>, <list> )  
 ##
@@ -410,7 +410,7 @@ function( src, rng, list )
     return mor;
 end );
 
-##############################################################################
+#############################################################################
 ##
 #M  CrossedSquareMorphismByGroupHomomorphisms( <Xs>, <Xr>, <list> )  
 ##
@@ -433,7 +433,7 @@ function( src, rng, list )
     return mor;
 end );
 
-##############################################################################
+#############################################################################
 ##
 #F  Cat2GroupMorphism( <src>, <rng>, <up>, <dn> ) . . cat2 morphism
 ##
@@ -455,7 +455,7 @@ InstallGlobalFunction( Cat2GroupMorphism, function( arg )
     fi; 
 end );
 
-###############################################################################
+#############################################################################
 ##
 #F  PreCat2GroupMorphism( <src>,<rng>,<upmor>,<ltmor> ) pre-cat2-grp morphism
 ##
@@ -482,7 +482,7 @@ InstallGlobalFunction( PreCat2GroupMorphism, function( arg )
     return fail;
 end );
 
-###############################################################################
+#############################################################################
 ##
 #M  PreCat2GroupMorphismByPreCat1GroupMorphisms( <src>, <rng>, <upm>, <ltm> ) 
 #M  Cat2GroupMorphismByCat1GroupMorphisms( <src>, <rng>, <upm>, <ltm> ) 
@@ -549,7 +549,7 @@ function( src, rng, upm, ltm )
     return mor;
 end );
 
-###############################################################################
+#############################################################################
 ##
 #M  PreCat2GroupMorphismByGroupHomomorphisms( <src>, <rng>, <homs> ) 
 ##
@@ -558,8 +558,8 @@ InstallMethod( PreCat2GroupMorphismByGroupHomomorphisms,
     [ IsPreCat2Group, IsPreCat2Group, IsList ], 0,
 function( C1, C2, homs )
 
-    local gamma, rho, xi, pi, up1, lt1, rt1, dn1, dg1, up2, lt2, rt2, dn2, dg2, 
-          upmor, ltmor, rtmor, dnmor, mor, ok;
+    local gamma, rho, xi, pi, up1, lt1, rt1, dn1, dg1, up2, lt2, rt2, dn2,
+          dg2, upmor, ltmor, rtmor, dnmor, mor, ok;
 
     if not ( Length( homs ) = 4 ) then 
         Error( "expecting 4 group homomorphisms" ); 
@@ -610,7 +610,7 @@ function( src, rng, homs )
     return mor;
 end );
 
-##############################################################################
+#############################################################################
 ##
 #M  InclusionMorphismHigherDimensionalDomains( <obj>, <sub> )
 ##
@@ -640,12 +640,12 @@ function( obj, sub )
     fi;
 end );
 
-###############################################################################
+#############################################################################
 ##
-#M  IsomorphismPreCat2GroupsNoTranspose . . . . iso between two pre-cat2-groups 
-#M  IsomorphismCat2GroupsNoTranspose  . . . . . . . iso between two cat2-groups 
-#M  IsomorphismPreCat2Groups  . . . . . . . . . iso between two pre-cat2-groups 
-#M  IsomorphismCat2Groups . . . . . . . . . . . . . iso between two cat2-groups 
+#M  IsomorphismPreCat2GroupsNoTranspose . . iso between two pre-cat2-groups 
+#M  IsomorphismCat2GroupsNoTranspose  . . . . . iso between two cat2-groups 
+#M  IsomorphismPreCat2Groups  . . . . . . . iso between two pre-cat2-groups 
+#M  IsomorphismCat2Groups . . . . . . . . . . . iso between two cat2-groups 
 ## 
 InstallMethod( IsomorphismPreCat2GroupsNoTranspose, "for 2 pre-cat2-groups", 
     true, [ IsPreCat2Group, IsPreCat2Group ], 0,
@@ -810,7 +810,7 @@ function( C1, C2 )
     fi; 
 end ); 
 
-##############################################################################
+#############################################################################
 ##
 #M  IdentityMapping( <obj> )
 ##
@@ -834,9 +834,9 @@ function( C )
     return idC; 
 end );
 
-###############################################################################
+#############################################################################
 ##
-#M  AllCat2GroupMorphisms  . . . . . . morphisms from one cat2-group to another 
+#M  AllCat2GroupMorphisms  . . . . morphisms from one cat2-group to another 
 ##
 InstallMethod( AllCat2GroupMorphisms, "for two cat2-groups", true, 
     [ IsCat2Group, IsCat2Group ], 0,

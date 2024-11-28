@@ -108,6 +108,13 @@ crossed square with crossed modules:
     left = [d10a->d20]
    right = Actor[d10a->d20]
     down = Norrie[d10a->d20]
+gap> W := Range( Up2DimensionalGroup( XSact ) );
+Group([ (2,5)(3,4), (2,3,5,4), (1,4,2,5,3) ])
+gap> StructureDescription( W );
+"C5 : C4"
+gap> xpa := CrossedPairing( XSact );;
+gap> ImageElmCrossedPairing( xpa, [ p1, (2,3,5,4) ] );
+(1,7,3,9,5)(2,8,4,10,6)
 
 ## Section 8.2.6
 gap> AXS20 := CrossedSquareByAutomorphismGroup( d20 );

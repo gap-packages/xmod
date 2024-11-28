@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  history.xml           XMod documentation            Chris Wensley  -->
 <!--                                                                     -->
-<!--  Copyright (C) 1996-2023, Murat Alp and Chris Wensley,              --> 
+<!--  Copyright (C) 1996-2024, Murat Alp and Chris Wensley,              --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -226,6 +226,16 @@ since lists are inappropriate values for the standard function <C>Size</C>.
 Added <C>PreXModWithTrivialRange</C> and started work on double groupoids. 
 </Item>
 </List> 
+</Subsection>
+
+<Subsection><Heading>Versions from 2.92</Heading>
+<List>
+<Item>
+Renamed <C>PermAutomorphismAsXModMorphism</C> as
+<C>PermAutomorphismAs2dGroupMorphism</C> and added a cat<M>^1</M>-group method 
+for this and for <C>AutomorphismPermGroup</C>.
+</Item>
+</List>
 </Subsection>
 
 </Section> 

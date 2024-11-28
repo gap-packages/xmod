@@ -8,7 +8,7 @@
 #Y  Copyright (C) 2001-2024, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
-##############################################################################
+#############################################################################
 ##
 #M  Source( <map> )  . . . . . . . . . . . . . . . . source for up-mapping
 #M  Range( <map> )  . . . . . . . . . . . . . . . . . range for up-mapping
@@ -284,7 +284,7 @@ InstallMethod( ViewString, "for a derivation", true, [ IsDerivation ],
 InstallMethod( PrintString, "for a derivation", true, [ IsDerivation ], 
     0, String ); 
 
-InstallMethod( PrintObj, "method for a derivation", true, [ IsDerivation ], 0,
+InstallMethod( PrintObj, "method for derivation", true, [ IsDerivation ], 0,
 function( chi )
 
     local obj, iso, R, stgR;
@@ -293,8 +293,8 @@ function( chi )
     R := Range( obj );
     stgR := StrongGeneratorsStabChain( StabChain( R ) );
     iso := IsomorphismFpGroupByGenerators( R, stgR );
-    Print( "DerivationByImages( ", R, ", ", Source(obj), ", ",
-         stgR, ", ", UpGeneratorImages(chi), " )" );
+    Print( "DerivationByImages( ", R, ", ", Source( obj ), ", ",
+         stgR, ", ", UpGeneratorImages( chi ), " )" );
 end );
 
 InstallMethod( ViewObj, "method for a derivation", true, [ IsDerivation ], 
@@ -419,7 +419,7 @@ end );
 #############################################################################
 ##
 #M  PrincipalDerivation         derivation determined by a choice of s in S
-#M  PrincipalDerivations   list of principal derivations without duplicates
+#M  PrincipalDerivations      list of principal derivations - no duplicates
 ##
 InstallMethod( PrincipalDerivation, "method for xmod and source element", 
     true, [ IsXMod, IsObject ], 0,
@@ -436,19 +436,20 @@ function( XM, s )
     stgR := StrongGeneratorsStabChain( StabChain( R ) );
     ngen := Length( stgR );
     imiota := 0 * [1..ngen];
+    ##  now using  r -> (s^-1)^r * s,  rather than  s^r * s^-1  ##
     for j in [1..ngen] do
         r := stgR[j];
         a := ImageElm( act, r );
         q := ImageElm( a, s^(-1) );
         imiota[j] := q * s;
-    ##  Print( "[r,a,q,q*s] = ", [r,a,q,q*s], "\n" );
-    ##  now using  r -> (s^-1)^r * s,  rather than  s^r * s^-1  ##
+        Info( InfoXMod, 2, "[r,a,q,q*s] = ", [r,a,q,q*s] );
     od;
     iota := DerivationByImages( XM, imiota );
     return iota;
 end );
 
-InstallMethod( PrincipalDerivations, "method for xmod",  true, [ IsXMod ], 0,
+InstallMethod( PrincipalDerivations, "method for a xmod",
+    true, [ IsXMod ], 0,
 function( XM )
 
     local S, s, elS, size, i, L, iota, im, pos;
@@ -470,17 +471,7 @@ end );
 
 #############################################################################
 ##
-#M  CompositeDerivation              Whitehead composite of two derivations
-##
-InstallMethod( CompositeDerivation, "method for two derivations", true,
-    [ IsDerivation, IsDerivation ], 0,
-function( chi, chj )
-    return WhiteheadProduct( chj, chi );
-end );
-
-#############################################################################
-##
-#M  WhiteheadProduct                 Whitehead composite of two derivations
+#M  WhiteheadProduct         Whitehead composite of two derivations/sections
 ##
 InstallMethod( WhiteheadProduct, "method for two derivations", true,
     [ IsDerivation, IsDerivation ], 0,
@@ -491,7 +482,7 @@ function( chi, chj )
 
     XM := Object2d( chi );
     if not ( Object2d( chj ) = XM ) then
-        Error( "<chi>,<chj> must be derivations of the SAME crossed module" );
+        Error( "<chi>,<chj> must be derivations of the SAME xmod" );
     fi;
     R := Range( XM );
     stgR := StrongGeneratorsStabChain( StabChain( R ) );
@@ -553,7 +544,7 @@ end );
 InstallOtherMethod( \*, "for two derivations of crossed modules",
     IsIdenticalObj, [ IsDerivation, IsDerivation ], 0,
 function( chi1, chi2 )
-Print( "***** best to replace * with WhiteheadProduct ??? *****\n" ); 
+    Info( InfoXMod, 1, "better to replace * with WhiteheadProduct" ); 
     return WhiteheadProduct( chi1, chi2 );
 end );
 
@@ -608,55 +599,6 @@ function( chi )
     return ok;
 end );
 
-#############################################################################
-##
-#M  InverseDerivations     Finds all semigroup inverses Xj for derivation Xi
-##                                               i.e.  XiXjXi=Xi & XjXiXj=Xj
-InstallMethod( InverseDerivations, "method for a derivation", true,
-    [ IsDerivation ], 0,
-function( chi )
-
-    local XM, x, D, L, size, j, chj, chk, chl, chh, chg, inv;
-
-    XM := Object2d( chi );
-    D := AllDerivations( XM );
-    L := ImagesList( D );
-    size := Length( L );
-    inv := [ ];
-    for j in [1..size] do
-        chj := DerivationByImages( XM, L[j] );
-        chk := WhiteheadProduct( chj, chi );
-        chl := WhiteheadProduct( chi, chk );
-        chh := WhiteheadProduct( chi, chj );
-        chg := WhiteheadProduct( chj, chh );
-        if ( ( UpGeneratorImages( chi ) = UpGeneratorImages( chl ) )
-            and ( UpGeneratorImages( chg ) = UpGeneratorImages( chj ) ) ) then
-            Add( inv, Position( L, UpGeneratorImages( chj ) ) );
-        fi;
-    od;
-    return inv;
-end );
-
-#############################################################################
-##
-#M  ListInverseDerivations            List all inverses for each derivation
-##
-InstallMethod( ListInverseDerivations, "method for a crossed module", true,
-    [ IsXMod ], 0,
-function( XM )
-
-    local L, i, M, size, D, chi;
-
-    D := AllDerivations( XM );
-    L := ImagesList( D );
-    size := Length( L );
-    M := 0 * [1..size];
-    for i in [1..size] do
-        chi := DerivationByImages( XM, L[i] );
-        M[i] := InverseDerivations( chi );
-    od;
-    return M;
-end );
 
 ############################################################################
 ##                                 Sections                               ##
@@ -782,7 +724,7 @@ function( xi )
         er := ImageElm( eR, r );
         s := er^(-1) * imxi[i];
         imchi[i] := PreImagesRepresentativeNC( eK, s );
-        Info( InfoXMod, 2, "In xi->chi :- ", [ i, r, er, s] );
+        Info( InfoXMod, 2, "in xi->chi :- ", [ i, r, er, s] );
     od;
     chi := DerivationByImages( XM, imchi );
     return chi;
@@ -838,9 +780,9 @@ InstallMethod( PrintObj, "for IsMonoidOfUp2DimensionalMappings", true,
     [ IsMonoidOfUp2DimensionalMappings ], 0,
 function( mon ) 
 
-    if IsMonoidOfDerivations( mon ) then 
+    if HasIsMonoidOfDerivations( mon ) and IsMonoidOfDerivations( mon ) then 
         Print( "monoid of derivations with images list:\n" ); 
-    elif IsMonoidOfSections( mon ) then  
+    elif HasIsMonoidOfSections( mon ) and IsMonoidOfSections( mon ) then  
         Print( "monoid of sections with images list:\n" ); 
     else 
         Error( "neither derivations nor sections" ); 
@@ -969,7 +911,7 @@ function( XM, str )
     fi;
     stgR := StrongGeneratorsStabChain( StabChain( R ) );
     len := Length( stgR );
-    subs := List( [1..len], i -> Subgroup( R, stgR{[1..i]} ) ); 
+    subs := List( [1..len], i -> Subgroup( R, stgR{[1..i]} ) );
     images := BacktrackDerivationsJ( XM, subs, [], [], 1, str );
     derivrec := MonoidOfUp2DimensionalMappingsObj( XM, images, str );
     return derivrec;
@@ -1066,30 +1008,51 @@ end );
 ##
 #M  WhiteheadPermGroup( XM )               perm rep for the Whitehead group
 ##
-##  (08/01/04)  wish to use SmallerDegreePermutationRepresentation
-##
 InstallMethod( WhiteheadPermGroup, "method for a crossed module", true,
     [ IsXMod ], 0,
 function( XM )
 
-    local tab, reg, im, grp, gens, strgens, pos, genchi, grp1;
+    local tab, reg, imlist, grp, gens, strgens, pos, genchi, 
+          W0, small, W, mgi, ismall, S, genS, gender, genims, 
+          genpos, genrow, genperm0, genperm, eta;
 
     reg := RegularDerivations( XM );
     tab := WhiteheadGroupTable( XM );
-    im := ImagesList( reg );
+    imlist := ImagesList( reg );
     gens := List( tab, PermList );
     grp := Group( gens );
     strgens := StrongGeneratorsStabChain( StabChain( grp ) );
     pos := List( strgens, g -> Position( gens, g ) );
     SetWhiteheadGroupGeneratorPositions( XM, pos ); 
-    genchi := List( pos, p -> DerivationByImages( XM, im[p] ) );
-    SetWhiteheadGroupGeneratingDerivations( XM, genchi );
+    genchi := List( pos, p -> DerivationByImages( XM, imlist[p] ) );
+    SetWhiteheadGroupGeneratingUpMappings( XM, genchi );
     if ( pos = [ ] ) then
-        grp1 := Group( () );
+        W0 := Group( () );
     else
-        grp1 := Group( strgens );
+        W0 := Group( strgens );
     fi;
-    return grp1;
+    SetWhiteheadRegularGroup( XM, W0 );
+    small := SmallerDegreePermutationRepresentation( W0 );
+    W := Image( small );
+    mgi := MappingGeneratorsImages( small );
+    ismall := GroupHomomorphismByImages( W, W0, mgi[2], mgi[1] );
+    SetIsWhiteheadPermGroup( W, true );
+    SetObject2d( W, XM );
+    SetWhiteheadGroupIsomorphism( XM, small );
+    SetWhiteheadGroupInverseIsomorphism( XM, ismall );
+    ## (16/11/24) create the Whitehead homomorphism S -> W
+    S := Source( XM );
+    genS := GeneratorsOfGroup( S );
+    gender:= List( genS, g -> PrincipalDerivation( XM, g ) );
+    genims:= List( gender, chi -> UpGeneratorImages( chi ) );
+    genpos := List( genims, L -> Position( imlist, L ) );
+    genrow := List(genpos, i -> tab[i] );
+    genperm0 := List( genrow, L -> PermList(L) );
+    genperm := List( genperm0, p -> Image( small, p ) );
+    eta := GroupHomomorphismByImages( S, W, genS, genperm );
+    SetWhiteheadHomomorphism( XM, eta );
+    SetPrincipalDerivationSubgroup( XM, Image( eta ) );
+    return W;
 end );
 
 #############################################################################
@@ -1116,4 +1079,50 @@ function( XM )
         fi;
     od;
     return mon;
+end );
+
+#############################################################################
+##
+#M  AllSections( C1G )                  convert AllDerivations to AllSections
+##
+InstallMethod( AllSections, "method for a cat1-group", 
+     true, [ IsCat1Group ], 0,
+function( C0 )
+
+    local X0, alld, imd, len, ims, i, chi, xi;
+
+    X0 := XModOfCat1Group( C0 );
+    alld := AllDerivations( X0 );
+    imd := ImagesList( alld );
+    len := Length( imd );
+    ims := ListWithIdenticalEntries( len, 0 );
+    for i in [1..len] do
+        chi := DerivationByImages( X0, imd[i] );
+        xi := SectionByDerivation( chi );
+        ims[i] := UpGeneratorImages( xi );
+    od;
+    return MonoidOfUp2DimensionalMappingsObj( C0, ims, "all" );
+end );
+
+#############################################################################
+##
+#M  RegularSections( C1G )      convert RegularDerivations to RegularSections
+##
+InstallMethod( RegularSections, "method for a cat1-group", 
+     true, [ IsCat1Group ], 0,
+function( C0 )
+
+    local X0, regd, imd, len, ims, i, chi, xi;
+
+    X0 := XModOfCat1Group( C0 );
+    regd := RegularDerivations( X0 );
+    imd := ImagesList( regd );
+    len := Length( imd );
+    ims := ListWithIdenticalEntries( len, 0 );
+    for i in [1..len] do
+        chi := DerivationByImages( X0, imd[i] );
+        xi := SectionByDerivation( chi );
+        ims[i] := UpGeneratorImages( xi );
+    od;
+    return MonoidOfUp2DimensionalMappingsObj( C0, ims, "regular" );
 end );
