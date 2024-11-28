@@ -2,7 +2,7 @@
 ##
 #W  gp2act.tst                    XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2023, Chris Wensley, et al
+#Y  Copyright (C) 2001-2024, Chris Wensley, et al
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 gap> START_TEST( "XMod package: gp2act.tst" );
@@ -39,7 +39,7 @@ gap> genX3 := GeneratingAutomorphisms( X3 );
 [ [[c3->s3] => [c3->s3]], [[c3->s3] => [c3->s3]] ]
 gap> e6 := Elements( APX3 )[6];
 (1,2)(3,4)(5,7)
-gap> m6 := PermAutomorphismAsXModMorphism( X3, e6 );;
+gap> m6 := PermAutomorphismAs2dGroupMorphism( X3, e6 );;
 gap> Display( m6 );
 Morphism of crossed modules :- 
 : Source = [c3->s3] with generating sets:
@@ -51,31 +51,36 @@ Morphism of crossed modules :-
 : Range Homomorphism maps range generators to:
   [ (4,6,5), (2,3)(4,5) ]
 
+gap> APC3 := AutomorphismPermGroup( C3 );
+Group([ (1,3,2)(4,6,5)(7,9,8)(12,13,14), (2,3)(4,7)(5,9)(6,8)(10,11)(13,14) ])
+gap> IdGroup( APC3 );
+[ 6, 1 ]
+gap> a := GeneratorsOfGroup( APC3 )[1];;
+gap> m := PermAutomorphismAs2dGroupMorphism( C3, a );
+[[g18 => s3] => [g18 => s3]]
+
 ## Section 6.1.2
 gap> X3;
 [c3->s3]
 gap> WGX3 := WhiteheadPermGroup( X3 );
-Group([ (1,2,3)(4,5,6), (1,4)(2,6)(3,5) ])
+Group([ (1,2,3), (1,2) ])
 gap> APX3 := AutomorphismPermGroup( X3 );
 Group([ (5,7,6), (1,2)(3,4)(6,7) ])
 gap> WX3 := WhiteheadXMod( X3 );; 
 gap> Display( WX3 );
-
 Crossed module Whitehead[c3->s3] :- 
 : Source group has generators:
   [ (1,2,3)(4,6,5) ]
 : Range group has generators:
-  [ (1,2,3)(4,5,6), (1,4)(2,6)(3,5) ]
+  [ (1,2,3), (1,2) ]
 : Boundary homomorphism maps source generators to:
-  [ (1,2,3)(4,5,6) ]
+  [ (1,2,3) ]
 : Action homomorphism maps range generators to automorphisms:
-  (1,2,3)(4,5,6) --> { source gens --> [ (1,2,3)(4,6,5) ] }
-  (1,4)(2,6)(3,5) --> { source gens --> [ (1,3,2)(4,5,6) ] }
+  (1,2,3) --> { source gens --> [ (1,2,3)(4,6,5) ] }
+  (1,2) --> { source gens --> [ (1,3,2)(4,5,6) ] }
   These 2 automorphisms generate the group of automorphisms.
-
 gap> LX3 := LueXMod( X3 );;
 gap> Display( LX3 );
-
 Crossed module Lue[c3->s3] :- 
 : Source group has generators:
   [ (1,2,3)(4,6,5) ]
@@ -90,7 +95,6 @@ Crossed module Lue[c3->s3] :-
 
 gap> NX3 := NorrieXMod( X3 );; 
 gap> Display( NX3 );
-
 Crossed module Norrie[c3->s3] :- 
 : Source group has generators:
   [ (4,5,6), (2,3)(5,6) ]
@@ -105,17 +109,16 @@ Crossed module Norrie[c3->s3] :-
 
 gap> AX3 := ActorXMod( X3 );; 
 gap> Display( AX3);
-
 Crossed module Actor[c3->s3] :- 
 : Source group has generators:
-  [ (1,2,3)(4,5,6), (1,4)(2,6)(3,5) ]
+  [ (1,2,3), (1,2) ]
 : Range group has generators:
   [ (5,7,6), (1,2)(3,4)(6,7) ]
 : Boundary homomorphism maps source generators to:
   [ (5,7,6), (1,2)(3,4)(6,7) ]
 : Action homomorphism maps range generators to automorphisms:
-  (5,7,6) --> { source gens --> [ (1,2,3)(4,5,6), (1,6)(2,5)(3,4) ] }
-  (1,2)(3,4)(6,7) --> { source gens --> [ (1,3,2)(4,6,5), (1,4)(2,6)(3,5) ] }
+  (5,7,6) --> { source gens --> [ (1,2,3), (2,3) ] }
+  (1,2)(3,4)(6,7) --> { source gens --> [ (1,3,2), (1,2) ] }
   These 2 automorphisms generate the group of automorphisms.
 
 gap> q8 := Group( (1,2,3,4)(5,8,7,6), (1,5,3,7)(2,6,4,8) );;
@@ -137,30 +140,28 @@ Morphism of crossed modules :-
   [ (1,2,3)(4,6,5) ]
   [ (4,5,6), (2,3)(5,6) ]
 :  Range = Actor[c3->s3] with generating sets:
-  [ (1,2,3)(4,5,6), (1,4)(2,6)(3,5) ]
+  [ (1,2,3), (1,2) ]
   [ (5,7,6), (1,2)(3,4)(6,7) ]
 : Source Homomorphism maps source generators to:
-  [ (1,2,3)(4,5,6) ]
+  [ (1,2,3) ]
 : Range Homomorphism maps range generators to:
   [ (5,6,7), (1,2)(3,4)(6,7) ]
 gap> IsInjective( IMX3 );
 true
 gap> ZX3 := XModCentre( X3 ); 
 [Group( () )->Group( () )]
-
 gap> IAX3 := InnerActorXMod( X3 );;  
 gap> Display( IAX3 );
-
 Crossed module InnerActor[c3->s3] :- 
 : Source group has generators:
-  [ (1,2,3)(4,5,6) ]
+  [ (1,2,3) ]
 : Range group has generators:
   [ (5,6,7), (1,2)(3,4)(6,7) ]
 : Boundary homomorphism maps source generators to:
   [ (5,7,6) ]
 : Action homomorphism maps range generators to automorphisms:
-  (5,6,7) --> { source gens --> [ (1,2,3)(4,5,6) ] }
-  (1,2)(3,4)(6,7) --> { source gens --> [ (1,3,2)(4,6,5) ] }
+  (5,6,7) --> { source gens --> [ (1,2,3) ] }
+  (1,2)(3,4)(6,7) --> { source gens --> [ (1,3,2) ] }
   These 2 automorphisms generate the group of automorphisms.
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 

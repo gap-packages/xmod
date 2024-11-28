@@ -2,7 +2,7 @@
 ##
 #W  gp2obj.tst                    XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2023, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2024, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 gap> START_TEST( "XMod package: gp2obj.tst" );
@@ -35,7 +35,6 @@ gap> SetName( c4, "<i>" );
 gap> X8b := XModByNormalSubgroup( q8, c4 );
 [<i>->q8]
 gap> Display(X8b);        
-
 Crossed module [<i>->q8] :- 
 : Source group has generators:
   [ (1,5,3,7)(2,8,4,6) ]
@@ -52,7 +51,6 @@ Crossed module [<i>->q8] :-
 gap> X5 := XModByAutomorphismGroup( c5 );
 [c5->Aut(c5)]
 gap> Display( X5 );
-
 Crossed module [c5->Aut(c5)] :- 
 : Source group c5 has generators:
   [ (5,6,7,8,9) ]
@@ -76,7 +74,6 @@ gap> Kernel( pr12 ) = Centre( d12 );
 true
 gap> X12 := XModByCentralExtension( pr12 );;
 gap> Display( X12 );                         
-
 Crossed module [d12->s3] :- 
 : Source group d12 has generators:
   [ (1,2,3,4,5,6), (2,6)(3,5) ]
@@ -220,7 +217,6 @@ Group([ (11,15)(12,16)(13,17)(14,18), (11,13,15,17)(12,14,16,18) ])
 gap> X16 := XModByPeifferQuotient( P16 );
 Peiffer([d16->sk4])
 gap> Display( X16 );
-
 Crossed module Peiffer([d16->sk4]) :- 
 : Source group has generators:
   [ f1, f2 ]
@@ -272,7 +268,6 @@ gap> StructureDescription( C18 );
 gap> C4 := DiagonalCat1Group( [ (1,2,3), (2,3,4) ] );;
 gap> SetName( Source(C4), "a4a4" );  SetName( Range(C4), "a4d" );
 gap> Display( C4 );
-
 Cat1-group [a4a4=>a4d] :- 
 : Source group a4a4 has generators:
   [ (1,2,3), (2,3,4), (5,6,7), (6,7,8) ]
@@ -376,7 +371,6 @@ gap> C8 := PreCat1GroupByTailHeadEmbedding( t8, h8, e8 );
 gap> IsCat1Group( C8 );
 true
 gap> Display(C8);
-
 Cat1-group [G8=>d12] :- 
 : Source group G8 has generators:
   [ f1, f2, f3, f4, f5, f6, f7 ]
@@ -416,7 +410,6 @@ gap> TailMap( IPC5 ); RangeEmbedding( IPC5 );
 ## Section 2.5.3
 gap> X8 := XModOfCat1Group( C8 );;
 gap> Display( X8 );
-
 Crossed module xmod([G8=>d12]) :- 
 : Source group has generators:
   [ f1, f4, f5, f7 ]
@@ -485,13 +478,42 @@ fail
 gap> SetInfoLevel( InfoXMod, 0 );
 gap> B18 := Cat1Select( 18, 4, 2 );
 [(C3 x C3) : C2=>Group( [ f1, <identity> of ..., f3 ] )]
-gap> reg18 := RegularActionHomomorphismObject( B18 );;
-gap> MappingGeneratorsImages( reg18 );
-[ [ [ f2, f3, f1 ], [ (4,5,6), (1,2,3), (2,3)(5,6) ] ], 
-  [ [ f3, f1 ], [ (1,3,5)(2,4,6), (1,2)(3,6)(4,5) ] ] ]
-gap> regB18 := Image( reg18 );; 
-gap> Y18 := XModOfCat1Group( regB18 ); 
-[Group( [ (4,5,6) ] )->Group( [ (1,3,5)(2,4,6), (1,2)(3,6)(4,5) ] )]
+gap> iso18 := IsomorphismPermObject( B18 );;
+gap> PB18 := Image( iso18 );;
+gap> Display( PB18 );
+Cat1-group :- 
+: Source group has generators:
+  [ (4,5,6), (1,2,3), (2,3)(5,6) ]
+: Range group has generators:
+  [ (4,5,6), (2,3)(5,6) ]
+: tail homomorphism maps source generators to:
+  [ (4,5,6), (), (2,3)(5,6) ]
+: head homomorphism maps source generators to:
+  [ (4,5,6), (), (2,3)(5,6) ]
+: range embedding maps range generators to:
+  [ (4,5,6), (2,3)(5,6) ]
+: kernel has generators:
+  [ (1,2,3) ]
+: boundary homomorphism maps generators of kernel to:
+  [ () ]
+: kernel embedding maps generators of kernel to:
+  [ (1,2,3) ]
+
+gap> Y18 := XModOfCat1Group( PB18 );;
+gap> Display( Y18 );
+Crossed module :- 
+: Source group has generators:
+  [ (1,2,3) ]
+: Range group has generators:
+  [ (4,5,6), (2,3)(5,6) ]
+: Boundary homomorphism maps source generators to:
+  [ () ]
+: Action homomorphism maps range generators to automorphisms:
+  (4,5,6) --> { source gens --> [ (1,2,3) ] }
+  (2,3)(5,6) --> { source gens --> [ (1,3,2) ] }
+  These 2 automorphisms generate the group of automorphisms.
+: associated cat1-group is [Group( [ (4,5,6), (1,2,3), (2,3)(5,6) 
+ ] ) => Group( [ (4,5,6), (2,3)(5,6) ] )]
 
 ## Section 2.8.1
 gap> IdGroup( X8 );

@@ -925,12 +925,12 @@ function( X1, X2 )
     lsgSQ1 := Length( sgSQ1 ); 
 
     for a in autQ2 do 
-        i := isoQ * PermAutomorphismAsXModMorphism( Q2, a ); 
+        i := isoQ * PermAutomorphismAs2dGroupMorphism( Q2, a ); 
         si := SourceHom( i ); 
         ri := RangeHom( i );
         ok := true; 
         for b in autD2 do 
-            j := isoD * PermAutomorphismAsXModMorphism( D2, b );
+            j := isoD * PermAutomorphismAs2dGroupMorphism( D2, b );
             sj := SourceHom( j );
             rj := RangeHom( j );
             ok := true; 

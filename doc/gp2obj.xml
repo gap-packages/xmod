@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2obj.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  Copyright (C) 1996-2023, Chris Wensley et al,                      --> 
+<!--  Copyright (C) 1996-2024, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -1114,11 +1114,11 @@ of a pre-crossed modute <M>X = (\partial : S \to R)</M>
 returns a record with fields 
 <List>
 <Item>
-<C>.precat1</C>, the pre-cat1-group <M>C = (e;t,h: G \to R)</M> of <M>X</M>, 
-where <M>G = R \ltimes S</M>; 
+<C>.precat1</C>, the pre-cat<M>^1</M>-group 
+<M>C = (e;t,h: G \to R)</M> of <M>X</M>, where <M>G = R \ltimes S</M>; 
 </Item>
 <Item>
-<C>.iscat1</C>, true if <M>C</M> is a cat1-group; 
+<C>.iscat1</C>, true if <M>C</M> is a cat<M>^1</M>-group; 
 </Item>
 <Item>
 <C>.xmodSourceEmbedding</C>, the image <M>S'</M> of <M>S</M> in <M>G</M>; 
@@ -1397,37 +1397,36 @@ Cat1-group :-
 : Source group has generators:
   [ (4,5,6), (1,2,3), (2,3)(5,6) ]
 : Range group has generators:
-  [ (1,2,3), (2,3)(5,6) ]
+  [ (4,5,6), (2,3)(5,6) ]
 : tail homomorphism maps source generators to:
-  [ (), (1,2,3), (2,3)(5,6) ]
+  [ (4,5,6), (), (2,3)(5,6) ]
 : head homomorphism maps source generators to:
-  [ (), (1,2,3), (2,3)(5,6) ]
+  [ (4,5,6), (), (2,3)(5,6) ]
 : range embedding maps range generators to:
-  [ (1,2,3), (2,3)(5,6) ]
+  [ (4,5,6), (2,3)(5,6) ]
 : kernel has generators:
-  [ (4,5,6) ]
+  [ (1,2,3) ]
 : boundary homomorphism maps generators of kernel to:
   [ () ]
 : kernel embedding maps generators of kernel to:
-  [ (4,5,6) ]
-: associated crossed module is [Group( [ (4,5,6) ] ) -> Group( 
-[ (1,2,3), (2,3)(5,6) ] )]
+  [ (1,2,3) ]
+
 gap> convert the result to the associated permutation crossed module 
 gap> Y18 := XModOfCat1Group( PB18 );; 
 gap> Display( Y18 ); 
 Crossed module :- 
 : Source group has generators:
-  [ (4,5,6) ]
+  [ (1,2,3) ]
 : Range group has generators:
-  [ (1,2,3), (2,3)(5,6) ]
+  [ (4,5,6), (2,3)(5,6) ]
 : Boundary homomorphism maps source generators to:
   [ () ]
 : Action homomorphism maps range generators to automorphisms:
-  (1,2,3) --> { source gens --> [ (4,5,6) ] }
-  (2,3)(5,6) --> { source gens --> [ (4,6,5) ] }
+  (4,5,6) --> { source gens --> [ (1,2,3) ] }
+  (2,3)(5,6) --> { source gens --> [ (1,3,2) ] }
   These 2 automorphisms generate the group of automorphisms.
 : associated cat1-group is [Group( [ (4,5,6), (1,2,3), (2,3)(5,6) 
- ] ) => Group( [ (1,2,3), (2,3)(5,6) ] )]
+ ] ) => Group( [ (4,5,6), (2,3)(5,6) ] )]
 ]]>
 </Example>
 

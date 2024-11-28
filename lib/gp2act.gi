@@ -1,12 +1,11 @@
-##############################################################################
+#############################################################################
 ##
-#W  gp2act.gi                  GAP4 package `XMod'               Chris Wensley
-#W                                                                 & Murat Alp
-##
-##  This file implements methods for actor crossed squares of crossed modules. 
-##
-#Y  Copyright (C) 2001-2020, Chris Wensley et al,  
+#W  gp2act.gi                  GAP4 package `XMod'              Chris Wensley
+#W                                                                & Murat Alp
+#Y  Copyright (C) 2001-2024, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
+##
+##  This filebimplements methods for actor crossed squares of crossed modules
 
 #############################################################################
 ##
@@ -16,7 +15,7 @@ InstallMethod( AutomorphismPermGroup, "automorphism perm group of xmod",
     true, [ IsXMod ], 0, 
 function( XM )
 
-    local S, genS, ngS, R, genR, ngR, bdy, act, ker, imbdy, 
+    local S, genS, ngS, R, genR, ngR, act, 
           AS, genAS, a2pS, PAS, genPAS, p2aS,
           AR, genAR, a2pR, PAR, genPAR, p2aR, 
           D, genD, emS, emR, emgenPAS, emgenPAR, emAS, emAR, infoD, 
@@ -30,9 +29,7 @@ function( XM )
     R := Range( XM );
     genR := GeneratorsOfGroup( R );
     ngR := Length( genR );
-    bdy := Boundary( XM );
     act := XModAction( XM );
-    ker := Kernel( bdy );
     AS := AutomorphismGroup( S ); 
     genAS := GeneratorsOfGroup( AS );
     a2pS := IsomorphismPermGroup( AS );    ### check if smaller possible
@@ -43,9 +40,8 @@ function( XM )
         Error( "p2aS = fail" );
     else 
         SetAutoGroupIsomorphism( PAS, p2aS );
-    fi; 
-
-    imbdy := Image( bdy );
+    fi;
+    Info( InfoXMod, 1, "p2aS = ", p2aS );
     AR := AutomorphismGroup( R );
     genAR := GeneratorsOfGroup( AR );
     a2pR := IsomorphismPermGroup( AR );    ### ditto
@@ -56,7 +52,8 @@ function( XM )
         Error( "p2aR = fail" );
     else 
         SetAutoGroupIsomorphism( PAR, p2aR );
-    fi; 
+    fi;
+    Info( InfoXMod, 1, "p2aR = ", p2aR );
     D := DirectProduct( PAS, PAR );
     genD := GeneratorsOfGroup( D );
     if ( HasName( PAS ) and HasName( PAR ) ) then
@@ -226,27 +223,128 @@ function( XM )
     return P;
 end );
 
+InstallMethod( AutomorphismPermGroup, 
+    "automorphism perm group of a cat1-group", true, [ IsCat1Group ], 0, 
+function( C1G )
+
+    local G, genG, ngG, R, genR, ngR, 
+          AG, genAG, a2pG, PAG, genPAG, p2aG,
+          AR, genAR, a2pR, PAR, genPAR, p2aR, 
+          D, genD, emG, emR, emgenPAG, emgenPAR, emAG, emAR, infoD, 
+          P, num, autogens, ag, eag, ar, ear, mor, ispre, ismor, 
+          genP, imsrc, imrng, projDG, projDR, projPG, projPR, ePAG, ePAR;
+
+    Info( InfoXMod, 1, "using standard AutomorphismPermGroup method" );
+    G := Source( C1G );
+    genG := GeneratorsOfGroup( G );
+    ngG := Length( genG );
+    R := Range( C1G );
+    genR := GeneratorsOfGroup( R );
+    ngR := Length( genR );
+    AG := AutomorphismGroup( G ); 
+    genAG := GeneratorsOfGroup( AG );
+    a2pG := IsomorphismPermGroup( AG );    ### check if smaller possible
+    PAG := Image( a2pG );
+    genPAG := List( genAG, a -> ImageElm( a2pG, a ) );
+    p2aG := GroupHomomorphismByImages( PAG, AG, genPAG, genAG ); 
+    if ( p2aG = fail ) then 
+        Error( "p2aG = fail" );
+    else 
+        SetAutoGroupIsomorphism( PAG, p2aG );
+    fi; 
+    ## imbdy := Image( bdy );
+    AR := AutomorphismGroup( R );
+    genAR := GeneratorsOfGroup( AR );
+    a2pR := IsomorphismPermGroup( AR );    ### ditto
+    PAR := Image( a2pR );
+    genPAR := List( genAR, a -> ImageElm( a2pR, a ) );
+    p2aR := GroupHomomorphismByImages( PAR, AR, genPAR, genAR );
+    if ( p2aR = fail ) then 
+        Error( "p2aR = fail" );
+    else 
+        SetAutoGroupIsomorphism( PAR, p2aR );
+    fi; 
+    D := DirectProduct( PAG, PAR );
+    genD := GeneratorsOfGroup( D );
+    if ( HasName( PAG ) and HasName( PAR ) ) then
+        SetName( D, Concatenation( Name(PAG), "x", Name(PAR) ) );
+    fi;
+    emG := Embedding( D, 1 );
+    emR := Embedding( D, 2 );
+    emgenPAG := List( genPAG, a -> ImageElm( emG, a ) );
+    emgenPAR := List( genPAR, a -> ImageElm( emR, a ) ); 
+    emAG := GroupHomomorphismByImages( AG, D, genAG, emgenPAG );  
+    emAR := GroupHomomorphismByImages( AR, D, genAR, emgenPAR ); 
+    infoD := DirectProductInfo( D );
+    P := Subgroup( D, [ ] );
+    num := 0;
+    autogens := [ ];
+    for ag in AG do 
+        eag := ImageElm( emAG, ag );
+        for ar in AR do 
+            ear := ImageElm( emAR, ar );
+            if not ( eag*ear in P ) then
+                mor := Make2DimensionalGroupMorphism( [ C1G, C1G, ag, ar ] );
+                ispre := ( not( mor = fail ) and 
+                           IsPreCat1GroupMorphism( mor ) );
+                if ispre then 
+                    ismor := IsCat1GroupMorphism( mor );
+                    if ismor then
+                        num := num + 1;
+                        Add( autogens, mor );
+                        P := ClosureGroup( P, eag*ear );
+                        Info( InfoXMod, 2, "size of P now ", Size(P) );
+                    fi;
+                fi;
+            fi;
+        od;
+    od;
+    genP := GeneratorsOfGroup( P );
+    projDG := Projection( D, 1 );
+    projDR := Projection( D, 2 );
+    imsrc := List( genP, g -> ImageElm( projDG, g ) ); 
+    imrng := List( genP, g -> ImageElm( projDR, g ) ); 
+    projPG := GroupHomomorphismByImages( P, PAG, genP, imsrc );
+    projPR := GroupHomomorphismByImages( P, PAR, genP, imrng );
+    SetGeneratingAutomorphisms( C1G, autogens );
+    SetIsAutomorphismPermGroupOfXMod( P, true );
+    ePAG := GroupHomomorphismByImages( PAG, D, genPAG, emgenPAG ); 
+    ePAR := GroupHomomorphismByImages( PAR, D, genPAR, emgenPAR ); 
+    SetEmbedSourceAutos( P, ePAG );
+    SetEmbedRangeAutos( P, ePAR );
+    SetSourceProjection( P, projPG );
+    SetRangeProjection( P, projPR );
+    SetAutomorphismDomain( P, C1G ); 
+    return P;
+end );
+
 #############################################################################
 ##
-#M  PermAutomorphismAsXModMorphism( <xmod>, <permaut> )
+#M  PermAutomorphismAs2dGroupMorphism( <2d-gp>, <permaut> )
 ##
-InstallMethod( PermAutomorphismAsXModMorphism, 
+InstallMethod( PermAutomorphismAs2dGroupMorphism, 
     "xmod morphism coresponding to an element of the AutomorphismPermGroup",
-    true, [ IsXMod, IsPerm ], 0, 
-function( XM, a )
+    true, [ Is2DimensionalDomain, IsPerm ], 0, 
+function( D, a )
 
-    local APXM, sp, rp, sa, ra, si, ri, smor, rmor, mor;
+    local APD, sp, rp, sa, ra, si, ri, smor, rmor, mor;
 
-    APXM := AutomorphismPermGroup( XM );
-    sp := SourceProjection( APXM );
+    APD := AutomorphismPermGroup( D );
+    sp := SourceProjection( APD );
     sa := ImageElm( sp, a );
     si := AutoGroupIsomorphism( Range( sp ) );
     smor := ImageElm( si, sa );
-    rp := RangeProjection( APXM );
+    rp := RangeProjection( APD );
     ra := ImageElm( rp, a );
     ri := AutoGroupIsomorphism( Range( rp ) );
     rmor := ImageElm( ri, ra );
-    mor := XModMorphism( XM, XM, smor, rmor ); 
+    if IsXMod( D ) then
+        mor := XModMorphism( D, D, smor, rmor );
+    elif IsCat1Group( D ) then
+        mor := Cat1GroupMorphism( D, D, smor, rmor );
+    else
+        mor := fail;
+    fi;
     return mor;
 end );
 
@@ -254,8 +352,9 @@ end );
 ##
 #M  ImageAutomorphismDerivation( <mor>, <chi> )
 ##
-InstallMethod( ImageAutomorphismDerivation, "image of derivation under action",
-    true, [ IsXModMorphism, IsDerivation ], 0, 
+InstallMethod( ImageAutomorphismDerivation, 
+    "image of derivation under action", true,
+    [ IsXModMorphism, IsDerivation ], 0, 
 function( mor, chi )
 
     local XM, R, stgR, imj, rho, imrho, sigma, invrho, rngR, k, r, rr, crr, chj;
@@ -295,42 +394,27 @@ end );
 InstallMethod( WhiteheadXMod, "Whitehead crossed module", true, 
     [ IsPermXMod ], 0, 
 function( XM )
-    local S, genS, reg, imreg, W, WT, posW, nposW, genW, imiota,
-          s, chi, poschi, iota, autS, genchi, j, sigma, ima, a, 
-          imact, act, WX, name;
+    local S, genS, W, posW, nposW, genW, iota, autS, genchi, j, chi, sigma, 
+          ima, a, imact, act, WX, name;
 
     S := Source( XM );
     genS := GeneratorsOfGroup( S );
-    reg := RegularDerivations( XM );
-    imreg := ImagesList( reg );
     W := WhiteheadPermGroup( XM );
-    WT := WhiteheadGroupTable( XM );
     posW := WhiteheadGroupGeneratorPositions( XM );
     nposW := Length( posW );
     genW := GeneratorsOfGroup( W );
     # determine the boundary map iota = PrincipalSourceHom
-    imiota := [ ];
-    for s in genS do
-        chi := PrincipalDerivation( XM, s );
-        poschi := Position( imreg, UpGeneratorImages( chi ) );
-        Add( imiota, PermList( WT[poschi] ) );
-    od;
-    iota := GroupHomomorphismByImages( S, W, genS, imiota ); 
+    iota := WhiteheadHomomorphism( XM ); 
     if ( InfoLevel( InfoXMod ) >= 2 ) then 
         Print( "iota in WhiteheadXMod:\n" ); 
         Display( iota ); 
     fi; 
-    ##  ????? should this be a general mapping ????????????????????
-    if not IsGroupHomomorphism( iota ) then
-        Error( "Whitehead boundary fails to be a homomorphism" );
-    fi;
     # now calculate the action homomorphism
     autS := AutomorphismGroup( S );
     if ( InfoLevel( InfoXMod ) >= 2 ) then 
         Print( "autS in WhiteheadXMod: ", StructureDescription(autS), "\n" ); 
     fi; 
-    genchi := WhiteheadGroupGeneratingDerivations( XM );
-    ##  (05/03/07)  allow for the case that W is trivial 
+    genchi := WhiteheadGroupGeneratingUpMappings( XM );
     if ( genchi = [ ] ) then
         imact := [ One( autS ) ];
     else 
@@ -351,7 +435,7 @@ function( XM )
     return WX;
 end );
 
-#############################################################################
+############################################################################
 ##
 #M  NorrieXMod( <XM> ) 
 ##
@@ -372,7 +456,6 @@ function( XM )
     DX := Parent( P );
     genP := GeneratorsOfGroup( P );
     Prng := [ 1..Length( genP ) ];
-    ########## 23/06/06 revision ########
     PAR := Image( RangeProjection( P ) ); 
     if HasAutoGroupIsomorphism( PAR ) then 
         p2aR := AutoGroupIsomorphism( PAR ); 
@@ -429,7 +512,7 @@ function( XM )
     return NX;
 end );
 
-#############################################################################
+############################################################################
 ##
 #M  LueXMod( <XM> )
 ##
@@ -449,7 +532,6 @@ function( XM )
     Prng := [ 1..Length( genP ) ];
     S := Source( XM );
     genS := GeneratorsOfGroup( S );
-    ########## 23/06/06 revision ##########
     PAS := Image( SourceProjection( P ) ); 
     if HasAutoGroupIsomorphism( PAS ) then 
         p2aS := AutoGroupIsomorphism( PAS ); 
@@ -484,6 +566,29 @@ end );
 
 #############################################################################
 ##
+#M  Actor( <obj> ) 
+#M  InnerActor( <obj> ) 
+##
+InstallGlobalFunction( Actor, function( obj )
+    if HasIsXMod( obj ) and IsXMod( obj ) then
+        return ActorXMod( obj );
+    elif ( HasIsCat1Group( obj ) and IsCat1Group( obj ) ) then 
+        return ActorCat1Group( obj );
+    else
+        return fail;
+    fi;
+end );
+
+InstallGlobalFunction( InnerActor, function( obj )
+    if HasIsXMod( obj ) and IsXMod( obj ) then
+        return InnerActorXMod( obj );
+    else
+        return fail;
+    fi;
+end );
+
+#############################################################################
+##
 #M  ActorXMod( <XM> ) 
 ##
 InstallMethod( ActorXMod, "actor crossed module", true, [ IsXMod ], 0, 
@@ -497,26 +602,28 @@ end );
 InstallMethod( ActorXMod, "actor crossed module", true, [ IsPermXMod ], 0, 
 function( XM )
 
-    local D, L, W, eW, P, genP, genpos, ngW, genW, invW, imdelta, 
-          S, R, AS, AR, PAS, p2aS, a2pS, PAR, p2aR, a2pR, emsrc, emrng, 
-          i, j, k, mor, imsrc, imrng, delta, GA, nGA, imact, rho, invrho, 
-          impos, chi, chj, imgen, phi, id, aut, act, ActX, name;
+    local D, L, W, RW, isoW, eRW, P, genP, genpos, ngW, genRW, genW, invW,
+          imdelta, S, R, AS, AR, PAS, p2aS, a2pS, PAR, p2aR, a2pR, emsrc,
+          emrng, i, j, k, mor, imsrc, imrng, delta, GA, nGA, imact, rho,
+          invrho, impos, chi, chj, imgen, phi, id, aut, act, ActX, name;
 
     D := RegularDerivations( XM );
     L := ImagesList( D );
     W := WhiteheadPermGroup( XM );
-    eW := Elements( W );
+    RW := WhiteheadRegularGroup( XM );
+    isoW := WhiteheadGroupIsomorphism( XM );
+    eRW := Elements( RW );
     P := AutomorphismPermGroup( XM );
     genP := GeneratorsOfGroup( P );
     genpos := WhiteheadGroupGeneratorPositions( XM );
     ngW := Length( genpos );
     # determine the boundary map
-    genW := List( genpos, i -> eW[i] );
+    genRW := List( genpos, i -> eRW[i] );
+    genW := List( genRW, g -> ImageElm( isoW, g ) );
     invW := List( genW, g -> g^-1 );
     imdelta := ListWithIdenticalEntries( ngW, 0 );
     S := Source( XM );
     R := Range( XM );
-    ########## 23/06/06 revision ##########
     PAR := Image( RangeProjection( P ) ); 
     if HasAutoGroupIsomorphism( PAR ) then 
         p2aR := AutoGroupIsomorphism( PAR ); 
@@ -566,7 +673,7 @@ function( XM )
             chj := ImageAutomorphismDerivation( mor, chi );
             impos[i] := Position( L, UpGeneratorImages( chj ) );
         od;
-        imgen := List( impos, i -> eW[i] );
+        imgen := List( impos, i -> Image( isoW, eRW[i] ) );
         phi := GroupHomomorphismByImages( W, W, genW, imgen );
         imact[k] := phi;
     od;
@@ -584,9 +691,16 @@ end );
 ##
 #M  ActorCat1Group( <C> )
 ##
+## a direct implementation might be better!
+##
 InstallMethod( ActorCat1Group, "actor cat1-group", true, [ IsCat1Group ], 0, 
 function( C )
-    return 0;
+
+    local XC, AXC;
+
+    XC := XModOfCat1Group( C );
+    AXC := ActorXMod ( XC );
+    return Cat1GroupOfXMod( AXC ); 
 end );
 
 #############################################################################
