@@ -118,7 +118,6 @@ BannerString := Concatenation(
   "----------",
   "-------------------------------------------------------------------\n" ), 
 
-Autoload := false, 
 
 TestFile := "tst/testall.g",
 
