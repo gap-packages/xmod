@@ -1,6 +1,6 @@
-##############################################################################
+############################################################################
 ##
-#W  induced.tst                 GAP4 package `XMod'              Chris Wensley
+#W  induced.tst                 GAP4 package `XMod'            Chris Wensley
 ##  
 #Y  Copyright (C) 2001-2023, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
@@ -293,6 +293,6 @@ gap> StructureDescription( indXs3c );
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> STOP_TEST( "induced.tst", 10000 );
 
-##############################################################################
+#############################################################################
 ##
-#E  induced.tst . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+#E  induced.tst . . . . . . . . . . . . . . . . . . . . . . . . .  ends here

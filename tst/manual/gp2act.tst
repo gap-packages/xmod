@@ -122,6 +122,7 @@ Crossed module Actor[c3->s3] :-
   These 2 automorphisms generate the group of automorphisms.
 
 gap> q8 := Group( (1,2,3,4)(5,8,7,6), (1,5,3,7)(2,6,4,8) );;
+gap> SetName( q8, "q8" );
 gap> XAq8 := XModByAutomorphismGroup( q8 );; 
 gap> StructureDescription( WhiteheadXMod( XAq8 ) ); 
 [ "Q8", "C2 x C2 x C2" ]
@@ -163,6 +164,51 @@ Crossed module InnerActor[c3->s3] :-
   (5,6,7) --> { source gens --> [ (1,2,3) ] }
   (1,2)(3,4)(6,7) --> { source gens --> [ (1,3,2) ] }
   These 2 automorphisms generate the group of automorphisms.
+
+## Section 6.2.1
+gap> C3;
+[g18 => s3]
+gap> AC3 := ActorCat1Group( C3 );
+cat1(Actor[c3->s3])
+gap> Display( AC3 );             
+Cat1-group cat1(Actor[c3->s3]) :- 
+: Source group has generators:
+  [ ( 9,10), ( 8, 9,10), ( 5, 7, 6)( 8, 9,10), (1,2)(3,4)(6,7)(8,9) ]
+: Range group has generators:
+  [ (5,7,6), (1,2)(3,4)(6,7) ]
+: tail homomorphism maps source generators to:
+  [ (), (), (5,7,6), (1,2)(3,4)(6,7) ]
+: head homomorphism maps source generators to:
+  [ (1,2)(3,4)(5,6), (5,7,6), (5,7,6), (1,2)(3,4)(6,7) ]
+: range embedding maps range generators to:
+  [ ( 5, 7, 6)( 8, 9,10), (1,2)(3,4)(6,7)(8,9) ]
+: kernel has generators:
+  [ ( 9,10), ( 8, 9,10) ]
+: boundary homomorphism maps generators of kernel to:
+  [ (1,2)(3,4)(5,6), (5,7,6) ]
+: kernel embedding maps generators of kernel to:
+  [ ( 9,10), ( 8, 9,10) ]
+: associated crossed module is Actor[c3->s3]
+gap> StructureDescription( AC3 );
+[ "S3 x S3", "S3" ]
+gap> IAC3 := InnerActorCat1Group( C3 );
+cat1(InnerActor[c3->s3])
+gap> StructureDescription( IAC3 );
+[ "(C3 x C3) : C2", "S3" ]
+
+
+## Section 6.2.2
+gap> c4q := Subgroup( q8, [ (1,2,3,4)(5,8,7,6) ] );;
+gap> SetName( c4q, "c4q" );                         
+gap> Xc4q := XModByNormalSubgroup( q8, c4q );;      
+gap> AXc4q := Actor( Xc4q );
+Actor[c4q->q8]
+gap> StructureDescription( AXc4q );
+[ "D8", "D8" ]
+gap> IAXc4q := InnerActor( Xc4q );
+InnerActor[c4q->q8]
+gap> StructureDescription( IAXc4q );
+[ "C2", "C2 x C2" ]
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 

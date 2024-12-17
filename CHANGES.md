@@ -1,6 +1,7 @@
  # CHANGES to the 'XMod' package
 
-## 2.92 -> 2.92dev (20/11/2024)
+## 2.92 -> 2.92dev (17/12/2024)
+ * (17/12/24) implemented (Inner)ActorCat1Group, fixing issue #144
  * (20/11/24) added AutomorphismPermGroup method for cat1-groups
               renamed PermAutomorphismAsXModMorphism as
               PermAutomorphismAs2dGroupMorphism and added cat1-group method

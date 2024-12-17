@@ -8,7 +8,7 @@ SetPackageInfo( rec(
 PackageName := "XMod",
 Subtitle := "Crossed Modules and Cat1-Groups",
 Version := "2.92dev",
-Date := "28/11/2024", # dd/mm/yyyy format
+Date := "17/12/2024", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -91,8 +91,7 @@ PackageDoc := rec(
   HTMLStart := "doc/chap0_mj.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
-  LongTitle := "Crossed Modules and Cat1-Groups in GAP",
-  Autoload  := true
+  LongTitle := "Crossed Modules and Cat1-Groups in GAP"
 ),
 
 Dependencies := rec(

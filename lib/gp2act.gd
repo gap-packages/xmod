@@ -53,10 +53,12 @@ DeclareAttribute( "ActorCat1Group", IsCat1Group );
 #############################################################################
 ##
 #A  InnerActorXMod( <XM> )
+#A  InnerActorCat1Group( <C> )
 #A  InnerMorphism( <XM> )
-#A  XModCentre( <XM> )     #? (18/07/11) : cannot get plain Centre to work ?? 
+#A  XModCentre( <XM> )     ## its not possible to use Centre for this 
 ##
 DeclareAttribute( "InnerActorXMod", IsXMod );
+DeclareAttribute( "InnerActorCat1Group", IsCat1Group );
 DeclareAttribute( "InnerMorphism", IsXMod );
 DeclareAttribute( "XModCentre", IsXMod ); 
 

@@ -690,8 +690,9 @@ end );
 #############################################################################
 ##
 #M  ActorCat1Group( <C> )
+#M  InnerActorCat1Group( <C> )
 ##
-## a direct implementation might be better!
+#? direct implementations might be better!
 ##
 InstallMethod( ActorCat1Group, "actor cat1-group", true, [ IsCat1Group ], 0, 
 function( C )
@@ -701,6 +702,17 @@ function( C )
     XC := XModOfCat1Group( C );
     AXC := ActorXMod ( XC );
     return Cat1GroupOfXMod( AXC ); 
+end );
+
+InstallMethod( InnerActorCat1Group, "inner actor cat1-group", true,
+    [ IsCat1Group ], 0, 
+function( C )
+
+    local XC, IAXC;
+
+    XC := XModOfCat1Group( C );
+    IAXC := InnerActorXMod ( XC );
+    return Cat1GroupOfXMod( IAXC ); 
 end );
 
 #############################################################################
@@ -732,8 +744,6 @@ end );
 ##
 #M  XModCentre( <XM> )
 ##
-#?  InstallOtherMethod( Centre, "centre of an xmod", true, [ IsPermXMod ], 0, 
-##  
 InstallMethod( XModCentre, "centre of an xmod", true, [ IsXMod ], 0, 
 function( XM )
     return Kernel( InnerMorphism( XM ) );
