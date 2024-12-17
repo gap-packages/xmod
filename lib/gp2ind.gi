@@ -446,7 +446,8 @@ function( X0, iota, trans )
     nrFM := Length( relFM );
 
     # determine  genN = closure of  genM  under conjugation by  P 
-    Info( InfoXMod, 2, "finding closure of GeneratorsOfGroup(M) by P-action");
+    Info( InfoXMod, 2, 
+        "finding closure of GeneratorsOfGroup(M) by P-action");
     genN := ShallowCopy( genM );
     ngN := Length( genN );
     genFN := ShallowCopy( genFM );
@@ -459,7 +460,7 @@ function( X0, iota, trans )
             posn := Position( genN, n2 );
             if ( posn = fail ) then
                 Add( genN, n2 );
-                m2 := ImageElm( g2fpM, n2 );## is this better?
+                m2 := ImageElm( g2fpM, n2 ); ## is this better?
                 if not ( n2 in M ) then 
                     Error( "M is not a normal subgroup of P" );
                 fi;
@@ -582,7 +583,7 @@ function( X0, iota, trans )
     Info( InfoXMod, 2, " genQ = ", genQ );
     Info( InfoXMod, 2, "geniN = ", geniN );
     Info( InfoXMod, 2, "  elQ = ", elQ );
-    Info( InfoXMod, 2, "imFIQ = images in Q of the generators of I: ", imFIQ );
+    Info( InfoXMod, 2, "imFIQ = images in Q of the gens of I: ", imFIQ );
     # Action of the generators of Q on the generators of I
     for j1 in [1..ngQ] do
         q1 := genQ[j1];
@@ -620,7 +621,7 @@ function( X0, iota, trans )
         t1 := T[i1];
         n1 := (i1-1)*ngN;
         Info( InfoXMod, 4, "[i1,t1] = ", [i1,t1] );
-        for j1 in [1..ngM] do                 #? no longer [1..ngN]
+        for j1 in [1..ngM] do
             m1 := genM[j1];
             t := ImageElm( comp, m1 )^t1;
             if not ( t in gimD ) then 
@@ -709,9 +710,8 @@ function( X0, iota, trans )
     free2 := FreeGroupOfFpGroup( FI2 );
     genfree2 := GeneratorsOfGroup( free2 );
     gensFI2 := GeneratorsOfPresentation( presFI1 );   ## ????? 
-    #? (10/07/10)  do we need both of genFI2 and gensFI2  ?????  
     Info( InfoXMod, 3, "gensFI2 = ", gensFI2 );
-    Info( InfoXMod, 3, "genFI2 = gensFI2 ? ", gensFI2 = gensFI2 );
+    Info( InfoXMod, 3, "genFI2 = gensFI2 ? ", genFI2 = gensFI2 );
     Info( InfoXMod, 1, "#I induced group has size: ", oFI2 );
     #? (19/07/11) : example InducedXMod( s4, s3b, s3b ) fails 
     #? because of a pc isomorphism instead of a perm isomorphism,
@@ -842,7 +842,7 @@ function( X0, iota, trans )
         Print( "mor: X0 -> IX  not an xmod morphism!\n" );
     fi;
     if IsPermGroup( IX ) then 
-        sdpr := SmallerDegreePermutationRepresentation2DimensionalGroup( IX );
+        sdpr := SmallerDegreePermutationRepresentation2DimensionalGroup(IX);
         if not ( sdpr = fail ) then 
             IX := Range( sdpr );
             mor := mor * sdpr;

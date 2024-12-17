@@ -1,11 +1,11 @@
-##############################################################################
+############################################################################
 ##
-#W  apps.gi                    GAP4 package `XMod'               Chris Wensley
+#W  apps.gi                    GAP4 package `XMod'             Chris Wensley
 ##
 #Y  Copyright (C) 2001-2024, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
-##############################################################################
+############################################################################
 ##
 InstallMethod( LoopClass, "for a crossed module and an element", true, 
     [ IsPreXMod, IsObject ], 0, 
@@ -39,7 +39,7 @@ function( X0, a )
 end ); 
 
 
-##############################################################################
+############################################################################
 ##
 InstallMethod( LoopClasses, "for a crossed module", true, [ IsPreXMod ], 0, 
 function( X0 ) 
@@ -179,7 +179,7 @@ function( X0, a )
     return XModByBoundaryAndAction( bdy1, act1 );  
 end ); 
 
-############################################################################## 
+############################################################################
 ## 
 InstallMethod( LoopClassesNew, "for a crossed module", true, 
     [ IsPreXMod ], 0, 
@@ -246,7 +246,7 @@ function( X0 )
     return classes; 
 end ); 
 
-############################################################################## 
+############################################################################
 ## 
 InstallMethod( LoopClassRepresentatives, "for a crossed module", true, 
     [ IsPreXMod ], 0, 
@@ -294,7 +294,7 @@ function( X0 )
     return reps; 
 end ); 
 
-############################################################################## 
+############################################################################
 ## 
 InstallMethod( LoopsXMod, "for a crossed module and an element", true, 
     [ IsPreXMod, IsObject ], 0, 
@@ -401,13 +401,13 @@ function( X0, a )
     return XModByBoundaryAndAction( bdy1, act1 );  
 end ); 
 
-##############################################################################
+############################################################################
 ##
 InstallMethod( AllLoopsXMod, "default method for a crossed module", true, 
     [ IsPreXMod ], 0, 
 function( X0 ) 
 
-    local bdy0, act0, M0, genM0, P0, genP0, igenP0, imgenM0, imbdy0, Q0, 
+    local bdy0, act0, M0, genM0, P0, genP0, igenP0, imbdy0, Q0, 
           conjP0, repsP0, eltsP0, nclP0, i, eclP0, relP0, c, p, genimbdy0, 
           len, class, j, r, k, q, pos, d, h, eqreps, numreps, a, X1, allX; 
 
@@ -418,7 +418,6 @@ function( X0 )
     P0 := Range( X0 ); 
     genP0 := GeneratorsOfGroup( P0 ); 
     igenP0 := List( genP0, g -> ImageElm( act0, g ) ); 
-    imgenM0 := List( genM0, g -> List( igenP0, p -> ImageElm(p,g) ) ); 
     imbdy0 := ImagesSource( bdy0 ); 
     Q0 := P0/imbdy0; 
     conjP0 := ConjugacyClasses( P0 ); 
@@ -427,7 +426,6 @@ function( X0 )
     nclP0 := Length( conjP0 ); 
     if ( InfoLevel( InfoXMod ) > 1 ) then 
         Print( "#I  Size(P0) = ", Size(P0), "\n" ); 
-        Print( "#I  imgenM0 = ", imgenM0, "\n" );   #? this is not used 
         Print( "#I  cokernel of boundary has IdGroup ", IdGroup(Q0), "\n" ); 
         Print( "#I  conjugacy class sizes, reps and orders:classes for P :-\n" ); 
         Print( "#I  ", List( conjP0, Size ), "\n" ); 
