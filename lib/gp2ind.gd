@@ -1,8 +1,8 @@
-###############################################################################
+##############################################################################
 ##
-#W  gp2ind.gd                   GAP4 package `XMod'               Chris Wensley
+#W  gp2ind.gd                   GAP4 package `XMod'             Chris Wensley
 ##
-#Y  Copyright (C) 2001-2020, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2024, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file declares functions for induced crossed modules. 
@@ -37,7 +37,7 @@
 
 #############################################################################
 ##
-##  #A  InducedXModData( <IX> )
+#A  InducedXModData( <IX> )
 ##
 ##  DeclareAttribute( "InducedXModData", Is2DimensionalDomain, "mutable" );
 
@@ -73,9 +73,12 @@ DeclareAttribute( "MorphismOfInducedXMod", IsInducedXMod );
 #O  InducedXModFromTrivialRange( <xmod>, <hom> )
 ##
 DeclareGlobalFunction( "InducedXMod" );
-DeclareOperation( "InducedXModBySurjection", [ IsXMod, IsGroupHomomorphism ] );
-DeclareOperation( "InducedXModByCoproduct", [ IsXMod, IsGroupHomomorphism ] );
-DeclareOperation( "InducedXModByBijection", [ IsXMod, IsGroupHomomorphism ] );
+DeclareOperation( "InducedXModBySurjection", 
+    [ IsXMod, IsGroupHomomorphism ] );
+DeclareOperation( "InducedXModByCoproduct", 
+    [ IsXMod, IsGroupHomomorphism ] );
+DeclareOperation( "InducedXModByBijection", 
+    [ IsXMod, IsGroupHomomorphism ] );
 DeclareOperation( "InducedXModByCopower", 
     [ IsXMod, IsGroupHomomorphism, IsList ] );
 DeclareOperation( "InducedXModFromTrivialSource", 
@@ -83,7 +86,7 @@ DeclareOperation( "InducedXModFromTrivialSource",
 DeclareOperation( "InducedXModFromTrivialRange", 
     [ IsXMod, IsGroupHomomorphism ] );
 
-##############################################################################
+#############################################################################
 ##
 #F  InducedCat1Group( <args> )
 #O  InducedCat1Data( <grp>, <hom>, <trans> )
@@ -94,7 +97,7 @@ DeclareOperation( "InducedCat1Data",
     [ IsCat1Group, IsGroupHomomorphism, IsList ] );
 DeclareOperation( "InducedCat1GroupByFreeProduct", [ IsList ] );
 
-##############################################################################
+#############################################################################
 ##
 #O  AllInducedXMods( <grp> )
 #O  AllInducedCat1Groups( <grp> )

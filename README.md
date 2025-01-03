@@ -20,7 +20,7 @@ Functions for crossed squares and cat2-groups have been added during 2019/20.
 
 ## Copyright
 
-The 'XMod' package is Copyright {\copyright} Chris Wensley et al, 1997--2024. 
+The 'XMod' package is Copyright © Chris Wensley et al, 1997--2025. 
 
 'XMod' is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -45,16 +45,15 @@ Once these prerequisites are in place, proceed as follows:
 
  * Unpack `xmod-<version_number>.tar.gz` in the `pkg` subdirectory of the GAP root directory.
  * From within GAP load the package with:
-
+    ```
     gap> LoadPackage( "xmod" );
-
     true
-
- * The file manual.pdf is in the `doc' subdirectory.
+    ```
+ * The file manual.pdf is in the `doc` subdirectory.
  * To run the test file read `testall.g` from the `tst` subdirectory. 
 
 ## Contact
 
 If you have a question relating to 'XMod', encounter any problems, or have a suggestion for extending the package in any way, please 
- * email: `cdwensley.maths@btinternet.com` 
+ * email: <mailto:cdwensley.maths@btinternet.com> 
  * or report an issue at: <https://github.com/gap-packages/xmod/issues/new> 

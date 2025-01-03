@@ -158,10 +158,10 @@ function( LX )
     return C2;
 end );
 
-#############################################################################
+############################################################################
 ##
-#F  InducedXMod( <xmod>, <hom> [, <trans>] )            crossed module induced
-#F  InducedXMod( <grp>, <grp>, <grp> [, <trans>] )       by group homomorphism 
+#F  InducedXMod( <xmod>, <hom> [, <trans>] )          crossed module induced
+#F  InducedXMod( <grp>, <grp>, <grp> [, <trans>] )     by group homomorphism 
 ##
 InstallGlobalFunction( InducedXMod, function( arg )
 
@@ -171,7 +171,7 @@ InstallGlobalFunction( InducedXMod, function( arg )
         Print("\nUsage: InducedXMod( X, iota [, T] );");
         Print("\n where X is a crossed module and iota is a homomorphism");
         Print("\n   or: InducedXMod( Q, P, M [, T] );");
-        Print("\n where  Q >= P |>= M  and  T  is a transversal for Q/P\n\n");
+        Print("\n where Q >= P |>= M and T is a transversal for Q/P\n\n");
     end;
     nargs := Length( arg );
     if ( ( nargs < 2 ) or ( nargs > 4 ) ) then
@@ -240,12 +240,13 @@ InstallGlobalFunction( InducedXMod, function( arg )
     if HasName( X0 ) then
         SetName( IX, Concatenation( "i*(", Name( X0 ), ")" ) );
     elif HasName(M) and HasName(P) and HasName(Q) then
-        SetName( IX, Concatenation( "i*(", [Name(Q),Name(P),Name(M)], ")" ) );
+        SetName( IX, 
+             Concatenation( "i*(", [Name(Q),Name(P),Name(M)], ")" ) );
     fi;
     return IX;
 end );
 
-#############################################################################
+############################################################################
 ##
 #M  InducedXModFromTrivialSource( <xmod>, <hom> ) . . . . . . . induced xmod
 ##
@@ -281,9 +282,9 @@ function( X0, iota )
     return IX;
 end );
 
-#############################################################################
+############################################################################
 ##
-#M  InducedXModFromTrivialRange( <xmod>, <hom> ) . . . . . . . . induced xmod
+#M  InducedXModFromTrivialRange( <xmod>, <hom> ) . . . . . . .  induced xmod
 ##
 InstallMethod( InducedXModFromTrivialRange, "for an xmod and a monomorphism",
     true, [ IsXMod, IsGroupHomomorphism ], 0,
@@ -351,9 +352,9 @@ function( X0, iota )
     return IX;
 end );
 
-#############################################################################
+############################################################################
 ##
-#M  InducedXModByCopower( <xmod>, <hom>, <trans> ) . . . . . . . induced xmod
+#M  InducedXModByCopower( <xmod>, <hom>, <trans> ) . . . . . .  induced xmod
 ##
 InstallMethod( InducedXModByCopower,
     "for an xmod, an inclusion, and a transversal", true,
@@ -1351,9 +1352,9 @@ function( info )
     return IC;
 end );
 
-#############################################################################
+############################################################################
 ##
-#F  InducedCat1Group( <arg> ) . . . . . . . . . . . . . . . induced cat1-groups
+#F  InducedCat1Group( <arg> ) . . . . . . . . . . . . .  induced cat1-groups
 ##
 InstallGlobalFunction( InducedCat1Group, function( arg )
 
@@ -1363,9 +1364,9 @@ InstallGlobalFunction( InducedCat1Group, function( arg )
     if ( nargs > 2 ) then
         return false;
     fi;
-    if not IsRecord( arg[1] ) then
-        return false;
-    fi;
+##    if not IsRecord( arg[1] ) then
+##        return false;
+##    fi;
     if IsGroup( arg[1] ) then
         if ( ( nargs < 3 ) or not IsNormal( arg[2], arg[1] ) ) then
             return false;
