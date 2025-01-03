@@ -136,9 +136,11 @@ Morphism of crossed modules :-
 
 ## Section 7.2.2
 gap> all := AllInducedXMods( q8 );;
-gap> L := List( all, x -> StructureDescription( Source( x ) ) );
-[ "C4 x C4", "C2 x C2", "1", "C4 x C4", "C2 x C2", "1", "C4 x C4", "C2 x C2", 
-  "1", "C2 x C2 x C2 x C2", "1" ]
+gap> L := List( all, x -> Source( x ) );;
+gap> Sort( L, function(g,h) return Size(g) < Size(h); end );;
+gap> List( L, x -> StructureDescription( x ) );
+[ "1", "1", "1", "1", "C2 x C2", "C2 x C2", "C2 x C2", "C4 x C4", "C4 x C4", 
+  "C4 x C4", "C2 x C2 x C2 x C2" ]
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 
