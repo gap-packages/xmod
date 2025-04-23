@@ -5,7 +5,7 @@
 ##  This file implements generic methods for (pre-)crossed squares 
 ##  and (pre-)cat2-groups.
 ##
-#Y  Copyright (C) 2001-2024, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2025, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
     
 #############################################################################
@@ -370,7 +370,6 @@ function( XS )
                 am := ImageElm( actup, m2 ); 
                 y := ImageElm( am, ImageElmCrossedPairing( xp, [n,m] ) ); 
                 if not x = ImageElmCrossedPairing( xp, [n,m2] ) * y then
-## Error("here");
                     Info( InfoXMod, 2, 
                           "n,m1,m2 crossed pairing axiom fails" ); 
                     return false; 
@@ -2311,11 +2310,9 @@ InstallMethod( PreCrossedSquareOfPreCat2Group, true,
     [ IsPreCat2Group ], 0,
 function( C2G )
  
-    local n, l, i, j, k, up, down, left, right, isolar, liste1, liste2, 
-          G, gensrc, x, C1, C2, h1, t1, h2, t2, 
-          L, M, N, P, XS, diag, genL, imdelta, delta, liste, partial, 
-          action, aut, actML, XM, kappa, CM1, CM2, lambda, actNL, CM3, 
-          mu, actPM, CM4, nu, actPN, xp, actPL;
+    local C1, C2, h1, t1, h2, t2, L, M, N, P, kappa, actML, up, 
+          lambda, actNL, left, mu, actPM, right, nu, actPN, down,
+          actPL, genL, imdelta, delta, diag, xp, XS;
 
     C1 := GeneratingCat1Groups( C2G )[1];
     C2 := GeneratingCat1Groups( C2G )[2];
@@ -2329,11 +2326,10 @@ function( C2G )
     t1 := TailMap( C1 );
     h2 := HeadMap( C2 );
     t2 := TailMap( C2 );  
-    L := Intersection( Kernel( t1 ), Kernel( t2 ) ) ;
+    L := Intersection( Kernel( t1 ), Kernel( t2 ) );
     M := Intersection( Image( t1 ), Kernel( t2 ) );
     N := Intersection( Kernel ( t1 ), Image( t2 ) );
-    P := Intersection( Image( t1 ), Image( t2 ) )  ;    
-    Info( InfoXMod, 4, "G = ", G );
+    P := Intersection( Image( t1 ), Image( t2 ) );
     Info( InfoXMod, 4, "L = ", L );
     Info( InfoXMod, 4, "M = ", M );
     Info( InfoXMod, 4, "N = ", N );

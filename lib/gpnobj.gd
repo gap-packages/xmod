@@ -1,8 +1,8 @@
-##############################################################################
+#############################################################################
 ##
-##  gpnobj.gd                 GAP4 package `XMod'                Chris Wensley
-##                                                                Alper Odabas
-#Y  Copyright (C) 2001-2020, Chris Wensley et al,  
+##  gpnobj.gd                 GAP4 package `XMod'               Chris Wensley
+##                                                               Alper Odabas
+#Y  Copyright (C) 2001-2025, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file declares generic methods for (pre-)catn-groups.
@@ -13,14 +13,16 @@
 #O  GroupsOfHigherDimensionalGroup( <obj> ) 
 ##  These are the vertices of the n-cube 
 ##
-DeclareAttribute( "GroupsOfHigherDimensionalGroup", IsHigherDimensionalGroup );
+DeclareAttribute( "GroupsOfHigherDimensionalGroup",
+    IsHigherDimensionalGroup );
 
 #############################################################################
 ##
 #R  IsPreCatnObj( <obj> ) 
 ##  A pre-catn-group is an n-cube of pre-cat1 groups
 ##
-DeclareRepresentation( "IsPreCatnObj", IsHigherDimensionalGroup and IsAttributeStoringRep, 
+DeclareRepresentation( "IsPreCatnObj", 
+    IsHigherDimensionalGroup and IsAttributeStoringRep, 
     [ "GeneratingCat1Groups", "HigherDimension" ] );
 
 #############################################################################

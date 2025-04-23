@@ -1,6 +1,6 @@
  # CHANGES to the 'XMod' package
 
-## 2.92 -> 2.92dev (03/01/2025)
+## 2.92 -> 2.92dev (02/02/2025)
  * (20/12/24) changed the examples of induced crossed modules in section 7.2
  * (17/12/24) implemented (Inner)ActorCat1Group, fixing issue #144
  * (20/11/24) added AutomorphismPermGroup method for cat1-groups

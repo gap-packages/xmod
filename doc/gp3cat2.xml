@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp3cat2.xml           XMod documentation            Chris Wensley  -->
 <!--                                                                     -->
-<!--  Copyright (C) 1996-2024, Chris Wensley et al,                      --> 
+<!--  Copyright (C) 1996-2025, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -126,6 +126,12 @@ by Arvasi, Odabas and Wensley <Cite Key="AOW"/>,
 there are tables listing the numbers of isomorphism classes of 
 cat<M>^2</M>-groups on groups of order at most <M>30</M> – 
 a total of <M>1007</M> cat<M>^2</M>-groups.
+<P/>
+As with cat<M>^1</M>-groups, there is no requirement for the various
+tail and head maps to be endomorphisms, but most of the cat<M>^2</M>-groups
+constructed by this package are of this type, so that groups
+<M>C_{\{2\}},C_{\{1\}}</M> and <M>C_{\emptyset}</M>
+are all subgroups of <M>C_{[2]}</M>.
 
 <ManSection Label="cat2-group">
    <Func Name="Cat2Group"
@@ -137,9 +143,18 @@ a total of <M>1007</M> cat<M>^2</M>-groups.
    <Oper Name="PreCat2GroupByPreCat1Groups"
          Arg="L" />
 <Description>
-The global functions <C>Cat2Group</C> and <C>PreCat2Group</C> are normally 
-called with two arguments - the generating up and left cat<M>^1</M>-groups - 
-or with a single argument which is a crossed square. 
+Following the second definition above, the global functions <C>Cat2Group</C>
+and <C>PreCat2Group</C> are normally called with two arguments - 
+the generating up and left cat<M>^1</M>-groups <M>\calC_1</M> 
+and <M>\calC_2</M>.
+In this case the groups <M>C_{[2]}, C_{\{2\}}, C_{\{1\}}</M> 
+are the common source and the ranges of <M>\calC_1,\calC_2</M>, 
+while <M>C_{\emptyset}</M> is the range of 
+<M>(e_1 \circ t_1) \circ (e_2 \circ t_2) = (e_2 \circ t_2) \circ (e_1 \circ t_1)</M>.
+<P/>
+Alternatively, they may be called with a single argument which is a
+crossed square.
+<P/>
 The operation <C>PreCat2GroupByPreCat1Groups</C> has five arguments - 
 the up, left, right, down and diagonal cat<M>^1</M>-groups. 
 <P/>
@@ -182,8 +197,34 @@ gap> C2b := PreCat2GroupByPreCat1Groups( up, left, right, down, diag );
 (pre-)cat2-group with generating (pre-)cat1-groups:
 1 : [d12 => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )]
 2 : [d12 => Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )]
-gap> IsPreCatnGroupWithIdentityEmbeddings( C2b );
+gap> C2a = C2b;
 false
+]]>
+</Example>
+
+<ManSection>
+   <Attr Name="Up2DimensionalGroup"
+         Arg="C2G" Label="for cat2-groups" />
+   <Attr Name="Left2DimensionalGroup"
+         Arg="C2G" Label="for cat2-groups" />
+   <Attr Name="Down2DimensionalGroup"
+         Arg="C2G" Label="for cat2-groups" />
+   <Attr Name="Right2DimensionalGroup"
+         Arg="C2G" Label="for cat2-groups" />
+   <Attr Name="Diagonal2DimensionalGroup"
+         Arg="C2G" Label="for cat2-groups" />
+<Description>
+These six attributes were defined for crossed squares
+but apply equally to cat<M>^2</M>-groups.
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> Diagonal2DimensionalGroup( C2a );
+[d12 => Group( [ (), (2,6)(3,5) ] )]
+gap> Diagonal2DimensionalGroup( C2b );
+[d12 => Group( [ (7,8) ] )]
 ]]>
 </Example>
 
@@ -222,7 +263,6 @@ gap> Projection( C2ab, 2 );
 2 : [d12 => Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )] >
 ]]>
 </Example>
-
 
 <ManSection>
    <Oper Name="DisplayLeadMaps" Arg="C0" />

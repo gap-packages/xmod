@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp2obj.xml            XMod documentation            Chris Wensley  -->
 <!--                                                        & Murat Alp  -->
-<!--  Copyright (C) 1996-2024, Chris Wensley et al,                      --> 
+<!--  Copyright (C) 1996-2025, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -437,6 +437,8 @@ starting with <C>IsPreXMod</C> and <C>IsXMod</C>.
          Arg="X0" />
    <Prop Name="IsPreXMod"
          Arg="X0" />
+   <Prop Name="Is2DimensionalGroup"
+         Arg="X0" />
    <Prop Name="IsPerm2DimensionalGroup"
          Arg="X0" />
    <Prop Name="IsPc2DimensionalGroup"
@@ -444,20 +446,22 @@ starting with <C>IsPreXMod</C> and <C>IsXMod</C>.
    <Prop Name="IsFp2DimensionalGroup"
          Arg="X0" />
 <Description>
-A structure which has <C>IsPerm2DimensionalGroup</C> is a precrossed module 
-or a pre-cat<M>^1</M>-group (see section <Ref Sect="sect-cat1" />) 
-whose source and range are both permutation groups. 
+A structure which has <C>Is2DimensionalGroup</C> is a precrossed module 
+or a pre-cat<M>^1</M>-group (see section <Ref Sect="sect-cat1" />).
+Such an object whose source and range are both permutation groups has
+<C>IsPerm2DimensionalGroup</C>.
 The properties <C>IsPc2DimensionalGroup</C>, <C>IsFp2DimensionalGroup</C> 
 are defined similarly. 
 In the example below we see that <Code>X5</Code> has 
-<C>IsPreXMod</C>, <C>IsXMod</C> and <C>IsPerm2DimensionalGroup</C>. 
+<C>IsPreXMod</C>, <C>IsXMod</C> and <C>IsPerm2DimensionalGroup</C>.
+<P/>
 There are also properties corresponding to the various construction methods 
-listed in section <Ref Sect="sect-constructions" />: 
+which are listed in section <Ref Sect="sect-constructions" />: 
 <C>IsTrivialAction2DimensionalGroup</C>; 
 <C>IsNormalSubgroup2DimensionalGroup</C>; 
 <C>IsCentralExtension2DimensionalGroup</C>; 
-<C>IsAutomorphismGroup2DimensionalGroup</C>; 
-<C>IsAbelianModule2DimensionalGroup</C>. 
+<C>IsAutomorphismGroup2DimensionalGroup</C>
+and <C>IsAbelianModule2DimensionalGroup</C>. 
 </Description>
 </ManSection>
 
@@ -471,6 +475,10 @@ gap> ForAll( [ "IsTrivial", "IsNonTrivial", "IsFinite",
 >  "IsGeneratorsOfSemigroup", "IsPreXModDomain", "IsPreXMod", "IsXMod", 
 >  "IsAutomorphismGroup2DimensionalGroup" ], 
 >  s -> s in kpoX5 ); 
+true
+gap> Is2DimensionalGroup(X5);
+true
+gap> IsAutomorphismGroup2DimensionalGroup(X5);
 true
 ]]>
 </Example>
@@ -689,9 +697,11 @@ range group <M>R</M>,  and three homomorphisms:  two surjections
 It follows that  
 <M>\;t \circ e \circ h = h,~ h \circ e \circ t = t,~ 
      t \circ e \circ t = t~</M> 
-and <M>~h \circ e \circ h = h</M>. 
-(See section <Ref Sect="sect-properties-cat1"/> for the case when 
-<M>t,h</M> are endomorphisms.) 
+and <M>~h \circ e \circ h = h</M>.
+<P/>
+See section <Ref Prop="IsPreCat1GroupWithIdentityEmbedding"/> 
+for the case when <M>t</M> and <M>h</M> are endomorphisms
+and <M>e</M> an inclusion.
 
 <ManSection Label="mansect-cat1">
    <Func Name="Cat1Group"
@@ -1048,12 +1058,13 @@ gap> KnownPropertiesOfObject( C8 );
 embedding of <C>C0</C> is an inclusion mapping. 
 (This property used to be called <C>IsPreCat1GroupByEndomorphisms</C> but, 
 as the example below shows, when the tail and head maps are endomorphisms 
-the range embedding need not be an inclusion.) 
-When this is not the case, replacing <M>t,h,e</M> by <M>t*e,h*e</M> 
-and the inclusion mapping of the image of <M>e</M> gives an isomorphic 
-cat<M>^1</M>-group for which <C>IsPreCat1GroupWithIdentityEmbedding</C> is true. 
-This is the <C>IsomorphicPreCat1GroupWithIdentityEmbedding</C> of <C>C0</C> and 
-<C>IsomorphismToPreCat1GroupWithIdentityEmbedding</C> is the isomorphism 
+the range embedding need not be a subgroup inclusion.) 
+When this is not the case, we may replace <M>t</M> and <M>h</M> by <M>t*e</M>
+and <M>h*e</M>, and <M>e</M> by the inclusion mapping of the 
+image of <M>e</M>.  This gives an isomorphic cat<M>^1</M>-group for which 
+<C>IsPreCat1GroupWithIdentityEmbedding</C> is true. 
+This is the <C>IsomorphicPreCat1GroupWithIdentityEmbedding</C> of <C>C0</C>,
+and <C>IsomorphismToPreCat1GroupWithIdentityEmbedding</C> is the isomorphism 
 between them. (See the next chapter for mappings of cat<M>^1</M>-groups.) 
 </Description>
 </ManSection>

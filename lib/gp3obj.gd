@@ -1,8 +1,8 @@
-##############################################################################
+#############################################################################
 ##
-##  gp3obj.gd                 GAP4 package `XMod'                Chris Wensley
-##                                                                Alper Odabas
-#Y  Copyright (C) 2001-2022, Chris Wensley et al,  
+##  gp3obj.gd                 GAP4 package `XMod'               Chris Wensley
+##                                                               Alper Odabas
+#Y  Copyright (C) 2001-2025, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file declares generic methods for (pre-)crossed squares and
@@ -176,7 +176,7 @@ InstallTrueMethod( IsPreCat2Group, IsCat2Group );
 ##
 #F  PreCat2Group( <arg> ) 
 #F  Cat2Group( <arg> }
-#O  DetermineRemainingCat1Groups( <up>, <left>, <diag> )
+#O  DetermineRemainingCat1Groups( <up>, <left> )
 #O  PreCat2GroupByPreCat1Groups( <up>, <left>, <right>, <down>, <diag> )
 ##
 DeclareGlobalFunction( "PreCat2Group" );
@@ -249,7 +249,7 @@ DeclareAttribute( "Cat2GroupOfCrossedSquare", IsCrossedSquare );
 
 ######################################################################## 
 ##                                                                    ##
-##  NONE OF THE FOLLOWING SUB-FUNCTIONS HAVE BEEN IMPLEMENTED SO FAR  ## 
+#?  NONE OF THE FOLLOWING SUB-FUNCTIONS HAVE BEEN IMPLEMENTED SO FAR  ## 
 ##                                                                    ## 
 ######################################################################## 
 
@@ -269,7 +269,7 @@ DeclareOperation( "IsSubPreCat2Group",
 DeclareOperation( "IsSubCat2Group", 
     [ IsHigherDimensionalGroup, IsHigherDimensionalGroup ] );
 
-##############################################################################
+#############################################################################
 ##
 #O  SubPreCrossedSquare( <PM, Ssrc, Srng> ) 
 #O  SubCrossedSquare( <PM, Ssrc, Srng> ) 

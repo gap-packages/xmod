@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp3xsq.xml            XMod documentation            Chris Wensley  -->
 <!--                                                                     -->
-<!--  Copyright (C) 1996-2024, Chris Wensley et al,                      --> 
+<!--  Copyright (C) 1996-2025, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -130,7 +130,7 @@ crossed modules of <M>\calS</M>.
   </List>
 </Item>
 <Item>
-<M>\kappa(n \boxtimes m) \;=\; (m^{-1})^{n}\;m 
+<M>\kappa(n \boxtimes m) \;=\; (m^{-1})^{n}\;m
 \quad \mbox{and} \quad
 \lambda(n \boxtimes m) \;=\; n^{-1}\;n^{m}</M>.
 </Item>
@@ -148,35 +148,40 @@ via <M>P</M> are compatible since
 \;=\; (({n_1}^{n^{-1}})^m)^n.
 </Display>
 <P/>
-(A <E>precrossed square</E> is a similar structure which satisfies 
+A <E>precrossed square</E> is a similar structure which satisfies 
 some subset of these axioms.
-This notion needs to be clarified.) 
+(This theoretical notion needs to be clarified.) 
+In this implementation <C>IsPreCrossedSquare</C> only checks that the five
+pre-crossed modules fit together correctly and that 
+<M>(\kappa,\nu)</M> and <M>(\lambda,\mu)</M>
+are both morphisms of pre-crossed modules.
 <P/>
-Crossed squares are the <M>k=2</M> case of a 
-crossed <M>k</M>-cube of groups, defined as follows. 
+Crossed squares are the <M>n=2</M> case of a 
+crossed <M>n</M>-cube of groups, defined as follows. 
 (This is an attempt to translate Definition 2.1 in Ronnie Brown's 
 <E>Computing homotopy types using crossed n-cubes of groups</E> 
 into right actions -- but this definition is not yet completely understood!) 
 <P/>
-A <E>crossed</E> <M>k</M><E>-cube of groups</E> consists of the following: 
+<Index>crossed n-cube</Index>
+A <E>crossed</E> <M>n</M><E>-cube of groups</E> consists of the following: 
 <List>
 <Item> 
-groups <M>S_A</M> for every subset <M>A \subseteq [k]</M>; 
+groups <M>S_A</M> for every subset <M>A \subseteq [n]</M>; 
 </Item>
 <Item>
 a commutative diagram of group homomorphisms 
-<M>\partial_i : S_A \to S_{A \setminus \{i\}},\; i \in [k]</M>; 
+<M>\partial_i : S_A \to S_{A \setminus \{i\}},\; i \in [n]</M>; 
 with composites 
-<M>\partial_B : S_A \to S_{A \setminus B},\; B \subseteq [k]</M>;
+<M>\partial_B : S_A \to S_{A \setminus B},\; B \subseteq [n]</M>;
 </Item>
 <Item>
 actions of <M>S_{\emptyset}</M> on each <M>S_A</M>; 
 and hence actions of <M>S_B</M> on <M>S_A</M> via <M>\partial_B</M>
-for each <M>B \subseteq [k]</M>; 
+for each <M>B \subseteq [n]</M>; 
 </Item>
 <Item> 
 functions <M>\boxtimes_{A,B} : S_A \times S_B \to S_{A \cup B}, 
-(A,B \subseteq [k])</M>. 
+(A,B \subseteq [n])</M>. 
 </Item> 
 </List>
 There is then a long list of axioms which must be satisfied. 
@@ -656,17 +661,17 @@ and crossed squares in particular.
 
 <ManSection>
    <Attr Name="Up2DimensionalGroup"
-         Arg="XS" />
+         Arg="XS" Label="for crossed squares" />
    <Attr Name="Left2DimensionalGroup"
-         Arg="XS" />
+         Arg="XS" Label="for crossed squares" />
    <Attr Name="Down2DimensionalGroup"
-         Arg="XS" />
+         Arg="XS" Label="for crossed squares" />
    <Attr Name="Right2DimensionalGroup"
-         Arg="XS" />
+         Arg="XS" Label="for crossed squares" />
    <Attr Name="CrossDiagonalActions"
-         Arg="XS" />
+         Arg="XS" Label="for crossed squares" />
    <Attr Name="Diagonal2DimensionalGroup"
-         Arg="XS" />
+         Arg="XS" Label="for crossed squares" />
    <Meth Name="Name" 
          Arg="S0" />
 <Description>

@@ -1,8 +1,8 @@
 #############################################################################
 ##
-#W  gp3cat2.tst                   XMOD test file                Chris Wensley
+#W  gp3cat2.tst                   XMOD test file               Chris Wensley
 ##
-#Y  Copyright (C) 2001-2024, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2025, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 gap> START_TEST( "XMod package: gp3cat2.tst" );
@@ -44,7 +44,7 @@ gap> R := Subgroup( G, genR );;
 gap> genQ := [ (1,3,5)(2,4,6), (2,6)(3,5) ];; 
 gap> Q := Subgroup( G, genQ );; 
 gap> Pa := Group( b );;  SetName( Pa, "c2a" ); 
-gap> Pb := Group( (7,8) );;  SetName( Pb, "c2b" ); 
+gap> Pb := Group( (7,8) );; ## SetName( Pb, "c2b" ); 
 gap> t3 := GroupHomomorphismByImages( R, Pb, genR, [(),(7,8)] );; 
 gap> e3 := GroupHomomorphismByImages( Pb, R, [(7,8)], [(2,6)(3,5)] );; 
 gap> right := PreCat1GroupByTailHeadEmbedding( t3, t3, e3 );;
@@ -58,10 +58,16 @@ gap> C2b := PreCat2GroupByPreCat1Groups( up, left, right, down, diag );
 (pre-)cat2-group with generating (pre-)cat1-groups:
 1 : [d12 => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )]
 2 : [d12 => Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )]
-gap> IsPreCatnGroupWithIdentityEmbeddings( C2b );
+gap> C2a = C2b;
 false
 
 # Section 8.4.2
+gap> Diagonal2DimensionalGroup( C2a );
+[d12 => Group( [ (), (2,6)(3,5) ] )]
+gap> Diagonal2DimensionalGroup( C2b );
+[d12 => Group( [ (7,8) ] )]
+
+# Section 8.4.3
 gap> C2ab := DirectProductOp( [ C2a, C2b ], C2a ); 
 (pre-)cat2-group with generating (pre-)cat1-groups:
 1 : [Group( [ (1,2,3,4,5,6), (2,6)(3,5), ( 7, 8, 9,10,11,12), ( 8,12)( 9,11) 
@@ -82,19 +88,19 @@ gap> Projection( C2ab, 2 );
 1 : [d12 => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )]
 2 : [d12 => Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )] >
 
-# Section 8.4.3
+# Section 8.4.4
 gap> DisplayLeadMaps( C2b );
 (pre-)cat2-group with up-left group: [ (1,2,3,4,5,6), (2,6)(3,5) ]
    up tail=head images: [ (1,4)(2,5)(3,6), (2,6)(3,5) ]
  left tail=head images: [ (1,5,3)(2,6,4), (2,6)(3,5) ]
 
-# Section 8.4.4
+# Section 8.4.5
 gap> TC2a := Transpose3DimensionalGroup( C2a );
 (pre-)cat2-group with generating (pre-)cat1-groups:
 1 : [d12 => Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )]
 2 : [d12 => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )]
 
-# Section 8.4.5 
+# Section 8.4.6
 gap> gamma := GroupHomomorphismByImages( G, G, [a,b], [a^-1,b] );;
 gap> rho := IdentityMapping( R );;
 gap> xi := GroupHomomorphismByImages( Q, Q, [a^2,b], [a^-2,b] );;
@@ -113,8 +119,7 @@ gap> mor2 := Cat2GroupMorphismByCat1GroupMorphisms( C2a, C2a, upmor, ltmor );;
 gap> mor1 = mor2; 
 true
 
-
-# Section 8.4.6 
+# Section 8.4.7
 gap> xsC2a := CrossedSquareOfCat2Group( C2a );;
 gap> IdGroup( xsC2a );
 [ [ 1, 1 ], [ 2, 1 ], [ 3, 1 ], [ 2, 1 ] ]
@@ -131,7 +136,7 @@ gap> C2act := Cat2GroupOfCrossedSquare( XSact );
 gap> Size3d( C2act );
 [ 80000, 400, 400, 20 ]
 
-# Section 8.4.7
+# Section 8.4.8
 gap> G24 := SmallGroup( 24, 10 );; 
 gap> w := G24.1;; x := G24.2;; y := G24.3;; z := G24.4;; o := One(G24);; 
 gap> R24 := Subgroup( G24, [x,y] );; 
