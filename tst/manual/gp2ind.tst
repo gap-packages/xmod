@@ -119,6 +119,7 @@ gap> X12 := InducedXMod( d24, d12b, c6b );
 i*([c6b->d12b])
 gap> StructureDescription( X12 );
 [ "C6 x C6", "D24" ]
+
 ## this command produces different results in stable-4.13 so removing here:
 ## gap> Display( MorphismOfInducedXMod( X12 ) );
 ## Morphism of crossed modules :- 
