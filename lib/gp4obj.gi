@@ -1,10 +1,4 @@
-
-
-
-
-
-
-#############################################################################
+	#############################################################################
 ##
 #W  gp4obj.gi                   GAP4 package `XMod'             Chris Wensley
 ##                                                               Alper Odabas
@@ -133,7 +127,7 @@ end );
 
 #############################################################################
 ##
-#M  PreCat3GroupByPreCat2Groups( <front>,<left>,<lup>,<right>,<down>,<back> ) 
+#M  PreCat3GroupByPreCat2Groups( <front>,<left>,<up>,<right>,<down>,<back> ) 
 ##
 InstallMethod( PreCat3GroupByPreCat2Groups, "for a pair of pre-cat2-groups", 
     true, [ IsPreCat2Group, IsPreCat2Group, IsPreCat2Group, 

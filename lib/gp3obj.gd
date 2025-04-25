@@ -21,31 +21,10 @@ DeclareProperty( "IsPc3DimensionalGroup", IsHigherDimensionalGroup );
 #############################################################################
 ## 
 #A  Size3d( <obj> ) 
+#A  CrossedPairing( <3dgp> )
 ##
 DeclareAttribute( "Size3d", Is3DimensionalDomain ); 
-
-#############################################################################
-##
-#P  IsCrossedPairing( <map> )
-#R  IsCrossedPairingObj( <obj> )
-#O  CrossedPairingObj( <src>, <rng>, <map> )
-#V  CrossedPairingFamily
-#T  CrossedPairingObjType
-#A  CrossedPairingMap( <xp> )
-#O  ImageElmCrossedPairing( <xp>, <elm> ) 
-##
-DeclareProperty( "IsCrossedPairing", IsGeneralMapping );
-DeclareRepresentation( "IsCrossedPairingObj", 
-    IsCrossedPairing and IsAttributeStoringRep,
-    [ "Source", "Range", "CrossedPairingMap" ] ); 
-BindGlobal( "CrossedPairingFamily", 
-    NewFamily( "CrossedPairingFamily", IsCrossedPairing, 
-               CanEasilySortElements, CanEasilySortElements ) ); 
-BindGlobal( "CrossedPairingType", 
-    NewType( CrossedPairingFamily, IsCrossedPairingObj ) ); 
-DeclareOperation( "CrossedPairingObj", [ IsList, IsGroup, IsGeneralMapping ] );
-DeclareAttribute( "CrossedPairingMap", IsCrossedPairing );
-DeclareOperation( "ImageElmCrossedPairing", [ IsCrossedPairing, IsObject ] );
+DeclareAttribute( "CrossedPairing", Is3DimensionalDomain );
 
 #############################################################################
 ##
@@ -136,9 +115,9 @@ InstallTrueMethod( IsPreCrossedSquare, IsCrossedSquare );
 DeclareGlobalFunction( "PreCrossedSquare" );
 DeclareGlobalFunction( "CrossedSquare" );
 DeclareOperation( "PreCrossedSquareByPreXMods", 
-  [ IsPreXMod, IsPreXMod, IsPreXMod, IsPreXMod, IsPreXMod, IsCrossedPairing ] );
+  [ IsPreXMod, IsPreXMod, IsPreXMod, IsPreXMod, IsPreXMod, IsFunction ] );
 DeclareOperation( "CrossedSquareByXMods", 
-  [ IsXMod, IsXMod, IsXMod, IsXMod, IsXMod, IsCrossedPairing ] );
+  [ IsXMod, IsXMod, IsXMod, IsXMod, IsXMod, IsFunction ] );
 DeclareOperation( "CrossedSquareByNormalSubgroups", 
     [ IsGroup, IsGroup, IsGroup, IsGroup ] );
 DeclareOperation( "CrossedSquareByNormalSubgroups", 
@@ -271,27 +250,30 @@ DeclareOperation( "IsSubCat2Group",
 
 #############################################################################
 ##
-#O  SubPreCrossedSquare( <PM, Ssrc, Srng> ) 
-#O  SubCrossedSquare( <PM, Ssrc, Srng> ) 
-#O  SubPreCat2Group( <C>, <H> )
+#O  SubPreCrossedSquare( <PXS>, <ul>, <ur>, <dl>, <dr> ) 
+#O  SubCrossedSquare( <XS>, <ul>, <ur>, <dl>, <dr> ) 
+#O  SubPreCat2Group( <PC2>, <ul>, <ur>, <dl>, <dr>  )
+#O  SubCat2Group( <C2>, <ul>, <ur>, <dl>, <dr>  )
 ##
 DeclareOperation( "SubPreCrossedSquare", 
-    [ IsPreCrossedSquare, IsGroup, IsGroup ] );
-DeclareOperation( "SubCrossedSquare", [ IsCrossedSquare, IsGroup, IsGroup ] );
-DeclareOperation( "SubPreCat2Group", [ IsPreCat2Group, IsGroup, IsGroup ] );
-DeclareOperation( "SubCat2Group", [ IsCat2Group, IsGroup, IsGroup ] );
+    [ IsPreCrossedSquare, IsGroup, IsGroup, IsGroup, IsGroup ] );
+DeclareOperation( "SubCrossedSquare", 
+    [ IsCrossedSquare, IsGroup, IsGroup, IsGroup, IsGroup ] );
+DeclareOperation( "SubPreCat2Group", 
+    [ IsPreCat2Group, IsGroup, IsGroup, IsGroup, IsGroup ] );
+DeclareOperation( "SubCat2Group", 
+    [ IsCat2Group, IsGroup, IsGroup, IsGroup, IsGroup ] );
 
 #############################################################################
 ##
-#O  TrivialSubHigherDimensionalGroup( <obj> ) 
+#O  TrivialSub3DimensionalGroup( <obj> ) 
 #A  TrivialSubPreCrossedSquare( <obj> ) 
 #A  TrivialSubCrossedSquare( <obj> ) 
 #A  TrivialSubPreCat2Group( <obj> ) 
 #A  TrivialSubCat2Group( <obj> ) 
 #P  IsIdentityCat2Group( <C1G> )
 ##
-DeclareOperation( "TrivialSubHigherDimensionalGroup", 
-    [ IsHigherDimensionalGroup ] );
+DeclareOperation( "TrivialSub3DimensionalGroup", [ Is3DimensionalGroup ] );
 DeclareAttribute( "TrivialSubPreCrossedSquare", IsPreCrossedSquare );
 DeclareAttribute( "TrivialSubCrossedSquare", IsCrossedSquare );
 DeclareAttribute( "TrivialSubPreCat2Group", IsPreCat2Group );

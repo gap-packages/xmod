@@ -2,7 +2,7 @@
 ##
 #W  init.g                 GAP package `XMod'                   Chris Wensley
 #W 
-#Y  Copyright (C) 2001-2023, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2025, Chris Wensley et al,  
 ##
 
 if not IsBound( PreImagesRepresentativeNC ) then 
@@ -19,7 +19,6 @@ ReadPackage( "xmod", "lib/gp2map.gd" );
 ReadPackage( "xmod", "lib/gp2up.gd" );
 ReadPackage( "xmod", "lib/gp2act.gd" );
 ReadPackage( "xmod", "lib/gp2ind.gd" );
-ReadPackage( "xmod", "lib/map2arg.gd" );
 ReadPackage( "xmod", "lib/gpd2obj.gd" ); 
 ReadPackage( "xmod", "lib/isoclinic.gd" );  
 ReadPackage( "xmod", "lib/hap.gd" );

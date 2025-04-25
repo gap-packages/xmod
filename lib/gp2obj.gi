@@ -1703,6 +1703,7 @@ function( obj, sub )
         return fail; 
     fi;
 end );
+
 ##############################################################################
 ##
 #M  SubPreXMod             creates SubPreXMod from Ssrc<=Psrc & Srng<=Prng

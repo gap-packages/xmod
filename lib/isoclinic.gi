@@ -2,7 +2,7 @@
 ##
 #W  isoclinic.gi             GAP4 package `XMod'                Alper Odabas
 #W                                                              & Enver Uslu
-#Y  Copyright (C) 2001-2024, Chris Wensley et al 
+#Y  Copyright (C) 2001-2025, Chris Wensley et al 
 #Y   
 ##  This file contains generic methods for finding isoclinism classes 
 ##  of crossed modules. 
@@ -714,14 +714,12 @@ function( lt )
     imdelta := List( genL, l ->ImageElm( nu, ImageElm( lambda, l ) ) ); 
     delta := GroupHomomorphismByImages( L, P, genL, imdelta ); 
     dg := XModByBoundaryAndAction( delta, adg );
-    map := Mapping2ArgumentsByFunction( [N,M], L, 
-             function(c) 
-               local a, l;
-               a := ImageElm( actlt, c[1] ); 
-               l := PreImagesRepresentativeNC( kappa, c[2] );  
-               return ImageElm( a, l^(-1) ) * l; 
-             end );
-    xp := CrossedPairingObj( [N,M], L, map );
+    xp := function( n, m ) 
+              local a, l;
+              a := ImageElm( actlt, n ); 
+              l := PreImagesRepresentativeNC( kappa, m );  
+              return ImageElm( a, l^(-1) ) * l; 
+          end;
     xs := PreCrossedSquareObj( up, lt, rt, dn, dg, xp );
 ##    SetIsCrossedSquare( xs, true );
     if not IsCrossedSquare( xs ) then 

@@ -47,68 +47,18 @@ end );
 
 #############################################################################
 ##
-#M  IsCrossedPairing
-#M  CrossedPairingObj( [<src1>,<src2>],<rng>,<map> ) . make a crossed pairing
-##
-InstallMethod( IsCrossedPairing, "generic method for mappings", true, 
-    [ IsGeneralMapping ], 0,
-function( map )
-    return ( HasSource( map ) and HasRange( map ) 
-             and HasCrossedPairingMap( map ) );
-end );
-
-InstallMethod( CrossedPairingObj, "for a general mapping", true,
-    [ IsList, IsGroup, IsGeneralMapping ], 0,
-function( src, rng, map )
-
-    local obj;
-
-    obj := rec();
-    if not ( Length(src)=2 ) and IsGroup(src[1]) and IsGroup(src[2]) then 
-        Error( "the first parameter should be a list of two groups" ); 
-    fi;
-    ObjectifyWithAttributes( obj, CrossedPairingType,
-        Source, src,
-        Range, rng, 
-        CrossedPairingMap, map,
-        IsCrossedPairing, true );
-    return obj;
-end );
-
-InstallMethod( PrintObj, "method for a crossed pairing", true, 
-    [ IsCrossedPairing ], 0,
-function( h )
-    local map; 
-    map := CrossedPairingMap( h );
-    Print( "crossed pairing: ", Source(map), " -> ", Range(map) ); 
-end ); 
-
-#############################################################################
-##
-#M  ImageElmCrossedPairing( <map>, <elm> )  . . . . . . . for crossed pairing
-##
-InstallMethod( ImageElmCrossedPairing, "for crossed pairing", true, 
-    [ IsCrossedPairing, IsList ], 0,
-function ( xp, elm ) 
-    return ImageElmMapping2ArgumentsByFunction( CrossedPairingMap(xp), elm );
-end );
-
-#############################################################################
-##
 #M  CrossedPairingByCommutators( <grp>, <grp>, <grp> ) . . . . make an xpair
 ##
 InstallMethod( CrossedPairingByCommutators, "for three groups", true,
     [ IsGroup, IsGroup, IsGroup ], 0,
 function( N, M, L )
 
-    local map, xp;
+    local xp;
 
     if not IsSubgroup( L, CommutatorSubgroup(N,M) ) then 
         Error( "require CommutatorSubgroup(N,M) <= L" );
     fi;
-    map := Mapping2ArgumentsByFunction( [N,M], L, 
-               function(c) return Comm( c[1], c[2] ); end );
-    xp := CrossedPairingObj( [N,M], L, map );
+    xp := function( n, m ) return Comm( n, m ); end ;
     return xp;
 end );
 
@@ -120,20 +70,18 @@ InstallMethod( CrossedPairingByConjugators, "for inner automorphism group",
     true, [ IsGroup ], 0,
 function( innM )
 
-    local gens, M, map, xp;
+    local gens, xp;
 
     gens := GeneratorsOfGroup( innM ); 
     if not ForAll( gens, HasConjugatorOfConjugatorIsomorphism ) then 
         Error( "innM is not a group of inner automorphisms" ); 
     fi;
-    M := Source( gens[1] );
-    map := Mapping2ArgumentsByFunction( [ innM, innM ], M, 
-               function(p) 
-               local c1, c2;
-               c1 := ConjugatorOfConjugatorIsomorphism( p[1] );
-               c2 := ConjugatorOfConjugatorIsomorphism( p[2] );
-               return Comm( c1, c2 ); end );
-    xp := CrossedPairingObj( [ innM, innM ], M, map );
+    xp := function( n, m ) 
+              local cn, cm;
+              cn := ConjugatorOfConjugatorIsomorphism( n );
+              cm := ConjugatorOfConjugatorIsomorphism( m );
+              return Comm( cn, cm );
+          end;
     return xp;
 end );
 
@@ -145,7 +93,7 @@ InstallMethod( CrossedPairingByDerivations, "for a crossed module", true,
     [ IsXMod ], 0,
 function( X0 )
 
-    local SX, RX, Winv, WR, eWR, WP, reg, imlist, map;
+    local SX, RX, Winv, WR, eWR, WP, reg, imlist, xp;
 
     SX := Source( X0 );
     RX := Range( X0 );
@@ -155,14 +103,13 @@ function( X0 )
     WP := WhiteheadPermGroup( X0 );
     reg := RegularDerivations( X0 );
     imlist := ImagesList( reg );
-    map := Mapping2ArgumentsByFunction( [RX,WP], SX, 
-               function(t) 
-                   local pos, chi;
-                   pos := Position( eWR, Image( Winv, t[2] ) ); 
-                   chi := DerivationByImages( X0, imlist[pos] ); 
-                   return DerivationImage( chi, t[1] ); 
-               end );
-    return CrossedPairingObj( [RX,WP], SX, map );
+    xp := function( r, t ) 
+              local pos, chi;
+              pos := Position( eWR, Image( Winv, t ) ); 
+              chi := DerivationByImages( X0, imlist[pos] ); 
+              return DerivationImage( chi, r ); 
+          end;
+    return xp;
 end );
 
 #############################################################################
@@ -173,7 +120,7 @@ InstallMethod( CrossedPairingByPreImages, "for two crossed modules",
     true, [ IsXMod, IsXMod ], 0,
 function( up, lt )
 
-    local L, M, N, kappa, lambda, map, xp;
+    local L, M, N, kappa, lambda, xp;
 
     L := Source( up );
     if not ( Source( lt ) = L ) then 
@@ -183,14 +130,12 @@ function( up, lt )
     N := Range( lt );
     kappa := Boundary( up ); 
     lambda := Boundary( lt );
-    map := Mapping2ArgumentsByFunction( [N,M], L, 
-               function( c ) 
-                   local lm, ln;
-                   lm := PreImagesRepresentativeNC( kappa, c[2] ); 
-                   ln := PreImagesRepresentativeNC( lambda, c[1] ); 
-                   return Comm( ln, lm ); 
-               end );
-    xp := CrossedPairingObj( [N,M], L, map );
+    xp := function( n, m ) 
+              local lm, ln;
+              ln := PreImagesRepresentativeNC( lambda, n ); 
+              lm := PreImagesRepresentativeNC( kappa, m ); 
+              return Comm( ln, lm ); 
+          end;
     return xp;
 end );
 
@@ -204,7 +149,7 @@ InstallMethod( CrossedPairingBySingleXModAction,
     "for xmod and normal subxmod", true, [ IsXMod, IsXMod ], 0,
 function( rt, lt )
 
-    local M, L, N, act, map, xp;
+    local M, L, N, act, xp;
 
     if not IsNormalSub2DimensionalDomain( rt, lt ) then 
         Error( "lt not a normal subxmod of rt" ); 
@@ -213,11 +158,9 @@ function( rt, lt )
     L := Source( lt );
     N := Range( lt ); 
     act := XModAction( rt );
-    map := Mapping2ArgumentsByFunction( [N,M], L, 
-               function( c ) 
-                   return ImageElm( ImageElm(act,c[1]), c[2]^(-1) ) * c[2];
-               end );
-    xp := CrossedPairingObj( [N,M], L, map );
+    xp := function( n, m ) 
+              return ImageElm( ImageElm(act,n), m^(-1) ) * m;
+          end;
     return xp;
 end );
 
@@ -351,10 +294,10 @@ function( XS )
     for n in genN do 
         for n2 in genN do 
             for m in genM do 
-                x := ImageElmCrossedPairing( xp, [ n*n2, m ] ); 
+                x := xp( n*n2, m ); 
                 an := ImageElm( actlt, n2 ); 
-                y := ImageElm( an, ImageElmCrossedPairing( xp, [n,m] ) ); 
-                z := ImageElmCrossedPairing( xp, [n2,m] ); 
+                y := ImageElm( an, xp( n, m ) ); 
+                z := xp( n2, m ); 
                 if not x = y * z then 
                     Info( InfoXMod, 2, 
                           "n1,n2,m crossed pairing axiom fails" ); 
@@ -366,10 +309,10 @@ function( XS )
     for n in genN do 
         for m in genM do 
             for m2 in genM do 
-                x := ImageElmCrossedPairing( xp, [ n, m*m2 ] ); 
+                x := xp( n, m*m2 ); 
                 am := ImageElm( actup, m2 ); 
-                y := ImageElm( am, ImageElmCrossedPairing( xp, [n,m] ) ); 
-                if not x = ImageElmCrossedPairing( xp, [n,m2] ) * y then
+                y := ImageElm( am, xp( n, m ) ); 
+                if not x = xp( n, m2 ) * y then
                     Info( InfoXMod, 2, 
                           "n,m1,m2 crossed pairing axiom fails" ); 
                     return false; 
@@ -383,9 +326,8 @@ function( XS )
         apdn := ImageElm( actdn, p );
         for n in genN do 
             for m in genM do 
-                if not ImageElm( apdg, ImageElmCrossedPairing( xp, [n,m] ) ) 
-                     = ImageElmCrossedPairing( xp, 
-                           [ ImageElm(apdn,n), ImageElm(aprt,m) ] ) then
+                if not ImageElm( apdg, xp( n, m ) ) 
+                     = xp( ImageElm(apdn,n), ImageElm(aprt,m) ) then
                     Info( InfoXMod, 2, "n,m,p crossed pairing axiom fails" ); 
                     return false; 
                 fi; 
@@ -397,32 +339,32 @@ function( XS )
         an := ImageElm( actrt, ImageElm( nu, n ) ); 
         for m in genM do 
             am := ImageElm( actdn, ImageElm( mu, m ) ); 
-            nboxm := ImageElmCrossedPairing( xp, [n,m] ); 
+            nboxm := xp( n, m ); 
             if not ImageElm( lambda, nboxm ) = n^(-1) * ImageElm( am, n ) 
                and ImageElm( kappa, nboxm ) = ImageElm( an, m^(-1) ) * m then 
                 Info( InfoXMod, 2,  
                       "kappa,lambda do not map nboxm correctly" ); 
-                return false; 
-            fi; 
+                return false;
+            fi;
         od;
-    od; 
+    od;
     ## check crossed pairing on images of kappa,lambda 
     for m in genM do 
         ## am := ImageElm( actdg, ImageElm( mu, m ) ); 
         am := ImageElm( actup, m );
         for l in genL do 
-            if not ( ImageElmCrossedPairing( xp, [ImageElm(lambda,l),m] ) 
+            if not ( xp( ImageElm( lambda, l ), m ) 
                    = l^(-1) * ImageElm( am, l ) ) then 
                 Info( InfoXMod, 2, "incorrect image for (lambda(l) box n)" ); 
-                return false; 
-            fi; 
+                return false;
+            fi;
         od;
     od;
     for n in genN do 
         ## an := ImageElm( actdg, ImageElm( nu, n ) ); 
         an := ImageElm( actlt, n );  
         for l in genL do 
-            if not ( ImageElmCrossedPairing( xp, [n,ImageElm(kappa,l)] ) 
+            if not ( xp( n, ImageElm( kappa, l ) ) 
                    = ImageElm( an, l^(-1) ) * l ) then 
                 Info( InfoXMod, 2, "incorrect image for (n box kappa(l))" ); 
                 return false; 
@@ -566,10 +508,10 @@ end );
 InstallMethod( PreCrossedSquareByPreXMods, "default pre-crossed square", 
     true, 
     [ IsPreXMod, IsPreXMod, IsPreXMod, 
-      IsPreXMod, IsPreXMod, IsCrossedPairing ], 0,
+      IsPreXMod, IsPreXMod, IsFunction ], 0,
 function( up, left, right, down, diag, xp )
 
-    local L, M, N, P, kappa, lambda, mu, nu, delta, PXS; 
+    local L, M, N, P, kappa, lambda, mu, nu, delta, n, m, PXS; 
 
     L := Source( up );
     M := Range( up );
@@ -585,11 +527,14 @@ function( up, left, right, down, diag, xp )
          and ( M = Source( right ) ) and ( P = Range( right ) ) 
          and ( L = Source( diag ) ) and ( P = Range( diag ) ) ) then 
         Error( "sources and ranges not matching" ); 
-    fi; 
-    if not ( ( L = Range( xp ) ) and ( [N,M] = Source( xp ) ) ) then 
-        Error( "incorrect source/range for crossed pairing" ); 
     fi;
-    
+    for n in GeneratorsOfGroup( N ) do
+        for m in GeneratorsOfGroup( M ) do
+            if not ( xp( n, m ) in L ) then
+                Error( "incorrect source/range for crossed pairing" ); 
+            fi;
+        od;
+    od;
     PXS := PreCrossedSquareObj( up, left, right, down, diag, xp );
     if not IsPreCrossedSquare( PXS ) then 
         Error( "PXS fails to be a crossed square" ); 
@@ -598,7 +543,7 @@ function( up, left, right, down, diag, xp )
 end );
 
 InstallMethod( CrossedSquareByXMods, "default crossed square", true, 
-    [ IsXMod, IsXMod, IsXMod, IsXMod, IsXMod, IsCrossedPairing ], 0,
+    [ IsXMod, IsXMod, IsXMod, IsXMod, IsXMod, IsFunction ], 0,
 function( up, left, right, down, diag, xp )
 
     local XS; 
@@ -754,23 +699,19 @@ function( dn, rt )
     kappa := Linfo!.projections[2]; 
     genLM := List( genL, l -> ImageElm( kappa, l ) );
     ## construct the crossed pairing 
-    map := Mapping2ArgumentsByFunction( [N,M], L, 
-               function( c ) 
-                   local n, m, nun, mum, n2, m2, l; 
-                   n := c[1];
-                   m := c[2]; 
-                   nun := ImageElm( nu, n );
-                   mum := ImageElm( mu, m );
-                   ## h(n,m) = (n^{-1}.n^mum, (m^{-1})^nun.m)
-                   n2 := n^(-1) * ImageElm(ImageElm(actN,mum),n);
-                   m2 := ImageElm(ImageElm(actM,nun),m^(-1)) * m; 
-                   l := ImageElm( embN, n2 ) * ImageElm( embM, m2 ); 
-                   if not ( l in L ) then 
-                       Error( "element l appears not to be in L" ); 
-                   fi;
-                   return l;
-               end );
-    xp := CrossedPairingObj( [N,M], L, map ); 
+    xp := function( n, m ) 
+              local nun, mum, n2, m2, l;
+              nun := ImageElm( nu, n );
+              mum := ImageElm( mu, m );
+              ## h(n,m) = (n^{-1}.n^mum, (m^{-1})^nun.m)
+              n2 := n^(-1) * ImageElm( ImageElm( actN, mum ), n );
+              m2 := ImageElm( ImageElm( actM, nun ), m^(-1) ) * m; 
+              l := ImageElm( embN, n2 ) * ImageElm( embM, m2 ); 
+              if not ( l in L ) then 
+                  Error( "element l appears not to be in L" ); 
+              fi;
+              return l;
+          end;
     autL := AutomorphismGroup( L );
     genP := GeneratorsOfGroup( P );
     lenP := Length( genP );
@@ -2471,8 +2412,7 @@ function( XS )
     NxLbyM := List( genM, m -> GroupHomomorphismByImages( NxL, NxL, genNxL, 
             Concatenation( 
                 List( genN, n -> ImageElm( e1NxL, n ) * 
-                                 ImageElm( e2NxL, 
-                                 ImageElmCrossedPairing( xpair, [n,m] ))), 
+                                 ImageElm( e2NxL, xpair( n, m ) ) ), 
                 List( genL, l -> ImageElm( e2NxL, 
                                  ImageElm( ImageElm( act_up, m ), l ))) ))); 
     autgenNxL := Concatenation( NxLbyP, NxLbyM ); 
@@ -2509,8 +2449,7 @@ function( XS )
     MxLbyN := List( genN, n -> GroupHomomorphismByImages( MxL, MxL, genMxL, 
             Concatenation( 
                 List( genM, m -> ImageElm( e1MxL, m ) * 
-                                 ImageElm( e2MxL,  
-                                 ImageElmCrossedPairing( xpair, [n,m] )^(-1) )), 
+                                 ImageElm( e2MxL, xpair( n, m )^(-1) ) ), 
                 List( genL, l -> ImageElm( e2MxL, 
                                  ImageElm( ImageElm( act_lt, n ), l ))) )));
     autgenMxL := Concatenation( MxLbyP, MxLbyN ); 
@@ -2612,16 +2551,10 @@ InstallMethod( Transpose3DimensionalGroup, "transposed crossed square", true,
     [ IsCrossedSquare ], 0,
 function( XS )
 
-    local xpS, NxM, L, map, xpT, XT;
+    local xpS, xpT, XT;
 
     xpS := CrossedPairing( XS );
-    NxM := Reversed( Source( xpS ) );
-    L := Range( xpS );
-    map := Mapping2ArgumentsByFunction( NxM, L, 
-        function(c) 
-            return ImageElmCrossedPairing( xpS, Reversed(c) )^(-1); 
-        end );
-    xpT := CrossedPairingObj( NxM, L, map );
+    xpT := function( m, n ) return xpS( n, m )^(-1); end;
     XT := PreCrossedSquareObj( Left2DimensionalGroup(XS), 
               Up2DimensionalGroup(XS), Down2DimensionalGroup(XS), 
            Right2DimensionalGroup(XS), Diagonal2DimensionalGroup(XS), xpT );
@@ -2676,4 +2609,87 @@ function( XS )
                  = Left2DimensionalGroup( XS ) ) 
            and ( Right2DimensionalGroup( XS ) 
                  = Down2DimensionalGroup( XS ) );
+end );
+
+##############################################################################
+##
+#M  SubPreCrossedSquare                  creates SubPreXSq from four subgroups
+##
+InstallMethod( SubPreCrossedSquare, "generic method for pre-crossed squares",
+     true, [ IsPreCrossedSquare, IsGroup, IsGroup, IsGroup, IsGroup ], 0,
+function( PXS, L1, M1, N1, P1 )
+
+    local  L, M, N, P, up, lt, rt, dn, dg, up1, lt1, rt1, dn1, dg1,
+           xp, sub;
+
+    up := Up2DimensionalGroup( PXS );
+    lt := Left2DimensionalGroup( PXS );
+    rt := Right2DimensionalGroup( PXS );
+    dn := Down2DimensionalGroup( PXS );
+    dg := Diagonal2DimensionalGroup( PXS );
+    L := Source( up );
+    M := Range( up );
+    N := Source( dn );
+    P := Range( dn );
+    up1 := SubPreXMod( up, L1, M1 );
+    lt1 := SubPreXMod( lt, L1, N1 );
+    rt1 := SubPreXMod( rt, M1, P1 );
+    dn1 := SubPreXMod( dn, N1, P1 );
+    dg1 := SubPreXMod( dg, L1, P1 );
+    if fail in [ up1, lt1, rt1, dn1, dg1 ] then
+        return fail;
+    fi;
+    xp := CrossedPairing( PXS );
+    sub := PreCrossedSquareByPreXMods( up1, lt1, rt1, dn1, dg1, xp );
+    return sub;
+end );
+
+#############################################################################
+##
+#M  TrivialSub3DimensionalGroup . . . . . . . . . .  of a 3d-object
+#M  TrivialSubPreCrossedSquare . . . . . . . . . . . of a pre-crossed square
+#M  TrivialSubCrossedSquare  . . . . . . . . . . . . of a crossed square
+#M  TrivialSubPreCat2Group . . . . . . . . . . . . . of a pre-cat2-group
+#M  TrivialSubCat2Group  . . . . . . . . . . . . . . of a cat2-group
+##
+InstallMethod( TrivialSub3DimensionalGroup, "of a 3d-object", true, 
+    [ Is3DimensionalGroup ], 0,
+function( obj )
+
+    local upid, dnid;
+
+    upid := TrivialSub2DimensionalGroup( Up2DimensionalGroup( obj ) );
+    dnid := TrivialSub2DimensionalGroup( Down2DimensionalGroup( obj ) );
+    if IsPreCrossedSquare( obj ) then
+        return SubPreCrossedSquare( obj, Source( upid ), Range( upid ),
+                                         Source( dnid ), Range( dnid ) );
+    elif IsPreCat2Group( obj ) then
+        return SubPreCat2Group( obj, Source( upid ), Range( upid ),
+                                     Source( dnid ), Range( dnid ) );
+    else
+        Error( "<obj> must be a pre-crossed square or a pre-cat2-group" );
+    fi;
+end );
+
+InstallMethod( TrivialSubPreCrossedSquare, "of a pre-crossed square", true,
+    [ IsPreCrossedSquare ], 0,
+function( obj )
+    return TrivialSub3DimensionalGroup( obj );
+end );
+
+InstallMethod( TrivialSubCrossedSquare, "of a crossed square", true, 
+    [ IsCrossedSquare ], 0,
+function( obj )
+    return TrivialSub3DimensionalGroup( obj );
+end );
+
+InstallMethod( TrivialSubPreCat2Group, "of a pre-cat2-group", true, 
+    [ IsPreCat2Group ], 0,
+function( obj )
+    return TrivialSub3DimensionalGroup( obj );
+end );
+
+InstallMethod( TrivialSubCat2Group, "of a cat2-group", true, [ IsCat2Group ], 0,
+function( obj )
+    return TrivialSub3DimensionalGroup( obj );
 end );
