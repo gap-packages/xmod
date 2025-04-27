@@ -100,13 +100,13 @@
   
   [33X[0;0YA  morphism  of  crossed  modules [22X(σ, ρ) : calX_1 -> calX_2[122X factors uniquely
   through  an  induced  crossed  module  [22Xρ_∗  calX_1  =  (δ : ρ_∗ S_1 -> R_2)[122X.
-  Similarly,  a morphism of cat1-groups factors through an induced cat1-group.
-  Calculation  of  induced  crossed modules of [22XcalX[122X also provides an algebraic
-  means  of  determining  the  homotopy  [22X2[122X-type  of  homotopy  pushouts of the
-  classifying  space  of [22XcalX[122X. For more background from algebraic topology see
-  references  in  [BH78],  [BW95], [BW96]. Induced crossed modules and induced
-  cat1-groups  also  provide  the building blocks for constructing pushouts in
-  the categories [13XXMod[113X and [13XCat1[113X.[133X
+  Similarly,   a   morphism   of   cat[22X^1[122X-groups  factors  through  an  induced
+  cat[22X^1[122X-group. Calculation of induced crossed modules of [22XcalX[122X also provides an
+  algebraic  means  of determining the homotopy [22X2[122X-type of homotopy pushouts of
+  the  classifying  space of [22XcalX[122X. For more background from algebraic topology
+  see  references  in  [BH78],  [BW95],  [BW96].  Induced  crossed modules and
+  induced  cat[22X^1[122X-groups  also  provide  the  building  blocks for constructing
+  pushouts in the categories [13XXMod[113X and [13XCat1[113X.[133X
   
   [33X[0;0YData  for  the  cases  of algebraic interest is provided by a crossed module
   [22XcalX  =  (∂  :  S  ->  R)[122X and a homomorphism [22Xι : R -> Q[122X. The output from the
@@ -124,74 +124,113 @@
   module   is  constructed.  These  constructions  use  Tietze  transformation
   routines in the library file [10Xtietze.gi[110X.[133X
   
-  [33X[0;0YAs  a  first,  surjective  example,  we  take  for [22XcalX[122X the normal inclusion
-  crossed  module  of  [10Xa4[110X  in  [10Xs4[110X, and for [22Xι[122X the surjection from [10Xs4[110X to [10Xs3[110X with
-  kernel [10Xk4[110X. The induced crossed module is isomorphic to [10XX3 = [c3->s3][110X.[133X
+  [33X[0;0YAs a first, surjective example, we take for [22XcalX[122X a central extension crossed
+  module  of  dihedral  groups, [22X(d_24 -> d_12)[122X, and for [22Xι[122X a surjection [22Xd_12 ->
+  s_3[122X  with  kernel  [22Xc_2[122X. The induced crossed module is isomorphic to [22X(d_12 ->
+  s_3)[122X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27Xs4gens := GeneratorsOfGroup( s4 );[127X[104X
-    [4X[28X[ (1,2), (2,3), (3,4) ][128X[104X
-    [4X[25Xgap>[125X [27Xa4gens := GeneratorsOfGroup( a4 );[127X[104X
-    [4X[28X[ (1,2,3), (2,3,4) ][128X[104X
-    [4X[25Xgap>[125X [27Xs3b := Group( (5,6),(6,7) );;  SetName( s3b, "s3b" );[127X[104X
-    [4X[25Xgap>[125X [27Xepi := GroupHomomorphismByImages( s4, s3b, s4gens, [(5,6),(6,7),(5,6)] );;[127X[104X
-    [4X[25Xgap>[125X [27XX4 := XModByNormalSubgroup( s4, a4 );;[127X[104X
-    [4X[25Xgap>[125X [27XindX4 := InducedXModBySurjection( X4, epi );[127X[104X
-    [4X[28X[a4/ker->s3b][128X[104X
-    [4X[25Xgap>[125X [27XDisplay( indX4 );[127X[104X
-    [4X[28X[128X[104X
-    [4X[28XCrossed module [a4/ker->s3b] :- [128X[104X
-    [4X[28X: Source group a4/ker has generators:[128X[104X
-    [4X[28X  [ (1,3,2), (1,2,3) ][128X[104X
-    [4X[28X: Range group s3b has generators:[128X[104X
-    [4X[28X  [ (5,6), (6,7) ][128X[104X
+    [4X[25Xgap>[125X [27Xa := (6,7,8,9)(10,11,12);;  b := (7,9)(11,12);;[127X[104X
+    [4X[25Xgap>[125X [27Xd24 := Group( [ a, b ] );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( d24, "d24" );[127X[104X
+    [4X[25Xgap>[125X [27Xc := (1,2)(3,4,5);;  d := (4,5);;[127X[104X
+    [4X[25Xgap>[125X [27Xd12 := Group( [ c, d ] );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( d12, "d12" );[127X[104X
+    [4X[25Xgap>[125X [27Xbdy := GroupHomomorphismByImages( d24, d12, [a,b], [c,d] );;[127X[104X
+    [4X[25Xgap>[125X [27XX24 := XModByCentralExtension( bdy );[127X[104X
+    [4X[28X[d24->d12][128X[104X
+    [4X[25Xgap>[125X [27Xe := (13,14,15);;  f := (14,15);;[127X[104X
+    [4X[25Xgap>[125X [27Xs3 := Group( [ e, f ] );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( s3, "s3" );;[127X[104X
+    [4X[25Xgap>[125X [27Xepi := GroupHomomorphismByImages( d12, s3, [c,d], [e,f] );;[127X[104X
+    [4X[25Xgap>[125X [27XiX24 := InducedXModBySurjection( X24, epi );[127X[104X
+    [4X[28X[d24/ker->s3][128X[104X
+    [4X[25Xgap>[125X [27XDisplay( iX24 );               [127X[104X
+    [4X[28XCrossed module [d24/ker->s3] :- [128X[104X
+    [4X[28X: Source group d24/ker has generators:[128X[104X
+    [4X[28X  [ ( 1,11, 5, 4,10, 8)( 2,12, 6, 3, 9, 7), [128X[104X
+    [4X[28X  ( 1, 2)( 3, 4)( 5, 9)( 6,10)( 7,11)( 8,12) ][128X[104X
+    [4X[28X: Range group s3 has generators:[128X[104X
+    [4X[28X  [ (13,14,15), (14,15) ][128X[104X
     [4X[28X: Boundary homomorphism maps source generators to:[128X[104X
-    [4X[28X  [ (5,6,7), (5,7,6) ][128X[104X
+    [4X[28X  [ (13,14,15), (14,15) ][128X[104X
     [4X[28X: Action homomorphism maps range generators to automorphisms:[128X[104X
-    [4X[28X  (5,6) --> { source gens --> [ (1,2,3), (1,3,2) ] }[128X[104X
-    [4X[28X  (6,7) --> { source gens --> [ (1,2,3), (1,3,2) ] }[128X[104X
+    [4X[28X  (13,14,15) --> { source gens --> [ ( 1,11, 5, 4,10, 8)( 2,12, 6, 3, 9, 7), [128X[104X
+    [4X[28X  ( 1, 6)( 2, 5)( 3, 8)( 4, 7)( 9,10)(11,12) ] }[128X[104X
+    [4X[28X  (14,15) --> { source gens --> [ ( 1, 8,10, 4, 5,11)( 2, 7, 9, 3, 6,12), [128X[104X
+    [4X[28X  ( 1, 2)( 3, 4)( 5, 9)( 6,10)( 7,11)( 8,12) ] }[128X[104X
     [4X[28X  These 2 automorphisms generate the group of automorphisms.[128X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27XmorX4 := MorphismOfInducedXMod( indX4 );[127X[104X
-    [4X[28X[[a4->s4] => [a4/ker->s3b]][128X[104X
-    [4X[28X[128X[104X
-  [4X[32X[104X
-  
-  [33X[0;0YFor  a  second,  injective example we take for [22XcalX[122X the automorphism crossed
-  module  [10XXAq8[110X  of [2XCoproductXMod[102X ([14X7.1-1[114X), and for [22Xι[122X an inclusion of [10Xs4b[110X in [10Xs5[110X.
-  The resulting source group is [10XSL(2,5)[110X.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27Xiso4 := IsomorphismGroups( s4b, s4 );; [127X[104X
-    [4X[25Xgap>[125X [27Xs5 := Group( (1,2,3,4,5), (4,5) );; [127X[104X
-    [4X[25Xgap>[125X [27XSetName( s5, "s5" ); [127X[104X
-    [4X[25Xgap>[125X [27Xinc45 := InclusionMappingGroups( s5, s4 );;[127X[104X
-    [4X[25Xgap>[125X [27Xiota45 := iso4 * inc45;; [127X[104X
-    [4X[25Xgap>[125X [27XindXAq8 := InducedXMod( XAq8, iota45 );[127X[104X
-    [4X[28Xi*(XAq8)[128X[104X
-    [4X[25Xgap>[125X [27XSize2d( indXAq8 );[127X[104X
-    [4X[28X[ 120, 120 ][128X[104X
-    [4X[25Xgap>[125X [27XStructureDescription( indXAq8 );          [127X[104X
-    [4X[28X[ "SL(2,5)", "S5" ][128X[104X
+    [4X[25Xgap>[125X [27XmorX24 := MorphismOfInducedXMod( iX24 );[127X[104X
+    [4X[28X[[d24->d12] => [d24/ker->s3]][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YFor  a  third  example  we use the version [10XInducedXMod(Q,R,S)[110X of this global
-  function,  with  [22XQ  geqslant  R  ⊵ S[122X. We take the identity mapping on [10Xs3c[110X as
-  boundary,  and  the  inclusion  of  [10Xs3c[110X  in  [10Xs4[110X as [22Xι[122X. The induced group is a
-  general linear group [10XGL(2,3)[110X.[133X
+  [33X[0;0YFor  a  second,  injective  example  we take for [22XcalX[122X the result [10XiX24[110X of the
+  previous  example and for [22Xι[122X an inclusion of [22Xs_3[122X in [22Xs_4[122X. The resulting source
+  group has size [22X96[122X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
-    [4X[25Xgap>[125X [27Xs3c := Subgroup( s4, [ (2,3), (3,4) ] );;  [127X[104X
-    [4X[25Xgap>[125X [27XSetName( s3c, "s3c" );[127X[104X
-    [4X[25Xgap>[125X [27XindXs3c := InducedXMod( s4, s3c, s3c );[127X[104X
-    [4X[28Xi*([s3c->s3c])[128X[104X
-    [4X[25Xgap>[125X [27XStructureDescription( indXs3c );[127X[104X
-    [4X[28X[ "GL(2,3)", "S4" ][128X[104X
+    [4X[25Xgap>[125X [27Xg := (16,17,18);;  h := (16,17,18,19);;[127X[104X
+    [4X[25Xgap>[125X [27Xs4 := Group( [ g, h ] );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( s4, "s4" );;[127X[104X
+    [4X[25Xgap>[125X [27Xiota := GroupHomomorphismByImages( s3, s4, [e,f], [g^2*h^2,g*h^-1] );[127X[104X
+    [4X[28X[ (13,14,15), (14,15) ] -> [ (17,18,19), (18,19) ][128X[104X
+    [4X[25Xgap>[125X [27XiiX24 := InducedXModByCopower( iX24, iota, [ ] );[127X[104X
+    [4X[28Xi*([d24/ker->s3])[128X[104X
+    [4X[25Xgap>[125X [27XSize2d( iiX24 );               [127X[104X
+    [4X[28X[ 96, 24 ][128X[104X
+    [4X[25Xgap>[125X [27XStructureDescription( iiX24 );[127X[104X
+    [4X[28X[ "C2 x GL(2,3)", "S4" ][128X[104X
     [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YFor a third example we combine the previous two examples by taking for [22Xι[122X the
+  more  general  case [10Xalpha = theta*iota[110X. The resulting [10XjX24[110X is isomorphic to,
+  but not identical to, [10XiiX24[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xalpha := CompositionMapping( iota, epi );[127X[104X
+    [4X[28X[ (1,2)(3,4,5), (4,5) ] -> [ (17,18,19), (18,19) ][128X[104X
+    [4X[25Xgap>[125X [27XjX24 := InducedXMod( X24, alpha );;[127X[104X
+    [4X[25Xgap>[125X [27XStructureDescription( jX24 );[127X[104X
+    [4X[28X[ "C2 x GL(2,3)", "S4" ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YFor  a  fourth  example we use the version [10XInducedXMod(Q,R,S)[110X of this global
+  function,  with  a normal inclusion crossed module [22X(S -> R)[122X and an inclusion
+  mapping  [22XR  -> Q[122X. We take [22X(c_6 -> d_12)[122X as [22XcalX[122X and the inclusion of [22Xd_12[122X in
+  [22Xd_24[122X as [22Xι[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[28X## Section 7.2.1 : Example 4 [128X[104X
+    [4X[25Xgap>[125X [27Xd12b := Subgroup( d24, [ a^2, b ] );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( d12b, "d12b" ); [127X[104X
+    [4X[25Xgap>[125X [27Xc6b := Subgroup( d12b, [ a^2 ] );; [127X[104X
+    [4X[25Xgap>[125X [27XSetName( c6b, "c6b" );  [127X[104X
+    [4X[25Xgap>[125X [27XX12 := InducedXMod( d24, d12b, c6b );[127X[104X
+    [4X[28Xi*([c6b->d12b])[128X[104X
+    [4X[25Xgap>[125X [27XStructureDescription( X12 );[127X[104X
+    [4X[28X[ "C6 x C6", "D24" ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay( MorphismOfInducedXMod( X12 ) );[127X[104X
+    [4X[28XMorphism of crossed modules :- [128X[104X
+    [4X[28X: Source = [c6b->d12b] with generating sets:[128X[104X
+    [4X[28X  [ ( 6, 8)( 7, 9)(10,12,11) ][128X[104X
+    [4X[28X  [ ( 6, 8)( 7, 9)(10,12,11), ( 7, 9)(11,12) ][128X[104X
+    [4X[28X:  Range = i*([c6b->d12b]) with generating sets:[128X[104X
+    [4X[28X  [ ( 4, 5)( 6, 7)( 8, 9)(10,11)(12,13)(14,15), [128X[104X
+    [4X[28X  ( 4, 6, 8)( 5, 7, 9)(10,12,14)(11,13,15), [128X[104X
+    [4X[28X  ( 4,10)( 5,11)( 6,12)( 7,13)( 8,14)( 9,15), (1,2,3) ][128X[104X
+    [4X[28X  [ ( 6, 7, 8, 9)(10,11,12), ( 7, 9)(11,12) ][128X[104X
+    [4X[28X: Source Homomorphism maps source generators to:[128X[104X
+    [4X[28X  [ ( 4, 9, 6, 5, 8, 7)(10,15,12,11,14,13) ][128X[104X
+    [4X[28X: Range Homomorphism maps range generators to:[128X[104X
+    [4X[28X  [ ( 6, 8)( 7, 9)(10,12,11), ( 7, 9)(11,12) ][128X[104X
+    [4X[28X#[128X[104X
   [4X[32X[104X
   
   [1X7.2-2 AllInducedXMods[101X
@@ -205,13 +244,11 @@
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27Xall := AllInducedXMods( q8 );;[127X[104X
-    [4X[25Xgap>[125X [27Xids := List( all, x -> IdGroup(x) );;[127X[104X
-    [4X[25Xgap>[125X [27XSort( ids );[127X[104X
-    [4X[25Xgap>[125X [27Xids;[127X[104X
-    [4X[28X[ [ [ 1, 1 ], [ 8, 4 ] ], [ [ 1, 1 ], [ 8, 4 ] ], [ [ 1, 1 ], [ 8, 4 ] ], [128X[104X
-    [4X[28X  [ [ 1, 1 ], [ 8, 4 ] ], [ [ 4, 2 ], [ 8, 4 ] ], [ [ 4, 2 ], [ 8, 4 ] ], [128X[104X
-    [4X[28X  [ [ 4, 2 ], [ 8, 4 ] ], [ [ 16, 2 ], [ 8, 4 ] ], [ [ 16, 2 ], [ 8, 4 ] ], [128X[104X
-    [4X[28X  [ [ 16, 2 ], [ 8, 4 ] ], [ [ 16, 14 ], [ 8, 4 ] ] ][128X[104X
+    [4X[25Xgap>[125X [27XL := List( all, x -> Source( x ) );;[127X[104X
+    [4X[25Xgap>[125X [27XSort( L, function(g,h) return Size(g) < Size(h); end );;[127X[104X
+    [4X[25Xgap>[125X [27XList( L, x -> StructureDescription( x ) );[127X[104X
+    [4X[28X[ "1", "1", "1", "1", "C2 x C2", "C2 x C2", "C2 x C2", "C4 x C4", "C4 x C4", [128X[104X
+    [4X[28X  "C4 x C4", "C2 x C2 x C2 x C2" ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   

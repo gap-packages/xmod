@@ -36,7 +36,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X854FC0C781AD62EC">3.2-4 IsomorphismPerm2DimensionalGroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X87BCAAF787A7FF69">3.2-5 MorphismOfPullback</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X84DDF8247FC4982B">3.3 <span class="Heading">Morphisms of pre-cat1-groups</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X7B9D3C1F7A395FF2">3.3 <span class="Heading">Morphisms of pre-cat<span class="SimpleMath">^1</span>-groups</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7C47D0EC782D4C40">3.3-1 IsCat1GroupMorphism</a></span>
@@ -65,7 +65,7 @@
 
 <h4>3.1 <span class="Heading">Morphisms of 2-dimensional groups</span></h4>
 
-<p>This chapter describes morphisms of (pre-)crossed modules and (pre-)cat1-groups.</p>
+<p>This chapter describes morphisms of (pre-)crossed modules and (pre-)cat<span class="SimpleMath">^1</span>-groups.</p>
 
 <p><a id="X7FFD094F7FFB1F17" name="X7FFD094F7FFB1F17"></a></p>
 
@@ -167,7 +167,7 @@ true
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismByIsomorphisms</code>( <var class="Arg">D</var>, <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>When <span class="SimpleMath">calD</span> is a <span class="SimpleMath">2</span>-dimensional domain with source <span class="SimpleMath">S</span> and range <span class="SimpleMath">R</span> and <span class="SimpleMath">σ : S -&gt; S',~ ρ : R -&gt; R'</span> are isomorphisms, then <code class="code">IsomorphismByIsomorphisms(D,[sigma,rho])</code> returns an isomorphism <span class="SimpleMath">(σ,ρ) : calD -&gt; calD'</span> where <span class="SimpleMath">calD'</span> has source <span class="SimpleMath">S'</span> and range <span class="SimpleMath">R'</span>. Be sure to test <code class="code">IsBijective</code> for the two functions <span class="SimpleMath">σ,ρ</span> before applying this operation.</p>
 
-<p>Using <code class="func">IsomorphismByIsomorphisms</code> with a pair of isomorphisms obtained using <code class="code">IsomorphismPermGroup</code> or <code class="code">IsomorphismPcGroup</code>, we may construct a crossed module or a cat1-group of permutation groups or pc-groups.</p>
+<p>Using <code class="func">IsomorphismByIsomorphisms</code> with a pair of isomorphisms obtained using <code class="code">IsomorphismPermGroup</code> or <code class="code">IsomorphismPcGroup</code>, we may construct a crossed module or a cat<span class="SimpleMath">^1</span>-group of permutation groups or pc-groups.</p>
 
 
 <div class="example"><pre>
@@ -200,11 +200,11 @@ true
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismOfPullback</code>( <var class="Arg">xmod</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Let <span class="SimpleMath">calX_1 = (λ : L -&gt; N)</span> be the pullback crossed module obtained from a crossed module <span class="SimpleMath">calX_0 = (μ : M -&gt; P)</span> and a group homomorphism <span class="SimpleMath">ν : N -&gt; P</span>. Then the associated crossed module morphism is <span class="SimpleMath">(κ,ν) : calX_1 -&gt; calX_0</span> where <span class="SimpleMath">κ</span> is the projection from <span class="SimpleMath">L</span> to <span class="SimpleMath">M</span>.</p>
 
-<p><a id="X84DDF8247FC4982B" name="X84DDF8247FC4982B"></a></p>
+<p><a id="X7B9D3C1F7A395FF2" name="X7B9D3C1F7A395FF2"></a></p>
 
-<h4>3.3 <span class="Heading">Morphisms of pre-cat1-groups</span></h4>
+<h4>3.3 <span class="Heading">Morphisms of pre-cat<span class="SimpleMath">^1</span>-groups</span></h4>
 
-<p>A morphism of pre-cat1-groups from <span class="SimpleMath">calC_1 = (e_1;t_1,h_1 : G_1 -&gt; R_1)</span> to <span class="SimpleMath">calC_2 = (e_2;t_2,h_2 : G_2 -&gt; R_2)</span> is a pair <span class="SimpleMath">(γ, ρ)</span> where <span class="SimpleMath">γ : G_1 -&gt; G_2</span> and <span class="SimpleMath">ρ : R_1 -&gt; R_2</span> are homomorphisms satisfying</p>
+<p>A morphism of pre-cat<span class="SimpleMath">^1</span>-groups from <span class="SimpleMath">calC_1 = (e_1;t_1,h_1 : G_1 -&gt; R_1)</span> to <span class="SimpleMath">calC_2 = (e_2;t_2,h_2 : G_2 -&gt; R_2)</span> is a pair <span class="SimpleMath">(γ, ρ)</span> where <span class="SimpleMath">γ : G_1 -&gt; G_2</span> and <span class="SimpleMath">ρ : R_1 -&gt; R_2</span> are homomorphisms satisfying</p>
 
 <p class="pcenter">
 h_2 \circ \gamma ~=~ \rho \circ h_1, \qquad 
@@ -225,7 +225,7 @@ e_2 \circ \rho ~=~ \gamma \circ e_1.
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InclusionMorphism2DimensionalDomains</code>( <var class="Arg">C1</var>, <var class="Arg">S1</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InnerAutomorphismCat1</code>( <var class="Arg">C1</var>, <var class="Arg">r</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IdentityMapping</code>( <var class="Arg">C1</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>For an example we form a second cat1-group <code class="code">C2=[g18=&gt;s3a]</code>, similar to <code class="code">C1</code> in <a href="chap2.html#X7CF4C37F87D27EBA"><span class="RefLink">2.4-1</span></a>, then construct an isomorphism <span class="SimpleMath">(γ,ρ)</span> between them.</p>
+<p>For an example we form a second cat<span class="SimpleMath">^1</span>-group <code class="code">C2=[g18=&gt;s3a]</code>, similar to <code class="code">C1</code> in <a href="chap2.html#X7CF4C37F87D27EBA"><span class="RefLink">2.4-1</span></a>, then construct an isomorphism <span class="SimpleMath">(γ,ρ)</span> between them.</p>
 
 
 <div class="example"><pre>
@@ -260,7 +260,7 @@ Morphism of cat1-groups :-
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; XModMorphismOfCat1GroupMorphism</code>( <var class="Arg">IsCat1GroupMorphism</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>If <span class="SimpleMath">(σ,ρ) : calX_1 -&gt; calX_2</span> and <span class="SimpleMath">calC_1,calC_2</span> are the cat<span class="SimpleMath">^1</span>-groups accociated to <span class="SimpleMath">calX_1, calX_2</span>, then the associated morphism of cat<span class="SimpleMath">^1</span>-groups is <span class="SimpleMath">(γ,ρ)</span> where <span class="SimpleMath">γ(r_1,s_1) = (ρ r_1, σ s_1)</span>.</p>
 
-<p>Similarly, given a morphism <span class="SimpleMath">(γ,ρ) : calC_1 -&gt; calC_2</span> of cat1-groups, the associated morphism of crossed modules is <span class="SimpleMath">(σ,ρ) : calX_1 -&gt; calX_2</span> where <span class="SimpleMath">σ s_1 = γ(1,s_1)</span>. .</p>
+<p>Similarly, given a morphism <span class="SimpleMath">(γ,ρ) : calC_1 -&gt; calC_2</span> of cat<span class="SimpleMath">^1</span>-groups, the associated morphism of crossed modules is <span class="SimpleMath">(σ,ρ) : calX_1 -&gt; calX_2</span> where <span class="SimpleMath">σ s_1 = γ(1,s_1)</span>. .</p>
 
 
 <div class="example"><pre>
@@ -409,7 +409,7 @@ Group([ (19,20) ])
 <h5>3.5-1 QuotientQuasiIsomorphism</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuotientQuasiIsomorphism</code>( <var class="Arg">cat1</var>, <var class="Arg">bool</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>This function implements the quotient process. The second parameter is a boolean which, when true, causes the results of some intermediate calculations to be printed. The output shows the identity of the reduced cat1-group, if there is one.</p>
+<p>This function implements the quotient process. The second parameter is a boolean which, when true, causes the results of some intermediate calculations to be printed. The output shows the identity of the reduced cat<span class="SimpleMath">^1</span>-group, if there is one.</p>
 
 
 <div class="example"><pre>
@@ -454,7 +454,7 @@ quo: [ f2 ][ f3 ], [ "1", "C2" ]
 
 </pre></div>
 
-<p>The logs above show that <code class="code">C18a</code> has just one normal sub-crossed module <span class="SimpleMath">calN</span> leading to a reduction, and that there are three sub-crossed modules <span class="SimpleMath">calS</span> all giving the same reduction. The conclusion is that <code class="code">C18a</code> is quasi-isomorphic to the identity cat1-group on the cyclic group of order <span class="SimpleMath">2</span>.</p>
+<p>The logs above show that <code class="code">C18a</code> has just one normal sub-crossed module <span class="SimpleMath">calN</span> leading to a reduction, and that there are three sub-crossed modules <span class="SimpleMath">calS</span> all giving the same reduction. The conclusion is that <code class="code">C18a</code> is quasi-isomorphic to the identity cat<span class="SimpleMath">^1</span>-group on the cyclic group of order <span class="SimpleMath">2</span>.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap2.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap4.html">[Next Chapter]</a>&nbsp;  </div>
@@ -463,6 +463,6 @@ quo: [ f2 ][ f3 ], [ "1", "C2" ]
 <div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chap11.html">11</a>  <a href="chap12.html">12</a>  <a href="chap13.html">13</a>  <a href="chap14.html">14</a>  <a href="chap15.html">15</a>  <a href="chapBib.html">Bib</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <hr />
-<p class="foot">generated by <a href="http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+<p class="foot">generated by <a href="https://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
 </body>
 </html>

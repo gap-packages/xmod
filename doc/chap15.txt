@@ -166,6 +166,13 @@
   [30X    [33X[0;6YAdded [10XPreXModWithTrivialRange[110X and started work on double groupoids.[133X
   
   
+  [1X15.2-7 [33X[0;0YVersions from 2.92[133X[101X
+  
+  [30X    [33X[0;6YRenamed                [10XPermAutomorphismAsXModMorphism[110X               as
+        [10XPermAutomorphismAs2dGroupMorphism[110X  and  added a cat[22X^1[122X-group method for
+        this and for [10XAutomorphismPermGroup[110X.[133X
+  
+  
   [1X15.3 [33X[0;0YWhat needs doing next?[133X[101X
   
   [30X    [33X[0;6YSpeed up the calculation of Whitehead groups.[133X

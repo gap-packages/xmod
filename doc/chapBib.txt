@@ -6,9 +6,9 @@
   computational  group  theory[117X,  Ph.D.  thesis,  University  of  Wales, Bangor
   (1997).
   
-  [[20XAOWar[120X]  [16XArvasi,  Z., Odabas, A. and Wensley, C. D.[116X, [17XComputing 3-Dimensional
-  Groups  :  Crossed  Squares  and Cat2-groups[117X, [18XJ. Symbolic Computation[118X, [19X[119X ((to
-  appear)), .
+  [[20XAOW23[120X]  [16XArvasi,  Z., Odabas, A. and Wensley, C. D.[116X, [17XComputing 3-Dimensional
+  Groups  :  Crossed  Squares  and  Cat2-groups[117X,  [18XJ. Symbolic Computation[118X, [19X114[119X
+  (2023), 267-281.
   
   [[20XAW00[120X]  [16XAlp, M. and Wensley, C. D.[116X, [17XEnumeration of cat1-groups of low order[117X,
   [18XInt. J. Algebra and Computation[118X, [19X10[119X (2000), 407--424.

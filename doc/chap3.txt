@@ -5,7 +5,7 @@
   [1X3.1 [33X[0;0YMorphisms of 2-dimensional groups[133X[101X
   
   [33X[0;0YThis    chapter   describes   morphisms   of   (pre-)crossed   modules   and
-  (pre-)cat1-groups.[133X
+  (pre-)cat[22X^1[122X-groups.[133X
   
   [1X3.1-1 Source[101X
   
@@ -119,7 +119,7 @@
   
   [33X[0;0YUsing  [2XIsomorphismByIsomorphisms[102X  with a pair of isomorphisms obtained using
   [10XIsomorphismPermGroup[110X  or  [10XIsomorphismPcGroup[110X,  we  may  construct  a crossed
-  module or a cat1-group of permutation groups or pc-groups.[133X
+  module or a cat[22X^1[122X-group of permutation groups or pc-groups.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
@@ -154,9 +154,9 @@
   where [22Xκ[122X is the projection from [22XL[122X to [22XM[122X.[133X
   
   
-  [1X3.3 [33X[0;0YMorphisms of pre-cat1-groups[133X[101X
+  [1X3.3 [33X[0;0YMorphisms of pre-cat[22X^1[122X[101X[1X-groups[133X[101X
   
-  [33X[0;0YA  morphism  of  pre-cat1-groups from [22XcalC_1 = (e_1;t_1,h_1 : G_1 -> R_1)[122X to
+  [33X[0;0YA  morphism  of pre-cat[22X^1[122X-groups from [22XcalC_1 = (e_1;t_1,h_1 : G_1 -> R_1)[122X to
   [22XcalC_2  =  (e_2;t_2,h_2  : G_2 -> R_2)[122X is a pair [22X(γ, ρ)[122X where [22Xγ : G_1 -> G_2[122X
   and [22Xρ : R_1 -> R_2[122X are homomorphisms satisfying[133X
   
@@ -178,7 +178,7 @@
   [33X[1;0Y[29X[2XInnerAutomorphismCat1[102X( [3XC1[103X, [3Xr[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XIdentityMapping[102X( [3XC1[103X ) [32X attribute[133X
   
-  [33X[0;0YFor  an  example we form a second cat1-group [10XC2=[g18=>s3a][110X, similar to [10XC1[110X in
+  [33X[0;0YFor  an example we form a second cat[22X^1[122X-group [10XC2=[g18=>s3a][110X, similar to [10XC1[110X in
   [14X2.4-1[114X, then construct an isomorphism [22X(γ,ρ)[122X between them.[133X
   
   [4X[32X  Example  [32X[104X
@@ -214,7 +214,7 @@
   accociated  to  [22XcalX_1, calX_2[122X, then the associated morphism of cat[22X^1[122X-groups
   is [22X(γ,ρ)[122X where [22Xγ(r_1,s_1) = (ρ r_1, σ s_1)[122X.[133X
   
-  [33X[0;0YSimilarly,  given  a  morphism  [22X(γ,ρ) : calC_1 -> calC_2[122X of cat1-groups, the
+  [33X[0;0YSimilarly,  given  a  morphism [22X(γ,ρ) : calC_1 -> calC_2[122X of cat[22X^1[122X-groups, the
   associated  morphism  of crossed modules is [22X(σ,ρ) : calX_1 -> calX_2[122X where [22Xσ
   s_1 = γ(1,s_1)[122X. .[133X
   
@@ -392,7 +392,7 @@
   [33X[0;0YThis  function  implements  the  quotient process. The second parameter is a
   boolean   which,   when  true,  causes  the  results  of  some  intermediate
   calculations  to  be  printed.  The output shows the identity of the reduced
-  cat1-group, if there is one.[133X
+  cat[22X^1[122X-group, if there is one.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
@@ -435,5 +435,5 @@
   [33X[0;0YThe  logs  above  show that [10XC18a[110X has just one normal sub-crossed module [22XcalN[122X
   leading  to  a  reduction, and that there are three sub-crossed modules [22XcalS[122X
   all   giving   the   same   reduction.   The  conclusion  is  that  [10XC18a[110X  is
-  quasi-isomorphic to the identity cat1-group on the cyclic group of order [22X2[122X.[133X
+  quasi-isomorphic to the identity cat[22X^1[122X-group on the cyclic group of order [22X2[122X.[133X
   

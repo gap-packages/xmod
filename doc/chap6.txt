@@ -13,18 +13,18 @@
   
   [1X6.1-1 AutomorphismPermGroup[101X
   
-  [33X[1;0Y[29X[2XAutomorphismPermGroup[102X( [3Xxmod[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XGeneratingAutomorphisms[102X( [3Xxmod[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XPermAutomorphismAsXModMorphism[102X( [3Xxmod[103X, [3Xperm[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAutomorphismPermGroup[102X( [3X2d-gp[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XGeneratingAutomorphisms[102X( [3X2d-gp[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XPermAutomorphismAs2dGroupMorphism[102X( [3X2d-gp[103X, [3Xperm[103X ) [32X operation[133X
   
   [33X[0;0YThe  automorphisms [22X( σ, ρ )[122X of [22XcalX[122X form a group [22XAut(calX)[122X of crossed module
   isomorphisms.   The   function   [2XAutomorphismPermGroup[102X   finds   a   set  of
   [2XGeneratingAutomorphisms[102X  for  [22XAut(calX)[122X,  and  then constructs a permutation
   representation  of  this  group,  which  is  used  as the range of the actor
   crossed module of [22XcalX[122X. The individual automorphisms can be constructed from
-  the permutation group using the function [2XPermAutomorphismAsXModMorphism[102X. The
-  example  below  uses  the  crossed module [10XX3=[c3->s3][110X constructed in section
-  [14X5.1[114X.[133X
+  the  permutation group using the function [2XPermAutomorphismAs2dGroupMorphism[102X.
+  The example below uses the crossed module [10XX3=[c3->s3][110X constructed in section
+  [14X5.1-1[114X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
@@ -36,7 +36,7 @@
     [4X[28X[ [[c3->s3] => [c3->s3]], [[c3->s3] => [c3->s3]] ][128X[104X
     [4X[25Xgap>[125X [27Xe6 := Elements( APX3 )[6];[127X[104X
     [4X[28X(1,2)(3,4)(5,7)[128X[104X
-    [4X[25Xgap>[125X [27Xm6 := PermAutomorphismAsXModMorphism( X3, e6 );;[127X[104X
+    [4X[25Xgap>[125X [27Xm6 := PermAutomorphismAs2dGroupMorphism( X3, e6 );;[127X[104X
     [4X[25Xgap>[125X [27XDisplay( m6 );[127X[104X
     [4X[28XMorphism of crossed modules :- [128X[104X
     [4X[28X: Source = [c3->s3] with generating sets:[128X[104X
@@ -50,6 +50,26 @@
     [4X[28X[128X[104X
   [4X[32X[104X
   
+  [33X[0;0YThe  automorphisms  [22X( γ, ρ )[122X of a cat[22X^1[122X-group [22XcalC[122X form a group [22XAut(calC)[122X of
+  cat[22X^1[122X-group  isomorphisms.  The  function [2XAutomorphismPermGroup[102X constructs a
+  permutation  representation of this group, which is used as the range of the
+  actor   crossed   module  of  [22XcalC[122X.  The  individual  automorphisms  can  be
+  constructed    from    the    permutation    group    using   the   function
+  [2XPermAutomorphismAs2dGroupMorphism[102X. The example below uses the cat[22X^1[122X-group [10XC3[110X
+  constructed in section [2XDerivationByImages[102X ([14X5.1-1[114X).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XAPC3 := AutomorphismPermGroup( C3 );[127X[104X
+    [4X[28XGroup([ (1,3,2)(4,6,5)(7,9,8)(12,13,14), (2,3)(4,7)(5,9)(6,8)(10,11)(13,14) ])[128X[104X
+    [4X[25Xgap>[125X [27XIdGroup( APC3 );[127X[104X
+    [4X[28X[ 6, 1 ][128X[104X
+    [4X[25Xgap>[125X [27Xa := GeneratorsOfGroup( APC3 )[1];;[127X[104X
+    [4X[25Xgap>[125X [27Xm := PermAutomorphismAs2dGroupMorphism( C3, a );[127X[104X
+    [4X[28X[[g18 => s3] => [g18 => s3]][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
   [1X6.1-2 WhiteheadXMod[101X
   
   [33X[1;0Y[29X[2XWhiteheadXMod[102X( [3Xxmod[103X ) [32X attribute[133X
@@ -57,8 +77,8 @@
   [33X[1;0Y[29X[2XNorrieXMod[102X( [3Xxmod[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XActorXMod[102X( [3Xxmod[103X ) [32X attribute[133X
   
-  [33X[0;0YAn  automorphism [22X( σ, ρ )[122X of [10XX[110X acts on the Whitehead monoid by [22Xχ^(σ,ρ) = σ ∘
-  χ  ∘  ρ^-1[122X,  and  this determines the action for the actor. In fact the four
+  [33X[0;0YAn automorphism [22X( σ, ρ )[122X of [22XcalX[122X acts on the Whitehead monoid by [22Xχ^(σ,ρ) = σ
+  ∘  χ  ∘ ρ^-1[122X, and this determines the action for the actor. In fact the four
   groups  [22XS, W, R, A[122X, the homomorphisms between them, and the various actions,
   give  five  crossed modules forming a [13Xcrossed square[113X (see [2XActorCrossedSquare[102X
   ([14X8.2-5[114X)).[133X
@@ -80,19 +100,21 @@
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
     [4X[25Xgap>[125X [27XWGX3 := WhiteheadPermGroup( X3 );[127X[104X
-    [4X[28XGroup([ (1,2,3)(4,5,6), (1,4)(2,6)(3,5) ])[128X[104X
+    [4X[28XGroup([ (1,2,3), (1,2) ])[128X[104X
+    [4X[25Xgap>[125X [27XAPX3 := AutomorphismPermGroup( X3 );[127X[104X
+    [4X[28XGroup([ (5,7,6), (1,2)(3,4)(6,7) ])[128X[104X
     [4X[25Xgap>[125X [27XWX3 := WhiteheadXMod( X3 );; [127X[104X
     [4X[25Xgap>[125X [27XDisplay( WX3 );[127X[104X
     [4X[28XCrossed module Whitehead[c3->s3] :- [128X[104X
     [4X[28X: Source group has generators:[128X[104X
     [4X[28X  [ (1,2,3)(4,6,5) ][128X[104X
     [4X[28X: Range group has generators:[128X[104X
-    [4X[28X  [ (1,2,3)(4,5,6), (1,4)(2,6)(3,5) ][128X[104X
+    [4X[28X  [ (1,2,3), (1,2) ][128X[104X
     [4X[28X: Boundary homomorphism maps source generators to:[128X[104X
-    [4X[28X  [ (1,2,3)(4,5,6) ][128X[104X
+    [4X[28X  [ (1,2,3) ][128X[104X
     [4X[28X: Action homomorphism maps range generators to automorphisms:[128X[104X
-    [4X[28X  (1,2,3)(4,5,6) --> { source gens --> [ (1,2,3)(4,6,5) ] }[128X[104X
-    [4X[28X  (1,4)(2,6)(3,5) --> { source gens --> [ (1,3,2)(4,5,6) ] }[128X[104X
+    [4X[28X  (1,2,3) --> { source gens --> [ (1,2,3)(4,6,5) ] }[128X[104X
+    [4X[28X  (1,2) --> { source gens --> [ (1,3,2)(4,5,6) ] }[128X[104X
     [4X[28X  These 2 automorphisms generate the group of automorphisms.[128X[104X
     [4X[25Xgap>[125X [27XLX3 := LueXMod( X3 );;[127X[104X
     [4X[25Xgap>[125X [27XDisplay( LX3 );[127X[104X
@@ -124,26 +146,29 @@
     [4X[25Xgap>[125X [27XDisplay( AX3);[127X[104X
     [4X[28XCrossed module Actor[c3->s3] :- [128X[104X
     [4X[28X: Source group has generators:[128X[104X
-    [4X[28X  [ (1,2,3)(4,5,6), (1,4)(2,6)(3,5) ][128X[104X
+    [4X[28X  [ (1,2,3), (1,2) ][128X[104X
     [4X[28X: Range group has generators:[128X[104X
     [4X[28X  [ (5,7,6), (1,2)(3,4)(6,7) ][128X[104X
     [4X[28X: Boundary homomorphism maps source generators to:[128X[104X
     [4X[28X  [ (5,7,6), (1,2)(3,4)(6,7) ][128X[104X
     [4X[28X: Action homomorphism maps range generators to automorphisms:[128X[104X
-    [4X[28X  (5,7,6) --> { source gens --> [ (1,2,3)(4,5,6), (1,6)(2,5)(3,4) ] }[128X[104X
-    [4X[28X  (1,2)(3,4)(6,7) --> { source gens --> [ (1,3,2)(4,6,5), (1,4)(2,6)(3,5) ] }[128X[104X
+    [4X[28X  (5,7,6) --> { source gens --> [ (1,2,3), (2,3) ] }[128X[104X
+    [4X[28X  (1,2)(3,4)(6,7) --> { source gens --> [ (1,3,2), (1,2) ] }[128X[104X
     [4X[28X  These 2 automorphisms generate the group of automorphisms.[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
   [33X[0;0YThe  main  methods  for these operations are written for permutation crossed
-  modules.  For other crossed modules an isomorphism to a permutation crodssed
+  modules.  For  other crossed modules an isomorphism to a permutation crossed
   module  is found first, and then the main method is applied to the image. In
   the  example  the  crossed module [10XXAq8[110X is the automorphism crossed module of
   the quaternion group.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xq8 := Group( (1,2,3,4)(5,8,7,6), (1,5,3,7)(2,6,4,8) );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( q8, "q8" );[127X[104X
+    [4X[25Xgap>[125X [27XXAq8 := XModByAutomorphismGroup( q8 );; [127X[104X
     [4X[25Xgap>[125X [27XStructureDescription( WhiteheadXMod( XAq8 ) ); [127X[104X
     [4X[28X[ "Q8", "C2 x C2 x C2" ][128X[104X
     [4X[25Xgap>[125X [27XStructureDescription( LueXMod( XAq8 ) );      [127X[104X
@@ -183,10 +208,10 @@
     [4X[28X  [ (1,2,3)(4,6,5) ][128X[104X
     [4X[28X  [ (4,5,6), (2,3)(5,6) ][128X[104X
     [4X[28X:  Range = Actor[c3->s3] with generating sets:[128X[104X
-    [4X[28X  [ (1,2,3)(4,5,6), (1,4)(2,6)(3,5) ][128X[104X
+    [4X[28X  [ (1,2,3), (1,2) ][128X[104X
     [4X[28X  [ (5,7,6), (1,2)(3,4)(6,7) ][128X[104X
     [4X[28X: Source Homomorphism maps source generators to:[128X[104X
-    [4X[28X  [ (1,2,3)(4,5,6) ][128X[104X
+    [4X[28X  [ (1,2,3) ][128X[104X
     [4X[28X: Range Homomorphism maps range generators to:[128X[104X
     [4X[28X  [ (5,6,7), (1,2)(3,4)(6,7) ][128X[104X
     [4X[25Xgap>[125X [27XIsInjective( IMX3 );[127X[104X
@@ -197,15 +222,87 @@
     [4X[25Xgap>[125X [27XDisplay( IAX3 );[127X[104X
     [4X[28XCrossed module InnerActor[c3->s3] :- [128X[104X
     [4X[28X: Source group has generators:[128X[104X
-    [4X[28X  [ (1,2,3)(4,5,6) ][128X[104X
+    [4X[28X  [ (1,2,3) ][128X[104X
     [4X[28X: Range group has generators:[128X[104X
     [4X[28X  [ (5,6,7), (1,2)(3,4)(6,7) ][128X[104X
     [4X[28X: Boundary homomorphism maps source generators to:[128X[104X
     [4X[28X  [ (5,7,6) ][128X[104X
     [4X[28X: Action homomorphism maps range generators to automorphisms:[128X[104X
-    [4X[28X  (5,6,7) --> { source gens --> [ (1,2,3)(4,5,6) ] }[128X[104X
-    [4X[28X  (1,2)(3,4)(6,7) --> { source gens --> [ (1,3,2)(4,6,5) ] }[128X[104X
+    [4X[28X  (5,6,7) --> { source gens --> [ (1,2,3) ] }[128X[104X
+    [4X[28X  (1,2)(3,4)(6,7) --> { source gens --> [ (1,3,2) ] }[128X[104X
     [4X[28X  These 2 automorphisms generate the group of automorphisms.[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X6.2 [33X[0;0YActor of a cat[22X^1[122X[101X[1X-group[133X[101X
+  
+  [1X6.2-1 ActorCat1Group[101X
+  
+  [33X[1;0Y[29X[2XActorCat1Group[102X( [3Xcat1[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XInnerActorCat1Group[102X( [3Xcat1[103X ) [32X function[133X
+  
+  [33X[0;0YThe  actor  of  a  cat[22X^1[122X-group  [22XC[122X  is  obtained by converting [22XC[122X to a crossed
+  module;  forming  the actor of that crossed module; and then converting that
+  actor into a cat[22X^1[122X-group.[133X
+  
+  [33X[0;0YA similar procedure is followed for the inner actor.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XC3;[127X[104X
+    [4X[28X[g18 => s3][128X[104X
+    [4X[25Xgap>[125X [27XAC3 := ActorCat1Group( C3 );[127X[104X
+    [4X[28Xcat1(Actor[c3->s3])[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( AC3 );             [127X[104X
+    [4X[28XCat1-group cat1(Actor[c3->s3]) :- [128X[104X
+    [4X[28X: Source group has generators:[128X[104X
+    [4X[28X  [ ( 9,10), ( 8, 9,10), ( 5, 7, 6)( 8, 9,10), (1,2)(3,4)(6,7)(8,9) ][128X[104X
+    [4X[28X: Range group has generators:[128X[104X
+    [4X[28X  [ (5,7,6), (1,2)(3,4)(6,7) ][128X[104X
+    [4X[28X: tail homomorphism maps source generators to:[128X[104X
+    [4X[28X  [ (), (), (5,7,6), (1,2)(3,4)(6,7) ][128X[104X
+    [4X[28X: head homomorphism maps source generators to:[128X[104X
+    [4X[28X  [ (1,2)(3,4)(5,6), (5,7,6), (5,7,6), (1,2)(3,4)(6,7) ][128X[104X
+    [4X[28X: range embedding maps range generators to:[128X[104X
+    [4X[28X  [ ( 5, 7, 6)( 8, 9,10), (1,2)(3,4)(6,7)(8,9) ][128X[104X
+    [4X[28X: kernel has generators:[128X[104X
+    [4X[28X  [ ( 9,10), ( 8, 9,10) ][128X[104X
+    [4X[28X: boundary homomorphism maps generators of kernel to:[128X[104X
+    [4X[28X  [ (1,2)(3,4)(5,6), (5,7,6) ][128X[104X
+    [4X[28X: kernel embedding maps generators of kernel to:[128X[104X
+    [4X[28X  [ ( 9,10), ( 8, 9,10) ][128X[104X
+    [4X[28X: associated crossed module is Actor[c3->s3][128X[104X
+    [4X[25Xgap>[125X [27XStructureDescription( AC3 );[127X[104X
+    [4X[28X[ "S3 x S3", "S3" ][128X[104X
+    [4X[25Xgap>[125X [27XIAC3 := InnerActorCat1Group( C3 );[127X[104X
+    [4X[28Xcat1(InnerActor[c3->s3])[128X[104X
+    [4X[25Xgap>[125X [27XStructureDescription( IAC3 );[127X[104X
+    [4X[28X[ "(C3 x C3) : C2", "S3" ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X6.2-2 Actor[101X
+  
+  [33X[1;0Y[29X[2XActor[102X( [3Xargs[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XInnerActor[102X( [3Xargs[103X ) [32X function[133X
+  
+  [33X[0;0YThe global functions [10XActor[110X and [10XInnerActor[110X will call operations [10XActorXMod[110X and
+  [10XInnerActorXMod[110X or [10XActorCat1Group[110X and [10XInnerActorCat1Group[110X as appropriate.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xc4q := Subgroup( q8, [ (1,2,3,4)(5,8,7,6) ] );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( c4q, "c4q" );                         [127X[104X
+    [4X[25Xgap>[125X [27XXc4q := XModByNormalSubgroup( q8, c4q );;      [127X[104X
+    [4X[25Xgap>[125X [27XAXc4q := Actor( Xc4q );[127X[104X
+    [4X[28XActor[c4q->q8][128X[104X
+    [4X[25Xgap>[125X [27XStructureDescription( AXc4q );[127X[104X
+    [4X[28X[ "D8", "D8" ][128X[104X
+    [4X[25Xgap>[125X [27XIAXc4q := InnerActor( Xc4q );[127X[104X
+    [4X[28XInnerActor[c4q->q8][128X[104X
+    [4X[25Xgap>[125X [27XStructureDescription( IAXc4q );[127X[104X
+    [4X[28X[ "C2", "C2 x C2" ][128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
