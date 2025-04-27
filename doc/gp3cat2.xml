@@ -160,7 +160,7 @@ the up, left, right, down and diagonal cat<M>^1</M>-groups.
 <P/>
 The two cat<M>^2</M>-groups <C>C2a, C2b</C> constructed in the 
 following example are isomorphic.  
-They differ in the down-left group <C>P</C>. 
+They differ in the down-right group <C>P</C>. 
 </Description>
 </ManSection>
 <P/>
@@ -199,6 +199,10 @@ gap> C2b := PreCat2GroupByPreCat1Groups( up, left, right, down, diag );
 2 : [d12 => Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )]
 gap> C2a = C2b;
 false
+gap> GroupsOfHigherDimensionalGroup( C2a )[4];
+Group([ (), (2,6)(3,5) ])
+gap> GroupsOfHigherDimensionalGroup( C2b )[4];
+Group([ (7,8) ])
 ]]>
 </Example>
 
@@ -429,15 +433,73 @@ gap> ewy := GroupHomomorphismByImages( Q, G24, [w,y], [w,y] );;
 gap> C1wy := PreCat1GroupByTailHeadEmbedding( twy, twy, ewy );; 
 gap> C2wxy := PreCat2Group( C1xy, C1xy );; 
 gap> dg := Diagonal2DimensionalGroup( C2wxy );;
-gap> IsCat1Group( dg ); 
-false
 gap> C1sub := Subdiagonal2DimensionalGroup( C2wxy );; 
-gap> IsCat1Group( C1sub );
-true
-gap> IsSub2DimensionalGroup( dg, C1sub );
-true
+gap> [ IsCat1Group(dg), IsCat1Group(C1sub), IsSub2DimensionalGroup(dg,C1sub) ];
+[ false, true, true ]
 ]]>
 </Example>
+
+<ManSection>
+   <Oper Name="SubCat2Group"
+         Arg="C2G, ul, ur, dl" />
+   <Oper Name="IsSubCat2Group"
+         Arg="C2G, subC2G" />
+   <Oper Name="SubPreCat2Group"
+         Arg="C2G, ul, ur, dl" />
+   <Oper Name="IsSubPreCat2Group"
+         Arg="C2G, subC2G" />
+<Description>
+As with crossed squares, we may construct sub-structures of cat<M>^2</M>-groups.
+In this case we need only prescribe three subgroups, rather than four,
+so that the up and left sub-cat<M>^1</M>-groups can be specified.
+The remaining sub-cat<M>^1</M>-groups are then calculated automatically.
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> gps := GroupsOfHigherDimensionalGroup( C2ab );;
+gap> c6c2 := Subgroup( gps[1], [ (1,2,3,4,5,6), (8,12)(9,11) ] );;
+gap> c2c2 := Subgroup( gps[2], [ (1,4)(2,5)(3,6), (8,12)(9,11) ] );;
+gap> c3c2 := Subgroup( gps[3], [ (1,5,3)(2,6,4), (8,12)(9,11) ] );;
+gap> SC2ab := SubCat2Group( C2ab, c6c2, c2c2, c3c2 );;
+gap> Display( SC2ab );              
+(pre-)cat2-group with groups: [ Group( [ (1,2,3,4,5,6), ( 8,12)( 9,11) ] ), 
+  Group( [ (1,4)(2,5)(3,6), ( 8,12)( 9,11) ] ), 
+  Group( [ (1,5,3)(2,6,4), ( 8,12)( 9,11) ] ), 
+  Group( [ (), ( 8,12)( 9,11) ] ) ]
+   up tail=head: [ [ (1,2,3,4,5,6), ( 8,12)( 9,11) ], 
+  [ (1,4)(2,5)(3,6), ( 8,12)( 9,11) ] ]
+ left tail=head: [ [ (1,2,3,4,5,6), ( 8,12)( 9,11) ], 
+  [ (1,5,3)(2,6,4), ( 8,12)( 9,11) ] ]
+right tail=head: [ [ (1,4)(2,5)(3,6), ( 8,12)( 9,11) ], 
+  [ (), ( 8,12)( 9,11) ] ]
+ down tail=head: [ [ (1,5,3)(2,6,4), ( 8,12)( 9,11) ], [ (), ( 8,12)( 9,11) ] 
+ ]
+]]>
+</Example>
+
+<ManSection>
+   <Attr Name="TrivialSubCat2Group"
+         Arg="C2G" />
+   <Attr Name="TrivialSubPreCat2Group"
+         Arg="C2G" />
+<Description>
+A special case of the previous operation is when all the subgroups are trivial.
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> TC2ab := TrivialSubCrossedSquare( C2ab );
+crossed square with crossed modules:
+      up = [Group( () ) -> Group( () )]
+    left = [Group( () ) -> Group( () )]
+   right = [Group( () ) -> Group( () )]
+    down = [Group( () ) -> Group( () )]
+]]>
+</Example>
+
 </Section>
 
 

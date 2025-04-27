@@ -1,6 +1,7 @@
  # CHANGES to the 'XMod' package
 
-## 2.92 -> 2.92dev (25/04/2025)
+## 2.92 -> 2.92dev (27/04/2025)
+ * (27/04/25) added sub-crossed square and sub-cat2-group operations
  * (25/04/25) simplified the construction of crossed pairings so that 
               files map2arg.g{d,i} can be removed
  * (20/12/24) changed the examples of induced crossed modules in section 7.2

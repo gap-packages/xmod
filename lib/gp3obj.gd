@@ -226,18 +226,16 @@ DeclareAttribute( "PreCat2GroupOfPreCrossedSquare", IsPreCrossedSquare );
 DeclareAttribute( "CrossedSquareOfCat2Group", IsCat2Group );
 DeclareAttribute( "Cat2GroupOfCrossedSquare", IsCrossedSquare );
 
-######################################################################## 
-##                                                                    ##
-#?  NONE OF THE FOLLOWING SUB-FUNCTIONS HAVE BEEN IMPLEMENTED SO FAR  ## 
-##                                                                    ## 
-######################################################################## 
+#############################################################################
+## The following subfunctions were implemented in April 2025 for version 2.93
+#############################################################################
 
 #############################################################################
 ##
-#O  IsSubPreCrossedSquare( <obj> ) 
-#O  IsSubCrossedSquare( <obj> ) 
-#O  IsSubPreCat2Group( <obj> ) 
-#O  IsSubCat2Group( <obj> )
+#O  IsSubPreCrossedSquare( <pxs> <subpxs> ) 
+#O  IsSubCrossedSquare( <xs> <subxs> ) 
+#O  IsSubPreCat2Group( <pc1> <subpc1> ) 
+#O  IsSubCat2Group( <cat1> <subcat1 )
 ##
 DeclareOperation( "IsSubPreCrossedSquare", 
     [ IsHigherDimensionalGroup, IsHigherDimensionalGroup ] );
@@ -252,17 +250,17 @@ DeclareOperation( "IsSubCat2Group",
 ##
 #O  SubPreCrossedSquare( <PXS>, <ul>, <ur>, <dl>, <dr> ) 
 #O  SubCrossedSquare( <XS>, <ul>, <ur>, <dl>, <dr> ) 
-#O  SubPreCat2Group( <PC2>, <ul>, <ur>, <dl>, <dr>  )
-#O  SubCat2Group( <C2>, <ul>, <ur>, <dl>, <dr>  )
+#O  SubPreCat2Group( <PC2>, <ul>, <ur>, <dl>  )
+#O  SubCat2Group( <C2>, <ul>, <ur>, <dl>  )
 ##
 DeclareOperation( "SubPreCrossedSquare", 
     [ IsPreCrossedSquare, IsGroup, IsGroup, IsGroup, IsGroup ] );
 DeclareOperation( "SubCrossedSquare", 
     [ IsCrossedSquare, IsGroup, IsGroup, IsGroup, IsGroup ] );
 DeclareOperation( "SubPreCat2Group", 
-    [ IsPreCat2Group, IsGroup, IsGroup, IsGroup, IsGroup ] );
+    [ IsPreCat2Group, IsGroup, IsGroup, IsGroup ] );
 DeclareOperation( "SubCat2Group", 
-    [ IsCat2Group, IsGroup, IsGroup, IsGroup, IsGroup ] );
+    [ IsCat2Group, IsGroup, IsGroup, IsGroup ] );
 
 #############################################################################
 ##
@@ -273,7 +271,7 @@ DeclareOperation( "SubCat2Group",
 #A  TrivialSubCat2Group( <obj> ) 
 #P  IsIdentityCat2Group( <C1G> )
 ##
-DeclareOperation( "TrivialSub3DimensionalGroup", [ Is3DimensionalGroup ] );
+DeclareOperation( "TrivialSub3DimensionalGroup", [ Is3DimensionalDomain ] );
 DeclareAttribute( "TrivialSubPreCrossedSquare", IsPreCrossedSquare );
 DeclareAttribute( "TrivialSubCrossedSquare", IsCrossedSquare );
 DeclareAttribute( "TrivialSubPreCat2Group", IsPreCat2Group );

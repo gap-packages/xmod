@@ -2614,6 +2614,7 @@ end );
 ##############################################################################
 ##
 #M  SubPreCrossedSquare                  creates SubPreXSq from four subgroups
+#M  SubCrossedSquare                     creates SubXSq from four subgroups
 ##
 InstallMethod( SubPreCrossedSquare, "generic method for pre-crossed squares",
      true, [ IsPreCrossedSquare, IsGroup, IsGroup, IsGroup, IsGroup ], 0,
@@ -2644,6 +2645,62 @@ function( PXS, L1, M1, N1, P1 )
     return sub;
 end );
 
+InstallMethod( SubCrossedSquare, "generic method for pre-crossed squares",
+     true, [ IsCrossedSquare, IsGroup, IsGroup, IsGroup, IsGroup ], 0,
+function( XS, L1, M1, N1, P1 )
+
+    local sub, ok;
+
+    sub := SubPreCrossedSquare( XS, L1, M1, N1, P1 );
+    ok := IsCrossedSquare( sub );
+    if ok then
+        return sub;
+    else
+        return fail;
+    fi;
+end );
+
+##############################################################################
+##
+#M  SubPreCat2Group                    creates SubPreCat2 from three subgroups
+#M  SubCat2Group                       creates SubCat2 from three subgroups
+##
+InstallMethod( SubPreCat2Group, "generic method for pre-cat2-groups",
+     true, [ IsPreCat2Group, IsGroup, IsGroup, IsGroup ], 0,
+function( C2G, L1, M1, N1 )
+
+    local  L, M, N, up, lt, up1, lt1, rt1, dn1, dg1,
+           xp, sub;
+
+    up := Up2DimensionalGroup( C2G );
+    lt := Left2DimensionalGroup( C2G );
+    L := Source( up );
+    M := Range( up );
+    N := Range( lt );
+    up1 := SubPreCat1Group( up, L1, M1 );
+    lt1 := SubPreCat1Group( lt, L1, N1 );
+    if fail in [ up1, lt1 ] then
+        return fail;
+    fi;
+    sub := PreCat2Group( up1, lt1 );
+    return sub;
+end );
+
+InstallMethod( SubCat2Group, "generic method for cat2-groups",
+     true, [ IsCat2Group, IsGroup, IsGroup, IsGroup ], 0,
+function( C2G, L1, M1, N1 )
+
+    local sub, ok;
+
+    sub := SubPreCat2Group( C2G, L1, M1, N1 );
+    ok := IsCat2Group( sub );
+    if ok then
+        return sub;
+    else
+        return fail;
+    fi;
+end );
+
 #############################################################################
 ##
 #M  TrivialSub3DimensionalGroup . . . . . . . . . .  of a 3d-object
@@ -2653,7 +2710,7 @@ end );
 #M  TrivialSubCat2Group  . . . . . . . . . . . . . . of a cat2-group
 ##
 InstallMethod( TrivialSub3DimensionalGroup, "of a 3d-object", true, 
-    [ Is3DimensionalGroup ], 0,
+    [ Is3DimensionalDomain ], 0,
 function( obj )
 
     local upid, dnid;
@@ -2665,7 +2722,7 @@ function( obj )
                                          Source( dnid ), Range( dnid ) );
     elif IsPreCat2Group( obj ) then
         return SubPreCat2Group( obj, Source( upid ), Range( upid ),
-                                     Source( dnid ), Range( dnid ) );
+                                     Source( dnid ) );
     else
         Error( "<obj> must be a pre-crossed square or a pre-cat2-group" );
     fi;
@@ -2680,7 +2737,10 @@ end );
 InstallMethod( TrivialSubCrossedSquare, "of a crossed square", true, 
     [ IsCrossedSquare ], 0,
 function( obj )
-    return TrivialSub3DimensionalGroup( obj );
+    local triv, ok;
+    triv := TrivialSub3DimensionalGroup( obj );
+    ok := IsCrossedSquare( triv );
+    return triv;
 end );
 
 InstallMethod( TrivialSubPreCat2Group, "of a pre-cat2-group", true, 

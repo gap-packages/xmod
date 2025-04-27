@@ -721,11 +721,12 @@ its <C>Left2DimensionalGroup</C>.
 </ManSection>
 
 <ManSection>
-   <Attr Name="CrossedPairing"
+   <Attr Name="Crossed Pairing"
          Arg="XS" />
 <Description>
 Crossed pairings have been implemented as functions of two variables,
-<M>\{M,N\} \to L</M>. 
+<M>\{M,N\} \to L</M>.
+(Up until version 2.92 a more complicated two-variable mapping was used.)
 </Description>
 </ManSection>
 <P/>
@@ -762,6 +763,78 @@ true
 </Example>
 </Section>
 
+
+<Section><Heading>Substructures of Crossed Squares</Heading>
+
+To specify a sub-crossed square of <M>\calS</M> we may specify four
+subgroups of the four groups in <M>\calS</M>.
+If these define five sub-crossed modules, and these comc
+bine together
+satisfactorily, then a crossed square is produced.
+
+<ManSection>
+   <Oper Name="SubCrossedSquare"
+         Arg="XS, ul, ur, dl, dr" />
+   <Oper Name="IsSubCrossedSquare"
+         Arg="XS, subXS" />
+   <Oper Name="SubPreCrossedSquare"
+         Arg="XS, ul, ur, dl, dr" />
+   <Oper Name="IsSubPreCrossedSquare"
+         Arg="XS, subXS" />
+<Description>
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> Display( XS20 ); 
+[  c5d -> d10a ]
+[   |      |   ]
+[ d10b -> d20  ]
+gap> p5 := p1^5*p2;;  [p2,p12,p5];
+[ (2,10)(3,9)(4,8)(5,7), (1,10)(2,9)(3,8)(4,7)(5,6), 
+  (1,6)(2,5)(3,4)(7,10)(8,9) ]
+gap> L1 := TrivialSubgroup( c5d );;
+gap> M1 := Subgroup( d10a, [ p2 ] );;
+gap> N1 := Subgroup( d10b, [ p5 ] );;
+gap> P1 := Subgroup( d20, [ p2, p5 ] );;
+gap> sub20 := SubCrossedSquare( XS20, L1, M1, N1, P1 );
+crossed square with crossed modules:
+      up = [Group( () ) -> Group( [ ( 2,10)( 3, 9)( 4, 8)( 5, 7) ] )]
+    left = [Group( () ) -> Group( [ ( 1, 6)( 2, 5)( 3, 4)( 7,10)( 8, 9) ] )]
+   right = [Group( [ ( 2,10)( 3, 9)( 4, 8)( 5, 7) ] ) -> Group( 
+[ ( 2,10)( 3, 9)( 4, 8)( 5, 7), ( 1, 6)( 2, 5)( 3, 4)( 7,10)( 8, 9) ] )]
+    down = [Group( [ ( 1, 6)( 2, 5)( 3, 4)( 7,10)( 8, 9) ] ) -> Group( 
+[ ( 2,10)( 3, 9)( 4, 8)( 5, 7), ( 1, 6)( 2, 5)( 3, 4)( 7,10)( 8, 9) ] )]
+
+gap> sxp := CrossedPairing( sub20 );;
+gap> sxp( p5, p2 );
+()
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="TrivialSub3DimensionalGroup"
+         Arg="3dgp" />
+   <Attr Name="TrivialSubCrossedSquare"
+         Arg="XS" />
+   <Attr Name="TrivialSubPreCrossedSquare"
+         Arg="XS" />
+<Description>
+A special case of the previous operation is when all the subgroups are trivial.
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> TC2ab := TrivialSubCat2Group( C2ab );
+(pre-)cat2-group with generating (pre-)cat1-groups:
+1 : [Group( () ) => Group( () )]
+2 : [Group( () ) => Group( () )]
+]]>
+</Example>
+
+</Section>
 
 
 <Section><Heading>Morphisms of crossed squares</Heading>

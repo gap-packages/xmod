@@ -3051,7 +3051,7 @@ function( obj )
     if IsPreXMod( obj ) then
         return SubPreXMod( obj, idsrc, idrng );
     elif IsPreCat1Group( obj ) then
-        return SubPreCat1Group( obj, idsrc );
+        return SubPreCat1Group( obj, idsrc, idrng );
     else
         Error( "<obj> must be a pre-crossed module or a pre-cat1-group" );
     fi;

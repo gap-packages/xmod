@@ -227,7 +227,40 @@ gap> XSF := PreCrossedSquareByPreXMods( X0, X0, X1, X1, X0, h );;
 gap> IsCrossedSquare( XSF ); 
 true
 
-## Section 8.3.3
+## Section 8.3.1
+gap> Display( XS20 ); 
+[  c5d -> d10a ]
+[   |      |   ]
+[ d10b -> d20  ]
+gap> p5 := p1^5*p2;;  [p2,p12,p5];
+[ (2,10)(3,9)(4,8)(5,7), (1,10)(2,9)(3,8)(4,7)(5,6), 
+  (1,6)(2,5)(3,4)(7,10)(8,9) ]
+gap> L1 := TrivialSubgroup( c5d );;
+gap> M1 := Subgroup( d10a, [ p2 ] );;
+gap> N1 := Subgroup( d10b, [ p5 ] );;
+gap> P1 := Subgroup( d20, [ p2, p5 ] );;
+gap> sub20 := SubCrossedSquare( XS20, L1, M1, N1, P1 );
+crossed square with crossed modules:
+      up = [Group( () ) -> Group( [ ( 2,10)( 3, 9)( 4, 8)( 5, 7) ] )]
+    left = [Group( () ) -> Group( [ ( 1, 6)( 2, 5)( 3, 4)( 7,10)( 8, 9) ] )]
+   right = [Group( [ ( 2,10)( 3, 9)( 4, 8)( 5, 7) ] ) -> Group( 
+[ ( 2,10)( 3, 9)( 4, 8)( 5, 7), ( 1, 6)( 2, 5)( 3, 4)( 7,10)( 8, 9) ] )]
+    down = [Group( [ ( 1, 6)( 2, 5)( 3, 4)( 7,10)( 8, 9) ] ) -> Group( 
+[ ( 2,10)( 3, 9)( 4, 8)( 5, 7), ( 1, 6)( 2, 5)( 3, 4)( 7,10)( 8, 9) ] )]
+
+gap> sxp := CrossedPairing( sub20 );;
+gap> sxp( p5, p2 );
+()
+
+## Section 8.3.2
+gap> TXS20 := TrivialSubCrossedSquare( XS20 );
+crossed square with crossed modules:
+      up = [Group( () ) -> Group( () )]
+    left = [Group( () ) -> Group( () )]
+   right = [Group( () ) -> Group( () )]
+    down = [Group( () ) -> Group( () )]
+
+## Section 8.4.3
 gap> ad20 := GroupHomomorphismByImages( d20, d20, [p1,p2], [p1,p2^p1] );;
 gap> ad10a := GroupHomomorphismByImages( d10a, d10a, [p1^2,p2], [p1^2,p2^p1] );;
 gap> ad10b := GroupHomomorphismByImages( d10b, d10b, [p1^2,p12], [p1^2,p12^p1] );;
