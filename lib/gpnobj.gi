@@ -1,10 +1,10 @@
-##############################################################################
+#############################################################################
 ##
-#W  gpnobj.gi                   GAP4 package `XMod'              Chris Wensley
-##                                                                Alper Odabas
+#W  gpnobj.gi                   GAP4 package `XMod'             Chris Wensley
+##                                                               Alper Odabas
 ##  This file implements generic methods for (pre-)catn-groups.
 ##
-#Y  Copyright (C) 2001-2020, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2025, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 #############################################################################
@@ -161,7 +161,7 @@ end );
 
 #############################################################################
 ##
-#M  IsPreCatnGroupWithIdentityEmbeddings . . . check that all e are identities
+#M  IsPreCatnGroupWithIdentityEmbeddings . . check that all e are identities
 ##
 InstallMethod( IsPreCatnGroupWithIdentityEmbeddings, "test a pre-catn-group", 
     true, [ IsPreCatnGroup ], 0,
@@ -191,7 +191,7 @@ function( obj )
     fi;
 end );
 
-##############################################################################
+#############################################################################
 ##
 #M  PreCatnObj ( <cat1-groups> ) . . . . . . . . . . . make a pre-catn object
 ##
@@ -242,6 +242,7 @@ InstallGlobalFunction( PreCatnGroup, function( arg )
         "standard usage: PreCatnGroup( [pre-cat1-gp,pre-cat1-gp,...] );\n";
     if not ( ( nargs = 1 ) and IsList( arg[1] ) ) then 
         Print( usage );
+        Error( "please input a list of cat1-groups" );
     fi; 
     PnG := PreCatnObj( arg[1] ); 
     if ( PnG = fail ) then 
@@ -296,9 +297,9 @@ InstallGlobalFunction( CatnGroup, function( arg )
     return fail;
 end );
 
-##############################################################################
+#############################################################################
 ##
-#M  \=( <dom1>, <dom2> ) . . . test if two higher dimensional object are equal
+#M  \=( <dom1>, <dom2> ) . . test if two higher dimensional objects are equal
 ##
 InstallMethod( \=,
     "generic method for two higher dimensional domains",
@@ -320,9 +321,10 @@ end );
 #############################################################################
 ##
 #M  String, ViewString, PrintString, ViewObj, PrintObj 
-##  . . . . . . . . . . . . . . . . . . . . . . . . . for n-dimensional groups 
+##  . . . . . . . . . . . . . . . . . . . . . . . . for n-dimensional groups 
 ##
-InstallMethod( String, "for an nd-group", true, [ IsHigherDimensionalGroup ], 0, 
+InstallMethod( String, "for an nd-group", true, 
+    [ IsHigherDimensionalGroup ], 0, 
 function( gnd ) 
     return( STRINGIFY( "higher dimensional group with dimension ", 
                        String( HigherDimension(gnd)-1 ) ) ); 
@@ -334,8 +336,8 @@ InstallMethod( ViewString, "for an nd-group", true,
 InstallMethod( PrintString, "for an nd-group", true, 
     [ IsHigherDimensionalGroup ], 0, String ); 
 
-InstallMethod( PrintObj, "for an nd-group", true, [ IsHigherDimensionalGroup ], 
-    0,
+InstallMethod( PrintObj, "for an nd-group", true, 
+    [ IsHigherDimensionalGroup ], 0,
 function( gnd )
 
     local i, n, L;

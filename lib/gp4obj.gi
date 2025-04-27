@@ -1,16 +1,16 @@
-##############################################################################
+	#############################################################################
 ##
-#W  gp4obj.gi                   GAP4 package `XMod'              Chris Wensley
-##                                                                Alper Odabas
+#W  gp4obj.gi                   GAP4 package `XMod'             Chris Wensley
+##                                                               Alper Odabas
 ##  This file implements generic methods for (pre-)crossed cubes 
 ##  and (pre-)cat3-groups.
 ##
-#Y  Copyright (C) 2001-2024, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2025, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
     
-##############################################################################
+#############################################################################
 ##
-#M  PreCat3GroupObj( [<front>,<up>,<left>,<right>,<down>,<back>] ) 
+#M  PreCat3GroupObj( [<front>,<left>,<up>,<right>,<down>,<back>] ) 
 ##
 InstallMethod( PreCat3GroupObj, "for a list of pre-cat2-groups", true,
     [ IsList ], 0,
@@ -23,19 +23,19 @@ function( L )
     fi; 
     PC := rec();
     ObjectifyWithAttributes( PC, PreCat3GroupObjType, 
-      Front3DimensionalGroup, L[1], 
-      Up3DimensionalGroup, L[2], 
-      Left3DimensionalGroup, L[3],
-      Right3DimensionalGroup, L[4],
-      Down3DimensionalGroup, L[5],
-      Back3DimensionalGroup, L[6], 
-      GeneratingCat1Groups, [ Up2DimensionalGroup( L[1] ),
-                              Left2DimensionalGroup( L[1] ), 
-                              Up2DimensionalGroup( L[2] ) ],
-      HigherDimension, 4, 
-      IsHigherDimensionalGroup, true, 
-      IsPreCat3Group, true, 
-      IsPreCatnGroup, true );
+        Front3DimensionalGroup, L[1], 
+        Left3DimensionalGroup, L[2], 
+        Up3DimensionalGroup, L[3],
+        Right3DimensionalGroup, L[4],
+        Down3DimensionalGroup, L[5],
+        Back3DimensionalGroup, L[6], 
+        GeneratingCat1Groups, [ Up2DimensionalGroup( L[1] ),
+                                Left2DimensionalGroup( L[1] ), 
+                                Left2DimensionalGroup( L[2] ) ],
+        HigherDimension, 4, 
+        IsHigherDimensionalGroup, true, 
+        IsPreCat3Group, true, 
+        IsPreCatnGroup, true );
     ok := IsCat3Group( PC );
     return PC;
 end );
@@ -50,23 +50,45 @@ InstallMethod( IsCat3Group, "generic method for a cat3-group",
 function( P )
     return ( HigherDimension( P ) = 4 ) 
         and IsCat2Group( Front3DimensionalGroup( P ) )  
-        and IsCat2Group( Up3DimensionalGroup( P ) )  
         and IsCat2Group( Left3DimensionalGroup( P ) )  
+        and IsCat2Group( Up3DimensionalGroup( P ) )  
         and IsCat2Group( Right3DimensionalGroup( P ) )  
         and IsCat2Group( Down3DimensionalGroup( P ) )  
         and IsCat2Group( Back3DimensionalGroup( P ) );  
 end ); 
 
-##############################################################################
+#############################################################################
 ##
-#M  DetermineRemainingCat2Groups . . . . . . . . . . . for two pre-cat2-groups
+#M  DetermineRemainingFaces . . . . . . . . . . . for list of pre-catn-groups
 ## 
-InstallMethod( DetermineRemainingCat2Groups, "for front, up pre-cat2-groups", 
+InstallGlobalFunction( DetermineRemainingFaces, function( arg )
+
+    local nargs, C1;
+
+    nargs := Length( arg );
+    if ( nargs = 2 ) then
+        if IsPreCat1Group(arg[1]) and IsPreCat1Group(arg[2]) then
+            return DetermineRemainingCat1Groups( arg[1], arg[2] );
+        elif IsPreCat2Group(arg[1]) and IsPreCat2Group(arg[2]) then
+            return DetermineRemainingCat2Groups( arg[1], arg[2] );
+        else
+            return fail;
+        fi;
+    else
+        return fail;
+    fi;
+end );
+
+#############################################################################
+##
+#M  DetermineRemainingCat2Groups . . . . . . . . . . for two pre-cat2-groups
+## 
+InstallMethod( DetermineRemainingCat2Groups, "for front,left pre-cat2-gps", 
     true, [ IsPreCat2Group, IsPreCat2Group ], 0,
 function( front, left )
 
-    local Cfl, Cfu, Cll, up, Cur, Cfr, right, Cfd, Clr, down, 
-          Clb, Cub, back, Crd, G, R, Q, H, N, P, M, L; 
+    local Cfl, Cfu, Cll, up, Cud, Cfr, right, Cfd, Clr, down, 
+          Cld, Cur, back, Crd, G, R, Q, H, N, P, M, L; 
 
     Cfl := Left2DimensionalGroup( front ); 
     if not ( Cfl = Up2DimensionalGroup( left ) ) then 
@@ -79,9 +101,9 @@ function( front, left )
         Info( InfoXMod, 1, "up fails to be a cat2-group" ); 
         return fail; 
     fi; 
-    Cur := Down2DimensionalGroup( up ); 
+    Cud := Down2DimensionalGroup( up ); 
     Cfr := Right2DimensionalGroup( front ); 
-    right := Cat2Group( Cur, Cfr ); 
+    right := Cat2Group( Cud, Cfr ); 
     if ( right = fail ) then 
         Info( InfoXMod, 1, "right fails to be a cat2-group" ); 
         return fail; 
@@ -93,9 +115,9 @@ function( front, left )
         Info( InfoXMod, 1, "down fails to be a cat2-group" ); 
         return fail; 
     fi; 
-    Clb := Down2DimensionalGroup( left ); 
-    Cub := Right2DimensionalGroup( up ); 
-    back := Cat2Group( Clb, Cub ); 
+    Cld := Down2DimensionalGroup( left ); 
+    Cur := Right2DimensionalGroup( up ); 
+    back := Cat2Group( Cld, Cur ); 
     if ( back = fail ) then 
         Info( InfoXMod, 1, "back fails to be a cat2-group" ); 
         return fail; 
@@ -103,14 +125,14 @@ function( front, left )
     return [ up, right, down, back ]; 
 end ); 
 
-##############################################################################
+#############################################################################
 ##
-#M  PreCat3GroupByPreCat2Groups( <front>,<up>,<left>,<right>,<down>,<back> ) 
+#M  PreCat3GroupByPreCat2Groups( <front>,<left>,<up>,<right>,<down>,<back> ) 
 ##
 InstallMethod( PreCat3GroupByPreCat2Groups, "for a pair of pre-cat2-groups", 
     true, [ IsPreCat2Group, IsPreCat2Group, IsPreCat2Group, 
             IsPreCat2Group, IsPreCat2Group, IsPreCat2Group ], 0,
-function( front, up, left, right, down, back )
+function( front, left, up, right, down, back )
 
     local Cfu, Cfl, Cul, Cur, Cfr, Cfd, Cld, Clb, Cub, Crd, 
           G, R, Q, H, N, P, M, L; 
@@ -133,7 +155,7 @@ function( front, up, left, right, down, back )
     P := Range( Cfd ); 
     M := Range( Cld ); 
     L := Range( Crd ); 
-    return PreCat3GroupObj( [ front, up, left, right, down, back ] ); 
+    return PreCat3GroupObj( [ front, left, up, right, down, back ] ); 
 end ); 
 
 #############################################################################
@@ -149,8 +171,8 @@ InstallGlobalFunction( PreCat3Group, function( arg )
 
     nargs := Length( arg );
     if ( ( nargs < 1 ) or ( nargs > 3 ) ) then
-        Print( "standard usage: (Pre)Cat3Group( front, up );\n" );
-        Print( "            or: (Pre)Cat3Group( front, up-left );\n" );
+        Print( "standard usage: (Pre)Cat3Group( front, left );\n" );
+        Print( "            or: (Pre)Cat3Group( front, cat1 );\n" );
         Print( "            or: (Pre)Cat3Group( cat1, cat1, cat1 );\n" );
         Print( "            or: (Pre)Cat3Group( Xcube );\n" );
         return fail;
@@ -159,7 +181,7 @@ InstallGlobalFunction( PreCat3Group, function( arg )
         Error( "each argument should have a higher dimension" ); 
     fi;
     if ( nargs = 1 ) then 
-            Error( "argument is not a pre-crossed cube" ); 
+            Error( "PreCat3GroupOfPreCrossedcube not yet implemented" ); 
         ## C3G := PreCat3GroupOfPreCrossedcube( arg[1] );
     elif ( nargs = 3 ) then 
         front := PreCat2Group( arg[1], arg[2] ); 
@@ -181,7 +203,7 @@ InstallGlobalFunction( PreCat3Group, function( arg )
     Cfl := Left2DimensionalGroup( front ); 
     Clu := Up2DimensionalGroup( left ); 
     if not ( Cfl = Clu ) then 
-        Info( InfoXMod, 1, "Cfl <> Clu" ); 
+        Info( InfoXMod, 1, "front-left <> left-up" ); 
         return fail; 
     fi; 
     urdb := DetermineRemainingCat2Groups( front, left ); 
@@ -190,7 +212,7 @@ InstallGlobalFunction( PreCat3Group, function( arg )
         return fail; 
     fi;
     C3G := PreCat3GroupByPreCat2Groups( 
-               front, urdb[1], left, urdb[2], urdb[3], urdb[4] ); 
+               front, left, urdb[1], urdb[2], urdb[3], urdb[4] ); 
     if ( C3G = fail ) then 
         return fail; 
     fi;

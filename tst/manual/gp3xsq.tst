@@ -2,7 +2,7 @@
 ##
 #W  gp3xsq.tst                 XMOD test file                   Chris Wensley
 ##
-#Y  Copyright (C) 2001-2022, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2025, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 gap> START_TEST( "XMod package: gp3xsq.tst" );
@@ -53,7 +53,7 @@ gap> diag := XModByTrivialAction( delta );;
 gap> right := XModByTrivialAction( mu );; 
 gap> down := XModByTrivialAction( nu );; 
 gap> xp := CrossedPairingByCommutators( N, M, L );; 
-gap> Print( "xp([c,b]) = ", ImageElmCrossedPairing( xp, [c,b] ), "\n" ); 
+gap> Print( "xp([c,b]) = ", xp( c, b ), "\n" ); 
 xp([c,b]) = (1,3)(2,4)
 gap> PXS := PreCrossedSquareByPreXMods( up, left, right, down, diag, xp );;
 gap> Display( PXS ); 
@@ -85,8 +85,8 @@ gap> XSconj := CrossedSquareByNormalSubgroups( c5d, d10a, d10b, d20 );
 [   |      |   ]
 [ d10b -> d20  ]
 gap> xpc := CrossedPairing( XSconj );;
-gap> ImageElmCrossedPairing( xpc, [ p2, p12 ] );
-(1,9,7,5,3)(2,10,8,6,4)
+gap> xpc( p12, p2 );
+(1,3,5,7,9)(2,4,6,8,10)
 
 ## Section 8.2.4
 gap> X20 := XModByNormalSubgroup( d20, d10a );; 
@@ -98,7 +98,7 @@ gap> XS20 := CrossedSquareByNormalSubXMod( X20, X10 );
 [   |      |   ]
 [ d10b -> d20  ]
 gap> xp20 := CrossedPairing( XS20 );; 
-gap> ImageElmCrossedPairing( xp20, [ p1^2, p2 ] );
+gap> xp20( p1^2, p2 );
 (1,7,3,9,5)(2,8,4,10,6)
 
 ## Section 8.2.5
@@ -113,7 +113,7 @@ Group([ (2,5)(3,4), (2,3,5,4), (1,4,2,5,3) ])
 gap> StructureDescription( W );
 "C5 : C4"
 gap> xpa := CrossedPairing( XSact );;
-gap> ImageElmCrossedPairing( xpa, [ p1, (2,3,5,4) ] );
+gap> xpa( p1, (2,3,5,4) );
 (1,7,3,9,5)(2,8,4,10,6)
 
 ## Section 8.2.6
@@ -128,7 +128,7 @@ gap> I20 := Range( Up2DimensionalGroup( AXS20 ) );;
 gap> genI20 := GeneratorsOfGroup( I20 );           
 [ ^(1,2,3,4,5,6,7,8,9,10), ^(2,10)(3,9)(4,8)(5,7) ]
 gap> xpi := CrossedPairing( AXS20 );;
-gap> ImageElmCrossedPairing( xpi, [ genI20[1], genI20[2] ] );
+gap> xpi( genI20[1], genI20[2] );
 (1,9,7,5,3)(2,10,8,6,4)
 
 ## Section 8.2.7
@@ -144,7 +144,7 @@ gap> XS12 := CrossedSquareByPullback( X12, X12 );;
 gap> StructureDescription( XS12 );                  
 [ "C2 x C2 x S3", "D12", "D12", "S3" ]
 gap> xp12 := CrossedPairing( XS12 );; 
-gap> ImageElmCrossedPairing( xp12, [ (1,2,3,4,5,6), (2,6)(3,5) ] );
+gap> xp12( (1,2,3,4,5,6), (2,6)(3,5) );
 (1,5,3)(2,6,4)(7,11,9)(8,12,10)
 
 ## Section 8.2.8
@@ -163,7 +163,7 @@ gap> Name( XSS20 );;
 gap> XSS20;
 [d10a->d10a,d10a->d20]
 gap> xps := CrossedPairing( XSS20 );;
-gap> ImageElmCrossedPairing( xps, [ p1^2, p2 ] );
+gap> xps( p1^2, p2 );
 (1,7,3,9,5)(2,8,4,10,6)
 
 ## Section 8.2.9
@@ -206,21 +206,17 @@ gap> gensa[2]; ImageElm( act1, gensa[2] );
 (1,5)(2,4)(6,10)(7,9)
 
 ## Section 8.2.15
-gap> xp := CrossedPairing( XSconj );
-crossed pairing: Group( [ ( 1, 3, 5, 7, 9)( 2, 4, 6, 8,10), 
-  ( 1,10)( 2, 9)( 3, 8)( 4, 7)( 5, 6), (11,13,15,17,19)(12,14,16,18,20), 
-  (12,20)(13,19)(14,18)(15,17) ] ) -> c5d
-gap> ImageElmCrossedPairing( xp,
->        [ (1,6)(2,5)(3,4)(7,10)(8,9), (1,5)(2,4)(6,9)(7,8) ] );
+gap> xp := CrossedPairing( XSconj );;
+gap> xp( (1,6)(2,5)(3,4)(7,10)(8,9), (1,5)(2,4)(6,9)(7,8) );
 (1,7,8,5,3)(2,9,10,6,4)
 gap> F := FreeGroup(1);;
 gap> x := GeneratorsOfGroup(F)[1];;
 gap> z := GroupHomomorphismByImages( F, F, [x], [x^0] );;
 gap> id := GroupHomomorphismByImages( F, F, [x], [x] );;
-gap> map := Mapping2ArgumentsByFunction( [F,F], F, function(c) 
->           return x^(ExponentSumWord(c[1],x)*ExponentSumWord(c[2],x)); end );; 
-gap> h := CrossedPairingObj( [F,F], F, map );;
-gap> ImageElmCrossedPairing( h, [x^3,x^4] );
+gap> h := function(n,m)
+>             return x^(ExponentSumWord(n,x)*ExponentSumWord(m,x));
+>         end;;
+gap> h( x^3, x^4 );
 f1^12
 gap> A := AutomorphismGroup( F );;
 gap> a := GeneratorsOfGroup(A)[1];;
@@ -231,7 +227,40 @@ gap> XSF := PreCrossedSquareByPreXMods( X0, X0, X1, X1, X0, h );;
 gap> IsCrossedSquare( XSF ); 
 true
 
-## Section 8.3.3
+## Section 8.3.1
+gap> Display( XS20 ); 
+[  c5d -> d10a ]
+[   |      |   ]
+[ d10b -> d20  ]
+gap> p5 := p1^5*p2;;  [p2,p12,p5];
+[ (2,10)(3,9)(4,8)(5,7), (1,10)(2,9)(3,8)(4,7)(5,6), 
+  (1,6)(2,5)(3,4)(7,10)(8,9) ]
+gap> L1 := TrivialSubgroup( c5d );;
+gap> M1 := Subgroup( d10a, [ p2 ] );;
+gap> N1 := Subgroup( d10b, [ p5 ] );;
+gap> P1 := Subgroup( d20, [ p2, p5 ] );;
+gap> sub20 := SubCrossedSquare( XS20, L1, M1, N1, P1 );
+crossed square with crossed modules:
+      up = [Group( () ) -> Group( [ ( 2,10)( 3, 9)( 4, 8)( 5, 7) ] )]
+    left = [Group( () ) -> Group( [ ( 1, 6)( 2, 5)( 3, 4)( 7,10)( 8, 9) ] )]
+   right = [Group( [ ( 2,10)( 3, 9)( 4, 8)( 5, 7) ] ) -> Group( 
+[ ( 2,10)( 3, 9)( 4, 8)( 5, 7), ( 1, 6)( 2, 5)( 3, 4)( 7,10)( 8, 9) ] )]
+    down = [Group( [ ( 1, 6)( 2, 5)( 3, 4)( 7,10)( 8, 9) ] ) -> Group( 
+[ ( 2,10)( 3, 9)( 4, 8)( 5, 7), ( 1, 6)( 2, 5)( 3, 4)( 7,10)( 8, 9) ] )]
+
+gap> sxp := CrossedPairing( sub20 );;
+gap> sxp( p5, p2 );
+()
+
+## Section 8.3.2
+gap> TXS20 := TrivialSubCrossedSquare( XS20 );
+crossed square with crossed modules:
+      up = [Group( () ) -> Group( () )]
+    left = [Group( () ) -> Group( () )]
+   right = [Group( () ) -> Group( () )]
+    down = [Group( () ) -> Group( () )]
+
+## Section 8.4.3
 gap> ad20 := GroupHomomorphismByImages( d20, d20, [p1,p2], [p1,p2^p1] );;
 gap> ad10a := GroupHomomorphismByImages( d10a, d10a, [p1^2,p2], [p1^2,p2^p1] );;
 gap> ad10b := GroupHomomorphismByImages( d10b, d10b, [p1^2,p12], [p1^2,p12^p1] );;

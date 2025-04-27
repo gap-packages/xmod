@@ -5,7 +5,7 @@
 ##  This file implements functions for 3Dimensional Mappings for 
 ##  (pre-)crossed squares and (pre-)cat2-groups. 
 ##
-#Y  Copyright (C) 2001-2024, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2025, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 #############################################################################
@@ -237,7 +237,7 @@ end );
 ##
 #F  CrossedSquareMorphism( <src>, <rng>, <list> ) 
 ##
-##  (need to extend to other sets of parameters)
+#?  (need to extend to other sets of parameters)
 ##
 InstallGlobalFunction( CrossedSquareMorphism, function( arg )
 

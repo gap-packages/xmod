@@ -1,8 +1,8 @@
-##############################################################################
+#############################################################################
 ##
-#W  dom2dnd.gd                 GAP4 package `XMod'               Chris Wensley
-##                                                                Alper Odabas
-#Y  Copyright (C) 2001-2020, Chris Wensley et al,  
+#W  dom2dnd.gd                 GAP4 package `XMod'              Chris Wensley
+##                                                               Alper Odabas
+#Y  Copyright (C) 2001-2025, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 
 #############################################################################
@@ -58,15 +58,13 @@ DeclareGlobalFunction( "MakeHigherDimensionalMagma" );
 
 #############################################################################
 ##
-#C  IsHigherDimensionalSemigroup( <ndmag> )
+#C  IsHigherDimensionalSemigroup( <mag> )
 #F  MakeHigherDimensionalSemigroup( <mag>, <obs> )  
 #O  SinglePieceHigherDimensionalSemigroup( <sgp>, <obs> ) 
 ##
 DeclareCategory( "IsHigherDimensionalSemigroup", 
     IsHigherDimensionalMagma and CategoryCollections( IsAssociativeElement ) );
 DeclareGlobalFunction( "MakeHigherDimensionalSemigroup" ); 
-## DeclareOperation( "SinglePieceHigherDimensionalSemigroup", 
-##     [ IsSemigroup, IsCollection ] ); 
 
 #############################################################################
 ##
@@ -78,8 +76,6 @@ DeclareCategory( "IsHigherDimensionalMonoid",
     IsHigherDimensionalMagmaWithOne 
     and CategoryCollections(IsAssociativeElement) );
 DeclareGlobalFunction( "MakeHigherDimensionalMonoid" ); 
-##  DeclareOperation( "SinglePieceHigherDimensionalMonoid", 
-##      [ IsMonoid, IsCollection ] ); 
 
 
 ########################  HIGHER DIMENSIONAL GROUPS  ########################
@@ -152,7 +148,8 @@ DeclareCategory( "Is2DimensionalMagma", Is2DimensionalDomain and
 DeclareCategoryCollections( "Is2DimensionalMagma" ); 
 DeclareCategory( "Is2DimensionalMagmaWithOne", Is2DimensionalMagma 
     and CategoryCollections( IsMultiplicativeElementWithOne ) ); 
-DeclareCategory( "Is2DimensionalMagmaWithInverses", Is2DimensionalMagmaWithOne 
+DeclareCategory( "Is2DimensionalMagmaWithInverses", 
+    Is2DimensionalMagmaWithOne 
     and CategoryCollections( IsMultiplicativeElementWithInverse ) ); 
 
 ############################################################################# 
@@ -207,8 +204,8 @@ DeclareGlobalFunction( "Make2DimensionalMonoid" );
 ##
 #S  Is2DimensionalGroup( <m2d> ) 
 ##
-DeclareSynonymAttr( "Is2DimensionalGroup", Is2DimensionalMagmaWithInverses and 
-    CategoryCollections( IsAssociativeElement ) );
+DeclareSynonymAttr( "Is2DimensionalGroup", Is2DimensionalMagmaWithInverses
+    and CategoryCollections( IsAssociativeElement ) );
 
 ############################################################################# 
 ##  

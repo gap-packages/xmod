@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp4objmap.xml         XMod documentation            Chris Wensley  -->
 <!--                                                                     -->
-<!--  Copyright (C) 1996-2020, Chris Wensley et al,                      --> 
+<!--  Copyright (C) 1996-2025, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -11,13 +11,13 @@
 
 <Chapter Label="chap-obj4">
 
-<Heading>Crossed cubes and Cat<M>^3</M>-groups</Heading>
+<Heading>Cat<M>^3</M>-groups and Crossed cubes</Heading>
 
 <Index>4d-group</Index>
 <Index>4d-domain</Index>
 <Index>cat<M>^3</M>-group</Index>
 The term <E>4d-group</E> refers to a set of equivalent categories 
-of which the most common are the categories of 
+of which the ones we are most interested are the categories of 
 <E>crossed cubes</E> and <E>cat<M>^3</M>-groups</E>. 
 A <E>4d-mapping</E> is a function between two 4d-groups which preserves 
 all the structure.
@@ -89,7 +89,7 @@ is a third cat<M>^2</M>-group.
 The three remaining faces (cat<M>^2</M>-groups) <E>right</E><M>(\calE)</M>, 
 <E>down</E><M>(\calE)</M> and <E>back</E><M>(\calE)</M> 
 are then easily constructed. 
-We shall always use the order [<E>front,up,left,right,down,back</E>] 
+We shall always use the order [<E>front, left, up, right, down, back</E>] 
 for the six faces. 
 <P/>
 
@@ -104,8 +104,10 @@ for the six faces.
          Arg="L" />
 <Description>
 The global functions <C>Cat3Group</C> and <C>PreCat3Group</C> 
-are normally take as arguments a pair of cat<M>^2</M>-groups 
-or a trio of cat<M>^1</M>-groups. 
+normally take as arguments a pair of cat<M>^2</M>-groups 
+[<E>front, left</E>], or a trio of cat<M>^1</M>-groups
+[<E>front-up, front-left = left-up, left-left</E>].
+<P/>
 In subsection <Ref Oper="AllCat2GroupsIterator"/> the list of pairs 
 <C>CatnGroupLists(d12).pairs</C> contains the three entries 
 <C>[6,8],[8,11]</C> and <C>[6,11]</C>. 
@@ -116,19 +118,15 @@ for <C>d12</C> generate a cat<M>^3</M>-group.
 <P/>
 <Example>
 <![CDATA[
-gap> all1 := AllCat1Groups( d12 );; 
-gap> C68 := Cat2Group( all1[6], all1[8] );; 
-gap> C811 := Cat2Group( all1[8], all1[11] );;
+gap> alld12 := AllCat1Groups( d12 );; 
+gap> C68 := Cat2Group( alld12[6], alld12[8] );; 
+gap> C811 := Cat2Group( alld12[8], alld12[11] );;
 gap> C3Ga := Cat3Group( C68, C811 );
 cat3-group with generating (pre-)cat1-groups:
 1 : [d12 => Group( [ (), (1,6)(2,5)(3,4) ] )]
 2 : [d12 => Group( [ (1,4)(2,5)(3,6), (1,3)(4,6) ] )]
 3 : [d12 => Group( [ (1,5,3)(2,6,4), (1,4)(2,3)(5,6) ] )]
-gap> C3Gb := Cat3Group( all1[6], all1[8], all1[11] );
-cat3-group with generating (pre-)cat1-groups:
-1 : [d12 => Group( [ (), (1,6)(2,5)(3,4) ] )]
-2 : [d12 => Group( [ (1,4)(2,5)(3,6), (1,3)(4,6) ] )]
-3 : [d12 => Group( [ (1,5,3)(2,6,4), (1,4)(2,3)(5,6) ] )]
+gap> C3Gb := Cat3Group( alld12[6], alld12[8], alld12[11] );;
 gap> C3Ga = C3Gb;
 true
 ]]>
@@ -136,17 +134,17 @@ true
 
 <ManSection>
    <Attr Name="Front3DimensionalGroup"
-         Arg="C3" />
-   <Attr Name="Up3DimensionalGroup"
-         Arg="C3" />
+         Arg="C3" Label="for cat3-groups" />
    <Attr Name="Left3DimensionalGroup"
-         Arg="C3" />
+         Arg="C3" Label="for cat3-groups" />
+   <Attr Name="Up3DimensionalGroup"
+         Arg="C3" Label="for cat3-groups" />
    <Attr Name="Right3DimensionalGroup"
-         Arg="C3" />
+         Arg="C3" Label="for cat3-groups" />
    <Attr Name="Down3DimensionalGroup"
-         Arg="C3" />
+         Arg="C3" Label="for cat3-groups" />
    <Attr Name="Back3DimensionalGroup"
-         Arg="C3" />
+         Arg="C3" Label="for cat3-groups" />
 <Description> 
 The six faces of a cat<M>^3</M>-group are stored as these attributes. 
 </Description>
@@ -154,7 +152,7 @@ The six faces of a cat<M>^3</M>-group are stored as these attributes.
 <P/>
 <Example>
 <![CDATA[
-gap> C116 := Cat2Group( all1[11], all1[6] );;
+gap> C116 := Cat2Group( alld12[11], alld12[6] );;
 gap> Up3DimensionalGroup( C3Ga ) = C116;
 true
 ]]>
@@ -197,8 +195,8 @@ gap> CatnGroupNumbers( d12 ).cat3;
 94
 gap> triples[46];
 [ 5, 7, 11 ]
-gap> all1 := AllCat1Groups( d12 );; 
-gap> Cat3Group( all1[5], all1[7], all1[11] );
+gap> alld12 := AllCat1Groups( d12 );; 
+gap> Cat3Group( alld12[5], alld12[7], alld12[11] );
 cat3-group with generating (pre-)cat1-groups:
 1 : [d12 => Group( [ (), (1,4)(2,3)(5,6) ] )]
 2 : [d12 => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )]
@@ -315,13 +313,15 @@ subject to the following conditions:
 <Description>
 The operation <C>(Pre)CatnGroup</C> expects as input a list of 
 cat<M>^1</M>-groups. 
+For our group <C>d12</C> we may construct various cat<M>^4</M>-groups,
+and here is one of them.
 <P/> 
 </Description> 
 </ManSection>
 <P/>
 <Example>
 <![CDATA[
-gap> PC4 := PreCatnGroup( [ all1[5], all1[7], all1[11], all1[12] ] );
+gap> PC4 := PreCatnGroup( [ alld12[5], alld12[7], alld12[11], alld12[12] ] );
 (pre-)cat4-group with generating (pre-)cat1-groups:
 1 : [d12 => Group( [ (), (1,4)(2,3)(5,6) ] )]
 2 : [d12 => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )]
@@ -331,6 +331,33 @@ gap> IsCatnGroup( PC4 );
 true
 gap> HigherDimension( PC4 );
 5
+]]>
+</Example>
+
+For a cat<M>^5</M>-group we may start with the cyclic group whose order
+is the product of the first five primes. 
+With this group we may form <M>32</M> cat<M>^1</M>-groups and
+<M>528</M> cat<M>^2</M>-groups.
+<P/>
+<Example>
+<![CDATA[
+gap> G := Group( (1,2), (3,4,5), (6,7,8,9,10), (11,12,13,14,15,16,17),
+>                (20,21,22,23,24,25,26,27,28,29,30) );;
+gap> SetName( G, "C2310" );
+gap> all1 := AllCat1Groups( G );;
+gap> Print( "G has ", CatnGroupNumbers( G ).cat1, " cat1-groups\n" );
+G has 32 cat1-groups
+gap> PC5 := PreCatnGroup( [ all1[2], all1[5], all1[13], all1[25], all1[32] ] );
+(pre-)cat5-group with generating (pre-)cat1-groups:
+1 : [C2310 => Group( [ (), (), (), (), (1,2) ] )]
+2 : [C2310 => Group( [ (), (), (), (3,4,5), (1,2) ] )]
+3 : [C2310 => Group( [ (), (), ( 6, 7, 8, 9,10), (3,4,5), (1,2) ] )]
+4 : [C2310 => Group( [ (), (11,12,13,14,15,16,17), ( 6, 7, 8, 9,10), (3,4,5), 
+  (1,2) ] )]
+5 : [C2310 => Group( [ (20,21,22,23,24,25,26,27,28,29,30), 
+  (11,12,13,14,15,16,17), ( 6, 7, 8, 9,10), (3,4,5), (1,2) ] )]
+gap> HigherDimension( PC5 );
+6
 ]]>
 </Example>
 

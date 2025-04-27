@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp3xsq.xml            XMod documentation            Chris Wensley  -->
 <!--                                                                     -->
-<!--  Copyright (C) 1996-2024, Chris Wensley et al,                      --> 
+<!--  Copyright (C) 1996-2025, Chris Wensley et al,                      --> 
 <!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
@@ -130,7 +130,7 @@ crossed modules of <M>\calS</M>.
   </List>
 </Item>
 <Item>
-<M>\kappa(n \boxtimes m) \;=\; (m^{-1})^{n}\;m 
+<M>\kappa(n \boxtimes m) \;=\; (m^{-1})^{n}\;m
 \quad \mbox{and} \quad
 \lambda(n \boxtimes m) \;=\; n^{-1}\;n^{m}</M>.
 </Item>
@@ -148,35 +148,40 @@ via <M>P</M> are compatible since
 \;=\; (({n_1}^{n^{-1}})^m)^n.
 </Display>
 <P/>
-(A <E>precrossed square</E> is a similar structure which satisfies 
+A <E>precrossed square</E> is a similar structure which satisfies 
 some subset of these axioms.
-This notion needs to be clarified.) 
+(This theoretical notion needs to be clarified.) 
+In this implementation <C>IsPreCrossedSquare</C> only checks that the five
+pre-crossed modules fit together correctly and that 
+<M>(\kappa,\nu)</M> and <M>(\lambda,\mu)</M>
+are both morphisms of pre-crossed modules.
 <P/>
-Crossed squares are the <M>k=2</M> case of a 
-crossed <M>k</M>-cube of groups, defined as follows. 
+Crossed squares are the <M>n=2</M> case of a 
+crossed <M>n</M>-cube of groups, defined as follows. 
 (This is an attempt to translate Definition 2.1 in Ronnie Brown's 
 <E>Computing homotopy types using crossed n-cubes of groups</E> 
 into right actions -- but this definition is not yet completely understood!) 
 <P/>
-A <E>crossed</E> <M>k</M><E>-cube of groups</E> consists of the following: 
+<Index>crossed n-cube</Index>
+A <E>crossed</E> <M>n</M><E>-cube of groups</E> consists of the following: 
 <List>
 <Item> 
-groups <M>S_A</M> for every subset <M>A \subseteq [k]</M>; 
+groups <M>S_A</M> for every subset <M>A \subseteq [n]</M>; 
 </Item>
 <Item>
 a commutative diagram of group homomorphisms 
-<M>\partial_i : S_A \to S_{A \setminus \{i\}},\; i \in [k]</M>; 
+<M>\partial_i : S_A \to S_{A \setminus \{i\}},\; i \in [n]</M>; 
 with composites 
-<M>\partial_B : S_A \to S_{A \setminus B},\; B \subseteq [k]</M>;
+<M>\partial_B : S_A \to S_{A \setminus B},\; B \subseteq [n]</M>;
 </Item>
 <Item>
 actions of <M>S_{\emptyset}</M> on each <M>S_A</M>; 
 and hence actions of <M>S_B</M> on <M>S_A</M> via <M>\partial_B</M>
-for each <M>B \subseteq [k]</M>; 
+for each <M>B \subseteq [n]</M>; 
 </Item>
 <Item> 
 functions <M>\boxtimes_{A,B} : S_A \times S_B \to S_{A \cup B}, 
-(A,B \subseteq [k])</M>. 
+(A,B \subseteq [n])</M>. 
 </Item> 
 </List>
 There is then a long list of axioms which must be satisfied. 
@@ -237,7 +242,7 @@ gap> diag := XModByTrivialAction( delta );;
 gap> right := XModByTrivialAction( mu );; 
 gap> down := XModByTrivialAction( nu );; 
 gap> xp := CrossedPairingByCommutators( N, M, L );; 
-gap> Print( "xp([c,b]) = ", ImageElmCrossedPairing( xp, [c,b] ), "\n" ); 
+gap> Print( "xp([c,b]) = ", xp( c, b ), "\n" ); 
 xp([c,b]) = (1,3)(2,4)
 gap> PXS := PreCrossedSquareByPreXMods( up, left, right, down, diag, xp );;
 gap> Display( PXS ); 
@@ -246,8 +251,8 @@ gap> Display( PXS );
     left = [Group( [ (1,3)(2,4) ] ) -> Group( [ (1,2)(3,4) ] )]
    right = [Group( [ (2,4) ] ) -> Group( () )]
     down = [Group( [ (1,2)(3,4) ] ) -> Group( () )]
-gap>  IsCrossedSquare( PXS ); 
-false 
+gap> IsCrossedSquare( PXS ); 
+false
 ]]>
 </Example>
 
@@ -308,8 +313,8 @@ gap> XSconj := CrossedSquareByNormalSubgroups( c5d, d10a, d10b, d20 );
 [   |      |   ]
 [ d10b -> d20  ]
 gap> xpc := CrossedPairing( XSconj );;
-gap> ImageElmCrossedPairing( xpc, [ p2, p12 ] );
-(1,9,7,5,3)(2,10,8,6,4)
+gap> xpc( p12, p2 );
+(1,3,5,7,9)(2,4,6,8,10)
 ]]>
 </Example>
 
@@ -342,7 +347,7 @@ gap> XS20 := CrossedSquareByNormalSubXMod( X20, X10 );
 [   |      |   ]
 [ d10b -> d20  ]
 gap> xp20 := CrossedPairing( XS20 );; 
-gap> ImageElmCrossedPairing( xp20, [ p1^2, p2 ] );
+gap> xp20( p1^2, p2 );
 (1,7,3,9,5)(2,8,4,10,6)
 ]]>
 </Example>
@@ -382,7 +387,7 @@ Group([ (2,5)(3,4), (2,3,5,4), (1,4,2,5,3) ])
 gap> StructureDescription( W );
 "C5 : C4"
 gap> xpa := CrossedPairing( XSact );;
-gap> ImageElmCrossedPairing( xpa, [ p1, (2,3,5,4) ] );
+gap> xpa( p1, (2,3,5,4) );
 (1,7,3,9,5)(2,8,4,10,6)
 ]]>
 </Example>
@@ -416,7 +421,7 @@ gap> I20 := Range( Up2DimensionalGroup( AXS20 ) );;
 gap> genI20 := GeneratorsOfGroup( I20 );           
 [ ^(1,2,3,4,5,6,7,8,9,10), ^(2,10)(3,9)(4,8)(5,7) ]
 gap> xpi := CrossedPairing( AXS20 );;
-gap> ImageElmCrossedPairing( xpi, [ genI20[1], genI20[2] ] );
+gap> xpi( genI20[1], genI20[2] );
 (1,9,7,5,3)(2,10,8,6,4)
 ]]>
 </Example>
@@ -459,7 +464,7 @@ gap> XS12 := CrossedSquareByPullback( X12, X12 );;
 gap> StructureDescription( XS12 );                  
 [ "C2 x C2 x S3", "D12", "D12", "S3" ]
 gap> xp12 := CrossedPairing( XS12 );; 
-gap> ImageElmCrossedPairing( xp12, [ (1,2,3,4,5,6), (2,6)(3,5) ] );
+gap> xp12( (1,2,3,4,5,6), (2,6)(3,5) );
 (1,5,3)(2,6,4)(7,11,9)(8,12,10)
 ]]>
 </Example>
@@ -483,9 +488,9 @@ and <M>\partial</M> is the zero map.
 <Display>
 <![CDATA[
 \vcenter{\xymatrix{
-       &   &  S \ar[rr]^{\partial'} \ar[dd]_{\partial'} 
+       &   &  S \ar[rr]^{\partial'} \ar[dd]_{\partial'} \ar[rrdd]^{\partial}
               && Q \ar[dd]^{\iota} && 
-              A \ar[rr]^0 \ar[dd]_0
+              A \ar[rr]^0 \ar[dd]_0 \ar[rrdd]^0
               && 1 \ar[dd]^{\iota} &   \\
        &   &  &&  &   &&  \\
        &   &  Q \ar[rr]_{\iota}  
@@ -510,15 +515,11 @@ gap> up20 := Up2DimensionalGroup( XSS20 );;
 gap> Range( up20 ) = d10a; 
 true
 gap> SetName( Range( up20 ), "d10a" ); 
-gap> Name( XSS20 ); 
-"[d10a->d10a,d10a->d20]"
-gap> xp12 := CrossedPairing( XS12 );; 
-gap> ImageElmCrossedPairing( xp12, [ (1,2,3,4,5,6), (2,6)(3,5) ] );
-(1,5,3)(2,6,4)(7,11,9)(8,12,10)
+gap> Name( XSS20 );;
 gap> XSS20;
 [d10a->d10a,d10a->d20]
 gap> xps := CrossedPairing( XSS20 );;
-gap> ImageElmCrossedPairing( xps, [ p1^2, p2 ] );
+gap> xps( p1^2, p2 );
 (1,7,3,9,5)(2,8,4,10,6)
 ]]>
 </Example>
@@ -656,17 +657,17 @@ and crossed squares in particular.
 
 <ManSection>
    <Attr Name="Up2DimensionalGroup"
-         Arg="XS" />
+         Arg="XS" Label="for crossed squares" />
    <Attr Name="Left2DimensionalGroup"
-         Arg="XS" />
+         Arg="XS" Label="for crossed squares" />
    <Attr Name="Down2DimensionalGroup"
-         Arg="XS" />
+         Arg="XS" Label="for crossed squares" />
    <Attr Name="Right2DimensionalGroup"
-         Arg="XS" />
+         Arg="XS" Label="for crossed squares" />
    <Attr Name="CrossDiagonalActions"
-         Arg="XS" />
+         Arg="XS" Label="for crossed squares" />
    <Attr Name="Diagonal2DimensionalGroup"
-         Arg="XS" />
+         Arg="XS" Label="for crossed squares" />
    <Meth Name="Name" 
          Arg="S0" />
 <Description>
@@ -720,34 +721,20 @@ its <C>Left2DimensionalGroup</C>.
 </ManSection>
 
 <ManSection>
-   <Attr Name="CrossedPairing"
+   <Attr Name="Crossed Pairing"
          Arg="XS" />
-   <Attr Name="CrossedPairingMap"
-         Arg="xpair" />
-   <Oper Name="ImageElmCrossedPairing"
-         Arg="XS pair" />
-   <Oper Name="Mapping2ArgumentsByFunction"
-         Arg="MxN, L, map" />
 <Description>
-Crossed pairings have been implemented using an operation 
-<C>Mapping2ArgumentsByFunction</C>. 
-This encodes a map <M>\{M,N\} \to L</M> as a map <M>M \times N \to L</M>. 
-<P/> 
-The operation <C>ImageElmCrossedPairing</C> returns the image 
-when a crossed pairing <M>\{M,N\} \to L</M> is applied to the pair 
-<M>[m,n]</M> with <M>m \in M,~ n \in N</M>. 
+Crossed pairings have been implemented as functions of two variables,
+<M>\{M,N\} \to L</M>.
+(Up until version 2.92 a more complicated two-variable mapping was used.)
 </Description>
 </ManSection>
 <P/>
 The first example shows the crossed pairing in the crossed square <C>XSconj</C>. 
 <Example>
 <![CDATA[
-gap> xp := CrossedPairing( XSconj );
-crossed pairing: Group( [ ( 1, 3, 5, 7, 9)( 2, 4, 6, 8,10), 
-  ( 1,10)( 2, 9)( 3, 8)( 4, 7)( 5, 6), (11,13,15,17,19)(12,14,16,18,20), 
-  (12,20)(13,19)(14,18)(15,17) ] ) -> c5d
-gap> ImageElmCrossedPairing( xp,                                 
->      [ (1,6)(2,5)(3,4)(7,10)(8,9), (1,5)(2,4)(6,9)(7,8) ] );
+gap> xp := CrossedPairing( XSconj );;
+gap> xp( (1,6)(2,5)(3,4)(7,10)(8,9), (1,5)(2,4)(6,9)(7,8) );
 (1,7,8,5,3)(2,9,10,6,4)
 ]]>
 </Example>
@@ -759,10 +746,10 @@ gap> F := FreeGroup(1);;
 gap> x := GeneratorsOfGroup(F)[1];;
 gap> z := GroupHomomorphismByImages( F, F, [x], [x^0] );;
 gap> id := GroupHomomorphismByImages( F, F, [x], [x] );;
-gap> map := Mapping2ArgumentsByFunction( [F,F], F, function(c) 
->           return x^(ExponentSumWord(c[1],x)*ExponentSumWord(c[2],x)); end );; 
-gap> h := CrossedPairingObj( [F,F], F, map );;
-gap> ImageElmCrossedPairing( h, [x^3,x^4] );
+gap> h := function(n,m)
+>             return x^(ExponentSumWord(n,x)*ExponentSumWord(m,x));
+>         end;;
+gap> h( x^3, x^4 );
 f1^12
 gap> A := AutomorphismGroup( F );;
 gap> a := GeneratorsOfGroup(A)[1];;
@@ -776,6 +763,78 @@ true
 </Example>
 </Section>
 
+
+<Section><Heading>Substructures of Crossed Squares</Heading>
+
+To specify a sub-crossed square of <M>\calS</M> we may specify four
+subgroups of the four groups in <M>\calS</M>.
+If these define five sub-crossed modules, and these comc
+bine together
+satisfactorily, then a crossed square is produced.
+
+<ManSection>
+   <Oper Name="SubCrossedSquare"
+         Arg="XS, ul, ur, dl, dr" />
+   <Oper Name="IsSubCrossedSquare"
+         Arg="XS, subXS" />
+   <Oper Name="SubPreCrossedSquare"
+         Arg="XS, ul, ur, dl, dr" />
+   <Oper Name="IsSubPreCrossedSquare"
+         Arg="XS, subXS" />
+<Description>
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> Display( XS20 ); 
+[  c5d -> d10a ]
+[   |      |   ]
+[ d10b -> d20  ]
+gap> p5 := p1^5*p2;;  [p2,p12,p5];
+[ (2,10)(3,9)(4,8)(5,7), (1,10)(2,9)(3,8)(4,7)(5,6), 
+  (1,6)(2,5)(3,4)(7,10)(8,9) ]
+gap> L1 := TrivialSubgroup( c5d );;
+gap> M1 := Subgroup( d10a, [ p2 ] );;
+gap> N1 := Subgroup( d10b, [ p5 ] );;
+gap> P1 := Subgroup( d20, [ p2, p5 ] );;
+gap> sub20 := SubCrossedSquare( XS20, L1, M1, N1, P1 );
+crossed square with crossed modules:
+      up = [Group( () ) -> Group( [ ( 2,10)( 3, 9)( 4, 8)( 5, 7) ] )]
+    left = [Group( () ) -> Group( [ ( 1, 6)( 2, 5)( 3, 4)( 7,10)( 8, 9) ] )]
+   right = [Group( [ ( 2,10)( 3, 9)( 4, 8)( 5, 7) ] ) -> Group( 
+[ ( 2,10)( 3, 9)( 4, 8)( 5, 7), ( 1, 6)( 2, 5)( 3, 4)( 7,10)( 8, 9) ] )]
+    down = [Group( [ ( 1, 6)( 2, 5)( 3, 4)( 7,10)( 8, 9) ] ) -> Group( 
+[ ( 2,10)( 3, 9)( 4, 8)( 5, 7), ( 1, 6)( 2, 5)( 3, 4)( 7,10)( 8, 9) ] )]
+
+gap> sxp := CrossedPairing( sub20 );;
+gap> sxp( p5, p2 );
+()
+]]>
+</Example>
+
+<ManSection>
+   <Oper Name="TrivialSub3DimensionalGroup"
+         Arg="3dgp" />
+   <Attr Name="TrivialSubCrossedSquare"
+         Arg="XS" />
+   <Attr Name="TrivialSubPreCrossedSquare"
+         Arg="XS" />
+<Description>
+A special case of the previous operation is when all the subgroups are trivial.
+</Description>
+</ManSection>
+<P/>
+<Example>
+<![CDATA[
+gap> TC2ab := TrivialSubCat2Group( C2ab );
+(pre-)cat2-group with generating (pre-)cat1-groups:
+1 : [Group( () ) => Group( () )]
+2 : [Group( () ) => Group( () )]
+]]>
+</Example>
+
+</Section>
 
 
 <Section><Heading>Morphisms of crossed squares</Heading>
@@ -892,12 +951,12 @@ Morphism of crossed squares :-
   [ ( 1, 2, 3, 4, 5, 6, 7, 8, 9,10), ( 1, 3)( 4,10)( 5, 9)( 6, 8) ] ]
 gap> IsAutomorphismHigherDimensionalDomain( autoconj );
 true
-gap> KnownPropertiesOfObject( autoconj );
-[ "CanEasilyCompareElements", "CanEasilySortElements", "IsTotal", 
-  "IsSingleValued", "IsInjective", "IsSurjective", 
-  "IsPreCrossedSquareMorphism", "IsCrossedSquareMorphism", 
-  "IsEndomorphismHigherDimensionalDomain", 
-  "IsAutomorphismHigherDimensionalDomain" ]
+gap> kpo := KnownPropertiesOfObject( autoconj );;
+gap> Set( kpo );
+[ "CanEasilyCompareElements", "CanEasilySortElements", 
+  "IsAutomorphismHigherDimensionalDomain", "IsCrossedSquareMorphism", 
+  "IsEndomorphismHigherDimensionalDomain", "IsInjective", 
+  "IsPreCrossedSquareMorphism", "IsSingleValued", "IsSurjective", "IsTotal" ]
 ]]>
 </Example>
 

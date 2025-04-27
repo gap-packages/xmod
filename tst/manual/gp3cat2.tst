@@ -1,8 +1,8 @@
 #############################################################################
 ##
-#W  gp3cat2.tst                   XMOD test file                Chris Wensley
+#W  gp3cat2.tst                   XMOD test file               Chris Wensley
 ##
-#Y  Copyright (C) 2001-2024, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2025, Chris Wensley et al, 
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 gap> START_TEST( "XMod package: gp3cat2.tst" );
@@ -22,11 +22,9 @@ gap> SetName( d20, "d20" );  SetName( d10a, "d10a" );
 gap> X20 := XModByNormalSubgroup( d20, d10a );; 
 gap> XSact := ActorCrossedSquare( X20 );;
 
-
-
 ## Chapter 8
 
-# Section 8.4.1 
+# Section 8.5.1 
 gap> a := (1,2,3,4,5,6);;  b := (2,6)(3,5);; 
 gap> G := Group( a, b );;  SetName( G, "d12" );
 gap> t1 := GroupHomomorphismByImages( G, G, [a,b], [a^3,b] );; 
@@ -44,7 +42,7 @@ gap> R := Subgroup( G, genR );;
 gap> genQ := [ (1,3,5)(2,4,6), (2,6)(3,5) ];; 
 gap> Q := Subgroup( G, genQ );; 
 gap> Pa := Group( b );;  SetName( Pa, "c2a" ); 
-gap> Pb := Group( (7,8) );;  SetName( Pb, "c2b" ); 
+gap> Pb := Group( (7,8) );; ## SetName( Pb, "c2b" ); 
 gap> t3 := GroupHomomorphismByImages( R, Pb, genR, [(),(7,8)] );; 
 gap> e3 := GroupHomomorphismByImages( Pb, R, [(7,8)], [(2,6)(3,5)] );; 
 gap> right := PreCat1GroupByTailHeadEmbedding( t3, t3, e3 );;
@@ -58,10 +56,20 @@ gap> C2b := PreCat2GroupByPreCat1Groups( up, left, right, down, diag );
 (pre-)cat2-group with generating (pre-)cat1-groups:
 1 : [d12 => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )]
 2 : [d12 => Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )]
-gap> IsPreCatnGroupWithIdentityEmbeddings( C2b );
+gap> C2a = C2b;
 false
+gap> GroupsOfHigherDimensionalGroup( C2a )[4];
+Group([ (), (2,6)(3,5) ])
+gap> GroupsOfHigherDimensionalGroup( C2b )[4];
+Group([ (7,8) ])
 
-# Section 8.4.2
+# Section 8.5.2
+gap> Diagonal2DimensionalGroup( C2a );
+[d12 => Group( [ (), (2,6)(3,5) ] )]
+gap> Diagonal2DimensionalGroup( C2b );
+[d12 => Group( [ (7,8) ] )]
+
+# Section 8.5.3
 gap> C2ab := DirectProductOp( [ C2a, C2b ], C2a ); 
 (pre-)cat2-group with generating (pre-)cat1-groups:
 1 : [Group( [ (1,2,3,4,5,6), (2,6)(3,5), ( 7, 8, 9,10,11,12), ( 8,12)( 9,11) 
@@ -82,19 +90,19 @@ gap> Projection( C2ab, 2 );
 1 : [d12 => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )]
 2 : [d12 => Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )] >
 
-# Section 8.4.3
+# Section 8.5.4
 gap> DisplayLeadMaps( C2b );
 (pre-)cat2-group with up-left group: [ (1,2,3,4,5,6), (2,6)(3,5) ]
    up tail=head images: [ (1,4)(2,5)(3,6), (2,6)(3,5) ]
  left tail=head images: [ (1,5,3)(2,6,4), (2,6)(3,5) ]
 
-# Section 8.4.4
+# Section 8.5.5
 gap> TC2a := Transpose3DimensionalGroup( C2a );
 (pre-)cat2-group with generating (pre-)cat1-groups:
 1 : [d12 => Group( [ (1,5,3)(2,6,4), (2,6)(3,5) ] )]
 2 : [d12 => Group( [ (1,4)(2,5)(3,6), (2,6)(3,5) ] )]
 
-# Section 8.4.5 
+# Section 8.5.6
 gap> gamma := GroupHomomorphismByImages( G, G, [a,b], [a^-1,b] );;
 gap> rho := IdentityMapping( R );;
 gap> xi := GroupHomomorphismByImages( Q, Q, [a^2,b], [a^-2,b] );;
@@ -113,8 +121,7 @@ gap> mor2 := Cat2GroupMorphismByCat1GroupMorphisms( C2a, C2a, upmor, ltmor );;
 gap> mor1 = mor2; 
 true
 
-
-# Section 8.4.6 
+# Section 8.5.7
 gap> xsC2a := CrossedSquareOfCat2Group( C2a );;
 gap> IdGroup( xsC2a );
 [ [ 1, 1 ], [ 2, 1 ], [ 3, 1 ], [ 2, 1 ] ]
@@ -131,7 +138,7 @@ gap> C2act := Cat2GroupOfCrossedSquare( XSact );
 gap> Size3d( C2act );
 [ 80000, 400, 400, 20 ]
 
-# Section 8.4.7
+# Section 8.5.8
 gap> G24 := SmallGroup( 24, 10 );; 
 gap> w := G24.1;; x := G24.2;; y := G24.3;; z := G24.4;; o := One(G24);; 
 gap> R24 := Subgroup( G24, [x,y] );; 
@@ -144,15 +151,37 @@ gap> ewy := GroupHomomorphismByImages( Q24, G24, [w,y], [w,y] );;
 gap> C1wy := PreCat1GroupByTailHeadEmbedding( twy, twy, ewy );; 
 gap> C2wxy := PreCat2Group( C1xy, C1wy );; 
 gap> dg := Diagonal2DimensionalGroup( C2wxy );;
-gap> IsCat1Group( dg ); 
-false
 gap> C1sub := Subdiagonal2DimensionalGroup( C2wxy );; 
-gap> IsCat1Group( C1sub );
-true
-gap> IsSub2DimensionalGroup( dg, C1sub );
-true
+gap> [ IsCat1Group(dg), IsCat1Group(C1sub), IsSub2DimensionalGroup(dg,C1sub) ];
+[ false, true, true ]
 
-# Section 8.5.1
+# Section 8.5.9
+gap> gps := GroupsOfHigherDimensionalGroup( C2ab );;
+gap> c6c2 := Subgroup( gps[1], [ (1,2,3,4,5,6), (8,12)(9,11) ] );;
+gap> c2c2 := Subgroup( gps[2], [ (1,4)(2,5)(3,6), (8,12)(9,11) ] );;
+gap> c3c2 := Subgroup( gps[3], [ (1,5,3)(2,6,4), (8,12)(9,11) ] );;
+gap> SC2ab := SubCat2Group( C2ab, c6c2, c2c2, c3c2 );;
+gap> Display( SC2ab );              
+(pre-)cat2-group with groups: [ Group( [ (1,2,3,4,5,6), ( 8,12)( 9,11) ] ), 
+  Group( [ (1,4)(2,5)(3,6), ( 8,12)( 9,11) ] ), 
+  Group( [ (1,5,3)(2,6,4), ( 8,12)( 9,11) ] ), 
+  Group( [ (), ( 8,12)( 9,11) ] ) ]
+   up tail=head: [ [ (1,2,3,4,5,6), ( 8,12)( 9,11) ], 
+  [ (1,4)(2,5)(3,6), ( 8,12)( 9,11) ] ]
+ left tail=head: [ [ (1,2,3,4,5,6), ( 8,12)( 9,11) ], 
+  [ (1,5,3)(2,6,4), ( 8,12)( 9,11) ] ]
+right tail=head: [ [ (1,4)(2,5)(3,6), ( 8,12)( 9,11) ], 
+  [ (), ( 8,12)( 9,11) ] ]
+ down tail=head: [ [ (1,5,3)(2,6,4), ( 8,12)( 9,11) ], [ (), ( 8,12)( 9,11) ] 
+ ]
+
+# Section 8.5.10
+gap> TC2ab := TrivialSubCat2Group( C2ab );
+(pre-)cat2-group with generating (pre-)cat1-groups:
+1 : [Group( () ) => Group( () )]
+2 : [Group( () ) => Group( () )]
+
+# Section 8.6.1
 gap> G8 := Group( (1,2), (3,4), (5,6) );;  SetName( G8, "G8" ); 
 gap> A := Subgroup( G8, [ (1,2) ] );; 
 gap> B := Subgroup( G8, [ (3,4) ] );;
@@ -174,7 +203,7 @@ gap> for C2 in iso do DisplayLeadMaps( C2 ); od;
    up tail/head images: [ (1,2), (), () ], [ (1,2), (), (1,2) ]
  left tail/head images: [ (), (3,4), () ], [ (), (3,4), (3,4) ]
 
-# Section 8.5.2
+# Section 8.6.2
 gap> up := Up2DimensionalGroup( iso[1] );;                
 gap> AllCat2GroupsWithFixedUp( up );;                    
 gap> Length(last);                                       
@@ -194,7 +223,7 @@ gap> for C in L do DisplayLeadMaps( C ); od;
    up tail=head images: [ (1,2), (), () ]
  left tail=head images: [ (), (3,4), (3,4) ]
 
-# Section 8.5.3
+# Section 8.6.3
 gap> AllCat2GroupsNumber( G );
 41
 gap> reps2 := AllCat2GroupsUpToIsomorphism( G );;

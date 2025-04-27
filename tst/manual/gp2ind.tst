@@ -119,20 +119,22 @@ gap> X12 := InducedXMod( d24, d12b, c6b );
 i*([c6b->d12b])
 gap> StructureDescription( X12 );
 [ "C6 x C6", "D24" ]
-gap> Display( MorphismOfInducedXMod( X12 ) );
-Morphism of crossed modules :- 
-: Source = [c6b->d12b] with generating sets:
-  [ ( 6, 8)( 7, 9)(10,12,11) ]
-  [ ( 6, 8)( 7, 9)(10,12,11), ( 7, 9)(11,12) ]
-:  Range = i*([c6b->d12b]) with generating sets:
-  [ ( 4, 5)( 6, 7)( 8, 9)(10,11)(12,13)(14,15), 
-  ( 4, 6, 8)( 5, 7, 9)(10,12,14)(11,13,15), 
-  ( 4,10)( 5,11)( 6,12)( 7,13)( 8,14)( 9,15), (1,2,3) ]
-  [ ( 6, 7, 8, 9)(10,11,12), ( 7, 9)(11,12) ]
-: Source Homomorphism maps source generators to:
-  [ ( 4, 9, 6, 5, 8, 7)(10,15,12,11,14,13) ]
-: Range Homomorphism maps range generators to:
-  [ ( 6, 8)( 7, 9)(10,12,11), ( 7, 9)(11,12) ]
+
+## this command produces different results in stable-4.13 so removing here:
+## gap> Display( MorphismOfInducedXMod( X12 ) );
+## Morphism of crossed modules :- 
+## : Source = [c6b->d12b] with generating sets:
+##   [ ( 6, 8)( 7, 9)(10,12,11) ]
+##   [ ( 6, 8)( 7, 9)(10,12,11), ( 7, 9)(11,12) ]
+## :  Range = i*([c6b->d12b]) with generating sets:
+##   [ ( 4, 5)( 6, 7)( 8, 9)(10,11)(12,13)(14,15), 
+##   ( 4, 6, 8)( 5, 7, 9)(10,12,14)(11,13,15), 
+##   ( 4,10)( 5,11)( 6,12)( 7,13)( 8,14)( 9,15), (1,2,3) ]
+##   [ ( 6, 7, 8, 9)(10,11,12), ( 7, 9)(11,12) ]
+## : Source Homomorphism maps source generators to:
+##   [ ( 4, 9, 6, 5, 8, 7)(10,15,12,11,14,13) ]
+## : Range Homomorphism maps range generators to:
+##   [ ( 6, 8)( 7, 9)(10,12,11), ( 7, 9)(11,12) ]
 
 ## Section 7.2.2
 gap> all := AllInducedXMods( q8 );;

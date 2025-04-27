@@ -2,7 +2,7 @@
 ##
 #W  gp2obj.gi                 GAP4 package `XMod'               Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2024, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2025, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
 ##
 ##  This file contains generic methods for (pre-)crossed modules and
@@ -1703,6 +1703,7 @@ function( obj, sub )
         return fail; 
     fi;
 end );
+
 ##############################################################################
 ##
 #M  SubPreXMod             creates SubPreXMod from Ssrc<=Psrc & Srng<=Prng
@@ -3050,7 +3051,7 @@ function( obj )
     if IsPreXMod( obj ) then
         return SubPreXMod( obj, idsrc, idrng );
     elif IsPreCat1Group( obj ) then
-        return SubPreCat1Group( obj, idsrc );
+        return SubPreCat1Group( obj, idsrc, idrng );
     else
         Error( "<obj> must be a pre-crossed module or a pre-cat1-group" );
     fi;
@@ -3090,8 +3091,8 @@ function( obj )
     rng := Range( obj );
     gensrc := GeneratorsOfGroup( src );
     if IsXMod( obj ) then
-        return ( IsNormal( rng, src ) and
-            ( gensrc = List( gensrc, s -> ImageElm( Boundary(obj), s ) ) ) );
+        return IsSubgroup( rng, src ) and IsNormal( rng, src ) and
+            ( gensrc = List( gensrc, s -> ImageElm( Boundary(obj), s ) ) );
     elif IsCat1Group( obj ) then
         return IsNormalSubgroup2DimensionalGroup( XModOfCat1Group( obj ) );
     else
