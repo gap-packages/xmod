@@ -2,7 +2,6 @@
 ##
 #W  smallids.tst                  XMOD test file                Chris Wensley
 #Y  Copyright (C) 2001-2020, Chris Wensley et al, 
-#Y  School of Computer Science, Bangor University, U.K. 
 ##
 ##  compares the Cat1Group data in XMod and HAP - checks ids are the same 
 ##

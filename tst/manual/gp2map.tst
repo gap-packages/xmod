@@ -3,14 +3,11 @@
 #W  gp2map.tst                    XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
 #Y  Copyright (C) 2001-2023, Chris Wensley et al, 
-#Y  School of Computer Science, Bangor University, U.K. 
 ##
 ##
 gap> START_TEST( "XMod package: gp2map.tst" );
 gap> saved_infolevel_xmod := InfoLevel( InfoXMod );; 
 gap> SetInfoLevel( InfoXMod, 0 );;
-gap> saved_infolevel_groupoids := InfoLevel( InfoGroupoids );; 
-gap> SetInfoLevel( InfoGroupoids, 0 );;
 
 ##  make this test independent of gp2obj.tst
 gap> c5 := Group( (5,6,7,8,9) );;
@@ -190,5 +187,4 @@ gap> L18a := QuasiIsomorphism( C18a, [18,4,4], false );
 
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
-gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 
 gap> STOP_TEST( "gp2map.tst", 10000 );

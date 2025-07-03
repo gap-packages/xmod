@@ -3,13 +3,10 @@
 #W  gp2up.tst                     XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
 #Y  Copyright (C) 2001-2024, Chris Wensley et al, 
-#Y  School of Computer Science, Bangor University, U.K. 
 ##
 gap> START_TEST( "XMod package: gp2up.tst" );
 gap> saved_infolevel_xmod := InfoLevel( InfoXMod );; 
 gap> SetInfoLevel( InfoXMod, 0 );;
-gap> saved_infolevel_groupoids := InfoLevel( InfoGroupoids );; 
-gap> SetInfoLevel( InfoGroupoids, 0 );;
 
 ## Chapter 5
 
@@ -220,5 +217,4 @@ monoid of sections with images list:
 [ (1,3,2)(4,6,5), (1,2)(4,6) ]
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
-gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 
 gap> STOP_TEST( "gp2up.tst", 10000 );

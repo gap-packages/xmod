@@ -2,16 +2,15 @@
 ## 
 #W  double.gi                   GAP4 package `XMod'             Chris Wensley 
 ##
-#Y  Copyright (C) 2000-2023, Chris Wensley,  
-#Y  School of Computer Science, Bangor University, U.K. 
+#Y  Copyright (C) 2000-2025, Chris Wensley,  
 ##  
 ##  This file contains the implementations for double groupoids 
 ##  
 
 ###################  DOUBLE DOMAIN WITH OBJECTS   ########################## 
 
-InstallMethod( SinglePieceDoubleGroupoid, "for a groupoid and a precrossed module", true, 
-    [ IsGroupoid, IsPreXMod ], 0, 
+InstallMethod( SinglePieceDoubleGroupoid, 
+    "for groupoid and precrossed module", true, [ IsGroupoid, IsPreXMod ], 0, 
 function( gpd, px ) 
 
     local dgpd; 
@@ -22,7 +21,8 @@ function( gpd, px )
         IsSinglePiece, true, 
         IsAssociative, true, 
         IsCommutative, IsCommutative( gpd!.magma ) 
-                       and IsCommutative( Source( px ) ) ); 
+                       and IsCommutative( Source( px ) ),
+        IsDoubleGroupoidWithPreXMod, true ); 
     return dgpd; 
 end ); 
 
@@ -43,7 +43,7 @@ function( bdg )
     return dgpd; 
 end ); 
 
-InstallMethod( DoubleGroupoidWithZeroBoundary, "for a groupoid zand a group", 
+InstallMethod( DoubleGroupoidWithZeroBoundary, "for a groupoid and a group", 
     true, [ IsGroupoid, IsGroup ], 0, 
 function( gpd, src ) 
 
@@ -57,6 +57,40 @@ function( gpd, src )
     dgpd := SinglePieceDoubleGroupoid( gpd, px );
     return dgpd; 
 end ); 
+
+InstallMethod( ViewObj, "for a double groupoid with prexmod", true, 
+    [ IsDoubleGroupoidWithPreXMod and IsSinglePiece ], 0,   
+function( dgpd )
+    local pxm, isxmod;
+    pxm := dgpd!.prexmod;
+    isxmod := HasIsXMod( pxm ) and IsXMod( pxm );
+    Print( "single piece double groupoid with:\n" );
+    if isxmod then
+        Print( "     xmod = ", pxm, "\n" ); 
+    else
+        Print( "  prexmod = ", pxm, "\n" );
+    fi;
+    Print( " groupoid = ", dgpd!.groupoid, "\n" ); 
+    Print( "    group = ", dgpd!.groupoid!.magma, "\n" ); 
+    Print( "  objects = ", dgpd!.objects ); 
+end );
+
+InstallMethod( PrintObj, "for a double groupoid with prexmod", true, 
+    [ IsDoubleGroupoidWithPreXMod and IsSinglePiece ], 0, 
+function( dgpd )
+    local pxm, isxmod;
+    pxm := dgpd!.prexmod;
+    isxmod := HasIsXMod( pxm ) and IsXMod( pxm );
+    Print( "single piece double groupoid with:\n" );
+    if isxmod then
+        Print( "     xmod = ", pxm, "\n" ); 
+    else
+        Print( "  prexmod = ", pxm, "\n" );
+    fi;
+    Print( " groupoid = ", dgpd!.groupoid, "\n" ); 
+    Print( "    group = ", dgpd!.groupoid!.magma, "\n" ); 
+    Print( "  objects = ", dgpd!.objects, "\n" ); 
+end );
 
 InstallMethod( SquareOfArrows, 
     "for double groupoid with objects, element, up, left, right and down", 
@@ -76,7 +110,7 @@ function( dgpd, e, u, l, r, d )
              and ( HeadOfArrow( l ) = TailOfArrow( d ) ) 
              and ( HeadOfArrow( r ) = HeadOfArrow( d ) ); 
     if not ok then 
-        Info( InfoGroupoids, 1, "the four arrows do not form a square" ); 
+        Info( InfoXMod, 1, "the four arrows do not form a square" ); 
         return fail; 
     else 
         if IsSinglePiece( gpd ) then 
@@ -85,71 +119,74 @@ function( dgpd, e, u, l, r, d )
             piece := PieceOfObject( gpd, TailOfArrow( d ) ); 
         fi; 
         loop := d^-1 * l^-1 * u * r; 
-        ok := ( ime = loop![1] ); 
+        ok := ( ime = loop![2] );
         if not ok then 
-Print( "[ime,loop![1]] = ", [ime,loop![1]], "\n" ); 
-            Info( InfoGroupoids, 2, "here" ); 
-            Info( InfoGroupoids, 1, "element ", e, " has image ", ime, 
-                               " <> boundary element ", loop![1] ); 
+            Info( InfoXMod, 1, "element ", e, " has image ", ime, 
+                               " <> boundary element ", loop![2] );
             return fail; 
         fi; 
-        sq := SquareOfArrowsNC( e, u, l, r, d ); 
-        SetBoundaryOfSquare( sq, e ); 
+        sq := SquareOfArrowsNC( dgpd, e, u, l, r, d );
         return sq; 
     fi; 
 end );
 
 ############################################################################# 
 ## 
-#M  UpDownProduct( dgpd, s1, s2 ) 
+#M  VerticalProduct( s1, s2 ) 
 ##  . . . . . . . vertical composition of squares in a basic double groupoid 
 ## 
-InstallMethod( UpDownProduct, "for two squares in a basic double groupoid", 
-    true, [ IsDoubleGroupoid, IsDoubleGroupoidElement, 
-            IsDoubleGroupoidElement], 0, 
-function( dgpd, s1, s2 ) 
+InstallMethod( VerticalProduct, "for two squares in a basic double groupoid", 
+    true, [ IsDoubleGroupoidElement, IsDoubleGroupoidElement], 0, 
+function( s1, s2 ) 
 
-    local m, px, act, aut; 
+    local dgpd, m, px, act, aut; 
 
     ## elements are composable? 
-    if not ( ( s1![5] = s2![2] ) and 
-             ( FamilyObj( s1![1] ) = FamilyObj( s2![1] ) ) ) then 
-        Info( InfoGroupoids, 1, "down arrow of s1 <> up arrow of s2" ); 
+    if not ( s1![6] = s2![3] ) then 
+        Info( InfoXMod, 1, "down arrow of s1 <> up arrow of s2" ); 
         return fail; 
     fi; 
+    if not ( s1![1] = s2![1] ) then 
+        Info( InfoXMod, 1, "s1 and s2 are in different double groupoids" ); 
+        return fail; 
+    fi;
+    dgpd := s1![1];
     px := dgpd!.prexmod; 
     act := XModAction( px ); 
-    aut := ImageElm( act, s2![4]![1] ); 
-    m := s2![1] * ImageElm( aut, s1![1] ); 
-    return SquareOfArrowsNC( m, s1![2], s1![3]*s2![3], 
-                                s1![4]*s2![4], s2![5] ); 
+    aut := ImageElm( act, s2![5]![2] ); 
+    m := s2![2] * ImageElm( aut, s1![2] ); 
+    return SquareOfArrowsNC( dgpd, m, s1![3], s1![4]*s2![4], 
+                                      s1![5]*s2![5], s2![6] ); 
 end );
 
 ############################################################################# 
 ## 
-#M  LeftRightProduct( dgpd, s1, s2 ) 
-##      . . . . horizantal composition of squares in a basic double groupoid 
+#M  HorizontalProduct( s1, s2 ) 
+##      . . . . horizontal composition of squares in a basic double groupoid 
 ## 
-InstallMethod( LeftRightProduct, 
+InstallMethod( HorizontalProduct, 
     "for two squares in a basic double groupouid", true, 
-    [ IsDoubleGroupoid, IsDoubleGroupoidElement, 
-      IsDoubleGroupoidElement], 0, 
-function( dgpd, s1, s2 ) 
+    [ IsDoubleGroupoidElement, IsDoubleGroupoidElement], 0, 
+function( s1, s2 ) 
 
-    local m, px, act, aut;
+    local dgpd, m, px, act, aut;
 
     ## elements are composable? 
-    if not ( ( s1![4] = s2![3] ) and 
-             ( FamilyObj( s1![1] ) = FamilyObj( s2![1] ) ) ) then 
-        Info( InfoGroupoids, 1, "right arrow of s1 <> left arrow of s2" ); 
+    if not ( s1![5] = s2![4] ) then 
+        Info( InfoXMod, 1, "right arrow of s1 <> left arrow of s2" ); 
         return fail; 
     fi; 
+    if not ( s1![1] = s2![1] ) then 
+        Info( InfoXMod, 1, "s1 and s2 are in different double groupoids" ); 
+        return fail; 
+    fi;
+    dgpd := s1![1];
     px := dgpd!.prexmod; 
     act := XModAction( px ); 
-    aut := ImageElm( act, s2![5]![1] ); 
-    m := ImageElm( aut, s1![1] ) * s2![1];
-    return SquareOfArrowsNC( m, s1![2]*s2![2], s1![3], 
-                                s2![4], s1![5]*s2![5] ); 
+    aut := ImageElm( act, s2![6]![2] ); 
+    m := ImageElm( aut, s1![2] ) * s2![2];
+    return SquareOfArrowsNC( dgpd, m, s1![3]*s2![3], s1![4], 
+                                      s2![5], s1![6]*s2![6] ); 
 end );
 
 

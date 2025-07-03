@@ -3,13 +3,10 @@
 #W  gp2obj.tst                    XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
 #Y  Copyright (C) 2001-2025, Chris Wensley et al, 
-#Y  School of Computer Science, Bangor University, U.K. 
 ##
 gap> START_TEST( "XMod package: gp2obj.tst" );
 gap> saved_infolevel_xmod := InfoLevel( InfoXMod );; 
 gap> SetInfoLevel( InfoXMod, 0 );
-gap> saved_infolevel_groupoids := InfoLevel( InfoGroupoids );; 
-gap> SetInfoLevel( InfoGroupoids, 0 );;
 
 ## Chapter 2,  Section 2.1.1
 gap> c5 := Group( (5,6,7,8,9) );;
@@ -578,5 +575,4 @@ gap> ## GeneratorsOfGroup( obgp )[1];
 gap> ## Homset( gpd33, (11,12), (11,13) );
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
-gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 
 gap> STOP_TEST( "gp2obj.tst", 10000 );

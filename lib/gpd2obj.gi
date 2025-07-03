@@ -2,8 +2,7 @@
 ##
 #W  gpd2obj.gi                 GAP4 package `XMod'               Chris Wensley
 ##
-#Y  Copyright (C) 2001-2024, Chris Wensley et al,  
-#Y  School of Computer Science, Bangor University, U.K. 
+#Y  Copyright (C) 2001-2025, Chris Wensley et al,  
 
 #############################################################################
 ##  Standard error messages
@@ -11,8 +10,8 @@
 XMODOBJ_CONSTRUCTORS := Concatenation( 
     "The standard operations which construct a (pre)xmod with objects are:\n",
     "1.  SinglePiecePreXModWithObjects( (pre)xmod, objects, isdiscrete );\n",
-    "2.  DomainWithSingleObject( (pre)xmod, single object );\n",
-    "3.  UnionOfPieces( list of (pre)xmods with objects );\n",
+    "2.  MagmaWithSingleObject( (pre)xmod, single object );\n",
+    "3.  UnionODomainWithfPieces( list of (pre)xmods with objects );\n",
     "4.  PreXModWithObjects( one of the previous parameter options );" );
 
 #############################################################################
@@ -34,7 +33,7 @@ InstallGlobalFunction( PreXModWithObjects, function( arg )
     # prexmod plus single object 
     elif ( ( nargs = 2 ) and IsPreXMod( arg[1] ) and IsObject( arg[2] ) ) then
         Info( InfoXMod, 2, "prexmod plus single object" ); 
-        return DomainWithSingleObject( arg[1], arg[2] );
+        return MagmaWithSingleObject( arg[1], arg[2] );
     # prexmod + list of objects + boolean (true => discrete source) 
     elif ( ( nargs = 3 ) and IsPreXMod( arg[1] ) 
            and IsList( arg[2] ) and IsBool( arg[3] ) ) then
@@ -65,7 +64,7 @@ function( XM )
         for y2 in gensrc do
             Info( InfoXMod, 3, "x2,y2 = ", x2, ",  ", y2 ); 
             a2 := ImageElm( act, ImageElm( bdy, y2 ) ); 
-            z2 := ImageElm( a2![1], x2 ); 
+            z2 := ImageElm( a2![2], x2 ); 
             w2 := x2^y2;
             Info( InfoXMod, 3, "w2,z2 = ", w2, ",  ", z2 ); 
             if ( z2 <> w2 ) then
@@ -129,11 +128,6 @@ function( px, obs, isdisc )
     nobs := Length( obs );
     spx := Source( px ); 
     rpx := Range( px ); 
-    ## pxwo := rec( 
-    ##     objects := obs, 
-    ##     prexmod := px, 
-    ##     rays := List( obs, function( o ) return One(rpx); end ) 
-    ##     ); 
     rng := SinglePieceGroupoid( rpx, obs ); 
     if isdisc then 
         src := HomogeneousDiscreteGroupoid( spx, obs );
@@ -150,11 +144,11 @@ function( px, obs, isdisc )
         imbdy := ShallowCopy( gens ); 
         for i in [1..Length(imbdy)] do 
             a := gens[i]; 
-            if ( a![2] = a![3] ) then 
-                im := ImageElm( bpx, a![1] ); 
-                imbdy[i] := ArrowNC( true, im, a![2], a![3] ); 
+            if ( a![3] = a![4] ) then 
+                im := ImageElm( bpx, a![2] ); 
+                imbdy[i] := ArrowNC( src, true, im, a![3], a![4] ); 
             else 
-                imbdy[i] := ArrowNC( true, One(rpx), a![2], a![3] ); 
+                imbdy[i] := ArrowNC( src, true, One(rpx), a![3], a![4] ); 
             fi; 
         od; 
         bdy := GroupoidHomomorphismFromSinglePiece( src, rng, gens, imbdy ); 
@@ -163,12 +157,12 @@ function( px, obs, isdisc )
     apx := XModAction( px ); 
     AS := AutomorphismGroupOfGroupoid( src ); 
     AR := AutomorphismGroupOfGroupoid( rng ); 
-    AS0 := DomainWithSingleObject( AS, 0 ); 
+    AS0 := MagmaWithSingleObject( AS, 0 ); 
     obs0 := List( obs, o -> 0 ); 
     fact := function(a) local i,j,g,imobs,aut1,autg,aut2,aut; 
-                g := a![1]; 
-                i := Position( obs, a![2] ); 
-                j := Position( obs, a![3] ); 
+                g := a![2]; 
+                i := Position( obs, a![3] ); 
+                j := Position( obs, a![4] ); 
                 imobs := ShallowCopy( obs ); 
                 imobs[i] := obs[j]; 
                 imobs[j] := obs[i];
@@ -176,7 +170,7 @@ function( px, obs, isdisc )
                 autg := ImageElm( apx, g ); 
                 aut2 := GroupoidAutomorphismByGroupAuto( src, autg ); 
                 aut := aut1 * aut2; 
-                return ArrowNC( true, aut, 0, 0 ); 
+                return ArrowNC( src, true, aut, 0, 0 );
             end; 
     act := MappingWithObjectsByFunction( rng, AS0, fact, obs0 ); 
     pxwo := MakePreXModWithObjects( src, rng, bdy, act );
@@ -271,12 +265,10 @@ end );
 
 #############################################################################
 ##
-#M  DomainWithSingleObject
+#M  MagmaWithSingleObject
 ##
-##  Note that there is another method for [ IsGroup, IsObject ] in gpd.gi 
-##
-InstallMethod( DomainWithSingleObject, "generic method for domain, object",
-    true, [ IsDomain, IsObject ], 0,
+InstallMethod( MagmaWithSingleObject, "generic method for domain, object",
+    true, [ IsMagma, IsObject ], 0,
 function( dom, obj ) 
 
     local o; 

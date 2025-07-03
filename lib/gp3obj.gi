@@ -6,7 +6,6 @@
 ##  and (pre-)cat2-groups.
 ##
 #Y  Copyright (C) 2001-2025, Chris Wensley et al, 
-#Y  School of Computer Science, Bangor University, U.K. 
     
 #############################################################################
 ##

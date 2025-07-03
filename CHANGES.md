@@ -1,6 +1,10 @@
- # CHANGES to the 'XMod' package
+## CHANGES to the 'XMod' package
 
-## 2.92 -> 2.92dev (27/04/2025)
+## 2.93 -> 2.94 (20/05/2025)
+ * (20/05/25) make groupoids 1.77 of today a prerequisite and revise material
+              on double groupoids to agree with the changes in groupoids
+
+## 2.92 -> 2.93 (27/04/2025)
  * (27/04/25) added sub-crossed square and sub-cat2-group operations
  * (25/04/25) simplified the construction of crossed pairings so that 
               files map2arg.g{d,i} can be removed
@@ -23,7 +27,7 @@
 ## 2.89 -> 2.91 (16/02/2023) 
  * (16/02/23) revised tst/extra/d24.tst so that it works with option -A 
  * (09/02/23) added a chapter on double groupoids with operations 
-              EnhancedBasicDoubleGroupoid, DoubleGroupooidWithZeroBoundary
+              EnhancedBasicDoubleGroupoid, DoubleGroupoidWithZeroBoundary
  * (05/02/23) added PreXModWithTrivialRange 
 
 ## 2.88 -> 2.89 (04/02/2023) 
