@@ -3,7 +3,6 @@
 <!--  gpd2obj.xml           XMod documentation            Chris Wensley  -->
 <!--                                                                     -->
 <!--  Copyright (C) 2001-2022, Chris Wensley et al,                      --> 
-<!--  School of Computer Science, Bangor University, U.K.                --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
 
@@ -48,7 +47,8 @@ Other operations will be added as time permits.
 <P/> 
 In the example the crossed module <C>DX4</C> has discrete source, 
 while the crossed module <C>CX4</C> has connected source. 
-These are groupoid equivalents of <Ref Oper="XModByNormalSubgroup"/>. 
+These are groupoid generalisations of <Ref Oper="XModByNormalSubgroup"/>
+and the example <C>X4</C> in <Ref Oper="NormalSubXMods"/>.
 </Description>
 </ManSection>
 <P/>
@@ -67,12 +67,12 @@ single piece crossed module with objects
     single piece groupoid: < s4, [ -9, -8, -7 ] >
 gap> Da4 := Source( DX4 );; 
 gap> Ds4 := Range( DX4 );;
-gap> CX4 := SinglePiecePreXModWithObjects( X4, [-9,-8,-7], false );
+gap> CX4 := SinglePiecePreXModWithObjects( X4, [-6,-5,-4], false );
 single piece crossed module with objects
   source groupoid:
-    single piece groupoid: < a4, [ -9, -8, -7 ] >
+    single piece groupoid: < a4, [ -6, -5, -4 ] >
   and range groupoid:
-    single piece groupoid: < s4, [ -9, -8, -7 ] >
+    single piece groupoid: < s4, [ -6, -5, -4 ] >
 gap> Ca4 := Source( CX4 );; 
 gap> Cs4 := Range( CX4 );;
 ]]>
@@ -99,6 +99,7 @@ gap> Set( KnownPropertiesOfObject( DX4 ) );
 [ "CanEasilyCompareElements", "CanEasilySortElements", "IsAssociative", 
   "IsDirectProductWithCompleteDigraphDomain", "IsDuplicateFree", 
   "IsGeneratorsOfSemigroup", "IsPreXModWithObjects", "IsSinglePieceDomain", 
+  "IsXModWithObjects" ]
 ]]>
 </Example>
 
@@ -160,7 +161,8 @@ gap> Root2dGroup( CX4 );
 gap> act := XModAction( CX4 );; 
 gap> Size( Range( act ) ); 
 20736
-gap> r := Arrow( Cs4, (1,2,3,4), -4, -5 );; 
+gap> r := Arrow( Cs4, (1,2,3,4), -4, -5 );;
+gap> ## the next command constructs an arrow of the form (hom : 0 -> 0)
 gap> ImageElm( act, r );            
 [groupoid homomorphism : 
 [ [ [(1,2,3) : -6 -> -6], [(2,3,4) : -6 -> -6], [() : -6 -> -5], 

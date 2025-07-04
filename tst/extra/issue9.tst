@@ -3,7 +3,6 @@
 #W  issue9.tst                   GAP4 package `XMod'             Chris Wensley
 #W             
 #Y  Copyright (C) 2018, Chris Wensley et al,  
-#Y  School of Computer Science, Bangor University, U.K. 
 ##  
 gap> START_TEST( "XMod package: issue9.tst" );
 gap> saved_infolevel_xmod := InfoLevel( InfoXMod );; 

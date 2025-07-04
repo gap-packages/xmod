@@ -7,8 +7,6 @@
 gap> START_TEST( "XMod package: isoclinic.tst" );
 gap> saved_infolevel_xmod := InfoLevel( InfoXMod );; 
 gap> SetInfoLevel( InfoXMod, 0 );
-gap> saved_infolevel_groupoids := InfoLevel( InfoGroupoids );; 
-gap> SetInfoLevel( InfoGroupoids, 0 );;
 
 ## Chapter 4
 
@@ -257,5 +255,4 @@ gap> IsoclinicRank(X8);
 [ 3, 1 ]
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
-gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 
 gap> STOP_TEST( "isoclinic.tst", 10000 );

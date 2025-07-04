@@ -2,8 +2,7 @@
 ## 
 #W  double.gd                  GAP4 package `XMod'              Chris Wensley 
 ##
-#Y  Copyright (C) 2000-2023, Chris Wensley,  
-#Y  School of Computer Science, Bangor University, U.K. 
+#Y  Copyright (C) 2000-2025, Chris Wensley,  
 ##  
 ##  This file contains the declarations for double groupoids
 ##  
@@ -26,6 +25,12 @@ DeclareOperation( "EnhancedBasicDoubleGroupoid", [ IsBasicDoubleGroupoid ] );
 ## 
 DeclareOperation( "DoubleGroupoidWithZeroBoundary", 
     [ IsGroupoid, IsGroup ] ); 
+
+############################################################################# 
+##  
+#P  IsDoubleGroupoidWithPreXMod( <dg> ) 
+## 
+DeclareProperty( "IsDoubleGroupoidWithPreXMod", IsDoubleGroupoid ); 
 
 ############################################################################
 ##

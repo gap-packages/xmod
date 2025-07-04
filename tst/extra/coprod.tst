@@ -3,13 +3,10 @@
 #W  coprod.tst                   GAP4 package `XMod'             Chris Wensley
 #W             
 #Y  Copyright (C) 2001-2023, Chris Wensley et al,  
-#Y  School of Computer Science, Bangor University, U.K. 
 ##  
 gap> START_TEST( "XMod package: coprod.tst" );
 gap> saved_infolevel_xmod := InfoLevel( InfoXMod );; 
 gap> SetInfoLevel( InfoXMod, 1 );;
-gap> saved_infolevel_groupoids := InfoLevel( InfoGroupoids );; 
-gap> SetInfoLevel( InfoGroupoids, 0 );;
 
 gap> q8 := Group( (1,2,3,4)(5,8,7,6), (1,5,3,7)(2,6,4,8) );;
 gap> SetName( q8, "q8" );; 
@@ -114,7 +111,6 @@ gap> copZY := CoproductXMod( Z8, Y8 );;
 #I  the coproduct is [ "A4", "S4" ], [ [ 12, 3 ], [ 24, 12 ] ]
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
-gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 
 gap> STOP_TEST( "coprod.tst", 10000 );
 
 #############################################################################

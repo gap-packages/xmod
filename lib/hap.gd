@@ -4,7 +4,6 @@
 #W                                                                
 ##
 #Y  Copyright (C) 2001-2020, Chris Wensley et al,  
-#Y  School of Computer Science, Bangor University, U.K. 
 
 ##############################################################################
 ##
