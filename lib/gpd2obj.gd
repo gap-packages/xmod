@@ -2,8 +2,14 @@
 ##
 #W  gpd2obj.gd                 GAP4 package `XMod'               Chris Wensley
 ##
-#Y  Copyright (C) 2001-2020, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2025, Chris Wensley et al,  
 #Y  School of Computer Science, Bangor University, U.K. 
+
+##############  temporary fix 7/7/25 because of groupoids 1.77  #############
+## 
+#O  DomainWithSingleObject( <mag>, <obj> )
+##  
+DeclareOperation( "DomainWithSingleObject", [ IsDomain, IsObject ] );    
 
 #############################################################################
 ## 
