@@ -87,71 +87,16 @@ function( dgpd, e, u, l, r, d )
         loop := d^-1 * l^-1 * u * r; 
         ok := ( ime = loop![1] ); 
         if not ok then 
-Print( "[ime,loop![1]] = ", [ime,loop![1]], "\n" ); 
             Info( InfoGroupoids, 2, "here" ); 
             Info( InfoGroupoids, 1, "element ", e, " has image ", ime, 
                                " <> boundary element ", loop![1] ); 
             return fail; 
         fi; 
         sq := SquareOfArrowsNC( e, u, l, r, d ); 
-        SetBoundaryOfSquare( sq, e ); 
+        ## SetBoundaryOfSquare( sq, e ); 
         return sq; 
     fi; 
 end );
-
-############################################################################# 
-## 
-#M  UpDownProduct( dgpd, s1, s2 ) 
-##  . . . . . . . vertical composition of squares in a basic double groupoid 
-## 
-InstallMethod( UpDownProduct, "for two squares in a basic double groupoid", 
-    true, [ IsDoubleGroupoid, IsDoubleGroupoidElement, 
-            IsDoubleGroupoidElement], 0, 
-function( dgpd, s1, s2 ) 
-
-    local m, px, act, aut; 
-
-    ## elements are composable? 
-    if not ( ( s1![5] = s2![2] ) and 
-             ( FamilyObj( s1![1] ) = FamilyObj( s2![1] ) ) ) then 
-        Info( InfoGroupoids, 1, "down arrow of s1 <> up arrow of s2" ); 
-        return fail; 
-    fi; 
-    px := dgpd!.prexmod; 
-    act := XModAction( px ); 
-    aut := ImageElm( act, s2![4]![1] ); 
-    m := s2![1] * ImageElm( aut, s1![1] ); 
-    return SquareOfArrowsNC( m, s1![2], s1![3]*s2![3], 
-                                s1![4]*s2![4], s2![5] ); 
-end );
-
-############################################################################# 
-## 
-#M  LeftRightProduct( dgpd, s1, s2 ) 
-##      . . . . horizantal composition of squares in a basic double groupoid 
-## 
-InstallMethod( LeftRightProduct, 
-    "for two squares in a basic double groupouid", true, 
-    [ IsDoubleGroupoid, IsDoubleGroupoidElement, 
-      IsDoubleGroupoidElement], 0, 
-function( dgpd, s1, s2 ) 
-
-    local m, px, act, aut;
-
-    ## elements are composable? 
-    if not ( ( s1![4] = s2![3] ) and 
-             ( FamilyObj( s1![1] ) = FamilyObj( s2![1] ) ) ) then 
-        Info( InfoGroupoids, 1, "right arrow of s1 <> left arrow of s2" ); 
-        return fail; 
-    fi; 
-    px := dgpd!.prexmod; 
-    act := XModAction( px ); 
-    aut := ImageElm( act, s2![5]![1] ); 
-    m := ImageElm( aut, s1![1] ) * s2![1];
-    return SquareOfArrowsNC( m, s1![2]*s2![2], s1![3], 
-                                s2![4], s1![5]*s2![5] ); 
-end );
-
 
 ############################################################################
 ##
