@@ -1,7 +1,7 @@
 ## CHANGES to the 'XMod' package
 
-## 2.93 -> 2.94 (20/05/2025)
- * (20/05/25) make groupoids 1.77 of today a prerequisite and revise material
+## 2.93 -> 2.94 (07/07/2025)
+ * (30/06/25) make the new groupoids 1.77 a prerequisite and revise material
               on double groupoids to agree with the changes in groupoids
 
 ## 2.92 -> 2.93 (27/04/2025)
