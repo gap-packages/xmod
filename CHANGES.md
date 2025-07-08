@@ -1,6 +1,9 @@
  # CHANGES to the 'XMod' package
 
-## 2.92 -> 2.92dev (27/04/2025)
+## 2.93 -> 2.94  (08/07/25)
+ * (08/07/25) temporary fix to work with the recently released groupoids 1.77
+
+## 2.92 -> 2.93 (27/04/2025)
  * (27/04/25) added sub-crossed square and sub-cat2-group operations
  * (25/04/25) simplified the construction of crossed pairings so that 
               files map2arg.g{d,i} can be removed
