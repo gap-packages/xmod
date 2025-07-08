@@ -18,8 +18,10 @@ In a double groupoid, as well as objects and arrows we need a set of <E>squares<
 A square is bounded by four arrows, two horizontal and two vertical, 
 and there is a <E>horizontal</E> groupoid structure  
 and a <E>vertical</E> groupoid structure on these squares. 
-An element of the source of the pre-crossed module is located at the centre of the square, 
-and its image under the boundary map is equal to the boundary of the square. 
+A square also contains an element of the source group of the 
+pre-crossed module, and its image under the boundary map 
+is equal to the boundary of the square. 
+When printing a square, this element is located at the centre, 
 <P/> 
 The double groupoids constructed here are special 
 in that all four arrows come from the same groupoid.
@@ -27,7 +29,7 @@ We call these <E>edge-symmetric</E> double groupoids.
 <P/> 
 This material in this chapter is experimental.
 It was started in 2023, in version 2.91,
-and extensively revised in 2025, for version 2.94.
+and extensively revised in 2025, for version 2.95.
 Further extensions are likely in due course.
 
 
@@ -39,6 +41,8 @@ for groupoids given in the <Package>Groupoids</Package> package,
 such as <C>SinglePieceBasicDoubleGroupoid</C>. 
 Such groupoids are <E>basic</E>, in that there is no pre-crossed module 
 involvement. 
+In <Package>XMod</Package> the operation <C>SinglePieceDoubleGroupoid</C>
+requires a groupoid and a crossed module as input parameters.
 
 <ManSection>
    <Oper Name="SinglePieceDoubleGroupoid"
@@ -398,9 +402,9 @@ into the more general case considered in this package.
    <Oper Name="EnhancedBasicDoubleGroupoid"
          Arg="bdg" />
 <Description>
-We need to add a pre-crossed module to the definition of such a 
+We need to add a pre-crossed module to the definition of a basic 
 double groupoid.  
-We choose <M>(G \to G)</M> where <M>G</M> is the root group of the 
+We choose to add <M>(G \to G)</M> where <M>G</M> is the root group of the 
 underlying groupoid. 
 (This is only valid for groupoids which are the direct product 
 with a complete graph.)

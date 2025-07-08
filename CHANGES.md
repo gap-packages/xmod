@@ -1,8 +1,11 @@
 ## CHANGES to the 'XMod' package
 
-## 2.93 -> 2.94 (07/07/2025)
+## 2.94 -> 2.94dev (08/07/2025)
  * (30/06/25) make the new groupoids 1.77 a prerequisite and revise material
               on double groupoids to agree with the changes in groupoids
+
+## 2.93 -> 2.94  (08/07/25)
+ * (08/07/25) temporary fix to work with the recently released groupoids 1.77
 
 ## 2.92 -> 2.93 (27/04/2025)
  * (27/04/25) added sub-crossed square and sub-cat2-group operations

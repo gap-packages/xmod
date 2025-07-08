@@ -2,7 +2,7 @@
 ##
 #W  gpd2obj.gd                 GAP4 package `XMod'               Chris Wensley
 ##
-#Y  Copyright (C) 2001-2020, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2025, Chris Wensley et al,  
 
 #############################################################################
 ## 
