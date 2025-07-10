@@ -9,10 +9,11 @@
 
 XMODOBJ_CONSTRUCTORS := Concatenation( 
     "The standard operations which construct a (pre)xmod with objects are:\n",
-    "1.  SinglePiecePreXModWithObjects( (pre)xmod, objects, isdiscrete );\n",
-    "2.  MagmaWithSingleObject( (pre)xmod, single object );\n",
-    "3.  UnionODomainWithfPieces( list of (pre)xmods with objects );\n",
-    "4.  PreXModWithObjects( one of the previous parameter options );" );
+    "1.  PreXModWithObjectsByBoundaryAndAction( boundary, action );\n",
+    "2.  SinglePiecePreXModWithObjects( (pre)xmod, objects, isdiscrete );\n",
+    "3.  MagmaWithSingleObject( (pre)xmod, single object );\n",
+    "4.  UnionODomainWithPieces( list of (pre)xmods with objects );\n",
+    "5.  PreXModWithObjects( one of the previous parameter options );" );
 
 #############################################################################
 ##
@@ -30,10 +31,19 @@ InstallGlobalFunction( PreXModWithObjects, function( arg )
          and  ForAll( arg[1], IsPreXModWithObjects ) ) then
         Info( InfoXMod, 2, "ByUnion" );
         return UnionOfPiecesOp( arg[1], arg[1][1] );
-    # prexmod plus single object 
-    elif ( ( nargs = 2 ) and IsPreXMod( arg[1] ) and IsObject( arg[2] ) ) then
-        Info( InfoXMod, 2, "prexmod plus single object" ); 
-        return MagmaWithSingleObject( arg[1], arg[2] );
+    elif ( nargs = 2 ) then
+        # prexmod plus single object 
+        if ( IsPreXMod( arg[1] ) and IsObject( arg[2] ) ) then
+            Info( InfoXMod, 2, "prexmod plus single object" ); 
+            return MagmaWithSingleObject( arg[1], arg[2] );
+        # two groupoid homomorphisms
+        elif ( IsGroupoidHomomorphism( arg[1] ) 
+               and IsGroupoidHomomorphism( arg[2] ) ) then
+            Info( InfoXMod, 2, "by boundary and action" );
+            return PreXModByBoundaryAndAction( arg[1], arg[2] );
+        else
+            return fail;
+        fi;
     # prexmod + list of objects + boolean (true => discrete source) 
     elif ( ( nargs = 3 ) and IsPreXMod( arg[1] ) 
            and IsList( arg[2] ) and IsBool( arg[3] ) ) then
@@ -43,6 +53,55 @@ InstallGlobalFunction( PreXModWithObjects, function( arg )
         Info( InfoXMod, 1, XMODOBJ_CONSTRUCTORS );
         return fail;
     fi;
+end );
+
+#############################################################################
+##
+#M  PreXModWithObjectsByBoundaryAndAction
+##
+InstallMethod( PreXModWithObjectsByBoundaryAndAction,
+    "pre-crossed module with objects from boundary and action maps",
+    true, [ IsGroupoidHomomorphism, IsGroupoidHomomorphism ], 0,
+function( bdy, act )
+
+    local rng, src, genrng, gensrc, aut, genaut, obsaut, root, imact, 
+          i, a0, ima, a, PX;
+
+    src := Source( bdy );
+    gensrc := GeneratorsOfGroupoid( src );
+    rng := Range( bdy );
+    genrng := GeneratorsOfGroupoid( rng );
+    if not ( Source( act ) = rng ) then
+        Info( InfoXMod, 2,
+              "The range group is not the source of the action." );
+        return fail;
+    fi;
+    aut := Range( act );
+    genaut := GeneratorsOfGroupoid( aut );
+    obsaut := ObjectList( aut );
+    root := RootGroup( aut );
+    if not ( Size( obsaut ) = 1 ) and IsGroupOfAutomorphisms( root ) then
+        Info( InfoXMod, 2, "<aut> is not a group of groupoid automorphisms" );
+        return fail;
+    fi;
+    for a in genaut do
+        if not ( ( Source( a![2] ) = src ) and ( Range( a![2] ) = src ) ) then
+            Info( InfoXMod, 2, "error in source and range of automorphism" );
+            return fail;
+        fi;
+    od;
+    if not ( One( root ) = IdentityMapping( src ) ) then
+        Info( InfoXMod, 2,
+              "root.identity <> IdentityMapping( src )" );
+        return fail;
+    fi;
+    imact := List( genrng, r -> ImageElm( act, r ) );
+    PX := PreXModWithObjectsObj( bdy, act ); 
+    if not IsPreXModWithObjects( PX ) then 
+        Info( InfoXMod, 1, "PX fails to be a groupoid pre-crossed module" ); 
+        return fail; 
+    fi;
+    return PX; 
 end );
 
 #############################################################################
@@ -80,24 +139,24 @@ end );
 
 ##############################################################################
 ##
-#M  MakePreXModWithObjects( <src>, <rng>, <bdy>, <act> ) 
+#M  PreXModWithObjectsObj( <bdy>, <act> ) 
 ##
-InstallMethod( MakePreXModWithObjects, "for gpd, gpd, gpdhom, gpdhom", 
-    true, [ IsGroupoid, IsGroupoid, IsGroupWithObjectsHomomorphism, 
-    IsGeneralMappingWithObjects ], 0,
-function( src, rng, bdy, act )
+InstallMethod( PreXModWithObjectsObj, "for 2 groupoid homomorphisms", 
+    true, [ IsGroupoidHomomorphism, IsGroupoidHomomorphism ], 0,
+function( bdy, act )
 
-    local pxwo; 
+    local pxwo, ok; 
 
-    pxwo := rec( source := src, range := rng, boundary := bdy, action := act ); 
+    pxwo := rec( boundary := bdy, action := act ); 
     ObjectifyWithAttributes( pxwo, PreXModWithObjectsType, 
         Is2DimensionalDomain, true, 
         IsSinglePieceDomain, true, 
         IsPreXModWithObjects, true, 
-        Source, src, 
-        Range, rng, 
+        Source, Source( bdy ), 
+        Range, Range( bdy ), 
         Boundary, bdy, 
         XModAction, act ); 
+    ok := IsXModWithObjects( pxwo );
     return pxwo; 
 end ); 
 
@@ -122,20 +181,25 @@ InstallMethod( SinglePiecePreXModWithObjectsNC, "for prexmod, obs, isdisc?",
     true, [ IsPreXMod, IsList, IsBool ], 0,
 function( px, obs, isdisc )
 
-    local nobs, spx, rpx, src, rng, gens, bpx, homs, imbdy, i, a, im, bdy, 
-          apx, AS, AR, AS0, obs0, imobs, fact, act, pxwo; 
+    local nobs, ro, spx, rpx, src, rng, gens, genr, bpx, homs, imbdy, imobs, 
+          i, a, im, bdy, apx, AS, AR, AS0, imact, p, g, q, pos, aut, p1, h, 
+          idspx, auts, act, pxo; 
 
     nobs := Length( obs );
+    ro := obs[1];  ## root object
     spx := Source( px ); 
     rpx := Range( px ); 
-    rng := SinglePieceGroupoid( rpx, obs ); 
+    rng := SinglePieceGroupoid( rpx, obs );
+## Print( "rng = ", rng, "\n" );
     if isdisc then 
         src := HomogeneousDiscreteGroupoid( spx, obs );
     else 
         src := SinglePieceGroupoid( spx, obs ); 
     fi;
+## Print( "src = ", src, "\n" );
     ## construct the boundary 
     gens := GeneratorsOfGroupoid( src ); 
+    genr := GeneratorsOfGroupoid( rng ); 
     bpx := Boundary( px ); 
     if isdisc then 
         homs := ListWithIdenticalEntries( nobs, bpx );
@@ -152,34 +216,50 @@ function( px, obs, isdisc )
             fi; 
         od; 
         bdy := GroupoidHomomorphismFromSinglePiece( src, rng, gens, imbdy ); 
-    fi; 
-    ## construct the action 
+    fi;
+## Print( "boundary = ", bdy, "\n" );
+    ## now construct the action 
     apx := XModAction( px ); 
     AS := AutomorphismGroupOfGroupoid( src ); 
     AR := AutomorphismGroupOfGroupoid( rng ); 
     AS0 := MagmaWithSingleObject( AS, 0 ); 
-    obs0 := List( obs, o -> 0 ); 
-    fact := function(a) local i,j,g,imobs,aut1,autg,aut2,aut; 
-                g := a![2]; 
-                i := Position( obs, a![3] ); 
-                j := Position( obs, a![4] ); 
-                imobs := ShallowCopy( obs ); 
-                imobs[i] := obs[j]; 
-                imobs[j] := obs[i];
-                aut1 := GroupoidAutomorphismByObjectPerm( src, imobs ); 
-                autg := ImageElm( apx, g ); 
-                aut2 := GroupoidAutomorphismByGroupAuto( src, autg ); 
-                aut := aut1 * aut2; 
-                return ArrowNC( src, true, aut, 0, 0 );
-            end; 
-    act := MappingWithObjectsByFunction( rng, AS0, fact, obs0 ); 
-    pxwo := MakePreXModWithObjects( src, rng, bdy, act );
-    SetObjectList( pxwo, obs );
-    SetRoot2dGroup( pxwo, px );
-    SetIsDirectProductWithCompleteDigraphDomain( pxwo, true );
-    SetIsXModWithObjects( pxwo, IsXMod( px ) ); 
-    #?  name := Name( pxwo ); 
-    return pxwo; 
+    imact := ListWithIdenticalEntries( nobs, 0 );
+    for i in [1..Length(genr)] do
+        a := genr[i];
+        g := a![2];
+        p := a![3];
+        q := a![4];
+        if ( p <> ro ) then
+             Error( "expecting tail of a to be the root object" );
+        fi;
+        if ( q = ro ) then  ## arrow is a loop
+            aut := ImageElm( apx, g );
+## Print( "aut = ", aut, "\n" );
+            if isdisc then
+                p1 := Pieces( src )[1];
+                idspx := IdentityMapping( spx );
+                auts := ListWithIdenticalEntries( nobs, idspx );
+                auts[1] := aut;
+                h := GroupoidAutomorphismByGroupAutos( src, auts ); 
+            else
+                h := GroupoidAutomorphismByGroupAuto( src, aut );
+            fi;
+## Print( "h = ", h, "\n" );
+            imact[i] := Arrow( AS0, h, 0, 0 );
+        else 
+            imobs := ShallowCopy( obs );
+            pos := Position( obs, q );
+            imobs[1] := q;
+            imobs[pos] := p;
+            h := GroupoidAutomorphismByObjectPerm( src, imobs );
+            imact[i] := Arrow( AS0, h, 0, 0 );
+        fi;
+    od;
+    act := GroupoidHomomorphism( rng, AS0, genr, imact );
+## Print( "act = ", act, "\n" );
+    pxo := PreXModWithObjectsByBoundaryAndAction( bdy, act );
+    SetRoot2dGroup( pxo, px );
+    return pxo;
 end ); 
 
 ##############################################################################
@@ -368,7 +448,7 @@ function( dwo )
     bdyo := RestrictedMappingGroupoids( bdy, sgo ); 
     rgo := FullSubgroupoid( rng, [ro] ); 
     acto := RestrictedMappingGroupoids( act, rgo ); 
-Error("here");
+Error("");
     return fail; 
 end ); 
 

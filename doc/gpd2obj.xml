@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gpd2obj.xml           XMod documentation            Chris Wensley  -->
 <!--                                                                     -->
-<!--  Copyright (C) 2001-2022, Chris Wensley et al,                      --> 
+<!--  Copyright (C) 2001-2025, Chris Wensley et al,                      --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
 
@@ -35,6 +35,15 @@ The boundary morphism is constant on objects.
 For details and other references see <Cite Key="AW2" />. 
 
 <ManSection>
+   <Oper Name="PreXModWithObjectsByBoundaryAndAction" 
+         Arg="bdy act" /> 
+<Description> 
+This is the groupoid generalisation of the operation
+<C>PreXModByBoundaryAndAction</C>.
+</Description>
+</ManSection>
+
+<ManSection>
    <Oper Name="SinglePiecePreXModWithObjects" 
          Arg="pxmod obs isdisc" /> 
 <Description> 
@@ -47,6 +56,8 @@ Other operations will be added as time permits.
 <P/> 
 In the example the crossed module <C>DX4</C> has discrete source, 
 while the crossed module <C>CX4</C> has connected source. 
+(Calculations with <C>DX4</C> temporarily removed while this function
+is being developed.)
 These are groupoid generalisations of <Ref Oper="XModByNormalSubgroup"/>
 and the example <C>X4</C> in <Ref Oper="NormalSubXMods"/>.
 </Description>
@@ -59,22 +70,15 @@ gap> SetName( s4, "s4" );
 gap> a4 := Subgroup( s4, [ (1,2,3), (2,3,4) ] );;
 gap> SetName( a4, "a4" );
 gap> X4 := XModByNormalSubgroup( s4, a4 );; 
-gap> DX4 := SinglePiecePreXModWithObjects( X4, [-9,-8,-7], true );
-single piece crossed module with objects
-  source groupoid:
-    homogeneous, discrete groupoid: < a4, [ -9, -8, -7 ] >
-  and range groupoid:
-    single piece groupoid: < s4, [ -9, -8, -7 ] >
-gap> Da4 := Source( DX4 );; 
-gap> Ds4 := Range( DX4 );;
 gap> CX4 := SinglePiecePreXModWithObjects( X4, [-6,-5,-4], false );
-single piece crossed module with objects
+single piece precrossed module with objects
   source groupoid:
     single piece groupoid: < a4, [ -6, -5, -4 ] >
   and range groupoid:
     single piece groupoid: < s4, [ -6, -5, -4 ] >
-gap> Ca4 := Source( CX4 );; 
-gap> Cs4 := Range( CX4 );;
+gap> SetName( CX4, "CX4" );
+gap> Ca4 := Source( CX4 );;  SetName( Ca4, "Ca4" );
+gap> Cs4 := Range( CX4 );;  SetName( Cs4, "Cs4" );
 ]]>
 </Example>
 
@@ -95,11 +99,10 @@ The precrossed module <C>DX4</C> belongs to the category
 <P/>
 <Example>
 <![CDATA[
-gap> Set( KnownPropertiesOfObject( DX4 ) ); 
+gap> Set( KnownPropertiesOfObject( CX4 ) ); 
 [ "CanEasilyCompareElements", "CanEasilySortElements", "IsAssociative", 
-  "IsDirectProductWithCompleteDigraphDomain", "IsDuplicateFree", 
-  "IsGeneratorsOfSemigroup", "IsPreXModWithObjects", "IsSinglePieceDomain", 
-  "IsXModWithObjects" ]
+  "IsDuplicateFree", "IsGeneratorsOfSemigroup", "IsPreXModWithObjects", 
+  "IsSinglePieceDomain", "IsXModWithObjects" ]
 ]]>
 </Example>
 
@@ -154,25 +157,22 @@ where the group is the automorphism group of the range groupoid.
 <P/>
 <Example>
 <![CDATA[
-gap> Set( KnownAttributesOfObject( CX4 ) ); 
-[ "Boundary", "ObjectList", "Range", "Root2dGroup", "Source", "XModAction" ]
 gap> Root2dGroup( CX4 ); 
 [a4->s4]
-gap> act := XModAction( CX4 );; 
-gap> Size( Range( act ) ); 
+gap> actC := XModAction( CX4 );; 
+gap> Size( Range( actC ) ); 
 20736
-gap> r := Arrow( Cs4, (1,2,3,4), -4, -5 );;
-gap> ## the next command constructs an arrow of the form (hom : 0 -> 0)
-gap> ImageElm( act, r );            
-[groupoid homomorphism : 
-[ [ [(1,2,3) : -6 -> -6], [(2,3,4) : -6 -> -6], [() : -6 -> -5], 
+gap> r1 := Arrow( Cs4, (1,2,3,4), -4, -5 );; 
+gap> ImageElm( actC, r1 );            
+[groupoid homomorphism : Ca4 -> Ca4
+[ [ [(1,2,3) : -6 -> -6], [(2,3,4) : -6 -> -6], [()  : -6 -> -5], 
       [() : -6 -> -4] ], 
-  [ [(2,3,4) : -6 -> -6], [(1,3,4) : -6 -> -6], [() : -6 -> -4], 
-      [() : -6 -> -5] ] ] : 0 -> 0]
-gap> s := Arrow( Ca4, (1,2,4), -5, -5 );;
-gap> ##  calculate s^r 
-gap> ims := ImageElmXModAction( CX4, s, r );
-[(1,2,3) : -4 -> -4]
+  [ [(2,3,4) : -4 -> -4], [(1,3,4) : -4 -> -4], [() : -4 -> -6], 
+      [() : -4 -> -5] ] ] : 0 -> 0]
+gap> s1 := Arrow( Ca4, (1,2,4), -5, -5 );;
+gap> ##  calculate s1^r1 
+gap> ims1 := ImageElmXModAction( CX4, s1, r1 );
+[(1,2,3) : -6 -> -6]
 ]]>
 </Example>
 

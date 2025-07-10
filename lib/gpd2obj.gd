@@ -62,7 +62,7 @@ DeclareProperty( "IsCat1Groupoid", IsPreCat1Groupoid );
 ##
 DeclareRepresentation( "IsPreXModWithObjectsObj", 
     Is2DimensionalDomainWithObjects and IsAttributeStoringRep, 
-    [ "source", "range", "boundary", "action" ] );
+    [ "boundary", "action" ] );
 
 #############################################################################
 ##
@@ -76,6 +76,13 @@ BindGlobal( "PreXModWithPiecesType",
             NewType( Family2DimensionalGroupWithObjects, 
                      IsPreXModWithObjectsObj and IsPiecesRep ) ); 
 
+#############################################################################
+##
+#O  PreXModWithObjectsByBoundaryAndAction( <bdy>, <act> )
+## 
+DeclareOperation( "PreXModWithObjectsByBoundaryAndAction",
+   [ IsGroupoidHomomorphism, IsGroupoidHomomorphism ] );
+
 ############################################################################# 
 ## 
 #A  Root2dGroup( <dwo> ) 
@@ -85,11 +92,11 @@ DeclareAttribute( "Root2dGroup", Is2DimensionalDomainWithObjects );
 ############################################################################# 
 ## 
 #F  PreXModWithObjects( <args> ) 
-#O  MakePreXModWithObjects( <src>, <rng>, <bdy>, <act> )         
+#O  PreXModWithObjectsObj( <bdy>, <act> )         
 ## 
 DeclareGlobalFunction( "PreXModWithObjects" );
-DeclareOperation( "MakePreXModWithObjects", [ IsGroupoid, IsGroupoid, 
-    IsGroupWithObjectsHomomorphism, IsGeneralMappingWithObjects ] ); 
+DeclareOperation( "PreXModWithObjectsObj",
+    [ IsGroupoidHomomorphism, IsGroupoidHomomorphism ] ); 
 
 #############################################################################
 ##
