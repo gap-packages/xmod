@@ -473,6 +473,7 @@ true
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SubXMod</code>( <var class="Arg">X0</var>, <var class="Arg">src</var>, <var class="Arg">rng</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TrivialSubXMod</code>( <var class="Arg">X0</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NormalSubXMods</code>( <var class="Arg">X0</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsNormal</code>( <var class="Arg">X0</var>, <var class="Arg">S0</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>With the standard crossed module constructors listed above as building blocks, sub-crossed modules, normal sub-crossed modules <span class="SimpleMath">\(\calN \lhd \calX\)</span>, and also quotients <span class="SimpleMath">\(\calX/\calN\)</span> may be constructed. A sub-crossed module <span class="SimpleMath">\(\calS = (\delta : N \to M)\)</span> is <em>normal</em> in <span class="SimpleMath">\(\calX = (\partial : S \to R)\)</span> if</p>
 
 
@@ -507,7 +508,7 @@ true
 [a4-&gt;s4]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Y4 := SubXMod( X4, k4, a4 ); </span>
 [k4-&gt;a4]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsNormal(X4,Y4);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsNormal( X4, Y4 );</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NX4 := NormalSubXMods( X4 );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length( NX4 ); </span>
@@ -1344,8 +1345,6 @@ groupoid with 2 pieces:
 [ (11,12)&gt;-( 1, 2)( 4, 6)( 7, 8)-&gt;(11,12) ] )&gt;
 
 </pre></div>
-
-<p>cat<span class="SimpleMath">\(^1\)</span>-group</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap3_mj.html">[Next Chapter]</a>&nbsp;  </div>

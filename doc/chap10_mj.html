@@ -28,10 +28,11 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10_mj.html#X847F4ED77F50528C">10.1 <span class="Heading">Constructions for crossed modules of groupoids</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10_mj.html#X86CD034F82F5F029">10.1-1 SinglePiecePreXModWithObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10_mj.html#X7B76F2BF82E075FF">10.1-2 IsXModWithObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10_mj.html#X858EB4F97D04D012">10.1-3 IsPermPreXModWithObjects</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10_mj.html#X797B1CD07C3682EE">10.1-4 Root2dGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10_mj.html#X78F89CAB7A281B8F">10.1-1 PreXModWithObjectsByBoundaryAndAction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10_mj.html#X86CD034F82F5F029">10.1-2 SinglePiecePreXModWithObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10_mj.html#X7B76F2BF82E075FF">10.1-3 IsXModWithObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10_mj.html#X858EB4F97D04D012">10.1-4 IsPermPreXModWithObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10_mj.html#X797B1CD07C3682EE">10.1-5 Root2dGroup</a></span>
 </div></div>
 </div>
 
@@ -45,14 +46,21 @@
 
 <p>A typical example of a crossed module <span class="SimpleMath">\(\calX\)</span> over a groupoid has for its range a connected groupoid. This is a direct product of a group with a complete graph, and we call the vertices of the graph the <em>objects</em> of the crossed module. The source of <span class="SimpleMath">\(\calX\)</span> is a groupoid, with the same objects, which is either discrete or connected. The boundary morphism is constant on objects. For details and other references see <a href="chapBib_mj.html#biBAW2">[AW10]</a>.</p>
 
+<p><a id="X78F89CAB7A281B8F" name="X78F89CAB7A281B8F"></a></p>
+
+<h5>10.1-1 PreXModWithObjectsByBoundaryAndAction</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PreXModWithObjectsByBoundaryAndAction</code>( <var class="Arg">bdy</var>, <var class="Arg">act</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>This is the groupoid generalisation of the operation <code class="code">PreXModByBoundaryAndAction</code>.</p>
+
 <p><a id="X86CD034F82F5F029" name="X86CD034F82F5F029"></a></p>
 
-<h5>10.1-1 SinglePiecePreXModWithObjects</h5>
+<h5>10.1-2 SinglePiecePreXModWithObjects</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SinglePiecePreXModWithObjects</code>( <var class="Arg">pxmod</var>, <var class="Arg">obs</var>, <var class="Arg">isdisc</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>At present the experimental operation <code class="code">SinglePiecePreXModWithObjects</code> accepts a precrossed module <code class="code">pxmod</code>, a set of objects <code class="code">obs</code>, and a boolean <code class="code">isdisc</code> which is <code class="keyw">true</code> when the source groupoid is homogeneous and discrete and <code class="keyw">false</code> when the source groupoid is connected. Other operations will be added as time permits.</p>
 
-<p>In the example the crossed module <code class="code">DX4</code> has discrete source, while the crossed module <code class="code">CX4</code> has connected source. These are groupoid equivalents of <code class="func">XModByNormalSubgroup</code> (<a href="chap2_mj.html#X83050ED686776933"><span class="RefLink">2.1-2</span></a>).</p>
+<p>In the example the crossed module <code class="code">DX4</code> has discrete source, while the crossed module <code class="code">CX4</code> has connected source. (Calculations with <code class="code">DX4</code> temporarily removed while this function is being developed.) These are groupoid generalisations of <code class="func">XModByNormalSubgroup</code> (<a href="chap2_mj.html#X83050ED686776933"><span class="RefLink">2.1-2</span></a>) and the example <code class="code">X4</code> in <code class="func">NormalSubXMods</code> (<a href="chap2_mj.html#X7884284383284A87"><span class="RefLink">2.2-2</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -62,28 +70,21 @@
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a4 := Subgroup( s4, [ (1,2,3), (2,3,4) ] );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( a4, "a4" );</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">X4 := XModByNormalSubgroup( s4, a4 );; </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DX4 := SinglePiecePreXModWithObjects( X4, [-9,-8,-7], true );</span>
-single piece crossed module with objects
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CX4 := SinglePiecePreXModWithObjects( X4, [-6,-5,-4], false );</span>
+single piece precrossed module with objects
   source groupoid:
-    homogeneous, discrete groupoid: &lt; a4, [ -9, -8, -7 ] &gt;
+    single piece groupoid: &lt; a4, [ -6, -5, -4 ] &gt;
   and range groupoid:
-    single piece groupoid: &lt; s4, [ -9, -8, -7 ] &gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Da4 := Source( DX4 );; </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Ds4 := Range( DX4 );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CX4 := SinglePiecePreXModWithObjects( X4, [-9,-8,-7], false );</span>
-single piece crossed module with objects
-  source groupoid:
-    single piece groupoid: &lt; a4, [ -9, -8, -7 ] &gt;
-  and range groupoid:
-    single piece groupoid: &lt; s4, [ -9, -8, -7 ] &gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Ca4 := Source( CX4 );; </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cs4 := Range( CX4 );;</span>
+    single piece groupoid: &lt; s4, [ -6, -5, -4 ] &gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( CX4, "CX4" );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Ca4 := Source( CX4 );;  SetName( Ca4, "Ca4" );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Cs4 := Range( CX4 );;  SetName( Cs4, "Cs4" );</span>
 
 </pre></div>
 
 <p><a id="X7B76F2BF82E075FF" name="X7B76F2BF82E075FF"></a></p>
 
-<h5>10.1-2 IsXModWithObjects</h5>
+<h5>10.1-3 IsXModWithObjects</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsXModWithObjects</code>( <var class="Arg">pxmod</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPreXModWithObjects</code>( <var class="Arg">pxmod</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
@@ -93,16 +94,16 @@ single piece crossed module with objects
 
 <div class="example"><pre>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Set( KnownPropertiesOfObject( DX4 ) ); </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Set( KnownPropertiesOfObject( CX4 ) ); </span>
 [ "CanEasilyCompareElements", "CanEasilySortElements", "IsAssociative", 
-  "IsDirectProductWithCompleteDigraphDomain", "IsDuplicateFree", 
-  "IsGeneratorsOfSemigroup", "IsPreXModWithObjects", "IsSinglePieceDomain", 
+  "IsDuplicateFree", "IsGeneratorsOfSemigroup", "IsPreXModWithObjects", 
+  "IsSinglePieceDomain", "IsXModWithObjects" ]
 
 </pre></div>
 
 <p><a id="X858EB4F97D04D012" name="X858EB4F97D04D012"></a></p>
 
-<h5>10.1-3 IsPermPreXModWithObjects</h5>
+<h5>10.1-4 IsPermPreXModWithObjects</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPermPreXModWithObjects</code>( <var class="Arg">pxmod</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPcPreXModWithObjects</code>( <var class="Arg">pxmod</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
@@ -123,7 +124,7 @@ false
 
 <p><a id="X797B1CD07C3682EE" name="X797B1CD07C3682EE"></a></p>
 
-<h5>10.1-4 Root2dGroup</h5>
+<h5>10.1-5 Root2dGroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Root2dGroup</code>( <var class="Arg">pxmod</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; XModAction</code>( <var class="Arg">pxmod</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
@@ -134,24 +135,22 @@ false
 
 <div class="example"><pre>
 
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Set( KnownAttributesOfObject( CX4 ) ); </span>
-[ "Boundary", "ObjectList", "Range", "Root2dGroup", "Source", "XModAction" ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Root2dGroup( CX4 ); </span>
 [a4-&gt;s4]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">act := XModAction( CX4 );; </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size( Range( act ) ); </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">actC := XModAction( CX4 );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size( Range( actC ) ); </span>
 20736
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r := Arrow( Cs4, (1,2,3,4), -4, -5 );; </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ImageElm( act, r );            </span>
-[groupoid homomorphism : 
-[ [ [(1,2,3) : -6 -&gt; -6], [(2,3,4) : -6 -&gt; -6], [() : -6 -&gt; -5], 
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r1 := Arrow( Cs4, (1,2,3,4), -4, -5 );; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ImageElm( actC, r1 );            </span>
+[groupoid homomorphism : Ca4 -&gt; Ca4
+[ [ [(1,2,3) : -6 -&gt; -6], [(2,3,4) : -6 -&gt; -6], [()  : -6 -&gt; -5], 
       [() : -6 -&gt; -4] ], 
-  [ [(2,3,4) : -6 -&gt; -6], [(1,3,4) : -6 -&gt; -6], [() : -6 -&gt; -4], 
-      [() : -6 -&gt; -5] ] ] : 0 -&gt; 0]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s := Arrow( Ca4, (1,2,4), -5, -5 );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">##  calculate s^r </span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ims := ImageElmXModAction( CX4, s, r );</span>
-[(1,2,3) : -4 -&gt; -4]
+  [ [(2,3,4) : -4 -&gt; -4], [(1,3,4) : -4 -&gt; -4], [() : -4 -&gt; -6], 
+      [() : -4 -&gt; -5] ] ] : 0 -&gt; 0]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s1 := Arrow( Ca4, (1,2,4), -5, -5 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">##  calculate s1^r1 </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ims1 := ImageElmXModAction( CX4, s1, r1 );</span>
+[(1,2,3) : -6 -&gt; -6]
 
 </pre></div>
 

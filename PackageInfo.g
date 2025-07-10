@@ -7,8 +7,8 @@ SetPackageInfo( rec(
 
 PackageName := "XMod",
 Subtitle := "Crossed Modules and Cat1-Groups",
-Version := "2.94",
-Date := "08/07/2025", # dd/mm/yyyy format
+Version := "2.95",
+Date := "10/07/2025", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -97,7 +97,7 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">=4.11.0",
   NeededOtherPackages := [ ["utils", ">= 0.81"], 
-                           ["groupoids", ">= 1.73"], 
+                           ["groupoids", ">= 1.77"], 
                            ["HAP", ">= 1.29"],
                            ["AutPGrp", ">= 1.10.2"], 
                            ["SmallGrp", ">= 1.4.2" ] ], 
@@ -162,7 +162,8 @@ AutoDoc := rec(
             "<P/>\n", 
             "&XMod; was originally implemented in 1996 using the &GAP;3 ", 
             "language, when the second author was studying for a Ph.D. ", 
-            "<Cite Key='A1'/> at Bangor.\n", 
+            "<Cite Key='A1'/> in the School of Mathematics and ",
+            "Computer Science at Bangor University.\n", 
             "<P/>\n", 
             "In April 2002 the first and third parts were converted ", 
             "to &GAP;4, the pre-structures were added, ", 
