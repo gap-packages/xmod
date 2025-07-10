@@ -3,7 +3,6 @@
 ##  gpnobj.gd                 GAP4 package `XMod'               Chris Wensley
 ##                                                               Alper Odabas
 #Y  Copyright (C) 2001-2025, Chris Wensley et al,  
-#Y  School of Computer Science, Bangor University, U.K. 
 ##  
 ##  This file declares generic methods for (pre-)catn-groups.
 

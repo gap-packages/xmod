@@ -3,7 +3,6 @@
 #W  others.tst                  GAP4 package `XMod'              Chris Wensley
 ##  
 #Y  Copyright (C) 2001-2023, Chris Wensley et al, 
-#Y  School of Computer Science, Bangor University, U.K. 
 
 gap> START_TEST( "XMod package: others.tst" );
 gap> saved_infolevel_xmod := InfoLevel( InfoXMod );; 

@@ -3,13 +3,6 @@
 #W  gpd2obj.gd                 GAP4 package `XMod'               Chris Wensley
 ##
 #Y  Copyright (C) 2001-2025, Chris Wensley et al,  
-#Y  School of Computer Science, Bangor University, U.K. 
-
-##############  temporary fix 7/7/25 because of groupoids 1.77  #############
-## 
-#O  DomainWithSingleObject( <mag>, <obj> )
-##  
-DeclareOperation( "DomainWithSingleObject", [ IsDomain, IsObject ] );    
 
 #############################################################################
 ## 
@@ -69,7 +62,7 @@ DeclareProperty( "IsCat1Groupoid", IsPreCat1Groupoid );
 ##
 DeclareRepresentation( "IsPreXModWithObjectsObj", 
     Is2DimensionalDomainWithObjects and IsAttributeStoringRep, 
-    [ "source", "range", "boundary", "action" ] );
+    [ "boundary", "action" ] );
 
 #############################################################################
 ##
@@ -83,6 +76,13 @@ BindGlobal( "PreXModWithPiecesType",
             NewType( Family2DimensionalGroupWithObjects, 
                      IsPreXModWithObjectsObj and IsPiecesRep ) ); 
 
+#############################################################################
+##
+#O  PreXModWithObjectsByBoundaryAndAction( <bdy>, <act> )
+## 
+DeclareOperation( "PreXModWithObjectsByBoundaryAndAction",
+   [ IsGroupoidHomomorphism, IsGroupoidHomomorphism ] );
+
 ############################################################################# 
 ## 
 #A  Root2dGroup( <dwo> ) 
@@ -92,11 +92,11 @@ DeclareAttribute( "Root2dGroup", Is2DimensionalDomainWithObjects );
 ############################################################################# 
 ## 
 #F  PreXModWithObjects( <args> ) 
-#O  MakePreXModWithObjects( <src>, <rng>, <bdy>, <act> )         
+#O  PreXModWithObjectsObj( <bdy>, <act> )         
 ## 
 DeclareGlobalFunction( "PreXModWithObjects" );
-DeclareOperation( "MakePreXModWithObjects", [ IsGroupoid, IsGroupoid, 
-    IsGroupWithObjectsHomomorphism, IsGeneralMappingWithObjects ] ); 
+DeclareOperation( "PreXModWithObjectsObj",
+    [ IsGroupoidHomomorphism, IsGroupoidHomomorphism ] ); 
 
 #############################################################################
 ##

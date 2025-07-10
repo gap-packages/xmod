@@ -1,4 +1,9 @@
- # CHANGES to the 'XMod' package
+## CHANGES to the 'XMod' package
+
+## 2.94 -> 2.95 (10/07/2025)
+ * (10/07/25) added PreXModWithObjectsByBoundaryAndAction
+ * (30/06/25) make the new groupoids 1.77 a prerequisite and revise material
+              on double groupoids to agree with the changes in groupoids
 
 ## 2.93 -> 2.94  (08/07/25)
  * (08/07/25) temporary fix to work with the recently released groupoids 1.77
@@ -26,7 +31,7 @@
 ## 2.89 -> 2.91 (16/02/2023) 
  * (16/02/23) revised tst/extra/d24.tst so that it works with option -A 
  * (09/02/23) added a chapter on double groupoids with operations 
-              EnhancedBasicDoubleGroupoid, DoubleGroupooidWithZeroBoundary
+              EnhancedBasicDoubleGroupoid, DoubleGroupoidWithZeroBoundary
  * (05/02/23) added PreXModWithTrivialRange 
 
 ## 2.88 -> 2.89 (04/02/2023) 

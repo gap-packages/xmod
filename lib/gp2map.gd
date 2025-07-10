@@ -3,7 +3,6 @@
 #W  gp2map.gd                   GAP4 package `XMod'              Chris Wensley
 #W                                                                 & Murat Alp
 #Y  Copyright (C) 2001-2021, Chris Wensley et al,  
-#Y  School of Computer Science, Bangor University, U.K. 
 ##
 ##  This file contains implementations of 2DimensionalMappings 
 ##  for crossed modules and cat1-groups.

@@ -3,7 +3,6 @@
 #W  gp2obj.gi                 GAP4 package `XMod'               Chris Wensley
 #W                                                                & Murat Alp
 #Y  Copyright (C) 2001-2025, Chris Wensley et al,  
-#Y  School of Computer Science, Bangor University, U.K. 
 ##
 ##  This file contains generic methods for (pre-)crossed modules and
 ##  (pre-)cat1-groups.
@@ -335,14 +334,15 @@ InstallMethod( ImageElmXModAction, "method for a precrossed module", true,
     [ Is2DimensionalDomain, IsObject, IsObject ], 0,
 function( PM, s, r ) 
 
-    local actr; 
+    local actr, im; 
 
     if ( HasIsPreXModWithObjects(PM) and IsPreXModWithObjects(PM) ) then 
         ## this is the crossed module of groupoids case 
-        actr := ImageElm( XModAction( PM ), r )![1]; 
+        actr := ImageElm( XModAction( PM ), r )![2]; 
         return ImageElm( actr, s ); 
-    else 
-        return ImageElm( ImageElm( XModAction(PM), r ), s ); 
+    else
+        im := ImageElm( XModAction(PM), r );
+        return ImageElm( im, s ); 
     fi; 
 end ); 
 

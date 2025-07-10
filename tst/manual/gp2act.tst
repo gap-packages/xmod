@@ -3,13 +3,10 @@
 #W  gp2act.tst                    XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
 #Y  Copyright (C) 2001-2024, Chris Wensley, et al
-#Y  School of Computer Science, Bangor University, U.K. 
 ##
 gap> START_TEST( "XMod package: gp2act.tst" );
 gap> saved_infolevel_xmod := InfoLevel( InfoXMod );; 
 gap> SetInfoLevel( InfoXMod, 0 );;
-gap> saved_infolevel_groupoids := InfoLevel( InfoGroupoids );; 
-gap> SetInfoLevel( InfoGroupoids, 0 );;
 
 ## make independent of gp2up.tst 
 gap> g18 := Group( (1,2,3), (4,5,6), (2,3)(5,6) );;
@@ -211,5 +208,4 @@ gap> StructureDescription( IAXc4q );
 [ "C2", "C2 x C2" ]
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
-gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 
 gap> STOP_TEST( "gp2act.tst", 10000 );

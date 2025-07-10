@@ -3,7 +3,6 @@
 #W  testing.g                   XMod Package                     Chris Wensley
 ##   
 #Y  Copyright (C) 1999-2020, Chris Wensley et al 
-#Y  School of Computer Science, Bangor University, U.K. 
 
 LoadPackage( "xmod" );
 

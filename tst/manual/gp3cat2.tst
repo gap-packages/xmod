@@ -3,13 +3,10 @@
 #W  gp3cat2.tst                   XMOD test file               Chris Wensley
 ##
 #Y  Copyright (C) 2001-2025, Chris Wensley et al, 
-#Y  School of Computer Science, Bangor University, U.K. 
 ##
 gap> START_TEST( "XMod package: gp3cat2.tst" );
 gap> saved_infolevel_xmod := InfoLevel( InfoXMod );; 
 gap> SetInfoLevel( InfoXMod, 0 );;
-gap> saved_infolevel_groupoids := InfoLevel( InfoGroupoids );; 
-gap> SetInfoLevel( InfoGroupoids, 0 );;
 
 ## make independent of isoclinic.tst, gp2obj.tst, gp3xsq.tst 
 
@@ -263,5 +260,4 @@ rec( allcat2pos := [ 1, 7, 9, 16, 19, 22, 30, 36, 39, 41 ],
   omit := false, pisopos := [  ], sisopos := [ 1, 5, 8, 10 ] )
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
-gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 
 gap> STOP_TEST( "gp3cat2.tst", 10000 );

@@ -3,7 +3,6 @@
 #W  gpgpd.gi                   GAP4 package `XMod'              Chris Wensley
 ##
 #Y  Copyright (C) 2001-2024, Chris Wensley et al,  
-#Y  School of Computer Science, Bangor University, U.K. 
 
 #############################################################################
 ##

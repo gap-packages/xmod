@@ -3,13 +3,10 @@
 #W  gpnobjmap.tst                 XMOD test file                Chris Wensley
 ##                                                               Alper Odabas
 #Y  Copyright (C) 2001-2020, Chris Wensley et al, 
-#Y  School of Computer Science, Bangor University, U.K. 
 ##
 gap> START_TEST( "XMod package: gpnobjmap.tst" );
 gap> saved_infolevel_xmod := InfoLevel( InfoXMod );; 
 gap> SetInfoLevel( InfoXMod, 0 );;
-gap> saved_infolevel_groupoids := InfoLevel( InfoGroupoids );; 
-gap> SetInfoLevel( InfoGroupoids, 0 );;
 
 gap> SetAssertionLevel(3); 
 
@@ -206,5 +203,4 @@ gap> IsBijective( idCC233 );
 true
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
-gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 
 gap> STOP_TEST( "gpnobjmap.tst", 10000 );

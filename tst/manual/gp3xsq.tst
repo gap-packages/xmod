@@ -3,13 +3,10 @@
 #W  gp3xsq.tst                 XMOD test file                   Chris Wensley
 ##
 #Y  Copyright (C) 2001-2025, Chris Wensley et al, 
-#Y  School of Computer Science, Bangor University, U.K. 
 ##
 gap> START_TEST( "XMod package: gp3xsq.tst" );
 gap> saved_infolevel_xmod := InfoLevel( InfoXMod );; 
 gap> SetInfoLevel( InfoXMod, 0 );;
-gap> saved_infolevel_groupoids := InfoLevel( InfoGroupoids );; 
-gap> SetInfoLevel( InfoGroupoids, 0 );;
 
 ## make independent of isoclinic.tst and gp2obj.tst 
 gap> d24 := DihedralGroup( IsPermGroup, 24 );; 
@@ -305,5 +302,4 @@ gap> Set( kpo );
   "IsPreCrossedSquareMorphism", "IsSingleValued", "IsSurjective", "IsTotal" ]
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
-gap> SetInfoLevel( InfoGroupoids, saved_infolevel_groupoids );; 
 gap> STOP_TEST( "gp3xsq.tst", 10000 );
