@@ -1,5 +1,8 @@
 ## CHANGES to the 'XMod' package
 
+## 2.95 -> 2.96 (18/07/2025)
+ * (18/-7/25) now make groupoids v1.78 a prerequisite
+
 ## 2.94 -> 2.95 (10/07/2025)
  * (10/07/25) added PreXModWithObjectsByBoundaryAndAction
  * (30/06/25) make the new groupoids 1.77 a prerequisite and revise material
