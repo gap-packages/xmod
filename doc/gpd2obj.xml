@@ -18,7 +18,6 @@ The material documented in this chapter is experimental,
 and is likely to be changed in due course. 
 
 <Section> 
-
 <Heading>Constructions for crossed modules of groupoids</Heading>
 
 <Index>crossed module over a groupoid</Index>
@@ -65,8 +64,6 @@ and the example <C>X4</C> in <Ref Oper="NormalSubXMods"/>.
 <P/>
 <Example>
 <![CDATA[
-gap> s4 := Group( (1,2,3,4), (3,4) );; 
-gap> SetName( s4, "s4" );
 gap> a4 := Subgroup( s4, [ (1,2,3), (2,3,4) ] );;
 gap> SetName( a4, "a4" );
 gap> X4 := XModByNormalSubgroup( s4, a4 );; 

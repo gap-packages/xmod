@@ -2,7 +2,7 @@
 ##
 #W  gpd2obj.tst                   XMOD test file                Chris Wensley
 ##
-#Y  Copyright (C) 2001-2022, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2025, Chris Wensley et al, 
 ##
 gap> START_TEST( "XMod package: gpd2obj.tst" );
 gap> saved_infolevel_xmod := InfoLevel( InfoXMod );; 
@@ -11,8 +11,6 @@ gap> SetInfoLevel( InfoXMod, 0 );;
 ## Chapter 10
 
 ## Subsection 10.1.1 
-gap> s4 := Group( (1,2,3,4), (3,4) );; 
-gap> SetName( s4, "s4" );
 gap> a4 := Subgroup( s4, [ (1,2,3), (2,3,4) ] );;
 gap> SetName( a4, "a4" );
 gap> X4 := XModByNormalSubgroup( s4, a4 );; 
