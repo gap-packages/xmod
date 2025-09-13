@@ -79,19 +79,10 @@ Their functions for computing isoclinism classes of groups and
 crossed modules are contained in Chapter <Ref Chap="chap-isclnc" />, 
 and are described in detail in their paper <Cite Key="IOU1" />. 
 <P/> 
-The package may be obtained as a compressed tar file 
-<File>XMod-version.number.tar.gz</File>
-by ftp from one of the following sites: 
-<List>
-<Item>
-the &XMod; GitHub release site: 
-<URL>https://github.com/gap-packages.github.io/xmod/</URL>. 
-</Item>
-<Item>
-any &GAP; archive, e.g. 
-<URL>https://www.gap-system.org/Packages/packages.html</URL>; 
-</Item>
-</List>
+The package may be obtained as a compressed <Code>.tar</Code> file 
+<File>XMod-version.tar.gz</File> from the GitHub release site: 
+<URL>https://github.com/gap-packages/xmod/releases/tag/version</URL>.
+<Index>GitHub repository</Index> 
 The package also has a GitHub repository at: 
 <URL>https://github.com/gap-packages/xmod/</URL>.
 <P/>
