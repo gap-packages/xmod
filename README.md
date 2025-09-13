@@ -1,4 +1,4 @@
-[![Build Status](https://github.com/gap-packages/xmod/workflows/CI/badge.svg?branch=master)](https://github.com/gap-packages/xmod/actions?query=workflow%3ACI+branch%3Amaster)
+[![CI](https://github.com/gap-packages/xmod/actions/workflows/CI.yml/badge.svg)](https://github.com/gap-packages/xmod/actions/workflows/CI.yml)
 [![Code Coverage](https://codecov.io/github/gap-packages/xmod/coverage.svg?branch=master&token=)](https://codecov.io/gh/gap-packages/xmod)
 
 # The GAP 4 package 'XMod' 
@@ -13,9 +13,7 @@ Functions for crossed squares and cat2-groups have been added during 2019/20.
 
 ## Distribution
 
- * The 'XMod' package is distributed with the accepted GAP packages, see: 
-     <https://www.gap-system.org/Packages/xmod.html>
- * It may also be obtained from the GitHub repository at:
+The 'XMod' package may be obtained from the GitHub repository at:
      <https://gap-packages.github.io/xmod/> 
 
 ## Copyright
