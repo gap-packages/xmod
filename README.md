@@ -13,9 +13,7 @@ Functions for crossed squares and cat2-groups have been added during 2019/20.
 
 ## Distribution
 
- * The 'XMod' package is distributed with the accepted GAP packages, see: 
-     <https://www.gap-system.org/Packages/xmod.html>
- * It may also be obtained from the GitHub repository at:
+The 'XMod' package may be obtained from the GitHub repository at:
      <https://gap-packages.github.io/xmod/> 
 
 ## Copyright

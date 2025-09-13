@@ -79,7 +79,7 @@ Here is a picture of the situation:
               && S_{\{2\}} \ar[dd]^{\dot{\partial}_2} && 
               L \ar[rr]^{\kappa} \ar[dd]_{\lambda} 
               && M \ar[dd]^{\mu} &   \\
-\mathcal{S}  & = &  &&  & = &&  \\
+\mathbb{S}  & = &  &&  & = &&  \\
        &   &  S_{\{1\}} \ar[rr]_{\dot{\partial}_1}  
               && S_{\emptyset} &&  
               N \ar[rr]_{\nu}  

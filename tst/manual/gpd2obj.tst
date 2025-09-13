@@ -25,10 +25,15 @@ single piece precrossed module with objects
 gap> SetName( CX4, "CX4" );
 gap> Ca4 := Source( CX4 );;  SetName( Ca4, "Ca4" );
 gap> Cs4 := Range( CX4 );;  SetName( Cs4, "Cs4" );
-gap> ## DX4 := SinglePiecePreXModWithObjects( X4, [-9,-8,-7], true );
-gap> ## SetName( DX4, "DX4" );
-gap> ## Da4 := Source( DX4 );;  SetName( Da4, "Da4" );
-gap> ## Ds4 := Range( DX4 );;  SetName( Ds4, "Ds4" );
+gap> DX4 := SinglePiecePreXModWithObjects( X4, [-9,-8,-7], true );
+single piece precrossed module with objects
+  source groupoid:
+    homogeneous, discrete groupoid: < a4, [ -9, -8, -7 ] >
+  and range groupoid:
+    single piece groupoid: < s4, [ -9, -8, -7 ] >
+gap> SetName( DX4, "DX4" );
+gap> Da4 := Source( DX4 );;  SetName( Da4, "Da4" );
+gap> Ds4 := Range( DX4 );;  SetName( Ds4, "Ds4" );
 
 ## Subsection 10.1.2 
 gap> Set( KnownPropertiesOfObject( CX4 ) ); 
@@ -62,14 +67,18 @@ gap> ##  calculate s1^r1
 gap> ims1 := ImageElmXModAction( CX4, s1, r1 );
 [(1,2,3) : -6 -> -6]
 gap> ## repeat using DX4
-gap> ## actD := XModAction( DX4 );; 
-gap> ## SetName( Range( actD ), "autD" );
-gap> ## Size( Range( actD ) ); 
-gap> ## r2 := Arrow( Ds4, (1,2,3,4), -7, -8 );; 
-gap> ## ImageElm( actD, r2 );            
-gap> ## s2 := Arrow( Da4, (1,2,4), -8, -8 );;
+gap> actD := XModAction( DX4 );; 
+gap> SetName( Range( actD ), "autD" );
+gap> Size( Range( actD ) );
+82944
+gap> r2 := Arrow( Ds4, (1,2,3,4), -7, -8 );; 
+gap> ImageElm( actD, r2 );            
+[groupoid homomorphism : Da4 -> Da4
+ : 0 -> 0]
+gap> s2 := Arrow( Da4, (1,2,4), -8, -8 );;
 gap> ##  calculate s2^r2 
-gap> ## ims2 := ImageElmXModAction( DX4, s2, r2 );
+gap> ims2 := ImageElmXModAction( DX4, s2, r2 );
+[(1,2,3) : -9 -> -9]
 
 gap> SetInfoLevel( InfoXMod, saved_infolevel_xmod );; 
 gap> STOP_TEST( "gpd2obj.tst", 10000 );

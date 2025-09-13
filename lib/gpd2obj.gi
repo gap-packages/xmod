@@ -182,8 +182,8 @@ InstallMethod( SinglePiecePreXModWithObjectsNC, "for prexmod, obs, isdisc?",
 function( px, obs, isdisc )
 
     local nobs, ro, spx, rpx, src, rng, gens, genr, bpx, homs, imbdy, imobs, 
-          i, a, im, bdy, apx, AS, AR, AS0, imact, p, g, q, pos, aut, p1, h, 
-          idspx, auts, act, pxo; 
+          i, a, im, bdy, apx, AS, AR, AS0, imact, p, g, q, aut, h, auts,
+          idspx, act, pxo; 
 
     nobs := Length( obs );
     ro := obs[1];  ## root object
@@ -222,38 +222,34 @@ function( px, obs, isdisc )
     apx := XModAction( px ); 
     AS := AutomorphismGroupOfGroupoid( src ); 
     AR := AutomorphismGroupOfGroupoid( rng ); 
-    AS0 := MagmaWithSingleObject( AS, 0 ); 
+    AS0 := MagmaWithSingleObject( AS, 0 );
+    SetName( AS0, "AS0" ); 
     imact := ListWithIdenticalEntries( nobs, 0 );
     for i in [1..Length(genr)] do
         a := genr[i];
         g := a![2];
-        p := a![3];
-        q := a![4];
-        if ( p <> ro ) then
+        p := Position( obs, a![3] );
+        q := Position( obs, a![4] );
+        if ( p <> 1 ) then
              Error( "expecting tail of a to be the root object" );
         fi;
-        if ( q = ro ) then  ## arrow is a loop
+        if ( q = 1 ) then  ## a loop
             aut := ImageElm( apx, g );
 ## Print( "aut = ", aut, "\n" );
-            if isdisc then
-                p1 := Pieces( src )[1];
-                idspx := IdentityMapping( spx );
-                auts := ListWithIdenticalEntries( nobs, idspx );
-                auts[1] := aut;
-                h := GroupoidAutomorphismByGroupAutos( src, auts ); 
+            if not isdisc then
+                h := GroupoidAutomorphismByGroupAuto(src, aut);
             else
-                h := GroupoidAutomorphismByGroupAuto( src, aut );
+                auts := ListWithIdenticalEntries( nobs, aut );
+                h := GroupoidAutomorphismByGroupAutos( src, auts );
             fi;
-## Print( "h = ", h, "\n" );
-            imact[i] := Arrow( AS0, h, 0, 0 );
-        else 
+        else
             imobs := ShallowCopy( obs );
-            pos := Position( obs, q );
-            imobs[1] := q;
-            imobs[pos] := p;
+            imobs[1] := obs[q];
+            imobs[q] := ro; 
             h := GroupoidAutomorphismByObjectPerm( src, imobs );
-            imact[i] := Arrow( AS0, h, 0, 0 );
         fi;
+## Print( "h = ", h, "\n" );
+        imact[i] := Arrow( AS0, h, 0, 0 );
     od;
     act := GroupoidHomomorphism( rng, AS0, genr, imact );
 ## Print( "act = ", act, "\n" );
@@ -485,7 +481,7 @@ InstallMethod( PrintObj, "method for prexmods and precat2groups with objects",
     true, [ Is2DimensionalGroupWithObjects ], 0,
 function ( pxwo )
 
-    local len, pieces, i, p, type; 
+    local type, src, rng, len, pieces, i, p; 
 
     if ( HasIsXModWithObjects( pxwo ) and IsXModWithObjects( pxwo ) ) then 
         type := "crossed module with objects"; 
@@ -501,10 +497,16 @@ function ( pxwo )
         type := "2dgroup with objects"; 
     fi;
     if ( HasIsSinglePiece( pxwo ) and IsSinglePiece( pxwo ) ) then
+        src := Source( pxwo );
+        rng := Range( pxwo );
         Print( "single piece ", type, "\n" );
-        Print( "  source groupoid:\n    " );
+        Print( "  source groupoid: " );
+        if HasName( src ) then Print( Name( src ) ); fi;
+        Print( "\n" );
         Print( Source( pxwo ), "\n" ); 
-        Print( "  and range groupoid:\n    " ); 
+        Print( "  and range groupoid: " );
+        if HasName( rng ) then Print( Name( rng ) ); fi;
+        Print( "\n" ); 
         Print( Range( pxwo ) ); 
         return; 
     else 
@@ -545,14 +547,21 @@ end );
 InstallMethod( Display, "method for prexmods and precat2groups", true, 
     [ Is2DimensionalGroupWithObjects ], 0,
 function( xwo )
+    local  src, rng;
     Print( "crossed module of groupoids, " ); 
     if HasName( xwo ) then 
         Print( Name( xwo ) ); 
-    fi; 
+    fi;
+    Print( "\n" );
+    src := Source( xwo );
+    rng := Range( xwo );
+    Print( "source groupoid: " );
+    if HasName( src ) then Print( Name( src ) ); fi;
     Print( "\n" ); 
-    Print( "source groupoid:\n" ); 
     Display( Source( xwo ) ); 
-    Print( "range groupoid:\n" ); 
+    Print( "range groupoid: " );
+    if HasName( rng ) then Print( Name( rng ) ); fi;
+    Print( "\n" ); 
     Display( Range( xwo ) ); 
 end ); 
 
