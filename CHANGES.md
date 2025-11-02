@@ -1,15 +1,13 @@
 ## CHANGES to the 'XMod' package
 
-## 2.95 -> 2.96 (18/07/2025)
- * (18/-7/25) now make groupoids v1.78 a prerequisite
+## 2.95 -> 2.96 (01/11/2025)
+ * (02/11/25) change of address: Murat Alp now in Kuwait
+ * (13/09/25) now make groupoids v1.78 a prerequisite
 
-## 2.94 -> 2.95 (10/07/2025)
+## 2.93 -> 2.95 (10/07/2025)
  * (10/07/25) added PreXModWithObjectsByBoundaryAndAction
  * (30/06/25) make the new groupoids 1.77 a prerequisite and revise material
               on double groupoids to agree with the changes in groupoids
-
-## 2.93 -> 2.94  (08/07/25)
- * (08/07/25) temporary fix to work with the recently released groupoids 1.77
 
 ## 2.92 -> 2.93 (27/04/2025)
  * (27/04/25) added sub-crossed square and sub-cat2-group operations

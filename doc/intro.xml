@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  intro.xml             XMod documentation            Chris Wensley  -->
 <!--                                                                     -->
-<!--  Copyright (C) 1996-2021, Chris Wensley et al,                      --> 
+<!--  Copyright (C) 1996-2025, Chris Wensley et al,                      --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
 
@@ -15,14 +15,15 @@
 The &XMod; package provides functions for computation with 
 <List> 
 <Item>
-finite crossed modules of groups and cat1-groups, 
+finite crossed modules of groups and cat<M>^1</M>-groups, 
 and morphisms of these structures;
 </Item>
 <Item>
-finite pre-crossed modules, pre-cat1-groups, and their Peiffer quotients;
+finite pre-crossed modules, pre-cat<M>^1</M>-groups, 
+and their Peiffer quotients;
 </Item>
 <Item>
-derivations of crossed modules and sections of cat1-groups; 
+derivations of crossed modules and sections of cat<M>^1</M>-groups; 
 </Item>
 <Item>
 isoclinism of groups and crossed modules; 
@@ -31,10 +32,10 @@ isoclinism of groups and crossed modules;
 the actor crossed square of a crossed module; 
 </Item>
 <Item>
-crossed squares, cat2-groups, and their morphisms (experimental version); 
+crossed squares, cat<M>^2</M>-groups, and their morphisms; 
 </Item>
 <Item>
-crossed modules of groupoids (experimental version). 
+crossed modules of groupoids. 
 </Item>
 </List>
 
@@ -48,7 +49,7 @@ gap> LoadPackage( "xmod" );
 The term crossed module was introduced by J. H. C. Whitehead in 
 <Cite Key="W2" />, <Cite Key="W1" />.
 Loday, in <Cite Key="L1" />, 
-reformulated the notion of a crossed module as a cat1-group.
+reformulated the notion of a crossed module as a cat<M>^1</M>-group.
 Norrie <Cite Key="N1" />, <Cite Key="N2" /> 
 and Gilbert <Cite Key="G1" /> have studied derivations, 
 automorphisms of crossed modules and the actor of a crossed module, 
@@ -60,7 +61,7 @@ Brown, Higgins and Wensley in <Cite Key="BH1" />,
 For further references see <Cite Key="AW1" />, 
 where we discuss some of the data structures and algorithms 
 used in this package, and also tabulate
-isomorphism classes of cat1-groups up to size <M>30</M>.
+isomorphism classes of cat<M>^1</M>-groups up to size <M>30</M>.
 <P/>
 &XMod; was originally implemented in 1997 using the &GAP; 3 language.
 In April 2002 the first and third parts were converted to &GAP; 4, 
@@ -86,7 +87,7 @@ The package may be obtained as a compressed <Code>.tar</Code> file
 The package also has a GitHub repository at: 
 <URL>https://github.com/gap-packages/xmod/</URL>.
 <P/>
-Crossed modules and cat1-groups are special types of 
+Crossed modules and cat<M>^1</M>-groups are special types of 
 <E>2-dimensional groups</E> <Cite Key="B82"/>, <Cite Key="brow:hig:siv"/>, 
 and are implemented as <C>2DimensionalDomains</C> and <C>2DimensionalGroups</C> 
 having a <C>Source</C> and a <C>Range</C>.
@@ -97,12 +98,12 @@ The package divides into eight parts.
 The first part is concerned with the standard constructions for 
 pre-crossed modules and crossed modules; together with
 direct products; normal sub-crossed modules; and quotients.
-Operations for constructing pre-cat1-groups and cat1-groups,
-and for converting between cat1-groups and crossed modules,
+Operations for constructing pre-cat<M>^1</M>-groups and cat<M>^1</M>-groups,
+and for converting between cat<M>^1</M>-groups and crossed modules,
 are also included.
 <P/>
 The second part is concerned with <E>morphisms</E> of (pre-)crossed modules
-and (pre-)cat1-groups, together with standard operations for morphisms,
+and (pre-)cat<M>^1</M>-groups, together with standard operations for morphisms,
 such as composition, image and kernel.
 <P/>
 The third part is the most recent part of the package, 
@@ -113,11 +114,11 @@ Then, in <Ref Sect="sect-isoclinic-groups" />
 and <Ref Sect="sect-isoclinic-xmods" /> 
 there are functions for isoclinism of groups and crossed modules. 
 <P/>
-The fourth part is concerned with the equivalent notions of
-<E>derivation</E> for a crossed module and <E>section</E> for a cat1-group,
+The fourth part is concerned with the equivalent notions of <E>derivation</E>
+for a crossed module and <E>section</E> for a cat<M>^1</M>-group,
 and the monoids which they form under the Whitehead multiplication.
 <P/>
-The fifth part deals with actor crossed modules and actor cat1-groups.
+The fifth part deals with actor crossed modules and actor cat<M>^1</M>-groups.
 For the actor crossed module <M>{\rm Act}(\calX)</M> of a
 crossed module <M>\calX</M> we require representations
 for the Whitehead group of regular derivations of <M>\calX</M>
@@ -143,11 +144,11 @@ Future plans include the implementation of <E>group-graphs</E>
 which will provide examples of pre-crossed modules
 (their implementation will require interaction with graph-theoretic
 functions in &GAP; 4). 
-There are also plans to implement cat2-groups, 
+There are also plans to implement cat<M>^2</M>-groups, 
 and conversion betwen these and crossed squares. 
 <P/>
 The equivalent categories  <C>XMod</C>  (crossed modules) and
-<C>Cat1</C> (cat1-groups) are also equivalent to  <C>GpGpd</C>, 
+<C>Cat1</C> (cat<M>^1</M>-groups) are also equivalent to  <C>GpGpd</C>, 
 the subcategory of group objects in the category <C>Gpd</C> of groupoids.
 Finite groupoids have been implemented in Emma Moore's package 
 <Package>groupoids</Package> <Cite Key="M1"/> 

@@ -7,8 +7,8 @@ SetPackageInfo( rec(
 
 PackageName := "XMod",
 Subtitle := "Crossed Modules and Cat1-Groups",
-Version := "2.95",
-Date := "10/07/2025", # dd/mm/yyyy format
+Version := "2.96",
+Date := "02/11/2025", # dd/mm/yyyy format
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -26,16 +26,14 @@ Persons := [
     FirstNames    := "Murat",
     IsAuthor      := true,
     IsMaintainer  := false,
-    Email         := "muratalp@nigde.edu.tr",
+    Email         := "murat.alp@aum.edu.kw",
     PostalAddress := Concatenation( [ 
                        "Prof. Dr. M. Alp\n",
-                       "Ömer Halisdemir University\n",
-                       "Art and Science Faculty\n",
-                       "Mathematics Department\n",
-                       "Nigde\n",
-                       "Turkey"] ),
-    Place         := "Nigde",
-    Institution   := "Ömer Halisdemir University"
+                       "College of Engineering and Technology\n",
+                       "American University of the Middle East\n",
+                       "Kuwait"] ),
+    Place         := "Dasman",
+    Institution   := "American University of the Middle East"
   ),
     rec(
     LastName      := "Odabas",
@@ -76,7 +74,7 @@ SourceRepository := rec(
                                        "/releases/download/v", ~.Version, 
                                        "/", ~.PackageName, "-", ~.Version ), 
 
-SupportEmail := "c.d.wensley@bangor.ac.uk",
+SupportEmail := "cdwensley.maths@btinternet.com",
 ArchiveFormats  := ".tar.gz",
 
 AbstractHTML :=
@@ -97,7 +95,7 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">=4.11.0",
   NeededOtherPackages := [ ["utils", ">= 0.81"], 
-                           ["groupoids", ">= 1.77"], 
+                           ["groupoids", ">= 1.78"], 
                            ["HAP", ">= 1.29"],
                            ["AutPGrp", ">= 1.10.2"], 
                            ["SmallGrp", ">= 1.4.2" ] ], 
@@ -112,7 +110,7 @@ BannerString := Concatenation(
   " (methods for crossed modules and cat1-groups)\n",
   "by Chris Wensley (https://github.com/cdwensley),\n", 
   " with contributions from:\n", 
-  "    Murat Alp (muratalp@nigde.edu.tr),\n", 
+  "    Murat Alp (murat.alp@aum.edu.kw),\n", 
   "    Alper Odabas (aodabas@ogu.edu.tr),\n", 
   "and Enver Uslu.\n", 
   "----------",
@@ -178,7 +176,7 @@ AutoDoc := rec(
             "and are described in detail in the paper <Cite Key='IOU1' />.\n", 
             "<P/>\n", 
             "Bug reports, suggestions and comments are, of course, welcome. ", 
-            "Please submit an issue at ", 
+            "To provide these, please submit an issue at ", 
             "<URL>https://github.com/gap-packages/xmod/issues/</URL> ", 
             "or send an email to the first author at ", 
             "<Email>cdwensley@btinternet.com</Email>. \n", 
