@@ -8,12 +8,17 @@ gap> START_TEST( "XMod package: gpd2obj.tst" );
 gap> saved_infolevel_xmod := InfoLevel( InfoXMod );; 
 gap> SetInfoLevel( InfoXMod, 0 );;
 
+##  make this test independent of gp2obj.tst
+gap> s4 := Group( (1,2), (2,3), (3,4) );; 
+gap> a4 := Subgroup( s4, [ (1,2,3), (2,3,4) ] );; 
+gap> SetName( s4, "s4" );  SetName( a4, "a4" ); 
+gap> X4 := XModByNormalSubgroup( s4, a4 );;
+
+
+
 ## Chapter 10
 
 ## Subsection 10.1.1 
-gap> a4 := Subgroup( s4, [ (1,2,3), (2,3,4) ] );;
-gap> SetName( a4, "a4" );
-gap> X4 := XModByNormalSubgroup( s4, a4 );; 
 gap> CX4 := SinglePiecePreXModWithObjects( X4, [-6,-5,-4], false );
 single piece precrossed module with objects
   source groupoid:

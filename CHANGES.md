@@ -1,5 +1,8 @@
 ## CHANGES to the 'XMod' package
 
+## 2.96 -> 2.97-dev (03/12/2025)
+ * comment out use of Ancestor since this is no longer defined in groupoids
+
 ## 2.95 -> 2.96 (02/11/2025)
  * (02/11/25) change of address: Murat Alp now in Kuwait
  * (13/09/25) now make groupoids v1.78 a prerequisite

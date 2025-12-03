@@ -190,13 +190,11 @@ function( px, obs, isdisc )
     spx := Source( px ); 
     rpx := Range( px ); 
     rng := SinglePieceGroupoid( rpx, obs );
-## Print( "rng = ", rng, "\n" );
     if isdisc then 
         src := HomogeneousDiscreteGroupoid( spx, obs );
     else 
         src := SinglePieceGroupoid( spx, obs ); 
     fi;
-## Print( "src = ", src, "\n" );
     ## construct the boundary 
     gens := GeneratorsOfGroupoid( src ); 
     genr := GeneratorsOfGroupoid( rng ); 
@@ -210,14 +208,13 @@ function( px, obs, isdisc )
             a := gens[i]; 
             if ( a![3] = a![4] ) then 
                 im := ImageElm( bpx, a![2] ); 
-                imbdy[i] := ArrowNC( src, true, im, a![3], a![4] ); 
+                imbdy[i] := ArrowNC( src, 1,im, a![3], a![4] ); 
             else 
-                imbdy[i] := ArrowNC( src, true, One(rpx), a![3], a![4] ); 
+                imbdy[i] := ArrowNC( src, 1, One(rpx), a![3], a![4] ); 
             fi; 
         od; 
         bdy := GroupoidHomomorphismFromSinglePiece( src, rng, gens, imbdy ); 
     fi;
-## Print( "boundary = ", bdy, "\n" );
     ## now construct the action 
     apx := XModAction( px ); 
     AS := AutomorphismGroupOfGroupoid( src ); 
@@ -235,7 +232,6 @@ function( px, obs, isdisc )
         fi;
         if ( q = 1 ) then  ## a loop
             aut := ImageElm( apx, g );
-## Print( "aut = ", aut, "\n" );
             if not isdisc then
                 h := GroupoidAutomorphismByGroupAuto(src, aut);
             else
@@ -248,11 +244,9 @@ function( px, obs, isdisc )
             imobs[q] := ro; 
             h := GroupoidAutomorphismByObjectPerm( src, imobs );
         fi;
-## Print( "h = ", h, "\n" );
-        imact[i] := Arrow( AS0, h, 0, 0 );
+        imact[i] := ArrowNC( AS0, 1, h, 0, 0 );
     od;
     act := GroupoidHomomorphism( rng, AS0, genr, imact );
-## Print( "act = ", act, "\n" );
     pxo := PreXModWithObjectsByBoundaryAndAction( bdy, act );
     SetRoot2dGroup( pxo, px );
     return pxo;
@@ -278,7 +272,7 @@ InstallOtherMethod( UnionOfPiecesOp, "method for list of prexmods with objects",
     true, [ IsList, Is2DimensionalGroupWithObjects ], 0,
 function( comps, c1 )
 
-    local len, c, obs, obc, pieces, L, fam, filter, xwo, i, par;
+    local len, c, obs, obc, pieces, L, fam, filter, xwo, i, plist, par;
 
     if not ForAll( comps, 
         c -> "Is2DimensionalGroupWithObjects" in CategoriesOfObject( c ) ) then 
@@ -315,11 +309,9 @@ function( comps, c1 )
     xwo := Objectify( PreXModWithPiecesType, rec () );
     SetIsSinglePieceDomain( xwo, false ); 
     SetPieces( xwo, pieces ); 
-    if HasParent( pieces[1] ) then 
-        par := Ancestor( pieces[1] ); 
-        if ForAll( pieces, c -> ( Ancestor( c ) = par ) ) then 
-            SetParent( xwo, par ); 
-        fi; 
+    if HasParent( pieces[1] ) then
+        plist := ParentList( pieces[1] );
+        par := plist[ Length( plist) ];
     fi; 
     if ForAll( pieces, p -> HasIsXMod(p) and IsXMod(p) ) then
         SetIsXModWithObjects( xwo, true ); 
