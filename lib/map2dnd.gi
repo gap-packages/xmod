@@ -2,26 +2,7 @@
 ##
 #W  map2dnd.gi                 GAP4 package `XMod'               Chris Wensley
 ##
-#Y  Copyright (C) 2001-2020, Chris Wensley et al,  
-
-#############################################################################
-##
-#M  Is2DimensionalSemigroupMorphism
-#M  Is2DimensionalMonoidMorphism 
-##
-InstallMethod( Is2DimensionalSemigroupMorphism, 
-    "for a 2d-mapping", true, [ Is2DimensionalMagmaMorphism ], 0,
-function( map ) 
-    return ( Is2DimensionalSemigroup( Source(map) ) 
-             and Is2DimensionalSemigroup( Range(map) ) ); 
-end );
-
-InstallMethod( Is2DimensionalMonoidMorphism, "for a 2d-mapping", 
-    true, [ Is2DimensionalMagmaMorphism ], 0,
-function( map ) 
-    return ( Is2DimensionalMonoid( Source(map) ) 
-             and Is2DimensionalMonoid( Range(map) ) ); 
-end );
+#Y  Copyright (C) 2001-2025, Chris Wensley et al,  
 
 ##############################################################################
 ##

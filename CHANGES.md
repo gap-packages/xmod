@@ -1,6 +1,10 @@
 ## CHANGES to the 'XMod' package
 
-## 2.95 -> 2.96 (01/11/2025)
+## 2.96 -> 2.97-dev (04/12/2025)
+ * (04/12/25) remove various unused categories etc in dom2dnd.gd
+ * (03/12/25) comment out use of Ancestor - it is no longer defined in groupoids
+
+## 2.95 -> 2.96 (02/11/2025)
  * (02/11/25) change of address: Murat Alp now in Kuwait
  * (13/09/25) now make groupoids v1.78 a prerequisite
 
