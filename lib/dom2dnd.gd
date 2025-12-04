@@ -16,19 +16,11 @@ DeclareInfoClass( "InfoXMod" );
 ############################################################################# 
 ## 
 #C  IsHigherDimensionalDomain( <obj> ) . . . . test if object is n-dim domain 
-#F  MakeHigherDimensionalDomain( <src>, <rng> ) 
-## 
-DeclareCategory( "IsHigherDimensionalDomain", IsDomain ); 
-DeclareGlobalFunction( "MakeHigherDimensionalDomain" ); 
-
-######################  HIGHER DIMENSIONAL MAGMAS  ########################## 
-
-############################################################################# 
-## 
 #C  IsHigherDimensionalMagma( <m3d> ) . . . . . . .  category of n-dim magmas 
 #C  IsHigherDimensionalMagmaWithOne( <m3d> )  . . . . . . . . . . .  with one
 #C  IsHigherDimensionalMagmaWithInverses( <m3d> ) . . . . . . .  and inverses
-##
+## 
+DeclareCategory( "IsHigherDimensionalDomain", IsDomain ); 
 DeclareCategory( "IsHigherDimensionalMagma", IsHigherDimensionalDomain  
     and CategoryCollections( IsMultiplicativeElement ) ); 
 DeclareCategoryCollections( "IsHigherDimensionalMagma" ); 
@@ -37,44 +29,6 @@ DeclareCategory( "IsHigherDimensionalMagmaWithOne", IsHigherDimensionalMagma
 DeclareCategory( "IsHigherDimensionalMagmaWithInverses", 
     IsHigherDimensionalMagmaWithOne and 
     CategoryCollections( IsMultiplicativeElementWithInverse ) ); 
-
-############################################################################# 
-##  
-#V  FamilyHigherDimensionalMagma . . . . family for higher dimensional magmas 
-##  
-BindGlobal( "FamilyHigherDimensionalMagma", 
-    NewFamily( "FamilyHigherDimensionalMagma", IsHigherDimensionalMagma, 
-               CanEasilySortElements, CanEasilySortElements ) ); 
-
-############################################################################ 
-## 
-#F  MakeHigherDimensionalMagma( <mag>, <obs> ) 
-## 
-DeclareGlobalFunction( "MakeHigherDimensionalMagma" ); 
-
-
-################ HIGHER DIMENSIONAL SEMIGROUPS and MONOIDS ##################
-
-#############################################################################
-##
-#C  IsHigherDimensionalSemigroup( <mag> )
-#F  MakeHigherDimensionalSemigroup( <mag>, <obs> )  
-#O  SinglePieceHigherDimensionalSemigroup( <sgp>, <obs> ) 
-##
-DeclareCategory( "IsHigherDimensionalSemigroup", 
-    IsHigherDimensionalMagma and CategoryCollections( IsAssociativeElement ) );
-DeclareGlobalFunction( "MakeHigherDimensionalSemigroup" ); 
-
-#############################################################################
-##
-#C  IsHigherDimensionalMonoid( <ndmagma> )
-#F  MakeHigherDimensionalMonoid( <mag>, <obs> )  
-#O  SinglePieceHigherDimensionalMonoid( <mon>, <obs> ) 
-##
-DeclareCategory( "IsHigherDimensionalMonoid", 
-    IsHigherDimensionalMagmaWithOne 
-    and CategoryCollections(IsAssociativeElement) );
-DeclareGlobalFunction( "MakeHigherDimensionalMonoid" ); 
 
 
 ########################  HIGHER DIMENSIONAL GROUPS  ########################
@@ -128,7 +82,7 @@ DeclareAttribute( "DirectProductHigherDimensionalInfo",
 
 ############################################################################# 
 ## 
-#C  Is2DimensionalDomain( <obj> ) . . test if object is a 2Dimensional-domain 
+#C  Is2DimensionalDomain( <obj> ) . . . . . .  test if object is a 2d-domain 
 #F  Make2DimensionalDomain( <src>, <rng> ) 
 ## 
 DeclareCategory( "Is2DimensionalDomain", IsHigherDimensionalDomain ); 
@@ -138,7 +92,7 @@ DeclareGlobalFunction( "Make2DimensionalDomain" );
 
 ############################################################################# 
 ## 
-#C  Is2DimensionalMagma( <m2d> ) . . . . . . category of 2Dimensional magmas 
+#C  Is2DimensionalMagma( <m2d> ) . . . . . . . . . . . category of 2d-magmas 
 #C  Is2DimensionalMagmaWithOne( <m2d> ) . . . . . . . . . . . . . . with one
 #C  Is2DimensionalMagmaWithInverses( <m2d> )  . . . . . . . . . and inverses
 ##
@@ -153,44 +107,11 @@ DeclareCategory( "Is2DimensionalMagmaWithInverses",
 
 ############################################################################# 
 ##  
-#V  Family2DimensionalMagma . . . . . . . . .  family for 2Dimensional-magmas 
+#V  Family2DimensionalMagma . . . . . . . . . . . . . . family for 2d-magmas 
 ##  
 BindGlobal( "Family2DimensionalMagma", 
     NewFamily( "Family2DimensionalMagma", Is2DimensionalMagma, 
                CanEasilySortElements, CanEasilySortElements ) ); 
-
-############################################################################ 
-## 
-#F  Make2DimensionalMagma( <mag>, <obs> ) 
-## 
-DeclareGlobalFunction( "Make2DimensionalMagma" ); 
-
-
-################## 2 DIMENSIONAL SEMIGROUPS and MONOIDS #####################
-
-#############################################################################
-##
-#C  Is2DimensionalSemigroup( <2dmag> )
-#F  Make2DimensionalSemigroup( <mag>, <obs> )  
-#O  SinglePiece2DimensionalSemigroup( <sgp>, <obs> ) 
-##
-DeclareCategory( "Is2DimensionalSemigroup", 
-    Is2DimensionalMagma and CategoryCollections( IsAssociativeElement ) );
-DeclareGlobalFunction( "Make2DimensionalSemigroup" ); 
-## DeclareOperation( "SinglePiece2DimensionalSemigroup", 
-##     [ IsSemigroup, IsCollection ] ); 
-
-#############################################################################
-##
-#C  Is2DimensionalMonoid( <2dmagma> )
-#F  Make2DimensionalMonoid( <mag>, <obs> )  
-#O  SinglePiece2DimensionalMonoid( <mon>, <obs> ) 
-##
-DeclareCategory( "Is2DimensionalMonoid", 
-    Is2DimensionalMagmaWithOne and CategoryCollections(IsAssociativeElement) );
-DeclareGlobalFunction( "Make2DimensionalMonoid" ); 
-##  DeclareOperation( "SinglePiece2DimensionalMonoid", 
-##      [ IsMonoid, IsCollection ] ); 
 
 
 ##########################  2 DIMENSIONAL GROUPS  ###########################

@@ -2,7 +2,7 @@
 ##
 #W  map2dnd.gd                 GAP4 package `XMod'               Chris Wensley
 ##                                                                Alper Odabas
-#Y  Copyright (C) 2001-2020, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2025, Chris Wensley et al, 
 
 ############################################################################## 
 ## 
@@ -36,8 +36,6 @@ DeclareCategoryCollections( "IsGeneral2DimensionalMappingCollColl" );
 #P  IsEndo2DimensionalMapping( <map> )
 #P  Is2DimensionalMagmaGeneralMapping( <map> ) 
 #P  Is2DimensionalMagmaMorphism( <map> ) 
-#P  Is2DimensionalSemigroupMorphism( <map> )
-#P  Is2DimensionalMonoidMorphism( <map> )
 DeclareSynonymAttr( "Is2DimensionalMapping", 
     IsGeneral2DimensionalMapping and IsMapping );
 DeclareSynonymAttr( "IsEndoGeneral2DimensionalMapping",
@@ -48,12 +46,6 @@ DeclareSynonymAttr( "Is2DimensionalMagmaGeneralMapping",
     IsGeneral2DimensionalMapping and RespectsMultiplication );
 DeclareSynonymAttr( "Is2DimensionalMagmaMorphism", 
     Is2DimensionalMagmaGeneralMapping and IsMapping );
-
-#?  modify these next three to SynonymAttr's ??
-DeclareProperty( "Is2DimensionalSemigroupMorphism", 
-    Is2DimensionalMagmaMorphism  );
-DeclareProperty( "Is2DimensionalMonoidMorphism", 
-    Is2DimensionalMagmaMorphism );
 
 ############################################################################# 
 ##  
