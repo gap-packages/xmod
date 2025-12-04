@@ -531,13 +531,13 @@ true
 ## Section 2.9.1
 gap> s3 := Group( (11,12), (12,13) );; 
 gap> c3c3 := Group( [ (14,15,16), (17,18,19) ] );; 
-gap> bdy := GroupHomomorphismByImages( c3c3, s3, 
+gap> bdy3 := GroupHomomorphismByImages( c3c3, s3, 
 >        [(14,15,16),(17,18,19)], [(11,12,13),(11,12,13)] );;
 gap> a := GroupHomomorphismByImages( c3c3, c3c3, 
 >        [(14,15,16),(17,18,19)], [(14,16,15),(17,19,18)] );; 
 gap> aut := Group( [a] );; 
 gap> act := GroupHomomorphismByImages( s3, aut, [(11,12),(12,13)], [a,a] );;
-gap> X33 := XModByBoundaryAndAction( bdy, act );; 
+gap> X33 := XModByBoundaryAndAction( bdy3, act );; 
 gap> C33 := Cat1GroupOfXMod( X33 );; 
 gap> G33 := Source( C33 );; 
 gap> gpd33 := GroupGroupoid( C33 );;
