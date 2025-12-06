@@ -183,8 +183,9 @@ function( px, obs, isdisc )
 
     local nobs, ro, spx, rpx, src, rng, gens, genr, bpx, homs, imbdy, imobs, 
           i, a, im, bdy, apx, AS, AR, AS0, imact, p, g, q, aut, h, auts,
-          idspx, act, pxo; 
+          idspx, act, pxo, gpds; 
 
+    gpds := InstalledPackageVersion( "groupoids" );
     nobs := Length( obs );
     ro := obs[1];  ## root object
     spx := Source( px ); 
@@ -207,10 +208,18 @@ function( px, obs, isdisc )
         for i in [1..Length(imbdy)] do 
             a := gens[i]; 
             if ( a![3] = a![4] ) then 
-                im := ImageElm( bpx, a![2] ); 
-                imbdy[i] := ArrowNC( src, 1,im, a![3], a![4] ); 
-            else 
-                imbdy[i] := ArrowNC( src, 1, One(rpx), a![3], a![4] ); 
+                im := ImageElm( bpx, a![2] );
+                if ( gpds < "1.80" ) then
+                    imbdy[i] := ArrowNC( src, true, im, a![3], a![4] );
+                else
+                    imbdy[i] := ArrowNC( src, 1, im, a![3], a![4] ); 
+                fi;
+            else
+                if ( gpds < "1.80" ) then
+                    imbdy[i] := ArrowNC( src, true, One(rpx), a![3], a![4] );
+                else
+                    imbdy[i] := ArrowNC( src, 1, One(rpx), a![3], a![4] );
+                fi;
             fi; 
         od; 
         bdy := GroupoidHomomorphismFromSinglePiece( src, rng, gens, imbdy ); 
@@ -272,8 +281,11 @@ InstallOtherMethod( UnionOfPiecesOp, "method for list of prexmods with objects",
     true, [ IsList, Is2DimensionalGroupWithObjects ], 0,
 function( comps, c1 )
 
-    local len, c, obs, obc, pieces, L, fam, filter, xwo, i, plist, par;
+    local len, c, obs, obc, pieces, L, fam, filter, xwo, i, plist, par,
+          gpds, Ancestor;
 
+    gpds := InstalledPackageVersion( "groupoids" );
+    Ancestor := Parent;
     if not ForAll( comps, 
         c -> "Is2DimensionalGroupWithObjects" in CategoriesOfObject( c ) ) then 
         Error( "expecting a list of prexmods with objects" ); 
@@ -308,11 +320,20 @@ function( comps, c1 )
     filter := IsPiecesRep and IsPreXModWithObjects and IsAssociative; 
     xwo := Objectify( PreXModWithPiecesType, rec () );
     SetIsSinglePieceDomain( xwo, false ); 
-    SetPieces( xwo, pieces ); 
-    if HasParent( pieces[1] ) then
-        plist := ParentList( pieces[1] );
-        par := plist[ Length( plist) ];
-    fi; 
+    SetPieces( xwo, pieces );
+    if ( gpds < "1.80" ) then
+        if HasParent( pieces[1] ) then 
+            par := Ancestor( pieces[1] ); 
+            if ForAll( pieces, c -> ( Ancestor( c ) = par ) ) then 
+                SetParent( xwo, par );
+            fi;
+        fi; 
+    else
+        if HasParent( pieces[1] ) then
+            plist := ParentList( pieces[1] );
+            par := plist[ Length( plist) ];
+        fi;
+    fi;
     if ForAll( pieces, p -> HasIsXMod(p) and IsXMod(p) ) then
         SetIsXModWithObjects( xwo, true ); 
     fi; 
