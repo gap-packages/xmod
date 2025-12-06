@@ -253,7 +253,11 @@ function( px, obs, isdisc )
             imobs[q] := ro;
             h := GroupoidAutomorphismByObjectPerm( src, imobs );
         fi;
-        imact[i] := ArrowNC( AS0, 1, h, 0, 0 );
+        if ( gpds < "1.80" ) then
+            imact[i] := ArrowNC( AS0, true, h, 0, 0 );
+        else
+            imact[i] := ArrowNC( AS0, 1, h, 0, 0 );
+        fi;
     od;
     act := GroupoidHomomorphism( rng, AS0, genr, imact );
     pxo := PreXModWithObjectsByBoundaryAndAction( bdy, act );
