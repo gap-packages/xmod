@@ -282,10 +282,15 @@ InstallOtherMethod( UnionOfPiecesOp, "method for list of prexmods with objects",
 function( comps, c1 )
 
     local len, c, obs, obc, pieces, L, fam, filter, xwo, i, plist, par,
-          gpds, Ancestor;
+          gpds, Ancestor, ParList;
 
     gpds := InstalledPackageVersion( "groupoids" );
-    Ancestor := Parent;
+    if ( gpds > "1.80" ) then
+        Ancestor := Parent;
+        ParList := ParentList;
+    else
+        ParList := Parent;
+    fi;
     if not ForAll( comps, 
         c -> "Is2DimensionalGroupWithObjects" in CategoriesOfObject( c ) ) then 
         Error( "expecting a list of prexmods with objects" ); 
@@ -330,7 +335,7 @@ function( comps, c1 )
         fi; 
     else
         if HasParent( pieces[1] ) then
-            plist := ParentList( pieces[1] );
+            plist := ParList( pieces[1] );
             par := plist[ Length( plist) ];
         fi;
     fi;
