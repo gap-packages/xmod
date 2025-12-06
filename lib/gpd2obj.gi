@@ -25,7 +25,7 @@ InstallGlobalFunction( PreXModWithObjects, function( arg )
 
     local nargs, id, rays;
 
-    nargs := Length( arg ); 
+    nargs := Length( arg );
     # list of pieces
     if ( ( nargs = 1 ) and IsList( arg[1] ) 
          and  ForAll( arg[1], IsPreXModWithObjects ) ) then
@@ -34,7 +34,7 @@ InstallGlobalFunction( PreXModWithObjects, function( arg )
     elif ( nargs = 2 ) then
         # prexmod plus single object 
         if ( IsPreXMod( arg[1] ) and IsObject( arg[2] ) ) then
-            Info( InfoXMod, 2, "prexmod plus single object" ); 
+            Info( InfoXMod, 2, "prexmod plus single object" );
             return MagmaWithSingleObject( arg[1], arg[2] );
         # two groupoid homomorphisms
         elif ( IsGroupoidHomomorphism( arg[1] ) 
@@ -96,12 +96,12 @@ function( bdy, act )
         return fail;
     fi;
     imact := List( genrng, r -> ImageElm( act, r ) );
-    PX := PreXModWithObjectsObj( bdy, act ); 
+    PX := PreXModWithObjectsObj( bdy, act );
     if not IsPreXModWithObjects( PX ) then 
-        Info( InfoXMod, 1, "PX fails to be a groupoid pre-crossed module" ); 
-        return fail; 
+        Info( InfoXMod, 1, "PX fails to be a groupoid pre-crossed module" );
+        return fail;
     fi;
-    return PX; 
+    return PX;
 end );
 
 #############################################################################
@@ -114,18 +114,18 @@ function( XM )
 
     local  gensrc, genrng, x2, y2, a2, w2, z2, bdy, act;
 
-    Info( InfoXMod, 2, "using IsXMod from gpd2obj.gi" ); 
+    Info( InfoXMod, 2, "using IsXMod from gpd2obj.gi" );
     bdy := Boundary( XM );
     act := XModAction( XM );
     gensrc := GeneratorsOfGroupoid( Source( XM ) );
-    genrng := GeneratorsOfGroupoid( Range( XM ) ); 
+    genrng := GeneratorsOfGroupoid( Range( XM ) );
     for x2 in gensrc do
         for y2 in gensrc do
-            Info( InfoXMod, 3, "x2,y2 = ", x2, ",  ", y2 ); 
-            a2 := ImageElm( act, ImageElm( bdy, y2 ) ); 
-            z2 := ImageElm( a2![2], x2 ); 
+            Info( InfoXMod, 3, "x2,y2 = ", x2, ",  ", y2 );
+            a2 := ImageElm( act, ImageElm( bdy, y2 ) );
+            z2 := ImageElm( a2![2], x2 );
             w2 := x2^y2;
-            Info( InfoXMod, 3, "w2,z2 = ", w2, ",  ", z2 ); 
+            Info( InfoXMod, 3, "w2,z2 = ", w2, ",  ", z2 );
             if ( z2 <> w2 ) then
                 Info( InfoXMod, 2,
                       "CM2) fails at  x2 = ", x2, ",  y2 = ", y2, "\n",
@@ -145,9 +145,9 @@ InstallMethod( PreXModWithObjectsObj, "for 2 groupoid homomorphisms",
     true, [ IsGroupoidHomomorphism, IsGroupoidHomomorphism ], 0,
 function( bdy, act )
 
-    local pxwo, ok; 
+    local pxwo, ok;
 
-    pxwo := rec( boundary := bdy, action := act ); 
+    pxwo := rec( boundary := bdy, action := act );
     ObjectifyWithAttributes( pxwo, PreXModWithObjectsType, 
         Is2DimensionalDomain, true, 
         IsSinglePieceDomain, true, 
@@ -155,10 +155,10 @@ function( bdy, act )
         Source, Source( bdy ), 
         Range, Range( bdy ), 
         Boundary, bdy, 
-        XModAction, act ); 
+        XModAction, act );
     ok := IsXModWithObjects( pxwo );
-    return pxwo; 
-end ); 
+    return pxwo;
+end );
 
 ##############################################################################
 ##
@@ -169,13 +169,13 @@ InstallMethod( SinglePiecePreXModWithObjects, "for prexmod, objects, isdisc?",
     true, [ IsPreXMod, IsList, IsBool ], 0,
 function( px, obs, isdisc )
     if not IsSet( obs ) then 
-        Sort( obs ); 
-    fi; 
+        Sort( obs );
+    fi;
     if not IsDuplicateFree( obs ) then 
         Error( "objects must be distinct" );
-    fi; 
-    return SinglePiecePreXModWithObjectsNC( px, obs, isdisc ); 
-end ); 
+    fi;
+    return SinglePiecePreXModWithObjectsNC( px, obs, isdisc );
+end );
 
 InstallMethod( SinglePiecePreXModWithObjectsNC, "for prexmod, obs, isdisc?", 
     true, [ IsPreXMod, IsList, IsBool ], 0,
@@ -183,44 +183,53 @@ function( px, obs, isdisc )
 
     local nobs, ro, spx, rpx, src, rng, gens, genr, bpx, homs, imbdy, imobs, 
           i, a, im, bdy, apx, AS, AR, AS0, imact, p, g, q, aut, h, auts,
-          idspx, act, pxo; 
+          idspx, act, pxo, gpds;
 
+    gpds := InstalledPackageVersion( "groupoids" );
     nobs := Length( obs );
-    ro := obs[1];  ## root object
-    spx := Source( px ); 
-    rpx := Range( px ); 
+    ro := obs[1]; ## root object
+    spx := Source( px );
+    rpx := Range( px );
     rng := SinglePieceGroupoid( rpx, obs );
     if isdisc then 
         src := HomogeneousDiscreteGroupoid( spx, obs );
     else 
-        src := SinglePieceGroupoid( spx, obs ); 
+        src := SinglePieceGroupoid( spx, obs );
     fi;
     ## construct the boundary 
-    gens := GeneratorsOfGroupoid( src ); 
-    genr := GeneratorsOfGroupoid( rng ); 
-    bpx := Boundary( px ); 
+    gens := GeneratorsOfGroupoid( src );
+    genr := GeneratorsOfGroupoid( rng );
+    bpx := Boundary( px );
     if isdisc then 
         homs := ListWithIdenticalEntries( nobs, bpx );
         bdy := GroupoidHomomorphismFromHomogeneousDiscrete(src,rng,homs,obs);
     else
-        imbdy := ShallowCopy( gens ); 
+        imbdy := ShallowCopy( gens );
         for i in [1..Length(imbdy)] do 
-            a := gens[i]; 
+            a := gens[i];
             if ( a![3] = a![4] ) then 
-                im := ImageElm( bpx, a![2] ); 
-                imbdy[i] := ArrowNC( src, 1,im, a![3], a![4] ); 
-            else 
-                imbdy[i] := ArrowNC( src, 1, One(rpx), a![3], a![4] ); 
-            fi; 
-        od; 
-        bdy := GroupoidHomomorphismFromSinglePiece( src, rng, gens, imbdy ); 
+                im := ImageElm( bpx, a![2] );
+                if ( gpds < "1.80" ) then
+                    imbdy[i] := ArrowNC( src, true, im, a![3], a![4] );
+                else
+                    imbdy[i] := ArrowNC( src, 1, im, a![3], a![4] );
+                fi;
+            else
+                if ( gpds < "1.80" ) then
+                    imbdy[i] := ArrowNC( src, true, One(rpx), a![3], a![4] );
+                else
+                    imbdy[i] := ArrowNC( src, 1, One(rpx), a![3], a![4] );
+                fi;
+            fi;
+        od;
+        bdy := GroupoidHomomorphismFromSinglePiece( src, rng, gens, imbdy );
     fi;
     ## now construct the action 
-    apx := XModAction( px ); 
-    AS := AutomorphismGroupOfGroupoid( src ); 
-    AR := AutomorphismGroupOfGroupoid( rng ); 
+    apx := XModAction( px );
+    AS := AutomorphismGroupOfGroupoid( src );
+    AR := AutomorphismGroupOfGroupoid( rng );
     AS0 := MagmaWithSingleObject( AS, 0 );
-    SetName( AS0, "AS0" ); 
+    SetName( AS0, "AS0" );
     imact := ListWithIdenticalEntries( nobs, 0 );
     for i in [1..Length(genr)] do
         a := genr[i];
@@ -241,16 +250,20 @@ function( px, obs, isdisc )
         else
             imobs := ShallowCopy( obs );
             imobs[1] := obs[q];
-            imobs[q] := ro; 
+            imobs[q] := ro;
             h := GroupoidAutomorphismByObjectPerm( src, imobs );
         fi;
-        imact[i] := ArrowNC( AS0, 1, h, 0, 0 );
+        if ( gpds < "1.80" ) then
+            imact[i] := ArrowNC( AS0, true, h, 0, 0 );
+        else
+            imact[i] := ArrowNC( AS0, 1, h, 0, 0 );
+        fi;
     od;
     act := GroupoidHomomorphism( rng, AS0, genr, imact );
     pxo := PreXModWithObjectsByBoundaryAndAction( bdy, act );
     SetRoot2dGroup( pxo, px );
     return pxo;
-end ); 
+end );
 
 ##############################################################################
 ##
@@ -272,19 +285,24 @@ InstallOtherMethod( UnionOfPiecesOp, "method for list of prexmods with objects",
     true, [ IsList, Is2DimensionalGroupWithObjects ], 0,
 function( comps, c1 )
 
-    local len, c, obs, obc, pieces, L, fam, filter, xwo, i, plist, par;
+    local len, c, obs, obc, pieces, L, fam, filter, xwo, i, par,
+          gpds, Ancestor;
 
+    gpds := InstalledPackageVersion( "groupoids" );
+    if ( gpds > "1.80" ) then
+        Ancestor := Parent;
+    fi;
     if not ForAll( comps, 
         c -> "Is2DimensionalGroupWithObjects" in CategoriesOfObject( c ) ) then 
-        Error( "expecting a list of prexmods with objects" ); 
-    fi; 
-    len := Length( comps ); 
+        Error( "expecting a list of prexmods with objects" );
+    fi;
+    len := Length( comps );
     if ( len = 1 ) then 
-        Info( InfoXMod, 1, "only one component, so returning it" ); 
-        return c1; 
+        Info( InfoXMod, 1, "only one component, so returning it" );
+        return c1;
     fi;
     ## check object lists are disjoint 
-    obs := [ ]; 
+    obs := [ ];
     for c in comps do 
         obc := ObjectList( c );
         if ( Intersection( obs, obc ) <> [ ] ) then
@@ -292,43 +310,52 @@ function( comps, c1 )
                   "constituents must have disjoint object sets" );
             return fail;
         fi;
-        obs := Union( obs, obc ); 
+        obs := Union( obs, obc );
     od;
     ## sorting object lists by leading object 
     obs := List( comps, g -> ObjectList(g)[1] );
     L := [1..len];
     SortParallel( obs, L );
     if ( L = [1..len] ) then 
-        pieces := comps; 
+        pieces := comps;
     else 
-        Info( InfoXMod, 2, "reordering pieces by first object" ); 
+        Info( InfoXMod, 2, "reordering pieces by first object" );
         pieces := List( L, i -> comps[i] );
-    fi; 
-    fam := Family2DimensionalGroupWithObjects; 
-    filter := IsPiecesRep and IsPreXModWithObjects and IsAssociative; 
+    fi;
+    fam := Family2DimensionalGroupWithObjects;
+    filter := IsPiecesRep and IsPreXModWithObjects and IsAssociative;
     xwo := Objectify( PreXModWithPiecesType, rec () );
-    SetIsSinglePieceDomain( xwo, false ); 
-    SetPieces( xwo, pieces ); 
-    if HasParent( pieces[1] ) then
-        plist := ParentList( pieces[1] );
-        par := plist[ Length( plist) ];
-    fi; 
+    SetIsSinglePieceDomain( xwo, false );
+    SetPieces( xwo, pieces );
+    if ( gpds < "1.80" ) then
+        if HasParent( pieces[1] ) then 
+            par := Ancestor( pieces[1] );
+            if ForAll( pieces, c -> ( Ancestor( c ) = par ) ) then 
+                SetParent( xwo, par );
+            fi;
+        fi;
+    else
+        if HasParent( pieces[1] ) then
+            ## would like to use ParentList here, but maybe not available
+            par := Parent( pieces[1] );
+        fi;
+    fi;
     if ForAll( pieces, p -> HasIsXMod(p) and IsXMod(p) ) then
-        SetIsXModWithObjects( xwo, true ); 
-    fi; 
+        SetIsXModWithObjects( xwo, true );
+    fi;
     if ForAll( pieces, p -> HasIsPreXMod(p) and IsPreXMod(p) ) then
-        SetIsPreXModWithObjects( xwo, true ); 
-    fi; 
+        SetIsPreXModWithObjects( xwo, true );
+    fi;
     if ForAll( pieces, p -> HasIsCat1Groupoid(p) and IsCat1Groupoid(p) ) then
-        SetIsCat1Groupoid( xwo, true ); 
-    fi; 
+        SetIsCat1Groupoid( xwo, true );
+    fi;
     if ForAll( pieces, p -> HasIsPreCat1Groupoid(p) 
                             and IsPreCat1Groupoid(p) ) then
-        SetIsPreCat1Groupoid( xwo, true ); 
-    fi; 
+        SetIsPreCat1Groupoid( xwo, true );
+    fi;
 
     #? removed tests as to whether perm-, pc-, etc xmod with objects 
-    return xwo; 
+    return xwo;
 end );
 
 #############################################################################
@@ -339,30 +366,30 @@ InstallMethod( MagmaWithSingleObject, "generic method for domain, object",
     true, [ IsMagma, IsObject ], 0,
 function( dom, obj ) 
 
-    local o; 
+    local o;
 
     if ( IsList( obj ) and ( Length(obj) = 1 ) ) then
         Info( InfoXMod, 2, "object given as a singleton list" );
-        o := obj[1]; 
+        o := obj[1];
     else
         o := obj;
-    fi; 
+    fi;
     if not IsObject( o ) then 
-        Error( "<obj> not a scalar or singleton list," ); 
-    fi; 
+        Error( "<obj> not a scalar or singleton list," );
+    fi;
     if ( HasIsAssociative( dom ) and IsAssociative( dom ) 
          and ( "IsMagmaWithInverses" in CategoriesOfObject( dom ) ) 
          and IsMagmaWithInverses( dom ) ) then 
-        return SinglePieceGroupoidNC( dom, [o] ); 
+        return SinglePieceGroupoidNC( dom, [o] );
     elif ( HasIsMonoid( dom ) and IsMonoid( dom ) ) then 
-        return SinglePieceMonoidWithObjects( dom, [o] ); 
+        return SinglePieceMonoidWithObjects( dom, [o] );
     elif ( HasIsSemigroup( dom ) and IsSemigroup( dom ) ) then 
-        return SinglePieceSemigroupWithObjects( dom, [o] ); 
+        return SinglePieceSemigroupWithObjects( dom, [o] );
     elif ( ( "IsMagma" in CategoriesOfObject(dom) ) and IsMagma(dom) ) then 
-        return SinglePieceMagmaWithObjects( dom, [o] ); 
+        return SinglePieceMagmaWithObjects( dom, [o] );
     else 
-        Error( "unstructured domains with objects not yet implemented," ); 
-    fi; 
+        Error( "unstructured domains with objects not yet implemented," );
+    fi;
 end );
 
 ############################################################################# 
@@ -404,7 +431,7 @@ InstallMethod( PieceNrOfObject, "generic method for domain with objects",
     true, [ IsDomainWithObjects, IsObject ], 0,
 function( dwo, obj )
 
-    local pieces, i, objp, np; 
+    local pieces, i, objp, np;
 
     pieces := Pieces( dwo );
     for i in [1..Length( pieces )] do
@@ -425,20 +452,20 @@ InstallMethod( Root2dGroup, "generic method for domain with objects",
     true, [ Is2DimensionalDomainWithObjects ], 0,
 function( dwo )
 
-    local src, rng, bdy, act, ro, sgo, bdyo, rgo, acto; 
+    local src, rng, bdy, act, ro, sgo, bdyo, rgo, acto;
 
-    src := Source( dwo ); 
-    rng := Range( dwo ); 
+    src := Source( dwo );
+    rng := Range( dwo );
     bdy := Boundary( dwo );
-    act := XModAction( dwo ); 
-    ro := RootObject( rng ); 
-    sgo := FullSubgroupoid( src, [ro] ); 
-    bdyo := RestrictedMappingGroupoids( bdy, sgo ); 
-    rgo := FullSubgroupoid( rng, [ro] ); 
-    acto := RestrictedMappingGroupoids( act, rgo ); 
+    act := XModAction( dwo );
+    ro := RootObject( rng );
+    sgo := FullSubgroupoid( src, [ro] );
+    bdyo := RestrictedMappingGroupoids( bdy, sgo );
+    rgo := FullSubgroupoid( rng, [ro] );
+    acto := RestrictedMappingGroupoids( act, rgo );
 Error("");
-    return fail; 
-end ); 
+    return fail;
+end );
 
 ############################################################################# 
 ## 
@@ -449,20 +476,20 @@ end );
 InstallMethod( IsPermPreXModWithObjects, "for domain with objects", true, 
     [ Is2DimensionalDomainWithObjects ], 0,
 function( dwo )
-    return IsPerm2DimensionalGroup( Root2dGroup( dwo ) ); 
-end ); 
+    return IsPerm2DimensionalGroup( Root2dGroup( dwo ) );
+end );
 
 InstallMethod( IsPcPreXModWithObjects, "for domain with objects", true, 
     [ Is2DimensionalDomainWithObjects ], 0,
 function( dwo )
-    return IsPc2DimensionalGroup( Root2dGroup( dwo ) ); 
-end ); 
+    return IsPc2DimensionalGroup( Root2dGroup( dwo ) );
+end );
 
 InstallMethod( IsFpPreXModWithObjects, "for domain with objects", true, 
     [ Is2DimensionalDomainWithObjects ], 0,
 function( dwo )
-    return IsFp2DimensionalGroup( Root2dGroup( dwo ) ); 
-end ); 
+    return IsFp2DimensionalGroup( Root2dGroup( dwo ) );
+end );
 
 #############################################################################
 ##
@@ -473,43 +500,43 @@ InstallMethod( PrintObj, "method for prexmods and precat2groups with objects",
     true, [ Is2DimensionalGroupWithObjects ], 0,
 function ( pxwo )
 
-    local type, src, rng, len, pieces, i, p; 
+    local type, src, rng, len, pieces, i, p;
 
     if ( HasIsXModWithObjects( pxwo ) and IsXModWithObjects( pxwo ) ) then 
-        type := "crossed module with objects"; 
+        type := "crossed module with objects";
     elif ( HasIsPreXModWithObjects( pxwo ) 
            and IsPreXModWithObjects( pxwo ) ) then 
-        type := "precrossed module with objects"; 
+        type := "precrossed module with objects";
     elif ( HasIsCat1Groupoid( pxwo ) and IsCat1Groupoid( pxwo ) ) then 
-        type := "cat1-groupoid"; 
+        type := "cat1-groupoid";
     elif ( HasIsPreCat1Groupoid( pxwo ) 
            and IsPreCat1Groupoid( pxwo ) ) then 
-        type := "pre-cat1-groupoid"; 
+        type := "pre-cat1-groupoid";
     else 
-        type := "2dgroup with objects"; 
+        type := "2dgroup with objects";
     fi;
     if ( HasIsSinglePiece( pxwo ) and IsSinglePiece( pxwo ) ) then
         src := Source( pxwo );
         rng := Range( pxwo );
         Print( "single piece ", type, "\n" );
         Print( "  source groupoid: " );
-        if HasName( src ) then Print( Name( src ) ); fi;
+        if HasName( src ) then Print( Name( src ) );fi;
         Print( "\n" );
-        Print( Source( pxwo ), "\n" ); 
+        Print( Source( pxwo ), "\n" );
         Print( "  and range groupoid: " );
-        if HasName( rng ) then Print( Name( rng ) ); fi;
-        Print( "\n" ); 
-        Print( Range( pxwo ) ); 
-        return; 
+        if HasName( rng ) then Print( Name( rng ) );fi;
+        Print( "\n" );
+        Print( Range( pxwo ) );
+        return;
     else 
-        pieces := Pieces( pxwo ); 
-        len := Length( pieces ); 
+        pieces := Pieces( pxwo );
+        len := Length( pieces );
         if ( HasIsHomogeneousDomainWithObjects( pxwo ) 
              and IsHomogeneousDomainWithObjects( pxwo ) ) then
             Print( "homogeneous 2dgroup with objects:\n" );
         else
-            Print( "2dgroup with ", len, " pieces:\n" ); 
-        fi; 
+            Print( "2dgroup with ", len, " pieces:\n" );
+        fi;
     fi;
     if ForAll( pieces, function ( p )
           return HasName( p );
@@ -528,7 +555,7 @@ end );
 InstallMethod( ViewObj, "method for prexmods and precat2groups", true, 
     [ Is2DimensionalGroupWithObjects ], 0,
 function ( pxwo )
-    PrintObj( pxwo ); 
+    PrintObj( pxwo );
     return;
 end );
 
@@ -540,20 +567,20 @@ InstallMethod( Display, "method for prexmods and precat2groups", true,
     [ Is2DimensionalGroupWithObjects ], 0,
 function( xwo )
     local  src, rng;
-    Print( "crossed module of groupoids, " ); 
+    Print( "crossed module of groupoids, " );
     if HasName( xwo ) then 
-        Print( Name( xwo ) ); 
+        Print( Name( xwo ) );
     fi;
     Print( "\n" );
     src := Source( xwo );
     rng := Range( xwo );
     Print( "source groupoid: " );
-    if HasName( src ) then Print( Name( src ) ); fi;
-    Print( "\n" ); 
-    Display( Source( xwo ) ); 
+    if HasName( src ) then Print( Name( src ) );fi;
+    Print( "\n" );
+    Display( Source( xwo ) );
     Print( "range groupoid: " );
-    if HasName( rng ) then Print( Name( rng ) ); fi;
-    Print( "\n" ); 
-    Display( Range( xwo ) ); 
-end ); 
+    if HasName( rng ) then Print( Name( rng ) );fi;
+    Print( "\n" );
+    Display( Range( xwo ) );
+end );
 

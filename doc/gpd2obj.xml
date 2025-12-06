@@ -65,8 +65,6 @@ Need more investigation of <C>XModAction</C>.
 <P/>
 <Example>
 <![CDATA[
-gap> a4 := Subgroup( s4, [ (1,2,3), (2,3,4) ] );;
-gap> SetName( a4, "a4" );
 gap> X4 := XModByNormalSubgroup( s4, a4 );; 
 gap> CX4 := SinglePiecePreXModWithObjects( X4, [-6,-5,-4], false );
 single piece precrossed module with objects
@@ -94,11 +92,9 @@ gap> Ds4 := Range( DX4 );;  SetName( Ds4, "Ds4" );
          Arg="pxmod" /> 
    <Prop Name="IsPreXModWithObjects" 
          Arg="pxmod" /> 
-   <Prop Name="IsDirectProductWithCompleteDigraphDomain" 
-         Arg="pxmod" /> 
 <Description> 
 <Index>Is2DimensionalGroupWithObjects</Index> 
-The precrossed module <C>DX4</C> belongs to the category 
+The precrossed module <C>CX4</C> belongs to the category 
 <C>Is2DimensionalGroupWithObjects</C> and is, of course, a crossed module. 
 <P/> 
 </Description>
