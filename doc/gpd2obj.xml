@@ -57,15 +57,16 @@ In the example the crossed module <C>DX4</C> has discrete source,
 while the crossed module <C>CX4</C> has connected source. 
 These are groupoid generalisations of <Ref Oper="XModByNormalSubgroup"/>
 and the example <C>X4</C> in <Ref Oper="NormalSubXMods"/>.
-<P/>
-These calculations are WRONG!
-Need more investigation of <C>XModAction</C>.
+<!-- ------------------------------------------------------------------- -->
+<!-- At one time I thought that:  These calculations are WRONG!          -->
+<!-- and:  Need more investigation of <C>XModAction</C>.                 -->
+<!-- but they do seem to be correct after all!                           -->
+<!-- ------------------------------------------------------------------- -->
 </Description>
 </ManSection>
 <P/>
 <Example>
 <![CDATA[
-gap> X4 := XModByNormalSubgroup( s4, a4 );; 
 gap> CX4 := SinglePiecePreXModWithObjects( X4, [-6,-5,-4], false );
 single piece precrossed module with objects
   source groupoid:
@@ -102,7 +103,7 @@ The precrossed module <C>CX4</C> belongs to the category
 <P/>
 <Example>
 <![CDATA[
-gap> Set( KnownPropertiesOfObject( CX4 ) ); 
+gap> Set( KnownPropertiesOfObject( CX4 ) );
 [ "CanEasilyCompareElements", "CanEasilySortElements", "IsAssociative", 
   "IsDuplicateFree", "IsGeneratorsOfSemigroup", "IsPreXModWithObjects", 
   "IsSinglePieceDomain", "IsXModWithObjects" ]
@@ -127,7 +128,7 @@ they were constructed.
 <![CDATA[
 gap> IsPermPreXModWithObjects( CX4 );
 true
-gap> IsPcPreXModWithObjects( CX4 );  
+gap> IsPcPreXModWithObjects( CX4 );
 false
 gap> IsFpPreXModWithObjects( CX4 );
 false
@@ -142,8 +143,8 @@ false
 <Description> 
 <Index>ObjectList</Index> 
 The attributes of a precrossed module with objects include the standard 
-<C>Source</C>; <C>Range</C>; 
-<Ref Attr="Boundary" Label="for crossed modules"/>; 
+<C>Source</C>; <C>Range</C>;
+<Ref Attr="Boundary" Label="for crossed modules"/>;
 and <Ref Meth="XModAction" Label="for crossed modules of groups"/>
 as with precrossed modules of groups. 
 There is also <C>ObjectList</C>, 
@@ -160,13 +161,13 @@ where the group is the automorphism group of the range groupoid.
 <P/>
 <Example>
 <![CDATA[
-gap> Root2dGroup( CX4 ); 
+gap> Root2dGroup( CX4 );
 [a4->s4]
-gap> actC := XModAction( CX4 );; 
-gap> Size( Range( actC ) ); 
+gap> actC := XModAction( CX4 );;
+gap> Size( Range( actC ) );
 20736
-gap> r1 := Arrow( Cs4, (1,2,3,4), -4, -5 );; 
-gap> ImageElm( actC, r1 );            
+gap> r1 := Arrow( Cs4, (1,2,3,4), -4, -5 );;
+gap> ir1 := ImageElm( actC, r1 );
 [groupoid homomorphism : Ca4 -> Ca4
 [ [ [(1,2,3) : -6 -> -6], [(2,3,4) : -6 -> -6], [() : -6 -> -5], 
       [() : -6 -> -4] ], 
@@ -177,12 +178,12 @@ gap> ##  calculate s1^r1
 gap> ims1 := ImageElmXModAction( CX4, s1, r1 );
 [(1,2,3) : -6 -> -6]
 gap> ## repeat using DX4
-gap> actD := XModAction( DX4 );; 
+gap> actD := XModAction( DX4 );;
 gap> SetName( Range( actD ), "autD" );
 gap> Size( Range( actD ) );
 82944
-gap> r2 := Arrow( Ds4, (1,2,3,4), -7, -8 );; 
-gap> ImageElm( actD, r2 );            
+gap> r2 := Arrow( Ds4, (1,2,3,4), -7, -8 );;
+gap> ImageElm( actD, r2 );
 [groupoid homomorphism : Da4 -> Da4
  : 0 -> 0]
 gap> s2 := Arrow( Da4, (1,2,4), -8, -8 );;
