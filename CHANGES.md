@@ -1,6 +1,6 @@
 ## CHANGES to the 'XMod' package
 
-## 2.96 -> 2.97-dev (04/12/2025)
+## 2.96 -> 2.97 (10/12/2025)
  * (04/12/25) remove various unused categories etc in dom2dnd.gd
  * (03/12/25) comment out use of Ancestor - it is no longer defined in groupoids
 
