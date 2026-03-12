@@ -1,9 +1,9 @@
 #############################################################################
 ##
-##  PackageInfo.g  file for the package XMod 
-##  Chris Wensley et al 
+##  PackageInfo.g  file for the package XMod
+##  Chris Wensley et al
 
-SetPackageInfo( rec( 
+SetPackageInfo( rec(
 
 PackageName := "XMod",
 Subtitle := "Crossed Modules and Cat1-Groups",
@@ -64,15 +64,15 @@ CommunicatedBy := "Derek Holt (Warwick)",
 AcceptDate := "12/1996",
 
 SourceRepository := rec( 
-    Type             := "git", 
+    Type             := "git",
     URL              := "https://github.com/gap-packages/xmod" ),
     IssueTrackerURL  := Concatenation( ~.SourceRepository.URL, "/issues" ),
     PackageWWWHome   := "https://gap-packages.github.io/xmod/",
     README_URL       := Concatenation( ~.PackageWWWHome, "README.md" ),
     PackageInfoURL   := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
-    ArchiveURL       := Concatenation( ~.SourceRepository.URL, 
-                                       "/releases/download/v", ~.Version, 
-                                       "/", ~.PackageName, "-", ~.Version ), 
+    ArchiveURL       := Concatenation( ~.SourceRepository.URL,
+                                       "/releases/download/v", ~.Version,
+                                       "/", ~.PackageName, "-", ~.Version ),
 
 SupportEmail := "cdwensley.maths@btinternet.com",
 ArchiveFormats  := ".tar.gz",
@@ -106,50 +106,50 @@ Dependencies := rec(
 AvailabilityTest := ReturnTrue,
 
 BannerString := Concatenation( 
-  "Loading XMod ", String( ~.Version ), 
+  "Loading XMod ", String( ~.Version ),
   " (methods for crossed modules and cat1-groups)\n",
-  "by Chris Wensley (https://github.com/cdwensley),\n", 
-  " with contributions from:\n", 
-  "    Murat Alp (murat.alp@aum.edu.kw),\n", 
-  "    Alper Odabas (aodabas@ogu.edu.tr),\n", 
-  "and Enver Uslu.\n", 
+  "by Chris Wensley (https://github.com/cdwensley),\n",
+  " with contributions from:\n",
+  "    Murat Alp (murat.alp@aum.edu.kw),\n",
+  "    Alper Odabas (aodabas@ogu.edu.tr),\n",
+  "and Enver Uslu.\n",
   "----------",
-  "-------------------------------------------------------------------\n" ), 
+  "-------------------------------------------------------------------\n" ),
 
 
 TestFile := "tst/testall.g",
 
 Keywords := ["crossed module", "cat1-group", "derivation", "section", 
-             "actor", "crossed square" ], 
+             "actor", "crossed square" ],
 
 AutoDoc := rec(
     TitlePage := rec(
         Copyright := Concatenation(
-            "© 1996-2026, Chris Wensley et al. <P/>\n", 
-            "The &XMod; package is free software; you can redistribute it ", 
-            "and/or modify it under the terms of the GNU General ", 
-            "Public License as published by the Free Software Foundation; ", 
-            "either version 2 of the License, or (at your option) ", 
+            "© 1996-2026, Chris Wensley et al. <P/>\n",
+            "The &XMod; package is free software; you can redistribute it ",
+            "and/or modify it under the terms of the GNU General ",
+            "Public License as published by the Free Software Foundation; ",
+            "either version 2 of the License, or (at your option) ",
             "any later version.\n"
             ),
         Abstract := Concatenation( 
             "The &XMod; package provides functions for computation with\n",
-            "<List>\n", 
-            "  <Item>\n", 
-            "  finite crossed modules of groups and cat1-groups, \n", 
-            "  and morphisms of these structures; \n", 
-            "  </Item>\n", 
-            "  <Item>\n", 
-            "  finite pre-crossed modules, pre-cat1-groups, ", 
-            "  and their Peiffer quotients;\n", 
-            "  </Item>\n", 
-            "  <Item>\n", 
-            "  isoclinism classes of groups and crossed modules; \n", 
-            "  </Item>\n", 
-            "  <Item>\n", 
-            "  derivations of crossed modules and sections of cat1-groups; \n", 
-            "  </Item>\n", 
-            "  <Item>\n", 
+            "<List>\n",
+            "  <Item>\n",
+            "  finite crossed modules of groups and cat1-groups, \n",
+            "  and morphisms of these structures; \n",
+            "  </Item>\n",
+            "  <Item>\n",
+            "  finite pre-crossed modules, pre-cat1-groups, ",
+            "  and their Peiffer quotients;\n",
+            "  </Item>\n",
+            "  <Item>\n",
+            "  isoclinism classes of groups and crossed modules; \n",
+            "  </Item>\n",
+            "  <Item>\n",
+            "  derivations of crossed modules and sections of cat1-groups; \n",
+            "  </Item>\n",
+            "  <Item>\n",
             "  crossed squares and their morphisms, ", 
             "  including the actor crossed square of a crossed module; \n", 
             "  </Item>\n", 
