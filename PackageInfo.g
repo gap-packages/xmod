@@ -125,7 +125,7 @@ Keywords := ["crossed module", "cat1-group", "derivation", "section",
 AutoDoc := rec(
     TitlePage := rec(
         Copyright := Concatenation(
-            "© 1996-2025, Chris Wensley et al. <P/>\n", 
+            "© 1996-2026, Chris Wensley et al. <P/>\n", 
             "The &XMod; package is free software; you can redistribute it ", 
             "and/or modify it under the terms of the GNU General ", 
             "Public License as published by the Free Software Foundation; ", 
