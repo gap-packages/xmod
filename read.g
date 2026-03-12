@@ -2,13 +2,12 @@
 ##
 #W  read.g                 The XMOD package                     Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2025, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2026, Chris Wensley et al,  
 ##
 
 ## read the actual code 
 
-ReadPackage( "xmod", "lib/util.gi" ); 
-ReadPackage( "xmod", "lib/dom2dnd.gi" ); 
+ReadPackage( "xmod", "lib/util.gi" );
 ReadPackage( "xmod", "lib/map2dnd.gi" ); 
 ReadPackage( "xmod", "lib/gp2obj.gi" ); 
 ReadPackage( "xmod", "lib/gp2map.gi" ); 

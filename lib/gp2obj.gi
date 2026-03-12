@@ -2,7 +2,7 @@
 ##
 #W  gp2obj.gi                 GAP4 package `XMod'               Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2025, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2026, Chris Wensley et al,  
 ##
 ##  This file contains generic methods for (pre-)crossed modules and
 ##  (pre-)cat1-groups.
@@ -2295,7 +2295,6 @@ function( C1G )
         fi;
     fi;
     PM := PreXModObj( bdy, act ); 
-    #?  aded 30/04/08 - but is it really needed ?? 
     if ( IsSubgroup( Crng, kert ) and IsNormal( Crng, kert ) ) then 
         SetIsNormalSubgroup2DimensionalGroup( PM, true ); 
     fi; 

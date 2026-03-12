@@ -2,7 +2,7 @@
 ##
 #W  gp2act.gi                  GAP4 package `XMod'              Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2024, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2026, Chris Wensley et al,  
 ##
 ##  This filebimplements methods for actor crossed squares of crossed modules
 
@@ -14,7 +14,7 @@ InstallMethod( AutomorphismPermGroup, "automorphism perm group of xmod",
     true, [ IsXMod ], 0, 
 function( XM )
 
-    local S, genS, ngS, R, genR, ngR, act, 
+    local S, genS, ngS, R, genR, ngR,
           AS, genAS, a2pS, PAS, genPAS, p2aS,
           AR, genAR, a2pR, PAR, genPAR, p2aR, 
           D, genD, emS, emR, emgenPAS, emgenPAR, emAS, emAR, infoD, 
@@ -28,7 +28,6 @@ function( XM )
     R := Range( XM );
     genR := GeneratorsOfGroup( R );
     ngR := Length( genR );
-    act := XModAction( XM );
     AS := AutomorphismGroup( S ); 
     genAS := GeneratorsOfGroup( AS );
     a2pS := IsomorphismPermGroup( AS );    ### check if smaller possible
@@ -62,7 +61,7 @@ function( XM )
     emR := Embedding( D, 2 );
     emgenPAS := List( genPAS, a -> ImageElm( emS, a ) );
     emgenPAR := List( genPAR, a -> ImageElm( emR, a ) ); 
-    emAS := GroupHomomorphismByImages( AS, D, genAS, emgenPAS );  
+    emAS := GroupHomomorphismByImages( AS, D, genAS, emgenPAS );
     emAR := GroupHomomorphismByImages( AR, D, genAR, emgenPAR ); 
     infoD := DirectProductInfo( D );
     P := Subgroup( D, [ ] );
@@ -104,8 +103,8 @@ function( XM )
     ### ePAR := GroupHomomorphismByImages( AR, D, genAR, imePAR ); 
     ePAS := GroupHomomorphismByImages( PAS, D, genPAS, emgenPAS ); 
     ePAR := GroupHomomorphismByImages( PAR, D, genPAR, emgenPAR ); 
-    SetEmbedSourceAutos( P, ePAS );
-    SetEmbedRangeAutos( P, ePAR );
+    SetEmbedSourceAutos( P, emAS );
+    SetEmbedRangeAutos( P, emAR );
     SetSourceProjection( P, projPS );
     SetRangeProjection( P, projPR );
     SetAutomorphismDomain( P, XM ); 
@@ -116,8 +115,8 @@ InstallMethod( AutomorphismPermGroup, "automorphism perm group of xmod",
     true, [ IsXMod and IsNormalSubgroup2DimensionalGroup ], 0, 
 function( XM )
 
-    local S, genS, R, genR, autR, autS, AR, genAR, ngAR, AS, genAS, 
-          ar, as, a2pR, PAR, genPAR, p2aR, a2pS, PAS, genPAS, p2aS, 
+    local S, genS, R, genR, autR, autS, AR, genAR, ngAR, AS, genAS, ngAS,
+          i, ar, as, a2pR, PAR, genPAR, p2aR, a2pS, PAS, genPAS, p2aS, 
           restrict, D, genD, emS, emR, emgenPAS, emgenPAR, emAS, emAR, 
           infoD, P, genP, autogens, j, p2, p2i, newS, newR, oldS, oldR, 
           imsrc, imrng, projS, projR, filtS, ePAS, egenR, ePAR;
@@ -127,7 +126,6 @@ function( XM )
     genS := GeneratorsOfGroup( S );
     R := Range( XM );
     genR := GeneratorsOfGroup( R );
-
     autR := AutomorphismGroup( R );
     autS := AutomorphismGroup( S );
     genAR := [ ];
@@ -145,9 +143,20 @@ function( XM )
             fi;
         fi;
     od;
-    Info( InfoXMod, 2, " genAR = ", genAR );
-    Info( InfoXMod, 2, " genAS = ", genAS );
     ngAR := Length( genAR );
+    for i in [1..ngAR] do
+        ar := genAR[i];
+        genAR[i] := GroupHomomorphismByImages( R, R, genR,
+                        List( genR, r -> ImageElm( ar, r ) ) );
+    od;
+    Info( InfoXMod, 2, " genAR = ", genAR );
+    ngAS := Length( genAS );
+    for i in [1..ngAS] do
+        as := genAS[i];
+        genAS[i] := GroupHomomorphismByImages( S, S, genS,
+                        List( genS, s -> ImageElm( as, s ) ) );
+    od;
+    Info( InfoXMod, 2, " genAS = ", genAS );
     a2pR := IsomorphismPermGroup( AR );
     PAR := Image( a2pR );
     a2pR := a2pR * SmallerDegreePermutationRepresentation( PAR );
@@ -214,8 +223,8 @@ function( XM )
     ePAR := GroupHomomorphismByImages( PAR,D,genPAR,       egenR ); 
     SetGeneratingAutomorphisms( XM, autogens );
     SetIsAutomorphismPermGroupOfXMod( P, true );
-    SetEmbedSourceAutos( P, ePAS );
-    SetEmbedRangeAutos( P, ePAR );
+    SetEmbedSourceAutos( P, emAS );
+    SetEmbedRangeAutos( P, emAR );
     SetSourceProjection( P, projS );
     SetRangeProjection( P, projR );
     SetAutomorphismDomain( P, XM ); 
@@ -233,7 +242,7 @@ function( C1G )
           P, num, autogens, ag, eag, ar, ear, mor, ispre, ismor, 
           genP, imsrc, imrng, projDG, projDR, projPG, projPR, ePAG, ePAR;
 
-    Info( InfoXMod, 1, "using standard AutomorphismPermGroup method" );
+    Info( InfoXMod, 1, "standard AutomorphismPermGroup method for cat1-gps" );
     G := Source( C1G );
     genG := GeneratorsOfGroup( G );
     ngG := Length( genG );
@@ -309,12 +318,50 @@ function( C1G )
     SetIsAutomorphismPermGroupOfXMod( P, true );
     ePAG := GroupHomomorphismByImages( PAG, D, genPAG, emgenPAG ); 
     ePAR := GroupHomomorphismByImages( PAR, D, genPAR, emgenPAR ); 
-    SetEmbedSourceAutos( P, ePAG );
-    SetEmbedRangeAutos( P, ePAR );
+    SetEmbedSourceAutos( P, emAG );
+    SetEmbedRangeAutos( P, emAR );
     SetSourceProjection( P, projPG );
     SetRangeProjection( P, projPR );
     SetAutomorphismDomain( P, C1G ); 
     return P;
+end );
+
+#############################################################################
+##
+#M  InnerAutomorphismPermGroup( <2d-gp> )  subgroup of AutomorphismPermGroup
+##
+InstallMethod( InnerAutomorphismPermGroup, 
+    "inner automorphism perm group of xmod", true, [ Is2DimensionalGroup ], 0, 
+function( D )
+
+    local isxmod, S, genS, R, genR, n, P, esa, era, i, r, innr, esar, erar,
+          genIP, IP;
+
+    isxmod := HasIsXMod( D ) and IsXMod( D );
+    S := Source( D );
+    genS := GeneratorsOfGroup( S );
+    R := Range( D );
+    genR := GeneratorsOfGroup( R );
+    n := Length( genR );
+    P := AutomorphismPermGroup( D );
+    esa := EmbedSourceAutos( P );
+    era := EmbedRangeAutos( P );
+    genIP := [1..n];
+    for i in [1..n] do
+        r := genR[i];
+        if isxmod then
+            innr := InnerAutomorphismXMod( D, r );
+        else
+            innr := InnerAutomorphismCat1Group( D, r );
+        fi;
+        esar := ImageElm( esa, SourceHom( innr ) );
+        erar := ImageElm( era, RangeHom( innr ) );
+        genIP[i] := esar * erar;
+    od;
+    IP := Group( genIP );
+    genIP := SmallGeneratingSet( IP );
+    IP := Group( genIP );
+    return IP;
 end );
 
 #############################################################################
@@ -425,7 +472,7 @@ function( XM )
             a := GroupHomomorphismByImages( S, S, genS, ima );
             imact[j] := a;
         od;
-    fi; 
+    fi;  
     act := GroupHomomorphismByImages( W, autS, genW, imact );
     WX := XMod( iota, act );
     name := Name( XM );
@@ -442,15 +489,16 @@ InstallMethod( NorrieXMod, "Norrie crossed module", true,
     [ IsXMod ], 0, 
 function( XM )
 
-    local S, R, genR, P, DX, genP, Prng, 
+    local S, R, genR, n, P, DX, genP, Prng, 
           AS, AR, a2pS, PAS, p2aS, a2pR, PAR, p2aR, 
-          im, r, autr, psrc, emsrc, conjr, prng, emrng, bdy, ok,
-          imact, p, projp, proja, ima, a, act, i, f, NX, name;
+          esa, era, im, i, r, innr, esar, erar, bdy, ok,
+          imact, p, projp, proja, ima, a, act, f, NX, name;
 
     Info( InfoXMod, 2, "now in NorrieXMod" ); 
     S := Source( XM );
     R := Range( XM );
     genR := GeneratorsOfGroup( R );
+    n := Length( genR );
     P := AutomorphismPermGroup( XM );
     DX := Parent( P );
     genP := GeneratorsOfGroup( P );
@@ -477,15 +525,15 @@ function( XM )
     a2pS := InverseGeneralMapping( p2aS );
     ######################################
     # determine the boundary map
-    im := [ ]; 
-    for r in genR do 
-        autr := ImageElm( XModAction( XM ), r );
-        psrc := ImageElm( a2pS, autr );
-        emsrc := ImageElm( EmbedSourceAutos( P ), psrc );
-        conjr := InnerAutomorphism( R, r );
-        prng := ImageElm( a2pR, conjr );
-        emrng := ImageElm( EmbedRangeAutos( P ), prng );
-        Add( im, emrng * emsrc );  ### assumes direct product ###
+    esa := EmbedSourceAutos( P );
+    era := EmbedRangeAutos( P );
+    im := [1..n]; 
+    for i in [1..n] do 
+        r := genR[i];
+        innr := InnerAutomorphismXMod( XM, r );
+        esar := ImageElm( esa, SourceHom( innr ) );
+        erar := ImageElm( era, RangeHom( innr ) );
+        im[i] := esar * erar;
     od;
     bdy := GroupHomomorphismByImages( R, P, genR, im );
     # determine the action
@@ -650,8 +698,8 @@ function( XM )
         j := genpos[i];
         chj := DerivationByImages( XM, L[j] );
         mor := Object2dEndomorphism( chj );
-        imsrc := ImageElm( emsrc, ImageElm( a2pS, SourceHom( mor ) ) );
-        imrng := ImageElm( emrng, ImageElm( a2pR, RangeHom( mor ) ) );
+        imsrc := ImageElm( emsrc, SourceHom( mor ) );
+        imrng := ImageElm( emrng, RangeHom( mor ) );
         imdelta[i] := imsrc * imrng;
     od;
     delta := GroupHomomorphismByImages( W, P, genW, imdelta );

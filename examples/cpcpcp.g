@@ -8,18 +8,18 @@
 
 CpCpCpCat2Groups := function( p ) 
 
-    local  G, genG, o, a, b, c, pooo, pooc, pocc, pcoc, 
-           pobo, pbbo, pabb, pabo, paoc, pobc, pbbc, pabc, 
-           C1, i, A, j, B, iso, C2, pos, ok; 
+    local  G, genG, o, a, b, c, pooo, pooc, pocc, pcoc,
+           pobo, pbbo, pabb, pabo, paoc, pobc, pbbc, pabc,
+           C1, i, A, j, B, iso, C2, pos, ok;
 
-    G := CyclicGroup( IsPermGroup, p ); 
-    G := DirectProduct( G, G, G ); 
-    genG := GeneratorsOfGroup( G ); 
-    o := One( G ); 
-    a := genG[1]; 
-    b := genG[2]; 
-    c := genG[3]; 
-    SetName( G, "G" ); 
+    G := CyclicGroup( IsPermGroup, p );
+    G := DirectProduct( G, G, G );
+    genG := GeneratorsOfGroup( G );
+    o := One( G );
+    a := genG[1];
+    b := genG[2];
+    c := genG[3];
+    SetName( G, "G" );
     ## construct the 12 projections needed for the cat1-groups 
     pooo := GroupHomomorphismByImages( G, G, [a,b,c], [o,o,o] );
     pooc := GroupHomomorphismByImages( G, G, [a,b,c], [o,o,c] );
@@ -34,7 +34,7 @@ CpCpCpCat2Groups := function( p )
     pbbc := GroupHomomorphismByImages( G, G, [a,b,c], [b,b,c] );
     pabc := GroupHomomorphismByImages( G, G, [a,b,c], [a,b,c] );
     ## construct 14 cat1-groups (there are 6 isomorphism classses) 
-    Print( "14 cat1-groups constructed:\n" ); 
+    Print( "14 cat1-groups constructed:\n" );
     C1 := [ Cat1Group( pooo, pooo ),  ##  1
             Cat1Group( pooc, pooc ),  ##  2
             Cat1Group( pooc, pocc ),  ##  3
@@ -47,22 +47,22 @@ CpCpCpCat2Groups := function( p )
             Cat1Group( pooc, pcoc ),  ## 10 ~ 3
             Cat1Group( pbbc, pbbc ),  ## 11 ~ 4
             Cat1Group( pbbc, pobc )   ## 12 ~ 5
-          ]; 
-    Print( C1, "\n" ); 
+          ];
+    Print( C1, "\n" );
     ## when p is small check the 6 isomorphisms listed above 
     if ( p < 4 ) then 
         for i in [7..12] do 
-            A := C1[i]; 
-            Print( i, " : " ); 
+            A := C1[i];
+            Print( i, " : " );
             for j in [1..6] do 
-                B := C1[j];  
-                iso := IsomorphismPreCat1Groups( A, B ); 
+                B := C1[j]; 
+                iso := IsomorphismPreCat1Groups( A, B );
                 if ( iso <> fail ) then 
-                    Print( " ~ ", j ); 
-                fi; 
+                    Print( " ~ ", j );
+                fi;
             od;
-            Print( "\n" ); 
-        od; 
+            Print( "\n" );
+        od;
     fi;
     ## construct representatives of the 23 classes of cat2-groups on G 
     C2 := [ Cat2Group( C1[1], C1[1] ),   ##   1
@@ -88,27 +88,27 @@ CpCpCpCat2Groups := function( p )
             Cat2Group( C1[3], C1[8] ),   ##  21 
             Cat2Group( C1[5], C1[11] ),  ##  22 
             Cat2Group( C1[5], C1[12] )   ##  23
-          ]; 
+          ];
     ## verify that there are no failures in these cat2-groups 
-    pos := Position( C2, fail ); 
+    pos := Position( C2, fail );
     if not ( pos = fail ) then 
-        Print( "failure at pos = ", pos, "\n" ); 
-    fi; 
+        Print( "failure at pos = ", pos, "\n" );
+    fi;
     ## verify that no two of these cat2-groups are isomorphic 
-    ok := true; 
+    ok := true;
     for i in [1..22] do 
-        A := C2[i]; 
+        A := C2[i];
         for j in [i+1..23] do 
-            B := C2[j]; 
-            iso := IsomorphismCat2Groups( A, B ); 
+            B := C2[j];
+            iso := IsomorphismCat2Groups( A, B );
             if ( iso <> fail ) then 
-                Print( [i,j], " are isomorphic\n" ); 
-                ok := false; 
-            fi; 
+                Print( [i,j], " are isomorphic\n" );
+                ok := false;
+            fi;
         od;
     od;
     if ok then 
-        Print( "no 2 of the 23 cat2-groups are isomorphic:\n" ); 
-    fi; 
-    return C2; 
-end; 
+        Print( "no 2 of the 23 cat2-groups are isomorphic:\n" );
+    fi;
+    return C2;
+end;

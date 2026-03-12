@@ -2,7 +2,7 @@
 ##
 #W  gp2map.tst                    XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2023, Chris Wensley et al, 
+#Y  Copyright (C) 1996-2026, Chris Wensley et al, 
 ##
 ##
 gap> START_TEST( "XMod package: gp2map.tst" );
@@ -73,6 +73,21 @@ gap> Set( kao );
 [ "Name", "Order", "Range", "RangeHom", "Source", "SourceHom" ]
 
 ## Section 3.2.4
+gap> a := GeneratorsOfGroup( Range( X5 ) )[1];
+[ (5,6,7,8,9) ] -> [ (5,7,9,6,8) ]
+gap> inna := InnerAutomorphismXMod( X5, a );;
+gap> Display( inna );
+Morphism of crossed modules :- 
+: Source = [c5->Aut(c5)] with generating sets:
+  [ (5,6,7,8,9) ]
+  [ GroupHomomorphismByImages( c5, c5, [ (5,6,7,8,9) ], [ (5,7,9,6,8) ] ) ]
+: Range = Source
+: Source Homomorphism maps source generators to:
+  [ (5,7,9,6,8) ]
+: Range Homomorphism maps range generators to:
+  [ GroupHomomorphismByImages( c5, c5, [ (5,6,7,8,9) ], [ (5,7,9,6,8) ] ) ]
+
+## Section 3.2.5
 gap> q8 := SmallGroup(8,4);;   ## quaternion group 
 gap> XAq8 := XModByAutomorphismGroup( q8 );
 [Group( [ f1, f2, f3 ] )->Group( [ Pcgs([ f1, f2, f3 ]) -> [ f1*f2, f2, f3 ], 
@@ -131,6 +146,19 @@ gap> iso8 := IsomorphismPerm2DimensionalGroup( C8 );
    [[G8=>d12] => [..]]
 
 ## Section 3.3.4
+gap> mor4 := InnerAutomorphismCat1Group( C3, (7,9) );;  
+gap> Display( mor4 );                                 
+Morphism of cat1-groups :- 
+: Source = [g18 => s3a] with generating sets:
+  [ (1,2,3), (4,5,6), (2,3)(5,6) ]
+  [ (7,8,9), (8,9) ]
+: Range = Source
+: Source Homomorphism maps source generators to:
+  [ (1,3,2), (4,6,5), (2,3)(4,5) ]
+: Range Homomorphism maps range generators to:
+  [ (7,9,8), (7,8) ]
+
+## Section 3.3.5
 gap> G := Group( (1,2,3,4)(5,6,7,8) );; 
 gap> H := Subgroup( G, [ (1,3)(2,4)(5,7)(6,8) ] );;
 gap> XG := XModByNormalSubgroup( G, H );

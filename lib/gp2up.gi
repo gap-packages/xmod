@@ -5,7 +5,7 @@
 ##
 ##  This file contains implementations of UpMappings, Derivations & Sections
 ##
-#Y  Copyright (C) 2001-2024, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2026, Chris Wensley et al,  
 
 #############################################################################
 ##
@@ -689,7 +689,6 @@ function( chi )
         g := er * eKchi[i];
         imhom[i] := g;
     od;
-    #? use SectionByHomomorphismNC
     hom := GroupHomomorphismByImages( R, Source(C), stgR, imhom );
     xi := SectionByHomomorphism( C, hom );
     return xi;
@@ -1058,8 +1057,6 @@ end );
 ##
 #M  WhiteheadTransformationMonoid( XM ) . trans rep for the Whitehead monoid
 ##
-#?  this needs some more work
-##
 InstallMethod( WhiteheadTransformationMonoid, "method for a crossed module", 
      true, [ IsXMod ], 0,
 function( XM )
@@ -1078,6 +1075,27 @@ function( XM )
         fi;
     od;
     return mon;
+end );
+
+#############################################################################
+##
+#M  WhiteheadGroupElement( chi ) . . permutation representation of derivation
+##
+InstallMethod( WhiteheadGroupElement, "method for a drerivation", true,
+    [ IsDerivation ], 0,
+function( chi )
+
+    local  XM, reg, tab, imlist, gens, im, pos, iso;
+
+    XM := Object2d( chi );
+    reg := RegularDerivations( XM );
+    tab := WhiteheadGroupTable( XM );
+    imlist := ImagesList( reg );
+    gens := List( tab, PermList );
+    im := UpGeneratorImages( chi );
+    pos := Position( imlist, im );
+    iso := WhiteheadGroupIsomorphism( XM );
+    return Image( iso, gens[pos] );
 end );
 
 #############################################################################

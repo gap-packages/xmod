@@ -2,7 +2,7 @@
 ##
 #W  gp2act.tst                    XMOD test file                Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2024, Chris Wensley, et al
+#Y  Copyright (C) 2001-2026, Chris Wensley, et al
 ##
 gap> START_TEST( "XMod package: gp2act.tst" );
 gap> saved_infolevel_xmod := InfoLevel( InfoXMod );; 
@@ -21,7 +21,15 @@ gap> e := GroupHomomorphismByImages( s3, g18, [g2,g3], [g2,g3] );;
 gap> C3 := Cat1Group( t, h, e );;
 gap> SetName( Kernel(t), "c3" );;
 gap> X3 := XModOfCat1Group( C3 );;
-
+gap> gens3 := [ (7,8,9), (8,9) ];;
+gap> s3 := Group( gens3 );;
+gap> SetName( s3, "s3" ); 
+gap> gend12 := [ (1,2,3,4,5,6), (2,6)(3,5) ];;
+gap> d12 := Group( gend12 );;
+gap> SetName( d12, "d12" ); 
+gap> pr12 := GroupHomomorphismByImages( d12, s3, gend12, gens3 );;
+gap> X12 := XModByCentralExtension( pr12 );; 
+gap> SetName( X12, "X12" );
 
 ## Chapter 6
 
@@ -57,6 +65,31 @@ gap> m := PermAutomorphismAs2dGroupMorphism( C3, a );
 [[g18 => s3] => [g18 => s3]]
 
 ## Section 6.1.2
+gap> InnerAutomorphismPermGroup( X3 ) = APX3;  
+true
+gap> Display( X12 );
+Crossed module X12 :- 
+: Source group d12 has generators:
+  [ (1,2,3,4,5,6), (2,6)(3,5) ]
+: Range group s3 has generators:
+  [ (7,8,9), (8,9) ]
+: Boundary homomorphism maps source generators to:
+  [ (7,8,9), (8,9) ]
+: Action homomorphism maps range generators to automorphisms:
+  (7,8,9) --> { source gens --> [ (1,2,3,4,5,6), (1,3)(4,6) ] }
+  (8,9) --> { source gens --> [ (1,6,5,4,3,2), (2,6)(3,5) ] }
+  These 2 automorphisms generate the group of automorphisms.
+gap> APX12 := AutomorphismPermGroup( X12 );     
+Group([ (1,4,6)(2,5,8)(9,10,11), (1,5)(2,6)(4,8), (1,6)(2,5)(3,7)(9,11) ])
+gap> IAPX12 := InnerAutomorphismPermGroup( X12 );        
+Group([ (1,4,6)(2,5,8)(9,10,11), (2,8)(3,7)(4,6)(10,11) ])
+gap> [ StructureDescription( APX12 ), StructureDescription( IAPX12 ) ];
+[ "D12", "S3" ]
+
+gap> InnerAutomorphismPermGroup( C3 );
+Group([ (1,3,2)(4,6,5)(7,9,8)(12,13,14), (2,3)(4,7)(5,9)(6,8)(10,11)(13,14) ])
+
+## Section 6.1.3
 gap> X3;
 [c3->s3]
 gap> WGX3 := WhiteheadPermGroup( X3 );
@@ -130,7 +163,7 @@ gap> StructureDescription( NorrieXMod( XAq8 ) );
 gap> StructureDescription( ActorXMod( XAq8 ) ); 
 [ "C2 x C2 x C2", "S4" ]
 
-## Section 6.1.3
+## Section 6.1.4
 gap> IMX3 := InnerMorphism( X3 );; 
 gap> Display( IMX3 );
 Morphism of crossed modules :- 

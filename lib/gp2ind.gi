@@ -2,7 +2,7 @@
 ##
 #W  gp2ind.gi                      XMOD Package                Chris Wensley
 ##
-#Y  Copyright (C) 2001-2024, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2026, Chris Wensley et al,  
 ##  
 ##  This file implements functions for induced crossed modules. 
 
@@ -373,7 +373,7 @@ function( X0, iota, trans )
           ofpi, actQ, imFIQ, imD, gimD, genD, ind, relFI,
           FI1, presFI1, gensFI1, tietze, total,
           FI2, genFI2, ngFI2, oFI2, gensFI2,
-          info, ispc, I, f2p, degI, prenew, imold,
+          info, I, f2p, degI, prenew, imold,
           homFIQ, imIQ, FK, genFK, genK, K, oK, mgiFIQ, words, imrem, imM,
           idI, genI, genpos, imact, imI, genim, aut, mor, morsrc,
           bdy, act, ishom, IX, series, idseries, sdpr;
@@ -688,7 +688,7 @@ function( X0, iota, trans )
                "to FI1 :- \n" );
     fi;
     i := 0;
-    repeat  ##??  why 9 times ?? 
+    repeat  ## up to 9 times, but this limit probably not reached? 
         i := i + 1;
         Info( InfoXMod, 3, "TzGo interation number ", i );
         tietze := presFI1!.tietze;
@@ -698,6 +698,9 @@ function( X0, iota, trans )
             TzPrint( presFI1 );
         fi;
     until ( ( total = tietze[TZ_TOTAL] ) or ( i > 9 ) );
+    if ( i > 9 ) then
+        Print( "WARNING? :- repeat terminated with i>9\n" );
+    fi;
     if ( InfoLevel( InfoXMod ) > 1 ) then 
         Print( "\nSimplified pres. for induced group:\n", presFI1, "\n" );
         TzPrint( presFI1 );
@@ -709,27 +712,16 @@ function( X0, iota, trans )
     oFI2 := Size( FI2 );
     free2 := FreeGroupOfFpGroup( FI2 );
     genfree2 := GeneratorsOfGroup( free2 );
-    gensFI2 := GeneratorsOfPresentation( presFI1 );   ## ????? 
+    gensFI2 := GeneratorsOfPresentation( presFI1 );   ##??
     Info( InfoXMod, 3, "gensFI2 = ", gensFI2 );
     Info( InfoXMod, 3, "genFI2 = gensFI2 ? ", genFI2 = gensFI2 );
     Info( InfoXMod, 1, "#I induced group has size: ", oFI2 );
-    #? (19/07/11) : example InducedXMod( s4, s3b, s3b ) fails 
-    #? because of a pc isomorphism instead of a perm isomorphism,
-    #? so revert, for now, to the perm case only: 
     if ( oFI2 >= 1 ) then 
-        #?  info := IsomorphismPermOrPcInfo( FI2 );
         info := IsomorphismPermInfo( FI2 );
-        #?  ispc := ( info!.type = "pc" );
-        ispc := false;
-        if ispc then 
-            I := info!.pc;
-            f2p := info!.g2pc;
-        else 
-            I := info!.perm;
-            degI := NrMovedPoints( I );
-            f2p := info!.g2perm;
-        fi;
-        Info( InfoXMod, 2, "IsomorphismPermOrPcInfo: ", info );
+        I := info!.perm;
+        degI := NrMovedPoints( I );
+        f2p := info!.g2perm;
+        Info( InfoXMod, 2, "IsomorphismPermInfo: ", info );
     else 
         Print( "\n#I  unexpected order(I) = 1\n" );
         I := Group( () );
