@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  history.xml           XMod documentation            Chris Wensley  -->
 <!--                                                                     -->
-<!--  Copyright (C) 1996-2024, Murat Alp and Chris Wensley,              --> 
+<!--  Copyright (C) 1996-2026, Murat Alp and Chris Wensley,              --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
 
@@ -237,6 +237,22 @@ for this and for <C>AutomorphismPermGroup</C>.
 </List>
 </Subsection>
 
+<Subsection><Heading>Versions from 2.98</Heading>
+<List>
+<Item>
+Documented <C>InnerAutomorphismXMod</C> and <C>InnerAutomorphismCat1Group</C>,
+and added <C>InnerAutomorphismPermGroup</C> for a 2d-group.
+</Item>
+<Item>
+Included the verification that <C>CentreXMod(X)</C> and <C>XModCentre(X)</C>
+are equivalent.
+</Item>
+<Item>
+Added the operation <C>WhiteheadGroupElement</C> for a derivation.
+</Item>
+</List>
+</Subsection>
+
 </Section> 
 
 
@@ -277,9 +293,7 @@ Complete the conversion from Version <B>1</B> of the calculation of sections
 using <C>EndoClasses</C>.
 </Item>
 <Item>
-More crossed square constructions: 
-<List>
-<Item>
+Another crossed square construction. 
 If <M>M, N</M> are ordinary <M>P</M>-modules 
 and <M>A</M> is an arbitrary abelian group on which <M>P</M> acts trivially, 
 then there is a crossed square with sides 
@@ -287,23 +301,6 @@ then there is a crossed square with sides
 0 : A \to N,\quad 0 : A \to M,\quad
 0 : M \to P,\quad 0 : N \to P. 
 </Display>
-</Item>
-<Item>
-For a group <M>L</M>, the automorphism crossed module 
-<M>\Act\ L = (\iota : L \to \Aut\ L)</M> 
-splits to form the square 
-with <M>(\iota_1 : L \to \Inn\ L)</M> on two sides, 
-and <M>(\iota_2 : \Inn\ L \to \Aut\ L)</M> on the other two sides, 
-where <M>\iota_1</M> maps <M>l \in L</M> to the inner automorphism  
-<M>\beta_l : L \to L,\; l^{\prime} \mapsto l^{-1}l^{\prime}l</M>,  
-and <M>\iota_2</M> is the inclusion of <M>\Inn\ L</M> in  <M>\Aut\ L</M>. 
-The actions are standard, and the crossed pairing is 
-<Display>
-\boxtimes \;:\; \Inn\ L \times \Inn\ L \to L, \quad
-(\beta_l, \beta_{l^{\prime}}) \;\mapsto\; [l, l^{\prime}]~.
-</Display>
-</Item>
-</List>
 </Item>
 <Item>
 Improve the interaction with the <Package>HAP</Package> package. 

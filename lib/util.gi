@@ -2,7 +2,7 @@
 ##
 #W  util.gi                    GAP4 package `XMod'               Chris Wensley
 #W                                                                 & Murat Alp
-#Y  Copyright (C) 2001-2024, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2026, Chris Wensley et al,  
 
 ##############################################################################
 ##
@@ -76,8 +76,6 @@ function( G, N )
     SetIsGroupOfAutomorphisms( A, true );
     return A;
 end );
-
-## ???? replace by ElementsInGenerators ???? ## 
 
 ##############################################################################
 ##
@@ -377,7 +375,7 @@ InstallGlobalFunction( FactorsPresentation, function( arg )
     invs := tietze[TZ_INVERSES];
     numgens := tietze[TZ_NUMGENS];
     numinvs := 1 + 2 * numgens;
-    gens := T!.generators;         ## ??????
+    gens := T!.generators;         ##??
     rels := tietze[TZ_RELATORS];
     lengths := tietze[TZ_LENGTHS];
     flags := tietze[TZ_FLAGS];

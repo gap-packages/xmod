@@ -2,7 +2,7 @@
 ##
 #W  gpd2obj.gi                 GAP4 package `XMod'               Chris Wensley
 ##
-#Y  Copyright (C) 2001-2025, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2026, Chris Wensley et al,  
 
 #############################################################################
 ##  Standard error messages
@@ -353,8 +353,6 @@ function( comps, c1 )
                             and IsPreCat1Groupoid(p) ) then
         SetIsPreCat1Groupoid( xwo, true );
     fi;
-
-    #? removed tests as to whether perm-, pc-, etc xmod with objects 
     return xwo;
 end );
 

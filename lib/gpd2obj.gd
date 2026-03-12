@@ -2,7 +2,7 @@
 ##
 #W  gpd2obj.gd                 GAP4 package `XMod'               Chris Wensley
 ##
-#Y  Copyright (C) 2001-2025, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2026, Chris Wensley et al,  
 
 #############################################################################
 ## 
@@ -50,8 +50,8 @@ BindGlobal( "Family2DimensionalGroupWithObjects",
 DeclareProperty( "IsPreXModWithObjects", 
     IsPreXMod and Is2DimensionalDomainWithObjects );
 DeclareProperty( "IsXModWithObjects", IsPreXModWithObjects ); 
-DeclareProperty( "IsPreCat1Groupoid",   #? another condition?? 
-    Is2DimensionalDomainWithObjects );
+DeclareProperty( "IsPreCat1Groupoid",
+    IsPreCat1Group and Is2DimensionalDomainWithObjects );
 DeclareProperty( "IsCat1Groupoid", IsPreCat1Groupoid ); 
 
 #############################################################################

@@ -2,7 +2,7 @@
 ##
 #W  gp2act.gd                   GAP4 package `XMod'             Chris Wensley
 #W                                                                & Murat Alp
-#Y  Copyright (C) 2001-2024, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2026, Chris Wensley et al,  
 ##
 ##  This file declares methods for actor crossed squares of crossed modules. 
 ##  
@@ -19,6 +19,7 @@ DeclareAttribute( "EmbedSourceAutos", IsAutomorphismPermGroupOfXMod );
 DeclareAttribute( "EmbedRangeAutos", IsAutomorphismPermGroupOfXMod );
 DeclareAttribute( "SourceProjection", IsAutomorphismPermGroupOfXMod );
 DeclareAttribute( "RangeProjection", IsAutomorphismPermGroupOfXMod );
+DeclareAttribute( "InnerAutomorphismPermGroup", Is2DimensionalDomain );
 
 #############################################################################
 ##

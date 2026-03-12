@@ -2,7 +2,7 @@
 ##
 #W  apps.gi                    GAP4 package `XMod'             Chris Wensley
 ##
-#Y  Copyright (C) 2001-2024, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2026, Chris Wensley et al,  
 
 ############################################################################
 ##
@@ -456,19 +456,21 @@ function( X0 )
                 j := j+1; 
                 c := class[j]; 
                 r := repsP0[c]; 
-                for k in imbdy0 do    ##? genimbdy do 
+                ## for k in genimbdy0 do  
+                ## (12/3/26) using genimbdy0 changes results in extra/loops.tst
+                for k in imbdy0 do
                     q := r*k; 
                     pos := Position( eltsP0, q ); 
                     d := eclP0[pos];  ## the class of q 
                     if ( d <> c ) then 
-                        Info( InfoXMod, 3, "[c,r,k,q,d] = ", [c,r,k,q,d] ); 
+                        Info( InfoXMod, 2, "[c,r,k,q,d] = ", [c,r,k,q,d] ); 
                         for h in [1..nclP0] do 
                             if ( relP0[h] = d ) then 
                                 relP0[h] := c; 
                             fi; 
                         od;
                         Add( class, d ); 
-                        Info( InfoXMod, 3, "class = ", class ); 
+                        Info( InfoXMod, 2, "class = ", class ); 
                     fi; 
                 od; 
             od; 

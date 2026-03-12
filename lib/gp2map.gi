@@ -5,7 +5,7 @@
 ##  This file installs methods for 2DimensionalMappings 
 ##  for crossed modules and cat1-groups. 
 ##
-#Y  Copyright (C) 2001-2023, Chris Wensley et al, 
+#Y  Copyright (C) 2001-2026, Chris Wensley et al, 
 
 #############################################################################
 ##
@@ -1527,7 +1527,6 @@ InstallOtherMethod( IsBijective,
 #############################################################################
 ##
 #M  IsEndomorphism2DimensionalDomain( map ) . .  for a 2Dimensional-mapping
-#?  temporary fix 08/01/04  ---  need to check correctness
 #M  IsAutomorphism2DimensionalDomain( map ) . .  for a 2Dimensional-mapping
 ##
 InstallMethod( IsEndomorphism2DimensionalDomain, 

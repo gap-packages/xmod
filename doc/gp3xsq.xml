@@ -2,7 +2,7 @@
 <!--                                                                     -->
 <!--  gp3xsq.xml            XMod documentation            Chris Wensley  -->
 <!--                                                                     -->
-<!--  Copyright (C) 1996-2025, Chris Wensley et al,                      --> 
+<!--  Copyright (C) 1996-2026, Chris Wensley et al,                      --> 
 <!--                                                                     -->
 <!-- ------------------------------------------------------------------- -->
 
@@ -358,8 +358,7 @@ gap> xp20( p1^2, p2 );
          Arg="X0" />
 <Description>
 The actor <M>\calA(\calX_0)</M> of a crossed module 
-<M>\calX_0</M> has been described in Chapter 5 
-(see <Ref Func="ActorXMod" />). 
+<M>\calX_0</M> has been described in Chapter 6 (see <Ref Func="ActorXMod" />). 
 The crossed pairing is given by 
 <Display>
 \boxtimes \;:\;  R \times W \,\to\, S, \quad (r,\chi) \,\mapsto\, \chi r~.

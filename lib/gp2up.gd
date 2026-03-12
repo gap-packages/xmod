@@ -5,7 +5,7 @@
 ##
 ##  This file contains declarations for UpMappings, Derivations and Sections
 ##
-#Y  Copyright (C) 2001-2024, Chris Wensley et al,  
+#Y  Copyright (C) 2001-2026, Chris Wensley et al,  
 
 #############################################################################
 ##
@@ -124,6 +124,12 @@ InstallTrueMethod( IsDerivation, IsRegularDerivation );
 
 #############################################################################
 ##
+#O  WhiteheadGroupElement   perm image of a derivation in the Whitehead group
+##
+DeclareOperation( "WhiteheadGroupElement", [ IsUp2DimensionalMapping ] ); 
+
+#############################################################################
+##
 #A  SourceEndomorphism     upmapping determines endomorphism of source group
 #A  RangeEndomorphism      upmapping determines endomorphism of range group
 #A  Object2dEndomorphism   upmapping determines endomorphism of xmod or cat1
@@ -140,11 +146,8 @@ DeclareAttribute( "Object2dEndomorphism", IsUp2DimensionalMapping );
 #############################################################################
 ##
 #O  SectionByHomomorphism               converts a homomorphism to a section
-#O  SectionByHomomorphismNC             converts a homomorphism to a section
 ##
 DeclareOperation( "SectionByHomomorphism", 
-    [ IsPreCat1Group, IsGroupHomomorphism ] );
-DeclareOperation( "SectionByHomomorphismNC", 
     [ IsPreCat1Group, IsGroupHomomorphism ] );
 
 #############################################################################
