@@ -44,5 +44,8 @@ AutoDoc( rec(
         entities := rec( 
             AutoDoc := "<Package>AutoDoc</Package>"
         )
-    )
+    ),
+    extract_examples := rec(
+        subdir := "tst/manual",
+    ),
 ));
